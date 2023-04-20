@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlDWUpsertSettings DeserializeSqlDWUpsertSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> interimSchemaName = default;
             Optional<BinaryData> keys = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keys = BinaryData.FromString(property.Value.GetRawText());

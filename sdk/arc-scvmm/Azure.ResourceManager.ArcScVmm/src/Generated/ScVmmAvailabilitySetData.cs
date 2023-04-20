@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmAvailabilitySet data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmAvailabilitySet data model.
+    /// The AvailabilitySets resource definition.
+    /// </summary>
     public partial class ScVmmAvailabilitySetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmAvailabilitySetData. </summary>

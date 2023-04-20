@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    /// <summary> A class representing the MapsAccount data model. </summary>
+    /// <summary>
+    /// A class representing the MapsAccount data model.
+    /// An Azure resource which represents access to a suite of Maps REST APIs.
+    /// </summary>
     public partial class MapsAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MapsAccountData. </summary>

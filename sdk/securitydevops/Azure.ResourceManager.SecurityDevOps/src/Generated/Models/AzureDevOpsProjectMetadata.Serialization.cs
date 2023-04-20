@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsProjectMetadata DeserializeAzureDevOpsProjectMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AutoDiscovery> autoDiscovery = default;
             Optional<IList<string>> repos = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoDiscovery = new AutoDiscovery(property.Value.GetString());
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

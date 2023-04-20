@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmKeyVaultCredentialSettings DeserializeSqlVmKeyVaultCredentialSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<string> credentialName = default;
             Optional<Uri> azureKeyVaultUrl = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enable = property.Value.GetBoolean();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        azureKeyVaultUrl = null;
                         continue;
                     }
                     azureKeyVaultUrl = new Uri(property.Value.GetString());

@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchResourceCounter> aliasesCount = default;
             SearchResourceCounter documentCount = default;
             SearchResourceCounter indexesCount = default;
@@ -28,7 +32,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
@@ -68,7 +71,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);

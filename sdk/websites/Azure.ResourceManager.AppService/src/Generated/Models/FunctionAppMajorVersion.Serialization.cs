@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppMajorVersion DeserializeFunctionAppMajorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<IReadOnlyList<FunctionAppMinorVersion>> minorVersions = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FunctionAppMinorVersion> array = new List<FunctionAppMinorVersion>();

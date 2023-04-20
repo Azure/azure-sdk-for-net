@@ -74,6 +74,14 @@ namespace Azure.Communication.CallAutomation
             return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
+        /// <summary> Initializes a new instance of RemoveParticipantResult. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.RemoveParticipantResult"/> instance for mocking. </returns>
+        public static RemoveParticipantResult RemoveParticipantResult(string operationContext = default)
+        {
+            return new RemoveParticipantResult(operationContext);
+        }
+
         /// <summary> Create an EventSource. </summary>
         /// <param name="callConnectionId"> Call connection id for the event. </param>
         /// <param name="eventName"> Optional event name; used for events related to content. </param>
@@ -127,18 +135,53 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default)
+        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
+                sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
                     : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of remove participant failed event.
+        /// </summary>
+        public static RemoveParticipantFailed RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        {
+            var internalObject = new RemoveParticipantFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                );
+
+            return new RemoveParticipantFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of remove participant success event.
+        /// </summary>
+        public static RemoveParticipantSucceeded RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        {
+            var internalObject = new RemoveParticipantSucceededInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                );
+
+            return new RemoveParticipantSucceeded(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
@@ -157,6 +200,40 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
         {
             return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call corre lation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="recognitionType">
+        /// Determines the sub-type of the recognize operation.
+        /// In case of cancel operation the this field is not set and is returned empty
+        /// </param>
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeChoiceCompleted"/> instance for mocking. </returns>
+        internal static RecognizeChoiceCompleted RecognizeChoiceCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, ChoiceResult choiceResult = null)
+        {
+            return new RecognizeChoiceCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, choiceResult);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call corre lation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="recognitionType">
+        /// Determines the sub-type of the recognize operation.
+        /// In case of cancel operation the this field is not set and is returned empty
+        /// </param>
+        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeDtmfCompleted"/> instance for mocking. </returns>
+        internal static RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
+        {
+            return new RecognizeDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult);
         }
     }
 }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         internal static GitHubConnectorStatsListResponse DeserializeGitHubConnectorStatsListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GitHubConnectorStats>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GitHubConnectorStats> array = new List<GitHubConnectorStats>();

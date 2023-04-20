@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBCompositePath DeserializeCosmosDBCompositePath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<CompositePathSortOrder> order = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = new CompositePathSortOrder(property.Value.GetString());

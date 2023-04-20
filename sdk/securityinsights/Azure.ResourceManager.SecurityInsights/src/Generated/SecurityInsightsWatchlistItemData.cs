@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsWatchlistItem data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsWatchlistItem data model.
+    /// Represents a Watchlist Item in Azure Security Insights.
+    /// </summary>
     public partial class SecurityInsightsWatchlistItemData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsWatchlistItemData. </summary>

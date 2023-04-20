@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityIssueInfo DeserializeConnectivityIssueInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IssueOrigin> origin = default;
             Optional<IssueSeverity> severity = default;
             Optional<ConnectivityIssueType> type = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     origin = new IssueOrigin(property.Value.GetString());
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new IssueSeverity(property.Value.GetString());
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ConnectivityIssueType(property.Value.GetString());
@@ -55,18 +56,24 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property0 in item.EnumerateObject())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
+                            array.Add(null);
                         }
-                        array.Add(dictionary);
+                        else
+                        {
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property0 in item.EnumerateObject())
+                            {
+                                dictionary.Add(property0.Name, property0.Value.GetString());
+                            }
+                            array.Add(dictionary);
+                        }
                     }
                     context = array;
                     continue;

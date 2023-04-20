@@ -51,16 +51,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="customData">Specifies a base-64 encoded string of
         /// custom data. The base-64 encoded string is decoded to a binary
         /// array that is saved as a file on the Virtual Machine. The maximum
-        /// length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt;
-        /// **Note: Do not pass any secrets or passwords in customData
-        /// property** &lt;br&gt;&lt;br&gt; This property cannot be updated
-        /// after the VM is created. &lt;br&gt;&lt;br&gt; customData is passed
-        /// to the VM to be saved as a file, for more information see [Custom
-        /// Data on Azure
-        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/)
-        /// &lt;br&gt;&lt;br&gt; For using cloud-init for your Linux VM, see
-        /// [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
+        /// length of the binary array is 65535 bytes. **Note: Do not pass any
+        /// secrets or passwords in customData property.** This property cannot
+        /// be updated after the VM is created. The property customData is
+        /// passed to the VM to be saved as a file, for more information see
+        /// [Custom Data on Azure
+        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/).
+        /// If using cloud-init for your Linux VM, see [Using cloud-init to
+        /// customize a Linux VM during
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init).</param>
         public OSProfileProvisioningData(string adminPassword = default(string), string customData = default(string))
         {
             AdminPassword = adminPassword;
@@ -104,17 +103,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies a base-64 encoded string of custom data. The
         /// base-64 encoded string is decoded to a binary array that is saved
         /// as a file on the Virtual Machine. The maximum length of the binary
-        /// array is 65535 bytes. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Note:
-        /// Do not pass any secrets or passwords in customData property**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This property cannot be
-        /// updated after the VM is created.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; customData is passed to the VM
-        /// to be saved as a file, for more information see [Custom Data on
-        /// Azure
-        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For using cloud-init for your
-        /// Linux VM, see [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
+        /// array is 65535 bytes. **Note: Do not pass any secrets or passwords
+        /// in customData property.** This property cannot be updated after the
+        /// VM is created. The property customData is passed to the VM to be
+        /// saved as a file, for more information see [Custom Data on Azure
+        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/).
+        /// If using cloud-init for your Linux VM, see [Using cloud-init to
+        /// customize a Linux VM during
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init).
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }

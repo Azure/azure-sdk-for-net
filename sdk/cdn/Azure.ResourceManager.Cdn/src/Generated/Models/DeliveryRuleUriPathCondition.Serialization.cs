@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleUriPathCondition DeserializeDeliveryRuleUriPathCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriPathMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static AgentPoolUpgradeProfilePropertiesUpgradesItem DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kubernetesVersion = default;
             Optional<bool> isPreview = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPreview = property.Value.GetBoolean();

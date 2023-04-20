@@ -14,6 +14,10 @@ namespace Azure.Security.Attestation
     {
         internal static AttestationResponse DeserializeAttestationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {

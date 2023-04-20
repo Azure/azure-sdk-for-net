@@ -27,6 +27,10 @@ namespace Azure.Communication.Rooms
 
         internal static RoomParticipantInternal DeserializeRoomParticipantInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<RoleType> role = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     role = new RoleType(property.Value.GetString());

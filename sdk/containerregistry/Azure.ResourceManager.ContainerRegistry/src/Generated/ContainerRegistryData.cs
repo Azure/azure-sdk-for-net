@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistry data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistry data model.
+    /// An object that represents a container registry.
+    /// </summary>
     public partial class ContainerRegistryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryData. </summary>

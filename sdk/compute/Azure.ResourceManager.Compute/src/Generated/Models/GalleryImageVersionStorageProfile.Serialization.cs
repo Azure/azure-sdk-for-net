@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GalleryArtifactVersionFullSource> source = default;
             Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();

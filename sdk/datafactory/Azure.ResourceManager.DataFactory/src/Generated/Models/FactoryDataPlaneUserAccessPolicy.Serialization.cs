@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryDataPlaneUserAccessPolicy DeserializeFactoryDataPlaneUserAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> permissions = default;
             Optional<string> accessResourcePath = default;
             Optional<string> profileName = default;

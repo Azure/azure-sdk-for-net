@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServiceManagedCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServiceManagedCluster data model.
+    /// Managed cluster.
+    /// </summary>
     public partial class ContainerServiceManagedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>

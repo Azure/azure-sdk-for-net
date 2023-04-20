@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static WorkerAssignment DeserializeWorkerAssignment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string jobId = default;
             int capacityCost = default;

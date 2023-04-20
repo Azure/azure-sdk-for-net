@@ -12,7 +12,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DataCollectionRuleAssociation data model. </summary>
+    /// <summary>
+    /// A class representing the DataCollectionRuleAssociation data model.
+    /// Definition of generic ARM proxy resource.
+    /// </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>

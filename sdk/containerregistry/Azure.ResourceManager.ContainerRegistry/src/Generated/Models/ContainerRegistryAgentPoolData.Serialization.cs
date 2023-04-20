@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryAgentPoolData DeserializeContainerRegistryAgentPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,7 +114,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -130,7 +132,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             count = property0.Value.GetInt32();
@@ -145,7 +146,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             os = new ContainerRegistryOS(property0.Value.GetString());
@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkSubnetResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -165,7 +164,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());

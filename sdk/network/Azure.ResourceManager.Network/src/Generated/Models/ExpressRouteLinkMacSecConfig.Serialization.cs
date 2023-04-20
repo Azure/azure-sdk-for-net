@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteLinkMacSecConfig DeserializeExpressRouteLinkMacSecConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cknSecretIdentifier = default;
             Optional<string> cakSecretIdentifier = default;
             Optional<ExpressRouteLinkMacSecCipher> cipher = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cipher = new ExpressRouteLinkMacSecCipher(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sciState = new ExpressRouteLinkMacSecSciState(property.Value.GetString());

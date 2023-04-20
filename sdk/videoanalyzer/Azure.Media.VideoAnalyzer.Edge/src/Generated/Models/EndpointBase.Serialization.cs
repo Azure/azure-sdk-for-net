@@ -29,6 +29,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static EndpointBase DeserializeEndpointBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

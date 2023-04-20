@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionRuleDestinations DeserializeDataCollectionRuleDestinations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
             Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value);

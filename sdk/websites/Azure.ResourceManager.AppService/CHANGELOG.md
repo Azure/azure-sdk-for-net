@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
+
 ### Other Changes
 
 ## 1.0.1 (2023-02-20)

@@ -27,9 +27,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbUsername"> Gets or sets the database user name. </param>
         /// <param name="dbPassword"> Gets or sets the database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
-        /// <param name="dbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
+        /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
-        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
+        /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
+        /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
+        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri sslCertificateUri, string sslHostNameInCertificate, SslPreference? sslPreference, string sapSid) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -38,8 +40,10 @@ namespace Azure.ResourceManager.Workloads.Models
             DBUsername = dbUsername;
             DBPassword = dbPassword;
             DBPasswordUri = dbPasswordUri;
-            DBSslCertificateUri = dbSslCertificateUri;
+            SslCertificateUri = sslCertificateUri;
             SslHostNameInCertificate = sslHostNameInCertificate;
+            SslPreference = sslPreference;
+            SapSid = sapSid;
             ProviderType = providerType ?? "SapHana";
         }
 
@@ -58,8 +62,12 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
         public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the DB. </summary>
-        public Uri DBSslCertificateUri { get; set; }
+        public Uri SslCertificateUri { get; set; }
         /// <summary> Gets or sets the hostname(s) in the SSL certificate. </summary>
         public string SslHostNameInCertificate { get; set; }
+        /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
+        public SslPreference? SslPreference { get; set; }
+        /// <summary> Gets or sets the SAP System Identifier. </summary>
+        public string SapSid { get; set; }
     }
 }

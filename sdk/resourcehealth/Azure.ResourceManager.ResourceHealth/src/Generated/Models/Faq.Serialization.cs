@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static Faq DeserializeFaq(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> question = default;
             Optional<string> answer = default;
             Optional<string> localeCode = default;

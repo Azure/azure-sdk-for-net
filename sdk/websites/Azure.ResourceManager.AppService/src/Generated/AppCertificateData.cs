@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AppCertificate data model.
+    /// SSL certificate for an app.
+    /// </summary>
     public partial class AppCertificateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppCertificateData. </summary>

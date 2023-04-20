@@ -26,6 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentFieldType.Dictionary => "object",
             DocumentFieldType.Currency => "currency",
             DocumentFieldType.Address => "address",
+            DocumentFieldType.Boolean => "boolean",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentFieldType value.")
         };
 
@@ -44,6 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "object")) return DocumentFieldType.Dictionary;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "currency")) return DocumentFieldType.Currency;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "address")) return DocumentFieldType.Address;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "boolean")) return DocumentFieldType.Boolean;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentFieldType value.");
         }
     }

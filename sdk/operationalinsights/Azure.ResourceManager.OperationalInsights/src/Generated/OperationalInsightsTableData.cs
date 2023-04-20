@@ -11,7 +11,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsTable data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsTable data model.
+    /// Workspace data table definition.
+    /// </summary>
     public partial class OperationalInsightsTableData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsTableData. </summary>

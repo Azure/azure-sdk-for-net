@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static Mp4Format DeserializeMp4Format(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaOutputFile> array = new List<MediaOutputFile>();

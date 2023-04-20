@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppAuthConfig data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppAuthConfig data model.
+    /// Configuration settings for the Azure ContainerApp Service Authentication / Authorization feature.
+    /// </summary>
     public partial class ContainerAppAuthConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>

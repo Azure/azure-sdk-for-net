@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisIotFhirDestinationData DeserializeHealthcareApisIotFhirDestinationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -112,7 +113,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());

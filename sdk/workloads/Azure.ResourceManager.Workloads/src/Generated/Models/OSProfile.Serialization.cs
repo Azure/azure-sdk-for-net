@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
             Optional<OSConfiguration> osConfiguration = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osConfiguration = OSConfiguration.DeserializeOSConfiguration(property.Value);

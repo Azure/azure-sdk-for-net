@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the NetworkConnection data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkConnection data model.
+    /// Network related settings
+    /// </summary>
     public partial class NetworkConnectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkConnectionData. </summary>

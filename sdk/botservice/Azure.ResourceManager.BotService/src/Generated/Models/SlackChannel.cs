@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Slack channel definition. </summary>
-    public partial class SlackChannel : Channel
+    public partial class SlackChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of SlackChannel. </summary>
         public SlackChannel()

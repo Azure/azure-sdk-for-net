@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointRecallStatus DeserializeServerEndpointRecallStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalRecallErrorsCount = default;
             Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalRecallErrorsCount = property.Value.GetInt64();
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServerEndpointRecallError> array = new List<ServerEndpointRecallError>();

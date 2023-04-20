@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static UsagesProperties DeserializeUsagesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UsagesObject> usages = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usages = UsagesObject.DeserializeUsagesObject(property.Value);
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = ResourceName.DeserializeResourceName(property.Value);
@@ -63,7 +65,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isQuotaApplicable = property.Value.GetBoolean();
@@ -73,7 +74,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryDataset data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryDataset data model.
+    /// Dataset resource type.
+    /// </summary>
     public partial class FactoryDatasetData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryDatasetData. </summary>

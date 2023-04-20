@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlRecommendationActionData DeserializeMySqlRecommendationActionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -105,7 +109,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -129,7 +132,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionId = property0.Value.GetGuid();
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             actionId = property0.Value.GetInt32();
@@ -149,7 +150,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -159,7 +159,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTime = property0.Value.GetDateTimeOffset("O");
@@ -179,7 +178,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

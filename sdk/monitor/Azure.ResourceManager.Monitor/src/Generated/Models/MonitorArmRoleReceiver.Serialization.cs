@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorArmRoleReceiver DeserializeMonitorArmRoleReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string roleId = default;
             Optional<bool> useCommonAlertSchema = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();

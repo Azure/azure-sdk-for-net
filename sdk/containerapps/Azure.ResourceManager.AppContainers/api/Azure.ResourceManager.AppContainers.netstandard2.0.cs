@@ -1730,6 +1730,9 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppRegistryInfo() { }
         public string RegistryPassword { get { throw null; } set { } }
+        public string RegistryServer { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Uri RegistryUri { get { throw null; } set { } }
         public string RegistryUserName { get { throw null; } set { } }
     }

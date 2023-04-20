@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerDataEncryption DeserializePostgreSqlFlexibleServerDataEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> primaryKeyUri = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<PostgreSqlFlexibleServerKeyType> type = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        primaryKeyUri = null;
                         continue;
                     }
                     primaryKeyUri = new Uri(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new PostgreSqlFlexibleServerKeyType(property.Value.GetString());

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    /// <summary> A class representing the DataShareInvitation data model. </summary>
+    /// <summary>
+    /// A class representing the DataShareInvitation data model.
+    /// A Invitation data transfer object.
+    /// </summary>
     public partial class DataShareInvitationData : ResourceData
     {
         /// <summary> Initializes a new instance of DataShareInvitationData. </summary>

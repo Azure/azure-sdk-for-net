@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringFacility DeserializeDirectPeeringFacility(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<DirectPeeringType> directPeeringType = default;
             Optional<int> peeringDBFacilityId = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directPeeringType = new DirectPeeringType(property.Value.GetString());
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peeringDBFacilityId = property.Value.GetInt32();

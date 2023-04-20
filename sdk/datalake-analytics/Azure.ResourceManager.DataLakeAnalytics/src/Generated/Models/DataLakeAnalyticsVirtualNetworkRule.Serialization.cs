@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsVirtualNetworkRule DeserializeDataLakeAnalyticsVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
@@ -71,7 +73,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkRuleState = property0.Value.GetString().ToDataLakeAnalyticsVirtualNetworkRuleState();

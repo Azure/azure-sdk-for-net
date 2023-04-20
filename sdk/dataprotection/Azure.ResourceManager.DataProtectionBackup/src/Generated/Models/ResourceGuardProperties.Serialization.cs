@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
             Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new DataProtectionBackupProvisioningState(property.Value.GetString());
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowAutoApprovals = property.Value.GetBoolean();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceGuardOperationDetails> array = new List<ResourceGuardOperationDetails>();
@@ -77,7 +78,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

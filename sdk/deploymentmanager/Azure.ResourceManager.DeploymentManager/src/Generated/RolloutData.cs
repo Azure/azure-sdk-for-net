@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    /// <summary> A class representing the Rollout data model. </summary>
+    /// <summary>
+    /// A class representing the Rollout data model.
+    /// Defines the rollout.
+    /// </summary>
     public partial class RolloutData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RolloutData. </summary>

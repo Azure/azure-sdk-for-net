@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupVaultResourceMoveDetails DeserializeBackupVaultResourceMoveDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> completionTimeUtc = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     completionTimeUtc = property.Value.GetDateTimeOffset("O");

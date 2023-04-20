@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineProperties DeserializeMachineProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LocationData> locationData = default;
             Optional<AgentConfiguration> agentConfiguration = default;
             Optional<HybridComputeServiceStatuses> serviceStatuses = default;
@@ -105,7 +109,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locationData = LocationData.DeserializeLocationData(property.Value);
@@ -115,7 +118,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property.Value);
@@ -125,7 +127,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property.Value);
@@ -135,7 +136,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudMetadata = CloudMetadata.DeserializeCloudMetadata(property.Value);
@@ -145,7 +145,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osProfile = OSProfile.DeserializeOSProfile(property.Value);
@@ -160,7 +159,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new HybridComputeStatusType(property.Value.GetString());
@@ -170,7 +168,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastStatusChange = property.Value.GetDateTimeOffset("O");
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResponseError> array = new List<ResponseError>();
@@ -275,7 +271,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

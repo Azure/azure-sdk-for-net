@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppRegionInfo DeserializeNetAppRegionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
             Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageToNetworkProximity = new RegionStorageToNetworkProximity(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static TokenInformation DeserializeTokenInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> token = default;
             Optional<long> expiryTimeInUtcTicks = default;
             Optional<string> securityPin = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTimeInUtcTicks = property.Value.GetInt64();

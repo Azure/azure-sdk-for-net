@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
     {
         internal static ControllerConnectionDetails DeserializeControllerConnectionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value);

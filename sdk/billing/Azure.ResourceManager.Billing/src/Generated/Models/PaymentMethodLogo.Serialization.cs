@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mimeType = default;
             Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());

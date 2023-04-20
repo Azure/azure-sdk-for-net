@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationsDiscovery DeserializeMoverOperationsDiscovery(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isDataAction = default;
             Optional<MoverDisplayInfo> display = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDataAction = property.Value.GetBoolean();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value);
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());

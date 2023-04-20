@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsEventGridProperties DeserializeDigitalTwinsEventGridProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string topicEndpoint = default;
             string accessKey1 = default;
             Optional<string> accessKey2 = default;
@@ -153,7 +157,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> description = default;
             Optional<string> appUserModelId = default;
@@ -102,7 +106,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rawIcon = BinaryData.FromString(property.Value.GetRawText());
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rawPng = BinaryData.FromString(property.Value.GetRawText());

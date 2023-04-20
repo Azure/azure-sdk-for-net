@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceProperties DeserializeMoverResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MoverProvisioningState> provisioningState = default;
             ResourceIdentifier sourceId = default;
             Optional<ResourceIdentifier> targetId = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new MoverProvisioningState(property.Value.GetString());
@@ -129,7 +132,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value);
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MoverResourceDependency> array = new List<MoverResourceDependency>();
@@ -154,7 +155,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MoverResourceDependencyOverride> array = new List<MoverResourceDependencyOverride>();
@@ -169,7 +169,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isResolveRequired = property.Value.GetBoolean();

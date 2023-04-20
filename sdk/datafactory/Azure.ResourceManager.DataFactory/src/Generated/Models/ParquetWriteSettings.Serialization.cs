@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ParquetWriteSettings DeserializeParquetWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> maxRowsPerFile = default;
             Optional<BinaryData> fileNamePrefix = default;
             string type = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());

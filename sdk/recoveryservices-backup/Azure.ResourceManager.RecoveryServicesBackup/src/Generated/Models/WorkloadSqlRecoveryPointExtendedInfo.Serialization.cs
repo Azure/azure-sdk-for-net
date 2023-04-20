@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlRecoveryPointExtendedInfo DeserializeWorkloadSqlRecoveryPointExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
             Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataDirectoryTimeInUTC = property.Value.GetDateTimeOffset("O");
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppManagedEnvironmentOutboundSettings DeserializeContainerAppManagedEnvironmentOutboundSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppManagedEnvironmentOutBoundType> outBoundType = default;
             Optional<IPAddress> virtualNetworkApplianceIP = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outBoundType = new ContainerAppManagedEnvironmentOutBoundType(property.Value.GetString());
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualNetworkApplianceIP = IPAddress.Parse(property.Value.GetString());

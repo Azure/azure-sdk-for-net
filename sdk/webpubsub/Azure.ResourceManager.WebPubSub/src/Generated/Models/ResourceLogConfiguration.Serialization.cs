@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static ResourceLogConfiguration DeserializeResourceLogConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceLogCategory> array = new List<ResourceLogCategory>();

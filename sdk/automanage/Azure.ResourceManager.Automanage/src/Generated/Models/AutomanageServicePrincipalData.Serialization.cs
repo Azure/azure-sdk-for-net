@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageServicePrincipalData DeserializeAutomanageServicePrincipalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.Automanage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authorizationSet = property0.Value.GetBoolean();

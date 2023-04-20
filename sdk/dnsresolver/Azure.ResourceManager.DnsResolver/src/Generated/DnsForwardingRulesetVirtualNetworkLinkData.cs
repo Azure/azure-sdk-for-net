@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsForwardingRulesetVirtualNetworkLink data model. </summary>
+    /// <summary>
+    /// A class representing the DnsForwardingRulesetVirtualNetworkLink data model.
+    /// Describes a virtual network link.
+    /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>

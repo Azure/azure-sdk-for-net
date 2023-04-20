@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static ElasticMonitorResourceListResponse DeserializeElasticMonitorResourceListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ElasticMonitorResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ElasticMonitorResourceData> array = new List<ElasticMonitorResourceData>();

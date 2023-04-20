@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             SentenceSentimentValue sentiment = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
@@ -54,7 +58,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceTarget> array = new List<SentenceTarget>();
@@ -69,7 +72,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SentenceAssessment> array = new List<SentenceAssessment>();

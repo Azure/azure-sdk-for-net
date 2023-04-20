@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageConfigurationProfileAssignmentProperties DeserializeAutomanageConfigurationProfileAssignmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> configurationProfile = default;
             Optional<ResourceIdentifier> targetId = default;
             Optional<string> status = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configurationProfile = new ResourceIdentifier(property.Value.GetString());
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetId = new ResourceIdentifier(property.Value.GetString());

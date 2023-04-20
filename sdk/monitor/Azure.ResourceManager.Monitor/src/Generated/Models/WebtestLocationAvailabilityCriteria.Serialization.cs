@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier webTestId = default;
             ResourceIdentifier componentId = default;
             float failedLocationCount = default;

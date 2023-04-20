@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageObjectDetection DeserializeImageObjectDetection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ObjectDetectionPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;
@@ -131,7 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryMetric = new ObjectDetectionPrimaryMetric(property.Value.GetString());
@@ -201,7 +204,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());

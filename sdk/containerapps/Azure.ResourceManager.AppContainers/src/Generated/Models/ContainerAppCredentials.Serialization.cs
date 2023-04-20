@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCredentials DeserializeContainerAppCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<Guid> tenantId = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

@@ -16,6 +16,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyDetectionModel DeserializeAnomalyDetectionModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdatedTime = default;
@@ -41,7 +45,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelInfo = ModelInfo.DeserializeModelInfo(property.Value);

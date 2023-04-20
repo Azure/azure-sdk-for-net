@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningIdAssetReference DeserializeMachineLearningIdAssetReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier assetId = default;
             ReferenceType referenceType = default;
             foreach (var property in element.EnumerateObject())

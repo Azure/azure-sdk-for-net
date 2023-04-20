@@ -12,7 +12,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalRCustomCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the SignalRCustomCertificate data model.
+    /// A custom certificate.
+    /// </summary>
     public partial class SignalRCustomCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>

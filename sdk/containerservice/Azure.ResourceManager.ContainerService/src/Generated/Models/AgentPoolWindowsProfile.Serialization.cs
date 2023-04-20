@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolWindowsProfile DeserializeAgentPoolWindowsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disableOutboundNat = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableOutboundNat = property.Value.GetBoolean();

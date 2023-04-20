@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterClientCertificateThumbprint DeserializeClusterClientCertificateThumbprint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             BinaryData certificateThumbprint = default;
             foreach (var property in element.EnumerateObject())

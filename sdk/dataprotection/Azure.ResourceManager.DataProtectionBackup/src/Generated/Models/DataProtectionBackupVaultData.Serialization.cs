@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupVaultData DeserializeDataProtectionBackupVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupVaultProperties properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -124,7 +125,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

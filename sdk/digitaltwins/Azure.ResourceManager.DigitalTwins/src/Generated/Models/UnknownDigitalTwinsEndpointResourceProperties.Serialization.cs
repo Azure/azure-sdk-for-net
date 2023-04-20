@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = "Unknown";
             Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
@@ -102,7 +106,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());

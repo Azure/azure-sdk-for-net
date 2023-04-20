@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PrivateAccess data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateAccess data model.
+    /// Description of the parameters of Private Access for a Web Site.
+    /// </summary>
     public partial class PrivateAccessData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateAccessData. </summary>

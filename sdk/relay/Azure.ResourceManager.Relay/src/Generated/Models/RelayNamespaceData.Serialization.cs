@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayNamespaceData DeserializeRelayNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RelaySku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -81,7 +85,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = RelaySku.DeserializeRelaySku(property.Value);
@@ -91,7 +94,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -126,7 +128,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -155,7 +156,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -165,7 +165,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
@@ -185,7 +184,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
@@ -200,7 +198,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new RelayPublicNetworkAccess(property0.Value.GetString());

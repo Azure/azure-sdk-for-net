@@ -47,6 +47,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentDocumentResult DeserializeSentimentDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TextSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             IList<SentenceSentimentInternal> sentences = default;
@@ -94,7 +98,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static PrimaryRegionProperties DeserializePrimaryRegionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> operatorAddresses = default;
             Optional<IList<string>> esrpAddresses = default;
             Optional<IList<string>> allowedSignalingSourceAddressPrefixes = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -108,7 +110,6 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

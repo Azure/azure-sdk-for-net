@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static ShareableSearchServicePrivateLinkResourceType DeserializeShareableSearchServicePrivateLinkResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ShareableSearchServicePrivateLinkResourceProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value);

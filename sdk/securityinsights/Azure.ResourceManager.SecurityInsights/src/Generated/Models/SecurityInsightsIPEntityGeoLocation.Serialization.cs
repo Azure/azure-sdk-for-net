@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIPEntityGeoLocation DeserializeSecurityInsightsIPEntityGeoLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> asn = default;
             Optional<string> city = default;
             Optional<string> countryCode = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt32();
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     latitude = property.Value.GetDouble();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     longitude = property.Value.GetDouble();

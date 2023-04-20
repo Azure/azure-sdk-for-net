@@ -30,6 +30,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KnowledgeStore DeserializeKnowledgeStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
             foreach (var property in element.EnumerateObject())

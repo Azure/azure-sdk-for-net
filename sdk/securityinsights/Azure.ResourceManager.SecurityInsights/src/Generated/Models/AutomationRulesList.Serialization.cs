@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static AutomationRulesList DeserializeAutomationRulesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityInsightsAutomationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityInsightsAutomationRuleData> array = new List<SecurityInsightsAutomationRuleData>();

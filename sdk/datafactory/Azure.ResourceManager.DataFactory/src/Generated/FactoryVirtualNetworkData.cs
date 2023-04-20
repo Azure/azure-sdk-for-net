@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryVirtualNetwork data model.
+    /// Managed Virtual Network resource type.
+    /// </summary>
     public partial class FactoryVirtualNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryVirtualNetworkData. </summary>

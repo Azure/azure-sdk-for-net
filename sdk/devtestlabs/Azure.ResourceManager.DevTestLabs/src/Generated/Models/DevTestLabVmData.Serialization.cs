@@ -170,6 +170,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabVmData DeserializeDevTestLabVmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -217,7 +221,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -252,7 +255,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -296,7 +298,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -306,7 +307,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             computeId = new ResourceIdentifier(property0.Value.GetString());
@@ -346,7 +346,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAuthenticationWithSshKey = property0.Value.GetBoolean();
@@ -366,7 +365,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             labVirtualNetworkId = new ResourceIdentifier(property0.Value.GetString());
@@ -376,7 +374,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disallowPublicIPAddress = property0.Value.GetBoolean();
@@ -386,7 +383,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
@@ -401,7 +397,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             artifactDeploymentStatus = DevTestLabArtifactDeploymentStatus.DeserializeDevTestLabArtifactDeploymentStatus(property0.Value);
@@ -411,7 +406,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
@@ -426,7 +420,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             computeVm = ComputeVmProperties.DeserializeComputeVmProperties(property0.Value);
@@ -436,7 +429,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value);
@@ -446,7 +438,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value);
@@ -456,7 +447,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
@@ -466,7 +456,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowClaim = property0.Value.GetBoolean();
@@ -481,7 +470,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
@@ -491,7 +479,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             environmentId = new ResourceIdentifier(property0.Value.GetString());
@@ -501,7 +488,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DevTestLabDataDiskProperties> array = new List<DevTestLabDataDiskProperties>();
@@ -516,7 +502,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DevTestLabScheduleCreationParameter> array = new List<DevTestLabScheduleCreationParameter>();
@@ -541,7 +526,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uniqueIdentifier = property0.Value.GetGuid();

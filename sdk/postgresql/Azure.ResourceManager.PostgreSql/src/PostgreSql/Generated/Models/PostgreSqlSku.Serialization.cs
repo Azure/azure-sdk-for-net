@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlSku DeserializePostgreSqlSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<PostgreSqlSkuTier> tier = default;
             Optional<int> capacity = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new PostgreSqlSkuTier(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

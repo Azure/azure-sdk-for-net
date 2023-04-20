@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubMpnsCredential DeserializeNotificationHubMpnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mpnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<BinaryData> thumbprint = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             thumbprint = BinaryData.FromString(property0.Value.GetRawText());

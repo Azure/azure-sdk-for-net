@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalSpacecraftLink DeserializeOrbitalSpacecraftLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizedGroundStation> array = new List<AuthorizedGroundStation>();

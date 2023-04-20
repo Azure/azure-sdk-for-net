@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupDailySchedule DeserializeBackupDailySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();

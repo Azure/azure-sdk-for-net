@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static DeviceProvisioningServiceData DeserializeDeviceProvisioningServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             DeviceProvisioningServiceProperties properties = default;
             DeviceProvisioningServicesSkuInfo sku = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -116,7 +118,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

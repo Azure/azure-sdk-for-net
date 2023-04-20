@@ -57,6 +57,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AnomalyAlertConfiguration DeserializeAnomalyAlertConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> anomalyAlertingConfigurationId = default;
             string name = default;
             Optional<string> description = default;
@@ -85,7 +89,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossMetricsOperator = new MetricAlertConfigurationsOperator(property.Value.GetString());
@@ -95,7 +98,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

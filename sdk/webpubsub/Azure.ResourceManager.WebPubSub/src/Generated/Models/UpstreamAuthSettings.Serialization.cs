@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static UpstreamAuthSettings DeserializeUpstreamAuthSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UpstreamAuthType> type = default;
             Optional<ManagedIdentitySettings> managedIdentity = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new UpstreamAuthType(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value);

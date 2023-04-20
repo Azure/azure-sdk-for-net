@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static EventGridSubscriptionData DeserializeEventGridSubscriptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -113,7 +117,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -137,7 +140,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new EventSubscriptionProvisioningState(property0.Value.GetString());
@@ -147,7 +149,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value);
@@ -157,7 +158,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value);
@@ -167,7 +167,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value);
@@ -177,7 +176,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -192,7 +190,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -202,7 +199,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventDeliverySchema = new EventDeliverySchema(property0.Value.GetString());
@@ -212,7 +208,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value);
@@ -222,7 +217,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value);
@@ -232,7 +226,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value);

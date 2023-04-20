@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceCosmosDbConfiguration DeserializeHealthcareApisServiceCosmosDbConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> offerThroughput = default;
             Optional<Uri> keyVaultKeyUri = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerThroughput = property.Value.GetInt32();
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultKeyUri = null;
                         continue;
                     }
                     keyVaultKeyUri = new Uri(property.Value.GetString());

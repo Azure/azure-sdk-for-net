@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteCloneability DeserializeSiteCloneability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloneAbilityResult> result = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = property.Value.GetString().ToCloneAbilityResult();
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
@@ -65,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();

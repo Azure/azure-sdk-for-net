@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskSecurityProfile DeserializeDiskSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskSecurityType> securityType = default;
             Optional<ResourceIdentifier> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securityType = new DiskSecurityType(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secureVmDiskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());

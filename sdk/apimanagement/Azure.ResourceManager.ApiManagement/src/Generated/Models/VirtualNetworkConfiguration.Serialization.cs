@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static VirtualNetworkConfiguration DeserializeVirtualNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vnetid = default;
             Optional<string> subnetname = default;
             Optional<ResourceIdentifier> subnetResourceId = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetid = property.Value.GetGuid();
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetResourceId = new ResourceIdentifier(property.Value.GetString());

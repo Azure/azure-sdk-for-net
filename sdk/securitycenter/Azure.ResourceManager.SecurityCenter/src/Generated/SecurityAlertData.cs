@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAlert data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAlert data model.
+    /// Security alert
+    /// </summary>
     public partial class SecurityAlertData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityAlertData. </summary>

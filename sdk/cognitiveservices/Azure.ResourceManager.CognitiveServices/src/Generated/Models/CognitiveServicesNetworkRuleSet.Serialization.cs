@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesNetworkRuleSet DeserializeCognitiveServicesNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
             Optional<IList<CognitiveServicesIPRule>> ipRules = default;
             Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new CognitiveServicesNetworkRuleAction(property.Value.GetString());
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesVirtualNetworkRule> array = new List<CognitiveServicesVirtualNetworkRule>();

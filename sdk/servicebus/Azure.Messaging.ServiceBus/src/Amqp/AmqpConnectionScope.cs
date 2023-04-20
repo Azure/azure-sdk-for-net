@@ -232,7 +232,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                async (timeout) =>
                {
                    var stopWatch = ValueStopwatch.StartNew();
-                   AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                   AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                    AmqpSession session = await CreateAndOpenSessionAsync(
                        connection,
                        timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 async (timeout) =>
                 {
                     var stopWatch = ValueStopwatch.StartNew();
-                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                     AmqpSession session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                     return await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 },
@@ -263,7 +263,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                controller = new Controller(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
+                controller = new Controller(amqpSession, timeout);
                 await controller.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -655,13 +655,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     endpoint: endpoint,
                     audience: audience,
                     requiredClaims: authClaims,
-                    timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    timeout: timeout,
                     identifier: identifier).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
 
-                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -829,7 +829,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     endpoint: destinationEndpoint,
                     audience: audience,
                     requiredClaims: authClaims,
-                    timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    timeout: timeout,
                     identifier: identifier)
                     .ConfigureAwait(false);
 
@@ -837,7 +837,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.

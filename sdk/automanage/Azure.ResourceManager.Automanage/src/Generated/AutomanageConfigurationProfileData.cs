@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the AutomanageConfigurationProfile data model. </summary>
+    /// <summary>
+    /// A class representing the AutomanageConfigurationProfile data model.
+    /// Definition of the configuration profile.
+    /// </summary>
     public partial class AutomanageConfigurationProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>

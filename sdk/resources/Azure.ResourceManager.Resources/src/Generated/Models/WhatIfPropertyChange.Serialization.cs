@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             WhatIfPropertyChangeType propertyChangeType = default;
             Optional<BinaryData> before = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     before = BinaryData.FromString(property.Value.GetRawText());
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     after = BinaryData.FromString(property.Value.GetRawText());
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();

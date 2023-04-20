@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static SubRequest DeserializeSubRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceName> name = default;
             Optional<string> resourceType = default;
             Optional<string> unit = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = ResourceName.DeserializeResourceName(property.Value);
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new QuotaRequestState(property.Value.GetString());
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = LimitJsonObject.DeserializeLimitJsonObject(property.Value);

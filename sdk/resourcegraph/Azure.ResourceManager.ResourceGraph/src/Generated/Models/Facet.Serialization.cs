@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static Facet DeserializeFacet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

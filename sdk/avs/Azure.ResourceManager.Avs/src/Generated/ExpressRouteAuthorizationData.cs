@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the ExpressRouteAuthorization data model. </summary>
+    /// <summary>
+    /// A class representing the ExpressRouteAuthorization data model.
+    /// ExpressRoute Circuit Authorization
+    /// </summary>
     public partial class ExpressRouteAuthorizationData : ResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteAuthorizationData. </summary>

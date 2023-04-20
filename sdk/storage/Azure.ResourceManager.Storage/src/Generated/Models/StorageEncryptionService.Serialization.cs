@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageEncryptionService DeserializeStorageEncryptionService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastEnabledTime = default;
             Optional<StorageEncryptionKeyType> keyType = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyType = new StorageEncryptionKeyType(property.Value.GetString());

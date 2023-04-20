@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static HttpRequestHandlerMapping DeserializeHttpRequestHandlerMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> extension = default;
             Optional<string> scriptProcessor = default;
             Optional<string> arguments = default;

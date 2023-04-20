@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmSku = default;
             SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())

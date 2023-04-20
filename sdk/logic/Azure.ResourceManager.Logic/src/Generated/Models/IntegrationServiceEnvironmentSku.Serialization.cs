@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentSku DeserializeIntegrationServiceEnvironmentSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentSkuName> name = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new IntegrationServiceEnvironmentSkuName(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

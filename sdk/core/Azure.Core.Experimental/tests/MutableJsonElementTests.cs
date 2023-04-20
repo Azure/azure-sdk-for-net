@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -16,15 +14,14 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = """
                 {
-                  "Bar" : "Hi!"
+                  "Bar" : "Hi!",
+                  "Foo" : "\"+"
                 }
                 """;
 
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement element = MutableJsonDocument.Parse(json).RootElement;
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(json),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString()));
+            ValidateToString(json, element);
         }
 
         [Test]
@@ -39,13 +36,13 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("Bar").Set(null);
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            string expected = """
                 {
                   "Bar" : null
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString()));
+                """;
+
+            ValidateToString(expected, mdoc.RootElement);
         }
 
         [Test]
@@ -57,17 +54,17 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            var jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            jd.RootElement.GetProperty("Bar").Set("hello");
+            mdoc.RootElement.GetProperty("Bar").Set("hello");
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            string expected = """
                 {
                   "Bar" : "hello"
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jd.RootElement.ToString()));
+                """;
+
+            ValidateToString(expected, mdoc.RootElement);
         }
 
         [Test]
@@ -79,21 +76,25 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            var jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            jd.RootElement.GetProperty("Bar").Set("hello");
+            mdoc.RootElement.GetProperty("Bar").Set("hello");
 
-            JsonElement barElement = jd.RootElement.GetProperty("Bar").GetJsonElement();
+            JsonElement barElement = mdoc.RootElement.GetProperty("Bar").GetJsonElement();
             Assert.AreEqual("hello", barElement.GetString());
 
-            JsonElement rootElement = jd.RootElement.GetJsonElement();
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            JsonElement rootElement = mdoc.RootElement.GetJsonElement();
+
+            string expected = """
                 {
                   "Bar" : "hello"
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString()));
+                """;
+
+            Assert.AreEqual(
+				MutableJsonDocumentTests.RemoveWhiteSpace(expected),
+				MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString())
+			);
         }
 
         [Test]
@@ -148,6 +149,8 @@ namespace Azure.Core.Experimental.Tests
             {
                 Assert.AreEqual(expected++, el.GetInt32());
             }
+
+            Assert.AreEqual(4, expected);
         }
 
         [Test]
@@ -169,6 +172,128 @@ namespace Azure.Core.Experimental.Tests
             {
                 Assert.AreEqual(expected++, el.GetInt32());
             }
+
+            Assert.AreEqual(5, expected);
         }
+
+        [Test]
+        public void EnumeratedArrayValueCanBeChanged()
+        {
+            string json = "[0, 1, 2, 3]";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ArrayEnumerator enumerator = mdoc.RootElement.EnumerateArray();
+
+            MutableJsonElement value = default;
+            foreach (MutableJsonElement item in enumerator)
+            {
+                value = item;
+            }
+
+            value.Set(5);
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(3).GetInt32());
+        }
+
+        [Test]
+        public void CanEnumerateObject()
+        {
+            string json = """
+                {
+                  "Zero" : 0,
+                  "One" : 1,
+                  "Two" : 2,
+                  "Three" : 3
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int expected = 0;
+            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.AreEqual(expected, property.Value.GetInt32());
+                expected++;
+            }
+
+            Assert.AreEqual(4, expected);
+        }
+
+        [Test]
+        public void CanEnumerateObjectWithChanges()
+        {
+            string json = """
+                {
+                  "Zero" : 0,
+                  "One" : 1,
+                  "Two" : 2,
+                  "Three" : 3
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+
+            for (int i = 0; i < 4; i++)
+            {
+                mdoc.RootElement.GetProperty(expectedNames[i]).Set(i + 1);
+            }
+
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int index = 0;
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[index], property.Name);
+                Assert.AreEqual(index + 1, property.Value.GetInt32());
+                index++;
+            }
+
+            Assert.AreEqual(4, index);
+        }
+
+        [Test]
+        public void EnumeratedPropertyValueCanBeChanged()
+        {
+            string json = """
+                {
+                  "Foo" : 0,
+                  "Bar" : 1
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int index = 0;
+            MutableJsonElement value = default;
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                value = property.Value;
+                index++;
+            }
+
+            value.Set(5);
+
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
+        }
+
+        #region Helpers
+
+        internal static void ValidateToString(string json, MutableJsonElement element)
+        {
+            Assert.AreEqual(
+                MutableJsonDocumentTests.RemoveWhiteSpace(json),
+                MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()));
+        }
+
+        #endregion
     }
 }

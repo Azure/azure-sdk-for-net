@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterGpuCapacity DeserializeEdgeClusterGpuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gpuType = default;
             Optional<int> gpuUsedUnitsCount = default;
             Optional<int> gpuFreeUnitsCount = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gpuUsedUnitsCount = property.Value.GetInt32();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gpuFreeUnitsCount = property.Value.GetInt32();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gpuReservedForFailoverUnitsCount = property.Value.GetInt32();
@@ -91,7 +92,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gpuTotalUnitsCount = property.Value.GetInt32();

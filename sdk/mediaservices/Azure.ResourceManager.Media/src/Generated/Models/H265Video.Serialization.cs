@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265Video DeserializeH265Video(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sceneChangeDetection = default;
             Optional<H265Complexity> complexity = default;
             Optional<IList<H265Layer>> layers = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sceneChangeDetection = property.Value.GetBoolean();
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complexity = new H265Complexity(property.Value.GetString());
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<H265Layer> array = new List<H265Layer>();
@@ -113,7 +114,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyFrameInterval = property.Value.GetTimeSpan("P");
@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stretchMode = new InputVideoStretchMode(property.Value.GetString());
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     syncMode = new VideoSyncMode(property.Value.GetString());

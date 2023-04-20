@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the CdnCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the CdnCustomDomain data model.
+    /// Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
+    /// </summary>
     public partial class CdnCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnCustomDomainData. </summary>

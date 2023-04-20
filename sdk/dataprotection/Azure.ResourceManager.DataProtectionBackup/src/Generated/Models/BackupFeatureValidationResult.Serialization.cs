@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupFeatureValidationResult DeserializeBackupFeatureValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupSupportedFeatureType> featureType = default;
             Optional<IReadOnlyList<BackupSupportedFeature>> features = default;
             string objectType = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featureType = new BackupSupportedFeatureType(property.Value.GetString());
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BackupSupportedFeature> array = new List<BackupSupportedFeature>();

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ProtocolCustomSettings DeserializeProtocolCustomSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DdosCustomPolicyProtocol> protocol = default;
             Optional<string> triggerRateOverride = default;
             Optional<string> sourceRateOverride = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new DdosCustomPolicyProtocol(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggerSensitivityOverride = new DdosCustomPolicyTriggerSensitivityOverride(property.Value.GetString());

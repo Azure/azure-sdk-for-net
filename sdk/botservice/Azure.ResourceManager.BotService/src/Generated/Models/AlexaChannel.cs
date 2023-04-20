@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Alexa channel definition. </summary>
-    public partial class AlexaChannel : Channel
+    public partial class AlexaChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of AlexaChannel. </summary>
         public AlexaChannel()

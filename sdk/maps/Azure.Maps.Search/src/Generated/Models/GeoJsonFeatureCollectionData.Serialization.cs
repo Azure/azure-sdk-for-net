@@ -28,6 +28,10 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonFeatureCollectionData DeserializeGeoJsonFeatureCollectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<GeoJsonFeature> features = default;
             foreach (var property in element.EnumerateObject())
             {

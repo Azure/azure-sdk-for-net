@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataCollectionRuleMetadata DeserializeDataCollectionRuleMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisionedBy = default;
             foreach (var property in element.EnumerateObject())
             {

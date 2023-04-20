@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureFilter DeserializePacketCaptureFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PcProtocol> protocol = default;
             Optional<string> localIPAddress = default;
             Optional<string> remoteIPAddress = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new PcProtocol(property.Value.GetString());

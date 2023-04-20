@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> forceRestart = default;
             TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forceRestart = property.Value.GetBoolean();
@@ -105,7 +108,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static AvailabilityStatusProperties DeserializeAvailabilityStatusProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvailabilityStateValue> availabilityState = default;
             Optional<string> title = default;
             Optional<string> summary = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availabilityState = new AvailabilityStateValue(property.Value.GetString());
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rootCauseAttributionTime = property.Value.GetDateTimeOffset("O");
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolutionETA = property.Value.GetDateTimeOffset("O");
@@ -121,7 +122,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     occuredTime = property.Value.GetDateTimeOffset("O");
@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonChronicity = new ReasonChronicityType(property.Value.GetString());
@@ -141,7 +140,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reportedTime = property.Value.GetDateTimeOffset("O");
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recentlyResolved = AvailabilityStatusPropertiesRecentlyResolved.DeserializeAvailabilityStatusPropertiesRecentlyResolved(property.Value);
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecommendedAction> array = new List<RecommendedAction>();
@@ -176,7 +172,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceImpactingEvent> array = new List<ServiceImpactingEvent>();

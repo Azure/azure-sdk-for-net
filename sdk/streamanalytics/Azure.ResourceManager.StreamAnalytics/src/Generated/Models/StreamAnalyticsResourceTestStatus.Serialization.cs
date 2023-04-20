@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsResourceTestStatus DeserializeStreamAnalyticsResourceTestStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> code = default;
             Optional<string> message = default;

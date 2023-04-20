@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusNamespace data model.
+    /// Description of a namespace resource.
+    /// </summary>
     public partial class ServiceBusNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>

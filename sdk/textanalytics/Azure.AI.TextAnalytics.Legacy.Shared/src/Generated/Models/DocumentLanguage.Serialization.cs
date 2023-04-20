@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             DetectedLanguage detectedLanguage = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
@@ -45,7 +49,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);

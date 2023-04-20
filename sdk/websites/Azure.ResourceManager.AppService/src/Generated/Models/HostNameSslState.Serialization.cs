@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static HostNameSslState DeserializeHostNameSslState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<HostNameBindingSslState> sslState = default;
             Optional<string> virtualIP = default;
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sslState = property.Value.GetString().ToHostNameBindingSslState();
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
@@ -114,7 +116,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostType = property.Value.GetString().ToAppServiceHostType();

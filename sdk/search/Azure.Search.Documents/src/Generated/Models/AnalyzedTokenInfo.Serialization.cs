@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static AnalyzedTokenInfo DeserializeAnalyzedTokenInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string token = default;
             int startOffset = default;
             int endOffset = default;

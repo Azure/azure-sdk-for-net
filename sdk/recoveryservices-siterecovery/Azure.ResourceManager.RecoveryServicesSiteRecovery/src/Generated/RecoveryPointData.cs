@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the RecoveryPoint data model. </summary>
+    /// <summary>
+    /// A class representing the RecoveryPoint data model.
+    /// Recovery point.
+    /// </summary>
     public partial class RecoveryPointData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoveryPointData. </summary>

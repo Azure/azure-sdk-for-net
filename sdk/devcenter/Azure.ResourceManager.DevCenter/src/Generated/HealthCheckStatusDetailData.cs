@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the HealthCheckStatusDetail data model. </summary>
+    /// <summary>
+    /// A class representing the HealthCheckStatusDetail data model.
+    /// Health Check details.
+    /// </summary>
     public partial class HealthCheckStatusDetailData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>

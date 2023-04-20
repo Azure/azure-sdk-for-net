@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> path = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = BinaryData.FromString(property.Value.GetRawText());

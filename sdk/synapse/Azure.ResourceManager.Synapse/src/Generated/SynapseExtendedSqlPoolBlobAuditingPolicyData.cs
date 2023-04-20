@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseExtendedSqlPoolBlobAuditingPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseExtendedSqlPoolBlobAuditingPolicy data model.
+    /// An extended Sql pool blob auditing policy.
+    /// </summary>
     public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>

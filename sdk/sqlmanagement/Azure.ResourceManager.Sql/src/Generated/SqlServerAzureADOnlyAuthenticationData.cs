@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerAzureADOnlyAuthentication data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerAzureADOnlyAuthentication data model.
+    /// Azure Active Directory only authentication.
+    /// </summary>
     public partial class SqlServerAzureADOnlyAuthenticationData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerAzureADOnlyAuthenticationData. </summary>

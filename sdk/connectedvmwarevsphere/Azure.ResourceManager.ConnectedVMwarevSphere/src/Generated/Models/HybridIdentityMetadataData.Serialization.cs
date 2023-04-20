@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());

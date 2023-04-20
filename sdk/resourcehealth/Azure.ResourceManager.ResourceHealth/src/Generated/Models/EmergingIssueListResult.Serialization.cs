@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EmergingIssueListResult DeserializeEmergingIssueListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EmergingIssuesGetResultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EmergingIssuesGetResultData> array = new List<EmergingIssuesGetResultData>();

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
             Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
             Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkPlugin = new ContainerServiceNetworkPlugin(property.Value.GetString());
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkPluginMode = new ContainerServiceNetworkPluginMode(property.Value.GetString());
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkPolicy = new ContainerServiceNetworkPolicy(property.Value.GetString());
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkMode = new ContainerServiceNetworkMode(property.Value.GetString());
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());

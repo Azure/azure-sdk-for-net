@@ -13,7 +13,10 @@ using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
 {
-    /// <summary> A class representing the CommunicationsGateway data model. </summary>
+    /// <summary>
+    /// A class representing the CommunicationsGateway data model.
+    /// A CommunicationsGateway resource
+    /// </summary>
     public partial class CommunicationsGatewayData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CommunicationsGatewayData. </summary>

@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataJobData DeserializeHybridDataJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HybridDataJobStatus status = default;
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -109,7 +113,6 @@ namespace Azure.ResourceManager.HybridData
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -119,7 +122,6 @@ namespace Azure.ResourceManager.HybridData
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = HybridDataJobTopLevelError.DeserializeHybridDataJobTopLevelError(property.Value);
@@ -144,7 +146,6 @@ namespace Azure.ResourceManager.HybridData
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -168,7 +169,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bytesProcessed = property0.Value.GetInt64();
@@ -178,7 +178,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             itemsProcessed = property0.Value.GetInt64();
@@ -188,7 +187,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalBytesToProcess = property0.Value.GetInt64();
@@ -198,7 +196,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalItemsToProcess = property0.Value.GetInt64();
@@ -208,7 +205,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             details = HybridDataJobDetails.DeserializeHybridDataJobDetails(property0.Value);

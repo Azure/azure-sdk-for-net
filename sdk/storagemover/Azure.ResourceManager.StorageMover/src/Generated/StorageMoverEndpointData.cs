@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the StorageMoverEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the StorageMoverEndpoint data model.
+    /// The Endpoint resource, which contains information about file sources and targets.
+    /// </summary>
     public partial class StorageMoverEndpointData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static ImpactedRegion DeserializeImpactedRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

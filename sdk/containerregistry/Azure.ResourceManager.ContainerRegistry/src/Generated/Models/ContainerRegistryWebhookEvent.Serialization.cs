@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEvent DeserializeContainerRegistryWebhookEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
             Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
             Optional<Guid> id = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value);
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value);
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetGuid();

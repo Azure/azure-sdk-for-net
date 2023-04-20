@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiExtract DeserializeKpiExtract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string extractName = default;
             string expression = default;
             foreach (var property in element.EnumerateObject())

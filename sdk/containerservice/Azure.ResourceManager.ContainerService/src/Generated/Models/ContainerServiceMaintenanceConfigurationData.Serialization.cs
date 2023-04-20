@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ContainerServiceMaintenanceConfigurationData DeserializeContainerServiceMaintenanceConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
@@ -128,7 +129,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value);

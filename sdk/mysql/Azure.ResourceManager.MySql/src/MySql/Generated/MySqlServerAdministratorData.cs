@@ -12,7 +12,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlServerAdministrator data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlServerAdministrator data model.
+    /// Represents a and external administrator to be created.
+    /// </summary>
     public partial class MySqlServerAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>

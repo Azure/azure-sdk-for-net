@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="sentenceCount"></param>
         /// <param name="sortBy"> The sorting criteria to use for the results of Extractive Summarization. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, ExtractiveSummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, SummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
             SentenceCount = sentenceCount;
             SortBy = sortBy;
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Gets or sets the sentence count. </summary>
         public int? SentenceCount { get; set; }
         /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
-        public ExtractiveSummarySentencesOrder? SortBy { get; set; }
+        public SummarySentencesOrder? SortBy { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

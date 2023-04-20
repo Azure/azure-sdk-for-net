@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceSshPublicKey DeserializeContainerServiceSshPublicKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyData = default;
             foreach (var property in element.EnumerateObject())
             {

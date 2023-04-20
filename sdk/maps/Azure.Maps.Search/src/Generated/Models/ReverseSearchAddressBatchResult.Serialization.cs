@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchAddressBatchResult DeserializeReverseSearchAddressBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReverseSearchAddressBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReverseSearchAddressBatchItem> array = new List<ReverseSearchAddressBatchItem>();
@@ -38,7 +41,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the AutomanageBestPractice data model. </summary>
+    /// <summary>
+    /// A class representing the AutomanageBestPractice data model.
+    /// Definition of the Automanage best practice.
+    /// </summary>
     public partial class AutomanageBestPracticeData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>

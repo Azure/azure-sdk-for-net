@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SharedPrivateLinkResourceProperties DeserializeSharedPrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> privateLink = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> groupId = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateLink = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToSharedPrivateLinkResourceStatus();

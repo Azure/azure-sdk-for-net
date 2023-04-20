@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyRule DeserializeRoleManagementPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("ruleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

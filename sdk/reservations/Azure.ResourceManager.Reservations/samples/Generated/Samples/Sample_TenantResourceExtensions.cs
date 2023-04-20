@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CalculateReservationExchange_CalculateExchange()
         {
-            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-03-01/examples/CalculateExchange.json
+            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/CalculateExchange.json
             // this example is just showing the usage of "CalculateExchange_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,6 +60,27 @@ IsRenewEnabled = false,
 ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
 }
 },
+                    SavingsPlansToPurchase =
+{
+new SavingsPlanPurchase()
+{
+SkuName = "Compute_Savings_Plan",
+DisplayName = "ComputeSavingsPlan",
+BillingScopeId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000"),
+Term = SavingsPlanTerm.P1Y,
+AppliedScopeType = AppliedScopeType.Single,
+AppliedScopeProperties = new AppliedScopeProperties()
+{
+ResourceGroupId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/testrg"),
+},
+Commitment = new BenefitsCommitment()
+{
+Grain = BenefitsCommitmentGrain.Hourly,
+CurrencyCode = "USD",
+Amount = 15.23,
+},
+}
+},
                     ReservationsToExchange =
 {
 new ReservationToReturn()
@@ -81,7 +102,7 @@ Quantity = 1,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exchange_Exchange()
         {
-            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-03-01/examples/Exchange.json
+            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/Exchange.json
             // this example is just showing the usage of "Exchange_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

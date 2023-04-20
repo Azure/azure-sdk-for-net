@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlPrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class PostgreSqlPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionData. </summary>

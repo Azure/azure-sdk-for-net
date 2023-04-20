@@ -41,6 +41,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SqlSourceParameter DeserializeSqlSourceParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string query = default;
             foreach (var property in element.EnumerateObject())

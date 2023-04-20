@@ -11,7 +11,10 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A class representing the AvailabilityStatus data model. </summary>
+    /// <summary>
+    /// A class representing the AvailabilityStatus data model.
+    /// availabilityStatus of a resource.
+    /// </summary>
     public partial class AvailabilityStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of AvailabilityStatusData. </summary>

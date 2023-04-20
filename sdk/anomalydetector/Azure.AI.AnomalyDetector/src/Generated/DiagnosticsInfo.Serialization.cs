@@ -37,6 +37,10 @@ namespace Azure.AI.AnomalyDetector
 
         internal static DiagnosticsInfo DeserializeDiagnosticsInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ModelState> modelState = default;
             Optional<IList<VariableState>> variableStates = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelState = ModelState.DeserializeModelState(property.Value);
@@ -55,7 +58,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();

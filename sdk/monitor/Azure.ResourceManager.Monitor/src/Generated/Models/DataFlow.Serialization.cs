@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataFlow DeserializeDataFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataFlowStream>> streams = default;
             Optional<IList<string>> destinations = default;
             Optional<string> transformKql = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataFlowStream> array = new List<DataFlowStream>();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

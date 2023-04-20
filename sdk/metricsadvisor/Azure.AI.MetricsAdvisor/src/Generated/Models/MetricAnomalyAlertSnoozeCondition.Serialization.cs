@@ -26,6 +26,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricAnomalyAlertSnoozeCondition DeserializeMetricAnomalyAlertSnoozeCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int autoSnooze = default;
             SnoozeScope snoozeScope = default;
             bool onlyForSuccessive = default;

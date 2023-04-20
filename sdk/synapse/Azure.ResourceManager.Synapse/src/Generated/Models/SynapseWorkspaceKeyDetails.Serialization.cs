@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseWorkspaceKeyDetails DeserializeSynapseWorkspaceKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUrl = null;
                         continue;
                     }
                     keyVaultUrl = new Uri(property.Value.GetString());

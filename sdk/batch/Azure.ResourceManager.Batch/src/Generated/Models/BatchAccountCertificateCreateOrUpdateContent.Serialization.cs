@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountCertificateCreateOrUpdateContent DeserializeBatchAccountCertificateCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -100,7 +103,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -124,7 +126,6 @@ namespace Azure.ResourceManager.Batch.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             thumbprint = BinaryData.FromString(property0.Value.GetRawText());
@@ -134,7 +135,6 @@ namespace Azure.ResourceManager.Batch.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             format = property0.Value.GetString().ToBatchAccountCertificateFormat();
@@ -144,7 +144,6 @@ namespace Azure.ResourceManager.Batch.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             data = BinaryData.FromString(property0.Value.GetRawText());

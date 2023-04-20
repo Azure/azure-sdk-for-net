@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppRevision data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppRevision data model.
+    /// Container App Revision.
+    /// </summary>
     public partial class ContainerAppRevisionData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>

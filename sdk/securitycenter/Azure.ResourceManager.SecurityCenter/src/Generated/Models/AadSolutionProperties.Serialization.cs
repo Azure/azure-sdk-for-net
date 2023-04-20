@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadSolutionProperties DeserializeAadSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadConnectivityStateType> connectivityState = default;
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectivityState = new AadConnectivityStateType(property.Value.GetString());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspace = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

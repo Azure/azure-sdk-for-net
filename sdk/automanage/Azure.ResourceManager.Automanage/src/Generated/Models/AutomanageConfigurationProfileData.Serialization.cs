@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Automanage
 
         internal static AutomanageConfigurationProfileData DeserializeAutomanageConfigurationProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConfigurationProfileProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value);
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

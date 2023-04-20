@@ -40,6 +40,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonCountEvent DeserializeSpatialAnalysisPersonCountEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SpatialAnalysisPersonCountEventTrigger> trigger = default;
             Optional<string> outputFrequency = default;
             Optional<string> threshold = default;
@@ -50,7 +54,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trigger = new SpatialAnalysisPersonCountEventTrigger(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());

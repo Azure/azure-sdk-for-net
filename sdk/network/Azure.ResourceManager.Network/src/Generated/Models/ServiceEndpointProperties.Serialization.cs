@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ServiceEndpointProperties DeserializeServiceEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> service = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new NetworkProvisioningState(property.Value.GetString());
