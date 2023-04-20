@@ -78,7 +78,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.
@@ -180,7 +180,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.
@@ -282,7 +282,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.
@@ -384,7 +384,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.
@@ -486,7 +486,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.
@@ -588,7 +588,7 @@ Schema for <c>AtlasLineageInfo</c>:
 <code>{
   baseEntityGuid: string, # Optional. The GUID of the base entity.
   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+  widthCounts: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The entity count in specific direction.
   lineageDepth: number, # Optional. The depth of lineage.
   lineageWidth: number, # Optional. The width of lineage.
   includeParent: boolean, # Optional. True to return the parent of the base entity.

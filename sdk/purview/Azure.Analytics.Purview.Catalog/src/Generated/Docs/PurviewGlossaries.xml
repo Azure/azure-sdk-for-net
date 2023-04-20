@@ -102,8 +102,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -221,8 +221,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -733,8 +733,8 @@ Request Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -791,8 +791,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1303,8 +1303,8 @@ Request Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1361,8 +1361,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1544,8 +1544,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1603,8 +1603,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1785,8 +1785,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1844,8 +1844,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2037,8 +2037,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2096,8 +2096,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2289,8 +2289,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2348,8 +2348,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2463,8 +2463,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2578,8 +2578,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2771,8 +2771,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -2830,8 +2830,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -3023,8 +3023,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -3082,8 +3082,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -3227,8 +3227,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -3346,8 +3346,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -4016,7 +4016,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -4046,7 +4046,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -4054,7 +4054,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -4062,7 +4062,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -4101,8 +4101,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -4121,7 +4121,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -4151,7 +4151,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -4159,7 +4159,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -4167,7 +4167,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -4206,8 +4206,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -4680,7 +4680,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -4710,7 +4710,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -4718,7 +4718,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -4726,7 +4726,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -4765,8 +4765,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -4785,7 +4785,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -4815,7 +4815,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -4823,7 +4823,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -4831,7 +4831,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -4870,8 +4870,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -5073,7 +5073,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -5103,7 +5103,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -5111,7 +5111,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -5119,7 +5119,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -5158,8 +5158,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -5361,7 +5361,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -5391,7 +5391,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -5399,7 +5399,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -5407,7 +5407,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -5446,8 +5446,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -5920,7 +5920,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -5950,7 +5950,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -5958,7 +5958,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -5966,7 +5966,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -6005,8 +6005,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -6025,7 +6025,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -6055,7 +6055,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -6063,7 +6063,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -6071,7 +6071,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -6110,8 +6110,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -6584,7 +6584,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -6614,7 +6614,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -6622,7 +6622,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -6630,7 +6630,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -6669,8 +6669,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -6689,7 +6689,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -6719,7 +6719,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -6727,7 +6727,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -6735,7 +6735,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -6774,8 +6774,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -7011,7 +7011,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -7041,7 +7041,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -7049,7 +7049,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -7057,7 +7057,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -7096,8 +7096,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -7307,7 +7307,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -7337,7 +7337,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -7345,7 +7345,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -7353,7 +7353,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -7392,8 +7392,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -7870,7 +7870,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -7900,7 +7900,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -7908,7 +7908,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -7916,7 +7916,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -7955,8 +7955,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -7975,7 +7975,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -8005,7 +8005,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -8013,7 +8013,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8021,7 +8021,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -8060,8 +8060,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -8538,7 +8538,7 @@ Request Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -8568,7 +8568,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -8576,7 +8576,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8584,7 +8584,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -8623,8 +8623,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -8643,7 +8643,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -8673,7 +8673,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -8681,7 +8681,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8689,7 +8689,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -8728,8 +8728,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -8791,7 +8791,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8799,7 +8799,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -8851,7 +8851,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8859,7 +8859,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -8924,7 +8924,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -8932,7 +8932,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -8997,7 +8997,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -9005,7 +9005,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -9070,7 +9070,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -9078,7 +9078,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -9143,7 +9143,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -9151,7 +9151,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -9216,7 +9216,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -9224,7 +9224,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -9289,7 +9289,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
   relationshipType: string, # Optional.
   relationshipAttributes: {
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -9297,7 +9297,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
   guid: string, # Optional. The GUID of the object.
   typeName: string, # Optional. The name of the type.
-  uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+  uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
 }
 </code>
 
@@ -9497,8 +9497,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -9605,8 +9605,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -10117,8 +10117,8 @@ Request Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -10175,8 +10175,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -10687,8 +10687,8 @@ Request Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -10745,8 +10745,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -10898,8 +10898,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -11024,8 +11024,8 @@ Schema for <c>AtlasGlossaryCategory</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -11426,8 +11426,8 @@ Schema for <c>AtlasGlossaryExtInfo</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -11736,8 +11736,8 @@ Schema for <c>AtlasGlossaryExtInfo</c>:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -11862,8 +11862,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -11989,8 +11989,8 @@ Response Body:
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -12193,7 +12193,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -12223,7 +12223,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -12231,7 +12231,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -12239,7 +12239,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -12278,8 +12278,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -12481,7 +12481,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -12511,7 +12511,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -12519,7 +12519,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -12527,7 +12527,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -12566,8 +12566,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -13031,7 +13031,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -13061,7 +13061,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -13069,7 +13069,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -13077,7 +13077,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -13116,8 +13116,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -13319,7 +13319,7 @@ Response Body:
 Schema for <c>AtlasGlossaryTerm</c>:
 <code>{
   abbreviation: string, # Optional. The abbreviation of the term.
-  templateName: [AnyObject], # Optional.
+  templateName: [Intrinsic], # Optional.
   anchor: {
     displayText: string, # Optional. The display text.
     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -13349,7 +13349,7 @@ Schema for <c>AtlasGlossaryTerm</c>:
     }
   ], # Optional. An array of resource link for term
   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Steward.
-  attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+  attributes: Dictionary&lt;string, Dictionary&lt;string, Intrinsic&gt;&gt;, # Optional. The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
 The key of the first layer map is term template name.
   assignedEntities: [
     {
@@ -13357,7 +13357,7 @@ The key of the first layer map is term template name.
       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       relationshipType: string, # Optional.
       relationshipAttributes: {
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
@@ -13365,7 +13365,7 @@ The key of the first layer map is term template name.
       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The unique attributes of the object.
     }
   ], # Optional. An array of related object IDs.
   categories: [
@@ -13404,8 +13404,8 @@ The key of the first layer map is term template name.
         }
       ], # Optional. An array of time boundaries indicating validity periods.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      sourceDetails: Dictionary&lt;string, Intrinsic&gt;, # Optional. more detail on source information
+      attributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
