@@ -42,6 +42,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static ParagraphRole SectionHeading { get; } = new ParagraphRole(SectionHeadingValue);
         /// <summary> A note usually placed after the main content on a page. </summary>
         public static ParagraphRole Footnote { get; } = new ParagraphRole(FootnoteValue);
+        /// <summary> A block of formulas, often with shared alignment. </summary>
+        public static ParagraphRole FormulaBlock { get; } = new ParagraphRole(FormulaBlockValue);
         /// <summary> Determines if two <see cref="ParagraphRole"/> values are the same. </summary>
         public static bool operator ==(ParagraphRole left, ParagraphRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParagraphRole"/> values are not the same. </summary>

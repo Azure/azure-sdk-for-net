@@ -25,7 +25,9 @@ namespace Azure.Communication.CallAutomation
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;
             Optional<CollectTonesResult> collectTonesResult = default;
+            Optional<DtmfResult> dtmfResult = default;
             Optional<ChoiceResult> choiceResult = default;
+            Optional<SpeechResult> speechResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -75,6 +77,15 @@ namespace Azure.Communication.CallAutomation
                     collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("dtmfResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dtmfResult = DtmfResult.DeserializeDtmfResult(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("choiceResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -84,8 +95,17 @@ namespace Azure.Communication.CallAutomation
                     choiceResult = ChoiceResult.DeserializeChoiceResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("speechResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speechResult = SpeechResult.DeserializeSpeechResult(property.Value);
+                    continue;
+                }
             }
-            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, choiceResult.Value);
+            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value);
         }
     }
 }

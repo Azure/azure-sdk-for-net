@@ -274,11 +274,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <summary>
         /// Sets the OS state of the virtual machine to generalized. It is
         /// recommended to sysprep the virtual machine before performing this
-        /// operation. &lt;br&gt;For Windows, please refer to [Create a managed
-        /// image of a generalized VM in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
-        /// Linux, please refer to [How to create an image of a virtual machine
-        /// or
+        /// operation. For Windows, please refer to [Create a managed image of
+        /// a generalized VM in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).
+        /// For Linux, please refer to [How to create an image of a virtual
+        /// machine or
         /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -313,6 +313,12 @@ namespace Microsoft.Azure.Management.Compute
         /// Allowed value is 'virtualMachineScaleSet/id' eq
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on operation. 'instanceView' enables
+        /// fetching run time status of all Virtual Machines, this can only be
+        /// specified if a valid $filter option is specified. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -328,7 +334,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the virtual machines in the specified subscription.
         /// Use the nextLink property in the response to get the next page of
@@ -343,6 +349,12 @@ namespace Microsoft.Azure.Management.Compute
         /// Allowed value is 'virtualMachineScaleSet/id' eq
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on operation. 'instanceView' enables
+        /// fetching run time status of all Virtual Machines, this can only be
+        /// specified if a valid $filter option is specified. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -358,7 +370,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all available virtual machine sizes to which the specified
         /// virtual machine can be resized.
@@ -547,9 +559,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='sasUriExpirationTimeInMinutes'>
         /// Expiration duration in minutes for the SAS URIs with a value
-        /// between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not
-        /// specified, SAS URIs will be generated with a default expiration
-        /// duration of 120 minutes.
+        /// between 1 to 1440 minutes. **Note:** If not specified, SAS URIs
+        /// will be generated with a default expiration duration of 120
+        /// minutes.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
