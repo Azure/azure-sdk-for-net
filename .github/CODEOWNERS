@@ -106,7 +106,7 @@
 /sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/       @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @nisha-bhatia @ShivangiReja @AlexanderSher @jsquire
+/sdk/appconfiguration/                                             @ShivangiReja @jsquire @pallavit
 
 # ServiceLabel: %App Services %Service Attention
 #/<NotInRepo>/                                                     @antcp @AzureAppServiceCLI
@@ -182,6 +182,16 @@
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
+
+# PRLabel: %Cognitive - Health Insights
+/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
@@ -483,9 +493,13 @@
 # ServiceLabel: %Monitor %Service Attention
 /sdk/monitor/                                                      @SameergMS @dadunl
 
+# PRLabel: %Monitor - Ingestion
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @ShivangiReja
-/sdk/monitor/ci.yml                                                @nisha-bhatia @ShivangiReja
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
@@ -499,11 +513,11 @@
 
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry.*/                        @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # PRLabel: %Monitor - Distro
 # ServiceLabel: %Monitor - Distro %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %Monitor - Metrics %Service Attention
 #/<NotInRepo>/                                                     @AzMonEssential

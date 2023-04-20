@@ -28,8 +28,8 @@ extendedZipContent:
   target: /Shared/Core/ConstantDelayStrategy.cs
 - path: /sdk/core/Azure.Core/src/Shared/ContentTypeUtilities.cs
   target: /Shared/Core/ContentTypeUtilities.cs
-- path: /sdk/core/Azure.Core/src/Shared/DelayStrategy.cs
-  target: /Shared/Core/DelayStrategy.cs
+- path: /sdk/core/Azure.Core/src/Shared/DelayStrategyInternal.cs
+  target: /Shared/Core/DelayStrategyInternal.cs
 - path: /sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs
   target: /Shared/Core/DiagnosticScope.cs
 - path: /sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs

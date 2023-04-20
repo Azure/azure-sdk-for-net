@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectionMode = new DdosSettingsProtectionMode(property.Value.GetString());
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

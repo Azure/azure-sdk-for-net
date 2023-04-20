@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SignaturesOverridesProperties.DeserializeSignaturesOverridesProperties(property.Value);

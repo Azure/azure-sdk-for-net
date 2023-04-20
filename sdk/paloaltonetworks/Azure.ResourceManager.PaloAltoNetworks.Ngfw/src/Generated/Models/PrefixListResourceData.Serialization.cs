@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             etag = new ETag(property0.Value.GetString());
@@ -132,7 +130,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());

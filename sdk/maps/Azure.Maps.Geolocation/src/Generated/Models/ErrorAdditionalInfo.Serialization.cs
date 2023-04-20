@@ -31,7 +31,6 @@ namespace Azure.Maps.Geolocation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     info = property.Value.GetObject();

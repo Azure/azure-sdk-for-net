@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredSix { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredSixValue);
         /// <summary> 429. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredTwentyNineValue);
+
+        internal int ToSerialInt32() => _value;
+
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
         public static bool operator ==(PolicySettingsDefaultCustomBlockResponseStatusCode left, PolicySettingsDefaultCustomBlockResponseStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are not the same. </summary>

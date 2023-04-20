@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             assessmentMode = new AssessmentModeType(property0.Value.GetString());
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             patchMode = new PatchModeType(property0.Value.GetString());

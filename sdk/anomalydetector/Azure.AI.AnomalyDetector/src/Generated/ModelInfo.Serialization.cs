@@ -58,23 +58,6 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("alignPolicy"u8);
                 writer.WriteObjectValue(AlignPolicy);
             }
-            if (Optional.IsDefined(Status))
-            {
-                if (Status != null)
-                {
-                    writer.WritePropertyName("status"u8);
-                    writer.WriteStringValue(Status.Value.ToSerialString());
-                }
-                else
-                {
-                    writer.WriteNull("status");
-                }
-            }
-            if (Optional.IsDefined(DiagnosticsInfo))
-            {
-                writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo);
-            }
             writer.WriteEndObject();
         }
 
@@ -140,7 +123,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
@@ -153,14 +135,13 @@ namespace Azure.AI.AnomalyDetector
                         status = null;
                         continue;
                     }
-                    status = property.Value.GetString().ToModelStatus();
+                    status = new ModelStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -175,7 +156,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diagnosticsInfo = DiagnosticsInfo.DeserializeDiagnosticsInfo(property.Value);

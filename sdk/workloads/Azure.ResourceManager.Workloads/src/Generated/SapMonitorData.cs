@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (user assigned identities). </param>
+        /// <param name="identity"> [currently not in use] Managed service identity(user assigned identities). </param>
         /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
         /// <param name="errors"> Defines the SAP monitor errors. </param>
         /// <param name="appLocation"> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads
             StorageAccountArmId = storageAccountArmId;
         }
 
-        /// <summary> Managed service identity (user assigned identities). </summary>
+        /// <summary> [currently not in use] Managed service identity(user assigned identities). </summary>
         public UserAssignedServiceIdentity Identity { get; set; }
         /// <summary> State of provisioning of the SAP monitor. </summary>
         public WorkloadMonitorProvisioningState? ProvisioningState { get; }

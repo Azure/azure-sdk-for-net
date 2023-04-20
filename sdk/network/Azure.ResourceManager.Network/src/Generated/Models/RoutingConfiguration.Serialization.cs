@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value);
@@ -81,7 +79,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetRoutes = VnetRoute.DeserializeVnetRoute(property.Value);
@@ -91,7 +88,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -101,7 +97,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the three tier SAP configuration. </summary>
+    /// <summary> Gets or sets the three tier SAP configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class ThreeTierConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>

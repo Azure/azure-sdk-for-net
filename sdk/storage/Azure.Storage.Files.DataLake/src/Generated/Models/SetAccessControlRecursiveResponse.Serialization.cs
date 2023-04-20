@@ -29,7 +29,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directoriesSuccessful = property.Value.GetInt32();
@@ -39,7 +38,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesSuccessful = property.Value.GetInt32();
@@ -49,7 +47,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failureCount = property.Value.GetInt32();
@@ -59,7 +56,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AclFailedEntry> array = new List<AclFailedEntry>();

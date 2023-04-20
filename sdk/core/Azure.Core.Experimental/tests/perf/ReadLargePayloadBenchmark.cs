@@ -10,7 +10,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
     [MemoryDiagnoser]
     public class ReadLargePayloadBenchmark
     {
-        private dynamic _json = JsonSamples.DocumentSentiment.ToDynamic();
+        private dynamic _json = JsonSamples.DocumentSentiment.ToDynamicFromJson();
         private JsonDocument _document = JsonDocument.Parse(JsonSamples.DocumentSentiment);
 
         [Benchmark(Baseline = true)]

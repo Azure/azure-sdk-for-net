@@ -10,17 +10,17 @@ namespace Azure.Core.Tests.Public
     {
         public static dynamic CreateEmpty()
         {
-            return BinaryData.FromString("{}").ToDynamic();
+            return BinaryData.FromString("{}").ToDynamicFromJson();
         }
 
         public static dynamic CreateFromJson(string json)
         {
-            return BinaryData.FromString(json).ToDynamic();
+            return BinaryData.FromString(json).ToDynamicFromJson();
         }
 
         public static T JsonAsType<T>(string json)
         {
-            dynamic jsonData = new BinaryData(json).ToDynamic();
+            dynamic jsonData = new BinaryData(json).ToDynamicFromJson();
             return (T)jsonData;
         }
     }

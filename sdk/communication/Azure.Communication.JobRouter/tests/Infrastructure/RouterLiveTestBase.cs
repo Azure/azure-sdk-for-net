@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Infrastructure
@@ -17,6 +18,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
     public class RouterLiveTestBase : RecordedTestBase<RouterTestEnvironment>
     {
         private ConcurrentDictionary<string, Stack<Task>> _testCleanupTasks;
+        private const string URIDomainRegEx = @"https://([^/?]+)";
         protected const string Delimeter = "-";
 
         public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
@@ -27,6 +29,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             JsonPathSanitizers.Add("$..functionKey");
             JsonPathSanitizers.Add("$..appKey");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.comminication.azure.com"));
         }
 
         [SetUp]
@@ -246,7 +249,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var input = Encoding.UTF8.GetBytes(result);
             var encoded = SHA256.Create().ComputeHash(input);
             var response = BitConverter.ToString(encoded);
-            return response;
+            return string.Join("", response.Split('-'));
         }
 
         private string ReduceToFiftyCharactersInternal(params string?[] value)

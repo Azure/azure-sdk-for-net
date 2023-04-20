@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.FileSystem;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -30,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options == null)
             {
@@ -39,31 +40,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options);
+            _connectionVars = InitializeConnectionVars(options, platform);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _transmissionStateManager = new TransmissionStateManager();
 
-            _fileBlobProvider = InitializeOfflineStorage(options);
+            _fileBlobProvider = InitializeOfflineStorage(options, platform);
 
             if (_fileBlobProvider != null)
             {
                 _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
             }
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {
-                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                var connectionString = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
-                    return ConnectionStringParser.GetValues(connectionString);
+                    return ConnectionStringParser.GetValues(connectionString!);
                 }
             }
             else
@@ -99,17 +100,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options)
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (!options.DisableOfflineStorage)
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory
-                        ?? StorageHelper.GetDefaultStorageDirectory()
-                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform,
+                        configuredStorageDirectory: options.StorageDirectory);
 
-                    // TODO: Fallback to default location if location provided via options does not work.
                     AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
 
                     return new FileBlobProvider(storageDirectory);
@@ -129,13 +129,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
                 try
                 {
-                    var disableStatsbeat = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
                     {
                         AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
@@ -143,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         return null;
                     }
 
-                    return new AzureMonitorStatsbeat(connectionVars);
+                    return new AzureMonitorStatsbeat(connectionVars, platform);
                 }
                 catch (Exception ex)
                 {
