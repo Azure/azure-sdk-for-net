@@ -94,9 +94,8 @@ namespace Azure
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="delayStrategy">
-        /// The interval between status requests to the server.
-        /// The interval can change based on information returned from the server.
-        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
         /// <returns>The last HTTP response received from the server.</returns>
@@ -146,9 +145,8 @@ namespace Azure
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="delayStrategy">
-        /// The interval between status requests to the server.
-        /// The interval can change based on information returned from the server.
-        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
         /// <returns>The last HTTP response received from the server.</returns>
