@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2023-03-31-preview)
+## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 - Added new function `ListRooms` to list all created rooms by returning `Pageable<CommunicationRoom>`,
