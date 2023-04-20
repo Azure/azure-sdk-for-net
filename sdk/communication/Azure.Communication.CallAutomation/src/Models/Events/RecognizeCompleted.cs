@@ -40,10 +40,10 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
-        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult, SpeechResult speechResult)
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
 
             if (RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = collectTonesResult;
+                RecognizeResult = dtmfResult;
             }
             else if (RecognitionType == CallMediaRecognitionType.Choices)
             {
@@ -77,7 +77,7 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = internalEvent.ResultInformation;
             if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = internalEvent.CollectTonesResult;
+                RecognizeResult = internalEvent.DtmfResult;
             }
             else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
             {
@@ -93,9 +93,9 @@ namespace Azure.Communication.CallAutomation
                 {
                     RecognizeResult = internalEvent.SpeechResult;
                 }
-                else if (internalEvent.CollectTonesResult != null)
+                else if (internalEvent.DtmfResult != null)
                 {
-                    RecognizeResult = internalEvent.CollectTonesResult;
+                    RecognizeResult = internalEvent.DtmfResult;
                 }
                 else
                 {

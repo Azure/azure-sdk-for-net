@@ -80,6 +80,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
             },
+            SpeechLanguage = "en-US",
         };
 
         private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, 100L)
@@ -94,6 +95,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
             },
+            SpeechLanguage= "en-US",
         };
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
