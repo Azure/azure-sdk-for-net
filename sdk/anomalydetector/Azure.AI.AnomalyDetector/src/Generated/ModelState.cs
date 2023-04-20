@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of ModelState. </summary>
         /// <param name="epochIds">
-        /// This indicates the number of passes of the entire training dataset the
+        /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
         /// </param>
         /// <param name="trainLosses">
@@ -46,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary>
-        /// This indicates the number of passes of the entire training dataset the
+        /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
         /// </summary>
         public IList<int> EpochIds { get; }

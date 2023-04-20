@@ -103,7 +103,7 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
+            throw Errors.LocalFileAlreadyExists(_path);
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Results of last detection. </summary>
+    /// <summary> Results of the last detection. </summary>
     public partial class MultivariateLastDetectionResult
     {
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
-        /// <param name="variableStates"> Variable Status. </param>
+        /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
         internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             Results = results.ToList();
         }
 
-        /// <summary> Variable Status. </summary>
+        /// <summary> Variable status. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
         /// <summary> Anomaly status and information. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }

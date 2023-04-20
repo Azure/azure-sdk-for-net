@@ -16,6 +16,15 @@
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
         1. ComputeRP API calls will use 2023-03-01 API version.
+        2. Reapply operation support for VMSS.
+        3. Added $expand option in List Virtual Machine methods.
+        4. BypassPlatformSafetyChecksOnUserSchedule support for VMs.
+        5. Added Spot related properties to VMSS update.
+        6. SecurityPostureReference support for VMSS.
+        7. Resize support for dedicatedHost.
+        8. Added Encryption, Source Details, HyperVGeneration and WriteAccelerated for Restore Point.
+        9. Managed Identity support for Run Command.
+        10. Hibernate feature support for VMSS deallocate.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
