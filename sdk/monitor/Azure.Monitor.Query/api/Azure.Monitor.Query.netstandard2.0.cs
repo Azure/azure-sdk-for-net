@@ -93,6 +93,40 @@ namespace Azure.Monitor.Query
 }
 namespace Azure.Monitor.Query.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchQueryRequestMethod : System.IEquatable<Azure.Monitor.Query.Models.BatchQueryRequestMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchQueryRequestMethod(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.BatchQueryRequestMethod POST { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.BatchQueryRequestMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.BatchQueryRequestMethod left, Azure.Monitor.Query.Models.BatchQueryRequestMethod right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.BatchQueryRequestMethod (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.BatchQueryRequestMethod left, Azure.Monitor.Query.Models.BatchQueryRequestMethod right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchQueryRequestPath : System.IEquatable<Azure.Monitor.Query.Models.BatchQueryRequestPath>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchQueryRequestPath(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.BatchQueryRequestPath Query { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.BatchQueryRequestPath other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.BatchQueryRequestPath left, Azure.Monitor.Query.Models.BatchQueryRequestPath right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.BatchQueryRequestPath (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.BatchQueryRequestPath left, Azure.Monitor.Query.Models.BatchQueryRequestPath right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult
     {
         internal LogsBatchQueryResult() { }
