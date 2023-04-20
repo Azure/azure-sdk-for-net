@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceEndpointUri = null;
                         continue;
                     }
                     serviceEndpointUri = new Uri(property.Value.GetString());

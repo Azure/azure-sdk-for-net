@@ -12,6 +12,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
     internal class EventProcessorHostPartition : EventProcessorPartition
     {
         private TriggerPartitionContext _partitionContext;
+        private CheckpointInfo? _checkpoint;
 
         public EventProcessorHostPartition()
         {
@@ -26,13 +27,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         public string Owner => ProcessorHost.Identifier;
         public string EventHubPath => ProcessorHost.EventHubName;
-        public CheckpointInfo? Checkpoint { get; set; }
+
+        public CheckpointInfo? Checkpoint
+        {
+            get => _checkpoint ?? ProcessorHost?.GetLastReadCheckpoint(PartitionId);
+            set => _checkpoint = value;
+        }
 
         public LastEnqueuedEventProperties LastEnqueuedEventProperties
         {
             get
             {
-                if (ReadLastEnqueuedEventPropertiesFunc == null) return default;
+                if (ReadLastEnqueuedEventPropertiesFunc == null)
+                {
+                    return default;
+                }
 
                 try
                 {
@@ -41,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 catch (EventHubsException e) when (e.Reason == EventHubsException.FailureReason.ClientClosed)
                 {
                     // If the connection is closed, just return default value. This could be called before our connection is established (e.g. the context is passed to OnPartitionIntializingAsync, but the
-                    // connection for that partion has not been made yet, so the above call will fail).
+                    // connection for that partition has not been made yet, so the above call will fail).
                     return default;
                 }
             }
@@ -53,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         public async Task CheckpointAsync(EventData checkpointEvent)
         {
             await ProcessorHost.CheckpointAsync(PartitionId, checkpointEvent).ConfigureAwait(false);
-            Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber);
+            Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber, DateTimeOffset.UtcNow);
         }
 
         private class EventProcessorHostPartitionContext : TriggerPartitionContext

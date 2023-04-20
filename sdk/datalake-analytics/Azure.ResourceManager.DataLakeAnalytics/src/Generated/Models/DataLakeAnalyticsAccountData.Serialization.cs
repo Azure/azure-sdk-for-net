@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -73,7 +72,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -122,7 +119,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accountId = property0.Value.GetGuid();
@@ -132,7 +128,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToDataLakeAnalyticsAccountStatus();
@@ -142,7 +137,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToDataLakeAnalyticsAccountState();
@@ -152,7 +146,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -162,7 +155,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -182,7 +174,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
@@ -197,7 +188,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
@@ -212,7 +202,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
@@ -227,7 +216,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
@@ -242,7 +230,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeAnalyticsHiveMetastore> array = new List<DataLakeAnalyticsHiveMetastore>();
@@ -257,7 +244,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeAnalyticsVirtualNetworkRule> array = new List<DataLakeAnalyticsVirtualNetworkRule>();
@@ -272,7 +258,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
@@ -287,7 +272,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallState = property0.Value.GetString().ToDataLakeAnalyticsFirewallState();
@@ -297,7 +281,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeAnalyticsFirewallAllowAzureIPsState();
@@ -307,7 +290,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newTier = property0.Value.GetString().ToDataLakeAnalyticsCommitmentTierType();
@@ -317,7 +299,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentTier = property0.Value.GetString().ToDataLakeAnalyticsCommitmentTierType();
@@ -327,7 +308,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxJobCount = property0.Value.GetInt32();
@@ -337,7 +317,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxActiveJobCountPerUser = property0.Value.GetInt32();
@@ -347,7 +326,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxQueuedJobCountPerUser = property0.Value.GetInt32();
@@ -357,7 +335,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxJobRunningTimeInMin = property0.Value.GetInt32();
@@ -367,7 +344,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             systemMaxJobCount = property0.Value.GetInt32();
@@ -377,7 +353,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxDegreeOfParallelism = property0.Value.GetInt32();
@@ -387,7 +362,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             systemMaxDegreeOfParallelism = property0.Value.GetInt32();
@@ -397,7 +371,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxDegreeOfParallelismPerJob = property0.Value.GetInt32();
@@ -407,7 +380,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minPriorityPerJob = property0.Value.GetInt32();
@@ -417,7 +389,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             queryStoreRetention = property0.Value.GetInt32();
@@ -427,7 +398,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             debugDataAccessLevel = property0.Value.GetString().ToDebugDataAccessLevel();

@@ -10,8 +10,8 @@ generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/e4f7afa7b2b1fbba16c61f6935bfafb14df9042e/specification/cosmos-db/resource-manager/readme.md
-tag: package-2022-08
+require: https://github.com/Azure/azure-rest-api-specs/blob/50e7b9b2c1527ee2342032595541b2ffd12ae10d/specification/cosmos-db/resource-manager/readme.md
+tag: package-2022-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -147,7 +147,13 @@ rename-mapping:
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
+  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
+  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
+  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
+  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
+  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
   GremlinDatabaseResource: GremlinDatabaseResourceInfo
   GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
@@ -162,6 +168,9 @@ rename-mapping:
   RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
   RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
   RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
@@ -243,6 +252,12 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
+  RestorableTablePropertiesResource.ownerId: TableName
+  RestorableTablePropertiesResource.ownerResourceId: TableId
   CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
   CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   ContainerPartitionKey.systemKey: IsSystemKey
@@ -260,6 +275,8 @@ rename-mapping:
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
   RestorableSqlResourcesGetResult: RestorableSqlResourceData
   RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
+  RestorableTableResourcesGetResult: RestorableTableResourceData
   ServiceResourceProperties: CosmosDBServiceProperties
   ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
   ServiceResource: CosmosDBService
@@ -279,6 +296,7 @@ rename-mapping:
   AccountKeyMetadata.generationTime: GeneratedOn
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
+  MinimalTlsVersion: CosmosDBMinimalTlsVersion
 
 prepend-rp-prefix:
 - UniqueKey
@@ -506,6 +524,18 @@ directive:
 - rename-model:
     from: RestorableMongodbDatabaseGetResult
     to: RestorableMongoDBDatabase
+- rename-model:
+    from: RestorableGremlinDatabaseGetResult
+    to: RestorableGremlinDatabase
+- rename-model:
+    from: RestorableGremlinGraphGetResult
+    to: RestorableGremlinGraph
+- rename-model:
+    from: RestorableTableGetResult
+    to: RestorableTable
+- rename-model:
+    from: KeyWrapMetadata
+    to: CosmosDBKeyWrapMetadata
 # same as `Metric`
 - rename-model:
     from: Metric
