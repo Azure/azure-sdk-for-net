@@ -1398,6 +1398,23 @@ namespace Azure.Storage.Blobs.Models
         BlobContainer = 1,
         Blob = 2,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QueryRequestQueryType : System.IEquatable<Azure.Storage.Blobs.Models.QueryRequestQueryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QueryRequestQueryType(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.QueryRequestQueryType SQL { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.QueryRequestQueryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.QueryRequestQueryType left, Azure.Storage.Blobs.Models.QueryRequestQueryType right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.QueryRequestQueryType (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.QueryRequestQueryType left, Azure.Storage.Blobs.Models.QueryRequestQueryType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum RehydratePriority
     {
         High = 0,

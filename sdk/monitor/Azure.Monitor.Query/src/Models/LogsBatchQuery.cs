@@ -54,7 +54,9 @@ namespace Azure.Monitor.Query
             _counter++;
             var logQueryRequest = new BatchQueryRequest(id, LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer), workspaceId)
             {
-                Options = options
+                Options = options,
+                Path = BatchQueryRequestPath.Query,
+                Method = BatchQueryRequestMethod.POST
             };
             if (prefer != null)
             {

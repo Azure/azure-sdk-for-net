@@ -3241,11 +3241,45 @@ namespace Azure.Search.Documents.Models
         public T Document { get { throw null; } }
         public string Text { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SuggesterMode : System.IEquatable<Azure.Search.Documents.Models.SuggesterMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SuggesterMode(string value) { throw null; }
+        public static Azure.Search.Documents.Models.SuggesterMode AnalyzingInfixMatching { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.SuggesterMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.SuggesterMode left, Azure.Search.Documents.Models.SuggesterMode right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.SuggesterMode (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.SuggesterMode left, Azure.Search.Documents.Models.SuggesterMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SuggestResults<T>
     {
         internal SuggestResults() { }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchSuggestion<T>> Results { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SynonymMapFormat : System.IEquatable<Azure.Search.Documents.Models.SynonymMapFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SynonymMapFormat(string value) { throw null; }
+        public static Azure.Search.Documents.Models.SynonymMapFormat Solr { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.SynonymMapFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.SynonymMapFormat left, Azure.Search.Documents.Models.SynonymMapFormat right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.SynonymMapFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.SynonymMapFormat left, Azure.Search.Documents.Models.SynonymMapFormat right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ValueFacetResult<T>
     {
