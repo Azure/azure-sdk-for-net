@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.AnomalyDetector
 {
-    public enum MultivariateBatchDetectionStatus
+    public readonly partial struct MultivariateBatchDetectionStatus : IEquatable<MultivariateBatchDetectionStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MultivariateBatchDetectionStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string CreatedValue = "CREATED";
+        private const string RunningValue = "RUNNING";
+        private const string ReadyValue = "READY";
+        private const string FailedValue = "FAILED";
+
         /// <summary> CREATED. </summary>
-        Created,
+        public static MultivariateBatchDetectionStatus Created { get; } = new MultivariateBatchDetectionStatus(CreatedValue);
         /// <summary> RUNNING. </summary>
-        Running,
+        public static MultivariateBatchDetectionStatus Running { get; } = new MultivariateBatchDetectionStatus(RunningValue);
         /// <summary> READY. </summary>
-        Ready,
+        public static MultivariateBatchDetectionStatus Ready { get; } = new MultivariateBatchDetectionStatus(ReadyValue);
         /// <summary> FAILED. </summary>
-        Failed
+        public static MultivariateBatchDetectionStatus Failed { get; } = new MultivariateBatchDetectionStatus(FailedValue);
+        /// <summary> Determines if two <see cref="MultivariateBatchDetectionStatus"/> values are the same. </summary>
+        public static bool operator ==(MultivariateBatchDetectionStatus left, MultivariateBatchDetectionStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MultivariateBatchDetectionStatus"/> values are not the same. </summary>
+        public static bool operator !=(MultivariateBatchDetectionStatus left, MultivariateBatchDetectionStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MultivariateBatchDetectionStatus"/>. </summary>
+        public static implicit operator MultivariateBatchDetectionStatus(string value) => new MultivariateBatchDetectionStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MultivariateBatchDetectionStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MultivariateBatchDetectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
