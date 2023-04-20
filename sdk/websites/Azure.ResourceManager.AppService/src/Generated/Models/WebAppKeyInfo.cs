@@ -16,17 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
-        /// <param name="name"> Key name. </param>
-        /// <param name="value"> Key value. </param>
-        internal WebAppKeyInfo(string name, string value)
+        /// <param name="properties"> Properties of function key info. </param>
+        internal WebAppKeyInfo(WebAppKeyInfoProperties properties)
         {
-            Name = name;
-            Value = value;
+            Properties = properties;
         }
 
-        /// <summary> Key name. </summary>
-        public string Name { get; set; }
-        /// <summary> Key value. </summary>
-        public string Value { get; set; }
+        /// <summary> Properties of function key info. </summary>
+        public WebAppKeyInfoProperties Properties { get; set; }
     }
 }
