@@ -8,8 +8,46 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataSourceInfo
+    public partial class DataSourceInfo : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataSourceType))
+            {
+                writer.WritePropertyName("datasourceType"u8);
+                writer.WriteStringValue(DataSourceType);
+            }
+            if (Optional.IsDefined(ObjectType))
+            {
+                writer.WritePropertyName("objectType"u8);
+                writer.WriteStringValue(ObjectType);
+            }
+            writer.WritePropertyName("resourceID"u8);
+            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(ResourceLocation))
+            {
+                writer.WritePropertyName("resourceLocation"u8);
+                writer.WriteStringValue(ResourceLocation.Value);
+            }
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (Optional.IsDefined(ResourceUriString))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUriString);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DataSourceInfo DeserializeDataSourceInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -22,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<AzureLocation> resourceLocation = default;
             Optional<string> resourceName = default;
             Optional<ResourceType> resourceType = default;
-            Optional<string> resourceUri = default;
+            Optional<string> resourceUriString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceType"u8))
@@ -65,11 +103,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = property.Value.GetString();
+                    resourceUriString = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
+            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUriString.Value);
         }
     }
 }

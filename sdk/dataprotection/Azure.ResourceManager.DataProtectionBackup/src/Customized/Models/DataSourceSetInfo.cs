@@ -4,8 +4,10 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType("DataSourceSetInfo")]
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> DatasourceSet details of datasource to be backed up. </summary>
@@ -28,8 +30,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceLocation"> Location of datasource. </param>
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
-        /// <param name="resourceUri"> Uri of the resource. </param>
-        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUri)
+        /// <param name="resourceUriString"> Uri of the resource. </param>
+        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -37,7 +39,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceLocation = resourceLocation;
             ResourceName = resourceName;
             ResourceType = resourceType;
-            ResourceUri = resourceUri;
+            ResourceUriString = resourceUriString;
+#pragma warning disable CS0618 // Type or member is obsolete
+            ResourceUri = null;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary> DatasourceType of the resource. </summary>
@@ -53,6 +58,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Resource Type of Datasource. </summary>
         public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
-        public string ResourceUri { get; set; }
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
+        public System.Uri ResourceUri { get; set; }
+        /// <summary> Uri of the resource. </summary>
+        public string ResourceUriString { get; set; }
     }
 }
