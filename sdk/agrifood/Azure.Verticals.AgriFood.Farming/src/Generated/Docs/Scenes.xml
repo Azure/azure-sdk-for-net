@@ -293,10 +293,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: any, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -418,10 +418,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: any, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -481,10 +481,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: any, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
@@ -540,10 +540,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: any, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
