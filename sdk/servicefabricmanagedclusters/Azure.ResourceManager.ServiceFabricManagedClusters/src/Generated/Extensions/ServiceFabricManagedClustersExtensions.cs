@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceFabricManagedClusters.Mock;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceFabricManagedClusters. </summary>
     public static partial class ServiceFabricManagedClustersExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ServiceFabricManagedClusterResourceExtension GetServiceFabricManagedClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ServiceFabricManagedClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceFabricManagedClusterResourceExtension GetServiceFabricManagedClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ServiceFabricManagedClusterResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ServiceFabricManagedClustersResourceGroupResourceExtension GetServiceFabricManagedClustersResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ServiceFabricManagedClustersResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceFabricManagedClustersResourceGroupResourceExtension GetServiceFabricManagedClustersResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ServiceFabricManagedClustersResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ServiceFabricManagedClustersSubscriptionResourceExtension GetServiceFabricManagedClustersSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ServiceFabricManagedClustersSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ServiceFabricManagedClustersSubscriptionResourceExtension GetServiceFabricManagedClustersSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ServiceFabricManagedClustersSubscriptionResourceExtension(client, scope);
             });
         }
         #region ServiceFabricManagedApplicationTypeResource
@@ -169,7 +186,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An object representing collection of ServiceFabricManagedClusterResources and their operations over a ServiceFabricManagedClusterResource. </returns>
         public static ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceFabricManagedClusters();
+            return GetServiceFabricManagedClustersResourceGroupResourceExtension(resourceGroupResource).GetServiceFabricManagedClusters();
         }
 
         /// <summary>
@@ -238,7 +255,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceFabricManagedClustersAsync(cancellationToken);
+            return GetServiceFabricManagedClusterResourceExtension(subscriptionResource).GetServiceFabricManagedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +276,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceFabricManagedClusters(cancellationToken);
+            return GetServiceFabricManagedClusterResourceExtension(subscriptionResource).GetServiceFabricManagedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +302,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionAsync(location, clusterVersion, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionAsync(location, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -311,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersion(location, clusterVersion, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersion(location, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +355,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -365,7 +382,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionByEnvironment(location, environment, clusterVersion, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionByEnvironment(location, environment, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +404,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionsAsync(location, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +426,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersions(location, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersions(location, cancellationToken);
         }
 
         /// <summary>
@@ -432,7 +449,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +472,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterVersionsByEnvironment(location, environment, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedClusterVersionsByEnvironment(location, environment, cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizesAsync(location, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedUnsupportedVmSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -499,7 +516,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizes(location, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedUnsupportedVmSizes(location, cancellationToken);
         }
 
         /// <summary>
@@ -525,7 +542,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizeAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedUnsupportedVmSizeAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -551,7 +568,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedUnsupportedVmSize(location, vmSize, cancellationToken);
+            return GetServiceFabricManagedClustersSubscriptionResourceExtension(subscriptionResource).GetManagedUnsupportedVmSize(location, vmSize, cancellationToken);
         }
     }
 }

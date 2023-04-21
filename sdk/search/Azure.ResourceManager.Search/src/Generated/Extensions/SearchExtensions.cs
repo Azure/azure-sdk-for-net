@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Search.Mock;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Search
     /// <summary> A class to add extension methods to Azure.ResourceManager.Search. </summary>
     public static partial class SearchExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SearchResourceGroupResourceExtension GetSearchResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SearchResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SearchResourceGroupResourceExtension GetSearchResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SearchResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SearchServiceResourceExtension GetSearchServiceResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SearchServiceResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SearchServiceResourceExtension GetSearchServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SearchServiceResourceExtension(client, scope);
             });
         }
         #region SearchServiceResource
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An object representing collection of SearchServiceResources and their operations over a SearchServiceResource. </returns>
         public static SearchServiceCollection GetSearchServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSearchServices();
+            return GetSearchResourceGroupResourceExtension(resourceGroupResource).GetSearchServices();
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SearchServiceResource> GetSearchServicesAsync(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
+            return GetSearchServiceResourceExtension(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SearchServiceResource> GetSearchServices(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
+            return GetSearchServiceResourceExtension(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSearchServiceResourceExtension(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
+            return GetSearchServiceResourceExtension(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
     }
 }

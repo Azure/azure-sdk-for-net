@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SignalR.Mock;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.SignalR
     /// <summary> A class to add extension methods to Azure.ResourceManager.SignalR. </summary>
     public static partial class SignalRExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SignalRResourceExtension GetSignalRResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SignalRResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SignalRResourceExtension GetSignalRResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SignalRResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SignalRResourceGroupResourceExtension GetSignalRResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SignalRResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SignalRResourceGroupResourceExtension GetSignalRResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SignalRResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static SignalRSubscriptionResourceExtension GetSignalRSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SignalRSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SignalRSubscriptionResourceExtension GetSignalRSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SignalRSubscriptionResourceExtension(client, scope);
             });
         }
         #region SignalRResource
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRResources and their operations over a SignalRResource. </returns>
         public static SignalRCollection GetSignalRs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSignalRs();
+            return GetSignalRResourceGroupResourceExtension(resourceGroupResource).GetSignalRs();
         }
 
         /// <summary>
@@ -223,7 +240,7 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetSignalRResourceExtension(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,7 +265,7 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
+            return GetSignalRResourceExtension(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRResource> GetSignalRsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSignalRsAsync(cancellationToken);
+            return GetSignalRResourceExtension(subscriptionResource).GetSignalRsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +307,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRResource> GetSignalRs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSignalRs(cancellationToken);
+            return GetSignalRResourceExtension(subscriptionResource).GetSignalRs(cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +329,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetSignalRSubscriptionResourceExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +351,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetSignalRSubscriptionResourceExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

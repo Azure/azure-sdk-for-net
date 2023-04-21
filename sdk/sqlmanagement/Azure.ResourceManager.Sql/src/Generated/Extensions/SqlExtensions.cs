@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Sql.Mock;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -20,35 +21,131 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sql. </summary>
     public static partial class SqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeletedServerResourceExtension GetDeletedServerResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeletedServerResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeletedServerResourceExtension GetDeletedServerResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeletedServerResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static InstancePoolResourceExtension GetInstancePoolResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new InstancePoolResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static InstancePoolResourceExtension GetInstancePoolResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new InstancePoolResourceExtension(client, scope);
+            });
+        }
+
+        private static ManagedInstanceResourceExtension GetManagedInstanceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ManagedInstanceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ManagedInstanceResourceExtension GetManagedInstanceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ManagedInstanceResourceExtension(client, scope);
+            });
+        }
+
+        private static SqlResourceGroupResourceExtension GetSqlResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SqlResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SqlResourceGroupResourceExtension GetSqlResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SqlResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static SqlServerResourceExtension GetSqlServerResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SqlServerResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SqlServerResourceExtension GetSqlServerResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SqlServerResourceExtension(client, scope);
+            });
+        }
+
+        private static SqlSubscriptionResourceExtension GetSqlSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SqlSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SqlSubscriptionResourceExtension GetSqlSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SqlSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static SyncGroupResourceExtension GetSyncGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SyncGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SyncGroupResourceExtension GetSyncGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SyncGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualClusterResourceExtension GetVirtualClusterResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualClusterResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualClusterResourceExtension GetVirtualClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualClusterResourceExtension(client, scope);
             });
         }
         #region RecoverableDatabaseResource
@@ -2450,7 +2547,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public static InstancePoolCollection GetInstancePools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstancePools();
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetInstancePools();
         }
 
         /// <summary>
@@ -2507,7 +2604,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
         public static SqlServerTrustGroupCollection GetSqlServerTrustGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlServerTrustGroups(locationName);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetSqlServerTrustGroups(locationName);
         }
 
         /// <summary>
@@ -2573,7 +2670,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -2643,7 +2740,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -2705,7 +2802,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
         public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualClusters();
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetVirtualClusters();
         }
 
         /// <summary>
@@ -2762,7 +2859,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
         public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstanceFailoverGroups(locationName);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetInstanceFailoverGroups(locationName);
         }
 
         /// <summary>
@@ -2820,7 +2917,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedInstances();
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetManagedInstances();
         }
 
         /// <summary>
@@ -2878,7 +2975,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
         public static SqlServerCollection GetSqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlServers();
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetSqlServers();
         }
 
         /// <summary>
@@ -2952,7 +3049,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -2976,7 +3073,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3005,7 +3102,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3034,7 +3131,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3063,7 +3160,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3092,7 +3189,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3116,7 +3213,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3140,7 +3237,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupResourceExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
@@ -3149,7 +3246,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
         public static DeletedServerCollection GetDeletedServers(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServers(locationName);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetDeletedServers(locationName);
         }
 
         /// <summary>
@@ -3208,7 +3305,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
         public static SubscriptionUsageCollection GetSubscriptionUsages(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionUsages(locationName);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetSubscriptionUsages(locationName);
         }
 
         /// <summary>
@@ -3267,7 +3364,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public static SqlTimeZoneCollection GetSqlTimeZones(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlTimeZones(locationName);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetSqlTimeZones(locationName);
         }
 
         /// <summary>
@@ -3333,7 +3430,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -3403,7 +3500,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -3478,7 +3575,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedServerResource> GetDeletedServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServersAsync(cancellationToken);
+            return GetDeletedServerResourceExtension(subscriptionResource).GetDeletedServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3499,7 +3596,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedServerResource> GetDeletedServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServers(cancellationToken);
+            return GetDeletedServerResourceExtension(subscriptionResource).GetDeletedServers(cancellationToken);
         }
 
         /// <summary>
@@ -3520,7 +3617,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<InstancePoolResource> GetInstancePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancePoolsAsync(cancellationToken);
+            return GetInstancePoolResourceExtension(subscriptionResource).GetInstancePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3541,7 +3638,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<InstancePoolResource> GetInstancePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancePools(cancellationToken);
+            return GetInstancePoolResourceExtension(subscriptionResource).GetInstancePools(cancellationToken);
         }
 
         /// <summary>
@@ -3563,7 +3660,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionResourceExtension(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3585,7 +3682,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
         }
 
         /// <summary>
@@ -3607,7 +3704,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
+            return GetSyncGroupResourceExtension(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -3629,7 +3726,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
+            return GetSyncGroupResourceExtension(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -3653,7 +3750,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3677,7 +3774,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3706,7 +3803,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3735,7 +3832,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3764,7 +3861,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3793,7 +3890,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3817,7 +3914,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3841,7 +3938,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionResourceExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3862,7 +3959,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
+            return GetVirtualClusterResourceExtension(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3883,7 +3980,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualClusterResource> GetVirtualClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualClusters(cancellationToken);
+            return GetVirtualClusterResourceExtension(subscriptionResource).GetVirtualClusters(cancellationToken);
         }
 
         /// <summary>
@@ -3905,7 +4002,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
+            return GetManagedInstanceResourceExtension(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3927,7 +4024,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstances(expand, cancellationToken);
+            return GetManagedInstanceResourceExtension(subscriptionResource).GetManagedInstances(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3951,7 +4048,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSqlServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerResourceExtension(subscriptionResource).CheckSqlServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3975,7 +4072,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSqlServerNameAvailability(content, cancellationToken);
+            return GetSqlServerResourceExtension(subscriptionResource).CheckSqlServerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -3997,7 +4094,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlServerResource> GetSqlServersAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlServersAsync(expand, cancellationToken);
+            return GetSqlServerResourceExtension(subscriptionResource).GetSqlServersAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -4019,7 +4116,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlServerResource> GetSqlServers(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlServers(expand, cancellationToken);
+            return GetSqlServerResourceExtension(subscriptionResource).GetSqlServers(expand, cancellationToken);
         }
     }
 }

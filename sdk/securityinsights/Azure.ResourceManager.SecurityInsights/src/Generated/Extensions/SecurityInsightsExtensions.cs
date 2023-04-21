@@ -7,25 +7,26 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityInsights.Mock;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityInsights. </summary>
     public static partial class SecurityInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SecurityInsightsResourceGroupResourceExtension GetSecurityInsightsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SecurityInsightsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SecurityInsightsResourceGroupResourceExtension GetSecurityInsightsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SecurityInsightsResourceGroupResourceExtension(client, scope);
             });
         }
         #region SecurityInsightsAlertRuleResource
