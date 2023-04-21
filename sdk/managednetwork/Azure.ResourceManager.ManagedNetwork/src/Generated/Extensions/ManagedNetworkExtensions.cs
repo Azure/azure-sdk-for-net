@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetwork.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetwork
@@ -18,51 +19,51 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedNetwork. </summary>
     public static partial class ManagedNetworkExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ManagedNetworkArmResourceExtension GetManagedNetworkArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ManagedNetworkArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkArmResourceExtension GetManagedNetworkArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ManagedNetworkArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ManagedNetworkResourceExtension GetManagedNetworkResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ManagedNetworkResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkResourceExtension GetManagedNetworkResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ManagedNetworkResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ManagedNetworkResourceGroupResourceExtension GetManagedNetworkResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ManagedNetworkResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkResourceGroupResourceExtension GetManagedNetworkResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ManagedNetworkResourceGroupResourceExtension(client, scope);
             });
         }
         #region ManagedNetworkResource
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
         public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetScopeAssignments();
+            return GetManagedNetworkArmResourceExtension(client, scope).GetScopeAssignments();
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
         public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedNetworks();
+            return GetManagedNetworkResourceGroupResourceExtension(resourceGroupResource).GetManagedNetworks();
         }
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
+            return GetManagedNetworkResourceExtension(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
+            return GetManagedNetworkResourceExtension(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
         }
     }
 }
