@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -58,58 +60,53 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public async Task Test()
         {
             // SETUP
-            // CONFIGURE OTEL
             var resourceAttributes = new Dictionary<string, object>
             {
                 { "service.name", _roleName },
             };
 
-            IServiceCollection services = new ServiceCollection();
-            services
-                .AddLogging(builder =>
-                {
-                    builder.AddFilter<OpenTelemetryLoggerProvider>(_logCategoryName, _logLevel);
-                })
+            var builder = WebApplication.CreateBuilder();
+            builder.Logging.ClearProviders();
+            builder.Services
                 .AddOpenTelemetry()
-                    .ConfigureResource(x => x.AddAttributes(resourceAttributes))
-                    .WithTracing(builder =>
-                    {
-                        builder.AddSource(_activitySourceName);
-                    })
-                    .WithMetrics(builder =>
-                    {
-                        builder.AddMeter(_meterName);
-                    })
-                    .UseAzureMonitor(o => o.ConnectionString = TestEnvironment.ConnectionString);
+                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestEnvironment.ConnectionString;
+                });
 
-            using var serviceProvider = services.BuildServiceProvider();
+            var app = builder.Build();
+            app.MapGet("/", () =>
+            {
+                app.Logger.LogInformation("Hello World!");
 
-            // GetRequiredService must be invoked to initialize OTel.
-            var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
-            var meterProvider = serviceProvider.GetRequiredService<MeterProvider>();
-            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+                //using var client = new HttpClient();
+                //var response = client.GetAsync("https://www.bing.com/").Result;
 
-            // ACT
-            await TracesScenarioAsync(tracerProvider);
-            await MetricsScenarioAsync(meterProvider);
-            await LogsScenarioAsync(loggerFactory);
+                return $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}";
+            });
+
+            _ = app.RunAsync("http://localhost:9999");
+
+            // Send request
+            using var httpClient = new HttpClient();
+            var res = await httpClient.GetStringAsync("http://localhost:9999").ConfigureAwait(false);
+            Assert.NotNull(res);
+
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown(); // shutdown to prevent subscribing to log queries.
+
+            await VerifyTracesAsync();
+
+            await app.DisposeAsync();
         }
 
-        private async Task TracesScenarioAsync(TracerProvider tracerProvider)
+        private async Task VerifyTracesAsync()
         {
-            // CREATE ACTIVITY
-            string activityName = "MyTestActivity";
-            using (var activity = _activitySource.StartActivity(activityName, ActivityKind.Internal))
-            {
-                activity?.SetTag("foo", "bar");
-            }
-
-            // Export
-            tracerProvider.ForceFlush();
-            tracerProvider.Shutdown(); // shutdown to stop collecting / transmitting Traces during the remainder of the test.
-
             // Query
-            string query = $"AppDependencies | where Target == '{activityName}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated";
+            //string query = $"AppDependencies | where Target == '{activityName}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated";
+            string query = $"union * | top 1 by TimeGenerated";
             LogsTable? table = await CheckForRecordAsync(_logsQueryClient, query);
 
             // Assert
