@@ -129,9 +129,9 @@ directive:
       $.NotificationRegistration.properties.properties['$ref'] = '#/definitions/NotificationRegistrationProperties';
       delete $.SkuResource.properties.properties['allOf'];
       $.SkuResource.properties.properties['$ref'] = '#/definitions/ResourceTypeSku';
-      $.CustomRolloutSpecification.properties.canary['allOf'];
+      delete $.CustomRolloutSpecification.properties.canary['allOf'];
       $.CustomRolloutSpecification.properties.canary['$ref'] = '#/definitions/TrafficRegions';
-      $.CustomRolloutSpecification.properties.providerRegistration['allOf'];
+      delete $.CustomRolloutSpecification.properties.providerRegistration['allOf'];
       $.CustomRolloutSpecification.properties.providerRegistration['$ref'] = '#/definitions/ProviderRegistration';
       delete $.CustomRolloutProperties.properties.specification['allOf'];
       $.CustomRolloutProperties.properties.specification['$ref'] = '#/definitions/CustomRolloutSpecification';

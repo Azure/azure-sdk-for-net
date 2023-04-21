@@ -182,6 +182,16 @@
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
+
+# PRLabel: %Cognitive - Health Insights
+/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
@@ -488,7 +498,7 @@
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit 
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - ApplicationInsights

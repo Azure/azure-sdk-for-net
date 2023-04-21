@@ -90,5 +90,8 @@ namespace Azure.Storage
                 throw new ArgumentException($"Invalid Job Part Plan File: Value of {elementName} was expected to be a non-zero positive value but instead was {actualValue}");
             }
         }
+
+        public static IOException LocalFileAlreadyExists(string pathName)
+            => new IOException($"File path `{pathName}` already exists. Cannot overwrite file.");
     }
 }
