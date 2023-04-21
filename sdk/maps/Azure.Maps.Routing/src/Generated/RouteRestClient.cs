@@ -109,7 +109,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -576,7 +576,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -971,7 +971,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -1626,7 +1626,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -2210,7 +2210,10 @@ namespace Azure.Maps.Routing
             uri.AppendPath("/route/range/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("query", query, ",", true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
             if (fuelBudgetInLiters != null)
             {
                 uri.AppendQuery("fuelBudgetInLiters", fuelBudgetInLiters.Value, true);
@@ -2239,7 +2242,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("traffic", useTrafficData.Value, true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
