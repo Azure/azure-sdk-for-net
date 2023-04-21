@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -11,12 +10,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferManagerOptions
     {
-        /// <summary>
-        /// Optional. An object for tracking progress of all transfers.
-        /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
-        /// </summary>
-        internal IProgress<StorageTransferProgress> ProgressHandler { get; set; }
-
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.
         /// Default is <see cref="ErrorHandlingOptions.StopOnAllFailures"/>.

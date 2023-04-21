@@ -28,6 +28,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
 
+        internal TransferProgressTracker _progressTracker;
+
         /// <summary>
         /// Source resource
         /// </summary>
@@ -137,7 +139,7 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        internal TransferJobInternal(
+        private TransferJobInternal(
             DataTransfer dataTransfer,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
@@ -197,6 +199,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler);
         }
 
         /// <summary>
@@ -225,6 +228,7 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler);
         }
 
         public void Dispose()
@@ -293,6 +297,24 @@ namespace Azure.Storage.DataMovement
             else if (args.StorageTransferStatus > status)
             {
                 await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
+            }
+
+            // Progress tracking
+            if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
+            {
+                _progressTracker.IncrementInProgressFiles();
+            }
+            else if (args.StorageTransferStatus == StorageTransferStatus.Completed)
+            {
+                _progressTracker.IncrementCompletedFiles();
+            }
+            else if (args.StorageTransferStatus == StorageTransferStatus.CompletedWithSkippedTransfers)
+            {
+                _progressTracker.IncrementSkippedFiles();
+            }
+            else if (args.StorageTransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+            {
+                _progressTracker.IncrementFailedFiles();
             }
         }
 
@@ -385,6 +407,11 @@ namespace Azure.Storage.DataMovement
         public void AppendJobPart(JobPartInternal jobPart)
         {
             _jobParts.Add(jobPart);
+        }
+
+        internal void JobPartQueued()
+        {
+            _progressTracker.IncrementQueuedFiles();
         }
     }
 }
