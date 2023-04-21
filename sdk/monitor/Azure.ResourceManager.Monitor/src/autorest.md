@@ -275,6 +275,16 @@ rename-mapping:
   MonitoringAccountDestination.accountResourceId: -|arm-id
   StorageBlobDestination: DataCollectionRuleStorageBlobDestination
   StorageTableDestination: DataCollectionRuleStorageTableDestination
+  ActionType: MonitorWorkspaceActionType
+  Metrics: MonitorWorkspaceMetricProperties
+  PublicNetworkAccess: MonitorPublicNetworkAccessState
+  AzureMonitorWorkspaceResource: MonitorWorkspaceResource
+  AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
+  AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
+  AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
+  AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
+  AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
+  AzureMonitorWorkspaceResourceListResult: MonitorWorkspaceResourceListResult
 
 
 
