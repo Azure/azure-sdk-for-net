@@ -31,6 +31,11 @@ namespace Azure
         /// </summary>
         public string? ErrorCode { get; }
 
+        /// <summary>
+        /// Gets the response, if any, that led to the exception.
+        /// </summary>
+        public Response? Response { get; }
+
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
         public RequestFailedException(string message) : this(0, message)
@@ -105,6 +110,7 @@ namespace Azure
         public RequestFailedException(Response response, Exception? innerException)
             : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
         {
+            Response = response;
         }
 
         /// <inheritdoc />
@@ -128,6 +134,8 @@ namespace Azure
 
         internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response)
         {
+            BufferResponseIfNeeded(response);
+
             bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? data) : response.RequestFailedDetailsParser.TryParse(response, out error, out data);
             StringBuilder messageBuilder = new();
 
@@ -191,25 +199,23 @@ namespace Azure
             return (formatMessage, error?.Code, data);
         }
 
-        /// <summary>
-        /// This is intentionally sync-only as it will only be called by the ctor.
-        /// </summary>
-        /// <param name="response"></param>
-        /// <returns></returns>
-        internal static string? ReadContent(Response response)
+        private static void BufferResponseIfNeeded(Response response)
         {
-            string? content = null;
-
-            if (response.ContentStream != null &&
-                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            // Buffer into a memory stream if not already buffered
+            if (response.ContentStream is null or MemoryStream)
             {
-                using (var streamReader = new StreamReader(response.ContentStream, encoding))
-                {
-                    content = streamReader.ReadToEnd();
-                }
+                return;
             }
 
-            return content;
+            var bufferedStream = new MemoryStream();
+            response.ContentStream.CopyTo(bufferedStream);
+
+            // Dispose the unbuffered stream
+            response.ContentStream.Dispose();
+
+            // Reset the position of the buffered stream and set it on the response
+            bufferedStream.Position = 0;
+            response.ContentStream = bufferedStream;
         }
 
         internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
@@ -218,18 +224,9 @@ namespace Azure
             data = null;
             try
             {
-                string? content = null;
-                if (response.ContentStream != null && response.ContentStream.CanSeek)
-                {
-                    content = response.Content.ToString();
-                }
-                else
-                {
-                    // this path should only happen in exceptional cases such as when
-                    // the RFE ctor was called directly by client or customer code with an un-buffered response.
-                    // Generated code would never do this.
-                    content = ReadContent(response);
-                }
+                // The response content is buffered at this point.
+                string? content = response.Content.ToString();
+
                 // Optimistic check for JSON object we expect
                 if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
                 {

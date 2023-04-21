@@ -40,6 +40,12 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(exception.Response.ContentStream);
         }
 
         [Test]
@@ -60,6 +66,12 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(exception.Response.ContentStream);
         }
 
         [Test]
@@ -79,6 +91,12 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(exception.Response.ContentStream);
         }
 
         [Test]
@@ -141,6 +159,14 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("Content-Type", out var value));
+            Assert.AreEqual("text/json", value);
+            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
+            Assert.AreEqual(0, exception.Response.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", response.Content.ToString());
         }
 
         [Test]
@@ -160,6 +186,10 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
+            Assert.AreEqual(0, exception.Response.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", response.Content.ToString());
         }
 
         [Test]
@@ -320,6 +350,10 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
+
+            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
+            Assert.AreEqual(0, exception.Response.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", response.Content.ToString());
         }
 
         [Test]
@@ -345,6 +379,10 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
+
+            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
+            Assert.AreEqual(0, exception.Response.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", response.Content.ToString());
         }
 
         [Test]
@@ -418,7 +456,7 @@ namespace Azure.Core.Tests
                 false => new UnSeekableStream(_stream)
             };
         }
-        private class UnSeekableStream : MemoryStream
+        private class UnSeekableStream : Stream
         {
             private readonly MemoryStream _stream;
             public UnSeekableStream(MemoryStream stream)
@@ -454,10 +492,6 @@ namespace Azure.Core.Tests
             {
                 _stream.Close();
             }
-            public override bool TryGetBuffer(out ArraySegment<byte> buffer)
-            {
-                return _stream.TryGetBuffer(out buffer);
-            }
 
             public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
             {
@@ -479,6 +513,11 @@ namespace Azure.Core.Tests
             public override void EndWrite(IAsyncResult asyncResult)
             {
                 _stream.EndWrite(asyncResult);
+            }
+
+            public override void Flush()
+            {
+                _stream.Flush();
             }
 
             public override bool Equals(object obj)
@@ -509,6 +548,16 @@ namespace Azure.Core.Tests
             public override int ReadByte()
             {
                 return _stream.ReadByte();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return _stream.Seek(offset, origin);
+            }
+
+            public override void SetLength(long value)
+            {
+                _stream.SetLength(value);
             }
 
             public override string ToString()
