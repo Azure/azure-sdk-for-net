@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -126,7 +126,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
             var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifier(classifierId);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
             var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
 
             var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, classifierId, uri);

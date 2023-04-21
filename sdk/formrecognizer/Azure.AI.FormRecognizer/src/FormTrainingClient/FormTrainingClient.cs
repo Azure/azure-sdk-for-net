@@ -395,7 +395,7 @@ namespace Azure.AI.FormRecognizer.Training
 
         #endregion
 
-        #region Management Ops
+        #region Administration Ops
 
         /// <summary>
         /// Gets a description of a custom model, including the types of forms it can recognize and the fields it will extract for each form type.
