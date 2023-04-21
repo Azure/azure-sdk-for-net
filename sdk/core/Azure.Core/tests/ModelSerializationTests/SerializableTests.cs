@@ -24,11 +24,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public void CanRoundTripFutureVersionWithoutLoss(bool includeReadonly, bool handleUnknown)
         {
             Stream stream = new MemoryStream();
-            string serviceResponse;
-            if (handleUnknown)
-                serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-            else
-                serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\"}";
+            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            //if (handleUnknown)
+            //    serviceResponse =
+            //else
+            //    serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\"}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
             if (includeReadonly)
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
             }
             Assert.That(serviceResponse.Length, Is.EqualTo(bytesConsumed));
-            model.TrySerialize(stream, out var bytesWritten, options: options);
+            model.TrySerialize(stream, out var bytesWritten, options: options); // consider resetting stream in TrySerialize
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
@@ -83,6 +83,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Assert.That(model.Name, Is.EqualTo(model2.Name));
             Assert.That(model.Weight, Is.EqualTo(model2.Weight));
             Assert.That(roundTrip.Length, Is.EqualTo(bytesConsumed));
+            //validate add properties
+            //consider adding generic model checker that verifies all model properties
         }
 
         [Test]
