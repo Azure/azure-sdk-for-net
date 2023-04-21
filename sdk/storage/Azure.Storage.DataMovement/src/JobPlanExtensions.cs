@@ -193,18 +193,41 @@ namespace Azure.Storage.DataMovement
                 preserveLastModifiedTime: false, // TODO: update when supported
                 checksumVerificationOption: 0); // TODO: update when supported
 
+            // Create the source Path
+            string sourcePath;
+            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                sourcePath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                sourcePath = jobPart._sourceResource.Path;
+            }
+
+            string destinationPath;
+            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                destinationPath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                destinationPath = jobPart._destinationResource.Path;
+            }
+
             return new JobPartPlanHeader(
                 version: DataMovementConstants.PlanFile.SchemaVersion,
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
-                sourcePath: jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri ?
-                            jobPart._sourceResource.Uri.AbsoluteUri :
-                            jobPart._sourceResource.Path,
+                sourcePath: sourcePath,
                 sourceExtraQuery: "", // TODO: convert options to string
-                destinationPath: jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri ?
-                            jobPart._destinationResource.Uri.AbsoluteUri :
-                            jobPart._destinationResource.Path,
+                destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
                 isFinalPart: isFinalPart,
                 forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
