@@ -28,6 +28,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             ClinicalTrials = clinicalTrials;
         }
 
+        /// <summary> Initializes a new instance of TrialMatcherModelConfiguration. </summary>
+        /// <param name="verbose"> An indication whether the model should produce verbose output. </param>
+        /// <param name="includeEvidence"> An indication whether the model's output should include evidence for the inferences. </param>
+        /// <param name="clinicalTrials">
+        /// The clinical trials that the patient(s) should be matched to. &lt;br /&gt;The trial
+        /// selection can be given as a list of custom clinical trials and/or a list of
+        /// filters to known clinical trial registries. In case both are given, the
+        /// resulting trial set is a union of the two sets.
+        /// </param>
+        internal TrialMatcherModelConfiguration(bool? verbose, bool? includeEvidence, ClinicalTrials clinicalTrials)
+        {
+            Verbose = verbose;
+            IncludeEvidence = includeEvidence;
+            ClinicalTrials = clinicalTrials;
+        }
+
         /// <summary> An indication whether the model should produce verbose output. </summary>
         public bool? Verbose { get; set; }
         /// <summary> An indication whether the model's output should include evidence for the inferences. </summary>
