@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -25,10 +25,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             Stream stream = new MemoryStream();
             string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-            //if (handleUnknown)
-            //    serviceResponse =
-            //else
-            //    serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\"}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
             if (includeReadonly)
@@ -62,14 +58,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
             {
                 var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
                 Assert.AreEqual(1, additionalProperties.Count);
-                foreach (var entry in additionalProperties)
-                {
-                    Assert.AreEqual("numberOfLegs", entry.Key);
-                    Assert.AreEqual(4.ToString(), entry.Value.ToString());
-                }
+                Assert.IsTrue(additionalProperties.ContainsKey("numberOfLegs"));
+                Assert.IsTrue(additionalProperties["numberOfLegs"].ToString() == "4");
             }
             Assert.That(serviceResponse.Length, Is.EqualTo(bytesConsumed));
-            model.TrySerialize(stream, out var bytesWritten, options: options); // consider resetting stream in TrySerialize
+            model.TrySerialize(stream, out var bytesWritten, options: options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
@@ -83,8 +76,18 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Assert.That(model.Name, Is.EqualTo(model2.Name));
             Assert.That(model.Weight, Is.EqualTo(model2.Weight));
             Assert.That(roundTrip.Length, Is.EqualTo(bytesConsumed));
-            //validate add properties
-            //consider adding generic model checker that verifies all model properties
+            if (handleUnknown)
+            {
+                var additionalProperties1 = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
+                var additionalProperties2 = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model2) as Dictionary<string, BinaryData>;
+
+                Assert.AreEqual(1, additionalProperties1.Count);
+                Assert.IsTrue(additionalProperties1.ContainsKey("numberOfLegs"));
+                Assert.IsTrue(additionalProperties1["numberOfLegs"].ToString() == "4");
+                Assert.AreEqual(1, additionalProperties2.Count);
+                Assert.IsTrue(additionalProperties2.ContainsKey("numberOfLegs"));
+                Assert.IsTrue(additionalProperties2["numberOfLegs"].ToString() == "4");
+            }
         }
 
         [Test]
