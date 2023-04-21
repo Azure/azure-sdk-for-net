@@ -6,7 +6,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
