@@ -28,7 +28,8 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true).ConfigureAwait(false);
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -44,13 +45,15 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.AtomicJobStatus;
+            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource).ConfigureAwait(false);
+                destinationResource: destinationResource,
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -66,13 +69,15 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
+            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource).ConfigureAwait(false);
+                destinationResource: destinationResource,
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -85,19 +90,22 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childDestinationPath = header.SourcePath;
+            string childSourceName = childSourcePath.Substring(sourceResource.Path.Length + 1);
+            string childDestinationPath = header.DestinationPath;
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)),
-                partPlanFileExists: true).ConfigureAwait(false);
+                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -114,14 +122,16 @@ namespace Azure.Storage.DataMovement
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childDestinationPath = header.SourcePath;
+            string childDestinationPath = header.DestinationPath;
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length))).ConfigureAwait(false);
+                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -138,14 +148,18 @@ namespace Azure.Storage.DataMovement
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childDestinationPath = header.SourcePath;
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+            string childDestinationPath = header.DestinationPath;
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Path.Length + 1);
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length))).ConfigureAwait(false);
+                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
+                partPlanFileExists: true,
+                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -154,7 +168,9 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Translate the initial job part header to a job plan format file
         /// </summary>
-        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart, StorageTransferStatus jobStatus)
+        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart,
+            StorageTransferStatus jobStatus,
+            bool isFinalPart)
         {
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: JobPlanBlobType.Detect, // TODO: update when supported
@@ -175,18 +191,22 @@ namespace Azure.Storage.DataMovement
 
             JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
                 preserveLastModifiedTime: false, // TODO: update when supported
-                md5VerificationOption: 0); // TODO: update when supported
+                checksumVerificationOption: 0); // TODO: update when supported
 
             return new JobPartPlanHeader(
                 version: DataMovementConstants.PlanFile.SchemaVersion,
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
-                sourcePath: jobPart._sourceResource.Path,
+                sourcePath: jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri ?
+                            jobPart._sourceResource.Uri.AbsoluteUri :
+                            jobPart._sourceResource.Path,
                 sourceExtraQuery: "", // TODO: convert options to string
-                destinationPath: jobPart._destinationResource.Path,
+                destinationPath: jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri ?
+                            jobPart._destinationResource.Uri.AbsoluteUri :
+                            jobPart._destinationResource.Path,
                 destinationExtraQuery: "", // TODO: convert options to string
-                isFinalPart: false, // TODO: change but we might remove this param
+                isFinalPart: isFinalPart,
                 forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
                 forceIfReadOnly: false, // TODO: revisit for Azure Files
                 autoDecompress: false, // TODO: revisit if we want to support this feature

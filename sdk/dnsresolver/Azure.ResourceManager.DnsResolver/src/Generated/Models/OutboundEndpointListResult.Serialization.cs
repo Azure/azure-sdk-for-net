@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DnsResolverOutboundEndpointData> array = new List<DnsResolverOutboundEndpointData>();
