@@ -53,6 +53,9 @@ namespace Azure.Storage
         public static InvalidDataException HashMismatch(string hashHeaderName)
             => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");
 
+        public static InvalidDataException HashMismatchOnStreamedDownload(string mismatchedRange)
+            => new InvalidDataException($"Detected invalid data while streaming to the destination. Range {mismatchedRange} produced mismatched checksum.");
+
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
             => new ArgumentException("Precalculated checksum not supported when potentially partitioning an upload.");
 

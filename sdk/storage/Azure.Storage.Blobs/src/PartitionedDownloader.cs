@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs
                 var responseChecksum = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
                 if (!calculatedChecksum.Span.SequenceEqual(responseChecksum.Checksum.Span))
                 {
-                    throw new Exception(); // TODO: come up with new exception for data already copied to destination
+                    throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
             }
         }
