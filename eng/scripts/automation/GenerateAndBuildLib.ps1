@@ -5,7 +5,7 @@ $TSP_LOCATION_FILE = "tsp-location.yaml"
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
 #mgmt: swagger directory name to sdk directory name map
-$packageNameHash = [ordered]@{"vmware" = "avs"; 
+$packageNameHash = [ordered]@{"vmware" = "avs";
     "azure-kusto" = "kusto";
     "cosmos-db" = "cosmosdb";
     "msi" = "managedserviceidentity";
@@ -55,7 +55,7 @@ function Get-SwaggerInfo()
 create or update the autorest config file for sdk (autorest.md)
 
 .DESCRIPTION
-1. update input-file or require block according to the input parameter. If readme parameter is provided, autorest.md will 
+1. update input-file or require block according to the input parameter. If readme parameter is provided, autorest.md will
 contain only require block, if input-file parameter is provided, autorest.md will contain only require block.
 2. merge the autorestConfig to the autorest.md
 
@@ -111,9 +111,9 @@ function CreateOrUpdateAutorestConfigFile() {
 
             $inputRegex = "(?:(?:input-file|require)\s*:\s*\r?\n(?:\s*-\s+.*\r?\n)+|(?:input-file|require):\s+.*)"
             $fileContent = $fileContent -replace $inputRegex, $configline
-            $fileContent | Set-Content $autorestFilePath    
+            $fileContent | Set-Content $autorestFilePath
         }
-        
+
         # update autorest.md with configuration
         if ( $autorestConfigYaml) {
             Write-Host "Update autorest.md with configuration."
@@ -153,7 +153,7 @@ function CreateOrUpdateAutorestConfigFile() {
             Throw "autorest.md does not exist, and no autorest configuration to create one."
         }
     }
-} 
+}
 
 function Update-CIYmlFile() {
     param (
@@ -349,7 +349,7 @@ function New-MgmtPackageFolder() {
         [string]$AUTOREST_CONFIG_FILE = "autorest.md",
         [string]$outputJsonFile = "newPacakgeOutput.json"
     )
-  
+
     if ($packageName -eq "") {
         $packageName = $service
     }
@@ -375,8 +375,9 @@ function New-MgmtPackageFolder() {
       Pop-Location
 
       RegisterMgmtSDKToMgmtCoreClient -sdkRepoRootPath $sdkPath
+      git diff $sdkPath/sdk/resourcemanager/ci.mgmt.yml
     }
-  
+
     # update the readme path.
     if ($readme) {
       Write-Host "Updating autorest.md file."
@@ -385,11 +386,11 @@ function New-MgmtPackageFolder() {
       $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
       (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
     }
-  
+
     Push-Location $sdkPath
     $relativeFolderPath = Resolve-Path $projectFolder -Relative
     Pop-Location
-  
+
     $outputJson = [PSCustomObject]@{
       service = $service
       packageName = $mgmtPackageName
@@ -397,7 +398,7 @@ function New-MgmtPackageFolder() {
       path = @($relativeFolderPath)
     }
     $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
-  
+
     return $projectFolder
 }
 
@@ -409,7 +410,7 @@ function CreateOrUpdateTypeSpecConfigFile() {
         [string]$repo = "",
         [string]$specRoot = "",
         [string]$additionalSubDirectories="" #additional directories needed, separated by semicolon if more than one
-        
+
     )
     if (!(Test-Path -Path $typespecConfigurationFile)) {
         New-Item -Path $typespecConfigurationFile
@@ -474,7 +475,7 @@ function New-TypeSpecPackageFolder() {
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
-        
+
         CreateOrUpdateTypeSpecConfigFile `
             -typespecConfigurationFile $projectFolder/$TSP_LOCATION_FILE `
             -directory $relatedTypeSpecProjectFolder `
@@ -482,7 +483,7 @@ function New-TypeSpecPackageFolder() {
             -repo $repo `
             -specRoot $specRoot `
             -additionalSubDirectories $additionalSubDirectories
-        
+
         Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
     } else {
         Write-Host "Path doesn't exist. create template."
@@ -502,7 +503,7 @@ function New-TypeSpecPackageFolder() {
         $clientName = $namespaceArray[-1]
         $groupName = $namespaceArray[1..$endIndex] -join "."
         $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
-        
+
         if (Test-Path -Path $ciymlFilePath) {
             Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
             Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
@@ -617,12 +618,12 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "readmeFile:$readmeFile"
     $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
     Write-Host "service:$service, serviceType:$serviceType"
-    
+
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
         Write-Error "readme file '$readmeFile' does not exist."
         exit 1
     }
-    
+
     $packagesToGen = @()
     $newPackageOutput = "newPackageOutput.json"
     if ( $serviceType -eq "resource-manager" ) {
@@ -788,7 +789,7 @@ function GeneratePackage()
             Remove-Item $logFilePath
         }
     }
-    
+
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
@@ -819,7 +820,7 @@ function GeneratePackage()
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
-    $generatedSDKPackages.Add(@{packageName="$packageName"; 
+    $generatedSDKPackages.Add(@{packageName="$packageName";
                                 result=$result;
                                 path=@("$path", "$ciFilePath");
                                 packageFolder="$projectFolder";
@@ -842,7 +843,7 @@ function UpdateExistingSDKByInputFiles()
 
     $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
     Write-Host "Updating autorest.md files for all the changed swaggers."
-    
+
     $sdksInfo = @{}
     $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
     foreach ($path in $autorestFilesPath) {
@@ -875,5 +876,5 @@ function UpdateExistingSDKByInputFiles()
         $projectFolder = Resolve-Path -Path $projectFolder
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
-    
+
 }
