@@ -86,12 +86,12 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddSingleton<EventHubClientFactory>();
             builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
-            builder.Services.PostConfigure<EventHubOptions>(ConfigureInitialOffsetOptions);
+            builder.Services.PostConfigure<EventHubOptions>(ConfigureOptions);
 
             return builder;
         }
 
-        internal static void ConfigureInitialOffsetOptions(EventHubOptions options)
+        internal static void ConfigureOptions(EventHubOptions options)
         {
             OffsetType? type = options?.InitialOffsetOptions?.Type;
             if (type.HasValue)
@@ -120,6 +120,11 @@ namespace Microsoft.Extensions.Hosting
                             "An unsupported value was supplied for initialOffsetOptions.type");
                 }
                 // If not specified, EventProcessor's default offset will apply
+            }
+
+            if (options.MinEventBatchSize > options.MaxEventBatchSize)
+            {
+                throw new InvalidOperationException("The minimum event batch size cannot be larger than the maximum event batch size.");
             }
         }
     }

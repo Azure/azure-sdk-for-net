@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -16,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
-            #region Snippet:ContainerRegistry_Samples_CreateBlobClient
+            #region Snippet:ContainerRegistry_Samples_CreateContentClient
 
             // Get the service endpoint from the environment
             Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
@@ -170,13 +169,13 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             // Create a new ContainerRegistryContentClient
             ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
 
-#region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
+            #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
             // Create a manifest file in the Docker v2 Manifest List format
             var manifestList = new
             {
                 schemaVersion = 2,
-                mediaType = ManifestMediaType.DockerManifestList.ToString(),
+                mediaType = "application/vnd.docker.distribution.manifest.list.v2+json",
                 manifests = new[]
                 {
                     new
@@ -195,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             BinaryData content = BinaryData.FromObjectAsJson(manifestList);
             await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
-#endregion
+            #endregion
         }
 
         [Test]
@@ -216,14 +215,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             // Create a new ContainerRegistryContentClient
             ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
-#region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
-
-            // Pass multiple media types if the media type of the manifest to download is unknown
-            List<ManifestMediaType> mediaTypes = new() {
-                "application/vnd.docker.distribution.manifest.list.v2+json",
-                "application/vnd.oci.image.index.v1+json" };
-
-            GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
+            #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
+            GetManifestResult result = await client.GetManifestAsync("sample");
 
             if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
             {
@@ -233,8 +226,41 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Console.WriteLine("Manifest is an OCI index.");
             }
+            #endregion
+        }
 
-#endregion
+        [Test]
+        public async Task CanCatchUploadFailure()
+        {
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+            string uploadError = """{"errors":[{"code":"BLOB_UPLOAD_INVALID","message":"blob upload invalid"}]}""";
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(new MockResponse(404).SetContent(uploadError).AddHeader("Content-Type", "text/plain; charset=utf-8"))
+            };
+
+            ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
+            bool caught = false;
+
+            #region Snippet:ContainerRegistry_Samples_CanCatchUploadFailure
+            try
+            {
+                BinaryData blob = BinaryData.FromString("Sample blob.");
+                UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(blob);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "BLOB_UPLOAD_INVALID")
+            {
+                Console.WriteLine("Blob upload failed. Please retry.");
+                Console.WriteLine($"Service error: {ex.Message}");
+#if !SNIPPET
+                caught = true;
+#endif
+            }
+            #endregion
+
+            Assert.IsTrue(caught);
         }
     }
 }

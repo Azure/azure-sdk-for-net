@@ -147,13 +147,13 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """);
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 foreach (dynamic value in json.Foo)
                 { }
             });
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 foreach (dynamic value in json.Bar)
                 { }

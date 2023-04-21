@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -123,7 +122,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -158,7 +156,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value);
@@ -187,7 +183,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
@@ -214,7 +209,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -224,7 +218,6 @@ namespace Azure.ResourceManager.ExtendedLocations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostType = new CustomLocationHostType(property0.Value.GetString());

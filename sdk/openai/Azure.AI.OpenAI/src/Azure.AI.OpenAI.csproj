@@ -5,7 +5,7 @@
       Works with Azure OpenAI resources as well as the non-Azure OpenAI endpoint.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.OpenAI client library</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>

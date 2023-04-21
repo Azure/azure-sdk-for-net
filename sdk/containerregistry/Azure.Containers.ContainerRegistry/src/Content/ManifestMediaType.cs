@@ -24,6 +24,7 @@ namespace Azure.Containers.ContainerRegistry
         internal static readonly ManifestMediaType OciIndex = new ManifestMediaType("application/vnd.oci.image.index.v1+json");
         internal static readonly ManifestMediaType DockerManifestList = new ManifestMediaType("application/vnd.docker.distribution.manifest.list.v2+json");
         internal static readonly ManifestMediaType DockerManifestV1 = new ManifestMediaType("application/vnd.docker.container.image.v1+json");
+        internal static readonly ManifestMediaType OrasArtifactV1 = new ManifestMediaType("application/vnd.cncf.oras.artifact.manifest.v1+json");
 
         private readonly string _value;
 

@@ -61,7 +61,7 @@ namespace Azure.Identity
     {
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? CliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
@@ -75,7 +75,7 @@ namespace Azure.Identity
     {
         public AzureDeveloperCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? AzdCliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
@@ -89,7 +89,7 @@ namespace Azure.Identity
     {
         public AzurePowerShellCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? PowerShellProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
@@ -422,8 +422,8 @@ namespace Azure.Identity
     {
         public VisualStudioCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public System.TimeSpan? VisualStudioProcessTimeout { get { throw null; } set { } }
     }
     public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
     {

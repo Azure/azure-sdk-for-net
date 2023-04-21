@@ -98,12 +98,12 @@ Schema for <c>SearchRequest</c>:
   keywords: string, # Optional. The keywords applied to all searchable fields.
   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
-  filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
+  filter: any, # Optional. The filter for the search. See examples for the usage of supported filters.
   facets: [
     {
       count: number, # Optional. The count of the facet item.
       facet: string, # Optional. The name of the facet item.
-      sort: AnyObject, # Optional. Any object
+      sort: any, # Optional. Any object
     }
   ], # Optional.
   taxonomySetting: {
@@ -235,12 +235,12 @@ Schema for <c>SearchRequest</c>:
   keywords: string, # Optional. The keywords applied to all searchable fields.
   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
-  filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
+  filter: any, # Optional. The filter for the search. See examples for the usage of supported filters.
   facets: [
     {
       count: number, # Optional. The count of the facet item.
       facet: string, # Optional. The name of the facet item.
-      sort: AnyObject, # Optional. Any object
+      sort: any, # Optional. Any object
     }
   ], # Optional.
   taxonomySetting: {
@@ -333,7 +333,7 @@ Schema for <c>SuggestRequest</c>:
 <code>{
   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
-  filter: AnyObject, # Optional. The filter for the search.
+  filter: any, # Optional. The filter for the search.
 }
 </code>
 
@@ -405,7 +405,7 @@ Schema for <c>SuggestRequest</c>:
 <code>{
   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
-  filter: AnyObject, # Optional. The filter for the search.
+  filter: any, # Optional. The filter for the search.
 }
 </code>
 
@@ -600,7 +600,7 @@ Schema for <c>AutoCompleteRequest</c>:
 <code>{
   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
-  filter: AnyObject, # Optional. The filter for the autocomplete request.
+  filter: any, # Optional. The filter for the autocomplete request.
 }
 </code>
 
@@ -657,7 +657,7 @@ Schema for <c>AutoCompleteRequest</c>:
 <code>{
   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
-  filter: AnyObject, # Optional. The filter for the autocomplete request.
+  filter: any, # Optional. The filter for the autocomplete request.
 }
 </code>
 

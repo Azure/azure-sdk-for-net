@@ -45,6 +45,11 @@ namespace Azure.Core.Json
 
                 bool changed = false;
 
+                if (path.Length > 0)
+                {
+                    path += Delimiter;
+                }
+
                 for (int i = _changes!.Count - 1; i > highWaterMark; i--)
                 {
                     var c = _changes[i];

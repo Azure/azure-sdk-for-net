@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         internal ComputeArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ComputeArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ComputeArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

@@ -23,15 +23,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="sequenceNumber"> The Sequence Number of the event. </param>
         /// <param name="participants"> The list of participants in the call. </param>
-        /// <param name="sequenceNumber"> Sequence number to indicate order of ParticipantsUpdated events. </param>
-        internal ParticipantsUpdatedInternal(string callConnectionId, string serverCallId, string correlationId, IReadOnlyList<CallParticipantInternal> participants, int? sequenceNumber)
+        internal ParticipantsUpdatedInternal(string callConnectionId, string serverCallId, string correlationId, int? sequenceNumber, IReadOnlyList<CallParticipantInternal> participants)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            Participants = participants;
             SequenceNumber = sequenceNumber;
+            Participants = participants;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -40,9 +40,9 @@ namespace Azure.Communication.CallAutomation
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
+        /// <summary> The Sequence Number of the event. </summary>
+        public int? SequenceNumber { get; }
         /// <summary> The list of participants in the call. </summary>
         public IReadOnlyList<CallParticipantInternal> Participants { get; }
-        /// <summary> Sequence number to indicate order of ParticipantsUpdated events. </summary>
-        public int? SequenceNumber { get; }
     }
 }

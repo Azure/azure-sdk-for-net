@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: Container Registry
 input-file:
  - https://github.com/Azure/azure-rest-api-specs/blob/c8d9a26a2857828e095903efa72512cf3a76c15d/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json
- 
+
 model-namespace: false
 generation1-convenience-client: true
 ```
@@ -82,26 +82,6 @@ directive:
         delete $.responses["201"].schema;
 ```
 
-# Add content-range and content-length parameters to upload chunk
-``` yaml
-directive:
-    from: swagger-document
-    where: $.paths["/{nextBlobUuidLink}"].patch
-    transform: >
-        $.parameters.push({
-            "name": "Content-Range",
-            "in": "header",
-            "type": "string",
-            "description": "Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header."
-        });
-        $.parameters.push({
-            "name": "Content-Length",
-            "in": "header",
-            "type": "string",
-            "description": "Length of the chunk being uploaded, corresponding the length of the request body."
-        });
-```
-
 # Change NextLink client name to nextLink
 ``` yaml
 directive:
@@ -162,7 +142,51 @@ directive:
     delete $["x-accessibility"]
 ```
 
+# Remove security definitions
+``` yaml
+directive:
+- from: swagger-document
+  where: $.
+  transform: >
+    delete $["securityDefinitions"];
+    delete $["security"];
+```
+
+# Remove stream response from `deleteBlob`
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $.paths["/v2/{name}/blobs/{digest}"]["delete"]
+    transform: >
+      delete $.responses["202"].schema;
+```
+
+# Add content-range and content-length parameters to upload chunk
+<!--.NET specific -->
+
+``` yaml
+directive:
+    from: swagger-document
+    where: $.paths["/{nextBlobUuidLink}"].patch
+    transform: >
+        $.parameters.push({
+            "name": "Content-Range",
+            "in": "header",
+            "type": "string",
+            "description": "Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header."
+        });
+        $.parameters.push({
+            "name": "Content-Length",
+            "in": "header",
+            "type": "string",
+            "description": "Length of the chunk being uploaded, corresponding the length of the request body."
+        });
+```
+
 # Don't buffer downloads
+<!--.NET specific -->
+
 ``` yaml
 directive:
 - from: swagger-document

@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             string operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>> scopeAttributes = null,
             int? callsToComplete = null,
-            DelayStrategy fallbackStrategy = null,
+            DelayStrategyInternal fallbackStrategy = null,
             bool exceptionOnWait = false,
             Exception customExceptionOnUpdate = null,
             RequestFailedException originalExceptionOnUpdate = null)

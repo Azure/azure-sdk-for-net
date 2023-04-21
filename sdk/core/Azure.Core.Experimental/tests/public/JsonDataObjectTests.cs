@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -17,11 +16,10 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
 
-            // TODO: Standardize Exception types.
-            Assert.Throws<InvalidOperationException>(() => { var i = (int)data; });
-            Assert.Throws<InvalidOperationException>(() => { var b = (bool)data; });
-            Assert.Throws<InvalidOperationException>(() => { var s = (string)data; });
-            Assert.Throws<JsonException>(() => { var time = (DateTime)data; });
+            Assert.Throws<InvalidCastException>(() => { var i = (int)data; });
+            Assert.Throws<InvalidCastException>(() => { var b = (bool)data; });
+            Assert.Throws<InvalidCastException>(() => { var s = (string)data; });
+            Assert.Throws<InvalidCastException>(() => { var time = (DateTime)data; });
         }
 
         [Test]
@@ -94,9 +92,7 @@ namespace Azure.Core.Tests.Public
         public void CannotGetArrayIndexOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data[0]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data[0]; });
         }
         #endregion
 
@@ -113,9 +109,7 @@ namespace Azure.Core.Tests.Public
         public void CannotSetArrayIndexOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { data[0] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data[0] = "invalid"; });
         }
 
         #endregion
@@ -125,13 +119,13 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
-            var expectedKeys = new[] { "first", "second" };
+            var expectedNames = new[] { "first", "second" };
             var expectedValues = new[] { 1, 2 };
 
             int i = 0;
             foreach (var pair in data)
             {
-                Assert.AreEqual(expectedKeys[i], pair.Key);
+                Assert.AreEqual(expectedNames[i], pair.Name);
                 Assert.AreEqual(expectedValues[i], (int)pair.Value);
                 i++;
             }

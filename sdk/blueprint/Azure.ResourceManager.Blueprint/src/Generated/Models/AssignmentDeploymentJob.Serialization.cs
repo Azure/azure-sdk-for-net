@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value);
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AssignmentDeploymentJobResult> array = new List<AssignmentDeploymentJobResult>();
@@ -124,7 +122,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestUri = null;
                         continue;
                     }
                     requestUri = new Uri(property.Value.GetString());

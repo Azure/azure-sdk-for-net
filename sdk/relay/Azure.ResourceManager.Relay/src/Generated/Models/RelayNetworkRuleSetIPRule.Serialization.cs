@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Relay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new RelayNetworkRuleIPAction(property.Value.GetString());

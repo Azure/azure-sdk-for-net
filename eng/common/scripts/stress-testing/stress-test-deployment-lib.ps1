@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Stop'
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot "../SemVer.ps1")
 
 $limitRangeSpec = @"
 apiVersion: v1
@@ -17,6 +18,8 @@ spec:
       memory: 100Mi
     type: Container
 "@
+
+$MIN_HELM_VERSION = "3.11.0"
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
@@ -98,6 +101,7 @@ function DeployStressTests(
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
     [Parameter(Mandatory=$False)][switch]$Template,
+    [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
@@ -215,11 +219,16 @@ function DeployStressPackage(
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
     $dockerBuildConfigs = @()
-    
-    $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
-    $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
-    if (Test-Path $genValFile) {
-        $scenarios = $genVal.Scenarios
+
+    $generatedHelmValuesFilePath = Join-Path $pkg.Directory "generatedValues.yaml"
+    $generatedHelmValues = Get-Content $generatedHelmValuesFilePath -Raw | ConvertFrom-Yaml -Ordered
+    $releaseName = $pkg.ReleaseName
+    if ($RetryFailedTests) {
+        $releaseName, $generatedHelmValues = generateRetryTestsHelmValues $pkg $releaseName $generatedHelmValues
+    }
+
+    if (Test-Path $generatedHelmValuesFilePath) {
+        $scenarios = $generatedHelmValues.Scenarios
         foreach ($scenario in $scenarios) {
             if ("image" -in $scenario.keys) {
                 $dockerFilePath = Join-Path $pkg.Directory $scenario.image
@@ -286,7 +295,7 @@ function DeployStressPackage(
                 }
             }
         }
-        $genVal.scenarios = @( foreach ($scenario in $genVal.scenarios) {
+        $generatedHelmValues.scenarios = @( foreach ($scenario in $generatedHelmValues.scenarios) {
             $dockerPath = if ("image" -notin $scenario) {
                 $dockerFilePath
             } else {
@@ -298,15 +307,15 @@ function DeployStressPackage(
             $scenario
         } )
 
-        $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
+        $generatedHelmValues | ConvertTo-Yaml | Out-File -FilePath $generatedHelmValuesFilePath
     }
 
-    Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
+    Write-Host "Installing or upgrading stress test $releaseName from $($pkg.Directory)"
 
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
     $installFlag = $Template ? "" : "--install"
-    $helmCommandArg = "helm", $subCommand, $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
 
     $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
@@ -322,7 +331,7 @@ function DeployStressPackage(
           # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
           # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
           # See https://github.com/helm/helm/issues/4558
-          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
+          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $releaseName'"
           return
         }
     }
@@ -333,7 +342,7 @@ function DeployStressPackage(
     if(!$Template) {
         $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
                                                 -n $pkg.Namespace `
-                                                -l "status=deployed,name=$($pkg.ReleaseName)" `
+                                                -l "status=deployed,name=$releaseName" `
                                                 -o jsonpath='{.items[0].metadata.name}'
         Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
     }
@@ -370,8 +379,85 @@ function CheckDependencies()
         }
     }
 
+    # helm version example: v3.11.2+g912ebc1
+    $helmVersionString = (helm version --short).substring(1) -replace '\+.*',''
+    $helmVersion = [AzureEngSemanticVersion]::new($helmVersionString)
+    $minHelmVersion = [AzureEngSemanticVersion]::new($MIN_HELM_VERSION)
+    if ($helmVersion.CompareTo($minHelmVersion) -lt 0) {
+        throw "Please update helm to version >= $MIN_HELM_VERSION (current version: $helmVersionString)`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
+    }
+
     if ($shouldError) {
         exit 1
     }
 
+}
+
+function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues) {
+
+    $podOutput = RunOrExitOnFailure kubectl get pods -n $pkg.namespace -o json
+    $pods = $podOutput | ConvertFrom-Json
+
+    # Get all jobs within this helm release
+    $helmStatusOutput = RunOrExitOnFailure helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
+    # -----Example output-----
+    # NAME: <Release Name>
+    # LAST DEPLOYED: Mon Jan 01 12:12:12 2020
+    # NAMESPACE: <namespace>
+    # STATUS: deployed
+    # REVISION: 10
+    # RESOURCES:
+    # ==> v1alpha1/Schedule
+    # NAME                          AGE
+    # <schedule resource name 1>    5h5m
+    # <schedule resource name 2>    5h5m
+
+    # ==> v1/SecretProviderClass
+    # <secret provider name 1>   7d4h
+
+    # ==> v1/Job
+    # NAME          COMPLETIONS   DURATION   AGE
+    # <job name 1>   0/1          5h5m       5h5m
+    # <job name 2>   0/1          5h5m       5h5m
+    $discoveredJob = $False
+    $jobs = @()
+    foreach ($line in $helmStatusOutput) {
+        if ($discoveredJob -and $line -match "==>") {break}
+        if ($discoveredJob) {
+            $jobs += ($line -split '\s+')[0] | Where-Object {($_ -ne "NAME") -and ($_)}
+        }
+        if ($line -match "==> v1/Job") {
+            $discoveredJob = $True
+        }
+    }
+
+    $failedJobsScenario = @()
+    $revision = 0
+    foreach ($job in $jobs) {
+        $jobRevision = [int]$job.split('-')[-1]
+        if ($jobRevision -gt $revision) {
+            $revision = $jobRevision
+        }
+
+        $jobOutput = RunOrExitOnFailure kubectl describe jobs -n $pkg.Namespace $job
+        $podPhase = $jobOutput | Select-String "0 Failed"
+        if ([System.String]::IsNullOrEmpty($podPhase)) {
+            $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
+        }
+    }
+    
+    $releaseName = "$($pkg.ReleaseName)-$revision-retry"
+
+    $retryTestsHelmVal = @{"scenarios"=@()}
+    foreach ($failedScenario in $failedJobsScenario) {
+        $failedScenarioObject = $generatedHelmValues.scenarios | Where {$_.Scenario -eq $failedScenario}
+        $retryTestsHelmVal.scenarios += $failedScenarioObject
+    }
+
+    if (!$retryTestsHelmVal.scenarios.length) {
+        Write-Host "There are no failed pods to retry."
+        return
+    }
+    $generatedHelmValues = $retryTestsHelmVal
+    return $releaseName, $generatedHelmValues
 }

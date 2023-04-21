@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
@@ -115,7 +113,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new SavingsPlanTerm(property0.Value.GetString());
@@ -125,7 +122,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new SavingsPlanBillingPlan(property0.Value.GetString());
@@ -135,7 +131,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeType = new AppliedScopeType(property0.Value.GetString());
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
@@ -155,7 +149,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             commitment = BenefitsCommitment.DeserializeBenefitsCommitment(property0.Value);
