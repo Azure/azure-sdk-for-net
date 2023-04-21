@@ -190,9 +190,7 @@ function RegisterMgmtSDKToMgmtCoreClient () {
     $newLines = [System.Collections.ArrayList]::new()
     $startIndex = $track2MgmtDirs[0].FullName.Replace('\', '/').IndexOf(("/sdk/")) + 1
     $shouldRemove = $false
-    # foreach($line in $armLines) {
-    for ($i = 0; $i -le $armLines.Count - 1; $i++) {
-        $line = $armLines[$i]
+    foreach($line in $armLines) {
         if($line.StartsWith("  paths:")) {
             $newLines.Add($line) | Out-Null
             $newLines.Add("    include:") | Out-Null
@@ -377,7 +375,6 @@ function New-MgmtPackageFolder() {
       Pop-Location
 
       RegisterMgmtSDKToMgmtCoreClient -sdkRepoRootPath $sdkPath
-      git diff $sdkPath/sdk/resourcemanager/ci.mgmt.yml
     }
 
     # update the readme path.
