@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential);
             var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifier(classifierId);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Irs1040);
             ClassifyDocumentOperation operation;
 
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentAnalysisClient();
             var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifier(classifierId);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             ClassifyDocumentOperation operation;
 
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential);
             var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifier(classifierId);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
             var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
             var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Completed, classifierId, uri);
 
