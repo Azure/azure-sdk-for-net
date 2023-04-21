@@ -1443,6 +1443,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType left, Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageSchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AuthenticationMethodLdapProperties
+    {
+        public AuthenticationMethodLdapProperties() { }
+        public int? ConnectionTimeoutInMs { get { throw null; } set { } }
+        public string SearchBaseDistinguishedName { get { throw null; } set { } }
+        public string SearchFilterTemplate { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate> ServerCertificates { get { throw null; } }
+        public string ServerHostname { get { throw null; } set { } }
+        public int? ServerPort { get { throw null; } set { } }
+        public string ServiceUserDistinguishedName { get { throw null; } set { } }
+        public string ServiceUserPassword { get { throw null; } set { } }
+    }
     public partial class AutoscaleSettingsResourceInfo
     {
         public AutoscaleSettingsResourceInfo(int maxThroughput) { }
@@ -1502,6 +1514,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly int _dummyPrimitive;
         public CassandraAuthenticationMethod(string value) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod Cassandra { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod Ldap { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1522,6 +1535,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal CassandraClusterDataCenterNodeItem() { }
         public string Address { get { throw null; } }
+        public string CassandraProcessStatus { get { throw null; } }
         public double? CpuUsage { get { throw null; } }
         public long? DiskFreeKB { get { throw null; } }
         public long? DiskUsedKB { get { throw null; } }
@@ -1561,6 +1575,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsDeallocated { get { throw null; } set { } }
         public bool? IsRepairEnabled { get { throw null; } set { } }
         public string PrometheusEndpointIPAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CassandraError ProvisionError { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RestoreFromBackupId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
@@ -1570,6 +1585,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraClusterPublicStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraConnectionError> ConnectionErrors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem> DataCenters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraError> Errors { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraReaperStatus ReaperStatus { get { throw null; } }
     }
@@ -1634,15 +1650,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraDataCenterProperties
     {
         public CassandraDataCenterProperties() { }
+        public Azure.ResourceManager.CosmosDB.Models.AuthenticationMethodLdapProperties AuthenticationMethodLdapProperties { get { throw null; } set { } }
         public System.Uri BackupStorageCustomerKeyUri { get { throw null; } set { } }
         public string Base64EncodedCassandraYamlFragment { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DataCenterLocation { get { throw null; } set { } }
+        public bool? Deallocated { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public int? DiskCapacity { get { throw null; } set { } }
         public string DiskSku { get { throw null; } set { } }
         public bool? DoesSupportAvailabilityZone { get { throw null; } set { } }
         public System.Uri ManagedDiskCustomerKeyUri { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CassandraError ProvisionError { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraProvisioningState? ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
         public string Sku { get { throw null; } set { } }
@@ -1651,6 +1670,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraDataCenterSeedNode() { }
         public string IPAddress { get { throw null; } set { } }
+    }
+    public partial class CassandraError
+    {
+        public CassandraError() { }
+        public string AdditionalErrorInfo { get { throw null; } set { } }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        public string Target { get { throw null; } set { } }
     }
     public partial class CassandraKeyspaceCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -1838,6 +1865,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBAccountConnectionString() { }
         public string ConnectionString { get { throw null; } }
         public string Description { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBKind? KeyKind { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.Type? KeyType { get { throw null; } }
     }
     public partial class CosmosDBAccountCorsPolicy
     {
@@ -2257,12 +2286,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBKind : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CosmosDBKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBKind(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBKind Primary { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBKind PrimaryReadonly { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBKind Secondary { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBKind SecondaryReadonly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CosmosDBKind left, Azure.ResourceManager.CosmosDB.Models.CosmosDBKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CosmosDBKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CosmosDBKind left, Azure.ResourceManager.CosmosDB.Models.CosmosDBKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CosmosDBLocationProperties
     {
         public CosmosDBLocationProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupStorageRedundancy> BackupStorageRedundancies { get { throw null; } }
         public bool? DoesSupportAvailabilityZone { get { throw null; } }
         public bool? IsResidencyRestricted { get { throw null; } }
+        public bool? IsSubscriptionRegionAccessAllowedForAz { get { throw null; } }
+        public bool? IsSubscriptionRegionAccessAllowedForRegular { get { throw null; } }
+        public Azure.ResourceManager.CosmosDB.Models.Status? Status { get { throw null; } }
     }
     public partial class CosmosDBMetricAvailability
     {
@@ -3236,6 +3288,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayRegionalService> Locations { get { throw null; } }
         public string SqlDedicatedGatewayEndpoint { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.Status>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Status(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.Status Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Status Initializing { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Status InternallyReady { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Status Online { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Status Uninitialized { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.Status other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.Status left, Azure.ResourceManager.CosmosDB.Models.Status right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.Status (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.Status left, Azure.ResourceManager.CosmosDB.Models.Status right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ThroughputPolicyResourceInfo
     {
         public ThroughputPolicyResourceInfo() { }
@@ -3254,5 +3327,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public ThroughputSettingsUpdateData(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo Resource { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.Type>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Type(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.Models.Type Cassandra { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type CassandraConnectorMetadata { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type Gremlin { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type GremlinV2 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type MongoDB { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type Sql { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type SqlDedicatedGateway { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type Table { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.Type Undefined { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDB.Models.Type other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.Type left, Azure.ResourceManager.CosmosDB.Models.Type right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDB.Models.Type (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.Type left, Azure.ResourceManager.CosmosDB.Models.Type right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
