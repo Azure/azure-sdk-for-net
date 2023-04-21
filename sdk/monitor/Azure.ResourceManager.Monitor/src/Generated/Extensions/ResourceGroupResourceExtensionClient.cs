@@ -106,6 +106,13 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new DataCollectionRuleCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
+        public virtual MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources()
+        {
+            return GetCachedClient(Client => new MonitorWorkspaceResourceCollection(Client, Id));
+        }
+
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
         /// <list type="bullet">

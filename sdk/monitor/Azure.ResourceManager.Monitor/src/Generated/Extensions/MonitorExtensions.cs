@@ -591,6 +591,57 @@ namespace Azure.ResourceManager.Monitor
             return client.GetDataCollectionRuleAssociations(scope).Get(associationName, cancellationToken);
         }
 
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetMonitorWorkspaceResourcesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetMonitorWorkspaceResources(cancellationToken);
+        }
+
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        {
+            return resourceGroupResource.GetCachedClient((client) =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+            }
+            );
+        }
+
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
@@ -1095,8 +1146,64 @@ namespace Azure.ResourceManager.Monitor
             return resourceGroupResource.GetDataCollectionRules().Get(dataCollectionRuleName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
+        public static MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetMonitorWorkspaceResources();
+        }
+
         /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// Returns the specific Azure Monitor workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetMonitorWorkspaceResources().GetAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the specific Azure Monitor workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetMonitorWorkspaceResources().Get(azureMonitorWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1818,5 +1925,25 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetTenantResourceExtensionClient(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
         }
+        #endregion
+
+        #region MonitorWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
+        public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MonitorWorkspaceResource.ValidateResourceId(id);
+                return new MonitorWorkspaceResource(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }
