@@ -122,10 +122,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return table;
         }
 
-        private Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
+        internal Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
         {
             var tableDetails = new TablesParameterBindingDataContent(attribute);
-
             var tableDetailsBinaryData = new BinaryData(tableDetails);
             var parameterBindingData = new ParameterBindingData("1.0", "AzureStorageTables", tableDetailsBinaryData, "application/json");
 
@@ -240,6 +239,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return tableEntity;
         }
 
+        // Cannot use `new BinaryData(tableAttribute)` because this "may only be called on a Type for
+        // which Type.IsGenericParameter is true"; therefore we use our own reference type.
+        // Has the same properties as TableAttribute
         private class TablesParameterBindingDataContent
         {
             public TablesParameterBindingDataContent(TableAttribute attribute)
