@@ -5,9 +5,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 
-//[assembly: CodeGenSuppressType("DataSourceInfo")]
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Datasource to be backed up. </summary>
