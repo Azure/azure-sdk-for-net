@@ -288,7 +288,7 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, NextLinkOperationImplementation.GetHttpMethodFromOperationId(_operation.GetOperationId()));
+                return GetResponseFromState(state, GetHttpMethodFromOperationId(_operation.GetOperationId()));
             }
             catch (Exception e)
             {
@@ -300,6 +300,12 @@ namespace Azure.Core
         public virtual string GetOperationId()
         {
             return _operation.GetOperationId();
+        }
+
+        private static RequestMethod GetHttpMethodFromOperationId(string operationId)
+        {
+            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(operationId)).ToObjectFromJson<Dictionary<string, string>>();
+            return new RequestMethod(lroDetails["RequestMethod"]);
         }
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
