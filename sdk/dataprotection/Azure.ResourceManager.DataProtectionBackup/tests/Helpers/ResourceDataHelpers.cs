@@ -37,12 +37,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         }
 
         #region policy
-        public DataProtectionBackupPolicyData GetPolicyData()
+        public static DataProtectionBackupPolicyData GetPolicyData()
         {
+            IEnumerable<string> datasourcetypes = new List<string>()
+            {
+                "Microsoft.Compute/disks"
+            };
+            IEnumerable<string> repeating = new List<string>()
+            {
+                "R/2019-12-26T13:08:27.8535071Z/PT4H"
+            };
+            IEnumerable<DataProtectionBackupTaggingCriteria> taggingCriterias = new List<DataProtectionBackupTaggingCriteria>()
+            {
+                new DataProtectionBackupTaggingCriteria(true, 99, new DataProtectionBackupRetentionTag("Default"))
+            };
+            IEnumerable<DataProtectionBasePolicyRule> policyRules = new List<DataProtectionBackupRule>()
+            {
+                new DataProtectionBackupRule("sdktest", new DataStoreInfoBase(DataStoreType.OperationalStore, "DataStoreInfoBase"), new ScheduleBasedBackupTriggerContext(new DataProtectionBackupSchedule(repeating), taggingCriterias))
+            };
             var data = new DataProtectionBackupPolicyData()
             {
-                Properties
+                Properties = new RuleBasedBackupPolicy(datasourcetypes, policyRules)
             };
+            return data;
         }
         #endregion
     }
