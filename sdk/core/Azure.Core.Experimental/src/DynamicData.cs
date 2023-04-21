@@ -218,19 +218,19 @@ namespace Azure.Core.Dynamic
 
                 double d =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.GetDouble() == d,
+                    _element.TryGetDouble(out double od) && d == od,
 
                 float f =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.GetSingle() == f,
+                    _element.TryGetSingle(out float of) && f == of,
 
                 long l =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.GetInt64() == l,
+                    _element.TryGetInt64(out long ol) && l == ol,
 
                 int i =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.GetInt32() == i,
+                    _element.TryGetInt32(out int oi) && i == oi,
 
                 DynamicData data => Equals(data),
 
@@ -263,17 +263,14 @@ namespace Azure.Core.Dynamic
 
         private bool NumberEqual(DynamicData other)
         {
-            JsonElement thisElement = _element.GetJsonElement();
-            JsonElement otherElement = other._element.GetJsonElement();
-
-            if (thisElement.TryGetDecimal(out decimal d))
+            if (_element.TryGetDouble(out double d))
             {
-                return otherElement.TryGetDecimal(out decimal od) && d == od;
+                return other._element.TryGetDouble(out Double od) && d == od;
             }
 
-            if (thisElement.TryGetInt64(out long l))
+            if (_element.TryGetInt64(out long l))
             {
-                return otherElement.TryGetInt64(out long ol) && l == ol;
+                return other._element.TryGetInt64(out long ol) && l == ol;
             }
 
             return false;

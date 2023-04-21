@@ -198,7 +198,11 @@ namespace Azure.Core.Json
         public void Set(string value) { }
         public Azure.Core.Json.MutableJsonElement SetProperty(string name, object value) { throw null; }
         public override string ToString() { throw null; }
+        public bool TryGetDouble(out double value) { throw null; }
+        public bool TryGetInt32(out int value) { throw null; }
+        public bool TryGetInt64(out long value) { throw null; }
         public bool TryGetProperty(string name, out Azure.Core.Json.MutableJsonElement value) { throw null; }
+        public bool TryGetSingle(out float value) { throw null; }
         [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Json.MutableJsonElement>, System.Collections.Generic.IEnumerator<Azure.Core.Json.MutableJsonElement>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
