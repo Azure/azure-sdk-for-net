@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);

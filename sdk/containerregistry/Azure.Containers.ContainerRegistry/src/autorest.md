@@ -152,6 +152,16 @@ directive:
     delete $["security"];
 ```
 
+# Remove stream response from `deleteBlob`
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $.paths["/v2/{name}/blobs/{digest}"]["delete"]
+    transform: >
+      delete $.responses["202"].schema;
+```
+
 # Add content-range and content-length parameters to upload chunk
 <!--.NET specific -->
 

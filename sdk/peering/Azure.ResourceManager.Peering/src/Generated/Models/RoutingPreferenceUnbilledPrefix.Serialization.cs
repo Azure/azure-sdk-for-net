@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureRegion = new AzureLocation(property.Value.GetString());
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = property.Value.GetInt32();

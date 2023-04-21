@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.ServiceBus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSample", "samples\PluginSample\PluginSample.csproj", "{5B0D32EE-E945-4A30-B7E8-93ABDC396BDB}"
+EndProject
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,14 @@ Global
 		{B42578D2-76CD-4F4E-9999-CDB466477488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42578D2-76CD-4F4E-9999-CDB466477488}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42578D2-76CD-4F4E-9999-CDB466477488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E268BD-E98A-46EC-A09E-F81B69AEC5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E268BD-E98A-46EC-A09E-F81B69AEC5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E268BD-E98A-46EC-A09E-F81B69AEC5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E268BD-E98A-46EC-A09E-F81B69AEC5A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B0D32EE-E945-4A30-B7E8-93ABDC396BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0D32EE-E945-4A30-B7E8-93ABDC396BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0D32EE-E945-4A30-B7E8-93ABDC396BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0D32EE-E945-4A30-B7E8-93ABDC396BDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

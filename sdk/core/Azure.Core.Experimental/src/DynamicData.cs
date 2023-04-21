@@ -38,9 +38,8 @@ namespace Azure.Core.Dynamic
 
         internal void WriteTo(Stream stream)
         {
-            Utf8JsonWriter writer = new(stream);
+            using Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
-            writer.Flush();
         }
 
         private object? GetProperty(string name)
@@ -104,7 +103,7 @@ namespace Azure.Core.Dynamic
             {
                 JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
                 JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject(), _options),
-                _ => throw new InvalidOperationException($"Unable to enumerate JSON element."),
+                _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind {_element.ValueKind}.  Cannot cast value to IEnumerable."),
             };
         }
 
@@ -164,12 +163,21 @@ namespace Azure.Core.Dynamic
 
         private T ConvertTo<T>()
         {
+            JsonElement element = _element.GetJsonElement();
+
+            try
+            {
 #if NET6_0_OR_GREATER
-            return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
+                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions)!;
 #else
-            Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(_element.GetJsonElement());
-            return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
+                Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
+                return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
 #endif
+            }
+            catch (JsonException e)
+            {
+                throw new InvalidCastException($"Unable to convert value of kind {element.ValueKind} to type {typeof(T)}.", e);
+            }
         }
 
         /// <inheritdoc/>

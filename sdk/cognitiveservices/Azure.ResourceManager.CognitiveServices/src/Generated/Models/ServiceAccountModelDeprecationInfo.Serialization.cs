@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fineTune = property.Value.GetDateTimeOffset("O");
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inference = property.Value.GetDateTimeOffset("O");

@@ -152,7 +152,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_contact]: mailto:opencode@microsoft.com
 [clinical_matching_docs]: https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/trial-matcher/overview?branch=main
 [clinical_matching_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/src/
-[clinical_matching_client_nuget_package]: https://www.nuget.org/packages/
+[clinical_matching_client_nuget_package]: https://www.nuget.org/packages/Azure.Health.Insights.ClinicalMatching/
 [clinical_matching_api_documentation]: https://review.learn.microsoft.com/rest/api/cognitiveservices/healthinsights/trial-matcher?branch=healthin202303
 [product_docs]:https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/trial-matcher/?branch=main
 [samples_location]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples

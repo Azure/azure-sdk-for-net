@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ApiManagementPrivateEndpointServiceConnectionStatus(property.Value.GetString());

@@ -1,10 +1,26 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
-- Updated Microsoft.DocumentDB RP API version to 2022-11-15
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2023-04-11)
+
+### Features Added
+
+- Updated Microsoft.DocumentDB RP API version to `2022-11-15`
 - Added table and gremlin restorable apis
 - Added CosmosDBMinimalTlsVersion property
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
 
 ## 1.2.1 (2023-02-13)
 

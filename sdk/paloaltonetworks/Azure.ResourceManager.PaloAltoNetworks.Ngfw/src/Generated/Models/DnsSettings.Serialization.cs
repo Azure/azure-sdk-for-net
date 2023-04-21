@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableDnsProxy = new DnsProxy(property.Value.GetString());
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledDnsType = new EnabledDnsType(property.Value.GetString());
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();

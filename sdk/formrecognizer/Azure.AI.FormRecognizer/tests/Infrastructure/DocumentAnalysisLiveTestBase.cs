@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
-        private readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
+        protected readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
 
         public DocumentAnalysisLiveTestBase(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)

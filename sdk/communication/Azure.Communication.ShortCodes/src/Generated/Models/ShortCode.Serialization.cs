@@ -36,7 +36,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberType = new NumberType(property.Value.GetString());
@@ -51,7 +50,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,7 +64,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     purchaseDate = property.Value.GetDateTimeOffset("O");

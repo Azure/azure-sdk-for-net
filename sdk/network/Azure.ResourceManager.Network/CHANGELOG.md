@@ -189,14 +189,15 @@ vnet = await networkClient.VirtualNetworks
 ```
 
 After upgrade:
-
-```C# Snippet:Changelog_NewCode
+```C# Snippet:Changelog_NewCode_Namespaces
 using System;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+```
 
+```C# Snippet:Changelog_NewCode
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");

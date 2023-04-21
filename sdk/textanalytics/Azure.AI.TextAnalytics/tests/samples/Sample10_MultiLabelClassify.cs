@@ -12,9 +12,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void MultiLabelClassify()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             string document =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"

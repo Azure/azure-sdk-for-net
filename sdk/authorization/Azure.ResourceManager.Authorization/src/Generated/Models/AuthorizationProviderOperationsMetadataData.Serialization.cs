@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationProviderResourceType> array = new List<AuthorizationProviderResourceType>();
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
@@ -84,7 +82,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PrivateStorePlanStatus(property.Value.GetString());
@@ -72,7 +71,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestDate = BinaryData.FromString(property.Value.GetRawText());

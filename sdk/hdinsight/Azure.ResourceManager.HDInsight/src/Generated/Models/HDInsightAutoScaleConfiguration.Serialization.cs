@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value);

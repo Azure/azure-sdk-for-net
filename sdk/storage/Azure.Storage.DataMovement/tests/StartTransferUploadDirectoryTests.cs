@@ -56,10 +56,10 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPrefix = default,
             int waitTimeInSec = 10,
             TransferManagerOptions transferManagerOptions = default,
-            ContainerTransferOptions options = default)
+            TransferOptions options = default)
         {
             // Set transfer options
-            options ??= new ContainerTransferOptions();
+            options ??= new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
@@ -115,7 +115,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(Constants.KB, 10)]
         public async Task LocalToBlockBlobDirectory_SmallSize(long blobSize, int waitTimeInSec)
         {
-            ContainerTransferOptions options = new ContainerTransferOptions();
+            TransferOptions options = new TransferOptions();
             List<string> files = new List<string>();
             string localDirectory = CreateRandomDirectory(Path.GetTempPath());
             await using DisposingBlobContainer test = await GetTestContainerAsync();
@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(Constants.GB, 500)]
         public async Task LocalToBlockBlobDirectory_LargeSize(long blobSize, int waitTimeInSec)
         {
-            ContainerTransferOptions options = new ContainerTransferOptions();
+            TransferOptions options = new TransferOptions();
             List<string> files = new List<string>();
             string localDirectory = CreateRandomDirectory(Path.GetTempPath());
             await using DisposingBlobContainer test = await GetTestContainerAsync();
@@ -196,7 +196,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long blobSize = Constants.KB;
             int waitTimeInSec = 10;
-            ContainerTransferOptions options = new ContainerTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
                 MaximumTransferChunkSize = 200,
@@ -481,7 +481,7 @@ namespace Azure.Storage.DataMovement.Tests
                 string file4 = await CreateRandomFileAsync(lockedSubfolder);
                 files.Add(file4);
 
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Overwrite
                 };
@@ -531,7 +531,7 @@ namespace Azure.Storage.DataMovement.Tests
                 string file4 = await CreateRandomFileAsync(lockedSubfolder);
                 files.Add(file4);
 
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Overwrite
                 };
@@ -587,7 +587,7 @@ namespace Azure.Storage.DataMovement.Tests
                     destinationPrefix,
                     options);
 
-                ContainerTransferOptions containerOptions = new ContainerTransferOptions();
+                TransferOptions containerOptions = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerOptions);
 
                 // Act
@@ -632,7 +632,7 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationFolder,
             int concurrency,
             bool createFailedCondition = false,
-            ContainerTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             // Arrange
@@ -674,7 +674,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create transfer to do a AwaitCompletion
@@ -712,7 +712,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -757,7 +757,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
@@ -799,7 +799,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create transfer to do a EnsureCompleted
@@ -838,7 +838,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -883,7 +883,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };

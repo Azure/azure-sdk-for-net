@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute
     /// </summary>
     public partial interface IVirtualMachineScaleSetsOperations
     {
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         Task<AzureOperationResponse<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken);
         /// <summary>
         /// Display information about a virtual machine scale set.

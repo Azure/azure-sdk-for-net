@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             exitCode = property0.Value.GetInt32();
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startedAt = property0.Value.GetDateTimeOffset("O");
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             finishedAt = property0.Value.GetDateTimeOffset("O");
