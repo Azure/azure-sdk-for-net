@@ -192,7 +192,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs('", false);
             uri.AppendPath(key, true);
             uri.AppendPath("')", false);
-            if (selectedFields != null)
+            if (selectedFields != null && Optional.IsCollectionDefined(selectedFields))
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", true);
             }
