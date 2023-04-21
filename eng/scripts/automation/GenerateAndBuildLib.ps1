@@ -190,7 +190,9 @@ function RegisterMgmtSDKToMgmtCoreClient () {
     $newLines = [System.Collections.ArrayList]::new()
     $startIndex = $track2MgmtDirs[0].FullName.IndexOf(("\sdk\")) + 1
     $shouldRemove = $false
-    foreach($line in $armLines) {
+    # foreach($line in $armLines) {
+    for ($i = 0; $i -le $armLines.Count - 1; $i++) {
+        $line = $armLines[$i]
         if($line.StartsWith("  paths:")) {
             $newLines.Add($line) | Out-Null
             $newLines.Add("    include:") | Out-Null
