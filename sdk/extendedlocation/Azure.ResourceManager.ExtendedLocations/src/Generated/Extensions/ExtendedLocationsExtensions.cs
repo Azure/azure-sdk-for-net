@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ExtendedLocations.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocations
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// <summary> A class to add extension methods to Azure.ResourceManager.ExtendedLocations. </summary>
     public static partial class ExtendedLocationsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CustomLocationResourceExtension GetCustomLocationResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CustomLocationResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CustomLocationResourceExtension GetCustomLocationResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CustomLocationResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ExtendedLocationsResourceGroupResourceExtension GetExtendedLocationsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ExtendedLocationsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ExtendedLocationsResourceGroupResourceExtension GetExtendedLocationsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ExtendedLocationsResourceGroupResourceExtension(client, scope);
             });
         }
         #region CustomLocationResource
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomLocations();
+            return GetExtendedLocationsResourceGroupResourceExtension(resourceGroupResource).GetCustomLocations();
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
+            return GetCustomLocationResourceExtension(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomLocations(cancellationToken);
+            return GetCustomLocationResourceExtension(subscriptionResource).GetCustomLocations(cancellationToken);
         }
     }
 }

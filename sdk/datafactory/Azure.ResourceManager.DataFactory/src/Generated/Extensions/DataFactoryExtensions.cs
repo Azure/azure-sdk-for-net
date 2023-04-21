@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataFactory.Mock;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.DataFactory
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataFactory. </summary>
     public static partial class DataFactoryExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataFactoryResourceExtension GetDataFactoryResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataFactoryResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataFactoryResourceExtension GetDataFactoryResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataFactoryResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataFactoryResourceGroupResourceExtension GetDataFactoryResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataFactoryResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataFactoryResourceGroupResourceExtension GetDataFactoryResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataFactoryResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static DataFactorySubscriptionResourceExtension GetDataFactorySubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataFactorySubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataFactorySubscriptionResourceExtension GetDataFactorySubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataFactorySubscriptionResourceExtension(client, scope);
             });
         }
         #region DataFactoryResource
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
         public static DataFactoryCollection GetDataFactories(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataFactories();
+            return GetDataFactoryResourceGroupResourceExtension(resourceGroupResource).GetDataFactories();
         }
 
         /// <summary>
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataFactoriesAsync(cancellationToken);
+            return GetDataFactoryResourceExtension(subscriptionResource).GetDataFactoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +373,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataFactoryResource> GetDataFactories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataFactories(cancellationToken);
+            return GetDataFactoryResourceExtension(subscriptionResource).GetDataFactories(cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +398,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
+            return await GetDataFactoryResourceExtension(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -406,7 +423,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformation(locationId, factoryRepoUpdate, cancellationToken);
+            return GetDataFactoryResourceExtension(subscriptionResource).ConfigureFactoryRepoInformation(locationId, factoryRepoUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -431,7 +448,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataFactorySubscriptionResourceExtension(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -456,7 +473,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
+            return GetDataFactorySubscriptionResourceExtension(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
         }
     }
 }
