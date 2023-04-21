@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public Func<string, bool> CreateDirectoryFunc { get; set; } = (path) => true;
         public string UserName { get; set; } = "UnitTestUser";
         public string ProcessName { get; set; } = "UnitTestProcess";
-        public string ApplicationBaseDirectory { get; set; } = $"UnitTestDirectory";
+        public string ApplicationBaseDirectory { get; set; } = "UnitTestDirectory";
 
         public void SetEnvironmentVariable(string key, string value) => environmentVariables.Add(key, value);
 
