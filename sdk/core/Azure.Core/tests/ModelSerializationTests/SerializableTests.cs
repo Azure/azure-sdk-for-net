@@ -2,84 +2,110 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Azure;
+using Azure.Core.Tests;
 using Azure.Core.Tests.ModelSerializationTests;
 using NUnit.Framework;
 
-public class SerializableTests
+namespace Azure.Core.Tests.ModelSerializationTests
 {
-    private readonly SerializableOptions _wireOptions = new SerializableOptions { SerializeReadonlyProperties = false };
-    private readonly SerializableOptions _objectOptions = new SerializableOptions();
-
-    [TestCase(true, true)]
-    [TestCase(true, false)]
-    [TestCase(false, true)]
-    [TestCase(false, false)]
-    public void CanRoundTripFutureVersionWithoutLoss(bool includeReadonly, bool handleUnknown)
+    public class SerializableTests
     {
-        Stream stream = new MemoryStream();
-        var serviceResponse = "{\"LatinName\":\"Canis lupus familiaris\",\"Weight\":5.5,\"Name\":\"Mr. Fluffy\"}";
+        private readonly SerializableOptions _wireOptions = new SerializableOptions { IncludeReadOnlyProperties = false };
+        private readonly SerializableOptions _objectOptions = new SerializableOptions();
 
-        StringBuilder expectedSerialized = new StringBuilder("{");
-        if (includeReadonly)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void CanRoundTripFutureVersionWithoutLoss(bool includeReadonly, bool handleUnknown)
         {
-            expectedSerialized.Append("\"LatinName\":\"Canis lupus familiaris\",");
-        }
-        expectedSerialized.Append("\"Weight\":5.5");
-        if (handleUnknown)
-        {
-            expectedSerialized.Append(",\"Number of Legs\":4");
-        }
-        expectedSerialized.Append("}");
-        var expectedSerializedString = expectedSerialized.ToString();
+            Stream stream = new MemoryStream();
+            string serviceResponse;
+            if (handleUnknown)
+                serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            else
+                serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\"}";
 
-        SerializableOptions options = new SerializableOptions() { SerializeReadonlyProperties = includeReadonly, HandleUnknownElements = handleUnknown };
+            StringBuilder expectedSerialized = new StringBuilder("{");
+            if (includeReadonly)
+            {
+                expectedSerialized.Append("\"latinName\":\"Canis lupus familiaris\",");
+            }
+            expectedSerialized.Append("\"name\":\"Doggo\",");
+            expectedSerialized.Append("\"isHungry\":false,");
+            expectedSerialized.Append("\"weight\":5.5");
+            if (handleUnknown)
+            {
+                expectedSerialized.Append(",\"numberOfLegs\":4");
+            }
+            expectedSerialized.Append("}");
+            var expectedSerializedString = expectedSerialized.ToString();
 
-        var model = new Animal();
-        model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
+            SerializableOptions options = new SerializableOptions() { IncludeReadOnlyProperties = includeReadonly, HandleAdditionalProperties = handleUnknown };
 
-        Assert.That(model.LatinName, Is.EqualTo("Canis lupus familiaris"));
-        Assert.That(model.Weight, Is.EqualTo(5.5));
-        Assert.That(model.Name, Is.EqualTo("Mr. Fluffy"));
-        Assert.That(serviceResponse.Length, Is.EqualTo(bytesConsumed));
+            var model = new Animal();
+            model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
 
-        model.TrySerialize(stream, out var bytesWritten, options: options);
-        string roundTrip = new StreamReader(stream).ReadToEnd();
-       // var roundTrip = Encoding.UTF8.GetString(buffer.Span.Slice(0, bytesWritten));
-        Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-        Assert.That(expectedSerialized.Length, Is.EqualTo(bytesWritten));
+            if (includeReadonly)
+            {
+                Assert.That(model.LatinName, Is.EqualTo("Canis lupus familiaris"));
+            }
+            Assert.That(model.Name, Is.EqualTo("Doggo"));
+            Assert.IsFalse(model.IsHungry);
+            Assert.That(model.Weight, Is.EqualTo(5.5));
 
-        var model2 = new Animal();
-        model2.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), out bytesConsumed, options: options);
-
-        if (includeReadonly)
-            Assert.That(model.LatinName, Is.EqualTo(model2.LatinName));
-        Assert.That(model.Name, Is.EqualTo(model2.Name));
-        Assert.That(model.Weight, Is.EqualTo(model2.Weight));
-        Assert.That(roundTrip.Length, Is.EqualTo(bytesConsumed));
-    }
-
-    [Test]
-    public void PrettyPrint()
-    {
-        CatReadOnlyProperty model = new CatReadOnlyProperty(3.2, "Felis catus", "Catto", true, false);
-
-        Stream stream = new MemoryStream();
-        model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });
-        var actualJson = new StreamReader(stream);
-
-        var expectedJson = """
+            if (handleUnknown)
+            {
+                var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
+                Assert.AreEqual(1, additionalProperties.Count);
+                foreach (var entry in additionalProperties)
                 {
-                  "Weight": 1,
-                  "LatinName": "Felis catus",
-                  "Name": "Catto",
-                  "IsHungry": true,
-                  "HasWhiskers": false
+                    Assert.AreEqual("numberOfLegs", entry.Key);
+                    Assert.AreEqual(4.ToString(), entry.Value.ToString());
+                }
+            }
+            Assert.That(serviceResponse.Length, Is.EqualTo(bytesConsumed));
+            model.TrySerialize(stream, out var bytesWritten, options: options);
+            stream.Position = 0;
+            string roundTrip = new StreamReader(stream).ReadToEnd();
+            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+            Assert.That(expectedSerialized.Length, Is.EqualTo(bytesWritten));
+
+            var model2 = new Animal();
+            model2.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), out bytesConsumed, options: options);
+
+            if (includeReadonly)
+                Assert.That(model.LatinName, Is.EqualTo(model2.LatinName));
+            Assert.That(model.Name, Is.EqualTo(model2.Name));
+            Assert.That(model.Weight, Is.EqualTo(model2.Weight));
+            Assert.That(roundTrip.Length, Is.EqualTo(bytesConsumed));
+        }
+
+        [Test]
+        public void PrettyPrint()
+        {
+            CatReadOnlyProperty model = new CatReadOnlyProperty(3.2, "Felis catus", "Catto", true, false);
+
+            Stream stream = new MemoryStream();
+            model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });
+            stream.Position = 0;
+            var actualJson = new StreamReader(stream).ReadToEnd();
+
+            var expectedJson = """
+                {
+                  "latinName": "Felis catus",
+                  "name": "Catto",
+                  "isHungry": true,
+                  "weight": 3.2,
+                  "hasWhiskers": false
                 }
                 """;
 
-        Assert.That(expectedJson, Is.EqualTo(actualJson));
+            Assert.AreEqual(expectedJson, actualJson);
+        }
     }
 }

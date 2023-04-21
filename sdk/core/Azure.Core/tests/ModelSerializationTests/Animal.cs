@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class Animal : ISerializable, IUtf8JsonSerializable
+    public class Animal : IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public bool IsHungry { get; set; } = false;
         public double Weight { get; set; } = 0;
-        public readonly string LatinName = "Animalia";
+        public string LatinName { get; private set; } = "Animalia";
         public string Name { get; set; } = "Animal";
 
         public Animal()
@@ -41,28 +41,23 @@ namespace Azure.Core.Tests.ModelSerializationTests
             RawData = rawData;
         }
 
-        private string AnimalLatinName;
-        private bool AnimalIsHungry;
-        private double AnimalWeight;
-        private string AnimalName;
-
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
-            if (options.SerializeReadonlyProperties)
+            if (options.IncludeReadOnlyProperties)
             {
-                writer.WritePropertyName("LatinName"u8);
+                writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
             }
-            writer.WritePropertyName("IsHungry"u8);
-            writer.WriteBooleanValue(IsHungry);
-            writer.WritePropertyName("Weight"u8);
-            writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("Name"u8);
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("isHungry"u8);
+            writer.WriteBooleanValue(IsHungry);
+            writer.WritePropertyName("weight"u8);
+            writer.WriteNumberValue(Weight);
 
-            if (options.HandleUnknownElements)
+            if (options.HandleAdditionalProperties)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -88,30 +83,30 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Weight"u8))
+                if (property.NameEquals("weight"u8))
                 {
                     weight = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("Name"u8))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("LatinName"u8))
+                if (property.NameEquals("latinName"u8))
                 {
                     latinName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("IsHungry"u8))
+                if (property.NameEquals("isHungry"u8))
                 {
                     isHungry = property.Value.GetBoolean();
                     continue;
                 }
 
-                if (options.HandleUnknownElements)
+                if (options.HandleAdditionalProperties)
                 {
-                    //this means its an unknown property we got
+                    //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
@@ -127,10 +122,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(stream);
                 var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.AnimalLatinName = model.LatinName;
-                this.AnimalWeight = model.Weight;
-                this.AnimalIsHungry = model.IsHungry;
-                this.AnimalName = model.Name;
+                this.LatinName = model.LatinName;
+                this.Weight = model.Weight;
+                this.IsHungry = model.IsHungry;
+                this.Name = model.Name;
+                this.RawData = model.RawData;
                 bytesConsumed = stream.Length;
                 return true;
             }

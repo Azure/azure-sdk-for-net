@@ -4,19 +4,19 @@
 namespace Azure
 {
     /// <summary>
-    /// TODO - non-nullable options
+    /// TODO
     /// </summary>
     public class SerializableOptions
     {
         /// <summary>
         /// TODO
         /// </summary>
-        public bool SerializeReadonlyProperties { get; set; } = true;
+        public bool IncludeReadOnlyProperties { get; set; } = true;
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool HandleUnknownElements { get; set; } = true;
+        public bool HandleAdditionalProperties { get; set; } = true;
 
         /// <summary>
         /// TODO
