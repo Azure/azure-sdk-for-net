@@ -13,6 +13,7 @@ using Azure.Data.Tables;
 using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Newtonsoft.Json;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.BindToCollector<TableEntity>(CreateTableWriter);
 
+            binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
             binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
             binding.BindToInput<JArray>(CreateJArray);
         }
@@ -118,6 +120,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             await table.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
 
             return table;
+        }
+
+        private Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
+        {
+            var tableDetails = new TablesParameterBindingDataContent(attribute);
+
+            var tableDetailsBinaryData = new BinaryData(tableDetails);
+            var parameterBindingData = new ParameterBindingData("1.0", "AzureStorageTables", tableDetailsBinaryData, "application/json");
+
+            return Task.FromResult(parameterBindingData);
         }
 
         // Used as an alternative to binding to IQueryable.
@@ -226,6 +238,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             return tableEntity;
+        }
+
+        private class TablesParameterBindingDataContent
+        {
+            public TablesParameterBindingDataContent(TableAttribute attribute)
+            {
+                TableName = attribute.TableName;
+                Take = attribute.Take;
+                Filter = attribute.Filter;
+                Connection = attribute.Connection;
+                PartitionKey = attribute.PartitionKey;
+                RowKey = attribute.RowKey;
+            }
+
+            public string TableName { get; set; }
+            public int Take { get; set; }
+            public string Filter { get; set; }
+            public string Connection { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
         }
     }
 }
