@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridData.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridData
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.HybridData
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridData. </summary>
     public static partial class HybridDataExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HybridDataManagerResourceExtension GetHybridDataManagerResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HybridDataManagerResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridDataManagerResourceExtension GetHybridDataManagerResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new HybridDataManagerResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HybridDataResourceGroupResourceExtension GetHybridDataResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HybridDataResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridDataResourceGroupResourceExtension GetHybridDataResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HybridDataResourceGroupResourceExtension(client, scope);
             });
         }
         #region HybridDataManagerResource
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
         public static HybridDataManagerCollection GetHybridDataManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridDataManagers();
+            return GetHybridDataResourceGroupResourceExtension(resourceGroupResource).GetHybridDataManagers();
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
+            return GetHybridDataManagerResourceExtension(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridDataManagerResource> GetHybridDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridDataManagers(cancellationToken);
+            return GetHybridDataManagerResourceExtension(subscriptionResource).GetHybridDataManagers(cancellationToken);
         }
     }
 }

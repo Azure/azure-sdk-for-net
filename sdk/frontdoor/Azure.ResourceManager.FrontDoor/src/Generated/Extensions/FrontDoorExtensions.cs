@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FrontDoor.Mock;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,83 @@ namespace Azure.ResourceManager.FrontDoor
     /// <summary> A class to add extension methods to Azure.ResourceManager.FrontDoor. </summary>
     public static partial class FrontDoorExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static FrontDoorNetworkExperimentProfileResourceExtension GetFrontDoorNetworkExperimentProfileResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new FrontDoorNetworkExperimentProfileResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FrontDoorNetworkExperimentProfileResourceExtension GetFrontDoorNetworkExperimentProfileResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new FrontDoorNetworkExperimentProfileResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static FrontDoorResourceExtension GetFrontDoorResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new FrontDoorResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FrontDoorResourceExtension GetFrontDoorResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new FrontDoorResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static FrontDoorResourceGroupResourceExtension GetFrontDoorResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new FrontDoorResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FrontDoorResourceGroupResourceExtension GetFrontDoorResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new FrontDoorResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static FrontDoorSubscriptionResourceExtension GetFrontDoorSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new FrontDoorSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static FrontDoorSubscriptionResourceExtension GetFrontDoorSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new FrontDoorSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static FrontDoorTenantResourceExtension GetFrontDoorTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new FrontDoorTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static FrontDoorTenantResourceExtension GetFrontDoorTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new FrontDoorTenantResourceExtension(client, scope);
             });
         }
         #region FrontDoorWebApplicationFirewallPolicyResource
@@ -185,7 +218,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorWebApplicationFirewallPolicyResources and their operations over a FrontDoorWebApplicationFirewallPolicyResource. </returns>
         public static FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicies();
+            return GetFrontDoorResourceGroupResourceExtension(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -241,7 +274,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorResources and their operations over a FrontDoorResource. </returns>
         public static FrontDoorCollection GetFrontDoors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoors();
+            return GetFrontDoorResourceGroupResourceExtension(resourceGroupResource).GetFrontDoors();
         }
 
         /// <summary>
@@ -297,7 +330,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorNetworkExperimentProfileResources and their operations over a FrontDoorNetworkExperimentProfileResource. </returns>
         public static FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoorNetworkExperimentProfiles();
+            return GetFrontDoorResourceGroupResourceExtension(resourceGroupResource).GetFrontDoorNetworkExperimentProfiles();
         }
 
         /// <summary>
@@ -366,7 +399,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
+            return GetFrontDoorSubscriptionResourceExtension(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +420,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSets(cancellationToken);
+            return GetFrontDoorSubscriptionResourceExtension(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -411,7 +444,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorSubscriptionResourceExtension(subscriptionResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -435,7 +468,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckFrontDoorNameAvailability(content, cancellationToken);
+            return GetFrontDoorSubscriptionResourceExtension(subscriptionResource).CheckFrontDoorNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -456,7 +489,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FrontDoorResource> GetFrontDoorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorsAsync(cancellationToken);
+            return GetFrontDoorResourceExtension(subscriptionResource).GetFrontDoorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +510,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FrontDoorResource> GetFrontDoors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoors(cancellationToken);
+            return GetFrontDoorResourceExtension(subscriptionResource).GetFrontDoors(cancellationToken);
         }
 
         /// <summary>
@@ -498,7 +531,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorNetworkExperimentProfilesAsync(cancellationToken);
+            return GetFrontDoorNetworkExperimentProfileResourceExtension(subscriptionResource).GetFrontDoorNetworkExperimentProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -519,7 +552,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorNetworkExperimentProfiles(cancellationToken);
+            return GetFrontDoorNetworkExperimentProfileResourceExtension(subscriptionResource).GetFrontDoorNetworkExperimentProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -543,7 +576,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorTenantResourceExtension(tenantResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -567,7 +600,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckFrontDoorNameAvailability(content, cancellationToken);
+            return GetFrontDoorTenantResourceExtension(tenantResource).CheckFrontDoorNameAvailability(content, cancellationToken);
         }
     }
 }
