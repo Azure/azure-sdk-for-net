@@ -8,88 +8,14 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-[assembly: CodeGenSuppressType("SlimPolicyMetadata")]
-
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
     public partial class SlimPolicyMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
-        internal SlimPolicyMetadata()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUriString"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string metadataId, string category, string title, string owner, string additionalContentUriString, BinaryData metadata) : base(id, name, resourceType, systemData)
-        {
-            MetadataId = metadataId;
-            Category = category;
-            Title = title;
-            Owner = owner;
-            AdditionalContentUriString = additionalContentUriString;
-            Metadata = metadata;
-#pragma warning disable CS0618 // Type or member is obsolete
-            AdditionalContentUri = Uri.IsWellFormedUriString(AdditionalContentUriString, UriKind.Absolute) ? new Uri(AdditionalContentUriString) : null;
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-
-        /// <summary> The policy metadata identifier. </summary>
-        public string MetadataId { get; }
-        /// <summary> The category of the policy metadata. </summary>
-        public string Category { get; }
-        /// <summary> The title of the policy metadata. </summary>
-        public string Title { get; }
-        /// <summary> The owner of the policy metadata. </summary>
-        public string Owner { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property has been replaced by AdditionalContentUriString", false)]
-        public Uri AdditionalContentUri { get; }
-        /// <summary> Url for getting additional content about the resource metadata. </summary>
-#pragma warning disable CA1056 // AdditionalContentUri is not always a real URI
-        public string AdditionalContentUriString { get; }
-#pragma warning restore CA1056 // AdditionalContentUri is not always a real URI
-        /// <summary>
-        /// Additional metadata.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Metadata { get; }
+        public Uri AdditionalContentUri { get; set; }
     }
 }
