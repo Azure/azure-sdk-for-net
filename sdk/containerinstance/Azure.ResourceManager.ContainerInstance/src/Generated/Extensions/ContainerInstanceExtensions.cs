@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance.Mock;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerInstance. </summary>
     public static partial class ContainerInstanceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ContainerGroupResourceExtension GetContainerGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ContainerGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerGroupResourceExtension GetContainerGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ContainerGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerInstanceResourceGroupResourceExtension GetContainerInstanceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ContainerInstanceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerInstanceResourceGroupResourceExtension GetContainerInstanceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ContainerInstanceResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ContainerInstanceSubscriptionResourceExtension GetContainerInstanceSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ContainerInstanceSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ContainerInstanceSubscriptionResourceExtension GetContainerInstanceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ContainerInstanceSubscriptionResourceExtension(client, scope);
             });
         }
         #region ContainerGroupResource
@@ -74,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An object representing collection of ContainerGroupResources and their operations over a ContainerGroupResource. </returns>
         public static ContainerGroupCollection GetContainerGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerGroups();
+            return GetContainerInstanceResourceGroupResourceExtension(resourceGroupResource).GetContainerGroups();
         }
 
         /// <summary>
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerInstanceResourceGroupResourceExtension(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,7 +195,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
+            return GetContainerInstanceResourceGroupResourceExtension(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +216,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
+            return GetContainerGroupResourceExtension(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerGroups(cancellationToken);
+            return GetContainerGroupResourceExtension(subscriptionResource).GetContainerGroups(cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +259,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +303,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +325,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +347,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +369,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionResourceExtension(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
         }
     }
 }

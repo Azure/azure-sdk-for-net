@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ArcScVmm.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ArcScVmm
@@ -18,35 +19,115 @@ namespace Azure.ResourceManager.ArcScVmm
     /// <summary> A class to add extension methods to Azure.ResourceManager.ArcScVmm. </summary>
     public static partial class ArcScVmmExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ArcScVmmResourceGroupResourceExtension GetArcScVmmResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ArcScVmmResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArcScVmmResourceGroupResourceExtension GetArcScVmmResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ArcScVmmResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ScVmmAvailabilitySetResourceExtension GetScVmmAvailabilitySetResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ScVmmAvailabilitySetResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ScVmmAvailabilitySetResourceExtension GetScVmmAvailabilitySetResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ScVmmAvailabilitySetResourceExtension(client, scope);
+            });
+        }
+
+        private static ScVmmCloudResourceExtension GetScVmmCloudResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScVmmCloudResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScVmmCloudResourceExtension GetScVmmCloudResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScVmmCloudResourceExtension(client, scope);
+            });
+        }
+
+        private static ScVmmServerResourceExtension GetScVmmServerResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScVmmServerResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScVmmServerResourceExtension GetScVmmServerResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScVmmServerResourceExtension(client, scope);
+            });
+        }
+
+        private static ScVmmVirtualMachineResourceExtension GetScVmmVirtualMachineResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScVmmVirtualMachineResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScVmmVirtualMachineResourceExtension GetScVmmVirtualMachineResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScVmmVirtualMachineResourceExtension(client, scope);
+            });
+        }
+
+        private static ScVmmVirtualMachineTemplateResourceExtension GetScVmmVirtualMachineTemplateResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScVmmVirtualMachineTemplateResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScVmmVirtualMachineTemplateResourceExtension GetScVmmVirtualMachineTemplateResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScVmmVirtualMachineTemplateResourceExtension(client, scope);
+            });
+        }
+
+        private static ScVmmVirtualNetworkResourceExtension GetScVmmVirtualNetworkResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScVmmVirtualNetworkResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScVmmVirtualNetworkResourceExtension GetScVmmVirtualNetworkResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScVmmVirtualNetworkResourceExtension(client, scope);
             });
         }
         #region ScVmmServerResource
@@ -187,7 +268,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmServerResources and their operations over a ScVmmServerResource. </returns>
         public static ScVmmServerCollection GetScVmmServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmServers();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmServers();
         }
 
         /// <summary>
@@ -243,7 +324,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmCloudResources and their operations over a ScVmmCloudResource. </returns>
         public static ScVmmCloudCollection GetScVmmClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmClouds();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmClouds();
         }
 
         /// <summary>
@@ -299,7 +380,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualNetworkResources and their operations over a ScVmmVirtualNetworkResource. </returns>
         public static ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmVirtualNetworks();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmVirtualNetworks();
         }
 
         /// <summary>
@@ -355,7 +436,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualMachineResources and their operations over a ScVmmVirtualMachineResource. </returns>
         public static ScVmmVirtualMachineCollection GetScVmmVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmVirtualMachines();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmVirtualMachines();
         }
 
         /// <summary>
@@ -411,7 +492,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public static ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmVirtualMachineTemplates();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmVirtualMachineTemplates();
         }
 
         /// <summary>
@@ -467,7 +548,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmAvailabilitySetResources and their operations over a ScVmmAvailabilitySetResource. </returns>
         public static ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScVmmAvailabilitySets();
+            return GetArcScVmmResourceGroupResourceExtension(resourceGroupResource).GetScVmmAvailabilitySets();
         }
 
         /// <summary>
@@ -536,7 +617,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmServersAsync(cancellationToken);
+            return GetScVmmServerResourceExtension(subscriptionResource).GetScVmmServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -557,7 +638,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmServerResource> GetScVmmServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmServers(cancellationToken);
+            return GetScVmmServerResourceExtension(subscriptionResource).GetScVmmServers(cancellationToken);
         }
 
         /// <summary>
@@ -578,7 +659,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
+            return GetScVmmCloudResourceExtension(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -599,7 +680,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmCloudResource> GetScVmmClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmClouds(cancellationToken);
+            return GetScVmmCloudResourceExtension(subscriptionResource).GetScVmmClouds(cancellationToken);
         }
 
         /// <summary>
@@ -620,7 +701,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
+            return GetScVmmVirtualNetworkResourceExtension(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -641,7 +722,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
+            return GetScVmmVirtualNetworkResourceExtension(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +743,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
+            return GetScVmmVirtualMachineResourceExtension(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -683,7 +764,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
+            return GetScVmmVirtualMachineResourceExtension(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +785,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
+            return GetScVmmVirtualMachineTemplateResourceExtension(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -725,7 +806,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
+            return GetScVmmVirtualMachineTemplateResourceExtension(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +827,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
+            return GetScVmmAvailabilitySetResourceExtension(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -767,7 +848,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
+            return GetScVmmAvailabilitySetResourceExtension(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
         }
     }
 }

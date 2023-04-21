@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor.Mock;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,67 +20,99 @@ namespace Azure.ResourceManager.Advisor
     /// <summary> A class to add extension methods to Azure.ResourceManager.Advisor. </summary>
     public static partial class AdvisorExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static AdvisorArmResourceExtension GetAdvisorArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new AdvisorArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AdvisorArmResourceExtension GetAdvisorArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new AdvisorArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AdvisorResourceGroupResourceExtension GetAdvisorResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AdvisorResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AdvisorResourceGroupResourceExtension GetAdvisorResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AdvisorResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AdvisorSubscriptionResourceExtension GetAdvisorSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AdvisorSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AdvisorSubscriptionResourceExtension GetAdvisorSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AdvisorSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AdvisorTenantResourceExtension GetAdvisorTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AdvisorTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AdvisorTenantResourceExtension GetAdvisorTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AdvisorTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourceRecommendationBaseResourceExtension GetResourceRecommendationBaseResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceRecommendationBaseResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourceRecommendationBaseResourceExtension GetResourceRecommendationBaseResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceRecommendationBaseResourceExtension(client, scope);
+            });
+        }
+
+        private static SuppressionContractResourceExtension GetSuppressionContractResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SuppressionContractResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SuppressionContractResourceExtension GetSuppressionContractResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SuppressionContractResourceExtension(client, scope);
             });
         }
         #region MetadataEntityResource
@@ -145,7 +178,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An object representing collection of ResourceRecommendationBaseResources and their operations over a ResourceRecommendationBaseResource. </returns>
         public static ResourceRecommendationBaseCollection GetResourceRecommendationBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetResourceRecommendationBases();
+            return GetAdvisorArmResourceExtension(client, scope).GetResourceRecommendationBases();
         }
 
         /// <summary>
@@ -216,7 +249,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfigData> GetConfigurationsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationsAsync(cancellationToken);
+            return GetAdvisorResourceGroupResourceExtension(resourceGroupResource).GetConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +270,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfigData> GetConfigurations(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurations(cancellationToken);
+            return GetAdvisorResourceGroupResourceExtension(resourceGroupResource).GetConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +295,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetAdvisorResourceGroupResourceExtension(resourceGroupResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,7 +320,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateConfiguration(configurationName, data, cancellationToken);
+            return GetAdvisorResourceGroupResourceExtension(resourceGroupResource).CreateConfiguration(configurationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +341,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfigData> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationsAsync(cancellationToken);
+            return GetAdvisorSubscriptionResourceExtension(subscriptionResource).GetConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +362,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfigData> GetConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurations(cancellationToken);
+            return GetAdvisorSubscriptionResourceExtension(subscriptionResource).GetConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -354,7 +387,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetAdvisorSubscriptionResourceExtension(subscriptionResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -379,7 +412,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateConfiguration(configurationName, data, cancellationToken);
+            return GetAdvisorSubscriptionResourceExtension(subscriptionResource).CreateConfiguration(configurationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +432,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> GenerateRecommendationAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GenerateRecommendationAsync(cancellationToken).ConfigureAwait(false);
+            return await GetResourceRecommendationBaseResourceExtension(subscriptionResource).GenerateRecommendationAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -419,7 +452,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response GenerateRecommendation(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GenerateRecommendation(cancellationToken);
+            return GetResourceRecommendationBaseResourceExtension(subscriptionResource).GenerateRecommendation(cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +473,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> GetGenerateStatusRecommendationAsync(this SubscriptionResource subscriptionResource, Guid operationId, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetGenerateStatusRecommendationAsync(operationId, cancellationToken).ConfigureAwait(false);
+            return await GetResourceRecommendationBaseResourceExtension(subscriptionResource).GetGenerateStatusRecommendationAsync(operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,7 +494,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response GetGenerateStatusRecommendation(this SubscriptionResource subscriptionResource, Guid operationId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGenerateStatusRecommendation(operationId, cancellationToken);
+            return GetResourceRecommendationBaseResourceExtension(subscriptionResource).GetGenerateStatusRecommendation(operationId, cancellationToken);
         }
 
         /// <summary>
@@ -484,7 +517,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSuppressionContractsAsync(top, skipToken, cancellationToken);
+            return GetSuppressionContractResourceExtension(subscriptionResource).GetSuppressionContractsAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +540,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SuppressionContractResource> GetSuppressionContracts(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSuppressionContracts(top, skipToken, cancellationToken);
+            return GetSuppressionContractResourceExtension(subscriptionResource).GetSuppressionContracts(top, skipToken, cancellationToken);
         }
 
         /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
@@ -515,7 +548,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
         public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetMetadataEntities();
+            return GetAdvisorTenantResourceExtension(tenantResource).GetMetadataEntities();
         }
 
         /// <summary>

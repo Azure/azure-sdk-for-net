@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent.Mock;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Confluent
     /// <summary> A class to add extension methods to Azure.ResourceManager.Confluent. </summary>
     public static partial class ConfluentExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ConfluentOrganizationResourceExtension GetConfluentOrganizationResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ConfluentOrganizationResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConfluentOrganizationResourceExtension GetConfluentOrganizationResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ConfluentOrganizationResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ConfluentResourceGroupResourceExtension GetConfluentResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ConfluentResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConfluentResourceGroupResourceExtension GetConfluentResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ConfluentResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ConfluentSubscriptionResourceExtension GetConfluentSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ConfluentSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ConfluentSubscriptionResourceExtension GetConfluentSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ConfluentSubscriptionResourceExtension(client, scope);
             });
         }
         #region ConfluentOrganizationResource
@@ -74,7 +91,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
         public static ConfluentOrganizationCollection GetConfluentOrganizations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfluentOrganizations();
+            return GetConfluentResourceGroupResourceExtension(resourceGroupResource).GetConfluentOrganizations();
         }
 
         /// <summary>
@@ -149,7 +166,7 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateOrganizationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetConfluentResourceGroupResourceExtension(resourceGroupResource).ValidateOrganizationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,7 +193,7 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateOrganization(organizationName, data, cancellationToken);
+            return GetConfluentResourceGroupResourceExtension(resourceGroupResource).ValidateOrganization(organizationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +214,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
+            return GetConfluentSubscriptionResourceExtension(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +235,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentAgreement> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
+            return GetConfluentSubscriptionResourceExtension(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +256,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetConfluentSubscriptionResourceExtension(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -260,7 +277,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ConfluentAgreement> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
+            return GetConfluentSubscriptionResourceExtension(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
         }
 
         /// <summary>
@@ -281,7 +298,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
+            return GetConfluentOrganizationResourceExtension(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -302,7 +319,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfluentOrganizations(cancellationToken);
+            return GetConfluentOrganizationResourceExtension(subscriptionResource).GetConfluentOrganizations(cancellationToken);
         }
     }
 }

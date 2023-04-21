@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CustomerInsights.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CustomerInsights
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.CustomerInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.CustomerInsights. </summary>
     public static partial class CustomerInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CustomerInsightsResourceGroupResourceExtension GetCustomerInsightsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CustomerInsightsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CustomerInsightsResourceGroupResourceExtension GetCustomerInsightsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CustomerInsightsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HubResourceExtension GetHubResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HubResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HubResourceExtension GetHubResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HubResourceExtension(client, scope);
             });
         }
         #region HubResource
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of HubResources and their operations over a HubResource. </returns>
         public static HubCollection GetHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHubs();
+            return GetCustomerInsightsResourceGroupResourceExtension(resourceGroupResource).GetHubs();
         }
 
         /// <summary>
@@ -389,7 +390,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HubResource> GetHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHubsAsync(cancellationToken);
+            return GetHubResourceExtension(subscriptionResource).GetHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -410,7 +411,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HubResource> GetHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHubs(cancellationToken);
+            return GetHubResourceExtension(subscriptionResource).GetHubs(cancellationToken);
         }
     }
 }
