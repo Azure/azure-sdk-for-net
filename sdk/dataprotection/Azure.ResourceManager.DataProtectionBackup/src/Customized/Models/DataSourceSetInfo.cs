@@ -7,61 +7,15 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("DataSourceSetInfo")]
+//[assembly: CodeGenSuppressType("DataSourceSetInfo")]
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> DatasourceSet details of datasource to be backed up. </summary>
     public partial class DataSourceSetInfo
     {
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
-        /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public DataSourceSetInfo(ResourceIdentifier resourceId)
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            ResourceId = resourceId;
-        }
-
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
-        /// <param name="dataSourceType"> DatasourceType of the resource. </param>
-        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
-        /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
-        /// <param name="resourceLocation"> Location of datasource. </param>
-        /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
-        /// <param name="resourceType"> Resource Type of Datasource. </param>
-        /// <param name="resourceUriString"> Uri of the resource. </param>
-        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
-        {
-            DataSourceType = dataSourceType;
-            ObjectType = objectType;
-            ResourceId = resourceId;
-            ResourceLocation = resourceLocation;
-            ResourceName = resourceName;
-            ResourceType = resourceType;
-            ResourceUriString = resourceUriString;
-#pragma warning disable CS0618 // Type or member is obsolete
-            ResourceUri = null;
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-
-        /// <summary> DatasourceType of the resource. </summary>
-        public string DataSourceType { get; set; }
-        /// <summary> Type of Datasource object, used to initialize the right inherited type. </summary>
-        public string ObjectType { get; set; }
-        /// <summary> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Location of datasource. </summary>
-        public AzureLocation? ResourceLocation { get; set; }
-        /// <summary> Unique identifier of the resource in the context of parent. </summary>
-        public string ResourceName { get; set; }
-        /// <summary> Resource Type of Datasource. </summary>
-        public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri ResourceUri { get; set; }
-        /// <summary> Uri of the resource. </summary>
-        public string ResourceUriString { get; set; }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("dataSourceInfo"u8))
                 {
-                    dataSourceInfo = Models.DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceSetInfo"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataSourceSetInfo = Models.DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyInfo"u8))
