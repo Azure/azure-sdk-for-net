@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguage = "en-US",
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.Speech, new CommunicationUserIdentifier("targetUserId"), 500)
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"), 500)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -80,9 +80,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
             },
+            SpeechLanguage = "en-US",
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.SpeechOrDtmf, new CommunicationUserIdentifier("targetUserId"), 500)
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, 100L)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -94,11 +95,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
             },
+            SpeechLanguage= "en-US",
         };
+
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
-
-        private static readonly SendDtmfOptions _sendDmtfOptions = new(new CommunicationUserIdentifier("targetUserId"),
-            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound });
 
         private static CallMedia? _callMedia;
 
@@ -459,7 +459,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<SendDtmfResult>>?[]
                 {
-                   callMedia => callMedia.SendDtmf(_sendDmtfOptions)
+                   callMedia => callMedia.SendDtmf(
+                       new CommunicationUserIdentifier("targetUserId"),
+                       new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       "context"
+                       )
                 }
             };
         }
@@ -470,7 +474,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<SendDtmfResult>>>?[]
                 {
-                   callMedia => callMedia.SendDtmfAsync(_sendDmtfOptions)
+                   callMedia => callMedia.SendDtmfAsync(
+                       new CommunicationUserIdentifier("targetUserId"),
+                       new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound }
+                       )
                 }
             };
         }
