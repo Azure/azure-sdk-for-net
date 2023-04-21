@@ -238,9 +238,13 @@ namespace Azure.Core.Dynamic
             };
         }
 
-        /// <inheritdoc/>
-        public bool Equals(DynamicData other)
+        internal bool Equals(DynamicData other)
         {
+            if (other is null)
+            {
+                return _element.ValueKind == JsonValueKind.Null;
+            }
+
             if (_element.ValueKind != other._element.ValueKind)
             {
                 return false;

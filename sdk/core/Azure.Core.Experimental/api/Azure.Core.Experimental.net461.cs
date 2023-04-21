@@ -119,6 +119,9 @@ namespace Azure.Core.Dynamic
     {
         internal DynamicData() { }
         public void Dispose() { }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator int (Azure.Core.Dynamic.DynamicData value) { throw null; }
@@ -130,6 +133,7 @@ namespace Azure.Core.Dynamic
         public static implicit operator float? (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator float (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator string (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
     }

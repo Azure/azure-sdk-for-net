@@ -322,6 +322,7 @@ namespace Azure.Core.Tests.Public
         [TestCase("1", "1.2", false)]
         [TestCase("1", "2", false)]
         [TestCase("1", "null", false)]
+        [TestCase("1", "{ \"foo\": 1 }", false)]
         public void EqualsPrimitiveValues(string a, string b, bool expected)
         {
             dynamic aJson = new BinaryData(a).ToDynamicFromJson();
@@ -345,12 +346,15 @@ namespace Azure.Core.Tests.Public
             Assert.IsTrue(nullString == value.foo);
 
             // We cannot overload the equality operator with two nullable values, so
-            // the following is the consequence:
+            // the following is the consequence.
+            //
+            // However, this does give us a backdoor to differentiate between an
+            // absent property and a property whose JSON value is null, if we wanted to
+            // use it that way, although it's not nice.
             Assert.IsFalse(null == value.foo);
         }
 
         [Test]
-        [Ignore("To be implemented.")]
         public void EqualsForObjectsAndArrays()
         {
             dynamic obj1 = new BinaryData(new { foo = "bar" }).ToDynamicFromJson();
@@ -360,8 +364,8 @@ namespace Azure.Core.Tests.Public
             dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamicFromJson();
 
             // For objects and arrays, Equals provides reference equality.
-            Assert.AreEqual(obj1, obj2);
-            Assert.AreEqual(arr1, arr2);
+            Assert.AreEqual(obj1, obj1);
+            Assert.AreEqual(arr1, arr1);
 
             Assert.AreNotEqual(obj1, obj2);
             Assert.AreNotEqual(arr1, arr2);
@@ -473,20 +477,6 @@ namespace Azure.Core.Tests.Public
             Assert.IsFalse("foo" == barJson);
             Assert.IsTrue(barJson != "foo");
             Assert.IsTrue("foo" != barJson);
-        }
-
-        [Test]
-        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
-        public void EqualsForStringNUnit()
-        {
-            dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamicFromJson();
-            var value = foo.Value;
-
-            Assert.AreEqual(value, "foo");
-            Assert.AreEqual("foo", value);
-
-            Assert.That(value, Is.EqualTo("foo"));
-            Assert.That("foo", Is.EqualTo(value));
         }
 
         [Test]
