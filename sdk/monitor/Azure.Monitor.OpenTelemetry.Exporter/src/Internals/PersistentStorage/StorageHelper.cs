@@ -14,7 +14,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
         {
             // get root directory
-            var rootDirectory = configuredStorageDirectory ?? GetDefaultStorageDirectory(platform);
+            var rootDirectory = configuredStorageDirectory
+                ?? GetDefaultStorageDirectory(platform)
+                ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
             // get unique sub directory
             var userName = platform.GetEnvironmentUserName();
@@ -48,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                 }
             }
 
-            throw new InvalidOperationException("Unable to determine default storage directory.");
+            return null;
         }
 
         /// <summary>

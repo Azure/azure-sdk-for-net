@@ -62,6 +62,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
+        [InlineData("WINDOWS")]
+        [InlineData("LINUX")]
+        public void VerifyGetStorageDirectory_Failure(string osName)
+        {
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
+            platform.CreateDirectoryFunc = (path) => false;
+
+            Assert.Throws<InvalidOperationException>(() => StorageHelper.GetStorageDirectory(platform: platform, configuredStorageDirectory: null, instrumentationKey: "00000000-0000-0000-0000-000000000000"));
+        }
+
+        [Theory]
         [InlineData("LOCALAPPDATA")]
         [InlineData("TEMP")]
         public void VerifyDefaultDirectory_Windows(string envVarName)
@@ -97,18 +109,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // when using a default directory, we will append /Microsoft/AzureMonitor
             var expected = Path.Combine(expectedDirectory, "Microsoft", "AzureMonitor");
             Assert.Equal(expected, directoryPath);
-        }
-
-        [Theory]
-        [InlineData("WINDOWS")]
-        [InlineData("LINUX")]
-        public void VerifyDefaultDirectory_Failure(string osName)
-        {
-            var platform = new MockPlatform();
-            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
-            platform.CreateDirectoryFunc = (path) => false;
-
-            Assert.Throws<InvalidOperationException>(() => StorageHelper.GetDefaultStorageDirectory(platform: platform));
         }
     }
 }
