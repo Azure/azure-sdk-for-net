@@ -8,13 +8,13 @@ using System.Threading;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from start recognizing result.</summary>
-    public class StartRecognizingResult
+    public class StartRecognizingCallMediaResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal StartRecognizingResult()
+        internal StartRecognizingCallMediaResult()
         {
         }
 

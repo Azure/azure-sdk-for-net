@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             new CommunicationUserIdentifier("id")
         };
-        private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
+        private static readonly MediaFileSource _fileSource = new MediaFileSource(new System.Uri("file://path/to/file"));
         private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
         private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>");
 
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
             InterruptPrompt = true,
             OperationContext = "operationContext",
-            Prompt = new FileSource(new Uri("https://localhost"))
+            Prompt = new MediaFileSource(new Uri("https://localhost"))
         };
 
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
-        public async Task RecognizeOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<StartRecognizingResult>>> operation)
+        public async Task RecognizeOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>> operation)
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
@@ -169,7 +169,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
-        public void RecognizeOperations_Return202Accepted(Func<CallMedia, Response<StartRecognizingResult>> operation)
+        public void RecognizeOperations_Return202Accepted(Func<CallMedia, Response<StartRecognizingCallMediaResult>> operation)
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
@@ -225,7 +225,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
-        public void RecognizeOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<StartRecognizingResult>>> operation)
+        public void RecognizeOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -255,7 +255,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
-        public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingResult>> operation)
+        public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingCallMediaResult>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -285,7 +285,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
-        public void MediaOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingResult>> operation)
+        public void MediaOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingCallMediaResult>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -321,27 +321,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayMediaAsync(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.PlayMediaToAllAsync(_fileSource, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_textSource, _target, _options)
+                   callMedia => callMedia.PlayMediaAsync(_textSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_textSource, _options)
+                   callMedia => callMedia.PlayMediaToAllAsync(_textSource, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_ssmlSource, _target, _options)
+                   callMedia => callMedia.PlayMediaAsync(_ssmlSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_ssmlSource, _options)
+                   callMedia => callMedia.PlayMediaToAllAsync(_ssmlSource, _options)
                 },
             };
         }
@@ -361,23 +361,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_dmtfRecognizeOptions)
                 },
-                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_choiceRecognizeOptions)
                 },
-                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_speechRecognizeOptions)
                 },
-                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_speechOrDtmfRecognizeOptions)
                 },
-                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
                    callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
                 }
@@ -390,27 +390,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayMedia(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_fileSource, _options)
+                   callMedia => callMedia.PlayMediaToAll(_fileSource, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_textSource, _target, _options)
+                   callMedia => callMedia.PlayMedia(_textSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_textSource, _options)
+                   callMedia => callMedia.PlayMediaToAll(_textSource, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_ssmlSource, _target, _options)
+                   callMedia => callMedia.PlayMedia(_ssmlSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_ssmlSource, _options)
+                   callMedia => callMedia.PlayMediaToAll(_ssmlSource, _options)
                 },
             };
         }
@@ -430,23 +430,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_dmtfRecognizeOptions)
                 },
-                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_choiceRecognizeOptions)
                 },
-                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_speechRecognizeOptions)
                 },
-                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_speechOrDtmfRecognizeOptions)
                 },
-                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }

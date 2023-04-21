@@ -46,15 +46,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
-        /// <param name="playOptions"></param>
+        /// <param name="options"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual async Task<Response<PlayResult>> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayResult>> PlayMediaAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMedia)}");
             scope.Start();
             try
             {
-                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
+                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, options);
 
                 var response = await CallMediaRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -76,15 +76,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
-        /// <param name="playOptions"></param>
+        /// <param name="options"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayMedia(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMedia)}");
             scope.Start();
             try
             {
-                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
+                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, options);
 
                 var response = CallMediaRestClient.Play(CallConnectionId, request, cancellationToken);
 
@@ -130,16 +130,16 @@ namespace Azure.Communication.CallAutomation
         /// Play to all participants async.
         /// </summary>
         /// <param name="playSource"></param>
-        /// <param name="playOptions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual async Task<Response<PlayResult>> PlayToAllAsync(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayResult>> PlayMediaToAllAsync(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMediaToAll)}");
             scope.Start();
             try
             {
-                return await PlayAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken).ConfigureAwait(false);
+                return await PlayMediaAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -152,16 +152,16 @@ namespace Azure.Communication.CallAutomation
         /// Play to all participants.
         /// </summary>
         /// <param name="playSource"></param>
-        /// <param name="playOptions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayMediaToAll(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMediaToAll)}");
             scope.Start();
             try
             {
-                return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken);
+                return PlayMedia(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -223,20 +223,20 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Recognize tones.
         /// </summary>
-        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="options">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Returns <see cref="StartRecognizingResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
-        public virtual async Task<Response<StartRecognizingResult>> StartRecognizingAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="StartRecognizingCallMediaResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
+        public virtual async Task<Response<StartRecognizingCallMediaResult>> StartRecognizingAsync(CallMediaRecognizeOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");
             scope.Start();
             try
             {
-                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                RecognizeRequestInternal request = CreateRecognizeRequest(options);
 
                 var response = await CallMediaRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
-                var result = new StartRecognizingResult();
+                var result = new StartRecognizingCallMediaResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
@@ -251,20 +251,20 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Recognize tones.
         /// </summary>
-        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="options">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Returns <see cref="StartRecognizingResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
-        public virtual Response<StartRecognizingResult> StartRecognizing(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="StartRecognizingCallMediaResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
+        public virtual Response<StartRecognizingCallMediaResult> StartRecognizing(CallMediaRecognizeOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");
             scope.Start();
             try
             {
-                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                RecognizeRequestInternal request = CreateRecognizeRequest(options);
 
                 var response = CallMediaRestClient.Recognize(CallConnectionId, request, cancellationToken);
 
-                var result = new StartRecognizingResult();
+                var result = new StartRecognizingCallMediaResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
@@ -287,7 +287,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds,
                     MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect,
-                    StopTones = recognizeDtmfOptions.StopTones
+                    StopTones = (IReadOnlyList<DtmfTone>)recognizeDtmfOptions.StopTones
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
@@ -391,7 +391,7 @@ namespace Azure.Communication.CallAutomation
         {
             PlaySourceInternal sourceInternal;
 
-            if (playSource != null && playSource is FileSource fileSource)
+            if (playSource != null && playSource is MediaFileSource fileSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
                 sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
