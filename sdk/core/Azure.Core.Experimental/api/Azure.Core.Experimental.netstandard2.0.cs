@@ -166,6 +166,7 @@ namespace Azure.Core.Json
         public static Azure.Core.Json.MutableJsonDocument Parse(System.BinaryData utf8Json) { throw null; }
         public static Azure.Core.Json.MutableJsonDocument Parse(string json) { throw null; }
         public void WriteTo(System.IO.Stream stream, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

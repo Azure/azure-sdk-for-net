@@ -47,11 +47,14 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="stream">The stream to which to write the document.</param>
         /// <param name="format">A format string indicating the format to use when writing the document.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="stream"/> parameter is <see langword="null"/>.</exception>
         /// <exception cref="FormatException">Thrown if an unsupported value is passed for format.</exception>
         /// <remarks>The value of <paramref name="format"/> can be default or 'J' to write the document as JSON.</remarks>
         public void WriteTo(Stream stream, StandardFormat format = default)
         {
-            if (format != default || format.Symbol != 'J')
+            Argument.AssertNotNull(stream, nameof(stream));
+
+            if (format != default && format.Symbol != 'J')
             {
                 throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON.");
             }
@@ -66,8 +69,17 @@ namespace Azure.Core.Json
             RootElement.WriteTo(writer);
         }
 
-        internal void WriteTo(Utf8JsonWriter writer)
+        /// <summary>
+        /// Writes the document to the provided stream as a JSON value.
+        /// </summary>
+        /// <param name="writer">The writer to which to write the document.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="writer"/> parameter is <see langword="null"/>.</exception>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public void WriteTo(Utf8JsonWriter writer)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            Argument.AssertNotNull(writer, nameof(writer));
+
             if (!Changes.HasChanges)
             {
                 _originalDocument.RootElement.WriteTo(writer);
