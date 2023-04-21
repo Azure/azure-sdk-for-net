@@ -188,7 +188,7 @@ function RegisterMgmtSDKToMgmtCoreClient () {
     $armCiFile = "$sdkRepoRootPath/sdk/resourcemanager/ci.mgmt.yml"
     $armLines = Get-Content $armCiFile
     $newLines = [System.Collections.ArrayList]::new()
-    $startIndex = $track2MgmtDirs[0].FullName.IndexOf(("\sdk\")) + 1
+    $startIndex = $track2MgmtDirs[0].FullName.Replace('\', '/').IndexOf(("/sdk/")) + 1
     $shouldRemove = $false
     # foreach($line in $armLines) {
     for ($i = 0; $i -le $armLines.Count - 1; $i++) {
@@ -200,7 +200,7 @@ function RegisterMgmtSDKToMgmtCoreClient () {
             $newLines.Add("    - common/ManagementTestShared") | Out-Null
             $newLines.Add("    - common/ManagementCoreShared") | Out-Null
             foreach($dir in $track2MgmtDirs) {
-                $newLine = "    - $($dir.FullName.Substring($startIndex, $dir.FullName.Length - $startIndex).Replace('\', '/'))"
+                $newLine = "    - $($dir.FullName.Replace('\', '/').Substring($startIndex, $dir.FullName.Length - $startIndex))"
                 $newLines.Add($newLine) | Out-Null
             }
             $shouldRemove = $true
