@@ -13,51 +13,55 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class StorageHelperTests
     {
         private readonly string _testStorageDirectory;
+        private readonly MockPlatform _testPlatform;
+        private readonly string _testIkey = "testIkey";
+        private readonly string _testHash;
 
         public StorageHelperTests()
         {
-            _testStorageDirectory = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+            _testStorageDirectory = isWindows
                 ? @"C:\UnitTest"
                 : "/var/UnitTest";
+
+            _testPlatform = isWindows
+                ? new MockPlatform { UserName = "ApplicationPoolIdentity", ProcessName = "w3wp", ApplicationBaseDirectory = @"C:\inetpub\wwwroot" }
+                : new MockPlatform { UserName = "TestUser", ProcessName = "TestApplication", ApplicationBaseDirectory = "/unitTest/" };
+
+            // This hash value is a combination of the ikey + values from the platform (UserName, ProcessName, ApplicationBaseDirectory).
+            _testHash = isWindows
+                ? "f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb"
+                : "683940b83fdb5f4de3bead583ecb8dce9ec04cbc22319eaa1238e6e83bdc9112";
         }
 
         [Fact]
         public void VerifyGetStorageDirectory_Configured()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
-                platform: new MockPlatform
-                {
-                    UserName = "ApplicationPoolIdentity",
-                    ProcessName ="w3wp",
-                    ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
-                },
+                platform: _testPlatform,
                 configuredStorageDirectory: _testStorageDirectory,
-                instrumentationKey: "testIkey");
+                instrumentationKey: _testIkey);
 
-            var expected = Path.Combine(_testStorageDirectory, "f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb");
+            var expected = Path.Combine(_testStorageDirectory, _testHash);
             Assert.Equal(expected, directoryPath);
         }
 
         [Theory]
         [InlineData("WINDOWS", "LOCALAPPDATA")]
+        [InlineData("WINDOWS", "TEMP")]
         [InlineData("LINUX", "TMPDIR")]
         public void VerifyGetStorageDirectory_Default(string osName, string envVarName)
         {
-            var platform = new MockPlatform
-            {
-                UserName = "ApplicationPoolIdentity",
-                ProcessName = "w3wp",
-                ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
-            };
-            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
-            platform.SetEnvironmentVariable(envVarName, _testStorageDirectory);
+            _testPlatform.IsOsPlatformFunc = (os) => os.ToString() == osName;
+            _testPlatform.SetEnvironmentVariable(envVarName, _testStorageDirectory);
 
             var directoryPath = StorageHelper.GetStorageDirectory(
-                platform: platform,
+                platform: _testPlatform,
                 configuredStorageDirectory: null,
-                instrumentationKey: "testIkey");
+                instrumentationKey: _testIkey);
 
-            var expected = Path.Combine(_testStorageDirectory, "Microsoft", "AzureMonitor", "f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb");
+            var expected = Path.Combine(_testStorageDirectory, "Microsoft", "AzureMonitor", _testHash);
             Assert.Equal(expected, directoryPath);
         }
 
