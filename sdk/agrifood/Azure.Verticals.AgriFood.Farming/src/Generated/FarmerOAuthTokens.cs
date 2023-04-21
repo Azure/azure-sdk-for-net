@@ -270,14 +270,14 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens", false);
-            if (authProviderIds != null)
+            if (authProviderIds != null && Optional.IsCollectionDefined(authProviderIds))
             {
                 foreach (var param in authProviderIds)
                 {
                     uri.AppendQuery("authProviderIds", param, true);
                 }
             }
-            if (partyIds != null)
+            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
             {
                 foreach (var param in partyIds)
                 {

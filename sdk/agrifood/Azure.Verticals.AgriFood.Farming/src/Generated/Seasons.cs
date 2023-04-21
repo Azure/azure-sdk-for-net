@@ -300,35 +300,35 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxEndDateTime", maxEndDateTime.Value, "O", true);
             }
-            if (years != null)
+            if (years != null && Optional.IsCollectionDefined(years))
             {
                 foreach (var param in years)
                 {
                     uri.AppendQuery("years", param, true);
                 }
             }
-            if (seasonIds != null)
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
