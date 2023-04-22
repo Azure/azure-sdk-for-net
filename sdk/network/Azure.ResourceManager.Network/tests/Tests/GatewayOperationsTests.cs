@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = "westus"; // TestEnvironment.Location;
+            AzureLocation location = AzureLocation.WestUS;
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create a local network gateway with BGP
