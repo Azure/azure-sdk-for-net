@@ -18,7 +18,7 @@ namespace Azure.Core.Json
     {
         internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
-        private readonly Memory<byte> _original;
+        private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
         internal ChangeTracker Changes { get; } = new();
@@ -108,10 +108,21 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json)
+        {
+            var doc = JsonDocument.Parse(utf8Json);
+            return new MutableJsonDocument(doc, utf8Json);
+        }
+
+        /// <summary>
+        /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
+        /// </summary>
+        /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
+        /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
         public static MutableJsonDocument Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new MutableJsonDocument(doc, utf8Json.ToArray().AsMemory());
+            return new MutableJsonDocument(doc, utf8Json.ToMemory());
         }
 
         /// <summary>
@@ -132,7 +143,7 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, Memory<byte> utf8Json)
+        internal MutableJsonDocument(JsonDocument jsonDocument, ReadOnlyMemory<byte> utf8Json)
         {
             _original = utf8Json;
             _originalDocument = jsonDocument;

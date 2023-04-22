@@ -164,6 +164,7 @@ namespace Azure.Core.Json
         public Azure.Core.Json.MutableJsonElement RootElement { get { throw null; } }
         public void Dispose() { }
         public static Azure.Core.Json.MutableJsonDocument Parse(System.BinaryData utf8Json) { throw null; }
+        public static Azure.Core.Json.MutableJsonDocument Parse(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
         public static Azure.Core.Json.MutableJsonDocument Parse(string json) { throw null; }
         public void WriteTo(System.IO.Stream stream, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
