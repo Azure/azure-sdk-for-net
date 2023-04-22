@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callLocator.
         /// </summary>
-        public Uri RecordingStateCallbackEndpoint { get; set; }
+        public Uri RecordingStateCallbackUri { get; set; }
 
         /// <summary>
         /// The recording channel.

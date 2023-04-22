@@ -287,7 +287,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds,
                     MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect,
-                    StopTones = (IReadOnlyList<DtmfTone>)recognizeDtmfOptions.StopTones
+                    StopTones = recognizeDtmfOptions.StopTones.ToList<DtmfTone>()
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))

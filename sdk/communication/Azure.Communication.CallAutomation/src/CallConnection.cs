@@ -189,13 +189,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="callInvite"> The target to transfer the call to.</param>
+        /// <param name="target"> The target to transfer the call to.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
-        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite callInvite, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite target, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(callInvite);
+            TransferToParticipantOptions options = new TransferToParticipantOptions(target);
 
             return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -239,13 +239,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="callInvite"> The target to transfer the call to.</param>
+        /// <param name="target"> The target to transfer the call to.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
-        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite callInvite, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite target, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(callInvite);
+            TransferToParticipantOptions options = new TransferToParticipantOptions(target);
 
             return TransferCallToParticipant(options, cancellationToken);
         }
@@ -439,12 +439,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="participantMri">The participant's MRI.</param>
+        /// <param name="participantIdentifier">The participant's identifier.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantMri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantIdentifier"/> is null. </exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantMri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(CommunicationIdentifier participantIdentifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -452,7 +452,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var response = await RestClient.GetParticipantAsync(
                     callConnectionId: CallConnectionId,
-                    participantMri,
+                    participantIdentifier.RawId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -466,12 +466,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="participantMri">The participant MRI.</param>
+        /// <param name="participantIdentifier">The participant identifier.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantMri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantIdentifier"/> is null. </exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<CallParticipant> GetParticipant(string participantMri, CancellationToken cancellationToken = default)
+        public virtual Response<CallParticipant> GetParticipant(CommunicationIdentifier participantIdentifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -479,7 +479,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var response = RestClient.GetParticipant(
                     callConnectionId: CallConnectionId,
-                    participantMri,
+                    participantIdentifier.RawId,
                     cancellationToken: cancellationToken
                     );
 
