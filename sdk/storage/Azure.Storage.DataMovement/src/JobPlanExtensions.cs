@@ -20,6 +20,8 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
+            baseJob.VerifyJobPartPlanHeader(header);
+
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
@@ -42,7 +44,9 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
+
+            baseJob.VerifyJobPartPlanHeader(header);
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -66,7 +70,9 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
+
+            baseJob.VerifyJobPartPlanHeader(header);
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -91,6 +97,8 @@ namespace Azure.Storage.DataMovement
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
+
+            baseJob.VerifyJobPartPlanHeader(header);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -118,7 +126,9 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
+
+            baseJob.VerifyJobPartPlanHeader(header);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -144,7 +154,9 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
+
+            baseJob.VerifyJobPartPlanHeader(header);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -268,6 +280,62 @@ namespace Azure.Storage.DataMovement
                 result = JobPartPlanHeader.Deserialize(stream);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Verifies the contents of the Job Part Plan Header with the
+        /// information passed to resume the transfer.
+        /// </summary>
+        /// <param name="job">The job containing the resume information.</param>
+        /// <param name="header">The header which holds the state of the job when it was stopped/paused.</param>
+        internal static void VerifyJobPartPlanHeader(this TransferJobInternal job, JobPartPlanHeader header)
+        {
+            // Check source path
+            string passedSourcePath;
+            if (job._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(job._sourceResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                passedSourcePath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                passedSourcePath = job._sourceResource.Path;
+            }
+            // We only check if it starts with the path because if we're passed a container
+            // then we only need to check if the prefix matches
+            if (!header.SourcePath.StartsWith(passedSourcePath))
+            {
+                throw Errors.MismatchResumeTransferArguments(nameof(header.SourcePath), header.SourcePath, passedSourcePath);
+            }
+
+            // Check destinationPath
+            string passedDestinationPath;
+            if (job._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(job._destinationResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                passedDestinationPath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                passedDestinationPath = job._destinationResource.Path;
+            }
+            // We only check if it starts with the path because if we're passed a container
+            // then we only need to check if the prefix matches
+            if (!header.DestinationPath.StartsWith(passedDestinationPath))
+            {
+                throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
+            }
+
+            // Check CreateMode / Overwrite
+            if ((header.ForceWrite && job._createMode != StorageResourceCreateMode.Overwrite) ||
+                (!header.ForceWrite && job._createMode == StorageResourceCreateMode.Overwrite))
+            {
+                throw Errors.MismatchResumeCreateMode(header.ForceWrite, job._createMode);
+            }
         }
     }
 }
