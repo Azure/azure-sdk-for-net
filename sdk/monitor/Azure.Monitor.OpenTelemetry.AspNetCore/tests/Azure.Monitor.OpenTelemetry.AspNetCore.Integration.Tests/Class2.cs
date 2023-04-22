@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: CHANGE THIS TO SOMETHING UNIQUE WHEN WORKING LOCALLY
         // EXAMPLE "Test##" TO EASILY FIND YOUR RECORDS.
-        private const string _roleName = "Test6"; //nameof(Class2);
+        private const string _roleName = "Test7"; //nameof(Class2);
 
         private readonly LogsQueryClient _logsQueryClient;
 
@@ -84,10 +84,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             Assert.True(res.Equals("Response from Test Server"));
 
             // SHUTDOWN
-            // TODO: IS FLUSHING NECESSARY?
-            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-            tracerProvider.ForceFlush();
-            tracerProvider.Shutdown(); // shutdown to prevent subscribing to log queries.
+            // NOTE: If this test starts failing, Flushing may be necessary.
+            //var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            //tracerProvider.ForceFlush();
+            //tracerProvider.Shutdown();
+            // shutdown to prevent subscribing to log queries.
             await app.StopAsync();
 
             // ASSERT
@@ -112,9 +113,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             await VerifyLogs(
                 description: "ILogger LogInformation",
                 query: $"AppTraces | where Message == 'Message via ILogger LogInformation' | top 1 by TimeGenerated");
-
-            // TODO: IS THIS NEEDED?
-            //await app.DisposeAsync();
         }
 
         private async Task VerifyLogs(string description, string query)
