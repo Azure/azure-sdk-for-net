@@ -105,6 +105,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region ApplicationGatewayWafDynamicManifestResultResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayWafDynamicManifestResultResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> object. </returns>
+        public static ApplicationGatewayWafDynamicManifestResultResource GetApplicationGatewayWafDynamicManifestResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ApplicationGatewayWafDynamicManifestResultResource.ValidateResourceId(id);
+                return new ApplicationGatewayWafDynamicManifestResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ApplicationSecurityGroupResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
@@ -195,6 +214,25 @@ namespace Azure.ResourceManager.Network
             {
                 ExpressRouteProviderPortResource.ValidateResourceId(id);
                 return new ExpressRouteProviderPortResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SwapResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SwapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SwapResource.CreateResourceIdentifier" /> to create a <see cref="SwapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SwapResource" /> object. </returns>
+        public static SwapResource GetSwapResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SwapResource.ValidateResourceId(id);
+                return new SwapResource(client, id);
             }
             );
         }
@@ -784,6 +822,196 @@ namespace Azure.ResourceManager.Network
             {
                 NetworkInterfaceTapConfigurationResource.ValidateResourceId(id);
                 return new NetworkInterfaceTapConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region NetworkManagerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkManagerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkManagerResource" /> object. </returns>
+        public static NetworkManagerResource GetNetworkManagerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                NetworkManagerResource.ValidateResourceId(id);
+                return new NetworkManagerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SubscriptionNetworkManagerConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionNetworkManagerConnectionResource" /> object. </returns>
+        public static SubscriptionNetworkManagerConnectionResource GetSubscriptionNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SubscriptionNetworkManagerConnectionResource.ValidateResourceId(id);
+                return new SubscriptionNetworkManagerConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagementGroupNetworkManagerConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagementGroupNetworkManagerConnectionResource" /> object. </returns>
+        public static ManagementGroupNetworkManagerConnectionResource GetManagementGroupNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagementGroupNetworkManagerConnectionResource.ValidateResourceId(id);
+                return new ManagementGroupNetworkManagerConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ConnectivityConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectivityConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectivityConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConnectivityConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConnectivityConfigurationResource" /> object. </returns>
+        public static ConnectivityConfigurationResource GetConnectivityConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ConnectivityConfigurationResource.ValidateResourceId(id);
+                return new ConnectivityConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region NetworkGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkGroupResource" /> object. </returns>
+        public static NetworkGroupResource GetNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                NetworkGroupResource.ValidateResourceId(id);
+                return new NetworkGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region StaticMemberResource
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticMemberResource.CreateResourceIdentifier" /> to create a <see cref="StaticMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StaticMemberResource" /> object. </returns>
+        public static StaticMemberResource GetStaticMemberResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                StaticMemberResource.ValidateResourceId(id);
+                return new StaticMemberResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ScopeConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScopeConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScopeConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ScopeConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScopeConnectionResource" /> object. </returns>
+        public static ScopeConnectionResource GetScopeConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ScopeConnectionResource.ValidateResourceId(id);
+                return new ScopeConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SecurityAdminConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityAdminConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityAdminConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAdminConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityAdminConfigurationResource" /> object. </returns>
+        public static SecurityAdminConfigurationResource GetSecurityAdminConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SecurityAdminConfigurationResource.ValidateResourceId(id);
+                return new SecurityAdminConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AdminRuleCollectionResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AdminRuleCollectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdminRuleCollectionResource.CreateResourceIdentifier" /> to create an <see cref="AdminRuleCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdminRuleCollectionResource" /> object. </returns>
+        public static AdminRuleCollectionResource GetAdminRuleCollectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AdminRuleCollectionResource.ValidateResourceId(id);
+                return new AdminRuleCollectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region BaseAdminRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BaseAdminRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BaseAdminRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseAdminRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BaseAdminRuleResource" /> object. </returns>
+        public static BaseAdminRuleResource GetBaseAdminRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                BaseAdminRuleResource.ValidateResourceId(id);
+                return new BaseAdminRuleResource(client, id);
             }
             );
         }
@@ -1834,234 +2062,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ApplicationGatewayWafDynamicManifestResultResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationGatewayWafDynamicManifestResultResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> object. </returns>
-        public static ApplicationGatewayWafDynamicManifestResultResource GetApplicationGatewayWafDynamicManifestResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationGatewayWafDynamicManifestResultResource.ValidateResourceId(id);
-                return new ApplicationGatewayWafDynamicManifestResultResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SwapResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SwapResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SwapResource.CreateResourceIdentifier" /> to create a <see cref="SwapResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SwapResource" /> object. </returns>
-        public static SwapResource GetSwapResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SwapResource.ValidateResourceId(id);
-                return new SwapResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkManagerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkManagerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkManagerResource" /> object. </returns>
-        public static NetworkManagerResource GetNetworkManagerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkManagerResource.ValidateResourceId(id);
-                return new NetworkManagerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SubscriptionNetworkManagerConnectionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionNetworkManagerConnectionResource" /> object. </returns>
-        public static SubscriptionNetworkManagerConnectionResource GetSubscriptionNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionNetworkManagerConnectionResource.ValidateResourceId(id);
-                return new SubscriptionNetworkManagerConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagementGroupNetworkManagerConnectionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagementGroupNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagementGroupNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupNetworkManagerConnectionResource" /> object. </returns>
-        public static ManagementGroupNetworkManagerConnectionResource GetManagementGroupNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagementGroupNetworkManagerConnectionResource.ValidateResourceId(id);
-                return new ManagementGroupNetworkManagerConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConnectivityConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectivityConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectivityConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConnectivityConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectivityConfigurationResource" /> object. </returns>
-        public static ConnectivityConfigurationResource GetConnectivityConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConnectivityConfigurationResource.ValidateResourceId(id);
-                return new ConnectivityConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkGroupResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkGroupResource" /> object. </returns>
-        public static NetworkGroupResource GetNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkGroupResource.ValidateResourceId(id);
-                return new NetworkGroupResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region StaticMemberResource
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticMemberResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticMemberResource.CreateResourceIdentifier" /> to create a <see cref="StaticMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticMemberResource" /> object. </returns>
-        public static StaticMemberResource GetStaticMemberResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                StaticMemberResource.ValidateResourceId(id);
-                return new StaticMemberResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ScopeConnectionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScopeConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScopeConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ScopeConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopeConnectionResource" /> object. </returns>
-        public static ScopeConnectionResource GetScopeConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScopeConnectionResource.ValidateResourceId(id);
-                return new ScopeConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SecurityAdminConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityAdminConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityAdminConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAdminConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAdminConfigurationResource" /> object. </returns>
-        public static SecurityAdminConfigurationResource GetSecurityAdminConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SecurityAdminConfigurationResource.ValidateResourceId(id);
-                return new SecurityAdminConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AdminRuleCollectionResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AdminRuleCollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdminRuleCollectionResource.CreateResourceIdentifier" /> to create an <see cref="AdminRuleCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdminRuleCollectionResource" /> object. </returns>
-        public static AdminRuleCollectionResource GetAdminRuleCollectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AdminRuleCollectionResource.ValidateResourceId(id);
-                return new AdminRuleCollectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region BaseAdminRuleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BaseAdminRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BaseAdminRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseAdminRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BaseAdminRuleResource" /> object. </returns>
-        public static BaseAdminRuleResource GetBaseAdminRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BaseAdminRuleResource.ValidateResourceId(id);
-                return new BaseAdminRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         /// <summary> Gets a collection of ManagementGroupNetworkManagerConnectionResources in the ManagementGroupResource. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagementGroupNetworkManagerConnectionResources and their operations over a ManagementGroupNetworkManagerConnectionResource. </returns>
@@ -2340,6 +2340,67 @@ namespace Azure.ResourceManager.Network
         public static Response<BastionHostResource> GetBastionHost(this ResourceGroupResource resourceGroupResource, string bastionHostName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetBastionHosts().Get(bastionHostName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SwapResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the cloud service. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of SwapResources and their operations over a SwapResource. </returns>
+        public static SwapResourceCollection GetSwapResources(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSwapResources(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VipSwap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SwapResource>> GetSwapResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSwapResources(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VipSwap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SwapResource> GetSwapResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSwapResources(resourceName).Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
@@ -3082,6 +3143,62 @@ namespace Azure.ResourceManager.Network
         public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
+        public static NetworkManagerCollection GetNetworkManagers(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkManagers();
+        }
+
+        /// <summary>
+        /// Gets the specified Network Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Network Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkManagerResource> GetNetworkManager(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetNetworkManagers().Get(networkManagerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
@@ -4564,123 +4681,6 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SwapResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SwapResources and their operations over a SwapResource. </returns>
-        public static SwapResourceCollection GetSwapResources(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSwapResources(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SwapResource>> GetSwapResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSwapResources(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SwapResource> GetSwapResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSwapResources(resourceName).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
-        public static NetworkManagerCollection GetNetworkManagers(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkManagers();
-        }
-
-        /// <summary>
-        /// Gets the specified Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkManagerResource> GetNetworkManager(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNetworkManagers().Get(networkManagerName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets all of the available subnet delegations for this resource group in this region.
         /// <list type="bullet">
@@ -4909,6 +4909,59 @@ namespace Azure.ResourceManager.Network
             return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResultResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region where the nrp are located at. </param>
+        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResultResources and their operations over a ApplicationGatewayWafDynamicManifestResultResource. </returns>
+        public static ApplicationGatewayWafDynamicManifestResultCollection GetApplicationGatewayWafDynamicManifestResults(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayWafDynamicManifestResults(location);
+        }
+
+        /// <summary>
+        /// Gets the regional application gateway waf manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region where the nrp are located at. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApplicationGatewayWafDynamicManifestResultResource>> GetApplicationGatewayWafDynamicManifestResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the regional application gateway waf manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region where the nrp are located at. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<ApplicationGatewayWafDynamicManifestResultResource> GetApplicationGatewayWafDynamicManifestResult(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).Get(cancellationToken);
+        }
+
         /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
@@ -5079,115 +5132,6 @@ namespace Azure.ResourceManager.Network
             return subscriptionResource.GetExpressRoutePortsLocations().Get(locationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
-        public static NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus(this SubscriptionResource subscriptionResource)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualApplianceSkus();
-        }
-
-        /// <summary>
-        /// Retrieves a single available sku for network virtual appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skuName"> Name of the Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkVirtualApplianceSkuResource>> GetNetworkVirtualApplianceSkuAsync(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetNetworkVirtualApplianceSkus().GetAsync(skuName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves a single available sku for network virtual appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skuName"> Name of the Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResultResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResultResources and their operations over a ApplicationGatewayWafDynamicManifestResultResource. </returns>
-        public static ApplicationGatewayWafDynamicManifestResultCollection GetApplicationGatewayWafDynamicManifestResults(this SubscriptionResource subscriptionResource, AzureLocation location)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayWafDynamicManifestResults(location);
-        }
-
-        /// <summary>
-        /// Gets the regional application gateway waf manifest.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<ApplicationGatewayWafDynamicManifestResultResource>> GetApplicationGatewayWafDynamicManifestResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the regional application gateway waf manifest.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<ApplicationGatewayWafDynamicManifestResultResource> GetApplicationGatewayWafDynamicManifestResult(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).Get(cancellationToken);
-        }
-
         /// <summary> Gets a collection of SubscriptionNetworkManagerConnectionResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SubscriptionNetworkManagerConnectionResources and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
@@ -5242,6 +5186,62 @@ namespace Azure.ResourceManager.Network
         public static Response<SubscriptionNetworkManagerConnectionResource> GetSubscriptionNetworkManagerConnection(this SubscriptionResource subscriptionResource, string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetSubscriptionNetworkManagerConnections().Get(networkManagerConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
+        public static NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualApplianceSkus();
+        }
+
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skuName"> Name of the Sku. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NetworkVirtualApplianceSkuResource>> GetNetworkVirtualApplianceSkuAsync(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetNetworkVirtualApplianceSkus().GetAsync(skuName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skuName"> Name of the Sku. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
         }
 
         /// <summary>
@@ -6535,6 +6535,52 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagersAsync(top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkManagerResource> GetNetworkManagers(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagers(top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all the network profiles in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -7814,52 +7860,6 @@ namespace Azure.ResourceManager.Network
         public static Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagersAsync(top, skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkManagerResource> GetNetworkManagers(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagers(top, skipToken, cancellationToken);
         }
     }
 }
