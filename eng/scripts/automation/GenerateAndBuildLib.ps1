@@ -701,16 +701,22 @@ function GeneratePackage()
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
         dotnet build /t:GenerateCode $srcPath
-        $sampleFolder = Join-Path $projectFolder "samples"
-        $testConfigFile = Join-Path $sampleFolder $AUTOREST_TEST_CONFIG_FILE
-        if ((Test-Path -Path $testConfigFile) -And ( $serviceType -eq "resource-manager")) {
-            dotnet build /t:GenerateTests $sampleFolder
-        }
     }
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
         $result = "failed"
     } else {
+        # generate test for mgmt sdk.
+        $sampleFolder = Join-Path $projectFolder "samples"
+        $testConfigFile = Join-Path $sampleFolder $AUTOREST_TEST_CONFIG_FILE
+        $autoGenSampleFolder = Join-Path $sampleFolder "Generated"
+        if ((Test-Path -Path $testConfigFile) -And (Test-Path -Path $autoGenSampleFolder) -And ( $serviceType -eq "resource-manager")) {
+            dotnet build /t:GenerateTests $sampleFolder
+            if ( !$? ) {
+                Write-Error "Failed to generate tests.. exit code: $?"
+                $result = "failed"
+            }
+        }
         # Build
         Write-Host "Start to build sdk: $projectFolder"
         dotnet build $projectFolder
