@@ -179,13 +179,12 @@ function Update-CIYmlFile() {
 
 function RegisterMgmtSDKToMgmtCoreClient () {
     param(
-        [string]$sdkRepoRootPath
+        [string]$packagesPath
     )
-    $packagesPath = Join-Path $sdkRepoRootPath "sdk"
     $track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) }
     Write-Host "Updating mgmt core client ci.mgmt.yml"
     #add path for each mgmt library into Azure.ResourceManager
-    $armCiFile = "$sdkRepoRootPath/sdk/resourcemanager/ci.mgmt.yml"
+    $armCiFile = "$packagesPath/resourcemanager/ci.mgmt.yml"
     $armLines = Get-Content $armCiFile
     $newLines = [System.Collections.ArrayList]::new()
     $startIndex = $track2MgmtDirs[0].FullName.Replace('\', '/').IndexOf(("/sdk/")) + 1
@@ -374,7 +373,8 @@ function New-MgmtPackageFolder() {
       dotnet new azuremgmt --provider $packageName --includeCI true --force
       Pop-Location
 
-      RegisterMgmtSDKToMgmtCoreClient -sdkRepoRootPath $sdkPath
+      $packagesPath = Join-Path $sdkPath "sdk"
+      RegisterMgmtSDKToMgmtCoreClient -packagesPath $packagesPath
     }
 
     # update the readme path.
