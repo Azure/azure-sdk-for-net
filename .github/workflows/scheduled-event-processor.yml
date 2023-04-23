@@ -51,7 +51,7 @@ jobs:
       #   with:
       #     repository: Azure/azure-sdk-tools
       #     path: azure-sdk-tools
-      #     ref: refs/pull/6030/merge
+      #     ref: <refs/pull/<PRNumber>/merge> or <sha>
 
       # - name: Build and install GitHubEventProcessor from sources
       #   run: |
