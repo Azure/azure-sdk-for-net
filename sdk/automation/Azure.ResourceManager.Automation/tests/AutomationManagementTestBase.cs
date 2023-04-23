@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Automation.Tests
     public class AutomationManagementTestBase : ManagementRecordedTestBase<AutomationManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
-        protected string groupName;
+        protected AzureLocation DefaultLocation => TestEnvironment.Location;
+        protected string GroupName;
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Automation.Tests
                 });
             if (Mode == RecordedTestMode.Playback)
             {
-                groupName = resourceGroupName;
+                GroupName = resourceGroupName;
             }
             else
             {
                 using (Recording.DisableRecording())
                 {
-                    groupName = rgOp.Value.Data.Name;
+                    GroupName = rgOp.Value.Data.Name;
                 }
             }
             return rgOp.Value;
