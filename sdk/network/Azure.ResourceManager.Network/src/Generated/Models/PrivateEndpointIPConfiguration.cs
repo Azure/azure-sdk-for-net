@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure;
 
 namespace Azure.ResourceManager.Network.Models
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint&apos;s subnet. </param>
-        internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, string privateIPAddress)
+        internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
         {
             Name = name;
             PrivateEndpointIPConfigurationType = privateEndpointIPConfigurationType;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The member name of a group obtained from the remote resource that this private endpoint should connect to. </summary>
         public string MemberName { get; set; }
         /// <summary> A private ip address obtained from the private endpoint&apos;s subnet. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

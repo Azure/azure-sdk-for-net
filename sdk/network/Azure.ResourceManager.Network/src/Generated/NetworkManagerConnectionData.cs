@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionState"> Connection state. </param>
         /// <param name="description"> A description of the network manager connection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkManagerConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string networkManagerId, ScopeConnectionState? connectionState, string description, ETag? etag) : base(id, name, resourceType, systemData)
+        internal NetworkManagerConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier networkManagerId, ScopeConnectionState? connectionState, string description, ETag? etag) : base(id, name, resourceType, systemData)
         {
             NetworkManagerId = networkManagerId;
             ConnectionState = connectionState;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Network Manager Id. </summary>
-        public string NetworkManagerId { get; set; }
+        public ResourceIdentifier NetworkManagerId { get; set; }
         /// <summary> Connection state. </summary>
         public ScopeConnectionState? ConnectionState { get; }
         /// <summary> A description of the network manager connection. </summary>

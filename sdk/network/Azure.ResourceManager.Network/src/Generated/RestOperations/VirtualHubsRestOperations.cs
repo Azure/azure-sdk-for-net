@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetInboundRoutesRequest(string subscriptionId, string resourceGroupName, string virtualHubName, GetInboundRoutesContent content)
+        internal HttpMessage CreateGetInboundRoutesRequest(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubInboundRoutesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetInboundRoutesAsync(string subscriptionId, string resourceGroupName, string virtualHubName, GetInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> GetInboundRoutesAsync(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetInboundRoutes(string subscriptionId, string resourceGroupName, string virtualHubName, GetInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public Response GetInboundRoutes(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetOutboundRoutesRequest(string subscriptionId, string resourceGroupName, string virtualHubName, GetOutboundRoutesContent content)
+        internal HttpMessage CreateGetOutboundRoutesRequest(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubOutboundRoutesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetOutboundRoutesAsync(string subscriptionId, string resourceGroupName, string virtualHubName, GetOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> GetOutboundRoutesAsync(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetOutboundRoutes(string subscriptionId, string resourceGroupName, string virtualHubName, GetOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public Response GetOutboundRoutes(string subscriptionId, string resourceGroupName, string virtualHubName, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

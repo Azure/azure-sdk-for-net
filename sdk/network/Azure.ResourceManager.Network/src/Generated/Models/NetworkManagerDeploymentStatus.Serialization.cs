@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<DateTimeOffset> commitTime = default;
             Optional<string> region = default;
-            Optional<DeploymentStatus> deploymentStatus = default;
+            Optional<NetworkManagerDeploymentState> deploymentStatus = default;
             Optional<IReadOnlyList<string>> configurationIds = default;
             Optional<NetworkConfigurationDeploymentType> deploymentType = default;
             Optional<string> errorMessage = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    deploymentStatus = new DeploymentStatus(property.Value.GetString());
+                    deploymentStatus = new NetworkManagerDeploymentState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationIds"u8))

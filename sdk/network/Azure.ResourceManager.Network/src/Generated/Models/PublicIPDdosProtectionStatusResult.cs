@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetPublicIpAddressDdosProtectionStatusOperation API service call. </summary>
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
-        internal PublicIPDdosProtectionStatusResult(string publicIPAddressId, string publicIPAddress, WorkloadProtectedFlag? isWorkloadProtected, string ddosProtectionPlanId)
+        internal PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId, IPAddress publicIPAddress, WorkloadProtectedFlag? isWorkloadProtected, ResourceIdentifier ddosProtectionPlanId)
         {
             PublicIPAddressId = publicIPAddressId;
             PublicIPAddress = publicIPAddress;
@@ -29,12 +32,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Public IP ARM resource ID. </summary>
-        public string PublicIPAddressId { get; }
+        public ResourceIdentifier PublicIPAddressId { get; }
         /// <summary> IP Address of the Public IP Resource. </summary>
-        public string PublicIPAddress { get; }
+        public IPAddress PublicIPAddress { get; }
         /// <summary> Value indicating whether the IP address is DDoS workload protected or not. </summary>
         public WorkloadProtectedFlag? IsWorkloadProtected { get; }
         /// <summary> DDoS protection plan Resource Id of a if IP address is protected through a plan. </summary>
-        public string DdosProtectionPlanId { get; }
+        public ResourceIdentifier DdosProtectionPlanId { get; }
     }
 }

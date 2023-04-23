@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing a BaseAdminRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BaseAdminRuleResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetBaseAdminRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AdminRuleCollectionResource" /> using the GetBaseAdminRule method.
+    /// Otherwise you can get one from its parent resource <see cref="AdminRuleGroupResource" /> using the GetBaseAdminRule method.
     /// </summary>
     public partial class BaseAdminRuleResource : ArmResource
     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityHub. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="resourceType"> Resource Type. </param>
-        internal ConnectivityHub(ResourceIdentifier resourceId, string resourceType)
+        internal ConnectivityHub(ResourceIdentifier resourceId, ResourceType? resourceType)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Resource Type. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

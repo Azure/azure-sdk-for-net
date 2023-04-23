@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AdminRuleCollectionResources in the SecurityAdminConfiguration. </summary>
-        /// <returns> An object representing collection of AdminRuleCollectionResources and their operations over a AdminRuleCollectionResource. </returns>
-        public virtual AdminRuleCollectionCollection GetAdminRuleCollections()
+        /// <summary> Gets a collection of AdminRuleGroupResources in the SecurityAdminConfiguration. </summary>
+        /// <returns> An object representing collection of AdminRuleGroupResources and their operations over a AdminRuleGroupResource. </returns>
+        public virtual AdminRuleGroupCollection GetAdminRuleGroups()
         {
-            return GetCachedClient(Client => new AdminRuleCollectionCollection(Client, Id));
+            return GetCachedClient(Client => new AdminRuleGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdminRuleCollectionResource>> GetAdminRuleCollectionAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdminRuleGroupResource>> GetAdminRuleGroupAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            return await GetAdminRuleCollections().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
+            return await GetAdminRuleGroups().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AdminRuleCollectionResource> GetAdminRuleCollection(string ruleCollectionName, CancellationToken cancellationToken = default)
+        public virtual Response<AdminRuleGroupResource> GetAdminRuleGroup(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            return GetAdminRuleCollections().Get(ruleCollectionName, cancellationToken);
+            return GetAdminRuleGroups().Get(ruleCollectionName, cancellationToken);
         }
 
         /// <summary>

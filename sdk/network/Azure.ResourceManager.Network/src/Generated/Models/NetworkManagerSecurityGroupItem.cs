@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerSecurityGroupItem. </summary>
         /// <param name="networkGroupId"> Network manager group Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
-        public NetworkManagerSecurityGroupItem(string networkGroupId)
+        public NetworkManagerSecurityGroupItem(ResourceIdentifier networkGroupId)
         {
             Argument.AssertNotNull(networkGroupId, nameof(networkGroupId));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network manager group Id. </summary>
-        public string NetworkGroupId { get; set; }
+        public ResourceIdentifier NetworkGroupId { get; set; }
     }
 }

@@ -1,8 +1,29 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-04-23)
 
 ### Features Added
+
+Add new resources:
+- `AdminRuleGroupResource`
+- `ApplicationGatewayWafDynamicManifestResource`
+- `BaseAdminRuleResource`
+- `ConnectivityConfigurationResource`
+- `ExpressRoutePortAuthorizationResource`
+- `ExpressRouteProviderPortResource`
+- `ManagementGroupNetworkManagerConnectionResource`
+- `NetworkGroupResource`
+- `NetworkManagerResource`
+- `NetworkManagerConnectionResource`
+- `RouteMapResource`
+- `RoutingIntentResource`
+- `ScopeConnectionResource`
+- `SecurityAdminConfigurationResource`
+- `PolicySignaturesOverridesForIdpsResource`
+- `NetworkGroupStaticMemberResource`
+- `NetworkManagerConnectionResource`
+- `CloudServiceSwapResource`
+- `VpnServerConfigurationPolicyResource`
 
 ### Breaking Changes
 
@@ -13,6 +34,9 @@
 - Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
 
 ### Other Changes
+
+- Upgraded API version to `2022-09-01`.
+- Upgraded dependent `Azure.Core` to `1.31.0`.
 
 ## 1.1.1 (2023-02-13)
 

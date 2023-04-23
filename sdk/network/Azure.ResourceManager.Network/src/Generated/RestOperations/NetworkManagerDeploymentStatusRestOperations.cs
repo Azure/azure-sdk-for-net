@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusContent content, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkManagerDeploymentStatusParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkManagerDeploymentStatusListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkManagerDeploymentStatusListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkManagerName, networkManagerDeploymentStatusParameter, top);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkManagerName, content, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkManagerDeploymentStatusListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = null, CancellationToken cancellationToken = default)
+        public Response<NetworkManagerDeploymentStatusListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkManagerName, networkManagerDeploymentStatusParameter, top);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkManagerName, content, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

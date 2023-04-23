@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StaticMemberResources in the NetworkGroup. </summary>
-        /// <returns> An object representing collection of StaticMemberResources and their operations over a StaticMemberResource. </returns>
-        public virtual StaticMemberCollection GetStaticMembers()
+        /// <summary> Gets a collection of NetworkGroupStaticMemberResources in the NetworkGroup. </summary>
+        /// <returns> An object representing collection of NetworkGroupStaticMemberResources and their operations over a NetworkGroupStaticMemberResource. </returns>
+        public virtual NetworkGroupStaticMemberCollection GetNetworkGroupStaticMembers()
         {
-            return GetCachedClient(Client => new StaticMemberCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkGroupStaticMemberCollection(Client, Id));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StaticMemberResource>> GetStaticMemberAsync(string staticMemberName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkGroupStaticMemberResource>> GetNetworkGroupStaticMemberAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            return await GetStaticMembers().GetAsync(staticMemberName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkGroupStaticMembers().GetAsync(staticMemberName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StaticMemberResource> GetStaticMember(string staticMemberName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkGroupStaticMemberResource> GetNetworkGroupStaticMember(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            return GetStaticMembers().Get(staticMemberName, cancellationToken);
+            return GetNetworkGroupStaticMembers().Get(staticMemberName, cancellationToken);
         }
 
         /// <summary>

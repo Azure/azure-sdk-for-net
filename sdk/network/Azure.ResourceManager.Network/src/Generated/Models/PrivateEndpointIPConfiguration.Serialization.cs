@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ETag> etag = default;
             Optional<string> groupId = default;
             Optional<string> memberName = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -96,7 +97,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("privateIPAddress"u8))
                         {
-                            privateIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                     }

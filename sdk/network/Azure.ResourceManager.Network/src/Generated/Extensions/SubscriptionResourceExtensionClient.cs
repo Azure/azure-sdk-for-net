@@ -247,12 +247,12 @@ namespace Azure.ResourceManager.Network
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResultResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResources in the SubscriptionResource. </summary>
         /// <param name="location"> The region where the nrp are located at. </param>
-        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResultResources and their operations over a ApplicationGatewayWafDynamicManifestResultResource. </returns>
-        public virtual ApplicationGatewayWafDynamicManifestResultCollection GetApplicationGatewayWafDynamicManifestResults(AzureLocation location)
+        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResources and their operations over a ApplicationGatewayWafDynamicManifestResource. </returns>
+        public virtual ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(AzureLocation location)
         {
-            return new ApplicationGatewayWafDynamicManifestResultCollection(Client, Id, location);
+            return new ApplicationGatewayWafDynamicManifestCollection(Client, Id, location);
         }
 
         /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>

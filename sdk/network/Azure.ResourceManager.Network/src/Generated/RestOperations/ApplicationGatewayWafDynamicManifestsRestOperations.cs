@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationGatewayWafDynamicManifestResultList>> GetAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayWafDynamicManifestListResult>> GetAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayWafDynamicManifestResultList value = default;
+                        ApplicationGatewayWafDynamicManifestListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewayWafDynamicManifestResultList.DeserializeApplicationGatewayWafDynamicManifestResultList(document.RootElement);
+                        value = ApplicationGatewayWafDynamicManifestListResult.DeserializeApplicationGatewayWafDynamicManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationGatewayWafDynamicManifestResultList> Get(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayWafDynamicManifestListResult> Get(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayWafDynamicManifestResultList value = default;
+                        ApplicationGatewayWafDynamicManifestListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewayWafDynamicManifestResultList.DeserializeApplicationGatewayWafDynamicManifestResultList(document.RootElement);
+                        value = ApplicationGatewayWafDynamicManifestListResult.DeserializeApplicationGatewayWafDynamicManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationGatewayWafDynamicManifestResultList>> GetNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayWafDynamicManifestListResult>> GetNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayWafDynamicManifestResultList value = default;
+                        ApplicationGatewayWafDynamicManifestListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewayWafDynamicManifestResultList.DeserializeApplicationGatewayWafDynamicManifestResultList(document.RootElement);
+                        value = ApplicationGatewayWafDynamicManifestListResult.DeserializeApplicationGatewayWafDynamicManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationGatewayWafDynamicManifestResultList> GetNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayWafDynamicManifestListResult> GetNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayWafDynamicManifestResultList value = default;
+                        ApplicationGatewayWafDynamicManifestListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewayWafDynamicManifestResultList.DeserializeApplicationGatewayWafDynamicManifestResultList(document.RootElement);
+                        value = ApplicationGatewayWafDynamicManifestListResult.DeserializeApplicationGatewayWafDynamicManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> deploymentType = default;
-            Optional<DelegationProperties> delegation = default;
+            Optional<VirtualApplianceDelegationProperties> delegation = default;
             Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            delegation = DelegationProperties.DeserializeDelegationProperties(property0.Value);
+                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("partnerManagedResource"u8))

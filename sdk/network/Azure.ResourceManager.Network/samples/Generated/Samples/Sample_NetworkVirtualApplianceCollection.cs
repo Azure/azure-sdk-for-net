@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceData data = new NetworkVirtualApplianceData()
             {
                 VirtualHubId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1"),
-                Delegation = new DelegationProperties()
+                Delegation = new VirtualApplianceDelegationProperties()
                 {
                     ServiceName = "PaloAltoNetworks.Cloudngfw/firewalls",
                 },

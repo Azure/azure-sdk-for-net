@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Network
             return GetFirewallPolicyRuleCollectionGroups().Get(ruleCollectionGroupName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SignaturesOverrideResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
-        /// <returns> Returns a <see cref="SignaturesOverrideResource" /> object. </returns>
-        public virtual SignaturesOverrideResource GetSignaturesOverride()
+        /// <summary> Gets an object representing a PolicySignaturesOverridesForIdpsResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
+        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource" /> object. </returns>
+        public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdps()
         {
-            return new SignaturesOverrideResource(Client, Id.AppendChildResource("signatureOverrides", "default"));
+            return new PolicySignaturesOverridesForIdpsResource(Client, Id.AppendChildResource("signatureOverrides", "default"));
         }
 
         /// <summary>

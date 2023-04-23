@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerDeploymentStatus. </summary>
         /// <param name="commitOn"> Commit Time. </param>
         /// <param name="region"> Region Name. </param>
-        /// <param name="deploymentStatus"> Deployment Status. </param>
+        /// <param name="deploymentState"> Deployment Status. </param>
         /// <param name="configurationIds"> List of configuration ids. </param>
         /// <param name="deploymentType"> Configuration Deployment Type. </param>
         /// <param name="errorMessage"> Error Message. </param>
-        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, DeploymentStatus? deploymentStatus, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage)
+        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, NetworkManagerDeploymentState? deploymentState, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage)
         {
             CommitOn = commitOn;
             Region = region;
-            DeploymentStatus = deploymentStatus;
+            DeploymentState = deploymentState;
             ConfigurationIds = configurationIds;
             DeploymentType = deploymentType;
             ErrorMessage = errorMessage;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Region Name. </summary>
         public string Region { get; }
         /// <summary> Deployment Status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public NetworkManagerDeploymentState? DeploymentState { get; }
         /// <summary> List of configuration ids. </summary>
         public IReadOnlyList<string> ConfigurationIds { get; }
         /// <summary> Configuration Deployment Type. </summary>

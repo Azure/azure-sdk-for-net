@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> networkManagerId = default;
+            Optional<ResourceIdentifier> networkManagerId = default;
             Optional<ScopeConnectionState> connectionState = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("networkManagerId"u8))
                         {
-                            networkManagerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkManagerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("connectionState"u8))

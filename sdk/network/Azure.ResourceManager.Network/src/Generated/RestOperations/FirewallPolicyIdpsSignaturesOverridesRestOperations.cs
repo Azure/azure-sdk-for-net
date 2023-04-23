@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data)
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignaturesOverrideData>> PatchAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySignaturesOverridesForIdpsData>> PatchAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignaturesOverrideData> Patch(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data, CancellationToken cancellationToken = default)
+        public Response<PolicySignaturesOverridesForIdpsData> Patch(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignaturesOverrideData>> PutAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySignaturesOverridesForIdpsData>> PutAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignaturesOverrideData> Put(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignaturesOverrideData data, CancellationToken cancellationToken = default)
+        public Response<PolicySignaturesOverridesForIdpsData> Put(string subscriptionId, string resourceGroupName, string firewallPolicyName, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignaturesOverrideData>> GetAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySignaturesOverridesForIdpsData>> GetAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -251,13 +251,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SignaturesOverrideData)null, message.Response);
+                    return Response.FromValue((PolicySignaturesOverridesForIdpsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignaturesOverrideData> Get(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public Response<PolicySignaturesOverridesForIdpsData> Get(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,13 +282,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverrideData value = default;
+                        PolicySignaturesOverridesForIdpsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SignaturesOverrideData.DeserializeSignaturesOverrideData(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SignaturesOverrideData)null, message.Response);
+                    return Response.FromValue((PolicySignaturesOverridesForIdpsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignaturesOverridesList>> ListAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySignaturesOverridesForIdpsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverridesList value = default;
+                        PolicySignaturesOverridesForIdpsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SignaturesOverridesList.DeserializeSignaturesOverridesList(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsListResult.DeserializePolicySignaturesOverridesForIdpsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignaturesOverridesList> List(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public Response<PolicySignaturesOverridesForIdpsListResult> List(string subscriptionId, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SignaturesOverridesList value = default;
+                        PolicySignaturesOverridesForIdpsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SignaturesOverridesList.DeserializeSignaturesOverridesList(document.RootElement);
+                        value = PolicySignaturesOverridesForIdpsListResult.DeserializePolicySignaturesOverridesForIdpsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

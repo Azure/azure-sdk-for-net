@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -49,11 +49,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ConnectivityHub(resourceId.Value, resourceType.Value);
+            return new ConnectivityHub(resourceId.Value, Optional.ToNullable(resourceType));
         }
     }
 }

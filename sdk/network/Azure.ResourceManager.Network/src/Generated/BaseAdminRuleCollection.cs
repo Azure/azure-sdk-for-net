@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="BaseAdminRuleResource" /> and their operations.
-    /// Each <see cref="BaseAdminRuleResource" /> in the collection will belong to the same instance of <see cref="AdminRuleCollectionResource" />.
-    /// To get a <see cref="BaseAdminRuleCollection" /> instance call the GetBaseAdminRules method from an instance of <see cref="AdminRuleCollectionResource" />.
+    /// Each <see cref="BaseAdminRuleResource" /> in the collection will belong to the same instance of <see cref="AdminRuleGroupResource" />.
+    /// To get a <see cref="BaseAdminRuleCollection" /> instance call the GetBaseAdminRules method from an instance of <see cref="AdminRuleGroupResource" />.
     /// </summary>
     public partial class BaseAdminRuleCollection : ArmCollection, IEnumerable<BaseAdminRuleResource>, IAsyncEnumerable<BaseAdminRuleResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AdminRuleCollectionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AdminRuleCollectionResource.ResourceType), nameof(id));
+            if (id.ResourceType != AdminRuleGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AdminRuleGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

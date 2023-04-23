@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation and iterate over the result
             await foreach (BaseAdminRuleResource item in collection.GetAllAsync())
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleAdminRule";
@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleAdminRule";
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultAdminRule";
@@ -177,18 +177,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultAdminRule";
@@ -210,18 +210,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleDefaultAdminRule";
@@ -252,18 +252,18 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AdminRuleCollectionResource created on azure
-            // for more information of creating AdminRuleCollectionResource, please refer to the document of AdminRuleCollectionResource
+            // this example assumes you already have this AdminRuleGroupResource created on azure
+            // for more information of creating AdminRuleGroupResource, please refer to the document of AdminRuleGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            ResourceIdentifier adminRuleCollectionResourceId = AdminRuleCollectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
-            AdminRuleCollectionResource adminRuleCollection = client.GetAdminRuleCollectionResource(adminRuleCollectionResourceId);
+            ResourceIdentifier adminRuleGroupResourceId = AdminRuleGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            AdminRuleGroupResource adminRuleGroup = client.GetAdminRuleGroupResource(adminRuleGroupResourceId);
 
             // get the collection of this BaseAdminRuleResource
-            BaseAdminRuleCollection collection = adminRuleCollection.GetBaseAdminRules();
+            BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
             string ruleName = "SampleAdminRule";

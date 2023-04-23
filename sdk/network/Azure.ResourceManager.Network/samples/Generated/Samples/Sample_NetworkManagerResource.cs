@@ -285,7 +285,7 @@ new AzureLocation("westus")
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
             // invoke the operation and iterate over the result
-            NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter = new NetworkManagerDeploymentStatusParameter()
+            NetworkManagerDeploymentStatusContent content = new NetworkManagerDeploymentStatusContent()
             {
                 Regions =
 {
@@ -297,7 +297,7 @@ NetworkConfigurationDeploymentType.Connectivity,new NetworkConfigurationDeployme
 },
                 SkipToken = "FakeSkipTokenCode",
             };
-            await foreach (NetworkManagerDeploymentStatus item in networkManager.GetNetworkManagerDeploymentStatusAsync(networkManagerDeploymentStatusParameter))
+            await foreach (NetworkManagerDeploymentStatus item in networkManager.GetNetworkManagerDeploymentStatusAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
         /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, DelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
             ETag = etag;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The deployment type. PartnerManaged for the SaaS NVA. </summary>
         public string DeploymentType { get; }
         /// <summary> The delegation for the Virtual Appliance. </summary>
-        public DelegationProperties Delegation { get; set; }
+        public VirtualApplianceDelegationProperties Delegation { get; set; }
         /// <summary> The delegation for the Virtual Appliance. </summary>
         public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
     }

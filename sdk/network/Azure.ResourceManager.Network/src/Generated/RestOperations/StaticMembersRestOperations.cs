@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticMemberData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkGroupStaticMemberData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberData value = default;
+                        NetworkGroupStaticMemberData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticMemberData.DeserializeStaticMemberData(document.RootElement);
+                        value = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticMemberData)null, message.Response);
+                    return Response.FromValue((NetworkGroupStaticMemberData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticMemberData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, CancellationToken cancellationToken = default)
+        public Response<NetworkGroupStaticMemberData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberData value = default;
+                        NetworkGroupStaticMemberData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticMemberData.DeserializeStaticMemberData(document.RootElement);
+                        value = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticMemberData)null, message.Response);
+                    return Response.FromValue((NetworkGroupStaticMemberData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, StaticMemberData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, NetworkGroupStaticMemberData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/>, <paramref name="staticMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticMemberData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, StaticMemberData data, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkGroupStaticMemberData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        StaticMemberData value = default;
+                        NetworkGroupStaticMemberData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticMemberData.DeserializeStaticMemberData(document.RootElement);
+                        value = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/>, <paramref name="staticMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="networkGroupName"/> or <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticMemberData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, StaticMemberData data, CancellationToken cancellationToken = default)
+        public Response<NetworkGroupStaticMemberData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        StaticMemberData value = default;
+                        NetworkGroupStaticMemberData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticMemberData.DeserializeStaticMemberData(document.RootElement);
+                        value = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticMemberListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkGroupStaticMemberListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberListResult value = default;
+                        NetworkGroupStaticMemberListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticMemberListResult.DeserializeStaticMemberListResult(document.RootElement);
+                        value = NetworkGroupStaticMemberListResult.DeserializeNetworkGroupStaticMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticMemberListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkGroupStaticMemberListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberListResult value = default;
+                        NetworkGroupStaticMemberListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticMemberListResult.DeserializeStaticMemberListResult(document.RootElement);
+                        value = NetworkGroupStaticMemberListResult.DeserializeNetworkGroupStaticMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticMemberListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkGroupStaticMemberListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberListResult value = default;
+                        NetworkGroupStaticMemberListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticMemberListResult.DeserializeStaticMemberListResult(document.RootElement);
+                        value = NetworkGroupStaticMemberListResult.DeserializeNetworkGroupStaticMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticMemberListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkGroupStaticMemberListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -484,9 +484,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        StaticMemberListResult value = default;
+                        NetworkGroupStaticMemberListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticMemberListResult.DeserializeStaticMemberListResult(document.RootElement);
+                        value = NetworkGroupStaticMemberListResult.DeserializeNetworkGroupStaticMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

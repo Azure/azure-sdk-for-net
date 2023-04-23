@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRuleCollectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminRuleGroupListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionListResult value = default;
+                        AdminRuleGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRuleCollectionListResult.DeserializeAdminRuleCollectionListResult(document.RootElement);
+                        value = AdminRuleGroupListResult.DeserializeAdminRuleGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRuleCollectionListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<AdminRuleGroupListResult> List(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionListResult value = default;
+                        AdminRuleGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRuleCollectionListResult.DeserializeAdminRuleCollectionListResult(document.RootElement);
+                        value = AdminRuleGroupListResult.DeserializeAdminRuleGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRuleCollectionData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminRuleGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionData value = default;
+                        AdminRuleGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRuleCollectionData.DeserializeAdminRuleCollectionData(document.RootElement);
+                        value = AdminRuleGroupData.DeserializeAdminRuleGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRuleCollectionData)null, message.Response);
+                    return Response.FromValue((AdminRuleGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRuleCollectionData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
+        public Response<AdminRuleGroupData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionData value = default;
+                        AdminRuleGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRuleCollectionData.DeserializeAdminRuleCollectionData(document.RootElement);
+                        value = AdminRuleGroupData.DeserializeAdminRuleGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRuleCollectionData)null, message.Response);
+                    return Response.FromValue((AdminRuleGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleCollectionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/>, <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRuleCollectionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleCollectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminRuleGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        AdminRuleCollectionData value = default;
+                        AdminRuleGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRuleCollectionData.DeserializeAdminRuleCollectionData(document.RootElement);
+                        value = AdminRuleGroupData.DeserializeAdminRuleGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/>, <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRuleCollectionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleCollectionData data, CancellationToken cancellationToken = default)
+        public Response<AdminRuleGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,9 +318,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        AdminRuleCollectionData value = default;
+                        AdminRuleGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRuleCollectionData.DeserializeAdminRuleCollectionData(document.RootElement);
+                        value = AdminRuleGroupData.DeserializeAdminRuleGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRuleCollectionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminRuleGroupListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionListResult value = default;
+                        AdminRuleGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRuleCollectionListResult.DeserializeAdminRuleCollectionListResult(document.RootElement);
+                        value = AdminRuleGroupListResult.DeserializeAdminRuleGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRuleCollectionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<AdminRuleGroupListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AdminRuleCollectionListResult value = default;
+                        AdminRuleGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRuleCollectionListResult.DeserializeAdminRuleCollectionListResult(document.RootElement);
+                        value = AdminRuleGroupListResult.DeserializeAdminRuleGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

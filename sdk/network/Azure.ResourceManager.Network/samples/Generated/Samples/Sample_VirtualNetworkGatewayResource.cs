@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Samples
         // GenerateVPNClientPackage
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Generatevpnclientpackage_GenerateVPNClientPackage()
+        public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
             // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientParameters vpnClientParameters = new VpnClientParameters();
-            ArmOperation<string> lro = await virtualNetworkGateway.GeneratevpnclientpackageAsync(WaitUntil.Completed, vpnClientParameters);
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientParameters vpnClientParameters = new VpnClientParameters();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, vpnClientParameters);
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -482,11 +482,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = new VpnPacketCaptureStartParameters()
+            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent()
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, vpnPacketCaptureStartParameters: vpnPacketCaptureStartParameters);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters = new VpnPacketCaptureStopParameters()
+            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent()
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, vpnPacketCaptureStopParameters);
+            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

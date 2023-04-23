@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            GetInboundRoutesContent content = new GetInboundRoutesContent()
+            VirtualHubInboundRoutesContent content = new VirtualHubInboundRoutesContent()
             {
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            GetOutboundRoutesContent content = new GetOutboundRoutesContent()
+            VirtualHubOutboundRoutesContent content = new VirtualHubOutboundRoutesContent()
             {
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",

@@ -105,20 +105,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ApplicationGatewayWafDynamicManifestResultResource
+        #region ApplicationGatewayWafDynamicManifestResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationGatewayWafDynamicManifestResultResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApplicationGatewayWafDynamicManifestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayWafDynamicManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResultResource" /> object. </returns>
-        public static ApplicationGatewayWafDynamicManifestResultResource GetApplicationGatewayWafDynamicManifestResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource" /> object. </returns>
+        public static ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifestResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationGatewayWafDynamicManifestResultResource.ValidateResourceId(id);
-                return new ApplicationGatewayWafDynamicManifestResultResource(client, id);
+                ApplicationGatewayWafDynamicManifestResource.ValidateResourceId(id);
+                return new ApplicationGatewayWafDynamicManifestResource(client, id);
             }
             );
         }
@@ -219,20 +219,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region SwapResource
+        #region CloudServiceSwapResource
         /// <summary>
-        /// Gets an object representing a <see cref="SwapResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SwapResource.CreateResourceIdentifier" /> to create a <see cref="SwapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceSwapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceSwapResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceSwapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SwapResource" /> object. </returns>
-        public static SwapResource GetSwapResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceSwapResource" /> object. </returns>
+        public static CloudServiceSwapResource GetCloudServiceSwapResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SwapResource.ValidateResourceId(id);
-                return new SwapResource(client, id);
+                CloudServiceSwapResource.ValidateResourceId(id);
+                return new CloudServiceSwapResource(client, id);
             }
             );
         }
@@ -561,20 +561,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region SignaturesOverrideResource
+        #region PolicySignaturesOverridesForIdpsResource
         /// <summary>
-        /// Gets an object representing a <see cref="SignaturesOverrideResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignaturesOverrideResource.CreateResourceIdentifier" /> to create a <see cref="SignaturesOverrideResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PolicySignaturesOverridesForIdpsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicySignaturesOverridesForIdpsResource.CreateResourceIdentifier" /> to create a <see cref="PolicySignaturesOverridesForIdpsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignaturesOverrideResource" /> object. </returns>
-        public static SignaturesOverrideResource GetSignaturesOverrideResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource" /> object. </returns>
+        public static PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdpsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SignaturesOverrideResource.ValidateResourceId(id);
-                return new SignaturesOverrideResource(client, id);
+                PolicySignaturesOverridesForIdpsResource.ValidateResourceId(id);
+                return new PolicySignaturesOverridesForIdpsResource(client, id);
             }
             );
         }
@@ -922,20 +922,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region StaticMemberResource
+        #region NetworkGroupStaticMemberResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticMemberResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticMemberResource.CreateResourceIdentifier" /> to create a <see cref="StaticMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkGroupStaticMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkGroupStaticMemberResource.CreateResourceIdentifier" /> to create a <see cref="NetworkGroupStaticMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticMemberResource" /> object. </returns>
-        public static StaticMemberResource GetStaticMemberResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkGroupStaticMemberResource" /> object. </returns>
+        public static NetworkGroupStaticMemberResource GetNetworkGroupStaticMemberResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticMemberResource.ValidateResourceId(id);
-                return new StaticMemberResource(client, id);
+                NetworkGroupStaticMemberResource.ValidateResourceId(id);
+                return new NetworkGroupStaticMemberResource(client, id);
             }
             );
         }
@@ -979,20 +979,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region AdminRuleCollectionResource
+        #region AdminRuleGroupResource
         /// <summary>
-        /// Gets an object representing an <see cref="AdminRuleCollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdminRuleCollectionResource.CreateResourceIdentifier" /> to create an <see cref="AdminRuleCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AdminRuleGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdminRuleGroupResource.CreateResourceIdentifier" /> to create an <see cref="AdminRuleGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdminRuleCollectionResource" /> object. </returns>
-        public static AdminRuleCollectionResource GetAdminRuleCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdminRuleGroupResource" /> object. </returns>
+        public static AdminRuleGroupResource GetAdminRuleGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AdminRuleCollectionResource.ValidateResourceId(id);
-                return new AdminRuleCollectionResource(client, id);
+                AdminRuleGroupResource.ValidateResourceId(id);
+                return new AdminRuleGroupResource(client, id);
             }
             );
         }
@@ -2342,17 +2342,17 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetBastionHosts().Get(bastionHostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SwapResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the cloud service. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SwapResources and their operations over a SwapResource. </returns>
-        public static SwapResourceCollection GetSwapResources(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
+        public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSwapResources(resourceName);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudServiceSwaps(resourceName);
         }
 
         /// <summary>
@@ -2374,9 +2374,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SwapResource>> GetSwapResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSwapResources(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCloudServiceSwaps(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2398,9 +2398,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SwapResource> GetSwapResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSwapResources(resourceName).Get(cancellationToken);
+            return resourceGroupResource.GetCloudServiceSwaps(resourceName).Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
@@ -4909,13 +4909,13 @@ namespace Azure.ResourceManager.Network
             return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResultResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region where the nrp are located at. </param>
-        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResultResources and their operations over a ApplicationGatewayWafDynamicManifestResultResource. </returns>
-        public static ApplicationGatewayWafDynamicManifestResultCollection GetApplicationGatewayWafDynamicManifestResults(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResources and their operations over a ApplicationGatewayWafDynamicManifestResource. </returns>
+        public static ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayWafDynamicManifestResults(location);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
         }
 
         /// <summary>
@@ -4935,9 +4935,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The region where the nrp are located at. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplicationGatewayWafDynamicManifestResultResource>> GetApplicationGatewayWafDynamicManifestResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetApplicationGatewayWafDynamicManifests(location).GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4957,9 +4957,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The region where the nrp are located at. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static Response<ApplicationGatewayWafDynamicManifestResultResource> GetApplicationGatewayWafDynamicManifestResult(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetApplicationGatewayWafDynamicManifestResults(location).Get(cancellationToken);
+            return subscriptionResource.GetApplicationGatewayWafDynamicManifests(location).Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>

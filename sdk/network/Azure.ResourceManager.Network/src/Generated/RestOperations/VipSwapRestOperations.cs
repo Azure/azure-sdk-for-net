@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwapResourceData>> GetAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceSwapData>> GetAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SwapResourceData value = default;
+                        CloudServiceSwapData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SwapResourceData.DeserializeSwapResourceData(document.RootElement);
+                        value = CloudServiceSwapData.DeserializeCloudServiceSwapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SwapResourceData)null, message.Response);
+                    return Response.FromValue((CloudServiceSwapData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwapResourceData> Get(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<CloudServiceSwapData> Get(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -109,19 +109,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SwapResourceData value = default;
+                        CloudServiceSwapData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SwapResourceData.DeserializeSwapResourceData(document.RootElement);
+                        value = CloudServiceSwapData.DeserializeCloudServiceSwapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SwapResourceData)null, message.Response);
+                    return Response.FromValue((CloudServiceSwapData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string groupName, string resourceName, SwapResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string groupName, string resourceName, CloudServiceSwapData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string groupName, string resourceName, SwapResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string groupName, string resourceName, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string groupName, string resourceName, SwapResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string groupName, string resourceName, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwapResourceListResult>> ListAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceSwapListResult>> ListAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SwapResourceListResult value = default;
+                        CloudServiceSwapListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SwapResourceListResult.DeserializeSwapResourceListResult(document.RootElement);
+                        value = CloudServiceSwapListResult.DeserializeCloudServiceSwapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwapResourceListResult> List(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<CloudServiceSwapListResult> List(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        SwapResourceListResult value = default;
+                        CloudServiceSwapListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SwapResourceListResult.DeserializeSwapResourceListResult(document.RootElement);
+                        value = CloudServiceSwapListResult.DeserializeCloudServiceSwapListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -295,8 +295,8 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            ArmOperation<IPPrefixesList> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed);
-            IPPrefixesList result = lro.Value;
+            ArmOperation<LearnedIPPrefixesListResult> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed);
+            LearnedIPPrefixesListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

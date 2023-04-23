@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,20 +19,28 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> publicIPAddressId = default;
-            Optional<string> publicIPAddress = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
+            Optional<IPAddress> publicIPAddress = default;
             Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
-            Optional<string> ddosProtectionPlanId = default;
+            Optional<ResourceIdentifier> ddosProtectionPlanId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddressId"u8))
                 {
-                    publicIPAddressId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"u8))
                 {
-                    publicIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isWorkloadProtected"u8))
@@ -45,7 +54,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ddosProtectionPlanId"u8))
                 {
-                    ddosProtectionPlanId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ddosProtectionPlanId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

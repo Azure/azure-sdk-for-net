@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string networkGroupId = default;
+            ResourceIdentifier networkGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkGroupId"u8))
                 {
-                    networkGroupId = property.Value.GetString();
+                    networkGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

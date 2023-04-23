@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Network
             return GetCachedClient(Client => new BastionHostCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SwapResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <returns> An object representing collection of SwapResources and their operations over a SwapResource. </returns>
-        public virtual SwapResourceCollection GetSwapResources(string resourceName)
+        /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
+        public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
         {
-            return new SwapResourceCollection(Client, Id, resourceName);
+            return new CloudServiceSwapCollection(Client, Id, resourceName);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>

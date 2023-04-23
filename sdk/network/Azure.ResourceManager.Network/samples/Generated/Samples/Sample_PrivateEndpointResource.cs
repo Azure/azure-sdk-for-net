@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -186,7 +187,7 @@ new PrivateEndpointIPConfiguration()
 Name = "pestaticconfig",
 GroupId = "file",
 MemberName = "file",
-PrivateIPAddress = "192.168.0.6",
+PrivateIPAddress = IPAddress.Parse("192.168.0.6"),
 }
 },
                 CustomNetworkInterfaceName = "testPeNic",
@@ -308,7 +309,7 @@ new PrivateEndpointIPConfiguration()
 Name = "pestaticconfig",
 GroupId = "file",
 MemberName = "file",
-PrivateIPAddress = "192.168.0.5",
+PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
 }
 },
                 CustomNetworkInterfaceName = "testPeNic",

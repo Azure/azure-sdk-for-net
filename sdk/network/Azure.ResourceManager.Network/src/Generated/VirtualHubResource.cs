@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, GetInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation GetInboundRoutes(WaitUntil waitUntil, GetInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, GetOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation GetOutboundRoutes(WaitUntil waitUntil, GetOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

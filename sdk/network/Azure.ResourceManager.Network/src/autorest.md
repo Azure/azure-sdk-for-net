@@ -143,6 +143,40 @@ rename-mapping:
   CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
   VpnAuthenticationType.AAD: Aad
+  ApplicationGatewayWafDynamicManifestResult: ApplicationGatewayWafDynamicManifest
+  ApplicationGatewayWafDynamicManifestResultList: ApplicationGatewayWafDynamicManifestListResult
+  SignaturesOverrides: PolicySignaturesOverridesForIdps
+  SignaturesOverrides.id: -|arm-id
+  SignaturesOverrides.type: -|resource-type
+  SignaturesOverridesList: PolicySignaturesOverridesForIdpsListResult
+  SignaturesOverridesProperties: PolicySignaturesOverridesForIdpsProperties
+  StaticMember: NetworkGroupStaticMember
+  StaticMemberListResult: NetworkGroupStaticMemberListResult
+  AdminRuleCollection: AdminRuleGroup
+  AdminRuleCollectionListResult: AdminRuleGroupListResult
+  NetworkManagerConnection.properties.networkManagerId: -|arm-id
+  SwapResource: CloudServiceSwap
+  SwapResourceProperties: CloudServiceSwapProperties
+  SwapResourceListResult: CloudServiceSwapListResult
+  Hub.resourceType: -|resource-type
+  DelegationProperties: VirtualApplianceDelegationProperties
+  DeploymentStatus: NetworkManagerDeploymentState
+  NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
+  NetworkManagerDeploymentStatusParameter: NetworkManagerDeploymentStatusContent
+  GetInboundRoutesParameters: VirtualHubInboundRoutesContent
+  GetOutboundRoutesParameters: VirtualHubOutboundRoutesContent
+  IPPrefixesList: LearnedIPPrefixesListResult
+  NetworkManagerSecurityGroupItem.networkGroupId: -|arm-id
+  PrivateEndpointIPConfiguration.properties.privateIPAddress: -|ip-address
+  PublicIpDdosProtectionStatusResult.publicIpAddressId: -|arm-id
+  PublicIpDdosProtectionStatusResult.publicIpAddress: -|ip-address
+  PublicIpDdosProtectionStatusResult.ddosProtectionPlanId: -|arm-id
+  VpnClientParameters: VpnClientContent
+  VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
+  VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
+
+keep-plural-resource-data:
+- PolicySignaturesOverridesForIdps
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -227,6 +261,7 @@ override-operation-name:
   ApplicationGateways_ListAvailableSslOptions: GetApplicationGatewayAvailableSslOptions
   ApplicationGateways_ListAvailableSslPredefinedPolicies: GetApplicationGatewayAvailableSslPredefinedPolicies
   ApplicationGateways_GetSslPredefinedPolicy: GetApplicationGatewaySslPredefinedPolicy
+  VirtualNetworkGateways_Generatevpnclientpackage: GenerateVpnClientPackage
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

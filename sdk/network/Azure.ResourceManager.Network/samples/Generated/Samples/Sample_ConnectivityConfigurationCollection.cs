@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Samples
 new ConnectivityHub()
 {
 ResourceId = new ResourceIdentifier("subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig"),
-ResourceType = "Microsoft.Network/virtualNetworks",
+ResourceType = new ResourceType("Microsoft.Network/virtualNetworks"),
 }
 },
                 IsGlobal = GlobalMeshSupportFlag.True,

@@ -709,16 +709,16 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerDeploymentStatusParameter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
@@ -735,16 +735,16 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerDeploymentStatusParameter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
