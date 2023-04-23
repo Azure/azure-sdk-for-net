@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var request = _resourceGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, resourceGroupName, data).Request;
-                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var uri = _resourceGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, resourceGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
                 var operation = new ResourcesArmOperation<ResourceGroupResource>(Response.FromValue(new ResourceGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, data, cancellationToken);
-                var request = _resourceGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, resourceGroupName, data).Request;
-                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var uri = _resourceGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, resourceGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
                 var operation = new ResourcesArmOperation<ResourceGroupResource>(Response.FromValue(new ResourceGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

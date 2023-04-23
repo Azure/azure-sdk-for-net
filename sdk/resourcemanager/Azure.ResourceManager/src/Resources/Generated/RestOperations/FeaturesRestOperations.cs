@@ -37,18 +37,23 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListAllRequest(string subscriptionId)
+        internal RequestUriBuilder CreateListAllRequestUri(string subscriptionId)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/features", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListAllRequest(string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListAllRequestUri(subscriptionId);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -104,11 +109,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceProviderNamespace)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -117,7 +119,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceProviderNamespace, true);
             uri.AppendPath("/features", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListRequestUri(subscriptionId, resourceProviderNamespace);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -177,11 +187,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -191,7 +198,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/features/", false);
             uri.AppendPath(featureName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetRequestUri(subscriptionId, resourceProviderNamespace, featureName);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -259,11 +274,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        internal RequestUriBuilder CreateRegisterRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -274,7 +286,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(featureName, true);
             uri.AppendPath("/register", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = CreateRegisterRequestUri(subscriptionId, resourceProviderNamespace, featureName);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -338,11 +358,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateUnregisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        internal RequestUriBuilder CreateUnregisterRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -353,7 +370,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(featureName, true);
             uri.AppendPath("/unregister", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateUnregisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = CreateUnregisterRequestUri(subscriptionId, resourceProviderNamespace, featureName);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -417,15 +442,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListAllNextPageRequestUri(nextLink, subscriptionId);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
@@ -485,15 +515,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceProviderNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceProviderNamespace)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListNextPageRequestUri(nextLink, subscriptionId, resourceProviderNamespace);
             request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;

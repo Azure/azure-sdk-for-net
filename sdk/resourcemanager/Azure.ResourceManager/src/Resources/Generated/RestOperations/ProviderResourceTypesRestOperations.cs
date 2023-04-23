@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace, string expand)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceProviderNamespace, string expand)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -54,7 +51,15 @@ namespace Azure.ResourceManager.Resources
                 uri.AppendQuery("$expand", expand, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace, string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListRequestUri(subscriptionId, resourceProviderNamespace, expand);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

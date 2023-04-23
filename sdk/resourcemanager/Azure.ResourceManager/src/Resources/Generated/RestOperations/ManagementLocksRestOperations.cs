@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData data)
+        internal RequestUriBuilder CreateCreateOrUpdateByScopeRequestUri(string scope, string lockName, ManagementLockData data)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -49,7 +46,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
             uri.AppendPath(lockName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            request.Uri = CreateCreateOrUpdateByScopeRequestUri(scope, lockName, data);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -119,11 +124,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateDeleteByScopeRequest(string scope, string lockName)
+        internal RequestUriBuilder CreateDeleteByScopeRequestUri(string scope, string lockName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -131,7 +133,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
             uri.AppendPath(lockName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteByScopeRequest(string scope, string lockName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            request.Uri = CreateDeleteByScopeRequestUri(scope, lockName);
             _userAgent.Apply(message);
             return message;
         }
@@ -182,11 +192,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByScopeRequest(string scope, string lockName)
+        internal RequestUriBuilder CreateGetByScopeRequestUri(string scope, string lockName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -194,7 +201,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
             uri.AppendPath(lockName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetByScopeRequest(string scope, string lockName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetByScopeRequestUri(scope, lockName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -258,11 +273,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListByScopeRequest(string scope, string filter)
+        internal RequestUriBuilder CreateListByScopeRequestUri(string scope, string filter)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -273,7 +285,15 @@ namespace Azure.ResourceManager.Resources
                 uri.AppendQuery("$filter", filter, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListByScopeRequest(string scope, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListByScopeRequestUri(scope, filter);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -329,15 +349,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListByScopeNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByScopeNextPageRequest(string nextLink, string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListByScopeNextPageRequestUri(nextLink, scope, filter);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

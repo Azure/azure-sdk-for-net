@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policySetDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var request = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, policySetDefinitionName, data).Request;
-                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var uri = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, policySetDefinitionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
                 var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policySetDefinitionName, data, cancellationToken);
-                var request = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, policySetDefinitionName, data).Request;
-                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var uri = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, policySetDefinitionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
                 var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

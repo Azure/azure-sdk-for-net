@@ -37,17 +37,22 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetByPolicyModeRequest(string policyMode)
+        internal RequestUriBuilder CreateGetByPolicyModeRequestUri(string policyMode)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests/", false);
             uri.AppendPath(policyMode, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetByPolicyModeRequest(string policyMode)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetByPolicyModeRequestUri(policyMode);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -107,11 +112,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListRequest(string filter)
+        internal RequestUriBuilder CreateListRequestUri(string filter)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests", false);
@@ -120,7 +122,15 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$filter", filter, false);
             }
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListRequestUri(filter);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -168,15 +178,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListNextPageRequestUri(nextLink, filter);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

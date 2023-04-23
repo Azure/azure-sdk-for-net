@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -49,7 +46,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            request.Uri = CreateCreateOrUpdateRequestUri(subscriptionId, policySetDefinitionName, data);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -119,11 +124,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string policySetDefinitionName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -131,7 +133,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            request.Uri = CreateDeleteRequestUri(subscriptionId, policySetDefinitionName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -183,11 +193,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string policySetDefinitionName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -195,7 +202,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetRequestUri(subscriptionId, policySetDefinitionName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -259,17 +274,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
+        internal RequestUriBuilder CreateGetBuiltInRequestUri(string policySetDefinitionName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetBuiltInRequestUri(policySetDefinitionName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -329,11 +349,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, int? top)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -348,7 +365,15 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListRequestUri(subscriptionId, filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -408,11 +433,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListBuiltInRequest(string filter, int? top)
+        internal RequestUriBuilder CreateListBuiltInRequestUri(string filter, int? top)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions", false);
@@ -425,7 +447,15 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListBuiltInRequest(string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListBuiltInRequestUri(filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -475,11 +505,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
@@ -487,7 +514,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            request.Uri = CreateCreateOrUpdateAtManagementGroupRequestUri(managementGroupId, policySetDefinitionName, data);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -557,11 +592,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        internal RequestUriBuilder CreateDeleteAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
@@ -569,7 +601,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            request.Uri = CreateDeleteAtManagementGroupRequestUri(managementGroupId, policySetDefinitionName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -621,11 +661,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        internal RequestUriBuilder CreateGetAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
@@ -633,7 +670,15 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetAtManagementGroupRequestUri(managementGroupId, policySetDefinitionName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -697,11 +742,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
+        internal RequestUriBuilder CreateListByManagementGroupRequestUri(string managementGroupId, string filter, int? top)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
@@ -716,7 +758,15 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListByManagementGroupRequestUri(managementGroupId, filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -776,15 +826,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListNextPageRequestUri(nextLink, subscriptionId, filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -848,15 +903,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListBuiltInNextPageRequestUri(string nextLink, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListBuiltInNextPageRequestUri(nextLink, filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -914,15 +974,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListByManagementGroupNextPageRequestUri(string nextLink, string managementGroupId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
+            request.Uri = CreateListByManagementGroupNextPageRequestUri(nextLink, managementGroupId, filter, top);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

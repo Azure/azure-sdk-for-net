@@ -196,7 +196,7 @@
             }
         },
         {
-            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-1433?api-version=2020-09-01",
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-5505?api-version=2020-09-01",
             "RequestMethod": "PUT",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -210,7 +210,7 @@
             },
             "RequestBody": {
                 "properties": {
-                    "displayName": "Test $polAssign-1433",
+                    "displayName": "Test $polAssign-5505",
                     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d"
                 }
             },
@@ -232,7 +232,7 @@
             },
             "ResponseBody": {
                 "properties": {
-                    "displayName": "Test $polAssign-1433",
+                    "displayName": "Test $polAssign-5505",
                     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                     "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
                     "metadata": {
@@ -243,13 +243,13 @@
                     },
                     "enforcementMode": "Default"
                 },
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-1433",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-5505",
                 "type": "Microsoft.Authorization/policyAssignments",
-                "name": "polAssign-1433"
+                "name": "polAssign-5505"
             }
         },
         {
-            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-1433?api-version=2020-09-01",
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-5505?api-version=2020-09-01",
             "RequestMethod": "DELETE",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -278,7 +278,7 @@
             },
             "ResponseBody": {
                 "properties": {
-                    "displayName": "Test $polAssign-1433",
+                    "displayName": "Test $polAssign-5505",
                     "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                     "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
                     "metadata": {
@@ -289,13 +289,13 @@
                     },
                     "enforcementMode": "Default"
                 },
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-1433",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-5505",
                 "type": "Microsoft.Authorization/policyAssignments",
-                "name": "polAssign-1433"
+                "name": "polAssign-5505"
             }
         },
         {
-            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-1433?api-version=2020-09-01",
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyAssignments/polAssign-5505?api-version=2020-09-01",
             "RequestMethod": "GET",
             "RequestHeaders": {
                 "Authorization": "Sanitized",
@@ -324,7 +324,7 @@
             "ResponseBody": {
                 "error": {
                     "code": "PolicyAssignmentNotFound",
-                    "message": "The policy assignment \u0027polAssign-1433\u0027 is not found."
+                    "message": "The policy assignment \u0027polAssign-5505\u0027 is not found."
                 }
             }
         }
