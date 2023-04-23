@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing the Alert data model.
+    /// A class representing the CostManagementAlert data model.
     /// An individual alert.
     /// </summary>
-    public partial class AlertData : ResourceData
+    public partial class CostManagementAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of AlertData. </summary>
-        public AlertData()
+        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
+        public CostManagementAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertData. </summary>
+        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
         /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal AlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, AlertSource? source, AlertPropertiesDetails details, string costEntityId, AlertStatus? status, string creationTime, string closeTime, string modificationTime, string statusModificationUserName, string statusModificationTime, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, AlertSource? source, AlertPropertiesDetails details, string costEntityId, AlertStatus? status, string creationTime, string closeTime, string modificationTime, string statusModificationUserName, string statusModificationTime, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Definition = definition;
             Description = description;

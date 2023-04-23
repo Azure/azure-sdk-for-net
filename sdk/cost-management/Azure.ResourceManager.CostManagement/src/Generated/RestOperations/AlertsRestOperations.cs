@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="alertId"/> is null. </exception>
-        public async Task<Response<AlertData>> GetAsync(string scope, string alertId, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementAlertData>> GetAsync(string scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(alertId, nameof(alertId));
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        CostManagementAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((CostManagementAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="alertId"/> is null. </exception>
-        public Response<AlertData> Get(string scope, string alertId, CancellationToken cancellationToken = default)
+        public Response<CostManagementAlertData> Get(string scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(alertId, nameof(alertId));
@@ -164,19 +164,19 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        CostManagementAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((CostManagementAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDismissRequest(string scope, string alertId, AlertPatch patch)
+        internal HttpMessage CreateDismissRequest(string scope, string alertId, CostManagementAlertPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="patch"> Parameters supplied to the Dismiss Alert operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="alertId"/> or <paramref name="patch"/> is null. </exception>
-        public async Task<Response<AlertData>> DismissAsync(string scope, string alertId, AlertPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementAlertData>> DismissAsync(string scope, string alertId, CostManagementAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(alertId, nameof(alertId));
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        CostManagementAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="patch"> Parameters supplied to the Dismiss Alert operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="alertId"/> or <paramref name="patch"/> is null. </exception>
-        public Response<AlertData> Dismiss(string scope, string alertId, AlertPatch patch, CancellationToken cancellationToken = default)
+        public Response<CostManagementAlertData> Dismiss(string scope, string alertId, CostManagementAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(alertId, nameof(alertId));
@@ -244,9 +244,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        CostManagementAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

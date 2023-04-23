@@ -18,28 +18,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AlertResource" /> and their operations.
-    /// Each <see cref="AlertResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AlertCollection" /> instance call the GetAlerts method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementAlertResource" /> and their operations.
+    /// Each <see cref="CostManagementAlertResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="CostManagementAlertCollection" /> instance call the GetCostManagementAlerts method from an instance of <see cref="ArmResource" />.
     /// </summary>
-    public partial class AlertCollection : ArmCollection, IEnumerable<AlertResource>, IAsyncEnumerable<AlertResource>
+    public partial class CostManagementAlertCollection : ArmCollection, IEnumerable<CostManagementAlertResource>, IAsyncEnumerable<CostManagementAlertResource>
     {
-        private readonly ClientDiagnostics _alertClientDiagnostics;
-        private readonly AlertsRestOperations _alertRestClient;
+        private readonly ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
+        private readonly AlertsRestOperations _costManagementAlertAlertsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AlertCollection"/> class for mocking. </summary>
-        protected AlertCollection()
+        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertCollection"/> class for mocking. </summary>
+        protected CostManagementAlertCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AlertCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CostManagementAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _alertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", AlertResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AlertResource.ResourceType, out string alertApiVersion);
-            _alertRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, alertApiVersion);
+            _costManagementAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CostManagementAlertResource.ResourceType, out string costManagementAlertAlertsApiVersion);
+            _costManagementAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementAlertAlertsApiVersion);
         }
 
         /// <summary>
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual async Task<Response<AlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementAlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertId, nameof(alertId));
 
-            using var scope = _alertClientDiagnostics.CreateScope("AlertCollection.Get");
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _alertRestClient.GetAsync(Id, alertId, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementAlertAlertsRestClient.GetAsync(Id, alertId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,18 +94,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public virtual Response<AlertResource> Get(string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementAlertResource> Get(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertId, nameof(alertId));
 
-            using var scope = _alertClientDiagnostics.CreateScope("AlertCollection.Get");
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _alertRestClient.Get(Id, alertId, cancellationToken);
+                var response = _costManagementAlertAlertsRestClient.Get(Id, alertId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(alertId, nameof(alertId));
 
-            using var scope = _alertClientDiagnostics.CreateScope("AlertCollection.Exists");
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _alertRestClient.GetAsync(Id, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementAlertAlertsRestClient.GetAsync(Id, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(alertId, nameof(alertId));
 
-            using var scope = _alertClientDiagnostics.CreateScope("AlertCollection.Exists");
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = _alertRestClient.Get(Id, alertId, cancellationToken: cancellationToken);
+                var response = _costManagementAlertAlertsRestClient.Get(Id, alertId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        IEnumerator<AlertResource> IEnumerable<AlertResource>.GetEnumerator()
+        IEnumerator<CostManagementAlertResource> IEnumerable<CostManagementAlertResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CostManagement
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AlertResource> IAsyncEnumerable<AlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CostManagementAlertResource> IAsyncEnumerable<CostManagementAlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

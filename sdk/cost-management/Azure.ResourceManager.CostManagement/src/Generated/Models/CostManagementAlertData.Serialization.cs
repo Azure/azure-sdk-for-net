@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class AlertData : IUtf8JsonSerializable
+    public partial class CostManagementAlertData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CostManagement
             writer.WriteEndObject();
         }
 
-        internal static AlertData DeserializeAlertData(JsonElement element)
+        internal static CostManagementAlertData DeserializeCostManagementAlertData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CostManagement
                     continue;
                 }
             }
-            return new AlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), creationTime.Value, closeTime.Value, modificationTime.Value, statusModificationUserName.Value, statusModificationTime.Value, Optional.ToNullable(eTag));
+            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), creationTime.Value, closeTime.Value, modificationTime.Value, statusModificationUserName.Value, statusModificationTime.Value, Optional.ToNullable(eTag));
         }
     }
 }

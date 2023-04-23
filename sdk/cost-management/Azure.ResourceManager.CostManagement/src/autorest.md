@@ -16,15 +16,13 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# override-operation-name: 
-#   Alerts_ListExternal: ListExternalAlerts
-
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
 - /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}
 - /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}
 - /{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}
 - /providers/Microsoft.CostManagement/scheduledActions/{name}
+- /providers/Microsoft.CostManagement/mgmtviews/{viewName}
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -56,7 +54,19 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+request-path-to-resource-name:
+  /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews
+  /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
+  /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
 
+# override-operation-name: 
+#   Alerts_ListExternal: ListExternalAlerts
+
+rename-mapping:
+  View: CostManagementView
+  Alert: CostManagementAlert
+  Export: CostManagementExport
+  # ViewListResult: CostManagementViewListResult
 
 directive:
   # [Error] Found more than 1 candidate for XX 
@@ -83,5 +93,4 @@ directive:
   - from: costmanagement.json
     where: $.parameters.scopeViewParameter
     transform: $['x-ms-skip-url-encoding'] = true;
-
 ```

@@ -50,77 +50,77 @@ namespace Azure.ResourceManager.CostManagement
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-        #region TenantViewResource
+        #region TenantsCostManagementViewsResource
         /// <summary>
-        /// Gets an object representing a <see cref="TenantViewResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantViewResource.CreateResourceIdentifier" /> to create a <see cref="TenantViewResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantViewResource" /> object. </returns>
-        public static TenantViewResource GetTenantViewResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource" /> object. </returns>
+        public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TenantViewResource.ValidateResourceId(id);
-                return new TenantViewResource(client, id);
+                TenantsCostManagementViewsResource.ValidateResourceId(id);
+                return new TenantsCostManagementViewsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ViewResource
+        #region CostManagementViewsResource
         /// <summary>
-        /// Gets an object representing a <see cref="ViewResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ViewResource.CreateResourceIdentifier" /> to create a <see cref="ViewResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ViewResource" /> object. </returns>
-        public static ViewResource GetViewResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementViewsResource" /> object. </returns>
+        public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ViewResource.ValidateResourceId(id);
-                return new ViewResource(client, id);
+                CostManagementViewsResource.ValidateResourceId(id);
+                return new CostManagementViewsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AlertResource
+        #region CostManagementAlertResource
         /// <summary>
-        /// Gets an object representing an <see cref="AlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertResource.CreateResourceIdentifier" /> to create an <see cref="AlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertResource" /> object. </returns>
-        public static AlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementAlertResource" /> object. </returns>
+        public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AlertResource.ValidateResourceId(id);
-                return new AlertResource(client, id);
+                CostManagementAlertResource.ValidateResourceId(id);
+                return new CostManagementAlertResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExportResource
+        #region CostManagementExportResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExportResource.CreateResourceIdentifier" /> to create an <see cref="ExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementExportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExportResource" /> object. </returns>
-        public static ExportResource GetExportResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementExportResource" /> object. </returns>
+        public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExportResource.ValidateResourceId(id);
-                return new ExportResource(client, id);
+                CostManagementExportResource.ValidateResourceId(id);
+                return new CostManagementExportResource(client, id);
             }
             );
         }
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.CostManagement
         }
         #endregion
 
-        /// <summary> Gets a collection of ViewResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of CostManagementViewsResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ViewResources and their operations over a ViewResource. </returns>
-        public static ViewCollection GetViews(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
+        public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetViews();
+            return GetArmResourceExtensionClient(client, scope).GetAllCostManagementViews();
         }
 
         /// <summary>
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ViewResource>> GetViewAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return await client.GetViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await client.GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,42 +218,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ViewResource> GetView(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return client.GetViews(scope).Get(viewName, cancellationToken);
+            return client.GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AlertResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of CostManagementAlertResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of AlertResources and their operations over a AlertResource. </returns>
-        public static AlertCollection GetAlerts(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
+        public static CostManagementAlertCollection GetCostManagementAlerts(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAlerts();
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AlertResource>> GetAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return await client.GetAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return GetArmResourceExtensionClient(client, scope).GetCostManagementAlerts();
         }
 
         /// <summary>
@@ -275,18 +251,42 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertResource> GetAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return client.GetAlerts(scope).Get(alertId, cancellationToken);
+            return await client.GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ExportResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets the alert for the scope by alert ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ExportResources and their operations over a ExportResource. </returns>
-        public static ExportCollection GetExports(this ArmClient client, ResourceIdentifier scope)
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CostManagementAlertResource> GetCostManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetExports();
+            return client.GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CostManagementExportResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
+        public static CostManagementExportCollection GetCostManagementExports(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetCostManagementExports();
         }
 
         /// <summary>
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExportResource>> GetExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await client.GetExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
+            return await client.GetCostManagementExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExportResource> GetExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<CostManagementExportResource> GetCostManagementExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return client.GetExports(scope).Get(exportName, expand, cancellationToken);
+            return client.GetCostManagementExports(scope).Get(exportName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>
@@ -400,12 +400,12 @@ namespace Azure.ResourceManager.CostManagement
             return client.GetScheduledActions(scope).Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantViewResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TenantViewResources and their operations over a TenantViewResource. </returns>
-        public static TenantViewCollection GetTenantViews(this TenantResource tenantResource)
+        /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
+        public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantViews();
+            return GetTenantResourceExtensionClient(tenantResource).GetAllTenantsCostManagementViews();
         }
 
         /// <summary>
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TenantViewResource>> GetTenantViewAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetTenantViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,9 +451,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TenantViewResource> GetTenantView(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
+        public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetTenantViews().Get(viewName, cancellationToken);
+            return tenantResource.GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>

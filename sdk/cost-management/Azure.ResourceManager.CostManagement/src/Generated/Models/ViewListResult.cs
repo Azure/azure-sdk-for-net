@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ViewListResult. </summary>
         internal ViewListResult()
         {
-            Value = new ChangeTrackingList<ViewData>();
+            Value = new ChangeTrackingList<CostManagementViewData>();
         }
 
         /// <summary> Initializes a new instance of ViewListResult. </summary>
         /// <param name="value"> The list of views. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ViewListResult(IReadOnlyList<ViewData> value, string nextLink)
+        internal ViewListResult(IReadOnlyList<CostManagementViewData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of views. </summary>
-        public IReadOnlyList<ViewData> Value { get; }
+        public IReadOnlyList<CostManagementViewData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

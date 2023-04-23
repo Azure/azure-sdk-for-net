@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ViewData>> value = default;
+            Optional<IReadOnlyList<CostManagementViewData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<ViewData> array = new List<ViewData>();
+                    List<CostManagementViewData> array = new List<CostManagementViewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ViewData.DeserializeViewData(item));
+                        array.Add(CostManagementViewData.DeserializeCostManagementViewData(item));
                     }
                     value = array;
                     continue;

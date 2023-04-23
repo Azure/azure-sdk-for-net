@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing the Export data model.
+    /// A class representing the CostManagementExport data model.
     /// An export resource.
     /// </summary>
-    public partial class ExportData : ResourceData
+    public partial class CostManagementExportData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExportData. </summary>
-        public ExportData()
+        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        public CostManagementExportData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportData. </summary>
+        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <param name="schedule"> Has schedule information for the export. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;

@@ -18,28 +18,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ViewResource" /> and their operations.
-    /// Each <see cref="ViewResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ViewCollection" /> instance call the GetViews method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementViewsResource" /> and their operations.
+    /// Each <see cref="CostManagementViewsResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="CostManagementViewsCollection" /> instance call the GetCostManagementViews method from an instance of <see cref="ArmResource" />.
     /// </summary>
-    public partial class ViewCollection : ArmCollection, IEnumerable<ViewResource>, IAsyncEnumerable<ViewResource>
+    public partial class CostManagementViewsCollection : ArmCollection, IEnumerable<CostManagementViewsResource>, IAsyncEnumerable<CostManagementViewsResource>
     {
-        private readonly ClientDiagnostics _viewClientDiagnostics;
-        private readonly ViewsRestOperations _viewRestClient;
+        private readonly ClientDiagnostics _costManagementViewsViewsClientDiagnostics;
+        private readonly ViewsRestOperations _costManagementViewsViewsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ViewCollection"/> class for mocking. </summary>
-        protected ViewCollection()
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsCollection"/> class for mocking. </summary>
+        protected CostManagementViewsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ViewCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CostManagementViewsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _viewClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ViewResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ViewResource.ResourceType, out string viewApiVersion);
-            _viewRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, viewApiVersion);
+            _costManagementViewsViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementViewsResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CostManagementViewsResource.ResourceType, out string costManagementViewsViewsApiVersion);
+            _costManagementViewsViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementViewsViewsApiVersion);
         }
 
         /// <summary>
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ViewResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CostManagementViewsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.CreateOrUpdate");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _viewRestClient.CreateOrUpdateByScopeAsync(Id, viewName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<ViewResource>(Response.FromValue(new ViewResource(Client, response), response.GetRawResponse()));
+                var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id, viewName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ViewResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CostManagementViewsResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.CreateOrUpdate");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _viewRestClient.CreateOrUpdateByScope(Id, viewName, data, cancellationToken);
-                var operation = new CostManagementArmOperation<ViewResource>(Response.FromValue(new ViewResource(Client, response), response.GetRawResponse()));
+                var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id, viewName, data, cancellationToken);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        public virtual async Task<Response<ViewResource>> GetAsync(string viewName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementViewsResource>> GetAsync(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Get");
             scope.Start();
             try
             {
-                var response = await _viewRestClient.GetByScopeAsync(Id, viewName, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementViewsViewsRestClient.GetByScopeAsync(Id, viewName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        public virtual Response<ViewResource> Get(string viewName, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementViewsResource> Get(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Get");
             scope.Start();
             try
             {
-                var response = _viewRestClient.GetByScope(Id, viewName, cancellationToken);
+                var response = _costManagementViewsViewsRestClient.GetByScope(Id, viewName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ViewResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ViewResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CostManagementViewsResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementViewsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _viewRestClient.CreateListByScopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _viewRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ViewResource(Client, ViewData.DeserializeViewData(e)), _viewClientDiagnostics, Pipeline, "ViewCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ViewResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ViewResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostManagementViewsResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementViewsResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _viewRestClient.CreateListByScopeRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _viewRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ViewResource(Client, ViewData.DeserializeViewData(e)), _viewClientDiagnostics, Pipeline, "ViewCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.Exists");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _viewRestClient.GetByScopeAsync(Id, viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementViewsViewsRestClient.GetByScopeAsync(Id, viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _viewClientDiagnostics.CreateScope("ViewCollection.Exists");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Exists");
             scope.Start();
             try
             {
-                var response = _viewRestClient.GetByScope(Id, viewName, cancellationToken: cancellationToken);
+                var response = _costManagementViewsViewsRestClient.GetByScope(Id, viewName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        IEnumerator<ViewResource> IEnumerable<ViewResource>.GetEnumerator()
+        IEnumerator<CostManagementViewsResource> IEnumerable<CostManagementViewsResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CostManagement
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ViewResource> IAsyncEnumerable<ViewResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CostManagementViewsResource> IAsyncEnumerable<CostManagementViewsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

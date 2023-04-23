@@ -18,46 +18,46 @@ using Azure.ResourceManager.CostManagement.Models;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A Class representing an Export along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetExport method.
+    /// A Class representing a CostManagementExport along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CostManagementExportResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCostManagementExportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCostManagementExport method.
     /// </summary>
-    public partial class ExportResource : ArmResource
+    public partial class CostManagementExportResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ExportResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CostManagementExportResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string exportName)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/exports/{exportName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _exportClientDiagnostics;
-        private readonly ExportsRestOperations _exportRestClient;
-        private readonly ExportData _data;
+        private readonly ClientDiagnostics _costManagementExportExportsClientDiagnostics;
+        private readonly ExportsRestOperations _costManagementExportExportsRestClient;
+        private readonly CostManagementExportData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ExportResource"/> class for mocking. </summary>
-        protected ExportResource()
+        /// <summary> Initializes a new instance of the <see cref="CostManagementExportResource"/> class for mocking. </summary>
+        protected CostManagementExportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CostManagementExportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExportResource(ArmClient client, ExportData data) : this(client, data.Id)
+        internal CostManagementExportResource(ArmClient client, CostManagementExportData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ExportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementExportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExportResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CostManagementExportResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _exportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string exportApiVersion);
-            _exportRestClient = new ExportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, exportApiVersion);
+            _costManagementExportExportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string costManagementExportExportsApiVersion);
+            _costManagementExportExportsRestClient = new ExportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementExportExportsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ExportData Data
+        public virtual CostManagementExportData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExportResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementExportResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Get");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Get");
             scope.Start();
             try
             {
-                var response = await _exportRestClient.GetAsync(Id.Parent, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementExportExportsRestClient.GetAsync(Id.Parent, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExportResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementExportResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Get");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Get");
             scope.Start();
             try
             {
-                var response = _exportRestClient.Get(Id.Parent, Id.Name, expand, cancellationToken);
+                var response = _costManagementExportExportsRestClient.Get(Id.Parent, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Delete");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Delete");
             scope.Start();
             try
             {
-                var response = await _exportRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementExportExportsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CostManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Delete");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Delete");
             scope.Start();
             try
             {
-                var response = _exportRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var response = _costManagementExportExportsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
                 var operation = new CostManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExportResource>> UpdateAsync(WaitUntil waitUntil, ExportData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CostManagementExportResource>> UpdateAsync(WaitUntil waitUntil, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Update");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Update");
             scope.Start();
             try
             {
-                var response = await _exportRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<ExportResource>(Response.FromValue(new ExportResource(Client, response), response.GetRawResponse()));
+                var response = await _costManagementExportExportsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ExportResource> Update(WaitUntil waitUntil, ExportData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CostManagementExportResource> Update(WaitUntil waitUntil, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Update");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Update");
             scope.Start();
             try
             {
-                var response = _exportRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new CostManagementArmOperation<ExportResource>(Response.FromValue(new ExportResource(Client, response), response.GetRawResponse()));
+                var response = _costManagementExportExportsRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ExecuteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Execute");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Execute");
             scope.Start();
             try
             {
-                var response = await _exportRestClient.ExecuteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementExportExportsRestClient.ExecuteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Execute(CancellationToken cancellationToken = default)
         {
-            using var scope = _exportClientDiagnostics.CreateScope("ExportResource.Execute");
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportResource.Execute");
             scope.Start();
             try
             {
-                var response = _exportRestClient.Execute(Id.Parent, Id.Name, cancellationToken);
+                var response = _costManagementExportExportsRestClient.Execute(Id.Parent, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -374,8 +374,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="ExportRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExportRun> GetExecutionHistoryAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _exportClientDiagnostics, Pipeline, "ExportResource.GetExecutionHistory", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -395,8 +395,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="ExportRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExportRun> GetExecutionHistory(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _exportClientDiagnostics, Pipeline, "ExportResource.GetExecutionHistory", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
         }
     }
 }

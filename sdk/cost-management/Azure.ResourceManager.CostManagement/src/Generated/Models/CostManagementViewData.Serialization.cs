@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class ViewData : IUtf8JsonSerializable
+    public partial class CostManagementViewData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CostManagement
             writer.WriteEndObject();
         }
 
-        internal static ViewData DeserializeViewData(JsonElement element)
+        internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CostManagement
                     continue;
                 }
             }
-            return new ViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag));
+            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag));
         }
     }
 }

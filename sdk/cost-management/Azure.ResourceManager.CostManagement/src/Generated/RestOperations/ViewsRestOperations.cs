@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ViewData>> GetAsync(string viewName, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementViewData>> GetAsync(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ViewData)null, message.Response);
+                    return Response.FromValue((CostManagementViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ViewData> Get(string viewName, CancellationToken cancellationToken = default)
+        public Response<CostManagementViewData> Get(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
@@ -160,19 +160,19 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ViewData)null, message.Response);
+                    return Response.FromValue((CostManagementViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string viewName, ViewData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string viewName, CostManagementViewData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ViewData>> CreateOrUpdateAsync(string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementViewData>> CreateOrUpdateAsync(string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ViewData> CreateOrUpdate(string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public Response<CostManagementViewData> CreateOrUpdate(string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ViewData>> GetByScopeAsync(string scope, string viewName, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementViewData>> GetByScopeAsync(string scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
@@ -341,13 +341,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ViewData)null, message.Response);
+                    return Response.FromValue((CostManagementViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ViewData> GetByScope(string scope, string viewName, CancellationToken cancellationToken = default)
+        public Response<CostManagementViewData> GetByScope(string scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
@@ -370,19 +370,19 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ViewData)null, message.Response);
+                    return Response.FromValue((CostManagementViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string viewName, ViewData data)
+        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string viewName, CostManagementViewData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ViewData>> CreateOrUpdateByScopeAsync(string scope, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementViewData>> CreateOrUpdateByScopeAsync(string scope, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
@@ -424,9 +424,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ViewData> CreateOrUpdateByScope(string scope, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public Response<CostManagementViewData> CreateOrUpdateByScope(string scope, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ViewData value = default;
+                        CostManagementViewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ViewData.DeserializeViewData(document.RootElement);
+                        value = CostManagementViewData.DeserializeCostManagementViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

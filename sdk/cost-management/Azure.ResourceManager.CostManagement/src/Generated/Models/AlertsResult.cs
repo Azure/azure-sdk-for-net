@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of AlertsResult. </summary>
         internal AlertsResult()
         {
-            Value = new ChangeTrackingList<AlertData>();
+            Value = new ChangeTrackingList<CostManagementAlertData>();
         }
 
         /// <summary> Initializes a new instance of AlertsResult. </summary>
         /// <param name="value"> List of alerts. </param>
         /// <param name="nextLink"> URL to get the next set of alerts results if there are any. </param>
-        internal AlertsResult(IReadOnlyList<AlertData> value, string nextLink)
+        internal AlertsResult(IReadOnlyList<CostManagementAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of alerts. </summary>
-        public IReadOnlyList<AlertData> Value { get; }
+        public IReadOnlyList<CostManagementAlertData> Value { get; }
         /// <summary> URL to get the next set of alerts results if there are any. </summary>
         public string NextLink { get; }
     }

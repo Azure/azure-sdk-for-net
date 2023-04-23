@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing the View data model.
+    /// A class representing the CostManagementView data model.
     /// States and configurations of Cost Analysis.
     /// </summary>
-    public partial class ViewData : ResourceData
+    public partial class CostManagementViewData : ResourceData
     {
-        /// <summary> Initializes a new instance of ViewData. </summary>
-        public ViewData()
+        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        public CostManagementViewData()
         {
             Kpis = new ChangeTrackingList<KpiProperties>();
             Pivots = new ChangeTrackingList<PivotProperties>();
         }
 
-        /// <summary> Initializes a new instance of ViewData. </summary>
+        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ChartType? chart, AccumulatedType? accumulated, MetricType? metric, IList<KpiProperties> kpis, IList<PivotProperties> pivots, ReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ChartType? chart, AccumulatedType? accumulated, MetricType? metric, IList<KpiProperties> kpis, IList<PivotProperties> pivots, ReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Scope = scope;

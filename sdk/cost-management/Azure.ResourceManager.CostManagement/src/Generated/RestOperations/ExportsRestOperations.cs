@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="exportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExportData>> GetAsync(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementExportData>> GetAsync(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ExportData value = default;
+                        CostManagementExportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExportData.DeserializeExportData(document.RootElement);
+                        value = CostManagementExportData.DeserializeCostManagementExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExportData)null, message.Response);
+                    return Response.FromValue((CostManagementExportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="exportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExportData> Get(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<CostManagementExportData> Get(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
@@ -178,19 +178,19 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        ExportData value = default;
+                        CostManagementExportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExportData.DeserializeExportData(document.RootElement);
+                        value = CostManagementExportData.DeserializeCostManagementExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExportData)null, message.Response);
+                    return Response.FromValue((CostManagementExportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string exportName, ExportData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string exportName, CostManagementExportData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExportData>> CreateOrUpdateAsync(string scope, string exportName, ExportData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementExportData>> CreateOrUpdateAsync(string scope, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ExportData value = default;
+                        CostManagementExportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExportData.DeserializeExportData(document.RootElement);
+                        value = CostManagementExportData.DeserializeCostManagementExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExportData> CreateOrUpdate(string scope, string exportName, ExportData data, CancellationToken cancellationToken = default)
+        public Response<CostManagementExportData> CreateOrUpdate(string scope, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                 case 201:
                     {
-                        ExportData value = default;
+                        CostManagementExportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExportData.DeserializeExportData(document.RootElement);
+                        value = CostManagementExportData.DeserializeCostManagementExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
 {
     internal class ViewTests : CostManagementManagementTestBase
     {
-        private ViewCollection _viewCollection;
+        private CostManagementViewsCollection _viewsCollection;
 
         public ViewTests(bool isAsync) : base(isAsync)
         {
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CostManagement.Tests
         [SetUp]
         public void SetUp()
         {
-            _viewCollection = Client.GetViews(DefaultScope);
+            _viewsCollection = Client.GetAllCostManagementViews(DefaultScope);
         }
 
         [RecordedTest]
         public async Task List()
         {
-            var list = await _viewCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await _viewsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
     }

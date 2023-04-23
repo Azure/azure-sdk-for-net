@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExportData>> value = default;
+            Optional<IReadOnlyList<CostManagementExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<ExportData> array = new List<ExportData>();
+                    List<CostManagementExportData> array = new List<CostManagementExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExportData.DeserializeExportData(item));
+                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item));
                     }
                     value = array;
                     continue;

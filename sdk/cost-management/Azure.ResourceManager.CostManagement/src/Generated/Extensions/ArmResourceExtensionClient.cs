@@ -31,25 +31,25 @@ namespace Azure.ResourceManager.CostManagement
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ViewResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of ViewResources and their operations over a ViewResource. </returns>
-        public virtual ViewCollection GetViews()
+        /// <summary> Gets a collection of CostManagementViewsResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
+        public virtual CostManagementViewsCollection GetAllCostManagementViews()
         {
-            return GetCachedClient(Client => new ViewCollection(Client, Id));
+            return GetCachedClient(Client => new CostManagementViewsCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AlertResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of AlertResources and their operations over a AlertResource. </returns>
-        public virtual AlertCollection GetAlerts()
+        /// <summary> Gets a collection of CostManagementAlertResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
+        public virtual CostManagementAlertCollection GetCostManagementAlerts()
         {
-            return GetCachedClient(Client => new AlertCollection(Client, Id));
+            return GetCachedClient(Client => new CostManagementAlertCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExportResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of ExportResources and their operations over a ExportResource. </returns>
-        public virtual ExportCollection GetExports()
+        /// <summary> Gets a collection of CostManagementExportResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
+        public virtual CostManagementExportCollection GetCostManagementExports()
         {
-            return GetCachedClient(Client => new ExportCollection(Client, Id));
+            return GetCachedClient(Client => new CostManagementExportCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>

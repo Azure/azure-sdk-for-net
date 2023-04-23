@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.CostManagement
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of TenantViewResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantViewResources and their operations over a TenantViewResource. </returns>
-        public virtual TenantViewCollection GetTenantViews()
+        /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
+        public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
         {
-            return GetCachedClient(Client => new TenantViewCollection(Client, Id));
+            return GetCachedClient(Client => new TenantsCostManagementViewsCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>

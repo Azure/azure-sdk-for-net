@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
 {
     internal class ExportTests : CostManagementManagementTestBase
     {
-        private ExportCollection _exportCollection;
+        private CostManagementExportCollection _exportCollection;
 
         public ExportTests(bool isAsync) : base(isAsync)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         [SetUp]
         public void SetUp()
         {
-            _exportCollection = Client.GetExports(DefaultScope);
+            _exportCollection = Client.GetCostManagementExports(DefaultScope);
         }
 
         [RecordedTest]

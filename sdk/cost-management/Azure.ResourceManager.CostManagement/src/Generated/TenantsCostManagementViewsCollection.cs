@@ -18,28 +18,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantViewResource" /> and their operations.
-    /// Each <see cref="TenantViewResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantViewCollection" /> instance call the GetTenantViews method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantsCostManagementViewsResource" /> and their operations.
+    /// Each <see cref="TenantsCostManagementViewsResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="TenantsCostManagementViewsCollection" /> instance call the GetTenantsCostManagementViews method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class TenantViewCollection : ArmCollection
+    public partial class TenantsCostManagementViewsCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _tenantViewViewsClientDiagnostics;
-        private readonly ViewsRestOperations _tenantViewViewsRestClient;
+        private readonly ClientDiagnostics _tenantsCostManagementViewsViewsClientDiagnostics;
+        private readonly ViewsRestOperations _tenantsCostManagementViewsViewsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantViewCollection"/> class for mocking. </summary>
-        protected TenantViewCollection()
+        /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsCollection"/> class for mocking. </summary>
+        protected TenantsCostManagementViewsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantViewCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal TenantViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantsCostManagementViewsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantViewViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", TenantViewResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TenantViewResource.ResourceType, out string tenantViewViewsApiVersion);
-            _tenantViewViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantViewViewsApiVersion);
+            _tenantsCostManagementViewsViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", TenantsCostManagementViewsResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(TenantsCostManagementViewsResource.ResourceType, out string tenantsCostManagementViewsViewsApiVersion);
+            _tenantsCostManagementViewsViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantsCostManagementViewsViewsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TenantViewResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TenantsCostManagementViewsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.CreateOrUpdate");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.CreateOrUpdateAsync(viewName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<TenantViewResource>(Response.FromValue(new TenantViewResource(Client, response), response.GetRawResponse()));
+                var response = await _tenantsCostManagementViewsViewsRestClient.CreateOrUpdateAsync(viewName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<TenantsCostManagementViewsResource>(Response.FromValue(new TenantsCostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TenantViewResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, ViewData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TenantsCostManagementViewsResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.CreateOrUpdate");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.CreateOrUpdate(viewName, data, cancellationToken);
-                var operation = new CostManagementArmOperation<TenantViewResource>(Response.FromValue(new TenantViewResource(Client, response), response.GetRawResponse()));
+                var response = _tenantsCostManagementViewsViewsRestClient.CreateOrUpdate(viewName, data, cancellationToken);
+                var operation = new CostManagementArmOperation<TenantsCostManagementViewsResource>(Response.FromValue(new TenantsCostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        public virtual async Task<Response<TenantViewResource>> GetAsync(string viewName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantsCostManagementViewsResource>> GetAsync(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.Get");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.Get");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+                var response = await _tenantsCostManagementViewsViewsRestClient.GetAsync(viewName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantsCostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,18 +187,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        public virtual Response<TenantViewResource> Get(string viewName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantsCostManagementViewsResource> Get(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.Get");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.Get");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.Get(viewName, cancellationToken);
+                var response = _tenantsCostManagementViewsViewsRestClient.Get(viewName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantsCostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.Exists");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.GetAsync(viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tenantsCostManagementViewsViewsRestClient.GetAsync(viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewCollection.Exists");
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.Exists");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.Get(viewName, cancellationToken: cancellationToken);
+                var response = _tenantsCostManagementViewsViewsRestClient.Get(viewName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

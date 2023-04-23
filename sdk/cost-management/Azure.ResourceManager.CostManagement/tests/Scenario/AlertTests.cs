@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
 {
     internal class AlertTests : CostManagementManagementTestBase
     {
-        private AlertCollection _alertCollection;
+        private CostManagementAlertCollection _alertCollection;
 
         public AlertTests(bool isAsync) : base(isAsync)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         [SetUp]
         public void SetUp()
         {
-            _alertCollection = Client.GetAlerts(DefaultScope);
+            _alertCollection = Client.GetCostManagementAlerts(DefaultScope);
         }
 
         [RecordedTest]

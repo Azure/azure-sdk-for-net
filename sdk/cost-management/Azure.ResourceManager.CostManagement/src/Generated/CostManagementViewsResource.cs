@@ -13,51 +13,50 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A Class representing a TenantView along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantViewResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantViewResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantView method.
+    /// A Class representing a CostManagementViews along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CostManagementViewsResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCostManagementViewsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCostManagementViews method.
     /// </summary>
-    public partial class TenantViewResource : ArmResource
+    public partial class CostManagementViewsResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TenantViewResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string viewName)
+        /// <summary> Generate the resource identifier of a <see cref="CostManagementViewsResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string viewName)
         {
-            var resourceId = $"/providers/Microsoft.CostManagement/views/{viewName}";
+            var resourceId = $"{scope}/providers/Microsoft.CostManagement/views/{viewName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _tenantViewViewsClientDiagnostics;
-        private readonly ViewsRestOperations _tenantViewViewsRestClient;
-        private readonly ViewData _data;
+        private readonly ClientDiagnostics _costManagementViewsViewsClientDiagnostics;
+        private readonly ViewsRestOperations _costManagementViewsViewsRestClient;
+        private readonly CostManagementViewData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantViewResource"/> class for mocking. </summary>
-        protected TenantViewResource()
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class for mocking. </summary>
+        protected CostManagementViewsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantViewResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantViewResource(ArmClient client, ViewData data) : this(client, data.Id)
+        internal CostManagementViewsResource(ArmClient client, CostManagementViewData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantViewResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantViewResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CostManagementViewsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantViewViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string tenantViewViewsApiVersion);
-            _tenantViewViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantViewViewsApiVersion);
+            _costManagementViewsViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string costManagementViewsViewsApiVersion);
+            _costManagementViewsViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementViewsViewsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ViewData Data
+        public virtual CostManagementViewData Data
         {
             get
             {
@@ -88,29 +87,29 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets the view by view name.
+        /// Gets the view for the defined scope by view name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
+        /// <description>Views_GetByScope</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantViewResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementViewsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementViewsViewsRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,29 +119,29 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets the view by view name.
+        /// Gets the view for the defined scope by view name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
+        /// <description>Views_GetByScope</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantViewResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementViewsResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.Get(Id.Name, cancellationToken);
+                var response = _costManagementViewsViewsRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantViewResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,11 +155,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_Delete</description>
+        /// <description>Views_DeleteByScope</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +167,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Delete");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _costManagementViewsViewsRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CostManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -190,11 +189,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_Delete</description>
+        /// <description>Views_DeleteByScope</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,11 +201,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Delete");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.Delete(Id.Name, cancellationToken);
+                var response = _costManagementViewsViewsRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
                 var operation = new CostManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -224,11 +223,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_CreateOrUpdate</description>
+        /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +235,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate View operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TenantViewResource>> UpdateAsync(WaitUntil waitUntil, ViewData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CostManagementViewsResource>> UpdateAsync(WaitUntil waitUntil, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Update");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();
             try
             {
-                var response = await _tenantViewViewsRestClient.CreateOrUpdateAsync(Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<TenantViewResource>(Response.FromValue(new TenantViewResource(Client, response), response.GetRawResponse()));
+                var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,11 +261,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Views_CreateOrUpdate</description>
+        /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,16 +273,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate View operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TenantViewResource> Update(WaitUntil waitUntil, ViewData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CostManagementViewsResource> Update(WaitUntil waitUntil, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tenantViewViewsClientDiagnostics.CreateScope("TenantViewResource.Update");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();
             try
             {
-                var response = _tenantViewViewsRestClient.CreateOrUpdate(Id.Name, data, cancellationToken);
-                var operation = new CostManagementArmOperation<TenantViewResource>(Response.FromValue(new TenantViewResource(Client, response), response.GetRawResponse()));
+                var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

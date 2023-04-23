@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ExportListResult. </summary>
         internal ExportListResult()
         {
-            Value = new ChangeTrackingList<ExportData>();
+            Value = new ChangeTrackingList<CostManagementExportData>();
         }
 
         /// <summary> Initializes a new instance of ExportListResult. </summary>
         /// <param name="value"> The list of exports. </param>
-        internal ExportListResult(IReadOnlyList<ExportData> value)
+        internal ExportListResult(IReadOnlyList<CostManagementExportData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of exports. </summary>
-        public IReadOnlyList<ExportData> Value { get; }
+        public IReadOnlyList<CostManagementExportData> Value { get; }
     }
 }
