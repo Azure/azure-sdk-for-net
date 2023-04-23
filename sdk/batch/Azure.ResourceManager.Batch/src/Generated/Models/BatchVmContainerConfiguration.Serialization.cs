@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmContainerConfiguration DeserializeBatchVmContainerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchVmContainerType type = default;
             Optional<IList<string>> containerImageNames = default;
             Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();

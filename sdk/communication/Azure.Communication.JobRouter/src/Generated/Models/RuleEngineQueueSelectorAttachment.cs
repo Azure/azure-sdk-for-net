@@ -21,8 +21,9 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rule"/> is null. </exception>
         public RuleEngineQueueSelectorAttachment(RouterRule rule)
@@ -42,8 +43,9 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
         /// </param>
         internal RuleEngineQueueSelectorAttachment(string kind, RouterRule rule) : base(kind)
         {
@@ -58,8 +60,9 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
         /// </summary>
         public RouterRule Rule { get; set; }
     }

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsBookmarkIncidentInfo DeserializeSecurityInsightsBookmarkIncidentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> incidentId = default;
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<string> title = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     incidentId = property.Value.GetGuid();
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new SecurityInsightsIncidentSeverity(property.Value.GetString());

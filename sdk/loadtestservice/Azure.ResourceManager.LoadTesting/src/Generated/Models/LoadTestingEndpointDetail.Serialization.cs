@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestingEndpointDetail DeserializeLoadTestingEndpointDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

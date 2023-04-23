@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordName = default;
             Optional<string> recordNamespace = default;
             Optional<BinaryData> maxRowsPerFile = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());

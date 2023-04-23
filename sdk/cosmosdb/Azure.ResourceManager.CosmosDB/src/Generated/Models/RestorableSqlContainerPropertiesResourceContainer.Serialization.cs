@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
+            if (Optional.IsDefined(ClientEncryptionPolicy))
+            {
+                writer.WritePropertyName("clientEncryptionPolicy"u8);
+                writer.WriteObjectValue(ClientEncryptionPolicy);
+            }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
@@ -53,6 +58,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestorableSqlContainerPropertiesResourceContainer DeserializeRestorableSqlContainerPropertiesResourceContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> self = default;
             Optional<string> rid = default;
             Optional<float> ts = default;
@@ -63,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +90,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ts = property.Value.GetSingle();
@@ -90,7 +99,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -105,7 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
@@ -115,7 +122,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
@@ -125,7 +131,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultTtl = property.Value.GetInt32();
@@ -135,7 +140,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
@@ -145,24 +149,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("clientEncryptionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientEncryptionPolicy = CosmosDBClientEncryptionPolicy.DeserializeCosmosDBClientEncryptionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analyticalStorageTtl = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

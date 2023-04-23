@@ -14,6 +14,10 @@ namespace Azure.MixedReality.Authentication
     {
         internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accessToken = default;
             foreach (var property in element.EnumerateObject())
             {

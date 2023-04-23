@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

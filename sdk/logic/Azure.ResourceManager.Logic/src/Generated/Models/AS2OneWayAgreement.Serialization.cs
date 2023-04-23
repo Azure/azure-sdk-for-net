@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2OneWayAgreement DeserializeAS2OneWayAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             AS2ProtocolSettings protocolSettings = default;

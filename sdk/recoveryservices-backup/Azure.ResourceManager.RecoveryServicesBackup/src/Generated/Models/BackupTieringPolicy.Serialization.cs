@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupTieringPolicy DeserializeBackupTieringPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TieringMode> tieringMode = default;
             Optional<int> duration = default;
             Optional<RetentionDurationType> durationType = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tieringMode = new TieringMode(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     duration = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationType = new RetentionDurationType(property.Value.GetString());

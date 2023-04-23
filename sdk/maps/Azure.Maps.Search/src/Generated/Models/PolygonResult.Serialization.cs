@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PolygonResult DeserializePolygonResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PolygonObject>> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolygonObject> array = new List<PolygonObject>();

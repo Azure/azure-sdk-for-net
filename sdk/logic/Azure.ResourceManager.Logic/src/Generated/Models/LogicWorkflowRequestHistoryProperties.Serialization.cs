@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRequestHistoryProperties DeserializeLogicWorkflowRequestHistoryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<LogicWorkflowRequest> request = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -71,7 +73,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value);
@@ -81,7 +82,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value);

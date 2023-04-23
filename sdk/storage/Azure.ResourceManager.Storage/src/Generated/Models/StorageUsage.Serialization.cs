@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageUsage DeserializeStorageUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = property.Value.GetString().ToStorageUsageUnit();
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt32();
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -54,7 +55,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = StorageUsageName.DeserializeStorageUsageName(property.Value);

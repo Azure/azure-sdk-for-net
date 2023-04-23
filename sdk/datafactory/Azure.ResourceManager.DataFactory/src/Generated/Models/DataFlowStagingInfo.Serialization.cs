@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedService = default;
             Optional<BinaryData> folderPath = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -53,7 +56,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folderPath = BinaryData.FromString(property.Value.GetRawText());

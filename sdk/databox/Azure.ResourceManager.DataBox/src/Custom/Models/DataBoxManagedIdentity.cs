@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Managed identity properties. </summary>
-    [CodeGenSuppress("UserAssignedResourceId")]
+    [CodeGenSuppress("UserAssignedResourceId", typeof(ResourceIdentifier))]
     public partial class DataBoxManagedIdentity
     {
         /// <summary> Arm resource id for user assigned identity to be used to fetch MSI token. </summary>

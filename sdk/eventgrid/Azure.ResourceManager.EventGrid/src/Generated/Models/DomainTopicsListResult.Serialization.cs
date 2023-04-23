@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static DomainTopicsListResult DeserializeDomainTopicsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DomainTopicData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DomainTopicData> array = new List<DomainTopicData>();

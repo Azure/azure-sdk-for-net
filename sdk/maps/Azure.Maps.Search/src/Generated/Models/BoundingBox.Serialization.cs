@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static BoundingBox DeserializeBoundingBox(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LatLongPairAbbreviated> topLeftPoint = default;
             Optional<LatLongPairAbbreviated> btmRightPoint = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     topLeftPoint = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
@@ -32,7 +35,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     btmRightPoint = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

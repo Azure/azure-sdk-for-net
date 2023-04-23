@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadContainerExtendedInfo DeserializeWorkloadContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostServerName = default;
             Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
             Optional<IList<DistributedNodesInfo>> nodesList = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value);
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();

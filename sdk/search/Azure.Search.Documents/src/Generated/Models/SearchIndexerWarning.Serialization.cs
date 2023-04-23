@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerWarning DeserializeSearchIndexerWarning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             string message = default;
             Optional<string> name = default;

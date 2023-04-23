@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static VolumeSnapshotProperties DeserializeVolumeSnapshotProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> snapshotPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshotPolicyId = new ResourceIdentifier(property.Value.GetString());

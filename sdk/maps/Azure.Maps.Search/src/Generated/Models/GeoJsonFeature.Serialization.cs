@@ -39,6 +39,10 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             GeoJsonGeometry geometry = default;
             Optional<object> properties = default;
             Optional<string> id = default;
@@ -55,7 +59,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = property.Value.GetObject();

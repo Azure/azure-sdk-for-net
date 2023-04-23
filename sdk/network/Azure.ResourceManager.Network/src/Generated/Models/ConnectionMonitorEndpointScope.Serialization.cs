@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointScope DeserializeConnectionMonitorEndpointScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ConnectionMonitorEndpointScopeItem>> include = default;
             Optional<IList<ConnectionMonitorEndpointScopeItem>> exclude = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusClientAffineProperties DeserializeServiceBusClientAffineProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<bool> isDurable = default;
             Optional<bool> isShared = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDurable = property.Value.GetBoolean();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isShared = property.Value.GetBoolean();

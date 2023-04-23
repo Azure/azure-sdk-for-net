@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static DeviceUpdatePrivateEndpointConnectionListResult DeserializeDeviceUpdatePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeviceUpdatePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeviceUpdatePrivateEndpointConnectionData> array = new List<DeviceUpdatePrivateEndpointConnectionData>();

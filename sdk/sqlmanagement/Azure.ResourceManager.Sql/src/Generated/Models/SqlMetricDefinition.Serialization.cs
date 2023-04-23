@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlMetricDefinition DeserializeSqlMetricDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlMetricName> name = default;
             Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<Uri> resourceUri = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = SqlMetricName.DeserializeSqlMetricName(property.Value);
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryAggregationType = new SqlMetricPrimaryAggregationType(property.Value.GetString());
@@ -47,7 +49,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceUri = null;
                         continue;
                     }
                     resourceUri = new Uri(property.Value.GetString());
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new SqlMetricDefinitionUnitType(property.Value.GetString());
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineAdditionalCapability DeserializeLabVirtualMachineAdditionalCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabServicesEnableState> installGpuDrivers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     installGpuDrivers = property.Value.GetString().ToLabServicesEnableState();

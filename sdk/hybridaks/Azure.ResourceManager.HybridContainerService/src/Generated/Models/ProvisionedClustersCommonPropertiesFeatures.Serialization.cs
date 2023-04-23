@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArcAgentProfile> arcAgentProfile = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arcAgentProfile = ArcAgentProfile.DeserializeArcAgentProfile(property.Value);

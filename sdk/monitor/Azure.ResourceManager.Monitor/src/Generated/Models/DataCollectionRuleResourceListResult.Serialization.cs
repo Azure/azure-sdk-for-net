@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataCollectionRuleResourceListResult DeserializeDataCollectionRuleResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DataCollectionRuleData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

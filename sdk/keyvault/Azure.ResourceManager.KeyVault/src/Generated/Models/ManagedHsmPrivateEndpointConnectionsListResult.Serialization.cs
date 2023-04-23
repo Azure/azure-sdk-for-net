@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static ManagedHsmPrivateEndpointConnectionsListResult DeserializeManagedHsmPrivateEndpointConnectionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedHsmPrivateEndpointConnectionData> array = new List<ManagedHsmPrivateEndpointConnectionData>();

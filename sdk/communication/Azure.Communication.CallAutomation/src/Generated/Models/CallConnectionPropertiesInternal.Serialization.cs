@@ -16,6 +16,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
@@ -41,7 +45,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
@@ -56,7 +59,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callConnectionState = new CallConnectionState(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
@@ -91,7 +92,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceIdentity = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);

@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static SelectAudioTrackById DeserializeSelectAudioTrackById(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long trackId = default;
             Optional<ChannelMapping> channelMapping = default;
             string odataType = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channelMapping = new ChannelMapping(property.Value.GetString());

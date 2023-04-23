@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isExpirationRequired = default;
             Optional<TimeSpan> maximumDuration = default;
             Optional<string> id = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isExpirationRequired = property.Value.GetBoolean();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumDuration = property.Value.GetTimeSpan("P");
@@ -84,7 +86,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);

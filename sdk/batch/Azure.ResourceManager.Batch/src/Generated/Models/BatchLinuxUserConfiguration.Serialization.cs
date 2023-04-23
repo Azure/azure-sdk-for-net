@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchLinuxUserConfiguration DeserializeBatchLinuxUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> uid = default;
             Optional<int> gid = default;
             Optional<string> sshPrivateKey = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uid = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gid = property.Value.GetInt32();

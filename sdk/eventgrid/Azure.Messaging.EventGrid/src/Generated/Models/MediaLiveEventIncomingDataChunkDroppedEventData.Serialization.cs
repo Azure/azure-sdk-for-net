@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingDataChunkDroppedEventData DeserializeMediaLiveEventIncomingDataChunkDroppedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timestamp = default;
             Optional<string> trackType = default;
             Optional<long> bitrate = default;
@@ -39,7 +43,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt64();

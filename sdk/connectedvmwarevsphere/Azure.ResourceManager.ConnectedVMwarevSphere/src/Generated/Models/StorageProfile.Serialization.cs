@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualDisk>> disks = default;
             Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualDisk> array = new List<VirtualDisk>();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualScsiController> array = new List<VirtualScsiController>();

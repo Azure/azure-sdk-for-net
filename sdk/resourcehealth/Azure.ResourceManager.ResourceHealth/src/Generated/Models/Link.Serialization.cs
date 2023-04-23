@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static Link DeserializeLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkTypeValue> type = default;
             Optional<LinkDisplayText> displayText = default;
             Optional<string> extensionName = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new LinkTypeValue(property.Value.GetString());
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     displayText = LinkDisplayText.DeserializeLinkDisplayText(property.Value);
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = BinaryData.FromString(property.Value.GetRawText());

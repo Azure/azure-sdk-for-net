@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FadeOptions DeserializeFadeOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan duration = default;
             string fadeColor = default;
             Optional<string> start = default;

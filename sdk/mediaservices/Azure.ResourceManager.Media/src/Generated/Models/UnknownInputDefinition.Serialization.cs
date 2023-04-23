@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownInputDefinition DeserializeUnknownInputDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrackDescriptor> array = new List<TrackDescriptor>();

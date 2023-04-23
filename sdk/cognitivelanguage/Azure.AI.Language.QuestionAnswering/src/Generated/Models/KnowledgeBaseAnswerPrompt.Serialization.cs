@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswerPrompt DeserializeKnowledgeBaseAnswerPrompt(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> displayOrder = default;
             Optional<int> qnaId = default;
             Optional<string> displayText = default;
@@ -23,7 +27,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     displayOrder = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     qnaId = property.Value.GetInt32();

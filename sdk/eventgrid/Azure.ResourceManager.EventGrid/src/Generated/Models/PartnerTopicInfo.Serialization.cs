@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerTopicInfo DeserializePartnerTopicInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> azureSubscriptionId = default;
             Optional<string> resourceGroupName = default;
             Optional<string> name = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureSubscriptionId = property.Value.GetGuid();
@@ -77,7 +80,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value);

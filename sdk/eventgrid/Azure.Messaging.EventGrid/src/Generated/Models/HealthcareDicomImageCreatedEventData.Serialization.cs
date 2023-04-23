@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> imageStudyInstanceUid = default;
             Optional<string> imageSeriesInstanceUid = default;
             Optional<string> imageSopInstanceUid = default;
@@ -48,7 +52,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sequenceNumber = property.Value.GetInt64();

@@ -79,6 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<DayOfWeek>> weekDays = default;
@@ -92,7 +96,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -107,7 +110,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -122,7 +124,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DayOfWeek> array = new List<DayOfWeek>();
@@ -137,7 +138,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -152,7 +152,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecurrenceScheduleOccurrence> array = new List<RecurrenceScheduleOccurrence>();

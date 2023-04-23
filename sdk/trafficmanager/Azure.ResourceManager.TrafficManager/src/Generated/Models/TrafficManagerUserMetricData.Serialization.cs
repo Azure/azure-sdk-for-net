@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerUserMetricData DeserializeTrafficManagerUserMetricData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceGranularMarkingEntity DeserializeThreatIntelligenceGranularMarkingEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             Optional<int> markingRef = default;
             Optional<IList<string>> selectors = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     markingRef = property.Value.GetInt32();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

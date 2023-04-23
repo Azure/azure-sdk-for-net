@@ -1,10 +1,6 @@
 # Contributing
 
-| Component            | Build Status                                                                                                                                                                                                          |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=main)   |
-
-# Prerequisites:
+## Prerequisites:
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
@@ -13,6 +9,7 @@
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a [topic branch](https://docs.github.com/get-started/quickstart/github-flow#create-a-branch) in your fork and a [pull request opened](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:
 
@@ -25,6 +22,8 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+**GitHub Actions :** Forks of the repository will inherit the automations performed in the Azure SDK for .NET repository as GitHub Actions.  It is reccommended that you explicitly [disable](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository) these Actions to prevent errors and unwanted automation.
 
 ----
 
@@ -73,22 +72,6 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:RunTests /p:scope=Compute`
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
-
-### Code Coverage
-
-If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
-
-```dotnetcli
-dotnet tool restore
-dotnet test /p:CollectCoverage=true
-```
-
-On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
-Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
-All covered projects should have 70% or better test coverage.
-
-By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
-To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ### Update build tools
 
@@ -177,6 +160,22 @@ information or instructions.
 
 ### Testing Against Latest Versions of Client Libraries
 In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
+
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```dotnetcli
+dotnet tool restore
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ## Public API additions
 
@@ -363,17 +362,16 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 
 #### Standard Process
 
-1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
-4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of the Azure SDK for .NET.
-6. Generate the code. See [Generating Client Code](#generating-client-code) below.
-7. **MANDATORY**: Add or update tests for the newly generated code.
-8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-10. A Pull request of your Azure SDK for .NET changes against **main** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-11. The pull requests will be reviewed and merged by the Azure SDK team
+1. Fork the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs) repository
+2. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
+3. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+4. **MANDATORY**: Create a topic branch in your fork of the Azure SDK for .NET; this is where your changes will be made.
+5. Generate the code. See [Generating Client Code](#generating-client-code) below.
+6. **MANDATORY**: Add or update tests for the newly generated code.
+7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+9. Opan a pull request with your changes against the `main` branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. The pull requests will be reviewed and merged by the Azure SDK team
 
 #### Generating Client Code
 

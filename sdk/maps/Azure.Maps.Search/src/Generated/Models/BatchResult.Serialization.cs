@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static BatchResult DeserializeBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);

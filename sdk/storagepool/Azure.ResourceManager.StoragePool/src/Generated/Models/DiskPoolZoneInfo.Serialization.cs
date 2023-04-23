@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> availabilityZones = default;
             Optional<IReadOnlyList<string>> additionalCapabilities = default;
             Optional<StoragePoolSku> sku = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);

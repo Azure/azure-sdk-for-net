@@ -62,6 +62,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
@@ -95,7 +99,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
@@ -105,7 +108,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);

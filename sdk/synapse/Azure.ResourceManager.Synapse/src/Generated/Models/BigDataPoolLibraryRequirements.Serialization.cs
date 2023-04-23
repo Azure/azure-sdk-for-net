@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolLibraryRequirements DeserializeBigDataPoolLibraryRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");

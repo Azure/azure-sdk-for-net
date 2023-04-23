@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadBackupContent DeserializeWorkloadBackupContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupType> backupType = default;
             Optional<bool> enableCompression = default;
             Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupType = new BackupType(property.Value.GetString());
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCompression = property.Value.GetBoolean();
@@ -68,7 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointExpiryTimeInUTC = property.Value.GetDateTimeOffset("O");

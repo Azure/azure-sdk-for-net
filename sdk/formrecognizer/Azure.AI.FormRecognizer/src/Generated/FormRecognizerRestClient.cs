@@ -224,7 +224,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, InternalContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, InternalContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,7 +284,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, InternalContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -705,7 +705,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(InternalContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -745,7 +745,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -767,7 +767,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -917,7 +917,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(InternalContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -957,7 +957,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -979,7 +979,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1129,7 +1129,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeIdDocumentAsyncRequest(FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeIdDocumentAsyncRequest(InternalContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1164,7 +1164,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders>> AnalyzeIdDocumentAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders>> AnalyzeIdDocumentAsyncAsync(InternalContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeIdDocumentAsyncRequest(contentType, includeTextDetails, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1185,7 +1185,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders> AnalyzeIdDocumentAsync(FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders> AnalyzeIdDocumentAsync(InternalContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeIdDocumentAsyncRequest(contentType, includeTextDetails, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1329,7 +1329,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(InternalContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1369,7 +1369,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1391,7 +1391,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(InternalContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1541,7 +1541,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(InternalContentType contentType, IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1581,7 +1581,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </remarks>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(InternalContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1603,7 +1603,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </remarks>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(InternalContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
             _pipeline.Send(message, cancellationToken);

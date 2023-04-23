@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementServiceNameAvailabilityResult DeserializeApiManagementServiceNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
             Optional<ApiManagementServiceNameUnavailableReason> reason = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reason = property.Value.GetString().ToApiManagementServiceNameUnavailableReason();

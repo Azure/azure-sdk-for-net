@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorTimeSeriesDataPoint DeserializeFrontDoorTimeSeriesDataPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTimeUtc = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeUtc = property.Value.GetDateTimeOffset("O");
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetSingle();

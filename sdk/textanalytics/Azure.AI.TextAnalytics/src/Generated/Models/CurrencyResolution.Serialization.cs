@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static CurrencyResolution DeserializeCurrencyResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> iso4217 = default;
             string unit = default;
             double value = default;

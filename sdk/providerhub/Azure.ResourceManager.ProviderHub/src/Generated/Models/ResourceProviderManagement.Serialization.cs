@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
-                writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
+                writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoles))
             {
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceAccessRoles)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -86,13 +91,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManagement DeserializeResourceProviderManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> schemaOwners = default;
             Optional<IList<string>> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
             Optional<string> incidentRoutingTeam = default;
             Optional<string> incidentContactEmail = default;
             Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
-            Optional<ResourceProviderManagementResourceAccessPolicy> resourceAccessPolicy = default;
+            Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
             Optional<IList<BinaryData>> resourceAccessRoles = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,7 +109,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -115,7 +123,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -145,7 +152,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
@@ -160,23 +166,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceAccessPolicy = new ResourceProviderManagementResourceAccessPolicy(property.Value.GetString());
+                    resourceAccessPolicy = property.Value.GetString().ToResourceAccessPolicy();
                     continue;
                 }
                 if (property.NameEquals("resourceAccessRoles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     resourceAccessRoles = array;
                     continue;

@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings) : base(id, name, resourceType, systemData)
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Hci
             ShouldAutoUpgradeMinorVersion = shouldAutoUpgradeMinorVersion;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
         }
 
         /// <summary> Provisioning state of the Extension proxy resource. </summary>
@@ -132,5 +134,7 @@ namespace Azure.ResourceManager.Hci
         /// </para>
         /// </summary>
         public BinaryData ProtectedSettings { get; set; }
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        public bool? EnableAutomaticUpgrade { get; set; }
     }
 }

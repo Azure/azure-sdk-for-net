@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static SummarizeResults DeserializeSummarizeResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataContext = default;
             Optional<int> odataCount = default;
             Optional<IReadOnlyList<PolicySummary>> value = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt32();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicySummary> array = new List<PolicySummary>();

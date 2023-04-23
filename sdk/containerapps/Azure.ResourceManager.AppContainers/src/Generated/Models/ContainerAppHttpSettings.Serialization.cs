@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpSettings DeserializeContainerAppHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireHttps = default;
             Optional<HttpSettingsRoutes> routes = default;
             Optional<ContainerAppForwardProxy> forwardProxy = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireHttps = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value);

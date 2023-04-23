@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultListResult DeserializeKeyVaultListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KeyVaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultData> array = new List<KeyVaultData>();

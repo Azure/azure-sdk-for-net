@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlStorageUpdateSettings DeserializeSqlStorageUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskCount = default;
             Optional<int> startingDeviceId = default;
             Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCount = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startingDeviceId = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskConfigurationType = new SqlVmDiskConfigurationType(property.Value.GetString());

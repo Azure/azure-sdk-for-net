@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<FactorySecretBaseDefinition> pfx = default;
             Optional<BinaryData> username = default;
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
@@ -96,7 +99,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     username = BinaryData.FromString(property.Value.GetRawText());
@@ -106,7 +108,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
@@ -116,7 +117,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resource = BinaryData.FromString(property.Value.GetRawText());
@@ -126,7 +126,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userTenant = BinaryData.FromString(property.Value.GetRawText());
@@ -136,7 +135,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);

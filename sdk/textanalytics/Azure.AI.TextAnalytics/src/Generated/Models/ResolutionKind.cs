@@ -22,7 +22,6 @@ namespace Azure.AI.TextAnalytics.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BooleanResolutionValue = "BooleanResolution";
         private const string DateTimeResolutionValue = "DateTimeResolution";
         private const string NumberResolutionValue = "NumberResolution";
         private const string OrdinalResolutionValue = "OrdinalResolution";
@@ -38,8 +37,6 @@ namespace Azure.AI.TextAnalytics.Models
         private const string NumericRangeResolutionValue = "NumericRangeResolution";
         private const string TemporalSpanResolutionValue = "TemporalSpanResolution";
 
-        /// <summary> BooleanResolution. </summary>
-        public static ResolutionKind BooleanResolution { get; } = new ResolutionKind(BooleanResolutionValue);
         /// <summary> DateTimeResolution. </summary>
         public static ResolutionKind DateTimeResolution { get; } = new ResolutionKind(DateTimeResolutionValue);
         /// <summary> NumberResolution. </summary>

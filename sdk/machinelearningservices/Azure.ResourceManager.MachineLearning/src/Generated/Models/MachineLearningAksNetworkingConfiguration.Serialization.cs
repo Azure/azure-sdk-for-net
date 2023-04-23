@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksNetworkingConfiguration DeserializeMachineLearningAksNetworkingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<string> serviceCidr = default;
             Optional<string> dnsServiceIP = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetId = new ResourceIdentifier(property.Value.GetString());

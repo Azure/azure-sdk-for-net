@@ -17,6 +17,10 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JsonWebKeySet> xMsPolicyCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,7 +28,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);

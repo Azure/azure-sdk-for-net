@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static AvailabilityStatusPropertiesRecentlyResolved DeserializeAvailabilityStatusPropertiesRecentlyResolved(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> unavailableOccuredTime = default;
             Optional<DateTimeOffset> resolvedTime = default;
             Optional<string> unavailableSummary = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unavailableOccuredTime = property.Value.GetDateTimeOffset("O");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolvedTime = property.Value.GetDateTimeOffset("O");

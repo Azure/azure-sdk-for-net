@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAddonProfile DeserializeManagedClusterAddonProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<IDictionary<string, string>> config = default;
             Optional<ManagedClusterAddonProfileIdentity> identity = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value);

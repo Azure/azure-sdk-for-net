@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EventImpactedResourceListResult DeserializeEventImpactedResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<EventImpactedResourceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

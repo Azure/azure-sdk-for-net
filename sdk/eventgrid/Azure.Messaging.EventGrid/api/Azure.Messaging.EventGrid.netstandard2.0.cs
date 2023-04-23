@@ -56,6 +56,8 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, object> properties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, object> properties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus?), System.DateTimeOffset? deliveryAttemptTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string messageId = null, System.DateTimeOffset? userActionTimestamp = default(System.DateTimeOffset?), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = default(long?), string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null) { throw null; }
@@ -246,6 +248,8 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, object storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount = default(long?), long? successCount = default(long?), string errorList = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData StorageTaskCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus?), System.DateTimeOffset? completedDateTime = default(System.DateTimeOffset?), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData StorageTaskQueuedEventData(System.DateTimeOffset? queuedDateTime = default(System.DateTimeOffset?), string taskExecutionId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.SubscriptionDeletedEventData SubscriptionDeletedEventData(string eventSubscriptionId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = null, string validationUrl = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -327,6 +331,8 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string AcsEmailDeliveryReportReceived = "Microsoft.Communication.EmailDeliveryReportReceived";
+        public const string AcsEmailEngagementTrackingReportReceived = "Microsoft.Communication.EmailEngagementTrackingReportReceived";
         public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
         public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
@@ -455,6 +461,8 @@ namespace Azure.Messaging.EventGrid
         public const string StorageDirectoryDeleted = "Microsoft.Storage.DirectoryDeleted";
         public const string StorageDirectoryRenamed = "Microsoft.Storage.DirectoryRenamed";
         public const string StorageLifecyclePolicyCompleted = "Microsoft.Storage.LifecyclePolicyCompleted";
+        public const string StorageTaskCompleted = "Microsoft.Storage.StorageTaskCompleted";
+        public const string StorageTaskQueued = "Microsoft.Storage.StorageTaskQueued";
         public const string WebAppServicePlanUpdated = "Microsoft.Web.AppServicePlanUpdated";
         public const string WebAppUpdated = "Microsoft.Web.AppUpdated";
         public const string WebBackupOperationCompleted = "Microsoft.Web.BackupOperationCompleted";
@@ -690,6 +698,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
+    public partial class AcsEmailDeliveryReportReceivedEventData
+    {
+        internal AcsEmailDeliveryReportReceivedEventData() { }
+        public System.DateTimeOffset? DeliveryAttemptTimestamp { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string Recipient { get { throw null; } }
+        public string Sender { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsEmailDeliveryReportStatus : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsEmailDeliveryReportStatus(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Delivered { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Failed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus FilteredSpam { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Quarantined { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus left, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus left, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AcsEmailEngagementTrackingReportReceivedEventData
+    {
+        internal AcsEmailEngagementTrackingReportReceivedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? Engagement { get { throw null; } }
+        public string EngagementContext { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string Sender { get { throw null; } }
+        public System.DateTimeOffset? UserActionTimestamp { get { throw null; } }
+        public string UserAgent { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AcsRecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType>
     {
@@ -810,6 +857,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsUserDisconnectedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel UserCommunicationIdentifier { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsUserEngagement : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsUserEngagement(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement Click { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement View { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement left, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement left, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ApiManagementApiCreatedEventData
     {
@@ -2425,6 +2490,39 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ScheduleTime { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToArchiveSummary { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToCoolSummary { get { throw null; } }
+    }
+    public partial class StorageTaskCompletedEventData
+    {
+        internal StorageTaskCompletedEventData() { }
+        public System.DateTimeOffset? CompletedDateTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus? Status { get { throw null; } }
+        public System.Uri SummaryReportBlobUri { get { throw null; } }
+        public string TaskExecutionId { get { throw null; } }
+        public string TaskName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageTaskCompletedStatus : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageTaskCompletedStatus(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus Failed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StorageTaskQueuedEventData
+    {
+        internal StorageTaskQueuedEventData() { }
+        public System.DateTimeOffset? QueuedDateTime { get { throw null; } }
+        public string TaskExecutionId { get { throw null; } }
     }
     public partial class SubscriptionDeletedEventData
     {

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeterProperties DeserializeContainerAppBillingMeterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppBillingMeterCategory> category = default;
             Optional<string> meterType = default;
             Optional<string> displayName = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = new ContainerAppBillingMeterCategory(property.Value.GetString());

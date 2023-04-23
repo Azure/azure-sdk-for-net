@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubApnsCredential DeserializeNotificationHubApnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<Uri> endpoint = default;
@@ -101,7 +105,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpoint = null;
                                 continue;
                             }
                             endpoint = new Uri(property0.Value.GetString());
@@ -111,7 +114,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             thumbprint = BinaryData.FromString(property0.Value.GetRawText());

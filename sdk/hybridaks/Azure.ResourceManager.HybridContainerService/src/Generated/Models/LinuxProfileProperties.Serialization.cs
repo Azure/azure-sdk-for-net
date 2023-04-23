@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LinuxProfileProperties DeserializeLinuxProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminUsername = default;
             Optional<LinuxProfilePropertiesSsh> ssh = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssh = LinuxProfilePropertiesSsh.DeserializeLinuxProfilePropertiesSsh(property.Value);

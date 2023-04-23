@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static GatewayLoadBalancerTunnelInterface DeserializeGatewayLoadBalancerTunnelInterface(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             Optional<int> identifier = default;
             Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identifier = property.Value.GetInt32();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new GatewayLoadBalancerTunnelProtocol(property.Value.GetString());
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new GatewayLoadBalancerTunnelInterfaceType(property.Value.GetString());

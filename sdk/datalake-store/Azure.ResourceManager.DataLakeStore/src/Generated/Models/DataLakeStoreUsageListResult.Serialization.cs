@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreUsageListResult DeserializeDataLakeStoreUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataLakeStoreUsage> array = new List<DataLakeStoreUsage>();

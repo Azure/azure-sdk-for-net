@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RuleBasedBackupPolicy DeserializeRuleBasedBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<DataProtectionBasePolicyRule> policyRules = default;
             IList<string> datasourceTypes = default;
             string objectType = default;

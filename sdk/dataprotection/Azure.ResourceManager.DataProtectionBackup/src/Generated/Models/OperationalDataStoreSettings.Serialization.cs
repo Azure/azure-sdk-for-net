@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceGroupId = new ResourceIdentifier(property.Value.GetString());

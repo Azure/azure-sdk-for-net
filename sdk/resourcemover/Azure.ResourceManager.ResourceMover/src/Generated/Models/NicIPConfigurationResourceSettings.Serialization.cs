@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
@@ -91,7 +95,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
@@ -106,7 +109,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
@@ -116,7 +118,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primary = property.Value.GetBoolean();
@@ -126,7 +127,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerBackendAddressPoolReferenceInfo> array = new List<LoadBalancerBackendAddressPoolReferenceInfo>();
@@ -141,7 +141,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerNatRuleReferenceInfo> array = new List<LoadBalancerNatRuleReferenceInfo>();
@@ -156,7 +155,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value);

@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayPathRule DeserializeApplicationGatewayPathRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -88,7 +92,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -132,7 +133,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -147,7 +147,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -157,7 +156,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -167,7 +165,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -187,7 +183,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -197,7 +192,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

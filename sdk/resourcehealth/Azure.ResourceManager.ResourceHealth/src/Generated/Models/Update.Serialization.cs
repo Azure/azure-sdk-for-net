@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static Update DeserializeUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summary = default;
             Optional<DateTimeOffset> updateDateTime = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateDateTime = property.Value.GetDateTimeOffset("O");

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static ServiceUnit DeserializeServiceUnit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<RolloutStep>> steps = default;
             string targetResourceGroup = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RolloutStep> array = new List<RolloutStep>();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     artifacts = ServiceUnitArtifacts.DeserializeServiceUnitArtifacts(property.Value);

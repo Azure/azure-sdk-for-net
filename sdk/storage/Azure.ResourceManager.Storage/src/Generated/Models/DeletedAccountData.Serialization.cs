@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static DeletedAccountData DeserializeDeletedAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Storage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -74,7 +77,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -84,7 +86,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = new AzureLocation(property0.Value.GetString());
@@ -99,7 +100,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionTime = property0.Value.GetDateTimeOffset("O");

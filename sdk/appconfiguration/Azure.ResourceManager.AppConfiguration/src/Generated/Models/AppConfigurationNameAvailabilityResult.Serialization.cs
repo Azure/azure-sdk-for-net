@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
             Optional<string> reason = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();

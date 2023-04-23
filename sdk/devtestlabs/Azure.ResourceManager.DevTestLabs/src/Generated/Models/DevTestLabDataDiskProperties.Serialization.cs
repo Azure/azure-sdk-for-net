@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabDataDiskProperties DeserializeDevTestLabDataDiskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
             Optional<ResourceIdentifier> existingLabDiskId = default;
             Optional<DevTestLabHostCachingOption> hostCaching = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     existingLabDiskId = new ResourceIdentifier(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostCaching = new DevTestLabHostCachingOption(property.Value.GetString());

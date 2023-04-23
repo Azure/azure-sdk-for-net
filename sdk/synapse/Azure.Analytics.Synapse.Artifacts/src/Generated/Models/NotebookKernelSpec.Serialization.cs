@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookKernelSpec DeserializeNotebookKernelSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string displayName = default;
             IDictionary<string, object> additionalProperties = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceRange> vCpus = default;
             Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCpus = ResourceRange.DeserializeResourceRange(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memory = ResourceRange.DeserializeResourceRange(property.Value);

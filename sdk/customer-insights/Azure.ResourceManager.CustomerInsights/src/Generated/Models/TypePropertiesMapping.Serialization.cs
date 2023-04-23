@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static TypePropertiesMapping DeserializeTypePropertiesMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourcePropertyName = default;
             string targetPropertyName = default;
             Optional<LinkType> linkType = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkType = property.Value.GetString().ToLinkType();

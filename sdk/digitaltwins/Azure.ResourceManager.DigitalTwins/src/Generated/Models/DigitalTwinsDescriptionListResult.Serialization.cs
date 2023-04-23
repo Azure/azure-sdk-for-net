@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static DigitalTwinsDescriptionListResult DeserializeDigitalTwinsDescriptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DigitalTwinsDescriptionData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DigitalTwinsDescriptionData> array = new List<DigitalTwinsDescriptionData>();

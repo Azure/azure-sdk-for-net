@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterSecurityProfileDefender> defender = default;
             Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value);
@@ -99,7 +100,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(property.Value);
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<byte[]> array = new List<byte[]>();

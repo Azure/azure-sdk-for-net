@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VaultBackupJobErrorInfo DeserializeVaultBackupJobErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<string> errorString = default;
             Optional<IList<string>> recommendations = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = property.Value.GetInt32();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static ResourceGuardProtectedObjectData DeserializeResourceGuardProtectedObjectData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

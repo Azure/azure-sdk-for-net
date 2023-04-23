@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -46,7 +50,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnalyzeTextLROResult> array = new List<AnalyzeTextLROResult>();

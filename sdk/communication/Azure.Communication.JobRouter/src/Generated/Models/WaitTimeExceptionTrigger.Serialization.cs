@@ -24,6 +24,10 @@ namespace Azure.Communication.JobRouter
 
         internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double thresholdSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

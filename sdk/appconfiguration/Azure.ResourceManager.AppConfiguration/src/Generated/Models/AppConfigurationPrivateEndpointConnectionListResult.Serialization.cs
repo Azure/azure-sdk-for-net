@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static AppConfigurationPrivateEndpointConnectionListResult DeserializeAppConfigurationPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppConfigurationPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppConfigurationPrivateEndpointConnectionData> array = new List<AppConfigurationPrivateEndpointConnectionData>();

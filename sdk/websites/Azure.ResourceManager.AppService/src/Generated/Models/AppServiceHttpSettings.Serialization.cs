@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireHttps = default;
             Optional<AppServiceHttpSettingsRoutes> routes = default;
             Optional<AppServiceForwardProxy> forwardProxy = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireHttps = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value);

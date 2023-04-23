@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingPath DeserializeStreamingPath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StreamingPolicyStreamingProtocol streamingProtocol = default;
             StreamingPathEncryptionScheme encryptionScheme = default;
             Optional<IReadOnlyList<string>> paths = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

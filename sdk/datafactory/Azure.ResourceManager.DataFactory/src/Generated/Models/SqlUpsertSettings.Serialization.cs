@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlUpsertSettings DeserializeSqlUpsertSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> useTempDB = default;
             Optional<BinaryData> interimSchemaName = default;
             Optional<BinaryData> keys = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useTempDB = BinaryData.FromString(property.Value.GetRawText());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keys = BinaryData.FromString(property.Value.GetRawText());

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceCreatedBy DeserializeMachineLearningComputeInstanceCreatedBy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userName = default;
             Optional<string> userOrgId = default;
             Optional<string> userId = default;

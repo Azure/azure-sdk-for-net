@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportQuotaChangeContent DeserializeSupportQuotaChangeContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> region = default;
             Optional<string> payload = default;
             foreach (var property in element.EnumerateObject())

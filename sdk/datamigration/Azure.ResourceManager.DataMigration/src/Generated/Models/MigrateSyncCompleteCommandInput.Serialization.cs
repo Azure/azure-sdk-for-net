@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSyncCompleteCommandInput DeserializeMigrateSyncCompleteCommandInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string databaseName = default;
             Optional<DateTimeOffset> commitTimeStamp = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     commitTimeStamp = property.Value.GetDateTimeOffset("O");

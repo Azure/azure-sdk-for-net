@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseExtendedServerBlobAuditingPolicyListResult DeserializeSynapseExtendedServerBlobAuditingPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseExtendedServerBlobAuditingPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseExtendedServerBlobAuditingPolicyData> array = new List<SynapseExtendedServerBlobAuditingPolicyData>();

@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WeeklyRetentionSchedule DeserializeWeeklyRetentionSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);

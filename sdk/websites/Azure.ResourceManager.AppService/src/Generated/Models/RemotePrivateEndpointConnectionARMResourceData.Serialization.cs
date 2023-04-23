@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
@@ -53,6 +58,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static RemotePrivateEndpointConnectionARMResourceData DeserializeRemotePrivateEndpointConnectionARMResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -88,7 +97,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -112,7 +120,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -122,7 +129,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value);
@@ -132,13 +138,19 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             ipAddresses = array;
                             continue;

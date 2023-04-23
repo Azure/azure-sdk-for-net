@@ -479,6 +479,7 @@ rename-mapping:
   SupportedTlsVersions: AppServiceSupportedTlsVersion
   VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
   VnetValidationTestFailure: VirtualNetworkValidationTestFailure
+  KeyInfoProperties: WebAppKeyInfoProperties
   # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
   DomainCollection: AppServiceDomainListResult
   IdentifierCollection: AppServiceIdentifierListResult
@@ -546,6 +547,7 @@ rename-mapping:
   WebAppStackCollection: WebAppStackListResult
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
+  HybridConnection.properties.relayArmUri: relayArmId|arm-id
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -694,6 +696,27 @@ directive:
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
+# workaround incorrect definition in swagger before it's fixed. github issue 35146
+  - from: WebApps.json
+    where: $.definitions.KeyInfo
+    transform: >
+      $["properties"] = {
+        "properties":{
+          "description": "Properties of function key info.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Key name",
+              "type": "string"
+            },
+            "value": {
+              "description": "Key value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    reason: workaround incorrect definition in swagger before it's fixed. github issue 35146
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document

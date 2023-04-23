@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static StorageInsightListResult DeserializeStorageInsightListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageInsightData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageInsightData> array = new List<StorageInsightData>();

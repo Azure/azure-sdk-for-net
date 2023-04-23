@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceTableStorageApplicationLogsConfig DeserializeAppServiceTableStorageApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppLogLevel> level = default;
             Uri sasUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = property.Value.GetString().ToWebAppLogLevel();

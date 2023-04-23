@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentLROResult DeserializeSentimentLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SentimentResponse results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

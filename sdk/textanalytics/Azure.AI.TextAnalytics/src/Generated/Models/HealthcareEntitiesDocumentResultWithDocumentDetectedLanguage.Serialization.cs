@@ -60,6 +60,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> detectedLanguage = default;
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
@@ -118,7 +122,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

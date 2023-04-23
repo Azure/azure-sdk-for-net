@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryExtendedLocation DeserializeGalleryExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<GalleryExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new GalleryExtendedLocationType(property.Value.GetString());

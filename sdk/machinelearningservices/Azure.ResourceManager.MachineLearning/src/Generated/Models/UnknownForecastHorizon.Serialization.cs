@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownForecastHorizon DeserializeUnknownForecastHorizon(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ForecastHorizonMode mode = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

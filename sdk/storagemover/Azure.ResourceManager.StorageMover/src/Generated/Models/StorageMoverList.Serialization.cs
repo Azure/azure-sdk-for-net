@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static StorageMoverList DeserializeStorageMoverList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageMoverData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageMoverData> array = new List<StorageMoverData>();

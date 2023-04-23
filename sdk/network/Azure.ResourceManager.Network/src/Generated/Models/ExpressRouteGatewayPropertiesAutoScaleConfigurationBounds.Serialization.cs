@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> min = default;
             Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     min = property.Value.GetInt32();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     max = property.Value.GetInt32();

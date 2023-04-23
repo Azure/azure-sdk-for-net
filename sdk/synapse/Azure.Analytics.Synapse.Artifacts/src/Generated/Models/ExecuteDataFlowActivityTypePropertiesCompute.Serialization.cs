@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     computeType = new DataFlowComputeType(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coreCount = property.Value.GetInt32();

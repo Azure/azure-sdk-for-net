@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SimpleSchedulePolicyV2 DeserializeSimpleSchedulePolicyV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScheduleRunType> scheduleRunFrequency = default;
             Optional<BackupHourlySchedule> hourlySchedule = default;
             Optional<BackupDailySchedule> dailySchedule = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduleRunFrequency = new ScheduleRunType(property.Value.GetString());
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
@@ -73,7 +75,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value);
@@ -83,7 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value);

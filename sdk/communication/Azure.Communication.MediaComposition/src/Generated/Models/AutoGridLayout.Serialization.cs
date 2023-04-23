@@ -51,6 +51,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static AutoGridLayout DeserializeAutoGridLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> inputIds = default;
             Optional<bool> highlightDominantSpeaker = default;
             LayoutType kind = default;
@@ -73,7 +77,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     highlightDominantSpeaker = property.Value.GetBoolean();
@@ -88,7 +91,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
@@ -103,7 +105,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

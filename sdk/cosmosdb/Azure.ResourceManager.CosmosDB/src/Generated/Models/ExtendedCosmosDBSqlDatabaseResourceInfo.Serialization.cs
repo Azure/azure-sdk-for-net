@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedCosmosDBSqlDatabaseResourceInfo DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> colls = default;
             Optional<string> users = default;
             Optional<string> rid = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ts = property.Value.GetSingle();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());

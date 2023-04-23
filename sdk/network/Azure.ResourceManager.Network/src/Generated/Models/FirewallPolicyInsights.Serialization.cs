@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyInsights DeserializeFirewallPolicyInsights(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEnabled = default;
             Optional<int> retentionDays = default;
             Optional<FirewallPolicyLogAnalyticsResources> logAnalyticsResources = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEnabled = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionDays = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logAnalyticsResources = FirewallPolicyLogAnalyticsResources.DeserializeFirewallPolicyLogAnalyticsResources(property.Value);

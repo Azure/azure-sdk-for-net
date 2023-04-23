@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static VirtualNetworkList DeserializeVirtualNetworkList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabVirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DevTestLabVirtualNetworkData> array = new List<DevTestLabVirtualNetworkData>();

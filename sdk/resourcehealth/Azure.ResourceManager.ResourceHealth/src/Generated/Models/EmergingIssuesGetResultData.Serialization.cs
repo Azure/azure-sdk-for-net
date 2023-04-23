@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         internal static EmergingIssuesGetResultData DeserializeEmergingIssuesGetResultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             refreshTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StatusBanner> array = new List<StatusBanner>();
@@ -90,7 +91,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StatusActiveEvent> array = new List<StatusActiveEvent>();

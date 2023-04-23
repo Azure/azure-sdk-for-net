@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static EventGroupingSettings DeserializeEventGroupingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventGroupingAggregationKind> aggregationKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aggregationKind = new EventGroupingAggregationKind(property.Value.GetString());

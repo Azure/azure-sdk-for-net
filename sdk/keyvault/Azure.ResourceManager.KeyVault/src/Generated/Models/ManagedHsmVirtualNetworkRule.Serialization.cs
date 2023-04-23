@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmVirtualNetworkRule DeserializeManagedHsmVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {

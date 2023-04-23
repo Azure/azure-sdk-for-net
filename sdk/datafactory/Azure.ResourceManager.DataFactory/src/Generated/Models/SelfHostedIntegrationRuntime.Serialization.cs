@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
             Optional<LinkedIntegrationRuntimeType> linkedInfo = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linkedInfo = LinkedIntegrationRuntimeType.DeserializeLinkedIntegrationRuntimeType(property0.Value);

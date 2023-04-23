@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricValue DeserializeMetricValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timeStamp = default;
             Optional<double> average = default;
             Optional<double> minimum = default;
@@ -32,7 +36,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     average = property.Value.GetDouble();
@@ -42,7 +45,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimum = property.Value.GetDouble();
@@ -52,7 +54,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximum = property.Value.GetDouble();
@@ -62,7 +63,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     total = property.Value.GetDouble();
@@ -72,7 +72,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetDouble();

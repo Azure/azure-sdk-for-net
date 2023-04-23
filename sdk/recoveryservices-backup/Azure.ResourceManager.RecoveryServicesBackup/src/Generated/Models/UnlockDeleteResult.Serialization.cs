@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static UnlockDeleteResult DeserializeUnlockDeleteResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> unlockDeleteExpiryTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unlockDeleteExpiryTime = property.Value.GetDateTimeOffset();

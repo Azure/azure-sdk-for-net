@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2AProtectionIntentDiskInputDetails DeserializeA2AProtectionIntentDiskInputDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri diskUri = default;
             Optional<StorageAccountCustomDetails> recoveryAzureStorageAccountCustomInput = default;
             Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomInput = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryAzureStorageAccountCustomInput = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryStagingStorageAccountCustomInput = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);

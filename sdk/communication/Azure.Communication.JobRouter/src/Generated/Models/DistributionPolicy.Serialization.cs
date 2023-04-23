@@ -36,6 +36,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<double> offerTtlSeconds = default;
@@ -56,7 +60,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerTtlSeconds = property.Value.GetDouble();
@@ -66,7 +69,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = DistributionMode.DeserializeDistributionMode(property.Value);

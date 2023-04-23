@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static OutlookChannel DeserializeOutlookChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelName = default;
             Optional<ETag?> etag = default;
             Optional<string> provisioningState = default;
@@ -70,7 +74,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());

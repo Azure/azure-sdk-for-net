@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointArray DeserializeServerEndpointArray(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSyncServerEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageSyncServerEndpointData> array = new List<StorageSyncServerEndpointData>();

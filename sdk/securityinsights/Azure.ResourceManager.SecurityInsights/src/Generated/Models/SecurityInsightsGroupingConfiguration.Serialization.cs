@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             bool reopenClosedIncident = default;
             TimeSpan lookbackDuration = default;
@@ -93,7 +97,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityInsightsAlertRuleEntityMappingType> array = new List<SecurityInsightsAlertRuleEntityMappingType>();
@@ -108,7 +111,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityInsightsAlertDetail> array = new List<SecurityInsightsAlertDetail>();
@@ -123,7 +125,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

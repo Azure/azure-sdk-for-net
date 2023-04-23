@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigurationServiceProperties DeserializeAppPlatformConfigurationServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformConfigurationServiceProvisioningState(property.Value.GetString());
@@ -46,7 +49,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceRequests = AppPlatformConfigurationServiceRequirements.DeserializeAppPlatformConfigurationServiceRequirements(property.Value);
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformConfigurationServiceInstance> array = new List<AppPlatformConfigurationServiceInstance>();
@@ -71,7 +72,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     settings = AppPlatformConfigurationServiceSettings.DeserializeAppPlatformConfigurationServiceSettings(property.Value);

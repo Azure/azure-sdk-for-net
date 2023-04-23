@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
             Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();

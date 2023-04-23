@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorSku DeserializeFrontDoorSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new FrontDoorSkuName(property.Value.GetString());

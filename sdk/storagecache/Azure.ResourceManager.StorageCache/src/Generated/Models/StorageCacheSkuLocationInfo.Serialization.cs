@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheSkuLocationInfo DeserializeStorageCacheSkuLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

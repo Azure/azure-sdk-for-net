@@ -5,9 +5,8 @@ namespace Azure.Communication.Email
 {
     internal static class ErrorMessages
     {
-        internal const string DuplicateHeaderName = " is duplicate. Header names must be unique";
         internal const string EmptyContent = "Email content must have either HTML or PlainText";
-        internal const string EmptyHeaderNameOrValue = "Empty Name/Value is not allowed in CustomHeader";
+        internal const string EmptyHeaderValue = "Empty Value is not allowed in Email Header";
         internal const string EmptySubject = "Email subject can not be empty";
         internal const string EmptyToRecipients = "ToRecipients cannot be empty";
         internal const string InvalidAttachmentContent = "Attachment ContentBytes must be a base64 string.";

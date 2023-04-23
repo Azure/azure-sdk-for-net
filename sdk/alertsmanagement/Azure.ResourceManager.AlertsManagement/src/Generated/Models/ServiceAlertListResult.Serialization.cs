@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static ServiceAlertListResult DeserializeServiceAlertListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<ServiceAlertData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAlertData> array = new List<ServiceAlertData>();

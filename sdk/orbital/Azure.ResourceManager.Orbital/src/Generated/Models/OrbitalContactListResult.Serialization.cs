@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static OrbitalContactListResult DeserializeOrbitalContactListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OrbitalContactData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OrbitalContactData> array = new List<OrbitalContactData>();

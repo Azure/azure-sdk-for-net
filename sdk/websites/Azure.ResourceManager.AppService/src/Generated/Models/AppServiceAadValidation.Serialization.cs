@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadValidation DeserializeAppServiceAadValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JwtClaimChecks> jwtClaimChecks = default;
             Optional<IList<string>> allowedAudiences = default;
             Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);

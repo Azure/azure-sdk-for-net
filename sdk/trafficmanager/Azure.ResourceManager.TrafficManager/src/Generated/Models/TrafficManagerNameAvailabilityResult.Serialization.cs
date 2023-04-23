@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
     {
         internal static TrafficManagerNameAvailabilityResult DeserializeTrafficManagerNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<bool> nameAvailable = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();

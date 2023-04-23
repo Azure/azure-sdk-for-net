@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppDiagnosticsMetadata> metadata = default;
             Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
             Optional<ContainerAppDiagnosticsStatus> status = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value);
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppDiagnosticsDataApiResult> array = new List<ContainerAppDiagnosticsDataApiResult>();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value);
@@ -91,7 +92,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value);

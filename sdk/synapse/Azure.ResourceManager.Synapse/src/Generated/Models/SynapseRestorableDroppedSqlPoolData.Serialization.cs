@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseRestorableDroppedSqlPoolData DeserializeSynapseRestorableDroppedSqlPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -69,7 +72,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
@@ -123,7 +124,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionDate = property0.Value.GetDateTimeOffset("O");
@@ -133,7 +133,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EmergingIssueImpact DeserializeEmergingIssueImpact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<ImpactedRegion>> regions = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImpactedRegion> array = new List<ImpactedRegion>();

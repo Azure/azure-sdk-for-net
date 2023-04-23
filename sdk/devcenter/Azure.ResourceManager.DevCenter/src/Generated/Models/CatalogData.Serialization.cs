@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static CatalogData DeserializeCatalogData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gitHub = GitCatalog.DeserializeGitCatalog(property0.Value);
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adoGit = GitCatalog.DeserializeGitCatalog(property0.Value);
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSyncTime = property0.Value.GetDateTimeOffset("O");

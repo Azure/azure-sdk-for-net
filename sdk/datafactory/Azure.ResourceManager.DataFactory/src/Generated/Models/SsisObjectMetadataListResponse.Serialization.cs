@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SsisObjectMetadataListResponse DeserializeSsisObjectMetadataListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SsisObjectMetadata>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SsisObjectMetadata> array = new List<SsisObjectMetadata>();

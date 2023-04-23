@@ -34,6 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureKeyVaultSecretReference DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedServiceReference store = default;
             object secretName = default;
             Optional<object> secretVersion = default;
@@ -54,7 +58,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secretVersion = property.Value.GetObject();

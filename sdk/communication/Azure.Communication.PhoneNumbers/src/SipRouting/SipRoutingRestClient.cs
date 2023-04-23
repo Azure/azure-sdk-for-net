@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     [CodeGenClient("SIPRoutingServiceRestClient")]
     internal partial class SipRoutingRestClient
     {
-        internal HttpMessage CreatePatchSipConfigurationRequest(SipConfiguration body)
+        internal HttpMessage CreateUpdateRequest(SipConfiguration body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -33,12 +33,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             return message;
         }
 
-        /// <summary> Patches SIP configuration for resource. </summary>
-        /// <param name="body"> Configuration patch. </param>
+        /// <summary> Updates SIP configuration for resource. </summary>
+        /// <param name="body"> Configuration update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchSipConfigurationAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchSipConfigurationRequest(body);
+            using var message = CreateUpdateRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -58,12 +58,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             }
         }
 
-        /// <summary> Patches SIP configuration for resource. </summary>
-        /// <param name="body"> Configuration patch. </param>
+        /// <summary> Updates SIP configuration for resource. </summary>
+        /// <param name="body"> Configuration update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchSipConfiguration(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        public Response Update(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchSipConfigurationRequest(body);
+            using var message = CreateUpdateRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

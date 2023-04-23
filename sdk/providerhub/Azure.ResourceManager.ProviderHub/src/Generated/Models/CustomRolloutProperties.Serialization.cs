@@ -32,34 +32,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutProperties DeserializeCustomRolloutProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            CustomRolloutPropertiesSpecification specification = default;
-            Optional<CustomRolloutPropertiesStatus> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            CustomRolloutSpecification specification = default;
+            Optional<CustomRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutPropertiesSpecification.DeserializeCustomRolloutPropertiesSpecification(property.Value);
+                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = CustomRolloutPropertiesStatus.DeserializeCustomRolloutPropertiesStatus(property.Value);
+                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value);
                     continue;
                 }
             }

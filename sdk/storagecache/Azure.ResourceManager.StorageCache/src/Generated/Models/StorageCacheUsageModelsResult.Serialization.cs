@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUsageModelsResult DeserializeStorageCacheUsageModelsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<StorageCacheUsageModel>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageCacheUsageModel> array = new List<StorageCacheUsageModel>();

@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static BoundingBoxCompassNotation DeserializeBoundingBoxCompassNotation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> northEast = default;
             Optional<string> southWest = default;
             Optional<MapsEntityType> entity = default;
@@ -33,7 +37,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     entity = new MapsEntityType(property.Value.GetString());

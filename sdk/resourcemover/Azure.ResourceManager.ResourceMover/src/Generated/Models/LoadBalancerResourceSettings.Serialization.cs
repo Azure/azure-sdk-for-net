@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> sku = default;
             Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerFrontendIPConfigurationResourceSettings> array = new List<LoadBalancerFrontendIPConfigurationResourceSettings>();
@@ -114,7 +116,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerBackendAddressPoolResourceSettings> array = new List<LoadBalancerBackendAddressPoolResourceSettings>();

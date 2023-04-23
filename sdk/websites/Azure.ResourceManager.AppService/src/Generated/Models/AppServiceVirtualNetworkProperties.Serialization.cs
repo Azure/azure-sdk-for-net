@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceVirtualNetworkProperties DeserializeAppServiceVirtualNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<BinaryData> certThumbprint = default;
             Optional<string> certBlob = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certThumbprint = BinaryData.FromString(property.Value.GetRawText());
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
@@ -69,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncRequired = property.Value.GetBoolean();
@@ -84,7 +84,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSwift = property.Value.GetBoolean();

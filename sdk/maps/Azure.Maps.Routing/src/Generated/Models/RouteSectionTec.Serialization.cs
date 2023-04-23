@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSectionTec DeserializeRouteSectionTec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> effectCode = default;
             Optional<IReadOnlyList<RouteSectionTecCause>> causes = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectCode = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteSectionTecCause> array = new List<RouteSectionTecCause>();

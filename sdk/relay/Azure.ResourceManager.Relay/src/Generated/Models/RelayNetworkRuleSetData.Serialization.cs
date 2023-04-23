@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayNetworkRuleSetData DeserializeRelayNetworkRuleSetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultAction = new RelayNetworkRuleSetDefaultAction(property0.Value.GetString());
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new RelayPublicNetworkAccess(property0.Value.GetString());
@@ -113,7 +114,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RelayNetworkRuleSetIPRule> array = new List<RelayNetworkRuleSetIPRule>();

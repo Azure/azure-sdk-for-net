@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskControllerTypes = default;
             Optional<bool> acceleratedNetwork = default;
             Optional<ArchitectureType> architecture = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acceleratedNetwork = property.Value.GetBoolean();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     architecture = new ArchitectureType(property.Value.GetString());

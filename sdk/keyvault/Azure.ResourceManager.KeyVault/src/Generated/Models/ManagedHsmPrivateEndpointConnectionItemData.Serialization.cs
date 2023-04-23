@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static ManagedHsmPrivateEndpointConnectionItemData DeserializeManagedHsmPrivateEndpointConnectionItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubResource> privateEndpoint = default;
             Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value);
@@ -53,7 +55,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ManagedHsmPrivateEndpointConnectionProvisioningState(property0.Value.GetString());

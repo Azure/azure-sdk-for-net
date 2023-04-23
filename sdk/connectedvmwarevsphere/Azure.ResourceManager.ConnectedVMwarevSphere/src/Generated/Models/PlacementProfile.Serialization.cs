@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static PlacementProfile DeserializePlacementProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourcePoolId = default;
             Optional<string> clusterId = default;
             Optional<string> hostId = default;

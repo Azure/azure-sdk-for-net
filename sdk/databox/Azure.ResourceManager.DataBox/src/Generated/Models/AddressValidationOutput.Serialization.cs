@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxValidationInputDiscriminator> validationType = default;
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationType = property0.Value.GetString().ToDataBoxValidationInputDiscriminator();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationStatus = property0.Value.GetString().ToAddressValidationStatus();
@@ -65,7 +66,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();

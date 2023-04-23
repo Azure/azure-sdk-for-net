@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class CallConnectionRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-01-15-preview")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -113,7 +113,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":terminate", false);
@@ -244,7 +244,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":transferToParticipant", false);
@@ -340,7 +340,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants", false);
@@ -410,7 +410,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:add", false);
@@ -506,7 +506,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:remove", false);
@@ -535,7 +535,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequest"/> is null. </exception>
-        public async Task<Response<RemoveParticipantResult>> RemoveParticipantAsync(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoveParticipantResponseInternal>> RemoveParticipantAsync(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -552,9 +552,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        RemoveParticipantResult value = default;
+                        RemoveParticipantResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoveParticipantResult.DeserializeRemoveParticipantResult(document.RootElement);
+                        value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -569,7 +569,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequest"/> is null. </exception>
-        public Response<RemoveParticipantResult> RemoveParticipant(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<RemoveParticipantResponseInternal> RemoveParticipant(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -586,9 +586,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        RemoveParticipantResult value = default;
+                        RemoveParticipantResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoveParticipantResult.DeserializeRemoveParticipantResult(document.RootElement);
+                        value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -602,7 +602,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:mute", false);
@@ -698,7 +698,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:unmute", false);
@@ -794,7 +794,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants/", false);

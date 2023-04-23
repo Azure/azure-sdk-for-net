@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ReRegisterSubscriptionMetadata DeserializeReRegisterSubscriptionMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<int> concurrencyLimit = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrencyLimit = property.Value.GetInt32();

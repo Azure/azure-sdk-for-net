@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> actions = default;
             Optional<IReadOnlyList<string>> notActions = default;
             Optional<IReadOnlyList<string>> dataActions = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -72,7 +73,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

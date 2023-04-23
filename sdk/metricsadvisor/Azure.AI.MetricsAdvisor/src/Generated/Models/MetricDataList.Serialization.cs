@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static MetricDataList DeserializeMetricDataList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MetricSeriesData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricSeriesData> array = new List<MetricSeriesData>();

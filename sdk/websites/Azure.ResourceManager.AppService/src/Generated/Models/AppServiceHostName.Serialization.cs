@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> siteNames = default;
             Optional<string> azureResourceName = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureResourceType = property.Value.GetString().ToAppServiceResourceType();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customHostNameDnsRecordType = property.Value.GetString().ToCustomHostNameDnsRecordType();
@@ -72,7 +73,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostNameType = property.Value.GetString().ToAppServiceHostNameType();

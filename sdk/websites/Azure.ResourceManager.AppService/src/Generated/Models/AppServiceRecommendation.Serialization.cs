@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceRecommendation DeserializeAppServiceRecommendation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -200,7 +204,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -219,7 +222,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -229,7 +231,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recommendationId = property0.Value.GetGuid();
@@ -239,7 +240,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -249,7 +249,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceScope = new ResourceScopeType(property0.Value.GetString());
@@ -274,7 +273,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             level = property0.Value.GetString().ToNotificationLevel();
@@ -284,7 +282,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             channels = property0.Value.GetString().ToRecommendationChannel();
@@ -294,7 +291,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -314,7 +310,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetInt32();
@@ -324,7 +319,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -339,7 +333,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -349,7 +342,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -359,7 +351,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nextNotificationTime = property0.Value.GetDateTimeOffset("O");
@@ -369,7 +360,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notificationExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -379,7 +369,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -389,7 +378,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             score = property0.Value.GetDouble();
@@ -399,7 +387,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDynamic = property0.Value.GetBoolean();

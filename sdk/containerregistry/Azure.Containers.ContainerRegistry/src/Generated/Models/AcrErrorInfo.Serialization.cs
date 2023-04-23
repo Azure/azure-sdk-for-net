@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrErrorInfo DeserializeAcrErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<object> detail = default;
@@ -33,7 +37,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detail = property.Value.GetObject();

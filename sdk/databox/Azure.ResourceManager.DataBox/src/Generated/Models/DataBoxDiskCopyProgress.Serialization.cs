@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<long> bytesCopied = default;
             Optional<int> percentComplete = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bytesCopied = property.Value.GetInt64();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentComplete = property.Value.GetInt32();
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DataBoxCopyStatus(property.Value.GetString());

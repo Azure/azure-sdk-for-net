@@ -30,6 +30,10 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueWeightedAllocation DeserializeQueueWeightedAllocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double weight = default;
             IList<QueueSelector> labelSelectors = default;
             foreach (var property in element.EnumerateObject())

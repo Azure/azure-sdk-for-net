@@ -14,6 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> errorCode = default;
             Optional<SparkErrorSource> source = default;
@@ -33,7 +37,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = new SparkErrorSource(property.Value.GetString());

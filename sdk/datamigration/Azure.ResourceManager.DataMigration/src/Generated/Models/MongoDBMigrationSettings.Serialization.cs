@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBMigrationSettings DeserializeMongoDBMigrationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> boostRUs = default;
             IDictionary<string, MongoDBDatabaseSettings> databases = default;
             Optional<MongoDBReplication> replication = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     boostRUs = property.Value.GetInt32();
@@ -80,7 +83,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replication = new MongoDBReplication(property.Value.GetString());
@@ -100,7 +102,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throttling = MongoDBThrottlingSettings.DeserializeMongoDBThrottlingSettings(property.Value);

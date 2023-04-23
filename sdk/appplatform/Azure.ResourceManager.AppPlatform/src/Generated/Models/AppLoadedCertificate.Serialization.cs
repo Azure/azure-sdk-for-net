@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppLoadedCertificate DeserializeAppLoadedCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier resourceId = default;
             Optional<bool> loadTrustStore = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadTrustStore = property.Value.GetBoolean();

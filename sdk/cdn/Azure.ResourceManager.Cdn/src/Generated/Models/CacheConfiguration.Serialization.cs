@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RuleQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<string> queryParameters = default;
             Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryStringCachingBehavior = new RuleQueryStringCachingBehavior(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCompressionEnabled = new RuleIsCompressionEnabled(property.Value.GetString());
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cacheBehavior = new RuleCacheBehavior(property.Value.GetString());

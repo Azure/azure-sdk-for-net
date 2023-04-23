@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static AddParticipantSucceededInternal DeserializeAddParticipantSucceededInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -47,7 +51,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
@@ -57,7 +60,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);

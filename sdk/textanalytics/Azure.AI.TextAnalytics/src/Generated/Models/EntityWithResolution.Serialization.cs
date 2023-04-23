@@ -47,6 +47,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntityWithResolution DeserializeEntityWithResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BaseResolution>> resolutions = default;
             string text = default;
             string category = default;
@@ -60,7 +64,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BaseResolution> array = new List<BaseResolution>();

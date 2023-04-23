@@ -37,6 +37,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ObjectTrackingProcessor DeserializeObjectTrackingProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ObjectTrackingAccuracy> accuracy = default;
             string type = default;
             string name = default;
@@ -47,7 +51,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accuracy = new ObjectTrackingAccuracy(property.Value.GetString());

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LcmConfigurationMode> configurationMode = default;
             Optional<bool> allowModuleOverwrite = default;
             Optional<ActionAfterReboot> actionAfterReboot = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configurationMode = new LcmConfigurationMode(property.Value.GetString());
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowModuleOverwrite = property.Value.GetBoolean();
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionAfterReboot = new ActionAfterReboot(property.Value.GetString());
@@ -56,7 +57,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshFrequencyMins = property.Value.GetSingle();
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rebootIfNeeded = property.Value.GetBoolean();
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configurationModeFrequencyMins = property.Value.GetSingle();

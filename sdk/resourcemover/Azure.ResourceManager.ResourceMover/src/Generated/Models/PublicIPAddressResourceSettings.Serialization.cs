@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

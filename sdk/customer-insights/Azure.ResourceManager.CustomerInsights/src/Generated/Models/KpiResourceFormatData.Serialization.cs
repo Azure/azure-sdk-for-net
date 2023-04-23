@@ -124,6 +124,10 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static KpiResourceFormatData DeserializeKpiResourceFormatData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -168,7 +172,6 @@ namespace Azure.ResourceManager.CustomerInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -187,7 +190,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             entityType = property0.Value.GetString().ToEntityType();
@@ -202,7 +204,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -217,7 +218,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -232,7 +232,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -247,7 +246,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             calculationWindow = property0.Value.GetString().ToCalculationWindowType();
@@ -262,7 +260,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             function = property0.Value.GetString().ToKpiFunction();
@@ -287,7 +284,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -302,7 +298,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
@@ -317,7 +312,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
@@ -332,7 +326,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -342,7 +335,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             thresHolds = KpiThresholds.DeserializeKpiThresholds(property0.Value);
@@ -352,7 +344,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KpiAlias> array = new List<KpiAlias>();
@@ -367,7 +358,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KpiExtract> array = new List<KpiExtract>();

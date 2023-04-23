@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
     {
         internal static CommunicationsGatewayListResult DeserializeCommunicationsGatewayListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CommunicationsGatewayData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nextLink = null;
                         continue;
                     }
                     nextLink = new Uri(property.Value.GetString());

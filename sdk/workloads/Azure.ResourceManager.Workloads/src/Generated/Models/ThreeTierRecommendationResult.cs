@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="dbVmSku"> The database VM SKU. </param>
         /// <param name="databaseInstanceCount"> The database server instance count. </param>
         /// <param name="centralServerVmSku"> The central server VM SKU. </param>

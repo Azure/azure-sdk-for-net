@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobStorageLocation DeserializeAzureBlobStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> container = default;
             string type = default;
             Optional<BinaryData> folderPath = default;
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     container = BinaryData.FromString(property.Value.GetRawText());
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folderPath = BinaryData.FromString(property.Value.GetRawText());
@@ -97,7 +99,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileName = BinaryData.FromString(property.Value.GetRawText());

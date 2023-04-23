@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageEncryptionService> blob = default;
             Optional<StorageEncryptionService> file = default;
             Optional<StorageEncryptionService> table = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);

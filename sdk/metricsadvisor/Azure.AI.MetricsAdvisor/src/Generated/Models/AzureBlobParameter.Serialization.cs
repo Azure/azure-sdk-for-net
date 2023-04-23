@@ -50,6 +50,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureBlobParameter DeserializeAzureBlobParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string container = default;
             string blobTemplate = default;

@@ -39,14 +39,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected const string GetParticipantsPayload = "{\"values\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}]}";
 
+        protected const string RemoveParticipantPayload = AddParticipantsPayload;
+
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
-            if (options == default)
-            {
-                options = new CallAutomationClientOptions();
-                options.EventProcessorOptions.EventTimeout = TimeSpan.FromSeconds(defaultTestTimeout);
-            }
-
             var mockResponse = new MockResponse(responseCode);
 
             if (responseContent != null)
@@ -103,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         protected void SendAndProcessEvent(
-            EventProcessor eventProcessor,
+            CallAutomationEventProcessor eventProcessor,
             CallAutomationEventBase eventToBeSent)
         {
             eventProcessor.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });

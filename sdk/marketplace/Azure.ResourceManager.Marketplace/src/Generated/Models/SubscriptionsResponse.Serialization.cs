@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static SubscriptionsResponse DeserializeSubscriptionsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
             Optional<string> skipToken = default;
             Optional<long> count = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MarketplaceSubscription> array = new List<MarketplaceSubscription>();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

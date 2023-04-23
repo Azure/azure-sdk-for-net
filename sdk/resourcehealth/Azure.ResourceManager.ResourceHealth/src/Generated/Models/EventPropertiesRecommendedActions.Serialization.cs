@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EventPropertiesRecommendedActions DeserializeEventPropertiesRecommendedActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<IReadOnlyList<EventPropertiesRecommendedActionsItem>> actions = default;
             Optional<string> localeCode = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EventPropertiesRecommendedActionsItem> array = new List<EventPropertiesRecommendedActionsItem>();
