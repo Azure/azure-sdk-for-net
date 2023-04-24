@@ -13,6 +13,7 @@
       CA2016;
       AZC0100;
     </NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,24 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\Argument.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AsyncLockWithValue.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ConstantDelayStrategy.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ContentTypeUtilities.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DelayStrategyInternal.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternal.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternalBase.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternalOfT.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationPoller.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\RetryAfterDelayStrategy.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\TaskExtensions.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\VoidValue.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsSample)' == 'true'">

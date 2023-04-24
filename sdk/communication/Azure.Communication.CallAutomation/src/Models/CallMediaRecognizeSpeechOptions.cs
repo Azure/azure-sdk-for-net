@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation
     public class CallMediaRecognizeSpeechOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOptions. </summary>
-        public CallMediaRecognizeSpeechOptions(RecognizeInputType recognizeInputType, CommunicationIdentifier targetParticipant, long endSilenceTimeoutInMs = default) : base(recognizeInputType, targetParticipant)
+        public CallMediaRecognizeSpeechOptions(CommunicationIdentifier targetParticipant, long endSilenceTimeoutInMs = 500L) : base(RecognizeInputType.Speech, targetParticipant)
         {
             EndSilenceTimeoutInMs = endSilenceTimeoutInMs;
         }

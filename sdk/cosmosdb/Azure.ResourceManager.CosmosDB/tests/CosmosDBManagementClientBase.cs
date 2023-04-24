@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -106,6 +107,25 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
             Assert.IsNull(throughput.Resource.AutoscaleSettings);
+        }
+
+        protected async Task<ResourceIdentifier> GetSubnetId(string vnetName, VirtualNetworkData vnet)
+        {
+            ResourceIdentifier subnetID;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+                    var subnetCollection = vnetResource.GetSubnets();
+                    subnetID = vnetResource.Data.Subnets[0].Id;
+                }
+            };
+            return subnetID;
         }
 
         // This is used to skip the tests in Unix platform when the test records contains newline.
