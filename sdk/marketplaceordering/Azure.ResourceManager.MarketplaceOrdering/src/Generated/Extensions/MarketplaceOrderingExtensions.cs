@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MarketplaceOrdering.Mock;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,19 +20,19 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     /// <summary> A class to add extension methods to Azure.ResourceManager.MarketplaceOrdering. </summary>
     public static partial class MarketplaceOrderingExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MarketplaceOrderingSubscriptionResourceExtension GetMarketplaceOrderingSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MarketplaceOrderingSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MarketplaceOrderingSubscriptionResourceExtension GetMarketplaceOrderingSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MarketplaceOrderingSubscriptionResourceExtension(client, scope);
             });
         }
         #region MarketplaceAgreementTermResource
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
         public static MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreementTerms();
+            return GetMarketplaceOrderingSubscriptionResourceExtension(subscriptionResource).GetMarketplaceAgreementTerms();
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
         public static MarketplaceAgreementCollection GetMarketplaceAgreements(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreements();
+            return GetMarketplaceOrderingSubscriptionResourceExtension(subscriptionResource).GetMarketplaceAgreements();
         }
 
         /// <summary>

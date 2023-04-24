@@ -11,25 +11,26 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServices.Mock;
 
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServices. </summary>
     public static partial class ManagedServicesExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ManagedServicesArmResourceExtension GetManagedServicesArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ManagedServicesArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedServicesArmResourceExtension GetManagedServicesArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ManagedServicesArmResourceExtension(client, scope);
             });
         }
         #region ManagedServicesRegistrationResource
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
         public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrations();
+            return GetManagedServicesArmResourceExtension(client, scope).GetManagedServicesRegistrations();
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
         public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrationAssignments();
+            return GetManagedServicesArmResourceExtension(client, scope).GetManagedServicesRegistrationAssignments();
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
         public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesMarketplaceRegistrations();
+            return GetManagedServicesArmResourceExtension(client, scope).GetManagedServicesMarketplaceRegistrations();
         }
 
         /// <summary>
