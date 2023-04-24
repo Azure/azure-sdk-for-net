@@ -321,27 +321,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaAsync(_textSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_textSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAllAsync(_textSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_textSource, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaAsync(_ssmlSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_ssmlSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAllAsync(_ssmlSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_ssmlSource, _options)
                 },
             };
         }
@@ -390,27 +390,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMedia(_fileSource, _target, _options)
+                   callMedia => callMedia.Play(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAll(_fileSource, _options)
+                   callMedia => callMedia.PlayToAll(_fileSource, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMedia(_textSource, _target, _options)
+                   callMedia => callMedia.Play(_textSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAll(_textSource, _options)
+                   callMedia => callMedia.PlayToAll(_textSource, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMedia(_ssmlSource, _target, _options)
+                   callMedia => callMedia.Play(_ssmlSource, _target, _options)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayMediaToAll(_ssmlSource, _options)
+                   callMedia => callMedia.PlayToAll(_ssmlSource, _options)
                 },
             };
         }

@@ -48,9 +48,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playTo"></param>
         /// <param name="options"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual async Task<Response<PlayResult>> PlayMediaAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayResult>> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMedia)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playTo"></param>
         /// <param name="options"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayMedia(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMedia)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
             scope.Start();
             try
             {
@@ -133,13 +133,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual async Task<Response<PlayResult>> PlayMediaToAllAsync(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayResult>> PlayToAllAsync(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMediaToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
             try
             {
-                return await PlayMediaAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken).ConfigureAwait(false);
+                return await PlayAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -155,13 +155,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayMediaToAll(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, PlayOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayMediaToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
             try
             {
-                return PlayMedia(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken);
+                return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), options, cancellationToken);
             }
             catch (Exception ex)
             {
