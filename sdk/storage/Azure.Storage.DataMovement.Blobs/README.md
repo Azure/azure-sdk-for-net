@@ -82,7 +82,7 @@ await transfer.AwaitCompletion();
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, Path.GetDirectoryName(localPath));
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
 await transfer.AwaitCompletion();
 ```
@@ -91,7 +91,7 @@ Upload a local directory to a virtual directory in the container specifying more
 ```C# Snippet:ExtensionMethodSimpleUploadWithOptions
 BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
 {
-    BlobDirectoryPrefix = Path.GetDirectoryName(localPath),
+    BlobDirectoryPrefix = blobDirectoryPrefix,
     TransferOptions = new TransferOptions()
     {
         CreateMode = StorageResourceCreateMode.Overwrite,

@@ -858,7 +858,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountBlobUri;
             string containerName = Randomize("sample-container");
-
+            string blobDirectoryPrefix = Path.GetDirectoryName(localPath);
             // Create a SharedKeyCredential that we can use to authenticate
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
 
@@ -884,7 +884,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // upload files with to a specific directory prefix
                     #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, Path.GetDirectoryName(localPath));
+                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
                     await transfer.AwaitCompletion();
                     #endregion
@@ -893,7 +893,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:ExtensionMethodSimpleUploadWithOptions
                     BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
                     {
-                        BlobDirectoryPrefix = Path.GetDirectoryName(localPath),
+                        BlobDirectoryPrefix = blobDirectoryPrefix,
                         TransferOptions = new TransferOptions()
                         {
                             CreateMode = StorageResourceCreateMode.Overwrite,
