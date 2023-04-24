@@ -7,7 +7,6 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public

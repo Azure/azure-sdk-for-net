@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using Azure.Core.Json;
 using NUnit.Framework;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Core.Tests
 {
     public class JsonDataDynamicMutableTests
     {
