@@ -245,6 +245,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-12-01",
             "name": "[variables('attestationSite')]",
+            "condition": "[parameters('enableAttestation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]"
             ],
