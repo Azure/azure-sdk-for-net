@@ -108,6 +108,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
@@ -119,6 +120,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
@@ -130,6 +132,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="json">The JSON string.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(string json)
         {
             byte[] utf8 = Encoding.UTF8.GetBytes(json);
