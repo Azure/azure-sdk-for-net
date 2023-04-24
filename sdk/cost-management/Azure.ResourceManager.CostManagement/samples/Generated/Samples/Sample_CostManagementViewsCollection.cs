@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.CostManagement.Samples
             CostManagementViewData data = new CostManagementViewData()
             {
                 DisplayName = "swagger Example",
-                Chart = ChartType.Table,
+                Chart = ViewChartType.Table,
                 Accumulated = AccumulatedType.True,
-                Metric = MetricType.ActualCost,
+                Metric = ViewMetricType.ActualCost,
                 Kpis =
 {
 new KpiProperties()
 {
-KpiType = KpiType.Forecast,
+ViewKpiType = ViewKpiType.Forecast,
 Id = null,
 Enabled = true,
 },new KpiProperties()
 {
-KpiType = KpiType.Budget,
+ViewKpiType = ViewKpiType.Budget,
 Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo",
 Enabled = true,
 }
@@ -159,19 +159,19 @@ Enabled = true,
 {
 new PivotProperties()
 {
-PivotType = PivotType.Dimension,
+ViewPivotType = ViewPivotType.Dimension,
 Name = "ServiceName",
 },new PivotProperties()
 {
-PivotType = PivotType.Dimension,
+ViewPivotType = ViewPivotType.Dimension,
 Name = "MeterCategory",
 },new PivotProperties()
 {
-PivotType = PivotType.TagKey,
+ViewPivotType = ViewPivotType.TagKey,
 Name = "swaggerTagKey",
 }
 },
-                TypePropertiesQueryType = ReportType.Usage,
+                TypePropertiesQueryType = ViewReportType.Usage,
                 Timeframe = ReportTimeframeType.MonthToDate,
                 DataSet = new ReportConfigDataset()
                 {

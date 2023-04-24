@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -626,8 +626,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -688,8 +688,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -750,8 +750,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -812,8 +812,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -874,8 +874,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string exportName = "TestExport";
             CostManagementExportData data = new CostManagementExportData()
             {
-                Format = FormatType.Csv,
+                Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
                     ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
@@ -936,8 +936,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Schedule = new ExportSchedule()
                 {
-                    Status = StatusType.Active,
-                    Recurrence = RecurrenceType.Weekly,
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Weekly,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
                         To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
