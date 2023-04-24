@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
-    internal readonly struct DiagnosticScope : IDisposable
+    internal struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
                                                     diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
-        public bool IsEnabled { get; }
+        public bool IsEnabled { get; private set; }
 
         public void AddAttribute(string name, string value)
         {
@@ -89,6 +89,11 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
+
+            if (started != null)
+            {
+                this.IsEnabled = IsEnabled && started.GetIsAllDataRequestedFlag();
+            }
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
@@ -338,12 +343,6 @@ namespace Azure.Core.Pipeline
                     links: GetActivitySourceLinkCollection(),
                     traceparent: _traceparent,
                     tracestate: _tracestate);
-
-                if (activity == null || ((bool?)ActivityExtensions.GetCustomProperty(activity, "IsAllDataRequested") ?? false))
-                {
-                    return null;
-                }
-
                 return activity;
             }
 
@@ -421,6 +420,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Action<Activity, int, string?>? SetErrorStatusMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
+        private static Func<Activity, bool>? GetAllDataRequestedMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
@@ -540,6 +540,25 @@ namespace Azure.Core.Pipeline
             }
 
             return GetTraceStateStringMethod(activity);
+        }
+
+        public static bool GetIsAllDataRequestedFlag(this Activity activity)
+        {
+            if (GetAllDataRequestedMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("IsAllDataRequested")?.GetMethod;
+                if (method == null)
+                {
+                    GetAllDataRequestedMethod = _ => true;
+                }
+                else
+                {
+                    GetAllDataRequestedMethod = Expression.Lambda<Func<Activity, bool>>(
+                        Expression.Call(ActivityParameter, method),
+                        ActivityParameter).Compile();
+                }
+            }
+            return GetAllDataRequestedMethod(activity);
         }
 
         public static void SetTraceState(this Activity activity, string? tracestate)
