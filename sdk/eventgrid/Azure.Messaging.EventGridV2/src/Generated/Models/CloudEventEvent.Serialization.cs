@@ -24,7 +24,11 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataBase64))
             {
@@ -77,7 +81,7 @@ namespace Azure.Messaging.EventGrid.Models
             }
             string id = default;
             string source = default;
-            Core.Optional < Models.object> data = default;
+            Optional<BinaryData> data = default;
             Optional<BinaryData> dataBase64 = default;
             string type = default;
             Optional<DateTimeOffset?> time = default;
@@ -103,7 +107,7 @@ namespace Azure.Messaging.EventGrid.Models
                     {
                         continue;
                     }
-                    data = Models.object.Deserializeobject(property.Value);
+                    data = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("data_base64"u8))

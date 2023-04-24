@@ -51,8 +51,7 @@ Schema for <c>CloudEventEvent</c>:
 <code>{
   id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
   source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: {
-  }, # Optional. Event data specific to the event type.
+  data: any, # Optional. Event data specific to the event type.
   data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
   type: string, # Required. Type of event related to the originating occurrence.
   time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
@@ -115,8 +114,7 @@ Schema for <c>CloudEventEvent</c>:
 <code>{
   id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
   source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: {
-  }, # Optional. Event data specific to the event type.
+  data: any, # Optional. Event data specific to the event type.
   data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
   type: string, # Required. Type of event related to the originating occurrence.
   time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
@@ -165,8 +163,7 @@ Schema for <c>CloudEventEvent</c>:
 <code>{
   id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
   source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: {
-  }, # Optional. Event data specific to the event type.
+  data: any, # Optional. Event data specific to the event type.
   data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
   type: string, # Required. Type of event related to the originating occurrence.
   time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
@@ -215,8 +212,7 @@ Schema for <c>CloudEventEvent</c>:
 <code>{
   id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
   source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: {
-  }, # Optional. Event data specific to the event type.
+  data: any, # Optional. Event data specific to the event type.
   data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
   type: string, # Required. Type of event related to the originating occurrence.
   time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
@@ -258,6 +254,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").GetProperty("lockToken").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
@@ -284,8 +281,7 @@ Schema for <c>ReceiveResponse</c>:
       event: {
         id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
         source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-        data: {
-        }, # Optional. Event data specific to the event type.
+        data: any, # Optional. Event data specific to the event type.
         data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
         type: string, # Required. Type of event related to the originating occurrence.
         time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
@@ -330,6 +326,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").GetProperty("lockToken").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
@@ -356,8 +353,7 @@ Schema for <c>ReceiveResponse</c>:
       event: {
         id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
         source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-        data: {
-        }, # Optional. Event data specific to the event type.
+        data: any, # Optional. Event data specific to the event type.
         data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
         type: string, # Required. Type of event related to the originating occurrence.
         time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
