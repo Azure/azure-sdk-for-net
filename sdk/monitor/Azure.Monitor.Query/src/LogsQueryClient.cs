@@ -438,10 +438,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                while (resource.StartsWith("/"))
-                {
-                    resource = resource.Substring(1);
-                }
+                resource.TrimStart('/');
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -491,10 +488,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                while (resource.StartsWith("/"))
-                {
-                    resource = resource.Substring(1);
-                }
+                resource.TrimStart('/');
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
