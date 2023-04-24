@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis.Mock;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.HealthcareApis
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthcareApis. </summary>
     public static partial class HealthcareApisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HealthcareApisResourceGroupResourceExtension GetHealthcareApisResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HealthcareApisResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HealthcareApisResourceGroupResourceExtension GetHealthcareApisResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new HealthcareApisResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HealthcareApisServiceResourceExtension GetHealthcareApisServiceResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HealthcareApisServiceResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HealthcareApisServiceResourceExtension GetHealthcareApisServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HealthcareApisServiceResourceExtension(client, scope);
+            });
+        }
+
+        private static HealthcareApisWorkspaceResourceExtension GetHealthcareApisWorkspaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new HealthcareApisWorkspaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static HealthcareApisWorkspaceResourceExtension GetHealthcareApisWorkspaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new HealthcareApisWorkspaceResourceExtension(client, scope);
             });
         }
         #region HealthcareApisServiceResource
@@ -245,7 +262,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
         public static HealthcareApisServiceCollection GetHealthcareApisServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisServices();
+            return GetHealthcareApisResourceGroupResourceExtension(resourceGroupResource).GetHealthcareApisServices();
         }
 
         /// <summary>
@@ -301,7 +318,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
         public static HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisWorkspaces();
+            return GetHealthcareApisResourceGroupResourceExtension(resourceGroupResource).GetHealthcareApisWorkspaces();
         }
 
         /// <summary>
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
+            return GetHealthcareApisServiceResourceExtension(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +408,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServices(cancellationToken);
+            return GetHealthcareApisServiceResourceExtension(subscriptionResource).GetHealthcareApisServices(cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +432,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetHealthcareApisServiceResourceExtension(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -439,7 +456,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
+            return GetHealthcareApisServiceResourceExtension(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +477,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
+            return GetHealthcareApisWorkspaceResourceExtension(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +498,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
+            return GetHealthcareApisWorkspaceResourceExtension(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
         }
     }
 }

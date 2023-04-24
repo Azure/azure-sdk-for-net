@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub.Mock;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.IotHub
     /// <summary> A class to add extension methods to Azure.ResourceManager.IotHub. </summary>
     public static partial class IotHubExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static IotHubDescriptionResourceExtension GetIotHubDescriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new IotHubDescriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IotHubDescriptionResourceExtension GetIotHubDescriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new IotHubDescriptionResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static IotHubResourceGroupResourceExtension GetIotHubResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new IotHubResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IotHubResourceGroupResourceExtension GetIotHubResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new IotHubResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static IotHubSubscriptionResourceExtension GetIotHubSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new IotHubSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static IotHubSubscriptionResourceExtension GetIotHubSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new IotHubSubscriptionResourceExtension(client, scope);
             });
         }
         #region IotHubDescriptionResource
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An object representing collection of IotHubDescriptionResources and their operations over a IotHubDescriptionResource. </returns>
         public static IotHubDescriptionCollection GetIotHubDescriptions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIotHubDescriptions();
+            return GetIotHubResourceGroupResourceExtension(resourceGroupResource).GetIotHubDescriptions();
         }
 
         /// <summary>
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotHubDescriptionsAsync(cancellationToken);
+            return GetIotHubDescriptionResourceExtension(subscriptionResource).GetIotHubDescriptionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +257,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotHubDescriptionResource> GetIotHubDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotHubDescriptions(cancellationToken);
+            return GetIotHubDescriptionResourceExtension(subscriptionResource).GetIotHubDescriptions(cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotHubNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetIotHubDescriptionResourceExtension(subscriptionResource).CheckIotHubNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -288,7 +305,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotHubNameAvailability(content, cancellationToken);
+            return GetIotHubDescriptionResourceExtension(subscriptionResource).CheckIotHubNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +326,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuotaAsync(cancellationToken);
+            return GetIotHubSubscriptionResourceExtension(subscriptionResource).GetIotHubUserSubscriptionQuotaAsync(cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +347,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuota(cancellationToken);
+            return GetIotHubSubscriptionResourceExtension(subscriptionResource).GetIotHubUserSubscriptionQuota(cancellationToken);
         }
     }
 }
