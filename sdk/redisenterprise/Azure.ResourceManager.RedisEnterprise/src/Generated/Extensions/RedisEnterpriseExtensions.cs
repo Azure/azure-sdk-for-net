@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RedisEnterprise.Mock;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// <summary> A class to add extension methods to Azure.ResourceManager.RedisEnterprise. </summary>
     public static partial class RedisEnterpriseExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RedisEnterpriseClusterResourceExtension GetRedisEnterpriseClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RedisEnterpriseClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RedisEnterpriseClusterResourceExtension GetRedisEnterpriseClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RedisEnterpriseClusterResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static RedisEnterpriseResourceGroupResourceExtension GetRedisEnterpriseResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new RedisEnterpriseResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RedisEnterpriseResourceGroupResourceExtension GetRedisEnterpriseResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new RedisEnterpriseResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static RedisEnterpriseSubscriptionResourceExtension GetRedisEnterpriseSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new RedisEnterpriseSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static RedisEnterpriseSubscriptionResourceExtension GetRedisEnterpriseSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RedisEnterpriseSubscriptionResourceExtension(client, scope);
             });
         }
         #region RedisEnterpriseClusterResource
@@ -112,7 +129,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
         public static RedisEnterpriseClusterCollection GetRedisEnterpriseClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRedisEnterpriseClusters();
+            return GetRedisEnterpriseResourceGroupResourceExtension(resourceGroupResource).GetRedisEnterpriseClusters();
         }
 
         /// <summary>
@@ -186,7 +203,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseOperationsStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetRedisEnterpriseSubscriptionResourceExtension(subscriptionResource).GetRedisEnterpriseOperationsStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -212,7 +229,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseOperationsStatus(location, operationId, cancellationToken);
+            return GetRedisEnterpriseSubscriptionResourceExtension(subscriptionResource).GetRedisEnterpriseOperationsStatus(location, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -233,7 +250,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseClustersAsync(cancellationToken);
+            return GetRedisEnterpriseClusterResourceExtension(subscriptionResource).GetRedisEnterpriseClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +271,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseClusters(cancellationToken);
+            return GetRedisEnterpriseClusterResourceExtension(subscriptionResource).GetRedisEnterpriseClusters(cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +293,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseSkusAsync(location, cancellationToken);
+            return GetRedisEnterpriseSubscriptionResourceExtension(subscriptionResource).GetRedisEnterpriseSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +315,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRedisEnterpriseSkus(location, cancellationToken);
+            return GetRedisEnterpriseSubscriptionResourceExtension(subscriptionResource).GetRedisEnterpriseSkus(location, cancellationToken);
         }
     }
 }

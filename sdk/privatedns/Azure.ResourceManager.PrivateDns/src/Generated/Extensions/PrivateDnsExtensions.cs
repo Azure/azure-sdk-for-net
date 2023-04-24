@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PrivateDns.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.PrivateDns
     /// <summary> A class to add extension methods to Azure.ResourceManager.PrivateDns. </summary>
     public static partial class PrivateDnsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PrivateDnsResourceGroupResourceExtension GetPrivateDnsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PrivateDnsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PrivateDnsResourceGroupResourceExtension GetPrivateDnsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new PrivateDnsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PrivateDnsZoneResourceExtension GetPrivateDnsZoneResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PrivateDnsZoneResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PrivateDnsZoneResourceExtension GetPrivateDnsZoneResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new PrivateDnsZoneResourceExtension(client, scope);
             });
         }
         #region PrivateDnsZoneResource
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
         public static PrivateDnsZoneCollection GetPrivateDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateDnsZones();
+            return GetPrivateDnsResourceGroupResourceExtension(resourceGroupResource).GetPrivateDnsZones();
         }
 
         /// <summary>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateDnsZonesAsync(top, cancellationToken);
+            return GetPrivateDnsZoneResourceExtension(subscriptionResource).GetPrivateDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
+            return GetPrivateDnsZoneResourceExtension(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
         }
     }
 }
