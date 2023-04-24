@@ -14,6 +14,7 @@ output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
+  lenient-model-deduplication: true
   flatten-payloads: false
 
 format-by-name-rules:
