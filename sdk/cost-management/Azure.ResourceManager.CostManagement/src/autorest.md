@@ -59,29 +59,23 @@ request-path-to-resource-name:
   /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
   /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
 
-# override-operation-name: 
-#   Alerts_ListExternal: ListExternalAlerts
-
 rename-mapping:
   View: CostManagementView
   Alert: CostManagementAlert
   Export: CostManagementExport
-  # ViewListResult: CostManagementViewListResult
 
 directive:
-  # [Error] Found more than 1 candidate for XX 
+  # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
   - remove-operation: Views_List
   - remove-operation: ScheduledActions_List
-  # [Error] Not a constant
-  - remove-operation: Alerts_ListExternal
+  # [Error][Linked:https://github.com/Azure/autorest.csharp/issues/3303] Not a constant
   - remove-operation: Forecast_ExternalCloudProviderUsage
   - remove-operation: Dimensions_ByExternalCloudProviderType
   - remove-operation: Query_UsageByExternalCloudProviderType
 
-  # [Build Error] Return 'Response' instead of 'Response<Foo>'
+  # [Build Error][LRO issue] Return 'Response' instead of 'Response<Foo>'
   - remove-operation: GenerateCostDetailsReport_CreateOperation
   - remove-operation: GenerateCostDetailsReport_GetOperationResults
-
   - remove-operation: GenerateDetailedCostReport_CreateOperation
   - remove-operation: GenerateDetailedCostReportOperationResults_Get
   - remove-operation: GenerateDetailedCostReportOperationStatus_Get
