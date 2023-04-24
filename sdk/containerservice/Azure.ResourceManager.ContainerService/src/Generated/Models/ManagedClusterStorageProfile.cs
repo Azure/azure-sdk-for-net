@@ -32,11 +32,44 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
+        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
+        public bool? IsEnabled
+        {
+            get => FileCsiDriver is null ? default : FileCsiDriver.IsEnabled;
+            set
+            {
+                if (FileCsiDriver is null)
+                    FileCsiDriver = new ManagedClusterStorageProfileFileCsiDriver();
+                FileCsiDriver.IsEnabled = value;
+            }
+        }
 
         /// <summary> Snapshot Controller settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
+        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
+        public bool? IsEnabled
+        {
+            get => SnapshotController is null ? default : SnapshotController.IsEnabled;
+            set
+            {
+                if (SnapshotController is null)
+                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
+                SnapshotController.IsEnabled = value;
+            }
+        }
 
         /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
+        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
+        public bool? IsEnabled
+        {
+            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsEnabled;
+            set
+            {
+                if (BlobCsiDriver is null)
+                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
+                BlobCsiDriver.IsEnabled = value;
+            }
+        }
     }
 }
