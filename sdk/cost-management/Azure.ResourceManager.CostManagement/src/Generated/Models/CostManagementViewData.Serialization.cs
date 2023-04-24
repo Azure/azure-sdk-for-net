@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.CostManagement
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<string> dateRange = default;
             Optional<string> currency = default;
-            Optional<ChartType> chart = default;
+            Optional<ViewChartType> chart = default;
             Optional<AccumulatedType> accumulated = default;
-            Optional<MetricType> metric = default;
+            Optional<ViewMetricType> metric = default;
             Optional<IList<KpiProperties>> kpis = default;
             Optional<IList<PivotProperties>> pivots = default;
-            Optional<ReportType> type0 = default;
+            Optional<ViewReportType> type0 = default;
             Optional<ReportTimeframeType> timeframe = default;
             Optional<ReportConfigTimePeriod> timePeriod = default;
             Optional<ReportConfigDataset> dataSet = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            chart = new ChartType(property0.Value.GetString());
+                            chart = new ViewChartType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accumulated"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            metric = new MetricType(property0.Value.GetString());
+                            metric = new ViewMetricType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("kpis"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CostManagement
                                     {
                                         continue;
                                     }
-                                    type0 = new ReportType(property1.Value.GetString());
+                                    type0 = new ViewReportType(property1.Value.GetString());
                                     continue;
                                 }
                                 if (property1.NameEquals("timeframe"u8))

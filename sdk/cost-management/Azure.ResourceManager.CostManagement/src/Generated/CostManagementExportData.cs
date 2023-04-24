@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <param name="schedule"> Has schedule information for the export. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </summary>
-        public FormatType? Format { get; set; }
+        public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
         internal ExportDeliveryInfo DeliveryInfo { get; set; }
         /// <summary> Has destination for the export being delivered. </summary>

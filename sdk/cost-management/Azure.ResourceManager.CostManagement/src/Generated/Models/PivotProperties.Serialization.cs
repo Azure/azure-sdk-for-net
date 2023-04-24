@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PivotType))
+            if (Optional.IsDefined(ViewPivotType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PivotType.Value.ToString());
+                writer.WriteStringValue(ViewPivotType.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<PivotType> type = default;
+            Optional<ViewPivotType> type = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    type = new PivotType(property.Value.GetString());
+                    type = new ViewPivotType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

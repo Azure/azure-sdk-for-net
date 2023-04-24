@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ChartType? chart, AccumulatedType? accumulated, MetricType? metric, IList<KpiProperties> kpis, IList<PivotProperties> pivots, ReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<KpiProperties> kpis, IList<PivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Scope = scope;
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Currency of the current view. </summary>
         public string Currency { get; }
         /// <summary> Chart type of the main view in Cost Analysis. Required. </summary>
-        public ChartType? Chart { get; set; }
+        public ViewChartType? Chart { get; set; }
         /// <summary> Show costs accumulated over time. </summary>
         public AccumulatedType? Accumulated { get; set; }
         /// <summary> Metric to use when displaying costs. </summary>
-        public MetricType? Metric { get; set; }
+        public ViewMetricType? Metric { get; set; }
         /// <summary> List of KPIs to show in Cost Analysis UI. </summary>
         public IList<KpiProperties> Kpis { get; }
         /// <summary> Configuration of 3 sub-views in the Cost Analysis UI. </summary>
         public IList<PivotProperties> Pivots { get; }
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
-        public ReportType? TypePropertiesQueryType { get; set; }
+        public ViewReportType? TypePropertiesQueryType { get; set; }
         /// <summary> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </summary>
         public ReportTimeframeType? Timeframe { get; set; }
         /// <summary> Has time period for pulling data for the report. </summary>

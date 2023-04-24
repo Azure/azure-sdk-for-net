@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of PivotProperties. </summary>
-        /// <param name="pivotType"> Data type to show in view. </param>
+        /// <param name="viewPivotType"> Data type to show in view. </param>
         /// <param name="name"> Data field to show in view. </param>
-        internal PivotProperties(PivotType? pivotType, string name)
+        internal PivotProperties(ViewPivotType? viewPivotType, string name)
         {
-            PivotType = pivotType;
+            ViewPivotType = viewPivotType;
             Name = name;
         }
 
         /// <summary> Data type to show in view. </summary>
-        public PivotType? PivotType { get; set; }
+        public ViewPivotType? ViewPivotType { get; set; }
         /// <summary> Data field to show in view. </summary>
         public string Name { get; set; }
     }

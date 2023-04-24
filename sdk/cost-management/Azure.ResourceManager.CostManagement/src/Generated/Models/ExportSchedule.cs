@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> The status of the export&apos;s schedule. If &apos;Inactive&apos;, the export&apos;s schedule is paused. </param>
         /// <param name="recurrence"> The schedule recurrence. </param>
         /// <param name="recurrencePeriod"> Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. </param>
-        internal ExportSchedule(StatusType? status, RecurrenceType? recurrence, ExportRecurrencePeriod recurrencePeriod)
+        internal ExportSchedule(ExportScheduleStatusType? status, ExportScheduleRecurrenceType? recurrence, ExportRecurrencePeriod recurrencePeriod)
         {
             Status = status;
             Recurrence = recurrence;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The status of the export&apos;s schedule. If &apos;Inactive&apos;, the export&apos;s schedule is paused. </summary>
-        public StatusType? Status { get; set; }
+        public ExportScheduleStatusType? Status { get; set; }
         /// <summary> The schedule recurrence. </summary>
-        public RecurrenceType? Recurrence { get; set; }
+        public ExportScheduleRecurrenceType? Recurrence { get; set; }
         /// <summary> Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. </summary>
         public ExportRecurrencePeriod RecurrencePeriod { get; set; }
     }

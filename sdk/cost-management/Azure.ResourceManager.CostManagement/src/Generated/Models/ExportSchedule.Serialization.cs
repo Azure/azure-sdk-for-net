@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<StatusType> status = default;
-            Optional<RecurrenceType> recurrence = default;
+            Optional<ExportScheduleStatusType> status = default;
+            Optional<ExportScheduleRecurrenceType> recurrence = default;
             Optional<ExportRecurrencePeriod> recurrencePeriod = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    status = new StatusType(property.Value.GetString());
+                    status = new ExportScheduleStatusType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recurrence = new RecurrenceType(property.Value.GetString());
+                    recurrence = new ExportScheduleRecurrenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recurrencePeriod"u8))

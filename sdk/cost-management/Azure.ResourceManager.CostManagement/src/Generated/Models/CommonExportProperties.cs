@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
         /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
-        internal CommonExportProperties(FormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
+        internal CommonExportProperties(ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </summary>
-        public FormatType? Format { get; set; }
+        public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
         internal ExportDeliveryInfo DeliveryInfo { get; set; }
         /// <summary> Has destination for the export being delivered. </summary>

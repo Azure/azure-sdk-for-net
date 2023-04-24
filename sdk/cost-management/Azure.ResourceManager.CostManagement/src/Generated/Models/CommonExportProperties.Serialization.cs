@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<FormatType> format = default;
+            Optional<ExportFormatType> format = default;
             ExportDeliveryInfo deliveryInfo = default;
             ExportDefinition definition = default;
             Optional<ExportExecutionListResult> runHistory = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    format = new FormatType(property.Value.GetString());
+                    format = new ExportFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deliveryInfo"u8))

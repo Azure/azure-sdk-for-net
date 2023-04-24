@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CostManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<FormatType> format = default;
+            Optional<ExportFormatType> format = default;
             Optional<ExportDeliveryInfo> deliveryInfo = default;
             Optional<ExportDefinition> definition = default;
             Optional<ExportExecutionListResult> runHistory = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            format = new FormatType(property0.Value.GetString());
+                            format = new ExportFormatType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deliveryInfo"u8))

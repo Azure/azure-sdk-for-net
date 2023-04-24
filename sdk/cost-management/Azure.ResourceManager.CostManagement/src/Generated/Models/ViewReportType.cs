@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
-    public readonly partial struct ReportType : IEquatable<ReportType>
+    public readonly partial struct ViewReportType : IEquatable<ViewReportType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ReportType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewReportType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReportType(string value)
+        public ViewReportType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string UsageValue = "Usage";
 
         /// <summary> Usage. </summary>
-        public static ReportType Usage { get; } = new ReportType(UsageValue);
-        /// <summary> Determines if two <see cref="ReportType"/> values are the same. </summary>
-        public static bool operator ==(ReportType left, ReportType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ReportType"/> values are not the same. </summary>
-        public static bool operator !=(ReportType left, ReportType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReportType"/>. </summary>
-        public static implicit operator ReportType(string value) => new ReportType(value);
+        public static ViewReportType Usage { get; } = new ViewReportType(UsageValue);
+        /// <summary> Determines if two <see cref="ViewReportType"/> values are the same. </summary>
+        public static bool operator ==(ViewReportType left, ViewReportType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ViewReportType"/> values are not the same. </summary>
+        public static bool operator !=(ViewReportType left, ViewReportType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ViewReportType"/>. </summary>
+        public static implicit operator ViewReportType(string value) => new ViewReportType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReportType other && Equals(other);
+        public override bool Equals(object obj) => obj is ViewReportType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ViewReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KpiType))
+            if (Optional.IsDefined(ViewKpiType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KpiType.Value.ToString());
+                writer.WriteStringValue(ViewKpiType.Value.ToString());
             }
             if (Optional.IsDefined(Id))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<KpiType> type = default;
+            Optional<ViewKpiType> type = default;
             Optional<string> id = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    type = new KpiType(property.Value.GetString());
+                    type = new ViewKpiType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
