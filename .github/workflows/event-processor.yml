@@ -29,14 +29,6 @@ jobs:
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
-      - name: 'Sparse Checkout'
-        run: |
-          set -ex
-          git clone --no-checkout --filter=tree:0 https://github.com/${{ github.repository }} .
-          git sparse-checkout init
-          git sparse-checkout set '.github'
-          git checkout main
-
       - name: 'Az CLI login'
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         uses: azure/login@v1
@@ -65,11 +57,10 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20230328.3
+          --version 1.0.0-dev.20230422.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
-        working-directory: .github/workflows
       # End-Install
 
       # Testing checkout of sources from the Azure/azure-sdk-tools repository

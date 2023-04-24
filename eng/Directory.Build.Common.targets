@@ -343,6 +343,12 @@
     <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
   </Target>
 
+  <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
+    <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
+      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+
   <Target Name="_SetProjectDependsOnInnerTarget">
     <PropertyGroup>
       <InnerTargets>ProjectDependsOnInner</InnerTargets>
