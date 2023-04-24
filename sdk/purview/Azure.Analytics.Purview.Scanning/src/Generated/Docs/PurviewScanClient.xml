@@ -28655,14 +28655,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -28732,14 +28732,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -28863,14 +28863,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -28901,14 +28901,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -29032,14 +29032,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -29070,14 +29070,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -29147,14 +29147,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }
@@ -29224,14 +29224,14 @@ Schema for <c>Trigger</c>:
       startTime: string (ISO 8601 Format), # Optional.
       endTime: string (ISO 8601 Format), # Optional.
       schedule: {
-        additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+        additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         minutes: [number], # Optional.
         hours: [number], # Optional.
         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         monthDays: [number], # Optional.
         monthlyOccurrences: [
           {
-            additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
+            additionalProperties: Dictionary&lt;string, any&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
             occurrence: number, # Optional.
           }

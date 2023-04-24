@@ -15,7 +15,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "226",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 06 Apr 2023 15:16:14 GMT",
         "Expires": "-1",
@@ -202,7 +202,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "260",
+        "Content-Length": "515",
         "Content-Type": "application/json",
         "traceparent": "00-2bedc0518968ed1917674c30ea3fee48-241df863e2972f1a-00",
         "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -490,7 +490,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.Network/locations/westus/operations/0d7c1c88-bd37-4946-9f9f-dd9eb54936fd?api-version=2021-02-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1931",
+        "Content-Length": "1926",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 06 Apr 2023 15:16:26 GMT",
         "Expires": "-1",
@@ -713,7 +713,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1932",
+        "Content-Length": "1927",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 06 Apr 2023 15:17:18 GMT",
         "ETag": "W/\u00222704ca51-848d-4423-a5c2-440cbf01f73a\u0022",
@@ -790,7 +790,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "627",
+        "Content-Length": "625",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 15:17:18 GMT",
         "Pragma": "no-cache",
@@ -840,7 +840,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "615",
+        "Content-Length": "613",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 15:17:18 GMT",
         "Pragma": "no-cache",

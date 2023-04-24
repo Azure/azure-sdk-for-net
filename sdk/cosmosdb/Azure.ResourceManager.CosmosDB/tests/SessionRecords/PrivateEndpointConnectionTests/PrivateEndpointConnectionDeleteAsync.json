@@ -15,7 +15,6 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Connection": "close",
         "Content-Length": "226",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 06 Apr 2023 15:42:47 GMT",
@@ -203,7 +202,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "260",
+        "Content-Length": "517",
         "Content-Type": "application/json",
         "traceparent": "00-fc9183666b9c0ac47d4b60d6a9bdff73-f4f941f4767054d8-00",
         "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1057,7 +1056,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T154357Z:0d8948b0-a56d-45c9-97dc-9594e59d6c99"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1088,7 +1087,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T154402Z:6c80e8c2-aa74-43bd-8feb-f38c66dadf0c"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1119,7 +1118,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T154410Z:0f4a71cf-e8aa-4e2a-a3a9-f4b416084c71"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {

@@ -35,5 +35,5 @@
       <_Parameter1>TestProxyPath</_Parameter1>
       <_Parameter2>$(NuGetPackageRoot)\azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net6.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
     </AssemblyAttribute>
-  </ItemGroup>  
+  </ItemGroup>
 </Project>

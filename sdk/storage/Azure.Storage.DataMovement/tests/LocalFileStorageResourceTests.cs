@@ -220,7 +220,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             catch (IOException ex)
             {
-                Assert.AreEqual(ex.Message, $"File path `{path}` already exists. Cannot overwite file.");
+                Assert.AreEqual(ex.Message, $"File path `{path}` already exists. Cannot overwrite file.");
             }
         }
 

@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// documents with models built on custom document types.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and higher.
-    /// If you want to use a lower version, please use the <see cref="FormRecognizer.FormRecognizerClient"/>.
+    /// This client only supports <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
+    /// To use an older service version, see <see cref="FormRecognizerClient"/>.
     /// </remarks>
     public class DocumentAnalysisClient
     {
@@ -111,6 +111,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
+        #region Document Models
+
         /// <summary>
         /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
         /// models provided by the Form Recognizer service.
@@ -153,8 +155,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
-                    features: null,
-                    queryFields: null,
+                    options.Features.Count == 0 ? null : options.Features,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken).ConfigureAwait(false);
 
@@ -216,8 +218,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
-                    features: null,
-                    queryFields: null,
+                    options.Features.Count == 0 ? null : options.Features,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken);
 
@@ -279,8 +281,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
-                    features: null,
-                    queryFields: null,
+                    options.Features.Count == 0 ? null : options.Features,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
@@ -342,8 +344,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
-                    features: null,
-                    queryFields: null,
+                    options.Features.Count == 0 ? null : options.Features,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken);
 
@@ -362,6 +364,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw;
             }
         }
+
+        #endregion Document Models
+
+        #region Document Classifiers
 
         /// <summary>
         /// Classifies one or more documents using a document classifier built with custom documents.
@@ -550,5 +556,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw;
             }
         }
+
+        #endregion Document Classifiers
     }
 }

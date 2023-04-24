@@ -52,15 +52,7 @@ namespace Azure.Storage.DataMovement
             _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
         }
 
-        /// <summary>
-        /// Adds a new transfer to the checkpointer.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override Task AddNewJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
@@ -78,20 +70,7 @@ namespace Azure.Storage.DataMovement
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Adds a new transfer to the checkpointer.
-        ///
-        /// If the transfer ID already exists, this method will throw an exception.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="partNumber"></param>
-        /// <param name="chunksTotal"></param>
-        /// <param name="headerStream"></param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
@@ -129,14 +108,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// Add existing job to the checkpointer with verification. This function will throw
-        /// if no existing job plan files exist in the checkpointer, and the job plan files have
-        /// mismatch information from the information to resume from.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override async Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
@@ -196,13 +168,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// Gets the current number of chunk counts stored in the job part with the
-        /// respective transfer id.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default)
@@ -215,21 +181,7 @@ namespace Azure.Storage.DataMovement
             throw Errors.MissingTransferIdCheckpointer(transferId);
         }
 
-        /// <summary>
-        /// Creates a stream to the stored memory stored checkpointing information.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="partNumber">The part number of the current transfer.</param>
-        /// <param name="readSize">
-        /// The size of how many bytes to read.
-        /// Specify 0 (zero) to create a stream that ends approximately at the end of the file.
-        /// </param>
-        /// <param name="offset">The offset of the current transfer.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
+        /// <inheritdoc/>
         public override async Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
@@ -266,24 +218,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// Writes to the checkpointer and stores the checkpointing information.
-        ///
-        /// Creates the checkpoint file for the respective ID if it does not currently exist.
-        ///
-        /// TODO: decide if we want to make this public, does not have a huge use to us currently.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="partNumber">The part number of the current transfer.</param>
-        /// <param name="chunkIndex">The offset of the current transfer.</param>
-        /// <param name="buffer">The buffer to write data from to the checkpoint.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <inheritdoc/>
         public override async Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
@@ -335,15 +270,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// Removes transfer information of the respective IDs.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>Returns a bool that is true if operation is successful, otherwise is false.</returns>
+        /// <inheritdoc/>
         public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             bool result = true;
@@ -376,26 +303,13 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(result);
         }
 
-        /// <summary>
-        /// Lists all the transfers contained in the checkpointer.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>The list of all the transfers contained in the checkpointer.</returns>
+        /// <inheritdoc/>
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_transferStates.Keys.ToList());
         }
 
-        /// <summary>
-        /// Sets the Job Transfer Status in the Job Part Plan files.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="status"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override async Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
@@ -437,14 +351,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// Sets the Job Part Transfer Status in the Job Part Plan files.
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="partNumber"></param>
-        /// <param name="status"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override async Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
