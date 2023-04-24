@@ -30,20 +30,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VMSizeProperties class.
         /// </summary>
         /// <param name="vCPUsAvailable">Specifies the number of vCPUs
-        /// available for the VM. &lt;br&gt;&lt;br&gt; When this property is
-        /// not specified in the request body the default behavior is to set it
-        /// to the value of vCPUs available for that VM size exposed in api
-        /// response of [List all available virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list)
-        /// .</param>
+        /// available for the VM. When this property is not specified in the
+        /// request body the default behavior is to set it to the value of
+        /// vCPUs available for that VM size exposed in api response of [List
+        /// all available virtual machine sizes in a
+        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).</param>
         /// <param name="vCPUsPerCore">Specifies the vCPU to physical core
-        /// ratio. &lt;br&gt;&lt;br&gt; When this property is not specified in
-        /// the request body the default behavior is set to the value of
-        /// vCPUsPerCore for the VM Size exposed in api response of [List all
-        /// available virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list)
-        /// &lt;br&gt;&lt;br&gt; Setting this property to 1 also means that
-        /// hyper-threading is disabled.</param>
+        /// ratio. When this property is not specified in the request body the
+        /// default behavior is set to the value of vCPUsPerCore for the VM
+        /// Size exposed in api response of [List all available virtual machine
+        /// sizes in a
+        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// **Setting this property to 1 also means that hyper-threading is
+        /// disabled.**</param>
         public VMSizeProperties(int? vCPUsAvailable = default(int?), int? vCPUsPerCore = default(int?))
         {
             VCPUsAvailable = vCPUsAvailable;
@@ -58,25 +57,23 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the number of vCPUs available for the VM.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; When this property is not
-        /// specified in the request body the default behavior is to set it to
-        /// the value of vCPUs available for that VM size exposed in api
-        /// response of [List all available virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list)
-        /// .
+        /// When this property is not specified in the request body the default
+        /// behavior is to set it to the value of vCPUs available for that VM
+        /// size exposed in api response of [List all available virtual machine
+        /// sizes in a
+        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// </summary>
         [JsonProperty(PropertyName = "vCPUsAvailable")]
         public int? VCPUsAvailable { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the vCPU to physical core ratio.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; When this property is not
-        /// specified in the request body the default behavior is set to the
-        /// value of vCPUsPerCore for the VM Size exposed in api response of
-        /// [List all available virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Setting this property to 1
-        /// also means that hyper-threading is disabled.
+        /// Gets or sets specifies the vCPU to physical core ratio. When this
+        /// property is not specified in the request body the default behavior
+        /// is set to the value of vCPUsPerCore for the VM Size exposed in api
+        /// response of [List all available virtual machine sizes in a
+        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// **Setting this property to 1 also means that hyper-threading is
+        /// disabled.**
         /// </summary>
         [JsonProperty(PropertyName = "vCPUsPerCore")]
         public int? VCPUsPerCore { get; set; }

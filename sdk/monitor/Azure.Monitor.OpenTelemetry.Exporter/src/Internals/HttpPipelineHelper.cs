@@ -10,7 +10,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using System.Diagnostics.CodeAnalysis;
 
