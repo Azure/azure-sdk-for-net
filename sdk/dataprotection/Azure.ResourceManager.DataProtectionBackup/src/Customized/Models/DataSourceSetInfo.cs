@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> DatasourceSet details of datasource to be backed up. </summary>
     public partial class DataSourceSetInfo
     {
         /// <summary> Uri of the resource. </summary>
