@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption.Mock;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
@@ -20,67 +21,67 @@ namespace Azure.ResourceManager.Consumption
     /// <summary> A class to add extension methods to Azure.ResourceManager.Consumption. </summary>
     public static partial class ConsumptionExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ConsumptionArmResourceExtension GetConsumptionArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ConsumptionArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConsumptionArmResourceExtension GetConsumptionArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ConsumptionArmResourceExtension(client, scope);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
+        private static ConsumptionManagementGroupResourceExtension GetConsumptionManagementGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ManagementGroupResourceExtensionClient(client, resource.Id);
+                return new ConsumptionManagementGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConsumptionManagementGroupResourceExtension GetConsumptionManagementGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ManagementGroupResourceExtensionClient(client, scope);
+                return new ConsumptionManagementGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ConsumptionSubscriptionResourceExtension GetConsumptionSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ConsumptionSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConsumptionSubscriptionResourceExtension GetConsumptionSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ConsumptionSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ConsumptionTenantResourceExtension GetConsumptionTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ConsumptionTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConsumptionTenantResourceExtension GetConsumptionTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ConsumptionTenantResourceExtension(client, scope);
             });
         }
         #region ConsumptionBudgetResource
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
         public static ConsumptionBudgetCollection GetConsumptionBudgets(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionBudgets();
+            return GetConsumptionArmResourceExtension(client, scope).GetConsumptionBudgets();
         }
 
         /// <summary>
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
+            return await GetConsumptionManagementGroupResourceExtension(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +353,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ConsumptionAggregatedCostResult> GetAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
+            return GetConsumptionManagementGroupResourceExtension(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
+            return await GetConsumptionSubscriptionResourceExtension(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
+            return GetConsumptionSubscriptionResourceExtension(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Chaos.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
@@ -18,35 +19,51 @@ namespace Azure.ResourceManager.Chaos
     /// <summary> A class to add extension methods to Azure.ResourceManager.Chaos. </summary>
     public static partial class ChaosExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ChaosResourceGroupResourceExtension GetChaosResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ChaosResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ChaosResourceGroupResourceExtension GetChaosResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ChaosResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ChaosSubscriptionResourceExtension GetChaosSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ChaosSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ChaosSubscriptionResourceExtension GetChaosSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ChaosSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static ExperimentResourceExtension GetExperimentResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ExperimentResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ExperimentResourceExtension GetExperimentResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ExperimentResourceExtension(client, scope);
             });
         }
         #region CapabilityResource
@@ -187,7 +204,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
         public static ExperimentCollection GetExperiments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExperiments();
+            return GetChaosResourceGroupResourceExtension(resourceGroupResource).GetExperiments();
         }
 
         /// <summary>
@@ -252,7 +269,7 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
             Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
+            return GetChaosResourceGroupResourceExtension(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
         }
 
         /// <summary>
@@ -319,7 +336,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTargetTypes(locationName);
+            return GetChaosSubscriptionResourceExtension(subscriptionResource).GetTargetTypes(locationName);
         }
 
         /// <summary>
@@ -392,7 +409,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
+            return GetExperimentResourceExtension(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +432,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
+            return GetExperimentResourceExtension(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
         }
     }
 }

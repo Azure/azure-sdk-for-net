@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Mock;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,67 +20,83 @@ namespace Azure.ResourceManager.Automanage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automanage. </summary>
     public static partial class AutomanageExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static AutomanageArmResourceExtension GetAutomanageArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new AutomanageArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomanageArmResourceExtension GetAutomanageArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new AutomanageArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AutomanageConfigurationProfileResourceExtension GetAutomanageConfigurationProfileResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AutomanageConfigurationProfileResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomanageConfigurationProfileResourceExtension GetAutomanageConfigurationProfileResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AutomanageConfigurationProfileResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AutomanageResourceGroupResourceExtension GetAutomanageResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AutomanageResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomanageResourceGroupResourceExtension GetAutomanageResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AutomanageResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AutomanageSubscriptionResourceExtension GetAutomanageSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AutomanageSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomanageSubscriptionResourceExtension GetAutomanageSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AutomanageSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static AutomanageTenantResourceExtension GetAutomanageTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new AutomanageTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static AutomanageTenantResourceExtension GetAutomanageTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new AutomanageTenantResourceExtension(client, scope);
             });
         }
         #region AutomanageBestPracticeResource
@@ -263,7 +280,7 @@ namespace Azure.ResourceManager.Automanage
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetAutomanageVmConfigurationProfileAssignments();
+            return GetAutomanageArmResourceExtension(client, scope).GetAutomanageVmConfigurationProfileAssignments();
         }
 
         /// <summary>
@@ -334,7 +351,7 @@ namespace Azure.ResourceManager.Automanage
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetAutomanageHcrpConfigurationProfileAssignments();
+            return GetAutomanageArmResourceExtension(client, scope).GetAutomanageHcrpConfigurationProfileAssignments();
         }
 
         /// <summary>
@@ -405,7 +422,7 @@ namespace Azure.ResourceManager.Automanage
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.AzureStackHci/clusters", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetAutomanageHciClusterConfigurationProfileAssignments();
+            return GetAutomanageArmResourceExtension(client, scope).GetAutomanageHciClusterConfigurationProfileAssignments();
         }
 
         /// <summary>
@@ -471,7 +488,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
         public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutomanageConfigurationProfiles();
+            return GetAutomanageResourceGroupResourceExtension(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
 
         /// <summary>
@@ -540,7 +557,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
+            return GetAutomanageConfigurationProfileResourceExtension(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -561,7 +578,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
+            return GetAutomanageConfigurationProfileResourceExtension(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +599,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
+            return GetAutomanageSubscriptionResourceExtension(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -603,7 +620,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServicePrincipals(cancellationToken);
+            return GetAutomanageSubscriptionResourceExtension(subscriptionResource).GetServicePrincipals(cancellationToken);
         }
 
         /// <summary>
@@ -623,7 +640,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAutomanageSubscriptionResourceExtension(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -643,7 +660,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServicePrincipal(cancellationToken);
+            return GetAutomanageSubscriptionResourceExtension(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
 
         /// <summary> Gets a collection of AutomanageBestPracticeResources in the TenantResource. </summary>
@@ -651,7 +668,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
         public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAutomanageBestPractices();
+            return GetAutomanageTenantResourceExtension(tenantResource).GetAutomanageBestPractices();
         }
 
         /// <summary>

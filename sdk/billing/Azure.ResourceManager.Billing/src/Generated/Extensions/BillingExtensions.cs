@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -18,19 +19,19 @@ namespace Azure.ResourceManager.Billing
     /// <summary> A class to add extension methods to Azure.ResourceManager.Billing. </summary>
     public static partial class BillingExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static BillingTenantResourceExtension GetBillingTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new BillingTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BillingTenantResourceExtension GetBillingTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new BillingTenantResourceExtension(client, scope);
             });
         }
         #region BillingSubscriptionResource
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingSubscriptions(billingAccountName);
+            return GetBillingTenantResourceExtension(tenantResource).GetBillingSubscriptions(billingAccountName);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
+            return GetBillingTenantResourceExtension(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
         public static BillingPaymentMethodCollection GetBillingPaymentMethods(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingPaymentMethods();
+            return GetBillingTenantResourceExtension(tenantResource).GetBillingPaymentMethods();
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
+            return GetBillingTenantResourceExtension(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
         }
 
         /// <summary>
@@ -385,7 +386,7 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
+            return GetBillingTenantResourceExtension(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
         }
 
         /// <summary>

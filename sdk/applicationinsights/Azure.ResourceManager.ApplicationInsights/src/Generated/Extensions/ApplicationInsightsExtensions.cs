@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights.Mock;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,19 +20,19 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApplicationInsights. </summary>
     public static partial class ApplicationInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ApplicationInsightsResourceGroupResourceExtension GetApplicationInsightsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ApplicationInsightsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationInsightsResourceGroupResourceExtension GetApplicationInsightsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ApplicationInsightsResourceGroupResourceExtension(client, scope);
             });
         }
         #region ComponentLinkedStorageAccountResource
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of ComponentLinkedStorageAccountResources and their operations over a ComponentLinkedStorageAccountResource. </returns>
         public static ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetComponentLinkedStorageAccounts();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetComponentLinkedStorageAccounts();
         }
 
         /// <summary>
