@@ -15,5 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeriesResult. </summary>
     public partial class MetricEnrichedSeriesData
     {
+
+        /// <summary> Gets the series. </summary>
+        public SeriesIdentity Series { get; }
     }
 }
