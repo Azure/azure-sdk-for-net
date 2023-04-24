@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -53,15 +54,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 { "service.name", _roleName },
             };
 
+            var resourceBuilder = ResourceBuilder.CreateDefault();
+            resourceBuilder.AddAttributes(resourceAttributes);
+
             var builder = WebApplication.CreateBuilder();
             builder.Logging.ClearProviders();
             builder.Services
+                    .AddOptions<OpenTelemetryLoggerOptions>()
+                        .Configure(options =>
+                        {
+                            options.SetResourceBuilder(resourceBuilder);
+                        });
+            builder.Services
                 .AddOpenTelemetry()
-                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
-                .UseAzureMonitor(options =>
-                {
-                    options.ConnectionString = TestEnvironment.ConnectionString;
-                });
+                    .ConfigureResource(x => x.AddAttributes(resourceAttributes))
+                    .UseAzureMonitor(options =>
+                    {
+                        options.ConnectionString = TestEnvironment.ConnectionString;
+                    });
 
             var app = builder.Build();
             app.MapGet("/", () =>
@@ -93,26 +103,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ASSERT
             await VerifyLogs(
-                description: "Dependency for invoking HttpClient",
+                description: "Dependency for invoking HttpClient, from testhost",
                 query: $"AppDependencies | where Data == '{_testServerUrl}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
 
             await VerifyLogs(
-                description: "Server generated RequestTelemetry",
+                description: "RequestTelemetry, from WebApp",
                 query: $"AppRequests | where Url == '{_testServerUrl}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
 
             await VerifyLogs(
-                description: "Metric for incoming request",
-                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                description: "Metric for outgoing request, from testhost.",
+                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{_roleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
 
-            // TODO: where Properties.http.peername == 'localhost'
             await VerifyLogs(
-                description: "Metric for outgoing request",
-                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                description: "Metric for incoming request, from WebApp",
+                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{_roleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
 
-            // TODO: WHY IS AppRoleName set to "unknown_service:testhost"?
             await VerifyLogs(
-                description: "ILogger LogInformation",
-                query: $"AppTraces | where Message == 'Message via ILogger LogInformation' | top 1 by TimeGenerated");
+                description: "ILogger LogInformation, from WebApp",
+                query: $"AppTraces | where Message == 'Message via ILogger LogInformation' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
         }
 
         private async Task VerifyLogs(string description, string query)
