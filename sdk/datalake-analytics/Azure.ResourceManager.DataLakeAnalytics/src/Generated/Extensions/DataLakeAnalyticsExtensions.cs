@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataLakeAnalytics.Mock;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataLakeAnalytics. </summary>
     public static partial class DataLakeAnalyticsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataLakeAnalyticsAccountResourceExtension GetDataLakeAnalyticsAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataLakeAnalyticsAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataLakeAnalyticsAccountResourceExtension GetDataLakeAnalyticsAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataLakeAnalyticsAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataLakeAnalyticsResourceGroupResourceExtension GetDataLakeAnalyticsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataLakeAnalyticsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataLakeAnalyticsResourceGroupResourceExtension GetDataLakeAnalyticsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataLakeAnalyticsResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static DataLakeAnalyticsSubscriptionResourceExtension GetDataLakeAnalyticsSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataLakeAnalyticsSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataLakeAnalyticsSubscriptionResourceExtension GetDataLakeAnalyticsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataLakeAnalyticsSubscriptionResourceExtension(client, scope);
             });
         }
         #region DataLakeAnalyticsAccountResource
@@ -169,7 +186,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsAccountResources and their operations over a DataLakeAnalyticsAccountResource. </returns>
         public static DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataLakeAnalyticsAccounts();
+            return GetDataLakeAnalyticsResourceGroupResourceExtension(resourceGroupResource).GetDataLakeAnalyticsAccounts();
         }
 
         /// <summary>
@@ -241,7 +258,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(options, cancellationToken);
+            return GetDataLakeAnalyticsAccountResourceExtension(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +282,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(options, cancellationToken);
+            return GetDataLakeAnalyticsAccountResourceExtension(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +307,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsAccountResourceExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -315,7 +332,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
+            return GetDataLakeAnalyticsAccountResourceExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +353,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsSubscriptionResourceExtension(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +374,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
+            return GetDataLakeAnalyticsSubscriptionResourceExtension(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
         }
     }
 }

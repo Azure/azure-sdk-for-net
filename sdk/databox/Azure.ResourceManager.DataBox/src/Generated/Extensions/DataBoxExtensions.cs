@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox.Mock;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.DataBox
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBox. </summary>
     public static partial class DataBoxExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataBoxJobResourceExtension GetDataBoxJobResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataBoxJobResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataBoxJobResourceExtension GetDataBoxJobResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataBoxJobResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataBoxResourceGroupResourceExtension GetDataBoxResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataBoxResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataBoxResourceGroupResourceExtension GetDataBoxResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataBoxResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static DataBoxSubscriptionResourceExtension GetDataBoxSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataBoxSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataBoxSubscriptionResourceExtension GetDataBoxSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataBoxSubscriptionResourceExtension(client, scope);
             });
         }
         #region DataBoxJobResource
@@ -74,7 +91,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
         public static DataBoxJobCollection GetDataBoxJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataBoxJobs();
+            return GetDataBoxResourceGroupResourceExtension(resourceGroupResource).GetDataBoxJobs();
         }
 
         /// <summary>
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
+            return GetDataBoxResourceGroupResourceExtension(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +193,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
+            return GetDataBoxResourceGroupResourceExtension(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +218,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxResourceGroupResourceExtension(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +243,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
+            return GetDataBoxResourceGroupResourceExtension(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +268,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxResourceGroupResourceExtension(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -276,7 +293,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetDataBoxResourceGroupResourceExtension(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +315,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
+            return GetDataBoxJobResourceExtension(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +337,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxJobResource> GetDataBoxJobs(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
+            return GetDataBoxJobResourceExtension(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -345,7 +362,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionResourceExtension(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddress(location, content, cancellationToken);
+            return GetDataBoxSubscriptionResourceExtension(subscriptionResource).ValidateAddress(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -395,7 +412,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionResourceExtension(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -420,7 +437,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputs(location, content, cancellationToken);
+            return GetDataBoxSubscriptionResourceExtension(subscriptionResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -445,7 +462,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionResourceExtension(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -470,7 +487,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetDataBoxSubscriptionResourceExtension(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
         }
     }
 }

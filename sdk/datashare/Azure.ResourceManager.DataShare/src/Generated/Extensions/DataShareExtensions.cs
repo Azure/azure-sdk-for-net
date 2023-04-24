@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare.Mock;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,67 @@ namespace Azure.ResourceManager.DataShare
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataShare. </summary>
     public static partial class DataShareExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataShareAccountResourceExtension GetDataShareAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataShareAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataShareAccountResourceExtension GetDataShareAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataShareAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataShareConsumerInvitationResourceExtension GetDataShareConsumerInvitationResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataShareConsumerInvitationResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataShareConsumerInvitationResourceExtension GetDataShareConsumerInvitationResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataShareConsumerInvitationResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static DataShareResourceGroupResourceExtension GetDataShareResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new DataShareResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataShareResourceGroupResourceExtension GetDataShareResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new DataShareResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static DataShareTenantResourceExtension GetDataShareTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataShareTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataShareTenantResourceExtension GetDataShareTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataShareTenantResourceExtension(client, scope);
             });
         }
         #region DataShareAccountResource
@@ -261,7 +278,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
         public static DataShareAccountCollection GetDataShareAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataShareAccounts();
+            return GetDataShareResourceGroupResourceExtension(resourceGroupResource).GetDataShareAccounts();
         }
 
         /// <summary>
@@ -331,7 +348,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
+            return GetDataShareAccountResourceExtension(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -353,7 +370,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataShareAccountResource> GetDataShareAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
+            return GetDataShareAccountResourceExtension(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataShareConsumerInvitationResources in the TenantResource. </summary>
@@ -361,7 +378,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
         public static DataShareConsumerInvitationCollection GetDataShareConsumerInvitations(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetDataShareConsumerInvitations();
+            return GetDataShareTenantResourceExtension(tenantResource).GetDataShareConsumerInvitations();
         }
 
         /// <summary>
@@ -432,7 +449,7 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetTenantResourceExtensionClient(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
+            return await GetDataShareConsumerInvitationResourceExtension(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -457,7 +474,7 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetTenantResourceExtensionClient(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
+            return GetDataShareConsumerInvitationResourceExtension(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
         }
 
         /// <summary>
@@ -482,7 +499,7 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
+            return await GetDataShareTenantResourceExtension(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -507,7 +524,7 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
-            return GetTenantResourceExtensionClient(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
+            return GetDataShareTenantResourceExtension(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +545,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataShareEmailRegistration>> RegisterEmailAsync(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetDataShareTenantResourceExtension(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -549,7 +566,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataShareEmailRegistration> RegisterEmail(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).RegisterEmail(location, cancellationToken);
+            return GetDataShareTenantResourceExtension(tenantResource).RegisterEmail(location, cancellationToken);
         }
     }
 }

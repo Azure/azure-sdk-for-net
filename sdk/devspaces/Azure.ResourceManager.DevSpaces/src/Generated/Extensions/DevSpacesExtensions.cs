@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevSpaces.Mock;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevSpaces. </summary>
     public static partial class DevSpacesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ControllerResourceExtension GetControllerResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ControllerResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ControllerResourceExtension GetControllerResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ControllerResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevSpacesResourceGroupResourceExtension GetDevSpacesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevSpacesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DevSpacesResourceGroupResourceExtension GetDevSpacesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DevSpacesResourceGroupResourceExtension(client, scope);
             });
         }
         #region ControllerResource
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetControllers();
+            return GetDevSpacesResourceGroupResourceExtension(resourceGroupResource).GetControllers();
         }
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
+            return await GetDevSpacesResourceGroupResourceExtension(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
+            return GetDevSpacesResourceGroupResourceExtension(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetControllersAsync(cancellationToken);
+            return GetControllerResourceExtension(subscriptionResource).GetControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetControllers(cancellationToken);
+            return GetControllerResourceExtension(subscriptionResource).GetControllers(cancellationToken);
         }
     }
 }

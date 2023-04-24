@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Dns.Mock;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dns. </summary>
     public static partial class DnsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DnsResourceGroupResourceExtension GetDnsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DnsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DnsResourceGroupResourceExtension GetDnsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DnsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DnsSubscriptionResourceExtension GetDnsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DnsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DnsSubscriptionResourceExtension GetDnsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DnsSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static DnsZoneResourceExtension GetDnsZoneResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DnsZoneResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DnsZoneResourceExtension GetDnsZoneResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DnsZoneResourceExtension(client, scope);
             });
         }
         #region DnsARecordResource
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
         public static DnsZoneCollection GetDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDnsZones();
+            return GetDnsResourceGroupResourceExtension(resourceGroupResource).GetDnsZones();
         }
 
         /// <summary>
@@ -334,7 +351,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsZoneResource> GetDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
+            return GetDnsZoneResourceExtension(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +373,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsZoneResource> GetDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZones(top, cancellationToken);
+            return GetDnsZoneResourceExtension(subscriptionResource).GetDnsZones(top, cancellationToken);
         }
 
         /// <summary>
@@ -380,7 +397,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDnsSubscriptionResourceExtension(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,7 +421,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
+            return GetDnsSubscriptionResourceExtension(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataProtectionBackup.Mock;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,67 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataProtectionBackup. </summary>
     public static partial class DataProtectionBackupExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataProtectionBackupResourceGroupResourceExtension GetDataProtectionBackupResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataProtectionBackupResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataProtectionBackupResourceGroupResourceExtension GetDataProtectionBackupResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataProtectionBackupResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataProtectionBackupSubscriptionResourceExtension GetDataProtectionBackupSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataProtectionBackupSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataProtectionBackupSubscriptionResourceExtension GetDataProtectionBackupSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataProtectionBackupSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static DataProtectionBackupVaultResourceExtension GetDataProtectionBackupVaultResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataProtectionBackupVaultResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataProtectionBackupVaultResourceExtension GetDataProtectionBackupVaultResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataProtectionBackupVaultResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourceGuardResourceExtension GetResourceGuardResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGuardResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourceGuardResourceExtension GetResourceGuardResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGuardResourceExtension(client, scope);
             });
         }
         #region DataProtectionBackupVaultResource
@@ -188,7 +221,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
         public static DataProtectionBackupVaultCollection GetDataProtectionBackupVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataProtectionBackupVaults();
+            return GetDataProtectionBackupResourceGroupResourceExtension(resourceGroupResource).GetDataProtectionBackupVaults();
         }
 
         /// <summary>
@@ -244,7 +277,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
         public static ResourceGuardCollection GetResourceGuards(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGuards();
+            return GetDataProtectionBackupResourceGroupResourceExtension(resourceGroupResource).GetResourceGuards();
         }
 
         /// <summary>
@@ -317,7 +350,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupVaultResourceExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,7 +375,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
+            return GetDataProtectionBackupVaultResourceExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +396,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
+            return GetDataProtectionBackupVaultResourceExtension(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -384,7 +417,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
+            return GetDataProtectionBackupVaultResourceExtension(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +442,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupSubscriptionResourceExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -434,7 +467,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
+            return GetDataProtectionBackupSubscriptionResourceExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +488,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
+            return GetResourceGuardResourceExtension(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -476,7 +509,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceGuardResource> GetResourceGuards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceGuards(cancellationToken);
+            return GetResourceGuardResourceExtension(subscriptionResource).GetResourceGuards(cancellationToken);
         }
     }
 }

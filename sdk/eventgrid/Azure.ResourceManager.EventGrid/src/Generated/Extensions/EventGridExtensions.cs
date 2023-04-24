@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid.Mock;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,67 +20,179 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class to add extension methods to Azure.ResourceManager.EventGrid. </summary>
     public static partial class EventGridExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static EventGridArmResourceExtension GetEventGridArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new EventGridArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventGridArmResourceExtension GetEventGridArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new EventGridArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static EventGridDomainResourceExtension GetEventGridDomainResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new EventGridDomainResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventGridDomainResourceExtension GetEventGridDomainResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new EventGridDomainResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static EventGridResourceGroupResourceExtension GetEventGridResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new EventGridResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventGridResourceGroupResourceExtension GetEventGridResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new EventGridResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static EventGridTenantResourceExtension GetEventGridTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new EventGridTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventGridTenantResourceExtension GetEventGridTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new EventGridTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static EventGridTopicResourceExtension GetEventGridTopicResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new EventGridTopicResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static EventGridTopicResourceExtension GetEventGridTopicResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new EventGridTopicResourceExtension(client, scope);
+            });
+        }
+
+        private static EventSubscriptionResourceExtension GetEventSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new EventSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static EventSubscriptionResourceExtension GetEventSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new EventSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static PartnerConfigurationResourceExtension GetPartnerConfigurationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerConfigurationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PartnerConfigurationResourceExtension GetPartnerConfigurationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerConfigurationResourceExtension(client, scope);
+            });
+        }
+
+        private static PartnerNamespaceResourceExtension GetPartnerNamespaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerNamespaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PartnerNamespaceResourceExtension GetPartnerNamespaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerNamespaceResourceExtension(client, scope);
+            });
+        }
+
+        private static PartnerRegistrationResourceExtension GetPartnerRegistrationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerRegistrationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PartnerRegistrationResourceExtension GetPartnerRegistrationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerRegistrationResourceExtension(client, scope);
+            });
+        }
+
+        private static PartnerTopicResourceExtension GetPartnerTopicResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerTopicResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PartnerTopicResourceExtension GetPartnerTopicResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerTopicResourceExtension(client, scope);
+            });
+        }
+
+        private static SystemTopicResourceExtension GetSystemTopicResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SystemTopicResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SystemTopicResourceExtension GetSystemTopicResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SystemTopicResourceExtension(client, scope);
             });
         }
         #region PartnerNamespaceChannelResource
@@ -544,7 +657,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
         public static EventSubscriptionCollection GetEventSubscriptions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventSubscriptions();
+            return GetEventGridArmResourceExtension(client, scope).GetEventSubscriptions();
         }
 
         /// <summary>
@@ -603,7 +716,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
         public static ExtensionTopicResource GetExtensionTopic(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetExtensionTopic();
+            return GetEventGridArmResourceExtension(client, scope).GetExtensionTopic();
         }
 
         /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
@@ -611,7 +724,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
         public static EventGridDomainCollection GetEventGridDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridDomains();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetEventGridDomains();
         }
 
         /// <summary>
@@ -667,7 +780,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
         public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridTopics();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetEventGridTopics();
         }
 
         /// <summary>
@@ -723,7 +836,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
         public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerConfiguration();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetPartnerConfiguration();
         }
 
         /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
@@ -731,7 +844,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
         public static PartnerNamespaceCollection GetPartnerNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerNamespaces();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetPartnerNamespaces();
         }
 
         /// <summary>
@@ -787,7 +900,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
         public static PartnerRegistrationCollection GetPartnerRegistrations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerRegistrations();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetPartnerRegistrations();
         }
 
         /// <summary>
@@ -843,7 +956,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
         public static PartnerTopicCollection GetPartnerTopics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerTopics();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetPartnerTopics();
         }
 
         /// <summary>
@@ -899,7 +1012,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
         public static SystemTopicCollection GetSystemTopics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSystemTopics();
+            return GetEventGridResourceGroupResourceExtension(resourceGroupResource).GetSystemTopics();
         }
 
         /// <summary>
@@ -970,7 +1083,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridDomainsAsync(filter, top, cancellationToken);
+            return GetEventGridDomainResourceExtension(subscriptionResource).GetEventGridDomainsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -993,7 +1106,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridDomainResource> GetEventGridDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridDomains(filter, top, cancellationToken);
+            return GetEventGridDomainResourceExtension(subscriptionResource).GetEventGridDomains(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1016,7 +1129,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
+            return GetEventGridTopicResourceExtension(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1039,7 +1152,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
+            return GetEventGridTopicResourceExtension(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1062,7 +1175,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerConfigurationResource> GetPartnerConfigurationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerConfigurationsAsync(filter, top, cancellationToken);
+            return GetPartnerConfigurationResourceExtension(subscriptionResource).GetPartnerConfigurationsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1085,7 +1198,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerConfigurationResource> GetPartnerConfigurations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerConfigurations(filter, top, cancellationToken);
+            return GetPartnerConfigurationResourceExtension(subscriptionResource).GetPartnerConfigurations(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1108,7 +1221,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerNamespaceResource> GetPartnerNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerNamespacesAsync(filter, top, cancellationToken);
+            return GetPartnerNamespaceResourceExtension(subscriptionResource).GetPartnerNamespacesAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1131,7 +1244,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerNamespaceResource> GetPartnerNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerNamespaces(filter, top, cancellationToken);
+            return GetPartnerNamespaceResourceExtension(subscriptionResource).GetPartnerNamespaces(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1154,7 +1267,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerRegistrationResource> GetPartnerRegistrationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerRegistrationsAsync(filter, top, cancellationToken);
+            return GetPartnerRegistrationResourceExtension(subscriptionResource).GetPartnerRegistrationsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1177,7 +1290,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerRegistrationResource> GetPartnerRegistrations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerRegistrations(filter, top, cancellationToken);
+            return GetPartnerRegistrationResourceExtension(subscriptionResource).GetPartnerRegistrations(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1200,7 +1313,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerTopicResource> GetPartnerTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerTopicsAsync(filter, top, cancellationToken);
+            return GetPartnerTopicResourceExtension(subscriptionResource).GetPartnerTopicsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1223,7 +1336,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerTopicResource> GetPartnerTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerTopics(filter, top, cancellationToken);
+            return GetPartnerTopicResourceExtension(subscriptionResource).GetPartnerTopics(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1246,7 +1359,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SystemTopicResource> GetSystemTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSystemTopicsAsync(filter, top, cancellationToken);
+            return GetSystemTopicResourceExtension(subscriptionResource).GetSystemTopicsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1269,7 +1382,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SystemTopicResource> GetSystemTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSystemTopics(filter, top, cancellationToken);
+            return GetSystemTopicResourceExtension(subscriptionResource).GetSystemTopics(filter, top, cancellationToken);
         }
 
         /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
@@ -1277,7 +1390,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
         public static TopicTypeCollection GetTopicTypes(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTopicTypes();
+            return GetEventGridTenantResourceExtension(tenantResource).GetTopicTypes();
         }
 
         /// <summary>
@@ -1333,7 +1446,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of VerifiedPartnerResources and their operations over a VerifiedPartnerResource. </returns>
         public static VerifiedPartnerCollection GetVerifiedPartners(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetVerifiedPartners();
+            return GetEventGridTenantResourceExtension(tenantResource).GetVerifiedPartners();
         }
 
         /// <summary>
