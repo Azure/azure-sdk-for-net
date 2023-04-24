@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DesktopVirtualization.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -18,35 +19,83 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class to add extension methods to Azure.ResourceManager.DesktopVirtualization. </summary>
     public static partial class DesktopVirtualizationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DesktopVirtualizationResourceGroupResourceExtension GetDesktopVirtualizationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DesktopVirtualizationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DesktopVirtualizationResourceGroupResourceExtension GetDesktopVirtualizationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DesktopVirtualizationResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HostPoolResourceExtension GetHostPoolResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HostPoolResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HostPoolResourceExtension GetHostPoolResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HostPoolResourceExtension(client, scope);
+            });
+        }
+
+        private static ScalingPlanResourceExtension GetScalingPlanResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScalingPlanResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScalingPlanResourceExtension GetScalingPlanResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScalingPlanResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualApplicationGroupResourceExtension GetVirtualApplicationGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualApplicationGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualApplicationGroupResourceExtension GetVirtualApplicationGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualApplicationGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualWorkspaceResourceExtension GetVirtualWorkspaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualWorkspaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualWorkspaceResourceExtension GetVirtualWorkspaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualWorkspaceResourceExtension(client, scope);
             });
         }
         #region VirtualWorkspaceResource
@@ -225,7 +274,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
         public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualWorkspaces();
+            return GetDesktopVirtualizationResourceGroupResourceExtension(resourceGroupResource).GetVirtualWorkspaces();
         }
 
         /// <summary>
@@ -281,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
         public static ScalingPlanCollection GetScalingPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScalingPlans();
+            return GetDesktopVirtualizationResourceGroupResourceExtension(resourceGroupResource).GetScalingPlans();
         }
 
         /// <summary>
@@ -337,7 +386,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
         public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualApplicationGroups();
+            return GetDesktopVirtualizationResourceGroupResourceExtension(resourceGroupResource).GetVirtualApplicationGroups();
         }
 
         /// <summary>
@@ -393,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
         public static HostPoolCollection GetHostPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHostPools();
+            return GetDesktopVirtualizationResourceGroupResourceExtension(resourceGroupResource).GetHostPools();
         }
 
         /// <summary>
@@ -462,7 +511,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWorkspacesAsync(cancellationToken);
+            return GetVirtualWorkspaceResourceExtension(subscriptionResource).GetVirtualWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -483,7 +532,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
+            return GetVirtualWorkspaceResourceExtension(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -504,7 +553,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScalingPlansAsync(cancellationToken);
+            return GetScalingPlanResourceExtension(subscriptionResource).GetScalingPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -525,7 +574,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScalingPlans(cancellationToken);
+            return GetScalingPlanResourceExtension(subscriptionResource).GetScalingPlans(cancellationToken);
         }
 
         /// <summary>
@@ -547,7 +596,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
+            return GetVirtualApplicationGroupResourceExtension(subscriptionResource).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -569,7 +618,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualApplicationGroups(filter, cancellationToken);
+            return GetVirtualApplicationGroupResourceExtension(subscriptionResource).GetVirtualApplicationGroups(filter, cancellationToken);
         }
 
         /// <summary>
@@ -590,7 +639,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHostPoolsAsync(cancellationToken);
+            return GetHostPoolResourceExtension(subscriptionResource).GetHostPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -611,7 +660,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHostPools(cancellationToken);
+            return GetHostPoolResourceExtension(subscriptionResource).GetHostPools(cancellationToken);
         }
     }
 }

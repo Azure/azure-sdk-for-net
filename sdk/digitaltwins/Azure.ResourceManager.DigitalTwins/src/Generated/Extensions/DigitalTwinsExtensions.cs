@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DigitalTwins.Mock;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DigitalTwins
     /// <summary> A class to add extension methods to Azure.ResourceManager.DigitalTwins. </summary>
     public static partial class DigitalTwinsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DigitalTwinsDescriptionResourceExtension GetDigitalTwinsDescriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DigitalTwinsDescriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DigitalTwinsDescriptionResourceExtension GetDigitalTwinsDescriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DigitalTwinsDescriptionResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DigitalTwinsResourceGroupResourceExtension GetDigitalTwinsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DigitalTwinsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DigitalTwinsResourceGroupResourceExtension GetDigitalTwinsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DigitalTwinsResourceGroupResourceExtension(client, scope);
             });
         }
         #region DigitalTwinsDescriptionResource
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsDescriptionResources and their operations over a DigitalTwinsDescriptionResource. </returns>
         public static DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDigitalTwinsDescriptions();
+            return GetDigitalTwinsResourceGroupResourceExtension(resourceGroupResource).GetDigitalTwinsDescriptions();
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
+            return GetDigitalTwinsDescriptionResourceExtension(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
+            return GetDigitalTwinsDescriptionResourceExtension(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDigitalTwinsDescriptionResourceExtension(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
+            return GetDigitalTwinsDescriptionResourceExtension(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
         }
     }
 }

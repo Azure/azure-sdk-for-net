@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeploymentManager.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeploymentManager
@@ -18,19 +19,19 @@ namespace Azure.ResourceManager.DeploymentManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeploymentManager. </summary>
     public static partial class DeploymentManagerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeploymentManagerResourceGroupResourceExtension GetDeploymentManagerResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeploymentManagerResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeploymentManagerResourceGroupResourceExtension GetDeploymentManagerResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeploymentManagerResourceGroupResourceExtension(client, scope);
             });
         }
         #region ServiceTopologyResource
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of ServiceTopologyResources and their operations over a ServiceTopologyResource. </returns>
         public static ServiceTopologyResourceCollection GetServiceTopologyResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceTopologyResources();
+            return GetDeploymentManagerResourceGroupResourceExtension(resourceGroupResource).GetServiceTopologyResources();
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of StepResources and their operations over a StepResource. </returns>
         public static StepResourceCollection GetStepResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStepResources();
+            return GetDeploymentManagerResourceGroupResourceExtension(resourceGroupResource).GetStepResources();
         }
 
         /// <summary>
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of RolloutResources and their operations over a RolloutResource. </returns>
         public static RolloutCollection GetRollouts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRollouts();
+            return GetDeploymentManagerResourceGroupResourceExtension(resourceGroupResource).GetRollouts();
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of ArtifactSourceResources and their operations over a ArtifactSourceResource. </returns>
         public static ArtifactSourceCollection GetArtifactSources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArtifactSources();
+            return GetDeploymentManagerResourceGroupResourceExtension(resourceGroupResource).GetArtifactSources();
         }
 
         /// <summary>
