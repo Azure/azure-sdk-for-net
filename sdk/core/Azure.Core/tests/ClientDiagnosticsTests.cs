@@ -10,10 +10,8 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
 
-[assembly:AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
+[assembly: AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
 
 namespace Azure.Core.Tests
 {
@@ -410,42 +408,6 @@ namespace Azure.Core.Tests
             nextScope.Dispose();
 
             Assert.IsNull(Activity.Current);
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void OpenTelemetryCompatibilityWithParentBasedSampling()
-        {
-            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
-            Pipeline.ActivityExtensions.ResetFeatureSwitch();
-
-            // Open Telemetry Listener
-            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource($"Azure.*")
-                .SetSampler(new TraceIdRatioBasedSampler(0.1))
-                .Build();
-
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
-
-            int activeActivityCounts = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-                scope.Start();
-                if (scope.IsEnabled)
-                {
-                    activeActivityCounts++;
-                }
-                scope.Dispose();
-            }
-
-            Assert.IsTrue(activeActivityCounts > 0, "No activities created");
-            Assert.IsTrue(activeActivityCounts < 20, "More than expected activities created");
-
-            Assert.IsNull(Activity.Current);
-
-            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", false);
-            Pipeline.ActivityExtensions.ResetFeatureSwitch();
         }
     }
 }

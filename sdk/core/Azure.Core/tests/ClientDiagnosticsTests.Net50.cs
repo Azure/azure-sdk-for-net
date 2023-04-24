@@ -8,6 +8,8 @@ using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 namespace Azure.Core.Tests
 {
@@ -18,13 +20,13 @@ namespace Azure.Core.Tests
         [TearDown]
         public void ResetFeatureSwitch()
         {
-            ActivityExtensions.ResetFeatureSwitch();
+            Pipeline.ActivityExtensions.ResetFeatureSwitch();
         }
 
         private static TestAppContextSwitch SetAppConfigSwitch()
         {
             var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
-            ActivityExtensions.ResetFeatureSwitch();
+            Pipeline.ActivityExtensions.ResetFeatureSwitch();
             return s;
         }
 
@@ -467,6 +469,38 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void OpenTelemetryCompatibilityWithParentBasedSampling()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Open Telemetry Listener
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource($"Azure.*")
+                .SetSampler(new TraceIdRatioBasedSampler(0.1))
+                .Build();
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+
+            int activeActivityCounts = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.Start();
+                if (scope.IsEnabled)
+                {
+                    activeActivityCounts++;
+                }
+                scope.Dispose();
+            }
+
+            Assert.IsTrue(activeActivityCounts > 0, "No activities created");
+            Assert.IsTrue(activeActivityCounts < 20, "More than expected activities created");
+
+            Assert.IsNull(Activity.Current);
         }
     }
 #endif
