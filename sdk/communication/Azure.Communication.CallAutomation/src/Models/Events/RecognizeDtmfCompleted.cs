@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Recognize Dtmf Completed event.
     /// </summary>
-    internal class RecognizeDtmfCompleted : RecognizeCompleted
+    internal class RecognizeDtmfCompleted : RecognizeCompletedEventData
     {
         /// <summary> The recognize dtmf result. </summary>
         public DtmfResult DtmfResult { get; }
