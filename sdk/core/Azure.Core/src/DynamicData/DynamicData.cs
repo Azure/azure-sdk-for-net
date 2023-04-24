@@ -8,9 +8,10 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -161,14 +162,14 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        private T ConvertTo<T>()
+        private T? ConvertTo<T>()
         {
             JsonElement element = _element.GetJsonElement();
 
             try
             {
 #if NET6_0_OR_GREATER
-                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions)!;
+                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
                 return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
@@ -181,7 +182,7 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string? ToString()
         {
             return _element.ToString();
         }

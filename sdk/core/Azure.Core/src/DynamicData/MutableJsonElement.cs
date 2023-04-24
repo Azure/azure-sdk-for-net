@@ -14,7 +14,7 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON element.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public readonly partial struct MutableJsonElement
+    internal readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
@@ -576,7 +576,7 @@ namespace Azure.Core.Json
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string? ToString()
         {
             EnsureValid();
 

@@ -14,7 +14,7 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON value.
     /// </summary>
     [JsonConverter(typeof(JsonConverter))]
-    public sealed partial class MutableJsonDocument : IDisposable
+    internal sealed partial class MutableJsonDocument : IDisposable
     {
         internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 

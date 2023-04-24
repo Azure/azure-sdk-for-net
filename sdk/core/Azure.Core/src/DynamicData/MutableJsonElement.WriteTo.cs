@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Json
 {
-    public partial struct MutableJsonElement
+    internal partial struct MutableJsonElement
     {
         internal void WriteTo(Utf8JsonWriter writer)
         {

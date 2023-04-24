@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure
@@ -56,6 +57,30 @@ namespace Azure
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
             return element.GetObject();
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData data)
+        {
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions());
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData data, DynamicDataNameMapping propertyNameCasing)
+        {
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions() { PropertyNameCasing = propertyNameCasing });
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        internal static dynamic ToDynamicFromJson(this BinaryData data, DynamicJsonOptions options)
+        {
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, options);
         }
 
         private static object? GetObject(in this JsonElement element)
