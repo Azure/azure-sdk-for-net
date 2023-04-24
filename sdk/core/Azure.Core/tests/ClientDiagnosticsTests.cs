@@ -417,11 +417,10 @@ namespace Azure.Core.Tests
         public void OpenTelemetryCompatibilityWithParentBasedSampling()
         {
             AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
-
             Pipeline.ActivityExtensions.ResetFeatureSwitch();
 
             // Open Telemetry Listener
-            TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource($"Azure.*")
                 .SetSampler(new TraceIdRatioBasedSampler(0.1))
                 .Build();
@@ -440,10 +439,13 @@ namespace Azure.Core.Tests
                 scope.Dispose();
             }
 
-            Assert.IsTrue(activeActivityCounts < 20);
+            Assert.IsTrue(activeActivityCounts > 0, "No activities created");
+            Assert.IsTrue(activeActivityCounts < 20, "More than expected activities created");
 
-            OTelTracerProvider.Dispose();
-            OTelTracerProvider.ForceFlush();
+            Assert.IsNull(Activity.Current);
+
+            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", false);
+            Pipeline.ActivityExtensions.ResetFeatureSwitch();
         }
     }
 }
