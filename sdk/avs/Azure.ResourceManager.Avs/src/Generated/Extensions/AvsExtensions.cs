@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Avs.Mock;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A class to add extension methods to Azure.ResourceManager.Avs. </summary>
     public static partial class AvsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AvsPrivateCloudResourceExtension GetAvsPrivateCloudResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AvsPrivateCloudResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AvsPrivateCloudResourceExtension GetAvsPrivateCloudResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AvsPrivateCloudResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AvsResourceGroupResourceExtension GetAvsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AvsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AvsResourceGroupResourceExtension GetAvsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AvsResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static AvsSubscriptionResourceExtension GetAvsSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new AvsSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static AvsSubscriptionResourceExtension GetAvsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new AvsSubscriptionResourceExtension(client, scope);
             });
         }
         #region AvsPrivateCloudResource
@@ -492,7 +509,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
         public static AvsPrivateCloudCollection GetAvsPrivateClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvsPrivateClouds();
+            return GetAvsResourceGroupResourceExtension(resourceGroupResource).GetAvsPrivateClouds();
         }
 
         /// <summary>
@@ -562,7 +579,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionResourceExtension(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -584,7 +601,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
+            return GetAvsSubscriptionResourceExtension(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
         }
 
         /// <summary>
@@ -605,7 +622,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionResourceExtension(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -626,7 +643,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
+            return GetAvsSubscriptionResourceExtension(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -647,7 +664,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
+            return GetAvsPrivateCloudResourceExtension(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -668,7 +685,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
+            return GetAvsPrivateCloudResourceExtension(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
         }
     }
 }

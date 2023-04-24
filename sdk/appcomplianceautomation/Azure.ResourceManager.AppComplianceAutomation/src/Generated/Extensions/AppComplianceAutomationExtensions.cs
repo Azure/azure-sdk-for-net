@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -18,19 +19,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppComplianceAutomation. </summary>
     public static partial class AppComplianceAutomationExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AppComplianceAutomationTenantResourceExtension GetAppComplianceAutomationTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AppComplianceAutomationTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppComplianceAutomationTenantResourceExtension GetAppComplianceAutomationTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AppComplianceAutomationTenantResourceExtension(client, scope);
             });
         }
         #region ReportResource
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetReportResources();
+            return GetAppComplianceAutomationTenantResourceExtension(tenantResource).GetReportResources();
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerService.Mock;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,99 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerService. </summary>
     public static partial class ContainerServiceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AgentPoolSnapshotResourceExtension GetAgentPoolSnapshotResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AgentPoolSnapshotResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AgentPoolSnapshotResourceExtension GetAgentPoolSnapshotResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AgentPoolSnapshotResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerServiceFleetResourceExtension GetContainerServiceFleetResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ContainerServiceFleetResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerServiceFleetResourceExtension GetContainerServiceFleetResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ContainerServiceFleetResourceExtension(client, scope);
+            });
+        }
+
+        private static ContainerServiceManagedClusterResourceExtension GetContainerServiceManagedClusterResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ContainerServiceManagedClusterResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ContainerServiceManagedClusterResourceExtension GetContainerServiceManagedClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ContainerServiceManagedClusterResourceExtension(client, scope);
+            });
+        }
+
+        private static ContainerServiceResourceGroupResourceExtension GetContainerServiceResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ContainerServiceResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ContainerServiceResourceGroupResourceExtension GetContainerServiceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ContainerServiceResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ContainerServiceSubscriptionResourceExtension GetContainerServiceSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ContainerServiceSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ContainerServiceSubscriptionResourceExtension GetContainerServiceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ContainerServiceSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static ManagedClusterSnapshotResourceExtension GetManagedClusterSnapshotResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ManagedClusterSnapshotResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ManagedClusterSnapshotResourceExtension GetManagedClusterSnapshotResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ManagedClusterSnapshotResourceExtension(client, scope);
             });
         }
         #region OSOptionProfileResource
@@ -283,7 +348,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
         public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerServiceManagedClusters();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetContainerServiceManagedClusters();
         }
 
         /// <summary>
@@ -339,7 +404,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
         public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAgentPoolSnapshots();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
         /// <summary>
@@ -395,7 +460,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ManagedClusterSnapshotResources and their operations over a ManagedClusterSnapshotResource. </returns>
         public static ManagedClusterSnapshotCollection GetManagedClusterSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedClusterSnapshots();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetManagedClusterSnapshots();
         }
 
         /// <summary>
@@ -451,7 +516,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerServiceFleets();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetContainerServiceFleets();
         }
 
         /// <summary>
@@ -520,7 +585,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
+            return GetContainerServiceManagedClusterResourceExtension(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -541,7 +606,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
+            return GetContainerServiceManagedClusterResourceExtension(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +627,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
+            return GetAgentPoolSnapshotResourceExtension(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -583,7 +648,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
+            return GetAgentPoolSnapshotResourceExtension(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +669,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
+            return GetManagedClusterSnapshotResourceExtension(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +690,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
+            return GetManagedClusterSnapshotResourceExtension(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -647,7 +712,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -669,7 +734,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
         }
 
         /// <summary>
@@ -690,7 +755,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
+            return GetContainerServiceFleetResourceExtension(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +776,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleets(cancellationToken);
+            return GetContainerServiceFleetResourceExtension(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }
