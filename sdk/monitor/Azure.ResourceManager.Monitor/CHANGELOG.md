@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-04-24)
 
 ### Features Added
 
@@ -12,10 +12,6 @@
 
 - Property `MetadataProvisionedBy` on `DataCollectionRuleData` is no longer available for api-version >= `2022-06-01`
 - Property `MetadataProvisionedBy` on `DataCollectionRuleAsociationData` is no longer available for api-version >= `2022-06-01`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2023-04-04)
 
