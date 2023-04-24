@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<string> hostname = default;
             Optional<string> kernelVersion = default;
             Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<long?> gatewayPort = default;
             Optional<long?> icmHttpPort = default;
             Optional<long?> icmHttpsPort = default;
@@ -150,7 +151,11 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("ipAddress"u8))
                         {
-                            ipAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ipAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayPort"u8))

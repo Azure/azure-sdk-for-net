@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(SizeGB))
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
-                writer.WriteNumberValue(SizeGB.Value);
+                writer.WriteNumberValue(SizeInGB.Value);
             }
             if (Optional.IsDefined(Sku))
             {

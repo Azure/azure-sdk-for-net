@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<ResourceIdentifier> subnet = default;
             Optional<string> databaseSid = default;
             Optional<string> databaseType = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<SubResource> loadBalancerDetails = default;
             Optional<IReadOnlyList<DatabaseVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
@@ -134,7 +135,11 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("ipAddress"u8))
                         {
-                            ipAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ipAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("loadBalancerDetails"u8))

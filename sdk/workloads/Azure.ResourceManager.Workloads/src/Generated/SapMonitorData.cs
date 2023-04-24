@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="monitorSubnetId"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
         /// <param name="storageAccountArmId"> The ARM ID of the Storage account used for SAP monitoring. </param>
-        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, string storageAccountArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> The ARM ID of the MSI used for SAP monitoring. </summary>
         public ResourceIdentifier MsiArmId { get; }
         /// <summary> The ARM ID of the Storage account used for SAP monitoring. </summary>
-        public string StorageAccountArmId { get; }
+        public ResourceIdentifier StorageAccountArmId { get; }
     }
 }

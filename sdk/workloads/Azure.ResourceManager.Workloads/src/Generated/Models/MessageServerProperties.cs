@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Message Server properties. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="hostname"> Message Server SAP Hostname. </param>
         /// <param name="ipAddress"> Message server IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health)
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, IPAddress ipAddress, SapHealthState? health)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Message Server SAP Hostname. </summary>
         public string Hostname { get; }
         /// <summary> Message server IP Address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }

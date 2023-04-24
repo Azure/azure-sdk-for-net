@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             string vmSize = default;
-            ImageReference imageReference = default;
+            SapImageReference imageReference = default;
             SapOSProfile osProfile = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))

@@ -31,13 +31,17 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> centralServerVmId = default;
+            Optional<ResourceIdentifier> centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"u8))
                 {
-                    centralServerVmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    centralServerVmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("softwareInstallationType"u8))

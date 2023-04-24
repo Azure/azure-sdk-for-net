@@ -69,10 +69,12 @@ rename-mapping:
   Monitor.properties.monitorSubnet: monitorSubnetId|arm-id
   Monitor.properties.logAnalyticsWorkspaceArmId: -|arm-id
   Monitor.properties.msiArmId: -|arm-id
+  Monitor.properties.storageAccountArmId: -|arm-id
   Monitor: SapMonitor
   ProviderInstance: SapProviderInstance
   ErrorDefinition: SapVirtualInstanceErrorDetail
   DiskSku: SapDiskSku
+  ImageReference: SapImageReference
   LinuxConfiguration: SapLinuxConfiguration
   NamingPatternType: SapNamingPatternType
   OSConfiguration: SapOSConfiguration
@@ -87,6 +89,18 @@ rename-mapping:
   StorageConfiguration: SapStorageConfiguration
   VirtualMachineConfiguration: SapVirtualMachineConfiguration
   WindowsConfiguration: SapWindowsConfiguration
+  SAPApplicationServerInstance.properties.ipAddress: -|ip-address
+  MessageServerProperties.ipAddress: -|ip-address
+  EnqueueServerProperties.ipAddress: -|ip-address
+  EnqueueReplicationServerProperties.ipAddress: -|ip-address
+  SAPDatabaseInstance.properties.ipAddress: -|ip-address
+  DeployerVmPackages.url: PackageUri
+  ExternalInstallationSoftwareConfiguration.centralServerVmId: -|arm-id
+  DiscoveryConfiguration.centralServerVmId: -|arm-id
+  DiskVolumeConfiguration.sizeGB: SizeInGB
+  DiskDetails.sizeGB: SizeInGB
+  MountFileShareConfiguration.id: fileShareId|arm-id
+  MountFileShareConfiguration.privateEndpointId: -|arm-id
 
 directive:
   - remove-operation: Operations_List

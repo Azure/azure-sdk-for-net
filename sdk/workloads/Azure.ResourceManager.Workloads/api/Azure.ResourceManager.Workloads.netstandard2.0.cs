@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads
         public long? IcmHttpPort { get { throw null; } }
         public long? IcmHttpsPort { get { throw null; } }
         public string InstanceNo { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Workloads
         public string DatabaseSid { get { throw null; } }
         public string DatabaseType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Workloads
         public Azure.Core.ResourceIdentifier MsiArmId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapRoutingPreference? RoutingPreference { get { throw null; } set { } }
-        public string StorageAccountArmId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier StorageAccountArmId { get { throw null; } }
         public string ZoneRedundancyPreference { get { throw null; } set { } }
     }
     public partial class SapMonitorResource : Azure.ResourceManager.ArmResource
@@ -502,8 +502,8 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class DeployerVmPackages
     {
         public DeployerVmPackages() { }
+        public System.Uri PackageUri { get { throw null; } set { } }
         public string StorageAccountId { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class DeploymentConfiguration : Azure.ResourceManager.Workloads.Models.SapConfiguration
     {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         public DiscoveryConfiguration() { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } }
-        public string CentralServerVmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CentralServerVmId { get { throw null; } set { } }
         public string ManagedRgStorageAccountName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         public DiskVolumeConfiguration() { }
         public long? Count { get { throw null; } set { } }
-        public long? SizeGB { get { throw null; } set { } }
+        public long? SizeInGB { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } set { } }
     }
     public partial class EnqueueReplicationServerProperties
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public string InstanceNo { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
     }
@@ -591,13 +591,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public EnqueueServerProperties() { }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
     }
     public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
     {
         public ExternalInstallationSoftwareConfiguration() { }
-        public string CentralServerVmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CentralServerVmId { get { throw null; } set { } }
     }
     public abstract partial class FileShareConfiguration
     {
@@ -629,14 +629,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public HighAvailabilitySoftwareConfiguration(string fencingClientId, string fencingClientPassword) { }
         public string FencingClientId { get { throw null; } set { } }
         public string FencingClientPassword { get { throw null; } set { } }
-    }
-    public partial class ImageReference
-    {
-        public ImageReference() { }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
     }
     public abstract partial class InfrastructureConfiguration
     {
@@ -677,14 +669,14 @@ namespace Azure.ResourceManager.Workloads.Models
         public long? HttpPort { get { throw null; } }
         public long? HttpsPort { get { throw null; } }
         public long? InternalMsPort { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public long? MsPort { get { throw null; } }
     }
     public partial class MountFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration
     {
-        public MountFileShareConfiguration(string id, string privateEndpointId) { }
-        public string Id { get { throw null; } set { } }
-        public string PrivateEndpointId { get { throw null; } set { } }
+        public MountFileShareConfiguration(Azure.Core.ResourceIdentifier fileShareId, Azure.Core.ResourceIdentifier privateEndpointId) { }
+        public Azure.Core.ResourceIdentifier FileShareId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
     }
     public partial class MsSqlServerProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
@@ -897,6 +889,14 @@ namespace Azure.ResourceManager.Workloads.Models
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType left, Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SapImageReference
+    {
+        public SapImageReference() { }
+        public string Offer { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class SapInstallWithoutOSConfigSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
     {
@@ -1188,8 +1188,8 @@ namespace Azure.ResourceManager.Workloads.Models
     }
     public partial class SapVirtualMachineConfiguration
     {
-        public SapVirtualMachineConfiguration(string vmSize, Azure.ResourceManager.Workloads.Models.ImageReference imageReference, Azure.ResourceManager.Workloads.Models.SapOSProfile osProfile) { }
-        public Azure.ResourceManager.Workloads.Models.ImageReference ImageReference { get { throw null; } set { } }
+        public SapVirtualMachineConfiguration(string vmSize, Azure.ResourceManager.Workloads.Models.SapImageReference imageReference, Azure.ResourceManager.Workloads.Models.SapOSProfile osProfile) { }
+        public Azure.ResourceManager.Workloads.Models.SapImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapOSProfile OSProfile { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
     }
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public long? MaximumSupportedDiskCount { get { throw null; } }
         public long? MbpsReadWrite { get { throw null; } }
         public long? MinimumSupportedDiskCount { get { throw null; } }
-        public long? SizeGB { get { throw null; } }
+        public long? SizeInGB { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } }
     }
     public partial class ThreeTierConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-05-01)
+## 1.0.0 (2023-04-28)
 
 This release is first stable release for the Workloads Management library.
 

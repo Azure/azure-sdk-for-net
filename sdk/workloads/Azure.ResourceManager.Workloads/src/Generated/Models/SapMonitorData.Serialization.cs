@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
             Optional<ResourceIdentifier> monitorSubnet = default;
             Optional<ResourceIdentifier> msiArmId = default;
-            Optional<string> storageAccountArmId = default;
+            Optional<ResourceIdentifier> storageAccountArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -238,7 +238,11 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("storageAccountArmId"u8))
                         {
-                            storageAccountArmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

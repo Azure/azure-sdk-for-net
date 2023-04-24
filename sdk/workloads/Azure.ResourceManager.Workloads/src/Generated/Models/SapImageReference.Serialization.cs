@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ImageReference : IUtf8JsonSerializable
+    public partial class SapImageReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageReference DeserializeImageReference(JsonElement element)
+        internal static SapImageReference DeserializeSapImageReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ImageReference(publisher.Value, offer.Value, sku.Value, version.Value);
+            return new SapImageReference(publisher.Value, offer.Value, sku.Value, version.Value);
         }
     }
 }

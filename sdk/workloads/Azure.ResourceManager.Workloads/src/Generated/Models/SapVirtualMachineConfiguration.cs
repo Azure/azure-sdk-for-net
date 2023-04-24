@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="imageReference"> The image reference. </param>
         /// <param name="osProfile"> The OS profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/>, <paramref name="imageReference"/> or <paramref name="osProfile"/> is null. </exception>
-        public SapVirtualMachineConfiguration(string vmSize, ImageReference imageReference, SapOSProfile osProfile)
+        public SapVirtualMachineConfiguration(string vmSize, SapImageReference imageReference, SapOSProfile osProfile)
         {
             Argument.AssertNotNull(vmSize, nameof(vmSize));
             Argument.AssertNotNull(imageReference, nameof(imageReference));
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The virtual machine size. </summary>
         public string VmSize { get; set; }
         /// <summary> The image reference. </summary>
-        public ImageReference ImageReference { get; set; }
+        public SapImageReference ImageReference { get; set; }
         /// <summary> The OS profile. </summary>
         public SapOSProfile OSProfile { get; set; }
     }
