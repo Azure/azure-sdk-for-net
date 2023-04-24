@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -18,51 +19,51 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServiceIdentities. </summary>
     public static partial class ManagedServiceIdentitiesExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ManagedServiceIdentitiesArmResourceExtension GetManagedServiceIdentitiesArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ManagedServiceIdentitiesArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedServiceIdentitiesArmResourceExtension GetManagedServiceIdentitiesArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ManagedServiceIdentitiesArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ManagedServiceIdentitiesResourceGroupResourceExtension GetManagedServiceIdentitiesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ManagedServiceIdentitiesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedServiceIdentitiesResourceGroupResourceExtension GetManagedServiceIdentitiesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ManagedServiceIdentitiesResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static UserAssignedIdentityResourceExtension GetUserAssignedIdentityResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new UserAssignedIdentityResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static UserAssignedIdentityResourceExtension GetUserAssignedIdentityResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new UserAssignedIdentityResourceExtension(client, scope);
             });
         }
         #region SystemAssignedIdentityResource
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetSystemAssignedIdentity();
+            return GetManagedServiceIdentitiesArmResourceExtension(armResource).GetSystemAssignedIdentity();
         }
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSystemAssignedIdentity();
+            return GetManagedServiceIdentitiesArmResourceExtension(client, scope).GetSystemAssignedIdentity();
         }
 
         /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUserAssignedIdentities();
+            return GetManagedServiceIdentitiesResourceGroupResourceExtension(resourceGroupResource).GetUserAssignedIdentities();
         }
 
         /// <summary>
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
+            return GetUserAssignedIdentityResourceExtension(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
+            return GetUserAssignedIdentityResourceExtension(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
         }
     }
 }

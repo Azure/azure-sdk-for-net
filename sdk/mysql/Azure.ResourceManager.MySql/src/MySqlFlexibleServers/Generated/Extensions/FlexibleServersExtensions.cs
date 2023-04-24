@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MySql.FlexibleServers.Mock;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,67 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary> A class to add extension methods to Azure.ResourceManager.MySql.FlexibleServers. </summary>
     public static partial class FlexibleServersExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersResourceGroupResourceExtension GetFlexibleServersResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersResourceGroupResourceExtension GetFlexibleServersResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new FlexibleServersResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersSubscriptionResourceExtension GetFlexibleServersSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersSubscriptionResourceExtension GetFlexibleServersSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new FlexibleServersSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersTenantResourceExtension GetFlexibleServersTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersTenantResourceExtension GetFlexibleServersTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new FlexibleServersTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static MySqlFlexibleServerResourceExtension GetMySqlFlexibleServerResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MySqlFlexibleServerResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MySqlFlexibleServerResourceExtension GetMySqlFlexibleServerResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MySqlFlexibleServerResourceExtension(client, scope);
             });
         }
         #region MySqlFlexibleServerResource
@@ -166,7 +183,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerResources and their operations over a MySqlFlexibleServerResource. </returns>
         public static MySqlFlexibleServerCollection GetMySqlFlexibleServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMySqlFlexibleServers();
+            return GetFlexibleServersResourceGroupResourceExtension(resourceGroupResource).GetMySqlFlexibleServers();
         }
 
         /// <summary>
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An async collection of <see cref="MySqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlFlexibleServerResource> GetMySqlFlexibleServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMySqlFlexibleServersAsync(cancellationToken);
+            return GetMySqlFlexibleServerResourceExtension(subscriptionResource).GetMySqlFlexibleServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +273,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlFlexibleServerResource> GetMySqlFlexibleServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMySqlFlexibleServers(cancellationToken);
+            return GetMySqlFlexibleServerResourceExtension(subscriptionResource).GetMySqlFlexibleServers(cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +295,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An async collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedCapabilitiesAsync(locationName, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).GetLocationBasedCapabilitiesAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +317,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedCapabilities(locationName, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).GetLocationBasedCapabilities(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +342,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsageAsync(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsageAsync(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -350,7 +367,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsage(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsage(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +392,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,7 +417,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailability(locationName, content, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckMySqlFlexibleServerNameAvailability(locationName, content, cancellationToken);
         }
 
         /// <summary>
@@ -420,7 +437,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).ExecuteGetPrivateDnsZoneSuffixAsync(cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersTenantResourceExtension(tenantResource).ExecuteGetPrivateDnsZoneSuffixAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -440,7 +457,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).ExecuteGetPrivateDnsZoneSuffix(cancellationToken);
+            return GetFlexibleServersTenantResourceExtension(tenantResource).ExecuteGetPrivateDnsZoneSuffix(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningCompute.Mock;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.MachineLearningCompute
     /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearningCompute. </summary>
     public static partial class MachineLearningComputeExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MachineLearningComputeResourceGroupResourceExtension GetMachineLearningComputeResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MachineLearningComputeResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MachineLearningComputeResourceGroupResourceExtension GetMachineLearningComputeResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MachineLearningComputeResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MachineLearningComputeTenantResourceExtension GetMachineLearningComputeTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MachineLearningComputeTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MachineLearningComputeTenantResourceExtension GetMachineLearningComputeTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MachineLearningComputeTenantResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static OperationalizationClusterResourceExtension GetOperationalizationClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new OperationalizationClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static OperationalizationClusterResourceExtension GetOperationalizationClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new OperationalizationClusterResourceExtension(client, scope);
             });
         }
         #region OperationalizationClusterResource
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An object representing collection of OperationalizationClusterResources and their operations over a OperationalizationClusterResource. </returns>
         public static OperationalizationClusterCollection GetOperationalizationClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetOperationalizationClusters();
+            return GetMachineLearningComputeResourceGroupResourceExtension(resourceGroupResource).GetOperationalizationClusters();
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalizationClusterResource> GetOperationalizationClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalizationClustersAsync(skiptoken, cancellationToken);
+            return GetOperationalizationClusterResourceExtension(subscriptionResource).GetOperationalizationClustersAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalizationClusterResource> GetOperationalizationClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalizationClusters(skiptoken, cancellationToken);
+            return GetOperationalizationClusterResourceExtension(subscriptionResource).GetOperationalizationClusters(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAvailableOperationsMachineLearningComputesAsync(cancellationToken);
+            return GetMachineLearningComputeTenantResourceExtension(tenantResource).GetAvailableOperationsMachineLearningComputesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAvailableOperationsMachineLearningComputes(cancellationToken);
+            return GetMachineLearningComputeTenantResourceExtension(tenantResource).GetAvailableOperationsMachineLearningComputes(cancellationToken);
         }
     }
 }

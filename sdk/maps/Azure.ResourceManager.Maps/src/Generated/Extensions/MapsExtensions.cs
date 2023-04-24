@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maps.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.Maps
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maps. </summary>
     public static partial class MapsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MapsAccountResourceExtension GetMapsAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MapsAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MapsAccountResourceExtension GetMapsAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MapsAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MapsResourceGroupResourceExtension GetMapsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MapsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MapsResourceGroupResourceExtension GetMapsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MapsResourceGroupResourceExtension(client, scope);
             });
         }
         #region MapsAccountResource
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMapsAccounts();
+            return GetMapsResourceGroupResourceExtension(resourceGroupResource).GetMapsAccounts();
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An async collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
+            return GetMapsAccountResourceExtension(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMapsAccounts(cancellationToken);
+            return GetMapsAccountResourceExtension(subscriptionResource).GetMapsAccounts(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EnergyServices.Mock;
 using Azure.ResourceManager.EnergyServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.EnergyServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.EnergyServices. </summary>
     public static partial class EnergyServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static EnergyServiceResourceExtension GetEnergyServiceResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new EnergyServiceResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EnergyServiceResourceExtension GetEnergyServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new EnergyServiceResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static EnergyServicesResourceGroupResourceExtension GetEnergyServicesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new EnergyServicesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EnergyServicesResourceGroupResourceExtension GetEnergyServicesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new EnergyServicesResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static EnergyServicesSubscriptionResourceExtension GetEnergyServicesSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new EnergyServicesSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static EnergyServicesSubscriptionResourceExtension GetEnergyServicesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new EnergyServicesSubscriptionResourceExtension(client, scope);
             });
         }
         #region EnergyServiceResource
@@ -74,7 +91,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> An object representing collection of EnergyServiceResources and their operations over a EnergyServiceResource. </returns>
         public static EnergyServiceCollection GetEnergyServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEnergyServices();
+            return GetEnergyServicesResourceGroupResourceExtension(resourceGroupResource).GetEnergyServices();
         }
 
         /// <summary>
@@ -146,7 +163,7 @@ namespace Azure.ResourceManager.EnergyServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetEnergyServicesSubscriptionResourceExtension(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,7 +187,7 @@ namespace Azure.ResourceManager.EnergyServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
+            return GetEnergyServicesSubscriptionResourceExtension(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +208,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> An async collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EnergyServiceResource> GetEnergyServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEnergyServicesAsync(cancellationToken);
+            return GetEnergyServiceResourceExtension(subscriptionResource).GetEnergyServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +229,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> A collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EnergyServiceResource> GetEnergyServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEnergyServices(cancellationToken);
+            return GetEnergyServiceResourceExtension(subscriptionResource).GetEnergyServices(cancellationToken);
         }
     }
 }
