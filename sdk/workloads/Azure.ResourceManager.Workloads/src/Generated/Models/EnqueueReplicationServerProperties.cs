@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Net;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Enqueue Replication Server (ERS) properties. </summary>
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="kernelPatch"> ERS SAP Kernel Patch level. </param>
         /// <param name="ipAddress"> ERS SAP IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, IPAddress ipAddress, SapHealthState? health)
+        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SapHealthState? health)
         {
             ErsVersion = ersVersion;
             InstanceNo = instanceNo;
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> ERS SAP Kernel Patch level. </summary>
         public string KernelPatch { get; }
         /// <summary> ERS SAP IP Address. </summary>
-        public IPAddress IPAddress { get; }
+        public string IPAddress { get; }
         /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }

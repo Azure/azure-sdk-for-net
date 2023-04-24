@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Net;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Enqueue Server properties. </summary>
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="ipAddress"> Enqueue Server SAP IP Address. </param>
         /// <param name="port"> Enqueue Server Port. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal EnqueueServerProperties(string hostname, IPAddress ipAddress, long? port, SapHealthState? health)
+        internal EnqueueServerProperties(string hostname, string ipAddress, long? port, SapHealthState? health)
         {
             Hostname = hostname;
             IPAddress = ipAddress;
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Enqueue Server SAP Hostname. </summary>
         public string Hostname { get; }
         /// <summary> Enqueue Server SAP IP Address. </summary>
-        public IPAddress IPAddress { get; }
+        public string IPAddress { get; }
         /// <summary> Enqueue Server Port. </summary>
         public long? Port { get; }
         /// <summary> Defines the health of SAP Instances. </summary>

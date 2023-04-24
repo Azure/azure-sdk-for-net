@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads
         public long? IcmHttpPort { get { throw null; } }
         public long? IcmHttpsPort { get { throw null; } }
         public string InstanceNo { get { throw null; } }
-        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Workloads
         public string DatabaseSid { get { throw null; } }
         public string DatabaseType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
-        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public string InstanceNo { get { throw null; } }
-        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
     }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public EnqueueServerProperties() { }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
-        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
     }
     public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public long? HttpPort { get { throw null; } }
         public long? HttpsPort { get { throw null; } }
         public long? InternalMsPort { get { throw null; } }
-        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public long? MsPort { get { throw null; } }
     }
     public partial class MountFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration

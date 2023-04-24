@@ -89,11 +89,6 @@ rename-mapping:
   StorageConfiguration: SapStorageConfiguration
   VirtualMachineConfiguration: SapVirtualMachineConfiguration
   WindowsConfiguration: SapWindowsConfiguration
-  SAPApplicationServerInstance.properties.ipAddress: -|ip-address
-  MessageServerProperties.ipAddress: -|ip-address
-  EnqueueServerProperties.ipAddress: -|ip-address
-  EnqueueReplicationServerProperties.ipAddress: -|ip-address
-  SAPDatabaseInstance.properties.ipAddress: -|ip-address
   DeployerVmPackages.url: PackageUri
   ExternalInstallationSoftwareConfiguration.centralServerVmId: -|arm-id
   DiscoveryConfiguration.centralServerVmId: -|arm-id

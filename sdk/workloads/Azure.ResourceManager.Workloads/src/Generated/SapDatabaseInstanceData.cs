@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to Database resource. </param>
-        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, IPAddress ipAddress, SubResource loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, string ipAddress, SubResource loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
             DatabaseSid = databaseSid;
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </summary>
         public string DatabaseType { get; }
         /// <summary> Database IP Address. </summary>
-        public IPAddress IPAddress { get; }
+        public string IPAddress { get; }
         /// <summary> The Load Balancer details such as LoadBalancer ID attached to Database Virtual Machines. </summary>
         internal SubResource LoadBalancerDetails { get; }
         /// <summary> Gets Id. </summary>

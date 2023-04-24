@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> hostname = default;
             Optional<string> kernelVersion = default;
             Optional<string> kernelPatch = default;
-            Optional<IPAddress> ipAddress = default;
+            Optional<string> ipAddress = default;
             Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,11 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("health"u8))

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Application Instance errors. </param>
-        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, IPAddress ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
             SubnetId = subnetId;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> Application server instance SAP Kernel Patch level. </summary>
         public string KernelPatch { get; }
         /// <summary> Application server instance SAP IP Address. </summary>
-        public IPAddress IPAddress { get; }
+        public string IPAddress { get; }
         /// <summary> Application server instance gateway Port. </summary>
         public long? GatewayPort { get; }
         /// <summary> Application server instance ICM HTTP Port. </summary>
