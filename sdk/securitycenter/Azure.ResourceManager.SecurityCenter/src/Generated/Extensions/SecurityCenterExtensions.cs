@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityCenter.Mock;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -19,67 +20,195 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityCenter. </summary>
     public static partial class SecurityCenterExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static AdaptiveApplicationControlGroupResourceExtension GetAdaptiveApplicationControlGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new AdaptiveApplicationControlGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AdaptiveApplicationControlGroupResourceExtension GetAdaptiveApplicationControlGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new AdaptiveApplicationControlGroupResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CustomAssessmentAutomationResourceExtension GetCustomAssessmentAutomationResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CustomAssessmentAutomationResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CustomAssessmentAutomationResourceExtension GetCustomAssessmentAutomationResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CustomAssessmentAutomationResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CustomEntityStoreAssignmentResourceExtension GetCustomEntityStoreAssignmentResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CustomEntityStoreAssignmentResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CustomEntityStoreAssignmentResourceExtension GetCustomEntityStoreAssignmentResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new CustomEntityStoreAssignmentResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static IotSecuritySolutionResourceExtension GetIotSecuritySolutionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new IotSecuritySolutionResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IotSecuritySolutionResourceExtension GetIotSecuritySolutionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new IotSecuritySolutionResourceExtension(client, scope);
+            });
+        }
+
+        private static JitNetworkAccessPolicyResourceExtension GetJitNetworkAccessPolicyResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new JitNetworkAccessPolicyResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static JitNetworkAccessPolicyResourceExtension GetJitNetworkAccessPolicyResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new JitNetworkAccessPolicyResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityAutomationResourceExtension GetSecurityAutomationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityAutomationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityAutomationResourceExtension GetSecurityAutomationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityAutomationResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityCenterArmResourceExtension GetSecurityCenterArmResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityCenterArmResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityCenterArmResourceExtension GetSecurityCenterArmResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityCenterArmResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityCenterResourceGroupResourceExtension GetSecurityCenterResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityCenterResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityCenterResourceGroupResourceExtension GetSecurityCenterResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityCenterResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityCenterSubscriptionResourceExtension GetSecurityCenterSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityCenterSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityCenterSubscriptionResourceExtension GetSecurityCenterSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityCenterSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityCenterTenantResourceExtension GetSecurityCenterTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityCenterTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityCenterTenantResourceExtension GetSecurityCenterTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityCenterTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityConnectorResourceExtension GetSecurityConnectorResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityConnectorResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityConnectorResourceExtension GetSecurityConnectorResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityConnectorResourceExtension(client, scope);
+            });
+        }
+
+        private static SoftwareInventoryResourceExtension GetSoftwareInventoryResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SoftwareInventoryResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SoftwareInventoryResourceExtension GetSoftwareInventoryResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SoftwareInventoryResourceExtension(client, scope);
             });
         }
         #region CustomAssessmentAutomationResource
@@ -943,7 +1072,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
         public static ComplianceResultCollection GetComplianceResults(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetComplianceResults();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetComplianceResults();
         }
 
         /// <summary>
@@ -1002,7 +1131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
         public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAdvancedThreatProtectionSetting();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetAdvancedThreatProtectionSetting();
         }
 
         /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>
@@ -1011,7 +1140,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
         public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDeviceSecurityGroups();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetDeviceSecurityGroups();
         }
 
         /// <summary>
@@ -1070,7 +1199,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
         public static SecurityComplianceCollection GetSecurityCompliances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSecurityCompliances();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetSecurityCompliances();
         }
 
         /// <summary>
@@ -1129,7 +1258,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
         public static SecurityAssessmentCollection GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSecurityAssessments();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetSecurityAssessments();
         }
 
         /// <summary>
@@ -1190,7 +1319,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
         public static SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSqlVulnerabilityAssessmentScans();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetSqlVulnerabilityAssessmentScans();
         }
 
         /// <summary>
@@ -1251,7 +1380,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
         public static SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSqlVulnerabilityAssessmentBaselineRules();
+            return GetSecurityCenterArmResourceExtension(client, scope).GetSqlVulnerabilityAssessmentBaselineRules();
         }
 
         /// <summary>
@@ -1311,7 +1440,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of CustomAssessmentAutomationResources and their operations over a CustomAssessmentAutomationResource. </returns>
         public static CustomAssessmentAutomationCollection GetCustomAssessmentAutomations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomAssessmentAutomations();
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetCustomAssessmentAutomations();
         }
 
         /// <summary>
@@ -1367,7 +1496,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of CustomEntityStoreAssignmentResources and their operations over a CustomEntityStoreAssignmentResource. </returns>
         public static CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomEntityStoreAssignments();
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetCustomEntityStoreAssignments();
         }
 
         /// <summary>
@@ -1423,7 +1552,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of IotSecuritySolutionResources and their operations over a IotSecuritySolutionResource. </returns>
         public static IotSecuritySolutionCollection GetIotSecuritySolutions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIotSecuritySolutions();
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetIotSecuritySolutions();
         }
 
         /// <summary>
@@ -1480,7 +1609,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
         public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         }
 
         /// <summary>
@@ -1538,7 +1667,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityAutomationResources and their operations over a SecurityAutomationResource. </returns>
         public static SecurityAutomationCollection GetSecurityAutomations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityAutomations();
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetSecurityAutomations();
         }
 
         /// <summary>
@@ -1603,7 +1732,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
         }
 
         /// <summary>
@@ -1672,7 +1801,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName);
         }
 
         /// <summary>
@@ -1735,7 +1864,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
         public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
         }
 
         /// <summary>
@@ -1794,7 +1923,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
         public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
         }
 
         /// <summary>
@@ -1861,7 +1990,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSoftwareInventories(resourceNamespace, resourceType, resourceName);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetSoftwareInventories(resourceNamespace, resourceType, resourceName);
         }
 
         /// <summary>
@@ -1923,7 +2052,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityConnectorResources and their operations over a SecurityConnectorResource. </returns>
         public static SecurityConnectorCollection GetSecurityConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityConnectors();
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetSecurityConnectors();
         }
 
         /// <summary>
@@ -1993,7 +2122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2015,7 +2144,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SecurityCenterAllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
         }
 
         /// <summary>
@@ -2041,7 +2170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTopologyAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetTopologyAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2067,7 +2196,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTopology(ascLocation, topologyResourceName, cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetTopology(ascLocation, topologyResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -2088,7 +2217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
+            return GetJitNetworkAccessPolicyResourceExtension(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2109,7 +2238,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
+            return GetJitNetworkAccessPolicyResourceExtension(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -2135,7 +2264,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2161,7 +2290,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
         }
 
         /// <summary>
@@ -2187,7 +2316,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2213,7 +2342,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
         }
 
         /// <summary>
@@ -2239,7 +2368,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2265,7 +2394,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
         }
 
         /// <summary>
@@ -2286,7 +2415,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2307,7 +2436,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
+            return GetSecurityCenterResourceGroupResourceExtension(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityCenterPricingResources in the SubscriptionResource. </summary>
@@ -2315,7 +2444,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
         public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCenterPricings();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityCenterPricings();
         }
 
         /// <summary>
@@ -2371,7 +2500,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
         public static SecurityCenterLocationCollection GetSecurityCenterLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCenterLocations();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityCenterLocations();
         }
 
         /// <summary>
@@ -2423,7 +2552,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
         public static AutoProvisioningSettingCollection GetAutoProvisioningSettings(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoProvisioningSettings();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAutoProvisioningSettings();
         }
 
         /// <summary>
@@ -2479,7 +2608,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
         public static SecurityContactCollection GetSecurityContacts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityContacts();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityContacts();
         }
 
         /// <summary>
@@ -2535,7 +2664,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
         public static SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityWorkspaceSettings();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityWorkspaceSettings();
         }
 
         /// <summary>
@@ -2591,7 +2720,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
         public static RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegulatoryComplianceStandards();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetRegulatoryComplianceStandards();
         }
 
         /// <summary>
@@ -2647,7 +2776,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
         public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityAlertsSuppressionRules();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityAlertsSuppressionRules();
         }
 
         /// <summary>
@@ -2703,7 +2832,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
         public static SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
         }
 
         /// <summary>
@@ -2759,7 +2888,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
         public static SecureScoreCollection GetSecureScores(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScores();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecureScores();
         }
 
         /// <summary>
@@ -2815,7 +2944,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
         public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCloudConnectors();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecurityCloudConnectors();
         }
 
         /// <summary>
@@ -2871,7 +3000,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
         public static SecuritySettingCollection GetSecuritySettings(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySettings();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecuritySettings();
         }
 
         /// <summary>
@@ -2923,7 +3052,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of IngestionSettingResources and their operations over a IngestionSettingResource. </returns>
         public static IngestionSettingCollection GetIngestionSettings(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIngestionSettings();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetIngestionSettings();
         }
 
         /// <summary>
@@ -2979,7 +3108,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
         public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionGovernanceRules();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSubscriptionGovernanceRules();
         }
 
         /// <summary>
@@ -3035,7 +3164,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
         public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionSecurityApplications();
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSubscriptionSecurityApplications();
         }
 
         /// <summary>
@@ -3104,7 +3233,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardingsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetMdeOnboardingsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3125,7 +3254,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MdeOnboarding> GetMdeOnboardings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardings(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetMdeOnboardings(cancellationToken);
         }
 
         /// <summary>
@@ -3145,7 +3274,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardingAsync(cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetMdeOnboardingAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3165,7 +3294,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<MdeOnboarding> GetMdeOnboarding(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboarding(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetMdeOnboarding(cancellationToken);
         }
 
         /// <summary>
@@ -3186,7 +3315,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomAssessmentAutomationsAsync(cancellationToken);
+            return GetCustomAssessmentAutomationResourceExtension(subscriptionResource).GetCustomAssessmentAutomationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3207,7 +3336,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomAssessmentAutomations(cancellationToken);
+            return GetCustomAssessmentAutomationResourceExtension(subscriptionResource).GetCustomAssessmentAutomations(cancellationToken);
         }
 
         /// <summary>
@@ -3228,7 +3357,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomEntityStoreAssignmentsAsync(cancellationToken);
+            return GetCustomEntityStoreAssignmentResourceExtension(subscriptionResource).GetCustomEntityStoreAssignmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3249,7 +3378,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomEntityStoreAssignments(cancellationToken);
+            return GetCustomEntityStoreAssignmentResourceExtension(subscriptionResource).GetCustomEntityStoreAssignments(cancellationToken);
         }
 
         /// <summary>
@@ -3271,7 +3400,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotSecuritySolutionsAsync(filter, cancellationToken);
+            return GetIotSecuritySolutionResourceExtension(subscriptionResource).GetIotSecuritySolutionsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3293,7 +3422,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotSecuritySolutions(filter, cancellationToken);
+            return GetIotSecuritySolutionResourceExtension(subscriptionResource).GetIotSecuritySolutions(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3315,7 +3444,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTasksAsync(filter, cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetTasksAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3337,7 +3466,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTasks(filter, cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetTasks(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3358,7 +3487,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityAutomationsAsync(cancellationToken);
+            return GetSecurityAutomationResourceExtension(subscriptionResource).GetSecurityAutomationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3379,7 +3508,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAutomationResource> GetSecurityAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityAutomations(cancellationToken);
+            return GetSecurityAutomationResourceExtension(subscriptionResource).GetSecurityAutomations(cancellationToken);
         }
 
         /// <summary>
@@ -3402,7 +3531,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroupsAsync(includePathRecommendations, summary, cancellationToken);
+            return GetAdaptiveApplicationControlGroupResourceExtension(subscriptionResource).GetAdaptiveApplicationControlGroupsAsync(includePathRecommendations, summary, cancellationToken);
         }
 
         /// <summary>
@@ -3425,7 +3554,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroups(includePathRecommendations, summary, cancellationToken);
+            return GetAdaptiveApplicationControlGroupResourceExtension(subscriptionResource).GetAdaptiveApplicationControlGroups(includePathRecommendations, summary, cancellationToken);
         }
 
         /// <summary>
@@ -3446,7 +3575,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3467,7 +3596,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllowedConnections(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAllowedConnections(cancellationToken);
         }
 
         /// <summary>
@@ -3488,7 +3617,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTopologiesAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetTopologiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3509,7 +3638,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTopologies(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetTopologies(cancellationToken);
         }
 
         /// <summary>
@@ -3530,7 +3659,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
+            return GetJitNetworkAccessPolicyResourceExtension(subscriptionResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3551,7 +3680,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJitNetworkAccessPolicies(cancellationToken);
+            return GetJitNetworkAccessPolicyResourceExtension(subscriptionResource).GetJitNetworkAccessPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -3572,7 +3701,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3593,7 +3722,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken);
         }
 
         /// <summary>
@@ -3614,7 +3743,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceDataAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAllSecuritySolutionsReferenceDataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3635,7 +3764,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceData(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAllSecuritySolutionsReferenceData(cancellationToken);
         }
 
         /// <summary>
@@ -3656,7 +3785,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExternalSecuritySolutionsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetExternalSecuritySolutionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3677,7 +3806,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExternalSecuritySolutions(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetExternalSecuritySolutions(cancellationToken);
         }
 
         /// <summary>
@@ -3699,7 +3828,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlsAsync(expand, cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecureScoreControlsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3721,7 +3850,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDetails> GetSecureScoreControls(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControls(expand, cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecureScoreControls(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3742,7 +3871,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscriptionAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecureScoreControlDefinitionsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3763,7 +3892,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
         }
 
         /// <summary>
@@ -3784,7 +3913,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3805,7 +3934,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySolutions(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetSecuritySolutions(cancellationToken);
         }
 
         /// <summary>
@@ -3826,7 +3955,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAlertData> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertsAsync(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3847,7 +3976,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAlertData> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlerts(cancellationToken);
+            return GetSecurityCenterSubscriptionResourceExtension(subscriptionResource).GetAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -3868,7 +3997,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSoftwareInventoriesAsync(cancellationToken);
+            return GetSoftwareInventoryResourceExtension(subscriptionResource).GetSoftwareInventoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3889,7 +4018,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SoftwareInventoryResource> GetSoftwareInventories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSoftwareInventories(cancellationToken);
+            return GetSoftwareInventoryResourceExtension(subscriptionResource).GetSoftwareInventories(cancellationToken);
         }
 
         /// <summary>
@@ -3910,7 +4039,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityConnectorsAsync(cancellationToken);
+            return GetSecurityConnectorResourceExtension(subscriptionResource).GetSecurityConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3931,7 +4060,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityConnectorResource> GetSecurityConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityConnectors(cancellationToken);
+            return GetSecurityConnectorResourceExtension(subscriptionResource).GetSecurityConnectors(cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>
@@ -3939,7 +4068,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
         public static TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAllTenantAssessmentMetadata();
+            return GetSecurityCenterTenantResourceExtension(tenantResource).GetAllTenantAssessmentMetadata();
         }
 
         /// <summary>
@@ -4008,7 +4137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSecureScoreControlDefinitionsAsync(cancellationToken);
+            return GetSecurityCenterTenantResourceExtension(tenantResource).GetSecureScoreControlDefinitionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4029,7 +4158,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSecureScoreControlDefinitions(cancellationToken);
+            return GetSecurityCenterTenantResourceExtension(tenantResource).GetSecureScoreControlDefinitions(cancellationToken);
         }
     }
 }

@@ -12,41 +12,42 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover.Mock;
 
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageMover. </summary>
     public static partial class StorageMoverExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageMoverResourceExtension GetStorageMoverResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageMoverResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static StorageMoverResourceExtension GetStorageMoverResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new StorageMoverResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageMoverResourceGroupResourceExtension GetStorageMoverResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageMoverResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static StorageMoverResourceGroupResourceExtension GetStorageMoverResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new StorageMoverResourceGroupResourceExtension(client, scope);
             });
         }
         #region StorageMoverResource
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
         public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageMovers();
+            return GetStorageMoverResourceGroupResourceExtension(resourceGroupResource).GetStorageMovers();
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMoversAsync(cancellationToken);
+            return GetStorageMoverResourceExtension(subscriptionResource).GetStorageMoversAsync(cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMovers(cancellationToken);
+            return GetStorageMoverResourceExtension(subscriptionResource).GetStorageMovers(cancellationToken);
         }
     }
 }
