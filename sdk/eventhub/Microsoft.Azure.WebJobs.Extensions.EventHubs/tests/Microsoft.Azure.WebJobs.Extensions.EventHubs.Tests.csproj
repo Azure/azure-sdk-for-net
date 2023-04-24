@@ -35,5 +35,5 @@
 
   <ItemGroup>
     <Folder Include="Properties" />
-  </ItemGroup>	
+  </ItemGroup>
 </Project>

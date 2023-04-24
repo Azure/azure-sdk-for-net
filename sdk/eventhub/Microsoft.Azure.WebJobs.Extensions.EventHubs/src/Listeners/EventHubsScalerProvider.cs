@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host;
@@ -38,12 +39,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             var logForwarder = serviceProvider.GetService<AzureEventSourceLogForwarder>();
             var options = serviceProvider.GetService<IOptions<EventHubOptions>>();
             var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-            var checkpointClientProvider = serviceProvider.GetService<CheckpointClientProvider>();
+            var checkpointClientProvider = new CheckpointClientProvider(configuration, azureComponentFactory, logForwarder, loggerFactory.CreateLogger<BlobServiceClient>());
             var nameResolver = serviceProvider.GetService<INameResolver>();
-            var evetnHubMetadata = JsonConvert.DeserializeObject<EventHubMetadata>(triggerMetadata.Metadata.ToString());
+            var eventHubMetadata = JsonConvert.DeserializeObject<EventHubMetadata>(triggerMetadata.Metadata.ToString());
             var factory = new EventHubClientFactory(configuration, hostComponentFactory, options, nameResolver, logForwarder, checkpointClientProvider);
-            evetnHubMetadata.ResolveProperties(serviceProvider.GetService<INameResolver>());
-            var eventHubConsumerClient = factory.GetEventHubConsumerClient(evetnHubMetadata.EventHubName, evetnHubMetadata.Connection, evetnHubMetadata.ConsumerGroup);
+            eventHubMetadata.ResolveProperties(serviceProvider.GetService<INameResolver>());
+            var eventHubConsumerClient = factory.GetEventHubConsumerClient(eventHubMetadata.EventHubName, eventHubMetadata.Connection, eventHubMetadata.ConsumerGroup);
             var checkpointStore = new BlobCheckpointStoreInternal(
                 factory.GetCheckpointStoreClient(),
                 triggerMetadata.FunctionName,
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             return _targetScaler;
         }
 
-        internal class EventHubMetadata
+        private class EventHubMetadata
         {
             [JsonProperty]
             public string EventHubName { get; set; }

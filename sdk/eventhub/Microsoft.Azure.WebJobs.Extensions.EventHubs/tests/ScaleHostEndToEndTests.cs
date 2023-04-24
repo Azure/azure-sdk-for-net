@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                     {
                         metadata.Properties[nameof(AzureComponentFactory)] = factoryWrapper;
                     }
-                    builder.AddServiceBusScaleForTrigger(metadata);
+                    builder.AddEventHubsScaleForTrigger(metadata);
                 }
             },
             scaleOptions =>
