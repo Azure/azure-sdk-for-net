@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.EventGrid.csproj" />
   </ItemGroup>
   
