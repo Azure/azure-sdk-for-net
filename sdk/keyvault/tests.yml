@@ -13,6 +13,8 @@ extends:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'eastus2euap'
+        # Some resource providers required for attestation are not supported in canary.
+        EnableAttestation: false
         # Managed HSM test resources are expensive and provisioning has not been reliable.
         # Given test coverage of non-canary regions we probably don't need to test in canary.
         MatrixFilters:
