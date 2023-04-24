@@ -1,19 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 
 namespace Azure.Core
 {
-    internal class ExponentialDelayStrategyInternal : DelayStrategy
+    internal class ExponentialDelayStrategy : DelayStrategy
     {
         private readonly TimeSpan _delay;
 
-        public ExponentialDelayStrategyInternal(
-            TimeSpan delay,
-            TimeSpan maxDelay) : base(maxDelay)
+        public ExponentialDelayStrategy(
+            TimeSpan? delay = default,
+            TimeSpan? maxDelay = default) : base(maxDelay)
         {
-            _delay = delay;
+            _delay = delay ?? TimeSpan.FromSeconds(0.8);
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) =>
