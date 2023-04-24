@@ -443,6 +443,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(activeActivityCounts < 20);
 
             OTelTracerProvider.Dispose();
+            OTelTracerProvider.ForceFlush();
         }
     }
 }
