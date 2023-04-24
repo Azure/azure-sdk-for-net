@@ -202,7 +202,7 @@ namespace Azure.Core.Dynamic
 
             if (_element.ValueKind == JsonValueKind.Null)
             {
-                return obj is null || obj is DynamicData d && Equals(d);
+                return obj is DynamicData d && Equals(d);
             }
 
             return obj switch
@@ -265,7 +265,7 @@ namespace Azure.Core.Dynamic
         {
             if (_element.TryGetDouble(out double d))
             {
-                return other._element.TryGetDouble(out Double od) && d == od;
+                return other._element.TryGetDouble(out double od) && d == od;
             }
 
             if (_element.TryGetInt64(out long l))
