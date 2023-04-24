@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -507,6 +508,17 @@ namespace Azure.Core.Tests.Public
 
             Assert.AreEqual("Hi!", model.Message);
             Assert.AreEqual(5, model.Number);
+        }
+
+        [Test]
+        public void CallToInternalMethodFails()
+        {
+            // Arrange
+            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamicFromJson();
+
+            // Act
+            using Stream stream = new MemoryStream();
+            Assert.Throws<RuntimeBinderException>(() => json.WriteTo(stream));
         }
     }
 }
