@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<IList<BinaryData>> meterFilter = default;
             Optional<BinaryData> tagFilter = default;
             Optional<decimal> threshold = default;
-            Optional<AlertOperator> @operator = default;
+            Optional<CostManagementAlertOperator> @operator = default;
             Optional<decimal> amount = default;
             Optional<string> unit = default;
             Optional<decimal> currentSpend = default;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    @operator = new AlertOperator(property.Value.GetString());
+                    @operator = new CostManagementAlertOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("amount"u8))

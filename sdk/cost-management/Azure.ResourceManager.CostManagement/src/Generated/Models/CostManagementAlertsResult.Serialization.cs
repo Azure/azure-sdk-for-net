@@ -12,9 +12,9 @@ using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class AlertsResult
+    internal partial class CostManagementAlertsResult
     {
-        internal static AlertsResult DeserializeAlertsResult(JsonElement element)
+        internal static CostManagementAlertsResult DeserializeCostManagementAlertsResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new AlertsResult(Optional.ToList(value), nextLink.Value);
+            return new CostManagementAlertsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ErrorDetails : IUtf8JsonSerializable
+    public partial class ExportRunErrorDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
+        internal static ExportRunErrorDetails DeserializeExportRunErrorDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ErrorDetails(code.Value, message.Value);
+            return new ExportRunErrorDetails(code.Value, message.Value);
         }
     }
 }

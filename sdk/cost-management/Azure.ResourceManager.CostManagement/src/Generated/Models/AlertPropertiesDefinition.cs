@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="alertType"> type of alert. </param>
         /// <param name="category"> Alert category. </param>
         /// <param name="criteria"> Criteria that triggered alert. </param>
-        internal AlertPropertiesDefinition(AlertType? alertType, AlertCategory? category, AlertCriterion? criteria)
+        internal AlertPropertiesDefinition(CostManagementAlertType? alertType, CostManagementAlertCategory? category, AlertCriterion? criteria)
         {
             AlertType = alertType;
             Category = category;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> type of alert. </summary>
-        public AlertType? AlertType { get; set; }
+        public CostManagementAlertType? AlertType { get; set; }
         /// <summary> Alert category. </summary>
-        public AlertCategory? Category { get; set; }
+        public CostManagementAlertCategory? Category { get; set; }
         /// <summary> Criteria that triggered alert. </summary>
         public AlertCriterion? Criteria { get; set; }
     }

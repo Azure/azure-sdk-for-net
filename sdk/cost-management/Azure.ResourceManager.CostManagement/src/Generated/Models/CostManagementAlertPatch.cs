@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Alert description. </summary>
         public string Description { get; set; }
         /// <summary> Source of alert. </summary>
-        public AlertSource? Source { get; set; }
+        public CostManagementAlertSource? Source { get; set; }
         /// <summary> Alert details. </summary>
         public AlertPropertiesDetails Details { get; set; }
         /// <summary> related budget. </summary>
         public string CostEntityId { get; set; }
         /// <summary> alert status. </summary>
-        public AlertStatus? Status { get; set; }
+        public CostManagementAlertStatus? Status { get; set; }
         /// <summary> dateTime in which alert was created. </summary>
         public string CreationTime { get; set; }
         /// <summary> dateTime in which alert was closed. </summary>

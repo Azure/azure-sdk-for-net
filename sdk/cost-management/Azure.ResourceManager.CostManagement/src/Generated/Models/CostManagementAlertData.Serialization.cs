@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CostManagement
             Optional<SystemData> systemData = default;
             Optional<AlertPropertiesDefinition> definition = default;
             Optional<string> description = default;
-            Optional<AlertSource> source = default;
+            Optional<CostManagementAlertSource> source = default;
             Optional<AlertPropertiesDetails> details = default;
             Optional<string> costEntityId = default;
-            Optional<AlertStatus> status = default;
+            Optional<CostManagementAlertStatus> status = default;
             Optional<string> creationTime = default;
             Optional<string> closeTime = default;
             Optional<string> modificationTime = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            source = new AlertSource(property0.Value.GetString());
+                            source = new CostManagementAlertSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("details"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            status = new AlertStatus(property0.Value.GetString());
+                            status = new CostManagementAlertStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="enrollmentStartDate"> datetime of enrollmentStartDate. </param>
         /// <param name="enrollmentEndDate"> datetime of enrollmentEndDate. </param>
         /// <param name="invoicingThreshold"> invoicing threshold. </param>
-        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, AlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold)
+        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold)
         {
             TimeGrainType = timeGrainType;
             PeriodStartDate = periodStartDate;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> notification threshold percentage as a decimal which activated this alert. </summary>
         public decimal? Threshold { get; set; }
         /// <summary> operator used to compare currentSpend with amount. </summary>
-        public AlertOperator? Operator { get; set; }
+        public CostManagementAlertOperator? Operator { get; set; }
         /// <summary> budget threshold amount. </summary>
         public decimal? Amount { get; set; }
         /// <summary> unit of currency being used. </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
         /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, AlertSource? source, AlertPropertiesDetails details, string costEntityId, AlertStatus? status, string creationTime, string closeTime, string modificationTime, string statusModificationUserName, string statusModificationTime, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, string creationTime, string closeTime, string modificationTime, string statusModificationUserName, string statusModificationTime, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Definition = definition;
             Description = description;
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Alert description. </summary>
         public string Description { get; set; }
         /// <summary> Source of alert. </summary>
-        public AlertSource? Source { get; set; }
+        public CostManagementAlertSource? Source { get; set; }
         /// <summary> Alert details. </summary>
         public AlertPropertiesDetails Details { get; set; }
         /// <summary> related budget. </summary>
         public string CostEntityId { get; set; }
         /// <summary> alert status. </summary>
-        public AlertStatus? Status { get; set; }
+        public CostManagementAlertStatus? Status { get; set; }
         /// <summary> dateTime in which alert was created. </summary>
         public string CreationTime { get; set; }
         /// <summary> dateTime in which alert was closed. </summary>

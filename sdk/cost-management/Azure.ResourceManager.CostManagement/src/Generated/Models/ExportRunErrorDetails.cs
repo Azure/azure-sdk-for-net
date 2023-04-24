@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The details of the error. </summary>
-    public partial class ErrorDetails
+    public partial class ExportRunErrorDetails
     {
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
-        public ErrorDetails()
+        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        public ExportRunErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
-        internal ErrorDetails(string code, string message)
+        internal ExportRunErrorDetails(string code, string message)
         {
             Code = code;
             Message = message;

@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertType> type = default;
-            Optional<AlertCategory> category = default;
+            Optional<CostManagementAlertType> type = default;
+            Optional<CostManagementAlertCategory> category = default;
             Optional<AlertCriterion> criteria = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    type = new AlertType(property.Value.GetString());
+                    type = new CostManagementAlertType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    category = new AlertCategory(property.Value.GetString());
+                    category = new CostManagementAlertCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("criteria"u8))

@@ -63,6 +63,12 @@ prepend-rp-prefix:
   - Alert
   - View
   - Export
+  - AlertCategory
+  - AlertOperator
+  - AlertSource
+  - AlertsResult
+  - AlertStatus
+  - AlertType
 
 rename-mapping:
   FormatType: ExportFormatType
@@ -73,6 +79,7 @@ rename-mapping:
   MetricType: ViewMetricType
   KpiType: ViewKpiType
   ChartType: ViewChartType
+  ErrorDetails: ExportRunErrorDetails
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

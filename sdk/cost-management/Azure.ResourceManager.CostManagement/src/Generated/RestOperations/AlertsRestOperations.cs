@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="scope"> The scope associated with alerts operations. This includes &apos;/subscriptions/{subscriptionId}/&apos; for subscription scope, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;/providers/Microsoft.Management/managementGroups/{managementGroupId} for Management Group scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for billingProfile scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}&apos; for invoiceSection scope, and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}&apos; specific for partners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<AlertsResult>> ListAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementAlertsResult>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertsResult value = default;
+                        CostManagementAlertsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertsResult.DeserializeAlertsResult(document.RootElement);
+                        value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="scope"> The scope associated with alerts operations. This includes &apos;/subscriptions/{subscriptionId}/&apos; for subscription scope, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;/providers/Microsoft.Management/managementGroups/{managementGroupId} for Management Group scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for billingProfile scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}&apos; for invoiceSection scope, and &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}&apos; specific for partners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<AlertsResult> List(string scope, CancellationToken cancellationToken = default)
+        public Response<CostManagementAlertsResult> List(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        AlertsResult value = default;
+                        CostManagementAlertsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertsResult.DeserializeAlertsResult(document.RootElement);
+                        value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementAlertPatch patch = new CostManagementAlertPatch()
             {
-                Status = AlertStatus.Dismissed,
+                Status = CostManagementAlertStatus.Dismissed,
             };
             CostManagementAlertResource result = await costManagementAlert.UpdateAsync(patch);
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementAlertPatch patch = new CostManagementAlertPatch()
             {
-                Status = AlertStatus.Dismissed,
+                Status = CostManagementAlertStatus.Dismissed,
             };
             CostManagementAlertResource result = await costManagementAlert.UpdateAsync(patch);
 

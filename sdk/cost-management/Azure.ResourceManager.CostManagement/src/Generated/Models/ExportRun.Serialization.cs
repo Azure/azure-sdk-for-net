@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<DateTimeOffset> processingEndTime = default;
             Optional<string> fileName = default;
             Optional<CommonExportProperties> runSettings = default;
-            Optional<ErrorDetails> error = default;
+            Optional<ExportRunErrorDetails> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            error = ErrorDetails.DeserializeErrorDetails(property0.Value);
+                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value);
                             continue;
                         }
                     }
