@@ -22,7 +22,7 @@ extends:
          - ArmTemplateParameters=^(?!.*enableHsm.*true)
         # Some resource providers required for attestation are not supported in canary.
         MatrixReplace:
-         - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation: $false$2'
+         - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         MatrixFilters:
