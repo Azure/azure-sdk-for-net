@@ -1,0 +1,1566 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-a3a056fb5bb6154c94d2c830f6c43539-72a4f9c75485a04d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "84d5b4995dafc0914b7a8b6940f5652d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d900ab7c-c7b4-4c27-b4fe-5fe917e91350",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "d900ab7c-c7b4-4c27-b4fe-5fe917e91350",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091624Z:d900ab7c-c7b4-4c27-b4fe-5fe917e91350"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-9117?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-ef799f7e395905468726b77631fbc8db-1470f138e0f56e49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0d72f41f3a21cdcb955108f0eb2da954",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0071c3de-3770-4d8e-907b-83e9573cbbb4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "0071c3de-3770-4d8e-907b-83e9573cbbb4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091630Z:0071c3de-3770-4d8e-907b-83e9573cbbb4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117",
+        "name": "testRG-9117",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "180",
+        "Content-Type": "application/json",
+        "traceparent": "00-16505dc6b619ca4a9ffa75b4bfd5188b-2ec1e50f8a5caf4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "28c18c8e74070b87cb657d8566091d14",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ]
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/operationStatus/NGJjMmQzM2ItMjAzMi00NTE0LTk2M2MtMjE3NjU5NTA5YjFhOzNjMDc0ZTVkLWE2NjYtNGZjMS04MGEyLWM1MWIwMTQ1MWUwMA==?api-version=2023-01-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "553",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-resource-system-data": "{\u0022createdBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022createdByType\u0022:\u0022Application\u0022,\u0022createdAt\u0022:\u00222023-04-24T09:16:33.5905843Z\u0022,\u0022lastModifiedBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022lastModifiedByType\u0022:\u0022Application\u0022,\u0022lastModifiedAt\u0022:\u00222023-04-24T09:16:33.5905843Z\u0022}",
+        "x-ms-correlation-request-id": "d28daf95-bf9e-42a2-a6f1-5f032c580635",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "99",
+        "x-ms-request-id": "d28daf95-bf9e-42a2-a6f1-5f032c580635",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091637Z:d28daf95-bf9e-42a2-a6f1-5f032c580635"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Provisioning",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932",
+        "name": "vault9932",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/operationStatus/NGJjMmQzM2ItMjAzMi00NTE0LTk2M2MtMjE3NjU5NTA5YjFhOzNjMDc0ZTVkLWE2NjYtNGZjMS04MGEyLWM1MWIwMTQ1MWUwMA==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-16505dc6b619ca4a9ffa75b4bfd5188b-78d36b878eec9b40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d967ca15d56b7f17eb0256d54d482e47",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "469",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "436d68df-e454-48fb-b82a-4bf5b66bc9f3",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "999",
+        "x-ms-request-id": "436d68df-e454-48fb-b82a-4bf5b66bc9f3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091637Z:436d68df-e454-48fb-b82a-4bf5b66bc9f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/operationStatus/NGJjMmQzM2ItMjAzMi00NTE0LTk2M2MtMjE3NjU5NTA5YjFhOzNjMDc0ZTVkLWE2NjYtNGZjMS04MGEyLWM1MWIwMTQ1MWUwMA==",
+        "name": "NGJjMmQzM2ItMjAzMi00NTE0LTk2M2MtMjE3NjU5NTA5YjFhOzNjMDc0ZTVkLWE2NjYtNGZjMS04MGEyLWM1MWIwMTQ1MWUwMA==",
+        "status": "Succeeded",
+        "startTime": "2023-04-24T09:16:34.7186771Z",
+        "endTime": "2023-04-24T09:16:35Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-16505dc6b619ca4a9ffa75b4bfd5188b-db074ad4a4ab2847-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "57f6dcea4cd616cf12b772ed67fe3b6b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "550",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "16f80f15-109a-49b9-a354-d2fbe43f5d29",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "499",
+        "x-ms-request-id": "16f80f15-109a-49b9-a354-d2fbe43f5d29",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091638Z:16f80f15-109a-49b9-a354-d2fbe43f5d29"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932",
+        "name": "vault9932",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "978",
+        "Content-Type": "application/json",
+        "traceparent": "00-2bc8c5fbafcebf459e093a0e26ba8240-77d038714cba1c4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a944a19cbe1f1c53a321a3bc6eebc49e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "isDefault": true,
+                    "taggingPriority": 99,
+                    "tagInfo": {
+                      "tagName": "Default"
+                    }
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "isDefault": true,
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "duration": "P30D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "duration": "P7D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "57cb2190-05b0-410e-9f1f-d61e277f6e2b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "199",
+        "x-ms-request-id": "57cb2190-05b0-410e-9f1f-d61e277f6e2b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091639Z:57cb2190-05b0-410e-9f1f-d61e277f6e2b"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+        "name": "policy7353",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0cfeaec4f6da964888e4ce8343dd4469-10f70032ebec6449-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0af569f3fac8c650b3632a18ecc7eabc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f697d50c-b3e8-43ca-94a8-1148bc0b1c9f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "199",
+        "x-ms-request-id": "f697d50c-b3e8-43ca-94a8-1148bc0b1c9f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091640Z:f697d50c-b3e8-43ca-94a8-1148bc0b1c9f"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+        "name": "policy7353",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "978",
+        "Content-Type": "application/json",
+        "traceparent": "00-dc1f62337c5f6e42aa73d7b2f815aa4f-a17895f7d9cc6848-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a692d8b132a598d6832f2bf56efb0302",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "isDefault": true,
+                    "taggingPriority": 99,
+                    "tagInfo": {
+                      "tagName": "Default"
+                    }
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "isDefault": true,
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "duration": "P30D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "duration": "P7D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "82080286-c0a1-49c3-a837-5b7ba31d284f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "198",
+        "x-ms-request-id": "82080286-c0a1-49c3-a837-5b7ba31d284f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091640Z:82080286-c0a1-49c3-a837-5b7ba31d284f"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+        "name": "policy7353",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2419?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "978",
+        "Content-Type": "application/json",
+        "traceparent": "00-ba5c22ecf2c9c94fbc6487a9af7842ec-24163c5e3dd4844d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "02475fa39123a1a7507ef6bc943b2fdc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "isDefault": true,
+                    "taggingPriority": 99,
+                    "tagInfo": {
+                      "tagName": "Default"
+                    }
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "isDefault": true,
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "duration": "P30D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "duration": "P7D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "40bfce9f-2b30-4f9c-ada4-ffbcf3c47561",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "197",
+        "x-ms-request-id": "40bfce9f-2b30-4f9c-ada4-ffbcf3c47561",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091641Z:40bfce9f-2b30-4f9c-ada4-ffbcf3c47561"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2419",
+        "name": "policy2419",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2289?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "978",
+        "Content-Type": "application/json",
+        "traceparent": "00-d439c413f081b840ba51c08518d93a82-c94bf223c2b08844-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "960ae7371e58c1f9935c8799cf5b57b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "isDefault": true,
+                    "taggingPriority": 99,
+                    "tagInfo": {
+                      "tagName": "Default"
+                    }
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "isDefault": true,
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "duration": "P30D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "duration": "P7D",
+                    "objectType": "AbsoluteDeleteOption"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d7f86cde-029a-4066-814d-29caafe95f55",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "196",
+        "x-ms-request-id": "d7f86cde-029a-4066-814d-29caafe95f55",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091642Z:d7f86cde-029a-4066-814d-29caafe95f55"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2289",
+        "name": "policy2289",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2224f0dc49f0824fac06b5447200caee-bced07be98615c44-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8d752760e87f209930f155263c1a0448",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3737",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "75358ad0-fc5d-4118-b947-469be0107600",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "198",
+        "x-ms-request-id": "75358ad0-fc5d-4118-b947-469be0107600",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091643Z:75358ad0-fc5d-4118-b947-469be0107600"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "policyRules": [
+                {
+                  "backupParameters": {
+                    "backupType": "Discrete",
+                    "objectType": "AzureBackupParams"
+                  },
+                  "trigger": {
+                    "schedule": {
+                      "repeatingTimeIntervals": [
+                        "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                      ],
+                      "timeZone": "UTC"
+                    },
+                    "taggingCriteria": [
+                      {
+                        "tagInfo": {
+                          "tagName": "Default",
+                          "id": "Default_"
+                        },
+                        "taggingPriority": 99,
+                        "isDefault": true
+                      }
+                    ],
+                    "objectType": "ScheduleBasedTriggerContext"
+                  },
+                  "dataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  },
+                  "name": "BackupDaily",
+                  "objectType": "AzureBackupRule"
+                },
+                {
+                  "lifecycles": [
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P30D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "OperationalStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    },
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P7D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "VaultStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    }
+                  ],
+                  "isDefault": true,
+                  "name": "Default",
+                  "objectType": "AzureRetentionRule"
+                }
+              ],
+              "datasourceTypes": [
+                "Microsoft.Storage/storageAccounts/blobServices"
+              ],
+              "objectType": "BackupPolicy"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+            "name": "policy7353",
+            "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+          },
+          {
+            "properties": {
+              "policyRules": [
+                {
+                  "backupParameters": {
+                    "backupType": "Discrete",
+                    "objectType": "AzureBackupParams"
+                  },
+                  "trigger": {
+                    "schedule": {
+                      "repeatingTimeIntervals": [
+                        "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                      ],
+                      "timeZone": "UTC"
+                    },
+                    "taggingCriteria": [
+                      {
+                        "tagInfo": {
+                          "tagName": "Default",
+                          "id": "Default_"
+                        },
+                        "taggingPriority": 99,
+                        "isDefault": true
+                      }
+                    ],
+                    "objectType": "ScheduleBasedTriggerContext"
+                  },
+                  "dataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  },
+                  "name": "BackupDaily",
+                  "objectType": "AzureBackupRule"
+                },
+                {
+                  "lifecycles": [
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P30D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "OperationalStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    },
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P7D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "VaultStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    }
+                  ],
+                  "isDefault": true,
+                  "name": "Default",
+                  "objectType": "AzureRetentionRule"
+                }
+              ],
+              "datasourceTypes": [
+                "Microsoft.Storage/storageAccounts/blobServices"
+              ],
+              "objectType": "BackupPolicy"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2419",
+            "name": "policy2419",
+            "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+          },
+          {
+            "properties": {
+              "policyRules": [
+                {
+                  "backupParameters": {
+                    "backupType": "Discrete",
+                    "objectType": "AzureBackupParams"
+                  },
+                  "trigger": {
+                    "schedule": {
+                      "repeatingTimeIntervals": [
+                        "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                      ],
+                      "timeZone": "UTC"
+                    },
+                    "taggingCriteria": [
+                      {
+                        "tagInfo": {
+                          "tagName": "Default",
+                          "id": "Default_"
+                        },
+                        "taggingPriority": 99,
+                        "isDefault": true
+                      }
+                    ],
+                    "objectType": "ScheduleBasedTriggerContext"
+                  },
+                  "dataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  },
+                  "name": "BackupDaily",
+                  "objectType": "AzureBackupRule"
+                },
+                {
+                  "lifecycles": [
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P30D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "OperationalStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    },
+                    {
+                      "deleteAfter": {
+                        "objectType": "AbsoluteDeleteOption",
+                        "duration": "P7D"
+                      },
+                      "sourceDataStore": {
+                        "dataStoreType": "VaultStore",
+                        "objectType": "DataStoreInfoBase"
+                      }
+                    }
+                  ],
+                  "isDefault": true,
+                  "name": "Default",
+                  "objectType": "AzureRetentionRule"
+                }
+              ],
+              "datasourceTypes": [
+                "Microsoft.Storage/storageAccounts/blobServices"
+              ],
+              "objectType": "BackupPolicy"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy2289",
+            "name": "policy2289",
+            "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c51483783882ce43971b9c75dd002a3f-b08f135e2366a04a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "87be4eff6df084a966866ec6090ed2f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c63a8a46-7583-4407-86e1-978299583c9f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "197",
+        "x-ms-request-id": "c63a8a46-7583-4407-86e1-978299583c9f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091643Z:c63a8a46-7583-4407-86e1-978299583c9f"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+        "name": "policy7353",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy73531?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1714dee74c7fe14fb0bff61a029108ef-2ba6d41f492c5046-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6c5b3e26a2c54e5d4dea6567c9d28479",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Language": "en-US",
+        "Content-Length": "236",
+        "Content-Type": "application/json",
+        "Date": "Mon, 24 Apr 2023 09:16:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f853bc17-ca2d-453e-8554-a187a68fb577",
+        "x-ms-error-code": "UserErrorGenericResourceNotFound",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "196",
+        "x-ms-request-id": "f853bc17-ca2d-453e-8554-a187a68fb577",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091644Z:f853bc17-ca2d-453e-8554-a187a68fb577"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "UserErrorGenericResourceNotFound",
+          "message": "Azure resource does not exist. Please make sure required resources exist. If the issue persists, contact Microsoft support.",
+          "target": null,
+          "details": null,
+          "innerError": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-78a6d4741571c64495e02ba3b6162439-56f528e462185a4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "80993f58d09df3c77ef026f979d21622",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Apr 2023 09:16:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2d7f22c7-0532-480b-a310-9b697e40a0ea",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "195",
+        "x-ms-request-id": "2d7f22c7-0532-480b-a310-9b697e40a0ea",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091645Z:2d7f22c7-0532-480b-a310-9b697e40a0ea"
+      },
+      "ResponseBody": {
+        "properties": {
+          "policyRules": [
+            {
+              "backupParameters": {
+                "backupType": "Discrete",
+                "objectType": "AzureBackupParams"
+              },
+              "trigger": {
+                "schedule": {
+                  "repeatingTimeIntervals": [
+                    "R/2023-04-17T16:00:00\u002B00:00/P1D"
+                  ],
+                  "timeZone": "UTC"
+                },
+                "taggingCriteria": [
+                  {
+                    "tagInfo": {
+                      "tagName": "Default",
+                      "id": "Default_"
+                    },
+                    "taggingPriority": 99,
+                    "isDefault": true
+                  }
+                ],
+                "objectType": "ScheduleBasedTriggerContext"
+              },
+              "dataStore": {
+                "dataStoreType": "VaultStore",
+                "objectType": "DataStoreInfoBase"
+              },
+              "name": "BackupDaily",
+              "objectType": "AzureBackupRule"
+            },
+            {
+              "lifecycles": [
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P30D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "OperationalStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                },
+                {
+                  "deleteAfter": {
+                    "objectType": "AbsoluteDeleteOption",
+                    "duration": "P7D"
+                  },
+                  "sourceDataStore": {
+                    "dataStoreType": "VaultStore",
+                    "objectType": "DataStoreInfoBase"
+                  }
+                }
+              ],
+              "isDefault": true,
+              "name": "Default",
+              "objectType": "AzureRetentionRule"
+            }
+          ],
+          "datasourceTypes": [
+            "Microsoft.Storage/storageAccounts/blobServices"
+          ],
+          "objectType": "BackupPolicy"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353",
+        "name": "policy7353",
+        "type": "Microsoft.DataProtection/backupVaults/backupPolicies"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-9117/providers/Microsoft.DataProtection/backupVaults/vault9932/backupPolicies/policy7353?api-version=2023-01-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9248c88cf1e64e4497fc6d7b83b2ac31-cdf8f89ede045d4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230424.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "feff601e97be5d82f16f39050741bb93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Mon, 24 Apr 2023 09:16:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2ef437b6-94a0-43bf-b1f4-0b487615cb62",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "49",
+        "x-ms-request-id": "2ef437b6-94a0-43bf-b1f4-0b487615cb62",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T091646Z:2ef437b6-94a0-43bf-b1f4-0b487615cb62"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1054191213",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

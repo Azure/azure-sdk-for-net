@@ -13,34 +13,39 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
 {
-    public class BackupVaultTests : DataProtectionBackupManagementTestBase
+    public class DataProtectionPolicyTests : DataProtectionBackupManagementTestBase
     {
-        public BackupVaultTests(bool isAsync)
+        public DataProtectionPolicyTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<DataProtectionBackupVaultCollection> GetVaultCollection()
+        private async Task<DataProtectionBackupPolicyCollection> GetPolicyCollection()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetDataProtectionBackupVaults();
+            var vaultCollection = resourceGroup.GetDataProtectionBackupVaults();
+            var name = Recording.GenerateAssetName("vault");
+            var input = ResourceDataHelpers.GetVaultData();
+            var lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            DataProtectionBackupVaultResource resource = lro.Value;
+            return resource.GetDataProtectionBackupPolicies();
         }
 
         [RecordedTest]
-        public async Task VaultApiTests()
+        public async Task PolicyApiTests()
         {
             //1.CreateOrUpdate
-            var collection = await GetVaultCollection();
-            var name = Recording.GenerateAssetName("vault");
-            var name2 = Recording.GenerateAssetName("vault");
-            var name3 = Recording.GenerateAssetName("vault");
-            var input = ResourceDataHelpers.GetVaultData();
+            var collection = await GetPolicyCollection();
+            var name = Recording.GenerateAssetName("policy");
+            var name2 = Recording.GenerateAssetName("policy");
+            var name3 = Recording.GenerateAssetName("policy");
+            var input = ResourceDataHelpers.GetPolicyData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            DataProtectionBackupVaultResource resource = lro.Value;
+            DataProtectionBackupPolicyResource resource = lro.Value;
             Assert.AreEqual(name, resource.Data.Name);
             //2.Get
-            DataProtectionBackupVaultResource resource2 = await collection.GetAsync(name);
-            ResourceDataHelpers.AssertVaultData(resource.Data, resource2.Data);
+            DataProtectionBackupPolicyResource resource2 = await collection.GetAsync(name);
+            ResourceDataHelpers.AssertpolicyData(resource.Data, resource2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
@@ -58,8 +63,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //resourceTests
             //5.Get
-            DataProtectionBackupVaultResource resource3 = await resource.GetAsync();
-            ResourceDataHelpers.AssertVaultData(resource.Data, resource3.Data);
+            DataProtectionBackupPolicyResource resource3 = await resource.GetAsync();
+            ResourceDataHelpers.AssertpolicyData(resource.Data, resource3.Data);
             //6.Delete
             await resource.DeleteAsync(WaitUntil.Completed);
         }
