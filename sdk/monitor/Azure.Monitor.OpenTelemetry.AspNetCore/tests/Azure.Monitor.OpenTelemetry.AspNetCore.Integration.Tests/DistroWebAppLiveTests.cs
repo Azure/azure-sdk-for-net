@@ -29,6 +29,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         // Union * | where AppRoleName == 'Test##'
         private const string _roleName = nameof(DistroWebAppLiveTests);
 
+        private const string _logMessage = "Message via ILogger";
+
         private readonly LogsQueryClient _logsQueryClient;
 
         public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
@@ -59,24 +61,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             var builder = WebApplication.CreateBuilder();
             builder.Logging.ClearProviders();
-            builder.Services
-                    .AddOptions<OpenTelemetryLoggerOptions>()
-                        .Configure(options =>
-                        {
-                            options.SetResourceBuilder(resourceBuilder);
-                        });
-            builder.Services
-                .AddOpenTelemetry()
-                    .ConfigureResource(x => x.AddAttributes(resourceAttributes))
-                    .UseAzureMonitor(options =>
-                    {
-                        options.ConnectionString = TestEnvironment.ConnectionString;
-                    });
+            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
+                .Configure(options =>
+                {
+                    options.SetResourceBuilder(resourceBuilder);
+                });
+            builder.Services.AddOpenTelemetry()
+                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestEnvironment.ConnectionString;
+                });
 
             var app = builder.Build();
             app.MapGet("/", () =>
             {
-                app.Logger.LogInformation("Message via ILogger LogInformation");
+                app.Logger.LogInformation(_logMessage);
 
                 //using var client = new HttpClient();
                 //var response = client.GetAsync("https://www.bing.com/").Result;
@@ -120,7 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             await VerifyLogs(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == 'Message via ILogger LogInformation' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                query: $"AppTraces | where Message == '{_logMessage}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
         }
 
         private async Task VerifyLogs(string description, string query)
