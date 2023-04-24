@@ -9,7 +9,7 @@ generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/55e5b360933b7d7467ba5a912ae4ff83806be9c7/specification/monitor/resource-manager/readme.md
-tag: package-track2-stable
+tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -278,7 +278,6 @@ rename-mapping:
   StorageTableDestination: DataCollectionRuleStorageTableDestination
   ActionType: MonitorWorkspaceActionType
   Metrics: MonitorWorkspaceMetricProperties
-  PublicNetworkAccess: MonitorPublicNetworkAccessState
   AzureMonitorWorkspaceResource: MonitorWorkspaceResource
   AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
   AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
