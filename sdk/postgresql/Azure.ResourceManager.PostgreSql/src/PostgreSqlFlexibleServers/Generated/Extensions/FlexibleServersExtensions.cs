@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Mock;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql.FlexibleServers. </summary>
     public static partial class FlexibleServersExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersResourceGroupResourceExtension GetFlexibleServersResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersResourceGroupResourceExtension GetFlexibleServersResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new FlexibleServersResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersSubscriptionResourceExtension GetFlexibleServersSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersSubscriptionResourceExtension GetFlexibleServersSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new FlexibleServersSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static FlexibleServersTenantResourceExtension GetFlexibleServersTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new FlexibleServersTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static FlexibleServersTenantResourceExtension GetFlexibleServersTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new FlexibleServersTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static PostgreSqlFlexibleServerResourceExtension GetPostgreSqlFlexibleServerResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PostgreSqlFlexibleServerResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PostgreSqlFlexibleServerResourceExtension GetPostgreSqlFlexibleServerResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PostgreSqlFlexibleServerResourceExtension(client, scope);
             });
         }
         #region PostgreSqlFlexibleServerActiveDirectoryAdministratorResource
@@ -185,7 +202,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An object representing collection of PostgreSqlFlexibleServerResources and their operations over a PostgreSqlFlexibleServerResource. </returns>
         public static PostgreSqlFlexibleServerCollection GetPostgreSqlFlexibleServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPostgreSqlFlexibleServers();
+            return GetFlexibleServersResourceGroupResourceExtension(resourceGroupResource).GetPostgreSqlFlexibleServers();
         }
 
         /// <summary>
@@ -255,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteLocationBasedCapabilitiesAsync(locationName, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteLocationBasedCapabilitiesAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +294,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteLocationBasedCapabilities(locationName, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteLocationBasedCapabilities(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +318,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -325,7 +342,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailability(content, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -350,7 +367,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -375,7 +392,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(locationName, content, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(locationName, content, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +413,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlFlexibleServersAsync(cancellationToken);
+            return GetPostgreSqlFlexibleServerResourceExtension(subscriptionResource).GetPostgreSqlFlexibleServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +434,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlFlexibleServers(cancellationToken);
+            return GetPostgreSqlFlexibleServerResourceExtension(subscriptionResource).GetPostgreSqlFlexibleServers(cancellationToken);
         }
 
         /// <summary>
@@ -442,7 +459,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -467,7 +484,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteVirtualNetworkSubnetUsage(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
+            return GetFlexibleServersSubscriptionResourceExtension(subscriptionResource).ExecuteVirtualNetworkSubnetUsage(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
         }
 
         /// <summary>
@@ -487,7 +504,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<string>> ExecuteGetPrivateDnsZoneSuffixAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).ExecuteGetPrivateDnsZoneSuffixAsync(cancellationToken).ConfigureAwait(false);
+            return await GetFlexibleServersTenantResourceExtension(tenantResource).ExecuteGetPrivateDnsZoneSuffixAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -507,7 +524,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<string> ExecuteGetPrivateDnsZoneSuffix(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).ExecuteGetPrivateDnsZoneSuffix(cancellationToken);
+            return GetFlexibleServersTenantResourceExtension(tenantResource).ExecuteGetPrivateDnsZoneSuffix(cancellationToken);
         }
     }
 }

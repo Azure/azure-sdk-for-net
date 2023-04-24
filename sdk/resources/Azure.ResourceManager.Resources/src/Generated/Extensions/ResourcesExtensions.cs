@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources.Mock;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -19,67 +20,147 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Azure.ResourceManager.Resources. </summary>
     public static partial class ResourcesExtensions
     {
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
+        private static ArmApplicationResourceExtension GetArmApplicationResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ManagementGroupResourceExtensionClient(client, resource.Id);
+                return new ArmApplicationResourceExtension(client, resource.Id);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmApplicationResourceExtension GetArmApplicationResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ManagementGroupResourceExtensionClient(client, scope);
+                return new ArmApplicationResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ArmDeploymentResourceExtension GetArmDeploymentResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ArmDeploymentResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmDeploymentResourceExtension GetArmDeploymentResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ArmDeploymentResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ArmDeploymentScriptResourceExtension GetArmDeploymentScriptResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ArmDeploymentScriptResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmDeploymentScriptResourceExtension GetArmDeploymentScriptResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ArmDeploymentScriptResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static JitRequestResourceExtension GetJitRequestResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new JitRequestResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static JitRequestResourceExtension GetJitRequestResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new JitRequestResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourcesManagementGroupResourceExtension GetResourcesManagementGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourcesManagementGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourcesManagementGroupResourceExtension GetResourcesManagementGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourcesManagementGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourcesResourceGroupResourceExtension GetResourcesResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourcesResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourcesResourceGroupResourceExtension GetResourcesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourcesResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourcesSubscriptionResourceExtension GetResourcesSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourcesSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourcesSubscriptionResourceExtension GetResourcesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourcesSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static ResourcesTenantResourceExtension GetResourcesTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourcesTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ResourcesTenantResourceExtension GetResourcesTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourcesTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static TemplateSpecResourceExtension GetTemplateSpecResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new TemplateSpecResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static TemplateSpecResourceExtension GetTemplateSpecResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TemplateSpecResourceExtension(client, scope);
             });
         }
         #region ArmDeploymentResource
@@ -239,7 +320,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this ManagementGroupResource managementGroupResource)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetArmDeployments();
+            return GetResourcesManagementGroupResourceExtension(managementGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -295,7 +376,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArmDeployments();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -351,7 +432,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmApplicationResources and their operations over a ArmApplicationResource. </returns>
         public static ArmApplicationCollection GetArmApplications(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArmApplications();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetArmApplications();
         }
 
         /// <summary>
@@ -407,7 +488,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
         public static ArmApplicationDefinitionCollection GetArmApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArmApplicationDefinitions();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetArmApplicationDefinitions();
         }
 
         /// <summary>
@@ -463,7 +544,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of JitRequestResources and their operations over a JitRequestResource. </returns>
         public static JitRequestCollection GetJitRequests(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJitRequests();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetJitRequests();
         }
 
         /// <summary>
@@ -519,7 +600,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
         public static ArmDeploymentScriptCollection GetArmDeploymentScripts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArmDeploymentScripts();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetArmDeploymentScripts();
         }
 
         /// <summary>
@@ -575,7 +656,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
         public static TemplateSpecCollection GetTemplateSpecs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTemplateSpecs();
+            return GetResourcesResourceGroupResourceExtension(resourceGroupResource).GetTemplateSpecs();
         }
 
         /// <summary>
@@ -633,7 +714,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetArmDeployments();
+            return GetResourcesSubscriptionResourceExtension(subscriptionResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -702,7 +783,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ArmApplicationResource> GetArmApplicationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetArmApplicationsAsync(cancellationToken);
+            return GetArmApplicationResourceExtension(subscriptionResource).GetArmApplicationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -723,7 +804,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ArmApplicationResource> GetArmApplications(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetArmApplications(cancellationToken);
+            return GetArmApplicationResourceExtension(subscriptionResource).GetArmApplications(cancellationToken);
         }
 
         /// <summary>
@@ -744,7 +825,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitRequestResource> GetJitRequestDefinitionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJitRequestDefinitionsAsync(cancellationToken);
+            return GetJitRequestResourceExtension(subscriptionResource).GetJitRequestDefinitionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -765,7 +846,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitRequestResource> GetJitRequestDefinitions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJitRequestDefinitions(cancellationToken);
+            return GetJitRequestResourceExtension(subscriptionResource).GetJitRequestDefinitions(cancellationToken);
         }
 
         /// <summary>
@@ -786,7 +867,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetArmDeploymentScriptsAsync(cancellationToken);
+            return GetArmDeploymentScriptResourceExtension(subscriptionResource).GetArmDeploymentScriptsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -807,7 +888,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetArmDeploymentScripts(cancellationToken);
+            return GetArmDeploymentScriptResourceExtension(subscriptionResource).GetArmDeploymentScripts(cancellationToken);
         }
 
         /// <summary>
@@ -829,7 +910,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(this SubscriptionResource subscriptionResource, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTemplateSpecsAsync(expand, cancellationToken);
+            return GetTemplateSpecResourceExtension(subscriptionResource).GetTemplateSpecsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -851,7 +932,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TemplateSpecResource> GetTemplateSpecs(this SubscriptionResource subscriptionResource, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTemplateSpecs(expand, cancellationToken);
+            return GetTemplateSpecResourceExtension(subscriptionResource).GetTemplateSpecs(expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ArmDeploymentResources in the TenantResource. </summary>
@@ -859,7 +940,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetArmDeployments();
+            return GetResourcesTenantResourceExtension(tenantResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -931,7 +1012,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+            return await GetArmDeploymentResourceExtension(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -955,7 +1036,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            return GetTenantResourceExtensionClient(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
+            return GetArmDeploymentResourceExtension(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
         }
     }
 }

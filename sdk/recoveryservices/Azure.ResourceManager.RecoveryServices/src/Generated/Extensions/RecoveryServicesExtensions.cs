@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices.Mock;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.RecoveryServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServices. </summary>
     public static partial class RecoveryServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RecoveryServicesResourceGroupResourceExtension GetRecoveryServicesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RecoveryServicesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RecoveryServicesResourceGroupResourceExtension GetRecoveryServicesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RecoveryServicesResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static RecoveryServicesSubscriptionResourceExtension GetRecoveryServicesSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new RecoveryServicesSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RecoveryServicesSubscriptionResourceExtension GetRecoveryServicesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new RecoveryServicesSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static RecoveryServicesVaultResourceExtension GetRecoveryServicesVaultResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new RecoveryServicesVaultResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static RecoveryServicesVaultResourceExtension GetRecoveryServicesVaultResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RecoveryServicesVaultResourceExtension(client, scope);
             });
         }
         #region RecoveryServicesPrivateLinkResource
@@ -112,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
         public static RecoveryServicesVaultCollection GetRecoveryServicesVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRecoveryServicesVaults();
+            return GetRecoveryServicesResourceGroupResourceExtension(resourceGroupResource).GetRecoveryServicesVaults();
         }
 
         /// <summary>
@@ -187,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesResourceGroupResourceExtension(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
+            return GetRecoveryServicesResourceGroupResourceExtension(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesSubscriptionResourceExtension(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
+            return GetRecoveryServicesSubscriptionResourceExtension(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
+            return GetRecoveryServicesVaultResourceExtension(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -306,7 +323,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
+            return GetRecoveryServicesVaultResourceExtension(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
         }
     }
 }
