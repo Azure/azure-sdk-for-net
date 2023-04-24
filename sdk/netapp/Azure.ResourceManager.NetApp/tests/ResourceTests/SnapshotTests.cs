@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
 
-            DefaultVirtualNetwork = await CreateVirtualNetwork();
+            await CreateVirtualNetwork();
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
             _snapshotCollection = _volumeResource.GetNetAppVolumeSnapshots();
         }

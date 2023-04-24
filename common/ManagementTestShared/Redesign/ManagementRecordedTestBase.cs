@@ -103,6 +103,17 @@ namespace Azure.ResourceManager.TestFramework
             });
         }
 
+        protected void IgnoreNetworkDependencyVersions()
+        {
+            // Ignore the api-version of resource group operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/Microsoft.Network/([^/]+)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         private ArmClient GetCleanupClient()
         {
             if (Mode != RecordedTestMode.Playback)

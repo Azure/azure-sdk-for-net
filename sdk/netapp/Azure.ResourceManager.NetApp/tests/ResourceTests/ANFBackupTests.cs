@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
-
-            DefaultVirtualNetwork = await CreateVirtualNetwork(location:DefaultLocation);
-            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId);
+            var volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork(location:DefaultLocation);
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
             _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
             //getVault id

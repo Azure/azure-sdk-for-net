@@ -114,11 +114,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource pool4 = null;
             await foreach (CapacityPoolResource pool in _capacityPoolCollection.GetAllAsync())
             {
-                count++;
                 if (pool.Id.Name == poolName1)
+                {
                     pool3 = pool;
-                if (pool.Id.Name == poolName2)
+                    count++;
+                }
+                else if (pool.Id.Name == poolName2)
+                {
                     pool4 = pool;
+                    count++;
+                }
             }
             Assert.AreEqual(count, 2);
             VerifyCapacityPoolProperties(pool3, true);
