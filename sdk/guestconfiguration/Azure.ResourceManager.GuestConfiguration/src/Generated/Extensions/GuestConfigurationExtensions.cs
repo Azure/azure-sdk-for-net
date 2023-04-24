@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.GuestConfiguration.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -18,51 +19,35 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.GuestConfiguration. </summary>
     public static partial class GuestConfigurationExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static GuestConfigurationArmResourceExtension GetGuestConfigurationArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new GuestConfigurationArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static GuestConfigurationArmResourceExtension GetGuestConfigurationArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new GuestConfigurationArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static GuestConfigurationVmAssignmentResourceExtension GetGuestConfigurationVmAssignmentResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new GuestConfigurationVmAssignmentResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static GuestConfigurationVmAssignmentResourceExtension GetGuestConfigurationVmAssignmentResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new GuestConfigurationVmAssignmentResourceExtension(client, scope);
             });
         }
         #region GuestConfigurationVmAssignmentResource
@@ -132,7 +117,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmAssignments();
+            return GetGuestConfigurationArmResourceExtension(client, scope).GetGuestConfigurationVmAssignments();
         }
 
         /// <summary>
@@ -203,7 +188,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationHcrpAssignments();
+            return GetGuestConfigurationArmResourceExtension(client, scope).GetGuestConfigurationHcrpAssignments();
         }
 
         /// <summary>
@@ -274,7 +259,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachineScaleSets", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmssAssignments();
+            return GetGuestConfigurationArmResourceExtension(client, scope).GetGuestConfigurationVmssAssignments();
         }
 
         /// <summary>

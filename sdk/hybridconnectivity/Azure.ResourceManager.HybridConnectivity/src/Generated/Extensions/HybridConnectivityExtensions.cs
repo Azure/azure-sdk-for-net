@@ -11,25 +11,26 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridConnectivity.Mock;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridConnectivity. </summary>
     public static partial class HybridConnectivityExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static HybridConnectivityArmResourceExtension GetHybridConnectivityArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new HybridConnectivityArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridConnectivityArmResourceExtension GetHybridConnectivityArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new HybridConnectivityArmResourceExtension(client, scope);
             });
         }
         #region EndpointResource
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEndpointResources();
+            return GetHybridConnectivityArmResourceExtension(client, scope).GetEndpointResources();
         }
 
         /// <summary>

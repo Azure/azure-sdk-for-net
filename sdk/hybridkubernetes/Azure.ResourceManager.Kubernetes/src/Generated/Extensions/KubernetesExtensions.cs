@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kubernetes.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kubernetes
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.Kubernetes
     /// <summary> A class to add extension methods to Azure.ResourceManager.Kubernetes. </summary>
     public static partial class KubernetesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ConnectedClusterResourceExtension GetConnectedClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ConnectedClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConnectedClusterResourceExtension GetConnectedClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ConnectedClusterResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static KubernetesResourceGroupResourceExtension GetKubernetesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new KubernetesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static KubernetesResourceGroupResourceExtension GetKubernetesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new KubernetesResourceGroupResourceExtension(client, scope);
             });
         }
         #region ConnectedClusterResource
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> An object representing collection of ConnectedClusterResources and their operations over a ConnectedClusterResource. </returns>
         public static ConnectedClusterCollection GetConnectedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConnectedClusters();
+            return GetKubernetesResourceGroupResourceExtension(resourceGroupResource).GetConnectedClusters();
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> An async collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
+            return GetConnectedClusterResourceExtension(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> A collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConnectedClusterResource> GetConnectedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConnectedClusters(cancellationToken);
+            return GetConnectedClusterResourceExtension(subscriptionResource).GetConnectedClusters(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Logic.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
@@ -18,35 +19,67 @@ namespace Azure.ResourceManager.Logic
     /// <summary> A class to add extension methods to Azure.ResourceManager.Logic. </summary>
     public static partial class LogicExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static IntegrationAccountResourceExtension GetIntegrationAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new IntegrationAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IntegrationAccountResourceExtension GetIntegrationAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new IntegrationAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static IntegrationServiceEnvironmentResourceExtension GetIntegrationServiceEnvironmentResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new IntegrationServiceEnvironmentResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IntegrationServiceEnvironmentResourceExtension GetIntegrationServiceEnvironmentResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new IntegrationServiceEnvironmentResourceExtension(client, scope);
+            });
+        }
+
+        private static LogicResourceGroupResourceExtension GetLogicResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LogicResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LogicResourceGroupResourceExtension GetLogicResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LogicResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static LogicWorkflowResourceExtension GetLogicWorkflowResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LogicWorkflowResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LogicWorkflowResourceExtension GetLogicWorkflowResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LogicWorkflowResourceExtension(client, scope);
             });
         }
         #region LogicWorkflowResource
@@ -472,7 +505,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
         public static LogicWorkflowCollection GetLogicWorkflows(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLogicWorkflows();
+            return GetLogicResourceGroupResourceExtension(resourceGroupResource).GetLogicWorkflows();
         }
 
         /// <summary>
@@ -528,7 +561,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationAccountResources and their operations over a IntegrationAccountResource. </returns>
         public static IntegrationAccountCollection GetIntegrationAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIntegrationAccounts();
+            return GetLogicResourceGroupResourceExtension(resourceGroupResource).GetIntegrationAccounts();
         }
 
         /// <summary>
@@ -584,7 +617,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationServiceEnvironmentResources and their operations over a IntegrationServiceEnvironmentResource. </returns>
         public static IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIntegrationServiceEnvironments();
+            return GetLogicResourceGroupResourceExtension(resourceGroupResource).GetIntegrationServiceEnvironments();
         }
 
         /// <summary>
@@ -660,7 +693,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateByLocationWorkflowAsync(location, workflowName, data, cancellationToken).ConfigureAwait(false);
+            return await GetLogicWorkflowResourceExtension(resourceGroupResource).ValidateByLocationWorkflowAsync(location, workflowName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -688,7 +721,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
+            return GetLogicWorkflowResourceExtension(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +744,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogicWorkflowResource> GetLogicWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogicWorkflowsAsync(top, filter, cancellationToken);
+            return GetLogicWorkflowResourceExtension(subscriptionResource).GetLogicWorkflowsAsync(top, filter, cancellationToken);
         }
 
         /// <summary>
@@ -734,7 +767,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogicWorkflowResource> GetLogicWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogicWorkflows(top, filter, cancellationToken);
+            return GetLogicWorkflowResourceExtension(subscriptionResource).GetLogicWorkflows(top, filter, cancellationToken);
         }
 
         /// <summary>
@@ -756,7 +789,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IntegrationAccountResource> GetIntegrationAccountsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIntegrationAccountsAsync(top, cancellationToken);
+            return GetIntegrationAccountResourceExtension(subscriptionResource).GetIntegrationAccountsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -778,7 +811,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IntegrationAccountResource> GetIntegrationAccounts(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIntegrationAccounts(top, cancellationToken);
+            return GetIntegrationAccountResourceExtension(subscriptionResource).GetIntegrationAccounts(top, cancellationToken);
         }
 
         /// <summary>
@@ -800,7 +833,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIntegrationServiceEnvironmentsAsync(top, cancellationToken);
+            return GetIntegrationServiceEnvironmentResourceExtension(subscriptionResource).GetIntegrationServiceEnvironmentsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -822,7 +855,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIntegrationServiceEnvironments(top, cancellationToken);
+            return GetIntegrationServiceEnvironmentResourceExtension(subscriptionResource).GetIntegrationServiceEnvironments(top, cancellationToken);
         }
     }
 }
