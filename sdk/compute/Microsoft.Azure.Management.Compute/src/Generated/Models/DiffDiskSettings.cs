@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Describes the parameters of ephemeral disk settings that can be
-    /// specified for operating system disk. &lt;br&gt;&lt;br&gt; NOTE: The
-    /// ephemeral disk settings can only be specified for managed disk.
+    /// specified for operating system disk. **Note:** The ephemeral disk
+    /// settings can only be specified for managed disk.
     /// </summary>
     public partial class DiffDiskSettings
     {
@@ -34,12 +34,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="option">Specifies the ephemeral disk settings for
         /// operating system disk. Possible values include: 'Local'</param>
         /// <param name="placement">Specifies the ephemeral disk placement for
-        /// operating system disk.&lt;br&gt;&lt;br&gt; Possible values are:
-        /// &lt;br&gt;&lt;br&gt; **CacheDisk** &lt;br&gt;&lt;br&gt;
-        /// **ResourceDisk** &lt;br&gt;&lt;br&gt; Default: **CacheDisk** if one
-        /// is configured for the VM size otherwise **ResourceDisk** is
-        /// used.&lt;br&gt;&lt;br&gt; Refer to VM size documentation for
-        /// Windows VM at
+        /// operating system disk. Possible values are: **CacheDisk,**
+        /// **ResourceDisk.** The defaulting behavior is: **CacheDisk** if one
+        /// is configured for the VM size otherwise **ResourceDisk** is used.
+        /// Refer to the VM size documentation for Windows VM at
         /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and
         /// Linux VM at
         /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to
@@ -66,13 +64,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the ephemeral disk placement for operating
-        /// system disk.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values
-        /// are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **CacheDisk**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ResourceDisk**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **CacheDisk** if one
-        /// is configured for the VM size otherwise **ResourceDisk** is
-        /// used.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Refer to VM size
-        /// documentation for Windows VM at
+        /// system disk. Possible values are: **CacheDisk,** **ResourceDisk.**
+        /// The defaulting behavior is: **CacheDisk** if one is configured for
+        /// the VM size otherwise **ResourceDisk** is used. Refer to the VM
+        /// size documentation for Windows VM at
         /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and
         /// Linux VM at
         /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to
