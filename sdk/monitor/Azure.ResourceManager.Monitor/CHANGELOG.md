@@ -4,7 +4,14 @@
 
 ### Features Added
 
+- Bump api-version of `DataCollectionRules` to `2022-06-01`
+- Bump api-version of `DataCollectionRuleAsociations` to `2022-06-01`
+- Bump api-version of `DataCollectionEndpoints` to `2022-06-01`
+
 ### Breaking Changes
+
+- Property `MetadataProvisionedBy` on `DataCollectionRuleData` is no longer available for api-version >= `2022-06-01`
+- Property `MetadataProvisionedBy` on `DataCollectionRuleAsociationData` is no longer available for api-version >= `2022-06-01`
 
 ### Bugs Fixed
 

@@ -9,7 +9,7 @@ Autorest CSharp Version: 2.3.82
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      5bba638fd53d813e475bfdc3b1b2789ee75b187c
+Commit:      b06a6f45e472dd07c2e0dab06b1e52dfe2684c88
 AutoRest information
 Requested version: v2
 Bootstrapper version:    autorest@2.0.4413

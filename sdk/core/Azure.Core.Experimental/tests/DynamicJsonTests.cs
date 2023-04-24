@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Text.Json;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -837,6 +838,38 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(2, (int)item.Value.Index);
 
             Assert.IsFalse(e.MoveNext());
+        }
+
+        [Test]
+        public void ThrowsInvalidCastForOriginalJsonValue()
+        {
+            dynamic json = BinaryData.FromString(
+                """
+                {
+                    "foo": 1
+                }
+                """
+                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+
+            Exception e = Assert.Throws<InvalidCastException>(() => { var value = (bool)json.Foo; });
+            Assert.That(e.Message.Contains(JsonValueKind.Number.ToString()));
+        }
+
+        [Test]
+        public void ThrowsInvalidCastForChangedJsonValue()
+        {
+            dynamic json = BinaryData.FromString(
+                """
+                {
+                    "foo": 1
+                }
+                """
+                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+
+            json.Foo = true;
+
+            Exception e = Assert.Throws<InvalidCastException>(() => { var value = (int)json.Foo; });
+            Assert.That(e.Message.Contains(JsonValueKind.True.ToString()));
         }
 
         #region Helpers

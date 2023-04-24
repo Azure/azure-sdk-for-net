@@ -76,6 +76,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private const int AbstractiveSummarizationSentenceCount = 3;
 
+        [SetUp]
+        public void TestSetup()
+        {
+            // Currently only supported in the public cloud.
+            TestEnvironment.IgnoreIfNotPublicCloud();
+        }
+
         [RecordedTest]
         [RetryOnInternalServerError]
         public async Task AbstractSummaryWithAADTest()
@@ -221,6 +228,48 @@ namespace Azure.AI.TextAnalytics.Tests
             // Take the first page.
             AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAbstractSummary()
+        {
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { SentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractSummary",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(abstractSummaryActionsResults);
+
+            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(abstractSummaryDocumentsResults);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationAbstractSummaryActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                AbstractSummaryActions = new[]
+                {
+                    new AbstractSummaryAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         [RecordedTest]
