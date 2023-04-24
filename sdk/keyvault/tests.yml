@@ -25,11 +25,12 @@ extends:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         MatrixFilters:
          - ArmTemplateParameters=^(?!.*enableHsm.*true)
-    AdditionalMatrixConfigs:
-      - Name: keyvault_test_matrix_addons
-        Path: sdk/keyvault/platform-matrix.json
-        Selection: sparse
-        GenerateVMJobs: true
+    ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly')  }}:
+      AdditionalMatrixConfigs:
+        - Name: keyvault_test_matrix_addons
+          Path: sdk/keyvault/platform-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT
