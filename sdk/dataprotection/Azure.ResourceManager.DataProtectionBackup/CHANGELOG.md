@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- Add property `ResourceUriString` to class `DataSourceInfo`, replace the `ResourceUri`.
+- Add property `ResourceUriString` to class `DataSourceSetInfo`, replace the `ResourceUri`.
+
 ### Bugs Fixed
 
 ### Other Changes

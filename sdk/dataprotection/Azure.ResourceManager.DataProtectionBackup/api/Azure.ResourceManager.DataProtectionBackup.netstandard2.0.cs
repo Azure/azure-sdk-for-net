@@ -1134,7 +1134,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri ResourceUri { get { throw null; } set { } }
+        public string ResourceUriString { get { throw null; } set { } }
     }
     public partial class DataSourceSetInfo
     {
@@ -1145,7 +1148,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri ResourceUri { get { throw null; } set { } }
+        public string ResourceUriString { get { throw null; } set { } }
     }
     public partial class DataStoreInfoBase
     {

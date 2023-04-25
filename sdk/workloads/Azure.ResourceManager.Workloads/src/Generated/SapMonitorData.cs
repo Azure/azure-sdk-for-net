@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="monitorSubnetId"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
         /// <param name="storageAccountArmId"> The ARM ID of the Storage account used for SAP monitoring. </param>
-        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, RoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, string storageAccountArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </summary>
         public AzureLocation? AppLocation { get; set; }
         /// <summary> Sets the routing preference of the SAP monitor. By default only RFC1918 traffic is routed to the customer VNET. </summary>
-        public RoutingPreference? RoutingPreference { get; set; }
+        public SapRoutingPreference? RoutingPreference { get; set; }
         /// <summary> Sets the preference for zone redundancy on resources created for the SAP monitor. By default resources will be created which do not support zone redundancy. </summary>
         public string ZoneRedundancyPreference { get; set; }
         /// <summary> Managed resource group configuration. </summary>
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> The ARM ID of the MSI used for SAP monitoring. </summary>
         public ResourceIdentifier MsiArmId { get; }
         /// <summary> The ARM ID of the Storage account used for SAP monitoring. </summary>
-        public string StorageAccountArmId { get; }
+        public ResourceIdentifier StorageAccountArmId { get; }
     }
 }
