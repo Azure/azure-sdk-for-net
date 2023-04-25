@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid
+namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Client options for EventGridClient. </summary>
     public partial class EventGridClientOptions : ClientOptions

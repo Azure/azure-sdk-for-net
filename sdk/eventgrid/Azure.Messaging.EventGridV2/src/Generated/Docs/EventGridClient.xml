@@ -483,10 +483,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EventGridClient(endpoint, credential);
 
-var data = new[] {
-    new {
-        lockToken = "<lockToken>",
-    }
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
 };
 
 Response response = await client.ReleaseBatchOfCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
@@ -503,9 +503,9 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>LockToken</c>:
+Schema for <c>LockTokenInput</c>:
 <code>{
-  lockToken: string, # Required. The token used to lock the event.
+  lockTokens: [string], # Required. LockTokens
 }
 </code>
 
@@ -536,10 +536,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EventGridClient(endpoint, credential);
 
-var data = new[] {
-    new {
-        lockToken = "<lockToken>",
-    }
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
 };
 
 Response response = client.ReleaseBatchOfCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
@@ -556,9 +556,9 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>LockToken</c>:
+Schema for <c>LockTokenInput</c>:
 <code>{
-  lockToken: string, # Required. The token used to lock the event.
+  lockTokens: [string], # Required. LockTokens
 }
 </code>
 

@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventGrid.Models;
 
-namespace Azure.Messaging.EventGrid
+namespace Azure.Messaging.EventGrid.Namespaces
 {
     // Data plane generated client.
     /// <summary> Azure Messaging EventGrid Client. </summary>
@@ -21,8 +19,6 @@ namespace Azure.Messaging.EventGrid
     {
         private const string AuthorizationHeader = "SharedAccessKey";
         private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -49,14 +45,6 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of EventGridClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EventGridClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of EventGridClient. </summary>
-        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
@@ -70,56 +58,6 @@ namespace Azure.Messaging.EventGrid
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-        }
-
-        /// <summary> Initializes a new instance of EventGridClient. </summary>
-        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridClient(Uri endpoint, TokenCredential credential, EventGridClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
-        /// <summary> Publish Single Cloud Event to namespace topic. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="event"> Single Cloud Event being published. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> PublishCloudEventAsync(string topicName, CloudEventEvent @event, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(@event, nameof(@event));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PublishCloudEventAsync(topicName, @event.ToRequestContent(), context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Publish Single Cloud Event to namespace topic. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="event"> Single Cloud Event being published. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response PublishCloudEvent(string topicName, CloudEventEvent @event, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(@event, nameof(@event));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PublishCloudEvent(topicName, @event.ToRequestContent(), context);
-            return response;
         }
 
         /// <summary> Publish Single Cloud Event to namespace topic. </summary>
@@ -180,38 +118,6 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Publish Batch of Cloud Events to namespace topic. </summary>
         /// <param name="topicName"> Topic Name. </param>
-        /// <param name="events"> Array of Cloud Events being published. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> PublishBatchOfCloudEventsAsync(string topicName, object events, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(events, nameof(events));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PublishBatchOfCloudEventsAsync(topicName, RequestContent.Create(events), context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Publish Batch of Cloud Events to namespace topic. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="events"> Array of Cloud Events being published. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response PublishBatchOfCloudEvents(string topicName, object events, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(events, nameof(events));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PublishBatchOfCloudEvents(topicName, RequestContent.Create(events), context);
-            return response;
-        }
-
-        /// <summary> Publish Batch of Cloud Events to namespace topic. </summary>
-        /// <param name="topicName"> Topic Name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="content"/> is null. </exception>
@@ -258,62 +164,6 @@ namespace Azure.Messaging.EventGrid
             {
                 using HttpMessage message = CreatePublishBatchOfCloudEventsRequest(topicName, content, context);
                 return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Receive Batch of Cloud Events from the Event Subscription. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. </param>
-        /// <param name="timeout"> Timeout value for receive operation in Seconds. Default is 60 seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ReceiveResponse>> ReceiveBatchOfCloudEventValuesAsync(string topicName, string eventSubscriptionName, int? maxEvents = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridClient.ReceiveBatchOfCloudEventValues");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await ReceiveBatchOfCloudEventsAsync(topicName, eventSubscriptionName, maxEvents, timeout, context).ConfigureAwait(false);
-                return Response.FromValue(ReceiveResponse.FromResponse(response), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Receive Batch of Cloud Events from the Event Subscription. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. </param>
-        /// <param name="timeout"> Timeout value for receive operation in Seconds. Default is 60 seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ReceiveResponse> ReceiveBatchOfCloudEventValues(string topicName, string eventSubscriptionName, int? maxEvents = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridClient.ReceiveBatchOfCloudEventValues");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = ReceiveBatchOfCloudEvents(topicName, eventSubscriptionName, maxEvents, timeout, context);
-                return Response.FromValue(ReceiveResponse.FromResponse(response), response);
             }
             catch (Exception e)
             {
@@ -385,42 +235,6 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Acknowledge Cloud Events. </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of LockTokens for the corresponding received Cloud Events to be acknowledged. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<LockTokensResponse>> AcknowledgeBatchOfCloudEventsAsync(string topicName, string eventSubscriptionName, LockTokenInput lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AcknowledgeBatchOfCloudEventsAsync(topicName, eventSubscriptionName, lockTokens.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(LockTokensResponse.FromResponse(response), response);
-        }
-
-        /// <summary> Acknowledge Cloud Events. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of LockTokens for the corresponding received Cloud Events to be acknowledged. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<LockTokensResponse> AcknowledgeBatchOfCloudEvents(string topicName, string eventSubscriptionName, LockTokenInput lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AcknowledgeBatchOfCloudEvents(topicName, eventSubscriptionName, lockTokens.ToRequestContent(), context);
-            return Response.FromValue(LockTokensResponse.FromResponse(response), response);
-        }
-
-        /// <summary> Acknowledge Cloud Events. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
@@ -476,42 +290,6 @@ namespace Azure.Messaging.EventGrid
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Release Cloud Events. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="tokens"> Array of LockTokens for the corresponding received Cloud Events to be acknowledged. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="tokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<LockTokensResponse>> ReleaseBatchOfCloudEventsAsync(string topicName, string eventSubscriptionName, object tokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(tokens, nameof(tokens));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReleaseBatchOfCloudEventsAsync(topicName, eventSubscriptionName, RequestContent.Create(tokens), context).ConfigureAwait(false);
-            return Response.FromValue(LockTokensResponse.FromResponse(response), response);
-        }
-
-        /// <summary> Release Cloud Events. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="tokens"> Array of LockTokens for the corresponding received Cloud Events to be acknowledged. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="tokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<LockTokensResponse> ReleaseBatchOfCloudEvents(string topicName, string eventSubscriptionName, object tokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(tokens, nameof(tokens));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReleaseBatchOfCloudEvents(topicName, eventSubscriptionName, RequestContent.Create(tokens), context);
-            return Response.FromValue(LockTokensResponse.FromResponse(response), response);
         }
 
         /// <summary> Release Cloud Events. </summary>
@@ -674,17 +452,6 @@ namespace Azure.Messaging.EventGrid
             request.Headers.Add("content-type", "application/json; charset=utf-8");
             request.Content = content;
             return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

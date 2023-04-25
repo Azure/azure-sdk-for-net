@@ -8,7 +8,7 @@
 using System;
 using Azure;
 using Azure.Core.Extensions;
-using Azure.Messaging.EventGrid;
+using Azure.Messaging.EventGrid.Namespaces;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -23,15 +23,6 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<EventGridClient, EventGridClientOptions>((options) => new EventGridClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="EventGridClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
-        public static IAzureClientBuilder<EventGridClient, EventGridClientOptions> AddEventGridClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<EventGridClient, EventGridClientOptions>((options, cred) => new EventGridClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="EventGridClient"/> instance. </summary>
