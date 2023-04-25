@@ -180,7 +180,7 @@ namespace Azure.Core.Pipeline
             private string? _traceparent;
             private string? _tracestate;
 
-            private bool _isAllDataRequested;
+            private bool _isAllDataRequested = true;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -267,7 +267,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
-                    _currentActivity?.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
                 {
