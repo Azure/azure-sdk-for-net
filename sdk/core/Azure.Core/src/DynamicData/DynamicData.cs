@@ -105,7 +105,7 @@ namespace Azure
             {
                 JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
                 JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject(), _options),
-                _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind {_element.ValueKind}.  Cannot cast value to IEnumerable."),
+                _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind '{_element.ValueKind}'.  Cannot cast value to IEnumerable."),
             };
         }
 
@@ -178,7 +178,7 @@ namespace Azure
             }
             catch (JsonException e)
             {
-                throw new InvalidCastException($"Unable to convert value of kind {element.ValueKind} to type {typeof(T)}.", e);
+                throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.", e);
             }
         }
 
