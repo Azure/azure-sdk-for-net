@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return table;
         }
 
-        internal Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
+        private Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
         {
             var tableDetails = new TablesParameterBindingDataContent(attribute);
             var tableDetailsBinaryData = new BinaryData(tableDetails);
