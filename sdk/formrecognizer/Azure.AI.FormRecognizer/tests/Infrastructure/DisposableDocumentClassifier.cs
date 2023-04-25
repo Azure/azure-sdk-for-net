@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableDocumentClassifier"/> class.
         /// </summary>
-        /// <param name="adminClient">The client to use for deleting the classifier upon disposal.</param>
-        /// <param name="classifierId">The identifier of the classifier to delete upon disposal.</param>
+        /// <param name="client">The client to use for deleting the classifier upon disposal.</param>
+        /// <param name="value">The classifier to associate with this instance. It will be deleted upon disposal.</param>
         private DisposableDocumentClassifier(DocumentModelAdministrationClient client, DocumentClassifierDetails value)
         {
             _client = client;

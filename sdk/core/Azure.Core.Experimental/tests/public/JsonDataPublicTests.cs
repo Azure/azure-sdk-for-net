@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core.Dynamic;
-using System.Text.Json;
-using NUnit.Framework;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
 {
@@ -147,16 +147,6 @@ namespace Azure.Core.Tests.Public
 
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual(5, list[0]);
-        }
-
-        [Test]
-        [Ignore(reason: "TODO: Feature to be added in later version.")]
-        public void GetMemberIsCaseInsensitive()
-        {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
-
-            Assert.AreEqual("Hello", (string)jsonData.Primitive);
-            Assert.AreEqual(true, (bool)jsonData.Nested.NestedPrimitive);
         }
 
         [Test]
@@ -310,17 +300,71 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("To be implemented.")]
         public void EqualsHandlesStringsSpecial()
         {
             dynamic json = new BinaryData("\"test\"").ToDynamicFromJson();
 
             Assert.IsTrue(json.Equals("test"));
-            Assert.IsTrue(json.Equals(new BinaryData("\"test\"").ToDynamicFromJson()));
+            Assert.IsTrue(json == "test");
         }
 
         [Test]
-        [Ignore("To be implemented.")]
+        [TestCase("\"test\"", "\"test\"", true)]
+        [TestCase("1", "1.0", true)]
+        [TestCase("5.5", "5.5", true)]
+        [TestCase("true", "true", true)]
+        [TestCase("false", "false", true)]
+        [TestCase("null", "null", true)]
+        [TestCase("\"test\"", "\"wrong\"", false)]
+        [TestCase("\"test\"", "1", false)]
+        [TestCase("true", "false", false)]
+        [TestCase("1.1", "1.2", false)]
+        [TestCase("1", "1.2", false)]
+        [TestCase("1", "2", false)]
+        [TestCase("1", "null", false)]
+        [TestCase("1", "{ \"foo\": 1 }", false)]
+        public void EqualsPrimitiveValues(string a, string b, bool expected)
+        {
+            dynamic aJson = new BinaryData(a).ToDynamicFromJson();
+            dynamic bJson = new BinaryData(b).ToDynamicFromJson();
+
+            Assert.AreEqual(expected, aJson.Equals(bJson));
+            Assert.AreEqual(expected, aJson == bJson);
+            Assert.AreEqual(expected, bJson.Equals(aJson));
+            Assert.AreEqual(expected, bJson == aJson);
+        }
+
+        [Test]
+        public void EqualsNull()
+        {
+            dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
+            Assert.IsTrue(value.foo.Equals(null));
+            Assert.IsTrue(value.foo == null);
+
+            string nullString = null;
+            Assert.IsTrue(value.foo == nullString);
+            Assert.IsTrue(nullString == value.foo);
+
+            // Because the DLR resolves `==` for nullable value types to take the non-nullable
+            // value on the right-hand side, we'll still require a cast for nullable primitives.
+            int? nullInt = null;
+            Assert.IsTrue(value.foo == nullInt);
+            Assert.IsTrue(nullInt == (int?)value.foo);
+
+            bool? nullBool = null;
+            Assert.IsTrue(value.foo == nullBool);
+            Assert.IsTrue(nullBool == (bool?)value.foo);
+
+            // We cannot overload the equality operator with two nullable values, so
+            // the following is the consequence.
+            Assert.IsFalse(null == value.foo);
+
+            // However, this does give us a backdoor to differentiate between an
+            // absent property and a property whose JSON value is null, if we wanted to
+            // use it that way, although it's not really very nice.
+        }
+
+        [Test]
         public void EqualsForObjectsAndArrays()
         {
             dynamic obj1 = new BinaryData(new { foo = "bar" }).ToDynamicFromJson();
@@ -330,8 +374,8 @@ namespace Azure.Core.Tests.Public
             dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamicFromJson();
 
             // For objects and arrays, Equals provides reference equality.
-            Assert.AreEqual(obj1, obj2);
-            Assert.AreEqual(arr1, arr2);
+            Assert.AreEqual(obj1, obj1);
+            Assert.AreEqual(arr1, arr1);
 
             Assert.AreNotEqual(obj1, obj2);
             Assert.AreNotEqual(arr1, arr2);
@@ -443,20 +487,6 @@ namespace Azure.Core.Tests.Public
             Assert.IsFalse("foo" == barJson);
             Assert.IsTrue(barJson != "foo");
             Assert.IsTrue("foo" != barJson);
-        }
-
-        [Test]
-        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
-        public void EqualsForStringNUnit()
-        {
-            dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamicFromJson();
-            var value = foo.Value;
-
-            Assert.AreEqual(value, "foo");
-            Assert.AreEqual("foo", value);
-
-            Assert.That(value, Is.EqualTo("foo"));
-            Assert.That("foo", Is.EqualTo(value));
         }
 
         [Test]
