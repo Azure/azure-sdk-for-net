@@ -6,12 +6,12 @@ namespace Azure
     /// <summary>
     /// Provides the ability for the user to define custom behavior when accessing JSON through a dynamic layer.
     /// </summary>
-    internal struct DynamicJsonOptions
+    public struct DynamicDataOptions
     {
         /// <summary>
-        /// Gets the default <see cref="DynamicJsonOptions"/> for Azure services.
+        /// Gets the default <see cref="DynamicDataOptions"/> for Azure services.
         /// </summary>
-        public static readonly DynamicJsonOptions AzureDefault = new()
+        public static readonly DynamicDataOptions Default = new()
         {
             PropertyNameCasing = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
         };
@@ -19,7 +19,7 @@ namespace Azure
         /// <summary>
         /// Creates a new instance of DynamicDataOptions.
         /// </summary>
-        public DynamicJsonOptions() { }
+        public DynamicDataOptions() { }
 
         /// <summary>
         /// Specifies how properties on <see cref="DynamicData"/> will be accessed in the underlying data buffer.

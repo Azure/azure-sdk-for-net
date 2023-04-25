@@ -64,7 +64,7 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData data)
         {
-            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions());
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions());
         }
 
         /// <summary>
@@ -72,13 +72,13 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData data, DynamicDataNameMapping propertyNameCasing)
         {
-            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions() { PropertyNameCasing = propertyNameCasing });
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions() { PropertyNameCasing = propertyNameCasing });
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        internal static dynamic ToDynamicFromJson(this BinaryData data, DynamicJsonOptions options)
+		public static dynamic ToDynamicFromJson(this BinaryData data, DynamicDataOptions options)
         {
             return new DynamicData(MutableJsonDocument.Parse(data).RootElement, options);
         }

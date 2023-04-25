@@ -29,9 +29,9 @@ namespace Azure
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
-        private DynamicJsonOptions _options;
+        private DynamicDataOptions _options;
 
-        internal DynamicData(MutableJsonElement element, DynamicJsonOptions options = default)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
         {
             _element = element;
             _options = options;
