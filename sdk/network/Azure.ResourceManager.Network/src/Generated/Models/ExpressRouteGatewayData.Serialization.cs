@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
+            if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
+            {
+                writer.WritePropertyName("expressRouteConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpressRouteConnectionList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.Network
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Optional<IReadOnlyList<ExpressRouteConnectionData>> expressRouteConnections = default;
+            Optional<IList<ExpressRouteConnectionData>> expressRouteConnections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> virtualHub = default;
             Optional<bool> allowNonVirtualWanTraffic = default;

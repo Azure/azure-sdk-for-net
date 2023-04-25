@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default) => await StartPacketCaptureAsync(waitUntil, (VpnPacketCaptureStartContent)vpnPacketCaptureStartParameters, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, CancellationToken cancellationToken = default) => await StartPacketCaptureAsync(waitUntil, (VpnPacketCaptureStartContent)vpnPacketCaptureStartParameters, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Starts packet capture on virtual network gateway in the specified resource group.
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default) => StartPacketCapture(waitUntil, (VpnPacketCaptureStartContent)vpnPacketCaptureStartParameters, cancellationToken);
+        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, CancellationToken cancellationToken = default) => StartPacketCapture(waitUntil, (VpnPacketCaptureStartContent)vpnPacketCaptureStartParameters, cancellationToken);
 
         /// <summary>
         /// Stops packet capture on virtual network gateway in the specified resource group.

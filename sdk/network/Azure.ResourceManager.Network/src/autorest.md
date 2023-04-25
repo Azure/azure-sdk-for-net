@@ -174,6 +174,7 @@ rename-mapping:
   VpnClientParameters: VpnClientContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
+  ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -415,11 +416,6 @@ directive:
         delete $.properties.type;
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
-  - from: virtualWan.json
-    where: $.definitions
-    transform: >
-      $.ExpressRouteGatewayProperties.properties.expressRouteConnections['readOnly'] = true;
-    reason: This collection property should be readonly.
   - from: virtualWan.json
     where: $.definitions
     transform: >
