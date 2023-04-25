@@ -591,6 +591,190 @@ namespace Azure.ResourceManager.Monitor
             return client.GetDataCollectionRuleAssociations(scope).Get(associationName, cancellationToken);
         }
 
+        /// <summary>
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetMetricDefinitionsAsync(metricnamespace, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<MetricDefinition> GetMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetMetricDefinitions(metricnamespace, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<MonitorMetric> GetMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ArmResourceGetMetricsOptions();
+
+            return GetArmResourceExtensionClient(client, scope).GetMetricsAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<MonitorMetric> GetMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ArmResourceGetMetricsOptions();
+
+            return GetArmResourceExtensionClient(client, scope).GetMetrics(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric baseline values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Baselines_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<SingleMetricBaseline> GetBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ArmResourceGetBaselinesOptions();
+
+            return GetArmResourceExtensionClient(client, scope).GetBaselinesAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric baseline values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Baselines_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<SingleMetricBaseline> GetBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ArmResourceGetBaselinesOptions();
+
+            return GetArmResourceExtensionClient(client, scope).GetBaselines(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricNamespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetMetricNamespacesAsync(startTime, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricNamespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<MetricNamespace> GetMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetMetricNamespaces(startTime, cancellationToken);
+        }
+
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
