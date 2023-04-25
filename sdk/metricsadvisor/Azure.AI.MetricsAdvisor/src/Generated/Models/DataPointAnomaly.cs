@@ -14,5 +14,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataPointAnomaly
     {
+        /// <summary> dimension specified for series. </summary>
+        public IReadOnlyDictionary<string, string> Dimension { get; }
+        /// <summary> Gets the property. </summary>
+        public AnomalyProperty Property { get; }
     }
 }

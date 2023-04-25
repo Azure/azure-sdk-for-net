@@ -13,5 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IncidentResult. </summary>
     public partial class AnomalyIncident
     {
+        /// <summary> Gets the root node. </summary>
+        public SeriesIdentity RootNode { get; }
+        /// <summary> Gets the property. </summary>
+        public IncidentProperty Property { get; }
     }
 }
