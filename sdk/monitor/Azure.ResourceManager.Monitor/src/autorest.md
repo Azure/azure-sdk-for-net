@@ -431,6 +431,5 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRuleAssociations_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRules_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/monitoringAccounts_API.json
-# exclude these two files because they do not exist in previous stable version of the SDK
 # - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/operations_API.json # we do not need to support this
 ```
