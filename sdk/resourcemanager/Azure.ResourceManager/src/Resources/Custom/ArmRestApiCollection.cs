@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Resources
             _providerCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(Id));
         }
 
-
         private RestOperations GetRestClient(CancellationToken cancellationToken = default)
         {
             return _restClient ??= new RestOperations(
