@@ -513,6 +513,224 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
+        /// Lists the Alerts for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListExternal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the Alerts for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListExternal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CostManagementAlertResource> GetCostManagementAlerts(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/forecast</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Forecast_ExternalCloudProviderUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        public static async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/forecast</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Forecast_ExternalCloudProviderUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        public static Response<ForecastResult> ExternalCloudProviderUsageForecast(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+
+            return GetTenantResourceExtensionClient(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Dimension> ByExternalCloudProviderTypeDimensionsAsync(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetTenantResourceExtensionClient(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Dimension> ByExternalCloudProviderTypeDimensions(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetTenantResourceExtensionClient(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Query the usage data for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Query_UsageByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
+        public static async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Query the usage data for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Query_UsageByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
+        public static Response<QueryResult> UsageByExternalCloudProviderTypeQuery(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+
+            return GetTenantResourceExtensionClient(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+        }
+
+        /// <summary>
         /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
         /// <list type="bullet">
         /// <item>

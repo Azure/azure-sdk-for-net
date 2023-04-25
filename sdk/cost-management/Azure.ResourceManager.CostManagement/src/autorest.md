@@ -85,11 +85,6 @@ directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
   - remove-operation: Views_List
   - remove-operation: ScheduledActions_List
-  # [Error][Linked:https://github.com/Azure/autorest.csharp/issues/3303] Not a constant
-  - remove-operation: Alerts_ListExternal
-  - remove-operation: Forecast_ExternalCloudProviderUsage
-  - remove-operation: Dimensions_ByExternalCloudProviderType
-  - remove-operation: Query_UsageByExternalCloudProviderType
   # [Build Error][LRO issue] Return 'Response' instead of 'Response<Foo>'
   - remove-operation: GenerateCostDetailsReport_CreateOperation
   - remove-operation: GenerateCostDetailsReport_GetOperationResults

@@ -19,6 +19,14 @@ namespace Azure.ResourceManager.CostManagement
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
+        private AlertsRestOperations _costManagementAlertAlertsRestClient;
+        private ClientDiagnostics _forecastClientDiagnostics;
+        private ForecastRestOperations _forecastRestClient;
+        private ClientDiagnostics _dimensionsClientDiagnostics;
+        private DimensionsRestOperations _dimensionsRestClient;
+        private ClientDiagnostics _queryClientDiagnostics;
+        private QueryRestOperations _queryRestClient;
         private ClientDiagnostics _generateReservationDetailsReportClientDiagnostics;
         private GenerateReservationDetailsReportRestOperations _generateReservationDetailsReportRestClient;
         private ClientDiagnostics _priceSheetClientDiagnostics;
@@ -40,6 +48,14 @@ namespace Azure.ResourceManager.CostManagement
         {
         }
 
+        private ClientDiagnostics CostManagementAlertAlertsClientDiagnostics => _costManagementAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
+        private AlertsRestOperations CostManagementAlertAlertsRestClient => _costManagementAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CostManagementAlertResource.ResourceType));
+        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GenerateReservationDetailsReportRestOperations GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -67,6 +83,230 @@ namespace Azure.ResourceManager.CostManagement
         public virtual TenantScheduledActionCollection GetTenantScheduledActions()
         {
             return GetCachedClient(Client => new TenantScheduledActionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Lists the Alerts for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListExternal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the Alerts for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListExternal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/forecast</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Forecast_ExternalCloudProviderUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ForecastClientDiagnostics.CreateScope("TenantResourceExtensionClient.ExternalCloudProviderUsageForecast");
+            scope.Start();
+            try
+            {
+                var response = await ForecastRestClient.ExternalCloudProviderUsageAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/forecast</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Forecast_ExternalCloudProviderUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ForecastResult> ExternalCloudProviderUsageForecast(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ForecastClientDiagnostics.CreateScope("TenantResourceExtensionClient.ExternalCloudProviderUsageForecast");
+            scope.Start();
+            try
+            {
+                var response = ForecastRestClient.ExternalCloudProviderUsage(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Dimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Dimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Query the usage data for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Query_UsageByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            using var scope = QueryClientDiagnostics.CreateScope("TenantResourceExtensionClient.UsageByExternalCloudProviderTypeQuery");
+            scope.Start();
+            try
+            {
+                var response = await QueryRestClient.UsageByExternalCloudProviderTypeAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query the usage data for external cloud provider type defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Query_UsageByExternalCloudProviderType</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<QueryResult> UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            using var scope = QueryClientDiagnostics.CreateScope("TenantResourceExtensionClient.UsageByExternalCloudProviderTypeQuery");
+            scope.Start();
+            try
+            {
+                var response = QueryRestClient.UsageByExternalCloudProviderType(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

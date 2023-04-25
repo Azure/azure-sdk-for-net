@@ -253,5 +253,76 @@ namespace Azure.ResourceManager.CostManagement
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateListExternalRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists the Alerts for external cloud provider type defined. </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CostManagementAlertsResult>> ListExternalAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+
+            using var message = CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CostManagementAlertsResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists the Alerts for external cloud provider type defined. </summary>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CostManagementAlertsResult> ListExternal(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+
+            using var message = CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CostManagementAlertsResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }
