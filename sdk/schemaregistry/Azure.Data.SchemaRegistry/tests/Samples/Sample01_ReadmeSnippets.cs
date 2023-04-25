@@ -19,12 +19,15 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
-            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpointAvro;
-
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+#if SNIPPET
+            string fullyQualifiedNamespace = "<{hostname}.servicebus.windows.net>";
+#else
+            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpointAvro;
+#endif
             var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
             #endregion
 
@@ -35,9 +38,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Order(1)]
         public void RegisterSchema()
         {
-            string groupName = TestEnvironment.SchemaRegistryGroup;
-
             #region Snippet:SchemaRegistryRegisterSchema
+#if SNIPPET
+            string groupName = "<group_name>";
+#else
+            string groupName = TestEnvironment.SchemaRegistryGroup;
+#endif
             string name = "employeeSample";
             SchemaFormat format = SchemaFormat.Avro;
             // Example schema's definition
@@ -64,9 +70,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Order(2)]
         public void RetrieveSchemaId()
         {
-            string groupName = TestEnvironment.SchemaRegistryGroup;
-
             #region Snippet:SchemaRegistryRetrieveSchemaId
+#if SNIPPET
+            string groupName = "<group_name>";
+#else
+            string groupName = TestEnvironment.SchemaRegistryGroup;
+#endif
             string name = "employeeSample";
             SchemaFormat format = SchemaFormat.Avro;
             // Example schema's content
@@ -92,9 +101,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Order(3)]
         public void RetrieveSchema()
         {
-            var schemaId = _schemaProperties.Id;
-
             #region Snippet:SchemaRegistryRetrieveSchema
+#if SNIPPET
+            var schemaId = "<schemaId>";
+#else
+            var schemaId = _schemaProperties.Id;
+#endif
             SchemaRegistrySchema schema = client.GetSchema(schemaId);
             string definition = schema.Definition;
             #endregion
@@ -106,11 +118,16 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Order(4)]
         public void RetrieveSchemaVersion()
         {
+            #region Snippet:SchemaRegistryRetrieveSchemaVersion
+#if SNIPPET
+            string groupName = "<group_name>";
+            string name = "<schema_name>";
+            int version = "<schema_version>";
+#else
             string groupName = _schemaProperties.GroupName;
             string name = _schemaProperties.Name;
             int version = 1;
-
-            #region Snippet:SchemaRegistryRetrieveSchemaVersion
+#endif
             SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
             string definition = schema.Definition;
             #endregion
