@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         {
             var tableDetails = new TablesParameterBindingDataContent(attribute);
             var tableDetailsBinaryData = new BinaryData(tableDetails);
-            var parameterBindingData = new ParameterBindingData("1.0", "AzureStorageTables", tableDetailsBinaryData, "application/json");
+            var parameterBindingData = new ParameterBindingData("1.0", Constants.ExtensionName, tableDetailsBinaryData, "application/json");
 
             return Task.FromResult(parameterBindingData);
         }

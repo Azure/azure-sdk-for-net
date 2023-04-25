@@ -10,6 +10,10 @@ using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System;
+using Moq;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
@@ -69,6 +73,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
             Assert.True(CustomTableBinding<Poco>.AddInvoked);
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
+        }
+
+        [RecordedTest]
+        public async Task Table_CreateParameterBindingData_CreatesValidParameterBindingDataObject()
+        {
+            // Arrange
+            var program = new BindToParameterBindingData();
+            var ext = new TableConverterExtensionConfigProvider();
+            await CallAsync<CustomTableBindingExtensionProgram>(configure: hostBuilder =>
+            {
+                DefaultConfigure(hostBuilder);
+                hostBuilder.ConfigureWebJobs(builder => { builder.AddExtension(ext); });
+            });
+
+            IHost host = new HostBuilder()
+               .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
+               {
+                   builder.AddTables();
+               })
+               .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingData>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
+            ParameterBindingData result = program.Result;
+
+            Assert.NotNull(result);
+
+            var tableData = result?.Content.ToObjectFromJson<Dictionary<string, string>>();
+
+            var config = new TablesExtensionConfigProvider(null, null, null);
+
+            // Assert
+            Assert.True(tableData.TryGetValue("Connection", out var resultConnection));
+            Assert.True(tableData.TryGetValue("ContainerName", out var resultContainerName));
+            Assert.True(tableData.TryGetValue("BlobName", out var resultBlobName));
         }
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
@@ -158,6 +199,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 // complete and flush all storage operations
                 return Task.FromResult(true);
+            }
+        }
+
+        private class BindToParameterBindingData
+        {
+            public ParameterBindingData Result { get; set; }
+
+            public void Run(
+                [Table("test")] ParameterBindingData blobData)
+            {
+                this.Result = blobData;
             }
         }
     }
