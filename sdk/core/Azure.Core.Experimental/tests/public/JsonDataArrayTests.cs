@@ -196,10 +196,7 @@ namespace Azure.Core.Tests.Public
 
             Assert.AreEqual(5, (int)data[0]);
             Assert.AreEqual("valid", (string)data[1]);
-
-            // TODO: to check for null, we have to cast to string.  Is that
-            // what we want?
-            Assert.AreEqual(null, (string)data[2]);
+            Assert.IsTrue(data[2] == null);
         }
 
         [Test]
@@ -212,11 +209,9 @@ namespace Azure.Core.Tests.Public
             data.value[2] = null;
 
             Assert.AreEqual(5, (int)data.value[0]);
+            Assert.IsTrue(5 == data.value[0]);
             Assert.AreEqual("valid", (string)data.value[1]);
-
-            // TODO: to check for null, we have to cast to string.  Is that
-            // what we want?
-            Assert.AreEqual(null, (string)data.value[2]);
+            Assert.IsTrue(data.value[2] == null);
         }
 
         [Test]

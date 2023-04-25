@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI
         {
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
-            Choices = choices.ToList();
+            Choices = choices;
             Usage = usage;
         }
 

@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
             else
             {
-                _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
+                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
             }
         }
 

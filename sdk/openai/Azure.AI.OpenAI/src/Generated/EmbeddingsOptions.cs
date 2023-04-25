@@ -34,6 +34,31 @@ namespace Azure.AI.OpenAI
             Input = input;
         }
 
+        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="internalNonAzureModelName">
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="input">
+        /// Input text to get embeddings for, encoded as a string.
+        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        /// 
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        internal EmbeddingsOptions(string user, string internalNonAzureModelName, string input)
+        {
+            User = user;
+            InternalNonAzureModelName = internalNonAzureModelName;
+            Input = input;
+        }
+
         /// <summary>
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.

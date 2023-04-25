@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -30,10 +29,10 @@ namespace Azure.AI.OpenAI
         /// <param name="textOffsets"> The text offsets associated with tokens in this completions data. </param>
         internal CompletionsLogProbabilityModel(IReadOnlyList<string> tokens, IReadOnlyList<float?> tokenLogProbabilities, IReadOnlyList<IDictionary<string, float?>> topLogProbabilities, IReadOnlyList<int> textOffsets)
         {
-            Tokens = tokens.ToList();
-            TokenLogProbabilities = tokenLogProbabilities.ToList();
-            TopLogProbabilities = topLogProbabilities.ToList();
-            TextOffsets = textOffsets.ToList();
+            Tokens = tokens;
+            TokenLogProbabilities = tokenLogProbabilities;
+            TopLogProbabilities = topLogProbabilities;
+            TextOffsets = textOffsets;
         }
 
         /// <summary> The textual forms of tokens evaluated in this probability model. </summary>

@@ -52,7 +52,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableInstanceDiscovery
+                DisableAuthorityValidationAndInstanceDiscovery = config.DisableAuthorityValidationAndInstanceDiscovery
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(

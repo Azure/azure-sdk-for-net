@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB2 Database. </param>
-        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid, SslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
+        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid, SapSslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
         /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
-        public SslPreference? SslPreference { get; set; }
+        public SapSslPreference? SslPreference { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the DB2 Database. </summary>
         public Uri SslCertificateUri { get; set; }
     }
