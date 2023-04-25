@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         }
 
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var list = await _alertCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
