@@ -51,16 +51,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "201": {
             "description": "Returns the create call response.",
             "schema": {
               "$ref": "#/definitions/CallConnectionProperties"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -107,16 +107,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the answer call response.",
             "schema": {
               "$ref": "#/definitions/CallConnectionProperties"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -163,14 +163,14 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Returns the redirect call response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "204": {
-            "description": "Returns the redirect call response."
           }
         },
         "x-ms-examples": {
@@ -216,14 +216,14 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Returns the reject call response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "204": {
-            "description": "Returns the reject call response."
           }
         },
         "x-ms-examples": {
@@ -253,16 +253,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the get call response.",
             "schema": {
               "$ref": "#/definitions/CallConnectionProperties"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -292,14 +292,14 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Returns the hangup call response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "204": {
-            "description": "Returns the hangup call response."
           }
         },
         "x-ms-examples": {
@@ -343,14 +343,14 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Returns the terminate call response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "204": {
-            "description": "Returns the terminate call response."
           }
         },
         "x-ms-examples": {
@@ -403,16 +403,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "202": {
             "description": "Returns the transfer call response.",
             "schema": {
               "$ref": "#/definitions/TransferCallResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -453,14 +453,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the play audio response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the play audio response."
           }
         },
         "x-ms-examples": {
@@ -491,14 +491,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the cancel all media operations response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the cancel all media operations response."
           }
         },
         "x-ms-examples": {
@@ -538,14 +538,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the recognize response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the recognize response."
           }
         },
         "x-ms-examples": {
@@ -598,14 +598,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the start dialog response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the start dialog response."
           }
         },
         "x-ms-examples": {
@@ -658,14 +658,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the stop dialog response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the stop dialog response."
           }
         },
         "x-ms-examples": {
@@ -696,16 +696,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the get participants response.",
             "schema": {
               "$ref": "#/definitions/GetParticipantsResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -758,16 +758,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "202": {
             "description": "Returns the add participant response.",
             "schema": {
               "$ref": "#/definitions/AddParticipantResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -821,16 +821,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "202": {
             "description": "Returns the remove participant response.",
             "schema": {
               "$ref": "#/definitions/RemoveParticipantResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -884,16 +884,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "202": {
             "description": "Returns the mute participants response",
             "schema": {
               "$ref": "#/definitions/MuteParticipantsResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -947,16 +947,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "202": {
             "description": "Returns the unmute participants response",
             "schema": {
               "$ref": "#/definitions/UnmuteParticipantsResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -995,16 +995,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the get participant response.",
             "schema": {
               "$ref": "#/definitions/CallParticipant"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -1050,16 +1050,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the start call recording response.",
             "schema": {
               "$ref": "#/definitions/RecordingStateResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -1090,16 +1090,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/CommunicationErrorResponse"
-            }
-          },
           "200": {
             "description": "Returns the recording properties.",
             "schema": {
               "$ref": "#/definitions/RecordingStateResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/CommunicationErrorResponse"
             }
           }
         },
@@ -1128,14 +1128,14 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Returns the stop call recording response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "204": {
-            "description": "Returns the stop call recording response."
           }
         },
         "x-ms-examples": {
@@ -1165,14 +1165,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the pause call recording response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the pause call recording response."
           }
         },
         "x-ms-examples": {
@@ -1202,14 +1202,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": "Returns the resume call recording response."
+          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
-          },
-          "202": {
-            "description": "Returns the resume call recording response."
           }
         },
         "x-ms-examples": {
@@ -1984,7 +1984,12 @@
     },
     "StopDialogRequest": {
       "type": "object",
-      "properties": {}
+      "properties": {
+        "id": {
+            "description": "filler field",
+            "type":  "string"
+        }
+    }
     },
     "GetParticipantsResponse": {
       "description": "The response payload for getting participants of the call.",
@@ -2728,9 +2733,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2739,6 +2741,14 @@
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
           "readOnly": true
         }
       }
@@ -2759,9 +2769,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2770,6 +2777,14 @@
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
           "readOnly": true
         }
       }
@@ -2790,9 +2805,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2802,6 +2814,28 @@
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
           "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "userConsent": {
+          "$ref": "#/definitions/UserConsent",
+          "description": "UserConsent data from the Conversation Conductor",
+          "readOnly": true
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "UserConsent": {
+      "type": "object",
+      "properties": {
+        "recording": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -2821,9 +2855,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2832,6 +2863,14 @@
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
           "readOnly": true
         }
       }
@@ -2852,9 +2891,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2864,6 +2900,27 @@
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
           "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
+          "readOnly": true
+        },
+        "hangup": {
+          "$ref": "#/definitions/Hangup",
+          "description": "Hangup data from the Conversation Conductor",
+          "readOnly": true
+        }
+      }
+    },
+    "Hangup": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
         }
       }
     },
@@ -2883,9 +2940,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogInputType": {
-          "$ref": "#/definitions/DialogInputType"
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2895,6 +2949,30 @@
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
           "readOnly": true
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
+        "dialogId": {
+          "description": "Dialog ID",
+          "type": "string",
+          "readOnly": true
+        },
+        "transferToExternalNumber": {
+          "$ref": "#/definitions/TransferToExternalNumber",
+          "description": "TransferToExternalNumber data from the Conversation Conductor",
+          "readOnly": true
+        }
+      }
+    },
+    "TransferToExternalNumber": {
+      "type": "object",
+      "properties": {
+        "transferDestination": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
         }
       }
     }

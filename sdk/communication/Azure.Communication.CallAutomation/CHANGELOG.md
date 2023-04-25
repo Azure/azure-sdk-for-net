@@ -1,4 +1,6 @@
 # Release History
+## 1.0.1-alpha.6 (Unreleased)
+- Added Conversation Conductor events
 
 ## 1.0.1-alpha.3 (Unreleased)
 - Added DialogInputType to all events

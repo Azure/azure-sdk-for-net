@@ -26,11 +26,15 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
+            UserConsent = internalEvent.UserConsent;
         }
 
         /// <summary> Determines the type of the dialog. </summary>
         public DialogInputType? DialogInputType { get; }
-
+        /// <summary>
+        /// UserConsent
+        /// </summary>
+        public UserConsent UserConsent { get; }
         /// <summary>
         /// Deserialize <see cref="DialogConsent"/> event.
         /// </summary>

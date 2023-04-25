@@ -26,10 +26,16 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
+            Hangup = internalEvent.Hangup;
         }
 
         /// <summary> Determines the type of the dialog. </summary>
         public DialogInputType? DialogInputType { get; }
+
+        /// <summary>
+        /// Hangup struct
+        /// </summary>
+        public Hangup Hangup { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogHangup"/> event.

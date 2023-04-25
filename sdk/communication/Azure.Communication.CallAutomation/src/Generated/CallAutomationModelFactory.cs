@@ -203,5 +203,30 @@ namespace Azure.Communication.CallAutomation
         {
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
+
+        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <param name="recording"></param>
+        /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
+        public static UserConsent UserConsent(int recording = default)
+        {
+            return new UserConsent(recording);
+        }
+
+        /// <summary> Initializes a new instance of Hangup. </summary>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="CallAutomation.Hangup"/> instance for mocking. </returns>
+        public static Hangup Hangup(string reason = null)
+        {
+            return new Hangup(reason);
+        }
+
+        /// <summary> Initializes a new instance of TransferToExternalNumber. </summary>
+        /// <param name="transferDestination"></param>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="CallAutomation.TransferToExternalNumber"/> instance for mocking. </returns>
+        public static TransferToExternalNumber TransferToExternalNumber(string transferDestination = null, string type = null)
+        {
+            return new TransferToExternalNumber(transferDestination, type);
+        }
     }
 }
