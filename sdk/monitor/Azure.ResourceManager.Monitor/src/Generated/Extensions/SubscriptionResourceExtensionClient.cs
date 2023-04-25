@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
-        private AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
         private ClientDiagnostics _autoscaleSettingClientDiagnostics;
         private AutoscaleSettingsRestOperations _autoscaleSettingRestClient;
         private ClientDiagnostics _alertRuleClientDiagnostics;
@@ -27,8 +25,6 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations _actionGroupRestClient;
         private ClientDiagnostics _activityLogsClientDiagnostics;
         private ActivityLogsRestOperations _activityLogsRestClient;
-        private ClientDiagnostics _metricDefinitionsClientDiagnostics;
-        private MetricDefinitionsRestOperations _metricDefinitionsRestClient;
         private ClientDiagnostics _metricsClientDiagnostics;
         private MetricsRestOperations _metricsRestClient;
         private ClientDiagnostics _metricAlertClientDiagnostics;
@@ -43,6 +39,8 @@ namespace Azure.ResourceManager.Monitor
         private DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
         private ClientDiagnostics _dataCollectionRuleClientDiagnostics;
         private DataCollectionRulesRestOperations _dataCollectionRuleRestClient;
+        private ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
+        private AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        private ClientDiagnostics MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics => _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private AzureMonitorWorkspacesRestOperations MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorWorkspaceResource.ResourceType));
         private ClientDiagnostics AutoscaleSettingClientDiagnostics => _autoscaleSettingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSettingResource.ResourceType.Namespace, Diagnostics);
         private AutoscaleSettingsRestOperations AutoscaleSettingRestClient => _autoscaleSettingRestClient ??= new AutoscaleSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutoscaleSettingResource.ResourceType));
         private ClientDiagnostics AlertRuleClientDiagnostics => _alertRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", AlertRuleResource.ResourceType.Namespace, Diagnostics);
@@ -66,8 +62,6 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations ActionGroupRestClient => _actionGroupRestClient ??= new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActionGroupResource.ResourceType));
         private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ActivityLogsRestOperations ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MetricDefinitionsRestOperations MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MetricAlertClientDiagnostics => _metricAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
@@ -82,6 +76,8 @@ namespace Azure.ResourceManager.Monitor
         private DataCollectionEndpointsRestOperations DataCollectionEndpointRestClient => _dataCollectionEndpointRestClient ??= new DataCollectionEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionEndpointResource.ResourceType));
         private ClientDiagnostics DataCollectionRuleClientDiagnostics => _dataCollectionRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleResource.ResourceType.Namespace, Diagnostics);
         private DataCollectionRulesRestOperations DataCollectionRuleRestClient => _dataCollectionRuleRestClient ??= new DataCollectionRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionRuleResource.ResourceType));
+        private ClientDiagnostics MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics => _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private AzureMonitorWorkspacesRestOperations MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -94,50 +90,6 @@ namespace Azure.ResourceManager.Monitor
         public virtual LogProfileCollection GetLogProfiles()
         {
             return GetCachedClient(Client => new LogProfileCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Lists all workspaces in the specified subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all workspaces in the specified subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,52 +266,6 @@ namespace Azure.ResourceManager.Monitor
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric definitions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_ListAtSubscriptionScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"> The region where the metrics you want reside. </param>
-        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionScopeMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionScopeMetricDefinition> GetAtSubscriptionScopeMetricDefinitionsAsync(string region, string metricnamespace = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, region, metricnamespace);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionScopeMetricDefinition.DeserializeSubscriptionScopeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAtSubscriptionScopeMetricDefinitions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric definitions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_ListAtSubscriptionScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"> The region where the metrics you want reside. </param>
-        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionScopeMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionScopeMetricDefinition> GetAtSubscriptionScopeMetricDefinitions(string region, string metricnamespace = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, region, metricnamespace);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionScopeMetricDefinition.DeserializeSubscriptionScopeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAtSubscriptionScopeMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -710,6 +616,50 @@ namespace Azure.ResourceManager.Monitor
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
         }
     }
 }

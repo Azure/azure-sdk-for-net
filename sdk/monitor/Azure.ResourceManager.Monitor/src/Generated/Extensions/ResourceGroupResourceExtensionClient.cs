@@ -43,13 +43,6 @@ namespace Azure.ResourceManager.Monitor
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
-        public virtual MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources()
-        {
-            return GetCachedClient(Client => new MonitorWorkspaceResourceCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
         public virtual AutoscaleSettingCollection GetAutoscaleSettings()
@@ -111,6 +104,13 @@ namespace Azure.ResourceManager.Monitor
         public virtual DataCollectionRuleCollection GetDataCollectionRules()
         {
             return GetCachedClient(Client => new DataCollectionRuleCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
+        public virtual MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources()
+        {
+            return GetCachedClient(Client => new MonitorWorkspaceResourceCollection(Client, Id));
         }
 
         /// <summary>

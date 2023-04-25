@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+    /// <summary> Gets or sets allow or disallow public network access to workspace. </summary>
     public readonly partial struct ScheduledQueryRulePublicNetworkAccess : IEquatable<ScheduledQueryRulePublicNetworkAccess>
     {
         private readonly string _value;
@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static ScheduledQueryRulePublicNetworkAccess Enabled { get; } = new ScheduledQueryRulePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ScheduledQueryRulePublicNetworkAccess Disabled { get; } = new ScheduledQueryRulePublicNetworkAccess(DisabledValue);
-        /// <summary> SecuredByPerimeter. </summary>
-        public static ScheduledQueryRulePublicNetworkAccess SecuredByPerimeter { get; } = new ScheduledQueryRulePublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="ScheduledQueryRulePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ScheduledQueryRulePublicNetworkAccess left, ScheduledQueryRulePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledQueryRulePublicNetworkAccess"/> values are not the same. </summary>
