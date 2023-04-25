@@ -122,7 +122,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #if SNIPPET
             string groupName = "<group_name>";
             string name = "<schema_name>";
-            int version = "<schema_version>";
+            int version = 1;
 #else
             string groupName = _schemaProperties.GroupName;
             string name = _schemaProperties.Name;

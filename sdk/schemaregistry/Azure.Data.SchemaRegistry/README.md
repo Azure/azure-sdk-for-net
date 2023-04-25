@@ -145,7 +145,7 @@ string definition = schema.Definition;
 ```C# Snippet:SchemaRegistryRetrieveSchemaVersion
 string groupName = "<group_name>";
 string name = "<schema_name>";
-int version = "<schema_version>";
+int version = 1;
 SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
 string definition = schema.Definition;
 ```
