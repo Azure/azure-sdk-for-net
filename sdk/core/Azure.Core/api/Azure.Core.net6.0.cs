@@ -51,7 +51,9 @@ namespace Azure
     {
         internal DynamicData() { }
         public void Dispose() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.DynamicData? left, object? right) { throw null; }
         public static implicit operator bool (Azure.DynamicData value) { throw null; }
@@ -67,7 +69,7 @@ namespace Azure
         public static implicit operator string (Azure.DynamicData value) { throw null; }
         public static bool operator !=(Azure.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public override string? ToString() { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum DynamicDataNameMapping
     {

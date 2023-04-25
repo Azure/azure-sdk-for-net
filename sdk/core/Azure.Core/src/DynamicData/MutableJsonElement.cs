@@ -576,16 +576,13 @@ namespace Azure.Core.Json
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
+        public override string ToString()
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.Value == null)
-                    return "null";
-
-                return change.Value.ToString()!;
+                return change.Value?.ToString() ?? "null";
             }
 
             // Account for changes to descendants of this element as well
@@ -594,7 +591,7 @@ namespace Azure.Core.Json
                 return Encoding.UTF8.GetString(GetRawBytes());
             }
 
-            return _element.ToString();
+            return _element.ToString() ?? "null";
         }
 
         internal JsonElement GetJsonElement()

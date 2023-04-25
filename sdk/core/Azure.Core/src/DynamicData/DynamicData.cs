@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -182,7 +183,7 @@ namespace Azure
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
+        public override string ToString()
         {
             return _element.ToString();
         }
@@ -194,6 +195,7 @@ namespace Azure
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)
         {
             if (obj is null)
@@ -278,6 +280,7 @@ namespace Azure
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return _element.GetHashCode();
