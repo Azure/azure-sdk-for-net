@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
@@ -18,19 +19,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.KubernetesConfiguration. </summary>
     public static partial class KubernetesConfigurationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static KubernetesConfigurationResourceGroupResourceExtension GetKubernetesConfigurationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new KubernetesConfigurationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static KubernetesConfigurationResourceGroupResourceExtension GetKubernetesConfigurationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new KubernetesConfigurationResourceGroupResourceExtension(client, scope);
             });
         }
         #region KubernetesClusterExtensionResource
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
+            return GetKubernetesConfigurationResourceGroupResourceExtension(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetKubernetesConfigurationResourceGroupResourceExtension(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetKubernetesConfigurationResourceGroupResourceExtension(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>

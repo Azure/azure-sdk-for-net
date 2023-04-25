@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.LabServices.Mock;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,67 @@ namespace Azure.ResourceManager.LabServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.LabServices. </summary>
     public static partial class LabServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static LabPlanResourceExtension GetLabPlanResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new LabPlanResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static LabPlanResourceExtension GetLabPlanResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new LabPlanResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static LabResourceExtension GetLabResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new LabResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static LabResourceExtension GetLabResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new LabResourceExtension(client, scope);
+            });
+        }
+
+        private static LabServicesResourceGroupResourceExtension GetLabServicesResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LabServicesResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LabServicesResourceGroupResourceExtension GetLabServicesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LabServicesResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static LabServicesSubscriptionResourceExtension GetLabServicesSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LabServicesSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LabServicesSubscriptionResourceExtension GetLabServicesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LabServicesSubscriptionResourceExtension(client, scope);
             });
         }
         #region LabVirtualMachineImageResource
@@ -169,7 +202,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabPlanResources and their operations over a LabPlanResource. </returns>
         public static LabPlanCollection GetLabPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLabPlans();
+            return GetLabServicesResourceGroupResourceExtension(resourceGroupResource).GetLabPlans();
         }
 
         /// <summary>
@@ -225,7 +258,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
         public static LabCollection GetLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLabs();
+            return GetLabServicesResourceGroupResourceExtension(resourceGroupResource).GetLabs();
         }
 
         /// <summary>
@@ -295,7 +328,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabPlanResource> GetLabPlansAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
+            return GetLabPlanResourceExtension(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +350,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabPlanResource> GetLabPlans(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabPlans(filter, cancellationToken);
+            return GetLabPlanResourceExtension(subscriptionResource).GetLabPlans(filter, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +372,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabResource> GetLabsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabsAsync(filter, cancellationToken);
+            return GetLabResourceExtension(subscriptionResource).GetLabsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -361,7 +394,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabResource> GetLabs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabs(filter, cancellationToken);
+            return GetLabResourceExtension(subscriptionResource).GetLabs(filter, cancellationToken);
         }
 
         /// <summary>
@@ -383,7 +416,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableLabServicesSku> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+            return GetLabServicesSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +438,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableLabServicesSku> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(filter, cancellationToken);
+            return GetLabServicesSubscriptionResourceExtension(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>
@@ -428,7 +461,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            return GetLabServicesSubscriptionResourceExtension(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -451,7 +484,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            return GetLabServicesSubscriptionResourceExtension(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
     }
 }

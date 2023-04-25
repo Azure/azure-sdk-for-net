@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthBot.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthBot
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.HealthBot
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthBot. </summary>
     public static partial class HealthBotExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HealthBotResourceExtension GetHealthBotResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HealthBotResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HealthBotResourceExtension GetHealthBotResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new HealthBotResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HealthBotResourceGroupResourceExtension GetHealthBotResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HealthBotResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HealthBotResourceGroupResourceExtension GetHealthBotResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HealthBotResourceGroupResourceExtension(client, scope);
             });
         }
         #region HealthBotResource
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
         public static HealthBotCollection GetHealthBots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthBots();
+            return GetHealthBotResourceGroupResourceExtension(resourceGroupResource).GetHealthBots();
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthBotResource> GetHealthBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthBotsAsync(cancellationToken);
+            return GetHealthBotResourceExtension(subscriptionResource).GetHealthBotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthBotResource> GetHealthBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthBots(cancellationToken);
+            return GetHealthBotResourceExtension(subscriptionResource).GetHealthBots(cancellationToken);
         }
     }
 }

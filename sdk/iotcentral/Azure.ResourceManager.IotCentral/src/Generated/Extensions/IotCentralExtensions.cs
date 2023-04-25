@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotCentral.Mock;
 using Azure.ResourceManager.IotCentral.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.IotCentral
     /// <summary> A class to add extension methods to Azure.ResourceManager.IotCentral. </summary>
     public static partial class IotCentralExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static IotCentralAppResourceExtension GetIotCentralAppResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new IotCentralAppResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IotCentralAppResourceExtension GetIotCentralAppResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new IotCentralAppResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static IotCentralResourceGroupResourceExtension GetIotCentralResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new IotCentralResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static IotCentralResourceGroupResourceExtension GetIotCentralResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new IotCentralResourceGroupResourceExtension(client, scope);
             });
         }
         #region IotCentralAppResource
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An object representing collection of IotCentralAppResources and their operations over a IotCentralAppResource. </returns>
         public static IotCentralAppCollection GetIotCentralApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIotCentralApps();
+            return GetIotCentralResourceGroupResourceExtension(resourceGroupResource).GetIotCentralApps();
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotCentralAppsAsync(cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).GetIotCentralAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotCentralAppResource> GetIotCentralApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIotCentralApps(cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).GetIotCentralApps(cancellationToken);
         }
 
         /// <summary>
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetIotCentralAppResourceExtension(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetIotCentralAppResourceExtension(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotCentralAppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTemplatesApps(cancellationToken);
+            return GetIotCentralAppResourceExtension(subscriptionResource).GetTemplatesApps(cancellationToken);
         }
     }
 }
