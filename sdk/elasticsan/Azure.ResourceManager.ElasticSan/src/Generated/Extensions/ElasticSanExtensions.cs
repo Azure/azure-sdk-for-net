@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan.Mock;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.ElasticSan
     /// <summary> A class to add extension methods to Azure.ResourceManager.ElasticSan. </summary>
     public static partial class ElasticSanExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ElasticSanResourceExtension GetElasticSanResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ElasticSanResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ElasticSanResourceExtension GetElasticSanResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ElasticSanResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ElasticSanResourceGroupResourceExtension GetElasticSanResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ElasticSanResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ElasticSanResourceGroupResourceExtension GetElasticSanResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ElasticSanResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static ElasticSanSubscriptionResourceExtension GetElasticSanSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ElasticSanSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ElasticSanSubscriptionResourceExtension GetElasticSanSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ElasticSanSubscriptionResourceExtension(client, scope);
             });
         }
         #region ElasticSanResource
@@ -112,7 +129,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanResources and their operations over a ElasticSanResource. </returns>
         public static ElasticSanCollection GetElasticSans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetElasticSans();
+            return GetElasticSanResourceGroupResourceExtension(resourceGroupResource).GetElasticSans();
         }
 
         /// <summary>
@@ -182,7 +199,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An async collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+            return GetElasticSanSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +221,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> A collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticSanSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(filter, cancellationToken);
+            return GetElasticSanSubscriptionResourceExtension(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>
@@ -225,7 +242,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An async collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticSanResource> GetElasticSansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticSansAsync(cancellationToken);
+            return GetElasticSanResourceExtension(subscriptionResource).GetElasticSansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +263,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> A collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticSanResource> GetElasticSans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticSans(cancellationToken);
+            return GetElasticSanResourceExtension(subscriptionResource).GetElasticSans(cancellationToken);
         }
     }
 }

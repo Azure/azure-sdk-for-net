@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataLakeStore.Mock;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.DataLakeStore
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataLakeStore. </summary>
     public static partial class DataLakeStoreExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataLakeStoreAccountResourceExtension GetDataLakeStoreAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataLakeStoreAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataLakeStoreAccountResourceExtension GetDataLakeStoreAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataLakeStoreAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataLakeStoreResourceGroupResourceExtension GetDataLakeStoreResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataLakeStoreResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataLakeStoreResourceGroupResourceExtension GetDataLakeStoreResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataLakeStoreResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static DataLakeStoreSubscriptionResourceExtension GetDataLakeStoreSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataLakeStoreSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataLakeStoreSubscriptionResourceExtension GetDataLakeStoreSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataLakeStoreSubscriptionResourceExtension(client, scope);
             });
         }
         #region DataLakeStoreAccountResource
@@ -131,7 +148,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An object representing collection of DataLakeStoreAccountResources and their operations over a DataLakeStoreAccountResource. </returns>
         public static DataLakeStoreAccountCollection GetDataLakeStoreAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataLakeStoreAccounts();
+            return GetDataLakeStoreResourceGroupResourceExtension(resourceGroupResource).GetDataLakeStoreAccounts();
         }
 
         /// <summary>
@@ -203,7 +220,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(options, cancellationToken);
+            return GetDataLakeStoreAccountResourceExtension(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +244,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(options, cancellationToken);
+            return GetDataLakeStoreAccountResourceExtension(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +269,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeStoreAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreAccountResourceExtension(subscriptionResource).CheckDataLakeStoreAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -277,7 +294,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeStoreAccountNameAvailability(location, content, cancellationToken);
+            return GetDataLakeStoreAccountResourceExtension(subscriptionResource).CheckDataLakeStoreAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +315,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityByLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreSubscriptionResourceExtension(subscriptionResource).GetCapabilityByLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -319,7 +336,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataLakeStoreCapabilityInformation> GetCapabilityByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityByLocation(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionResourceExtension(subscriptionResource).GetCapabilityByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -341,7 +358,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionResourceExtension(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +380,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionResourceExtension(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
     }
 }
