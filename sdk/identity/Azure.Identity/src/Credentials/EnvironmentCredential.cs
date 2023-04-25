@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -70,6 +68,7 @@ namespace Azure.Identity
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public EnvironmentCredential(TokenCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options), options)
         { }

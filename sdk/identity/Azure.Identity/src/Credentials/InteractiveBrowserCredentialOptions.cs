@@ -63,6 +63,6 @@ namespace Azure.Identity
         public string LoginHint { get; set; }
 
         /// <inheritdoc/>
-        public bool DisableInstanceDiscovery { get; set; }
+        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
     }
 }

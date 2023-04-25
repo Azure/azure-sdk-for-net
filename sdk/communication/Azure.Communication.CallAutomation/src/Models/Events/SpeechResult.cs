@@ -12,6 +12,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The RecognizeResultType of this RecognizeResult.
         /// </summary>
-        public override RecognizeResultType ResultType => RecognizeResultType.CollectTonesResult;
+        public override RecognizeResultType ResultType => RecognizeResultType.SpeechResult;
     }
 }

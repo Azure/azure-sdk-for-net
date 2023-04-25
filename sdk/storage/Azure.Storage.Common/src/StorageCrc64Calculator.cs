@@ -954,7 +954,7 @@ namespace Azure.Storage
         //
         // NB: uSizeA and/or uSizeB may be 0s (this trick may be used to "recompute" CRC for another initial value)
         //
-        private static UInt64 Concatenate(
+        internal static UInt64 Concatenate(
             UInt64 uInitialCrcAB,
             UInt64 uInitialCrcA,
             UInt64 uFinalCrcA,
