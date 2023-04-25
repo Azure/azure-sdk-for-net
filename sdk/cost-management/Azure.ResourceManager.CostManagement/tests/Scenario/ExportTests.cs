@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CostManagement.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
@@ -17,44 +18,25 @@ namespace Azure.ResourceManager.CostManagement.Tests
     internal class ExportTests : CostManagementManagementTestBase
     {
         private CostManagementExportCollection _exportCollection;
+        private ResourceGroupResource _resourceGroup;
 
         public ExportTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
             _exportCollection = Client.GetCostManagementExports(DefaultScope);
+            _resourceGroup = await CreateResourceGroup();
         }
 
-        [RecordedTest]
-        [Ignore("service issue: returned id is not start with /")]
-        public async Task List()
+        private async Task<CostManagementExportResource> CreateExport(string exportName, ResourceIdentifier storageAccountId)
         {
-            var list = await _exportCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
-        }
-
-        [RecordedTest]
-        [Ignore("service issue: returned id is not start with /")]
-        public async Task Get()
-        {
-            var list = await _exportCollection.GetAsync("export230424");
-        }
-
-        [RecordedTest]
-        [Ignore("service issue: returned id is not start with /")]
-        public async Task Create()
-        {
-            var rg = await CreateResourceGroup();
-            string storageAccountName = Recording.GenerateAssetName("azstorageforcost");
-            string exportName = Recording.GenerateAssetName("export");
-            await CreateStorageAccount(rg, storageAccountName);
-            var saId = StorageAccountResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, storageAccountName);
-            ExportDeliveryDestination exportDeliveryDestination = new ExportDeliveryDestination("container152")
+            string containerName = "exportcontainer";
+            ExportDeliveryDestination exportDeliveryDestination = new ExportDeliveryDestination(containerName)
             {
-                ResourceId = new ResourceIdentifier(saId),
+                ResourceId = new ResourceIdentifier(storageAccountId),
             };
             var data = new CostManagementExportData()
             {
@@ -63,9 +45,43 @@ namespace Azure.ResourceManager.CostManagement.Tests
                 DeliveryInfo = new ExportDeliveryInfo(exportDeliveryDestination),
             };
             var export = await _exportCollection.CreateOrUpdateAsync(WaitUntil.Completed, exportName, data);
-            Assert.IsNotNull(export);
+            return export.Value;
+        }
 
-            await export.Value.DeleteAsync(WaitUntil.Completed);
+        [RecordedTest]
+        [Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23704")]
+        public async Task CreateOrUpdateExistGetGetAllDelete()
+        {
+            // create a storage account
+            string exportName = Recording.GenerateAssetName("export");
+            string storageAccountName = Recording.GenerateAssetName("azstorageforcost");
+            await CreateStorageAccount(_resourceGroup, storageAccountName);
+            var saId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, storageAccountName);
+
+            // CreateOrUpdate
+            var export = await CreateExport(exportName, saId);
+            ValidateCostManagementExport(export.Data, exportName);
+
+            // Exist
+            var flag = await _exportCollection.ExistsAsync(exportName);
+            Assert.IsTrue(flag);
+
+            // Get
+            var getexport = await _exportCollection.GetAsync(exportName);
+            ValidateCostManagementExport(getexport.Value.Data, exportName);
+
+            // GetAll
+            var list = await _exportCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateCostManagementExport(list.FirstOrDefault().Data, exportName);
+
+            // Delete
+            await export.DeleteAsync(WaitUntil.Completed);
+        }
+
+        private void ValidateCostManagementExport(CostManagementExportData export, string exportName)
+        {
+            Assert.IsNotNull(export);
         }
     }
 }
