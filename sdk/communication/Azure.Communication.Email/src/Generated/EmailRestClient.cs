@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -76,7 +77,7 @@ namespace Azure.Communication.Email
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -104,7 +105,7 @@ namespace Azure.Communication.Email
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -150,7 +151,7 @@ namespace Azure.Communication.Email
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message0.Response);
             }
         }
 
@@ -174,7 +175,7 @@ namespace Azure.Communication.Email
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message0.Response);
+                    throw new RequestFailedException(message0.Response);
             }
         }
     }
