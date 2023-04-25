@@ -180,6 +180,8 @@ namespace Azure.Core.Pipeline
             private string? _traceparent;
             private string? _tracestate;
 
+            private bool _isAllDataRequested;
+
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
@@ -200,7 +202,10 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    _currentActivity?.AddObjectTag(name, value);
+                    if (_isAllDataRequested)
+                    {
+                        _currentActivity?.AddObjectTag(name, value);
+                    }
                 }
             }
 
@@ -262,14 +267,6 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
-                    if (!(_currentActivity?.GetIsAllDataRequestedFlag() ?? true))
-                    {
-                        _currentActivity.Stop();
-                        _currentActivity = null;
-
-                        return null;
-                    }
-
                     _currentActivity?.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
@@ -330,6 +327,8 @@ namespace Azure.Core.Pipeline
                     _currentActivity.Start();
                 }
 
+                _isAllDataRequested = _currentActivity?.GetIsAllDataRequestedFlag() ?? true;
+
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
                 return _currentActivity;
@@ -357,14 +356,17 @@ namespace Azure.Core.Pipeline
 
             public void MarkFailed(Exception? exception)
             {
-                if (exception != null)
+                if (_isAllDataRequested)
                 {
-                    _diagnosticSource?.Write(_activityName + ".Exception", exception);
-                }
+                    if (exception != null)
+                    {
+                        _diagnosticSource?.Write(_activityName + ".Exception", exception);
+                    }
 
-                if (ActivityExtensions.SupportsActivitySource())
-                {
-                    _currentActivity?.SetErrorStatus(exception?.ToString());
+                    if (ActivityExtensions.SupportsActivitySource())
+                    {
+                        _currentActivity?.SetErrorStatus(exception?.ToString());
+                    }
                 }
             }
 

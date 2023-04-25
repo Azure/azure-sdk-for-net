@@ -490,7 +490,7 @@ namespace Azure.Core.Tests
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
                 scope.Start();
-                if (Activity.Current != null) activeActivityCounts++;
+                if (Activity.Current.IsAllDataRequested) activeActivityCounts++;
                 scope.Dispose();
             }
 
@@ -519,7 +519,7 @@ namespace Azure.Core.Tests
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
                 scope.Start();
-                if (Activity.Current != null)
+                if (Activity.Current.IsAllDataRequested)
                     activeActivityCounts++;
                 scope.Dispose();
             }
@@ -551,7 +551,7 @@ namespace Azure.Core.Tests
 
                 scope.Start();
 
-                if (Activity.Current != null)
+                if (Activity.Current.IsAllDataRequested)
                     activeActivityCounts++;
                 scope.Dispose();
             }
