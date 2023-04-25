@@ -7,11 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -37,9 +35,13 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
+        private static readonly object s_syncLock = new();
+
         private TestProxy _proxy;
 
         private DateTime _testStartTime;
+
+        private bool _hasNewAssets;
 
         protected bool ValidateClientInstrumentation { get; set; }
 
@@ -353,49 +355,49 @@ namespace Azure.Core.TestFramework
             if (Mode == RecordedTestMode.Record)
             {
                 var testClassDirectory = new DirectoryInfo(GetSessionFileDirectory());
-                if (!testClassDirectory.Exists)
+                if (testClassDirectory.Exists)
                 {
-                    return;
-                }
+                    var knownMethods = new HashSet<string>();
 
-                var knownMethods = new HashSet<string>();
+                    // Management tests record in ctor
+                    knownMethods.Add(GetType().Name);
 
-                // Management tests record in ctor
-                knownMethods.Add(GetType().Name);
-
-                // Collect all method names
-                foreach (var method in GetType()
-                             .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
-                {
-                    // TestCase attribute allows specifying a test name
-                    foreach (var attribute in method.GetCustomAttributes(true))
+                    // Collect all method names
+                    foreach (var method in GetType()
+                                 .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
                     {
-                        if (attribute is ITestData { TestName: { } name })
+                        // TestCase attribute allows specifying a test name
+                        foreach (var attribute in method.GetCustomAttributes(true))
                         {
-                            knownMethods.Add(name);
+                            if (attribute is ITestData { TestName: { } name })
+                            {
+                                knownMethods.Add(name);
+                            }
                         }
+
+                        knownMethods.Add(method.Name);
                     }
 
-                    knownMethods.Add(method.Name);
-                }
-
-                foreach (var fileInfo in testClassDirectory.EnumerateFiles())
-                {
-                    bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
-
-                    if (!used)
+                    foreach (var fileInfo in testClassDirectory.EnumerateFiles())
                     {
-                        try
+                        bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
+
+                        if (!used)
                         {
-                            fileInfo.Delete();
-                        }
-                        catch
-                        {
-                            // Ignore
+                            try
+                            {
+                                fileInfo.Delete();
+                            }
+                            catch
+                            {
+                                // Ignore
+                            }
                         }
                     }
                 }
             }
+
+            PushAssets();
         }
 
         protected async Task SetProxyOptionsAsync(ProxyOptions options)
@@ -449,6 +451,7 @@ namespace Azure.Core.TestFramework
             if (Recording != null)
             {
                 await Recording.DisposeAsync(save);
+                _hasNewAssets |= (Mode == RecordedTestMode.Record && save);
             }
 
             _proxy?.CheckForErrors();
@@ -514,5 +517,38 @@ namespace Azure.Core.TestFramework
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
+
+        private void PushAssets()
+        {
+            if (!TestEnvironment.IsWindows ||
+                TestEnvironment.GlobalIsRunningInCI ||
+                TestEnvironment.DisableAssetsPrompt ||
+                AssetsJsonPath == null ||
+                !_hasNewAssets)
+            {
+                return;
+            }
+
+            string path = Path.Combine(
+                TestEnvironment.RepositoryRoot,
+                "eng",
+                "scripts",
+                $"Push-TestProxy.ps1 {AssetsJsonPath}");
+
+            var processInfo = new ProcessStartInfo(@"pwsh.exe", path)
+            {
+                UseShellExecute = true
+            };
+
+            lock (s_syncLock)
+            {
+                var process = Process.Start(processInfo);
+
+                if (process != null)
+                {
+                    process.WaitForExit();
+                }
+            }
+        }
     }
 }

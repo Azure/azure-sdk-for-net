@@ -45,7 +45,6 @@ namespace Azure.Core.TestFramework
 
         private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
         private static readonly object s_syncLock = new();
-        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -565,6 +564,8 @@ namespace Azure.Core.TestFramework
             return testProject;
         }
 
+        public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
         /// <summary>
         /// Determines if the current environment is Azure DevOps.
         /// </summary>
@@ -649,13 +650,26 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        internal static bool DisableAssetsPrompt
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableAssetsPrompt"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_DISABLE_ASSETS_PROMPT");
+
+                bool.TryParse(switchString, out bool disabledAssetsPrompt);
+
+                return disabledAssetsPrompt;
+            }
+        }
+
         private void BootStrapTestResources()
         {
             lock (s_syncLock)
             {
                 try
                 {
-                    if (!s_isWindows ||
+                    if (!IsWindows ||
                         s_bootstrappingAttemptedTypes.Contains(_type) ||
                         Mode == RecordedTestMode.Playback ||
                         GlobalIsRunningInCI)
