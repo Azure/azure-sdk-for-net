@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Relay.Mock;
 using Azure.ResourceManager.Relay.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Relay
     /// <summary> A class to add extension methods to Azure.ResourceManager.Relay. </summary>
     public static partial class RelayExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RelayNamespaceResourceExtension GetRelayNamespaceResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RelayNamespaceResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RelayNamespaceResourceExtension GetRelayNamespaceResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RelayNamespaceResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static RelayResourceGroupResourceExtension GetRelayResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new RelayResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RelayResourceGroupResourceExtension GetRelayResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new RelayResourceGroupResourceExtension(client, scope);
             });
         }
         #region RelayNamespaceAuthorizationRuleResource
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayNamespaceResources and their operations over a RelayNamespaceResource. </returns>
         public static RelayNamespaceCollection GetRelayNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRelayNamespaces();
+            return GetRelayResourceGroupResourceExtension(resourceGroupResource).GetRelayNamespaces();
         }
 
         /// <summary>
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetRelayNamespaceResourceExtension(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
+            return GetRelayNamespaceResourceExtension(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRelayNamespacesAsync(cancellationToken);
+            return GetRelayNamespaceResourceExtension(subscriptionResource).GetRelayNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RelayNamespaceResource> GetRelayNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRelayNamespaces(cancellationToken);
+            return GetRelayNamespaceResourceExtension(subscriptionResource).GetRelayNamespaces(cancellationToken);
         }
     }
 }

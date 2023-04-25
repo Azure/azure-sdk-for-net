@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quota.Mock;
 using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Quota
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quota. </summary>
     public static partial class QuotaExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static QuotaArmResourceExtension GetQuotaArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new QuotaArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static QuotaArmResourceExtension GetQuotaArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new QuotaArmResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static QuotaTenantResourceExtension GetQuotaTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new QuotaTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static QuotaTenantResourceExtension GetQuotaTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new QuotaTenantResourceExtension(client, scope);
             });
         }
         #region CurrentUsagesBaseResource
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
         public static CurrentUsagesBaseCollection GetCurrentUsagesBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCurrentUsagesBases();
+            return GetQuotaArmResourceExtension(client, scope).GetCurrentUsagesBases();
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
         public static CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCurrentQuotaLimitBases();
+            return GetQuotaArmResourceExtension(client, scope).GetCurrentQuotaLimitBases();
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQuotaRequestDetails();
+            return GetQuotaArmResourceExtension(client, scope).GetQuotaRequestDetails();
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationResponse> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperationsAsync(cancellationToken);
+            return GetQuotaTenantResourceExtension(tenantResource).GetQuotaOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationResponse> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperations(cancellationToken);
+            return GetQuotaTenantResourceExtension(tenantResource).GetQuotaOperations(cancellationToken);
         }
     }
 }

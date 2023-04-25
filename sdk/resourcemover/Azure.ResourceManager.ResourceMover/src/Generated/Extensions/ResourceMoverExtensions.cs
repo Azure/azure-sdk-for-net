@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceMover.Mock;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.ResourceMover
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceMover. </summary>
     public static partial class ResourceMoverExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MoverResourceSetResourceExtension GetMoverResourceSetResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MoverResourceSetResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MoverResourceSetResourceExtension GetMoverResourceSetResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MoverResourceSetResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ResourceMoverResourceGroupResourceExtension GetResourceMoverResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ResourceMoverResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceMoverResourceGroupResourceExtension GetResourceMoverResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ResourceMoverResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ResourceMoverTenantResourceExtension GetResourceMoverTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ResourceMoverTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceMoverTenantResourceExtension GetResourceMoverTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ResourceMoverTenantResourceExtension(client, scope);
             });
         }
         #region MoverResourceSetResource
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
         public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMoverResourceSets();
+            return GetResourceMoverResourceGroupResourceExtension(resourceGroupResource).GetMoverResourceSets();
         }
 
         /// <summary>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
+            return GetMoverResourceSetResourceExtension(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMoverResourceSets(cancellationToken);
+            return GetMoverResourceSetResourceExtension(subscriptionResource).GetMoverResourceSets(cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
+            return GetResourceMoverTenantResourceExtension(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDiscoveries(cancellationToken);
+            return GetResourceMoverTenantResourceExtension(tenantResource).GetOperationsDiscoveries(cancellationToken);
         }
     }
 }

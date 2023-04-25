@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql.Mock;
 using Azure.ResourceManager.PostgreSql.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql. </summary>
     public static partial class PostgreSqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PostgreSqlResourceGroupResourceExtension GetPostgreSqlResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PostgreSqlResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PostgreSqlResourceGroupResourceExtension GetPostgreSqlResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new PostgreSqlResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PostgreSqlServerResourceExtension GetPostgreSqlServerResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PostgreSqlServerResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PostgreSqlServerResourceExtension GetPostgreSqlServerResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new PostgreSqlServerResourceExtension(client, scope);
+            });
+        }
+
+        private static PostgreSqlSubscriptionResourceExtension GetPostgreSqlSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PostgreSqlSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PostgreSqlSubscriptionResourceExtension GetPostgreSqlSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PostgreSqlSubscriptionResourceExtension(client, scope);
             });
         }
         #region PostgreSqlServerResource
@@ -245,7 +262,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerResources and their operations over a PostgreSqlServerResource. </returns>
         public static PostgreSqlServerCollection GetPostgreSqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPostgreSqlServers();
+            return GetPostgreSqlResourceGroupResourceExtension(resourceGroupResource).GetPostgreSqlServers();
         }
 
         /// <summary>
@@ -314,7 +331,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlServersAsync(cancellationToken);
+            return GetPostgreSqlServerResourceExtension(subscriptionResource).GetPostgreSqlServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlServerResource> GetPostgreSqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlServers(cancellationToken);
+            return GetPostgreSqlServerResourceExtension(subscriptionResource).GetPostgreSqlServers(cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +374,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
+            return GetPostgreSqlSubscriptionResourceExtension(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -379,7 +396,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
+            return GetPostgreSqlSubscriptionResourceExtension(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -403,7 +420,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -427,7 +444,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailability(content, cancellationToken);
+            return GetPostgreSqlSubscriptionResourceExtension(subscriptionResource).CheckPostgreSqlNameAvailability(content, cancellationToken);
         }
     }
 }
