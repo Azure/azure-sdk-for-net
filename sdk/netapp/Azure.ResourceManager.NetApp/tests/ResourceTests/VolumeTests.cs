@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateVolume()
         {
             //create volume
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(volumeResource3.Data.UsageThreshold, volumeResource3.Data.UsageThreshold);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateDeleteVolume()
         {
             //create volume
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateVolumePoolNotFound()
         {
             //Delete pool
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateVolumeWithProperties()
         {
             //create volume
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeletePooWithVolumePresent()
         {
             Console.WriteLine("TEST DeletePooWithVolumePresent");
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(409, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetVolumeByName()
         {
             Console.WriteLine("TEST GetVolumeByName");
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource2.Should().BeEquivalentTo(volumeResource1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetVolumeByNameNotFound()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetVolumeByNamePoolNotFound()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListVolumes()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -343,7 +343,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource4.Should().BeEquivalentTo(volumeResource4);
         }
 
-        [Test]
         [Ignore("Ignore for now due to CI pipeline timeout.")]
         [RecordedTest]
         public async Task LongListVolumes()
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeList.Should().HaveCount(length);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ChangePoolForVolume()
         {
             //create volume
@@ -410,7 +409,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CheckAvailability()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -439,7 +438,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(checkNameResult.IsAvailable);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateDPVolume()
         {
             //create the source volume
@@ -610,7 +609,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BreakFileLocksVolumeNoFiles()
         {
             //create volume

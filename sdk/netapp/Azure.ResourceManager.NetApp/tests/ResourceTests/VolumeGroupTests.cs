@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteVolumeGroup()

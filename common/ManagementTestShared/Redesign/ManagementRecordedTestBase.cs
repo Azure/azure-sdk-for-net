@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.TestFramework
 
         protected void IgnoreNetworkDependencyVersions()
         {
-            // Ignore the api-version of resource group operations
+            // Ignore the api-version of Network operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/Microsoft.Network/([^/]+)\?api-version=(?<group>[a-z0-9-]+)", "**"
+                @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"

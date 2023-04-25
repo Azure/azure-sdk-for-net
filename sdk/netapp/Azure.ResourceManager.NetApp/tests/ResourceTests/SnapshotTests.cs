@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateDeleteSnapshot()
         {
             //create snapshot
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListSnapshots()
         {
             //create snapshot
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotList.Should().HaveCount(1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateVolumeFromSnapshot()
         {
             //create snapshot
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName + "1"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RevertVolumeToSnapshot()
         {
             //create snapshot
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsTrue(revertOperation.HasCompleted);
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("The specified filePath /dir1/file1 does not exist in the snapshot")]
         public async Task RestoreFilesFromSnapshotFileDoesNotExist()
         {

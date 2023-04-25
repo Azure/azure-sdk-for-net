@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetVaultObsolteButCustomCodeWorksOn2022_05_01()
         {

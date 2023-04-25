@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeletePool()
         {
@@ -81,7 +80,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task DeleteAccountWithPoolPresent()
         {
@@ -98,7 +96,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsTrue(await _capacityPoolCollection.ExistsAsync(poolName));
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllPoolsByNetAppAccount()
         {
@@ -132,7 +129,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             pool4.Should().BeEquivalentTo(pool2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task PatchPool()
         {

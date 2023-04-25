@@ -330,40 +330,30 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             {
                 vnetName = Recording.GenerateAssetName("vnet-");
             };
-            if (Mode == RecordedTestMode.Playback)
+            if (string.IsNullOrWhiteSpace(location))
             {
-                DefaultSubnetId = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, "default");
+                location = DefaultLocationString;
             }
-            else
+            location ??= DefaultLocationString;
+            ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
+            var vnet = new VirtualNetworkData()
             {
-                using (Recording.DisableRecording())
-                {
-                    if (string.IsNullOrWhiteSpace(location))
-                    {
-                        location = DefaultLocationString;
-                    }
-                    location ??= DefaultLocationString;
-                    ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
-                    var vnet = new VirtualNetworkData()
-                    {
-                        Location = location,
-                        Subnets = { new SubnetData() {
-                            Name = "default",
-                            AddressPrefix = "10.0.1.0/24"
-                        }}
-                    };
-                    vnet.AddressPrefixes.Add("10.0.0.0/16");
-                    vnet.Subnets[0].Delegations.Add(delegation);
-                    VirtualNetworkCollection vnetColletion = resourceGroup.GetVirtualNetworks();
-                    VirtualNetworkResource virtualNetwork = (await vnetColletion.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-                    var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
-                    var subnetCollection = vnetResource.Value.GetSubnets();
-                    DefaultSubnetId = vnetResource.Value.Data.Subnets[0].Id;
-                    //wait a bit this may take a while
-                    await Task.Delay(30000);
-                    await WaitForVnetSucceeded(vnetColletion, virtualNetwork);
-                }
-            }
+                Location = location,
+                Subnets = { new SubnetData() {
+                    Name = "default",
+                    AddressPrefix = "10.0.1.0/24"
+                }}
+            };
+            vnet.AddressPrefixes.Add("10.0.0.0/16");
+            vnet.Subnets[0].Delegations.Add(delegation);
+            VirtualNetworkCollection vnetColletion = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkResource virtualNetwork = (await vnetColletion.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+            var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var subnetCollection = vnetResource.Value.GetSubnets();
+            DefaultSubnetId = vnetResource.Value.Data.Subnets[0].Id;
+            //wait a bit this may take a while
+            await Task.Delay(30000);
+            await WaitForVnetSucceeded(vnetColletion, virtualNetwork);
         }
 
         private async Task WaitForVnetSucceeded(VirtualNetworkCollection vNetCollection, VirtualNetworkResource virtualNetworkResource = null)

@@ -138,7 +138,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteBackup()
@@ -252,7 +251,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task UpdateBackup()
@@ -311,7 +309,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListBackups()
@@ -385,7 +382,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             backup2Resource3.Should().BeEquivalentTo(backup2Resource2);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListAccountBackups()
@@ -464,7 +460,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             accountBackup2Resource3.Should().BeEquivalentTo(accountBackup2Resource2);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task GetBackupStatus()
@@ -519,7 +514,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
