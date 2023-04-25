@@ -24,6 +24,12 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class TenantResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="TenantResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            var resourceId = $"";
+            return new ResourceIdentifier(resourceId);
+        }
 
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
