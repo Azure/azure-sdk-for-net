@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
         /// <param name="id"> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest. </param>
         /// <param name="excludeExtensions"> List of virtual machine extensions to exclude when applying the Security Posture. </param>
-        internal ComputeSecurityPostureReference(string id, IList<VirtualMachineExtensionData> excludeExtensions)
+        internal ComputeSecurityPostureReference(ResourceIdentifier id, IList<VirtualMachineExtensionData> excludeExtensions)
         {
             Id = id;
             ExcludeExtensions = excludeExtensions;
         }
 
         /// <summary> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> List of virtual machine extensions to exclude when applying the Security Posture. </summary>
         public IList<VirtualMachineExtensionData> ExcludeExtensions { get; }
     }

@@ -262,6 +262,7 @@ rename-mapping:
   ExpandTypesForListVm: GetVirtualMachineExpandType
   SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
+  SecurityPostureReference.id: -|arm-id
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
