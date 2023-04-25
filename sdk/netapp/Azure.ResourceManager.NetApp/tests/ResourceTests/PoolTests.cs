@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await capacityPool.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove account
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;

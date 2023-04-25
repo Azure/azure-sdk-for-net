@@ -86,10 +86,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                             };
                             await volume.UpdateAsync(WaitUntil.Completed, volumePatch);
                         }
-                        if (Mode != RecordedTestMode.Playback)
-                        {
-                            await Task.Delay(30000);
-                        }
+                        await LiveDelay(30000);
                         if (volume.Data.ProvisioningState.Equals("Succeeded") || volume.Data.ProvisioningState.Equals("Failed"))
                         {
                             await volume.DeleteAsync(WaitUntil.Completed);
@@ -100,32 +97,20 @@ namespace Azure.ResourceManager.NetApp.Tests
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
                     }
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        await Task.Delay(30000);
-                    }
+                    await LiveDelay(30000);
                     await pool.DeleteAsync(WaitUntil.Completed);
                 }
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 //remove
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                //await LiveDelay(40000);
                 NetAppAccountBackupCollection accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
                 if (!string.IsNullOrWhiteSpace(lastBackupName))
                 {
                     NetAppAccountBackupResource backupResource = await accountBackupCollection.GetAsync(lastBackupName);
                     await backupResource.DeleteAsync(WaitUntil.Completed);
                 }
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(20000);
-                }
+                await LiveDelay(20000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             watch.Stop();
@@ -156,10 +141,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 DataProtection = dataProtectionProperties
             };
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
 
             //Validate 2022-05-01 volume after update
             NetAppVolumeResource getVolumeResource2022_05 = await _volumeCollection.GetAsync(volumeResource1.Id.Name);

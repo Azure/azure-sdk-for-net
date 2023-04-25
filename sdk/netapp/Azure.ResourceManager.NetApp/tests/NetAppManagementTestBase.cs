@@ -48,5 +48,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
+
+        protected async Task LiveDelay(int millisecondsDelay)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(millisecondsDelay);
+            }
+        }
     }
 }

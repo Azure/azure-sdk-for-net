@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await backupPolicy.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove account
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
@@ -181,10 +178,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.BackupPolicyId, backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId);
 
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
         }
 

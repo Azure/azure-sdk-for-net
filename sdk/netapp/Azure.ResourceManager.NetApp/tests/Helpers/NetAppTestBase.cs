@@ -131,10 +131,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         [TearDown]
         public async Task waitForDeletion()
         {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
         }
 
         public async Task<string> CreateValidAccountNameAsync(string prefix, ResourceGroupResource resourceGroup, string location = "")
@@ -352,7 +349,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             var subnetCollection = vnetResource.Value.GetSubnets();
             DefaultSubnetId = vnetResource.Value.Data.Subnets[0].Id;
             //wait a bit this may take a while
-            await Task.Delay(30000);
+            await LiveDelay(30000);
             await WaitForVnetSucceeded(vnetColletion, virtualNetwork);
         }
 
@@ -360,7 +357,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         {
             var maxDelay = TimeSpan.FromSeconds(120);
             int count = 0;
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            if (Mode != RecordedTestMode.Playback)
             {
                 maxDelay = TimeSpan.FromMilliseconds(500);
             }

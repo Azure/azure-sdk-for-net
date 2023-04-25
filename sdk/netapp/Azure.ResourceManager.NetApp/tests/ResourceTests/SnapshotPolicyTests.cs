@@ -72,10 +72,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await snapshotPolicy.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove account
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
@@ -199,10 +196,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotPolicyProperties.SnapshotPolicyId, snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId);
 
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -238,15 +232,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumesList.Should().HaveCount(1);
             volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(30000);
-            }
+            await LiveDelay(30000);
         }
 
         protected async Task<SnapshotPolicyResource> CreateSnapshotPolicy(string location, string name = "")
