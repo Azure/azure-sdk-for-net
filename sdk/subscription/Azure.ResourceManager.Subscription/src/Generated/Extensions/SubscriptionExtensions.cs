@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Subscription.Mock;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Subscription
     /// <summary> A class to add extension methods to Azure.ResourceManager.Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SubscriptionSubscriptionResourceExtension GetSubscriptionSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SubscriptionSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionSubscriptionResourceExtension GetSubscriptionSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SubscriptionSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static SubscriptionTenantResourceExtension GetSubscriptionTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new SubscriptionTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionTenantResourceExtension GetSubscriptionTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new SubscriptionTenantResourceExtension(client, scope);
             });
         }
         #region SubscriptionAliasResource
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionResourceExtension(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<CanceledSubscriptionId> CancelSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CancelSubscription(cancellationToken);
+            return GetSubscriptionSubscriptionResourceExtension(subscriptionResource).CancelSubscription(cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionResourceExtension(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).RenameSubscription(body, cancellationToken);
+            return GetSubscriptionSubscriptionResourceExtension(subscriptionResource).RenameSubscription(body, cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionResourceExtension(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<EnabledSubscriptionId> EnableSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).EnableSubscription(cancellationToken);
+            return GetSubscriptionSubscriptionResourceExtension(subscriptionResource).EnableSubscription(cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionAliasResources in the TenantResource. </summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
         public static SubscriptionAliasCollection GetSubscriptionAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSubscriptionAliases();
+            return GetSubscriptionTenantResourceExtension(tenantResource).GetSubscriptionAliases();
         }
 
         /// <summary>
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantPolicy();
+            return GetSubscriptionTenantResourceExtension(tenantResource).GetTenantPolicy();
         }
 
         /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
         public static BillingAccountPolicyCollection GetBillingAccountPolicies(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingAccountPolicies();
+            return GetSubscriptionTenantResourceExtension(tenantResource).GetBillingAccountPolicies();
         }
 
         /// <summary>
@@ -380,7 +381,7 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantResourceExtension(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -408,7 +409,7 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
+            return GetSubscriptionTenantResourceExtension(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
 
         /// <summary>
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantResourceExtension(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -458,7 +459,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
+            return GetSubscriptionTenantResourceExtension(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }
     }
 }

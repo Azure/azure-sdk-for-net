@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Support.Mock;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to Azure.ResourceManager.Support. </summary>
     public static partial class SupportExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SupportSubscriptionResourceExtension GetSupportSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SupportSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SupportSubscriptionResourceExtension GetSupportSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SupportSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static SupportTenantResourceExtension GetSupportTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new SupportTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SupportTenantResourceExtension GetSupportTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new SupportTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static SupportTicketResourceExtension GetSupportTicketResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SupportTicketResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SupportTicketResourceExtension GetSupportTicketResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SupportTicketResourceExtension(client, scope);
             });
         }
         #region SupportAzureServiceResource
@@ -131,7 +148,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
         public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSupportTickets();
+            return GetSupportSubscriptionResourceExtension(subscriptionResource).GetSupportTickets();
         }
 
         /// <summary>
@@ -203,7 +220,7 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSupportTicketResourceExtension(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,7 +244,7 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
+            return GetSupportTicketResourceExtension(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSupportAzureServices();
+            return GetSupportTenantResourceExtension(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>

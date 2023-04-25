@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Mock;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -19,35 +20,67 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Storage. </summary>
     public static partial class StorageExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeletedAccountResourceExtension GetDeletedAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeletedAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeletedAccountResourceExtension GetDeletedAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeletedAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageAccountResourceExtension GetStorageAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static StorageAccountResourceExtension GetStorageAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new StorageAccountResourceExtension(client, scope);
+            });
+        }
+
+        private static StorageResourceGroupResourceExtension GetStorageResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new StorageResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static StorageResourceGroupResourceExtension GetStorageResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new StorageResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static StorageSubscriptionResourceExtension GetStorageSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new StorageSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static StorageSubscriptionResourceExtension GetStorageSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new StorageSubscriptionResourceExtension(client, scope);
             });
         }
         #region StorageAccountResource
@@ -378,7 +411,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
         public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageAccounts();
+            return GetStorageResourceGroupResourceExtension(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
@@ -436,7 +469,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts();
+            return GetStorageSubscriptionResourceExtension(subscriptionResource).GetDeletedAccounts();
         }
 
         /// <summary>
@@ -507,7 +540,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetStorageSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +561,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetStorageSubscriptionResourceExtension(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -552,7 +585,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageAccountResourceExtension(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -576,7 +609,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
+            return GetStorageAccountResourceExtension(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -597,7 +630,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
+            return GetStorageAccountResourceExtension(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -618,7 +651,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageAccountResource> GetStorageAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccounts(cancellationToken);
+            return GetStorageAccountResourceExtension(subscriptionResource).GetStorageAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -639,7 +672,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+            return GetDeletedAccountResourceExtension(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -660,7 +693,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
+            return GetDeletedAccountResourceExtension(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -682,7 +715,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetStorageSubscriptionResourceExtension(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +737,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
+            return GetStorageSubscriptionResourceExtension(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
     }
 }
