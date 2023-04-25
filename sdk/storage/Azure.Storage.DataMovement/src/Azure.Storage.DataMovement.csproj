@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard2.1;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library</AssemblyTitle>
@@ -51,11 +50,8 @@
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PartitionedStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
@@ -80,7 +76,6 @@
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
   </ItemGroup>

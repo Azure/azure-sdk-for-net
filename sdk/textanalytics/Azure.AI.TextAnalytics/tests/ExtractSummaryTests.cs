@@ -56,13 +56,13 @@ namespace Azure.AI.TextAnalytics.Tests
             + " “The impact that I believe we are finding, and the impact that we’re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,” he said."
             + " “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
 
-        private static readonly List<string> s_extractSummaryBatchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_batchConvenienceDocuments = new()
         {
             ExtractSummaryDocument1,
             ExtractSummaryDocument2
         };
 
-        private static List<TextDocumentInput> s_extractSummaryBatchDocuments = new List<TextDocumentInput>
+        private static List<TextDocumentInput> s_batchDocuments = new()
         {
             new TextDocumentInput("1", ExtractSummaryDocument1)
             {
@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -108,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 OrderBy = SummarySentencesOrder.Rank
             };
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments, options);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchDocuments, options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -152,7 +152,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchConvenienceDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -176,7 +176,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "en", options);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchConvenienceDocuments, "en", options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -194,7 +194,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -218,7 +218,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchDocuments, options);
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchDocuments, options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -236,7 +236,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "auto");
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_batchConvenienceDocuments, "auto");
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -250,10 +250,52 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationExtractSummary()
+        {
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationExtractSummary",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            Assert.IsNotNull(extractSummaryActionsResults);
+
+            ExtractSummaryResultCollection extractSummaryDocumentsResults = extractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(extractSummaryDocumentsResults, SummarySentencesOrder.Offset);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationExtractSummaryActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractSummaryActions = new[]
+                {
+                    new ExtractSummaryAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<string> documents = s_extractSummaryBatchConvenienceDocuments;
+            List<string> documents = s_batchConvenienceDocuments;
             TextAnalyticsActions actions = new()
             {
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
@@ -294,7 +336,7 @@ namespace Azure.AI.TextAnalytics.Tests
             for (int i = 0; i < sentences.Count; i++)
             {
                 SummarySentence sentence = sentences.ElementAt(i);
-                string originalDocument = s_extractSummaryBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
+                string originalDocument = s_batchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
                 Assert.GreaterOrEqual(sentence.Offset, 0);

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
-        private readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
+        protected readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
 
         public DocumentAnalysisLiveTestBase(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
@@ -111,15 +111,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         /// <summary>
-        /// Builds a model and returns the associated <see cref="DisposableBuildModel"/> instance. Upon disposal, the model will be deleted.
+        /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance.
+        /// Upon disposal, the document model will be deleted.
         /// </summary>
-        /// <param name="modelId">Model Id.</param>
-        /// <param name="containerType">Type of container to use to execute training.</param>
+        /// <param name="modelId">The identifier of the model.</param>
+        /// <param name="containerType">The type of container to use for training.</param>
         /// <param name="buildMode">The technique to use to build the model. Defaults to <see cref="DocumentBuildMode.Template"/>.</param>
-        /// <returns>A <see cref="DisposableBuildModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableBuildModel> CreateDisposableBuildModelAsync(string modelId, ContainerType containerType = default, DocumentBuildMode buildMode = default)
+        /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
+        protected async Task<DisposableDocumentModel> BuildDisposableDocumentModelAsync(string modelId, ContainerType containerType = default, DocumentBuildMode buildMode = default)
         {
-            var adminClient = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentModelAdministrationClient();
 
             string trainingFiles = containerType switch
             {
@@ -136,7 +137,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ? DocumentBuildMode.Template
                 : buildMode;
 
-            return await DisposableBuildModel.BuildModelAsync(adminClient, trainingFilesUri, buildMode, modelId);
+            return await DisposableDocumentModel.BuildModelAsync(client, trainingFilesUri, buildMode, modelId);
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="classifierId">The identifier of the classifier.</param>
         /// <param name="description">An optional classifier description.</param>
         /// <returns>A <see cref="DisposableDocumentClassifier"/> instance from which the built classifier can be obtained.</returns>
-        protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifier(string classifierId, string description = null)
+        protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifierAsync(string classifierId, string description = null)
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
