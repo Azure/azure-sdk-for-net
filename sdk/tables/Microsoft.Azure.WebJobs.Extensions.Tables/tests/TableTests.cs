@@ -81,11 +81,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Arrange
             var program = new BindToParameterBindingData();
             var ext = new TableConverterExtensionConfigProvider();
-            await CallAsync<CustomTableBindingExtensionProgram>(configure: hostBuilder =>
-            {
-                DefaultConfigure(hostBuilder);
-                hostBuilder.ConfigureWebJobs(builder => { builder.AddExtension(ext); });
-            });
 
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
@@ -102,14 +97,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             Assert.NotNull(result);
 
-            var tableData = result?.Content.ToObjectFromJson<Dictionary<string, string>>();
-
-            var config = new TablesExtensionConfigProvider(null, null, null);
+            var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
 
             // Assert
-            Assert.True(tableData.TryGetValue("Connection", out var resultConnection));
-            Assert.True(tableData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(tableData.TryGetValue("BlobName", out var resultBlobName));
+            Assert.True(tableData.TryGetValue("TableName", out var tableName));
+            Assert.True(tableData.TryGetValue("Take", out var take));
+            Assert.True(tableData.TryGetValue("Filter", out var filter));
+            Assert.True(tableData.TryGetValue("Connection", out var connection));
+            Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
+            Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
         }
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
