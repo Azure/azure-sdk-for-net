@@ -208,6 +208,50 @@ namespace Azure.ResourceManager.ResourceHealth
             return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus();
         }
 
+        /// <summary>
+        /// Lists current service health events for given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListBySingleResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<EventData> GetEventsBySingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResourceAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists current service health events for given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListBySingleResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<EventData> GetEventsBySingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResource(filter, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
