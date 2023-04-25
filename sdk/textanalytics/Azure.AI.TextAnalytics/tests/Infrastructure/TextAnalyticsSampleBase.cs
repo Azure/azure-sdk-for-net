@@ -8,10 +8,22 @@ namespace Azure.AI.TextAnalytics.Samples
 {
     public class TextAnalyticsSampleBase : SamplesBase<TextAnalyticsTestEnvironment>
     {
-        public TextAnalyticsClientOptions CreateSampleOptions()
+        private const int MaxRetriesCount = 12;
+
+        public TextAnalyticsClientOptions CreateSampleOptions(bool useStaticResource = default)
         {
-            var options = new TextAnalyticsClientOptions();
-            options.Retry.MaxRetries = TextAnalyticsClientLiveTestBase.MaxRetriesCount;
+            TextAnalyticsClientOptions options = new()
+            {
+                Audience = TestEnvironment.GetAudience()
+            };
+
+            // While we use a persistent resource for live tests, we need to increase our retries.
+            // We should remove when having dynamic resource again
+            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
+            if (useStaticResource)
+            {
+                options.Retry.MaxRetries = MaxRetriesCount;
+            }
 
             return options;
         }

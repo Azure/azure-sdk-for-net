@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis
         internal HealthcareApisArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "HealthcareApisArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "HealthcareApisArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

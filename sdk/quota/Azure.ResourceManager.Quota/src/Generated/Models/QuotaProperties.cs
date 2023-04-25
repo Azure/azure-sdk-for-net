@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
-        /// <param name="resourceType"> Resource type name. </param>
+        /// <param name="resourceType"> The name of the resource type. Optional field. </param>
         /// <param name="quotaPeriod">
         /// The time period over which the quota usage values are summarized. For example:
         /// *P1D (per one day)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Quota.Models
         public string Unit { get; }
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
         public ResourceName Name { get; set; }
-        /// <summary> Resource type name. </summary>
+        /// <summary> The name of the resource type. Optional field. </summary>
         public string ResourceType { get; set; }
         /// <summary>
         /// The time period over which the quota usage values are summarized. For example:

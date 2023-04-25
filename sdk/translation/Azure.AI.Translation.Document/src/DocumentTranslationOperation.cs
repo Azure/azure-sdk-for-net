@@ -120,7 +120,7 @@ namespace Azure.AI.Translation.Document
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
 
-            _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(_diagnostics, this, rawResponse: null);
+            _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.AI.Translation.Document
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(_diagnostics, this, rawResponse: null);
+            _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
 
             Id = operationLocation.Split('/').Last();
         }

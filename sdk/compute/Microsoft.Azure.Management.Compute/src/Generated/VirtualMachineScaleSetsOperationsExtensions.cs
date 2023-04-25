@@ -260,14 +260,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine from the VM scale set.
+            /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
             /// virtual machines in the virtual machine scale set.
             /// </param>
-            public static void Deallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void Deallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>))
             {
-                operations.DeallocateAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.DeallocateAsync(resourceGroupName, vmScaleSetName, hibernate, instanceIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,6 +288,10 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine from the VM scale set.
+            /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
@@ -292,9 +300,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeallocateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeallocateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, hibernate, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -691,6 +699,48 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task StartAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Reapplies the Virtual Machine Scale Set Virtual Machine Profile to the
+            /// Virtual Machine Instances
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            public static VirtualMachineScaleSetsReapplyHeaders Reapply(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            {
+                return operations.ReapplyAsync(resourceGroupName, vmScaleSetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reapplies the Virtual Machine Scale Set Virtual Machine Profile to the
+            /// Virtual Machine Instances
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineScaleSetsReapplyHeaders> ReapplyAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ReapplyWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1241,14 +1291,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine from the VM scale set.
+            /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
             /// virtual machines in the virtual machine scale set.
             /// </param>
-            public static void BeginDeallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void BeginDeallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>))
             {
-                operations.BeginDeallocateAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.BeginDeallocateAsync(resourceGroupName, vmScaleSetName, hibernate, instanceIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1265,6 +1319,10 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine from the VM scale set.
+            /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
@@ -1273,9 +1331,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeallocateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeallocateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, hibernate, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1482,6 +1540,48 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginStartAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Reapplies the Virtual Machine Scale Set Virtual Machine Profile to the
+            /// Virtual Machine Instances
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            public static VirtualMachineScaleSetsReapplyHeaders BeginReapply(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            {
+                return operations.BeginReapplyAsync(resourceGroupName, vmScaleSetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reapplies the Virtual Machine Scale Set Virtual Machine Profile to the
+            /// Virtual Machine Instances
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineScaleSetsReapplyHeaders> BeginReapplyAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginReapplyWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

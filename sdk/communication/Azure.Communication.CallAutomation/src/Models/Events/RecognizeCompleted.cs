@@ -16,6 +16,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
+        private static string SPEECH_DTMF_ERROR = "Speech or Dtmf Recognition return two results!";
+
         /// <summary>
         /// The recognition type.
         /// </summary>
@@ -38,9 +40,10 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult)
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -51,11 +54,15 @@ namespace Azure.Communication.CallAutomation
 
             if (RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = collectTonesResult;
+                RecognizeResult = dtmfResult;
             }
             else if (RecognitionType == CallMediaRecognitionType.Choices)
             {
                 RecognizeResult = choiceResult;
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                RecognizeResult = speechResult;
             }
         }
 
@@ -70,11 +77,30 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = internalEvent.ResultInformation;
             if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = internalEvent.CollectTonesResult;
+                RecognizeResult = internalEvent.DtmfResult;
             }
             else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
             {
                 RecognizeResult = internalEvent.ChoiceResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech)
+            {
+                RecognizeResult = internalEvent.SpeechResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                if (internalEvent.SpeechResult != null)
+                {
+                    RecognizeResult = internalEvent.SpeechResult;
+                }
+                else if (internalEvent.DtmfResult != null)
+                {
+                    RecognizeResult = internalEvent.DtmfResult;
+                }
+                else
+                {
+                    throw new Exception(SPEECH_DTMF_ERROR);
+                }
             }
         }
 
