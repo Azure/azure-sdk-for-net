@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WorkloadMonitor.Mock;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadMonitor. </summary>
     public static partial class WorkloadMonitorExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static WorkloadMonitorResourceGroupResourceExtension GetWorkloadMonitorResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new WorkloadMonitorResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WorkloadMonitorResourceGroupResourceExtension GetWorkloadMonitorResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new WorkloadMonitorResourceGroupResourceExtension(client, scope);
             });
         }
         #region HealthMonitorResource
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Argument.AssertNotNullOrEmpty(resourceCollectionName, nameof(resourceCollectionName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
+            return GetWorkloadMonitorResourceGroupResourceExtension(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
         }
 
         /// <summary>
