@@ -11,25 +11,26 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Blueprint.Mock;
 
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.Blueprint. </summary>
     public static partial class BlueprintExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static BlueprintArmResourceExtension GetBlueprintArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new BlueprintArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BlueprintArmResourceExtension GetBlueprintArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new BlueprintArmResourceExtension(client, scope);
             });
         }
         #region BlueprintResource
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of BlueprintResources and their operations over a BlueprintResource. </returns>
         public static BlueprintCollection GetBlueprints(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetBlueprints();
+            return GetBlueprintArmResourceExtension(client, scope).GetBlueprints();
         }
 
         /// <summary>
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of AssignmentResources and their operations over a AssignmentResource. </returns>
         public static AssignmentCollection GetAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAssignments();
+            return GetBlueprintArmResourceExtension(client, scope).GetAssignments();
         }
 
         /// <summary>
