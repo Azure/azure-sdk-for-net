@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
-    internal struct DiagnosticScope : IDisposable
+    internal readonly struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
                                                     diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
-        public bool IsEnabled { get; private set; }
+        public bool IsEnabled { get; }
 
         public void AddAttribute(string name, string value)
         {
@@ -89,11 +89,6 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-
-            if (started != null)
-            {
-                this.IsEnabled = IsEnabled && started.GetIsAllDataRequestedFlag();
-            }
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
@@ -267,7 +262,15 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
-                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+                    if (!(_currentActivity?.GetIsAllDataRequestedFlag() ?? true))
+                    {
+                        _currentActivity.Stop();
+                        _currentActivity = null;
+
+                        return null;
+                    }
+
+                    _currentActivity?.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
                 {

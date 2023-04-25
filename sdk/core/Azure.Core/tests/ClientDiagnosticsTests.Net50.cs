@@ -473,7 +473,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void OpenTelemetryCompatibilityWithParentBasedSampling()
+        public void OpenTelemetryCompatibilityWithTraceIdRatioBasedSampler()
         {
             using var _ = SetAppConfigSwitch();
 
@@ -490,10 +490,7 @@ namespace Azure.Core.Tests
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
                 scope.Start();
-                if (scope.IsEnabled)
-                {
-                    activeActivityCounts++;
-                }
+                if (Activity.Current != null) activeActivityCounts++;
                 scope.Dispose();
             }
 
@@ -501,6 +498,80 @@ namespace Azure.Core.Tests
             Assert.IsTrue(activeActivityCounts < 20, "More than expected activities created");
 
             Assert.IsNull(Activity.Current);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void OpenTelemetryCompatibilityWithAlwaysOffSampler()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Open Telemetry Listener
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource($"Azure.*")
+                .SetSampler(new AlwaysOffSampler())
+                .Build();
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+
+            int activeActivityCounts = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.Start();
+                if (Activity.Current != null)
+                    activeActivityCounts++;
+                scope.Dispose();
+            }
+
+            Assert.AreEqual(0, activeActivityCounts);
+
+            Assert.IsNull(Activity.Current);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void OpenTelemetryCompatibilityWithCustomSampler()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Open Telemetry Listener
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource($"Azure.*")
+                .SetSampler(new ParentBasedSampler(new CustomSampler()))
+                .Build();
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+
+            int activeActivityCounts = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.AddLink($"00-6e76af18746bae4eadc3581338bbe8b{i}-2899ebfdbdce904b-00", "foo=bar");
+
+                scope.Start();
+
+                if (Activity.Current != null)
+                    activeActivityCounts++;
+                scope.Dispose();
+            }
+
+            Assert.AreEqual(4, activeActivityCounts); // 1 activity will be dropped due to sampler logic
+
+            Assert.IsNull(Activity.Current);
+        }
+
+        private class CustomSampler : Sampler
+        {
+            public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
+            {
+                if (samplingParameters.Links.First().Context.TraceId.ToString() == "6e76af18746bae4eadc3581338bbe8b1")
+                {
+                    return new SamplingResult(SamplingDecision.Drop);
+                }
+
+                return new SamplingResult(SamplingDecision.RecordAndSample);
+            }
         }
     }
 #endif
