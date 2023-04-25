@@ -55,7 +55,7 @@ namespace Azure.AI.Translation.Text
         {
             NormalizedSource = normalizedSource;
             DisplaySource = displaySource;
-            Translations = translations.ToList();
+            Translations = translations;
         }
 
         /// <summary>
