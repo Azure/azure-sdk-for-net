@@ -227,9 +227,9 @@ namespace Azure
         public RequestFailedException(string message) { }
         public RequestFailedException(string message, System.Exception? innerException) { }
         public string? ErrorCode { get { throw null; } }
-        public Azure.Response? Response { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public Azure.Response? GetRawResponse() { throw null; }
     }
     public abstract partial class Response : System.IDisposable
     {

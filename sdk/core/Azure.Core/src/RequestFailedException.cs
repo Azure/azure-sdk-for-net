@@ -34,7 +34,7 @@ namespace Azure
         /// <summary>
         /// Gets the response, if any, that led to the exception.
         /// </summary>
-        public Response? Response { get; }
+        private readonly Response? _response;
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
@@ -110,7 +110,7 @@ namespace Azure
         public RequestFailedException(Response response, Exception? innerException)
             : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
         {
-            Response = response;
+            _response = response;
         }
 
         /// <inheritdoc />
@@ -131,6 +131,11 @@ namespace Azure
 
             base.GetObjectData(info, context);
         }
+
+        /// <summary>
+        /// Gets the response, if any, that led to the exception.
+        /// </summary>
+        public Response? GetRawResponse() => _response;
 
         internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response)
         {
