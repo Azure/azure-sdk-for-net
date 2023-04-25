@@ -25,6 +25,15 @@ namespace Azure.Health.Insights.CancerProfiling
             Patients = patients.ToList();
         }
 
+        /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
+        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
+        /// <param name="configuration"> Configuration affecting the Onco Phenotype model's inference. </param>
+        internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration)
+        {
+            Patients = patients;
+            Configuration = configuration;
+        }
+
         /// <summary> The list of patients, including their clinical information and data. </summary>
         public IList<PatientRecord> Patients { get; }
         /// <summary> Configuration affecting the Onco Phenotype model's inference. </summary>
