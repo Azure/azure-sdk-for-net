@@ -32,7 +32,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             _client = client;
             Id = transactionId;
-            _operationInternal = new(_client.ClientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
+            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>

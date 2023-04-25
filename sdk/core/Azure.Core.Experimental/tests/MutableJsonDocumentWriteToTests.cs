@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core.Json;
@@ -462,6 +463,48 @@ namespace Azure.Core.Experimental.Tests
                 """;
 
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
+        [Test]
+        public void CanWriteToStream()
+        {
+            string json = """{ "foo" : 1 }""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream);
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(json, actual);
+        }
+
+        [Test]
+        public void CanWriteToStreamWithJsonFormat()
+        {
+            string json = """{ "foo" : 1 }""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'J');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(json, actual);
+        }
+
+        [Test]
+        public void CannotWriteToStreamWithPatchFormat()
+        {
+            string json = """{ "foo" : 1 }""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Stream stream = new MemoryStream();
+            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, 'P'));
         }
 
         [TestCaseSource(nameof(TestCases))]

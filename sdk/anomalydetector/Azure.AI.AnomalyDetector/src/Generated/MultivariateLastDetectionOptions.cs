@@ -28,6 +28,22 @@ namespace Azure.AI.AnomalyDetector
             Variables = variables.ToList();
         }
 
+        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <param name="variables">
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
+        /// values of variables.
+        /// </param>
+        /// <param name="topContributorCount">
+        /// Number of top contributed
+        /// variables for one anomalous time stamp in the response. The default is
+        /// 10.
+        /// </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        {
+            Variables = variables;
+            TopContributorCount = topContributorCount;
+        }
+
         /// <summary>
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         /// <summary> Initializes a new instance of UnknownSingleServerCustomResourceNames. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal UnknownSingleServerCustomResourceNames(NamingPatternType namingPatternType) : base(namingPatternType)
+        internal UnknownSingleServerCustomResourceNames(SapNamingPatternType namingPatternType) : base(namingPatternType)
         {
             NamingPatternType = namingPatternType;
         }

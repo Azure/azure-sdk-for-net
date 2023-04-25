@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,19 +10,27 @@
 
 ### Other Changes
 
+## 1.2.0 (2023-04-24)
+
+### Features Added
+
+- Bump api-version of `DataCollectionRules` to `2022-06-01`
+- Bump api-version of `DataCollectionRuleAsociations` to `2022-06-01`
+- Bump api-version of `DataCollectionEndpoints` to `2022-06-01`
+
+### Breaking Changes
+
+- Property `MetadataProvisionedBy` on `DataCollectionRuleData` is no longer available for api-version >= `2022-06-01`
+- Property `MetadataProvisionedBy` on `DataCollectionRuleAsociationData` is no longer available for api-version >= `2022-06-01`
+
 ## 1.1.0 (2023-04-04)
 
 ### Other Changes
 
 - Bump api-version of `ActionGroups` to `2023-01-01`.
 - Bump api-version of `Metrics` to `2021-05-01`.
-- Bump api-version of `DataCollectionRules` to `2022-06-01`
-- Bump api-version of `DataCollectionRuleAsociations` to `2022-06-01`
-- Bump api-version of `DataCollectionEndpoints` to `2022-06-01`
 - Method `MonitorExtensions.CreateNotifications` and `MonitorExtensions.CreateNotificationsAsync` on `SubscriptionResource` and `ResourceGroupResource` were no longer available for api-version >= `2023-01-01`.
 - Method `MonitorExtensions.GetNotificationStatus` and `MonitorExtensions.GetNotificationStatusAsync` on `SubscriptionResource` and `ResourceGroupResource` were no longer available for api-version >= `2023-01-01`.
-- Property `MetadataProvisionedBy` on `DataCollectionRuleData` is no longer available for api-version >= `2022-06-01`
-- Property `MetadataProvisionedBy` on `DataCollectionRuleAsociationData` is no longer available for api-version >= `2022-06-01`
 
 ## 1.0.1 (2023-02-21)
 

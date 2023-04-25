@@ -497,14 +497,14 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecognizeCompletedWithDtmfEventParsed_Test()
         {
-            CollectTonesResult collectTonesResult = new CollectTonesResult(new DtmfTone[] { DtmfTone.Five, DtmfTone.Six, DtmfTone.Pound });
+            DtmfResult dtmfResult = new DtmfResult(new DtmfTone[] { DtmfTone.Five, DtmfTone.Six, DtmfTone.Pound });
             RecognizeDtmfCompleted @event = CallAutomationModelFactory.RecognizeDtmfCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 recognitionType: CallMediaRecognitionType.Dtmf,
-                collectTonesResult: collectTonesResult,
+                dtmfResult: dtmfResult,
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
@@ -516,15 +516,15 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
                 RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
-                Assert.AreEqual(recognizeResult is CollectTonesResult, true);
+                Assert.AreEqual(recognizeResult is DtmfResult, true);
                 Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
-                if (recognizeResult is CollectTonesResult collectToneRecognizedResult)
+                if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
-                    string toneResults = collectToneRecognizedResult.ConvertToString();
-                    Assert.NotZero(collectToneRecognizedResult.Tones.Count());
-                    Assert.AreEqual(DtmfTone.Five, collectToneRecognizedResult.Tones.First());
+                    string toneResults = dtmfResultReturned.ConvertToString();
+                    Assert.NotZero(dtmfResultReturned.Tones.Count());
+                    Assert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
                     Assert.AreEqual(toneResults, "56#");
                 }
             }
@@ -575,14 +575,14 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void GetRecognizeResultFromRecognizeCompletedWithDtmf_Test()
         {
-            CollectTonesResult collectTonesResult = new CollectTonesResult(new DtmfTone[] { DtmfTone.Five });
+            DtmfResult dtmfResult = new DtmfResult(new DtmfTone[] { DtmfTone.Five });
             RecognizeDtmfCompleted @event = CallAutomationModelFactory.RecognizeDtmfCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 recognitionType: CallMediaRecognitionType.Dtmf,
-                collectTonesResult: collectTonesResult,
+                dtmfResult: dtmfResult,
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
@@ -594,14 +594,14 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
                 RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
-                Assert.AreEqual(recognizeResult is CollectTonesResult, true);
+                Assert.AreEqual(recognizeResult is DtmfResult, true);
                 Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
-                if (recognizeResult is CollectTonesResult collectToneRecognizedResult)
+                if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
-                    Assert.NotZero(collectToneRecognizedResult.Tones.Count());
-                    Assert.AreEqual(DtmfTone.Five, collectToneRecognizedResult.Tones.First());
+                    Assert.NotZero(dtmfResultReturned.Tones.Count());
+                    Assert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
                 }
             }
             else

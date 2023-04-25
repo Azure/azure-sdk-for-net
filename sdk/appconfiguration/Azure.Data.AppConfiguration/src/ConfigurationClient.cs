@@ -689,6 +689,43 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
+        /// <summary>
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities for snapshots based on name.
+        /// </summary>
+        /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
+        /// <param name="fields">The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
+        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = fields == SettingFields.All ? null : fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+        }
+
+        /// <summary>
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities for snapshots based on name.
+        /// </summary>
+        /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
+        /// <param name="fields">The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = fields == SettingFields.All ? null : fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+        }
+
         /// <summary> Gets a single configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>

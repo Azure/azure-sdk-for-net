@@ -106,26 +106,6 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
 
-        //TEMP for backcompat with AutoRest
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
-            IOperation<T> operation,
-            Response rawResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
-            : base(
-                clientDiagnostics,
-                operationTypeName ?? operation.GetType().Name,
-                scopeAttributes,
-                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
-        {
-            _operation = operation;
-            _rawResponse = rawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState<T>>();
-        }
-        //end TEMP for backcompat with AutoRest
-
         private OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)
         {

@@ -192,6 +192,96 @@ namespace Azure.Core.Dynamic
             _element.DisposeRoot();
         }
 
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            if (obj is null)
+            {
+                return _element.ValueKind == JsonValueKind.Null;
+            }
+
+            if (_element.ValueKind == JsonValueKind.Null)
+            {
+                return obj is DynamicData d && Equals(d);
+            }
+
+            return obj switch
+            {
+                string s =>
+                    _element.ValueKind == JsonValueKind.String &&
+                    _element.GetString() == s,
+
+                bool b =>
+                    (_element.ValueKind == JsonValueKind.True ||
+                     _element.ValueKind == JsonValueKind.False) &&
+                    _element.GetBoolean() == b,
+
+                double d =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetDouble(out double od) && d == od,
+
+                float f =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetSingle(out float of) && f == of,
+
+                long l =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetInt64(out long ol) && l == ol,
+
+                int i =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetInt32(out int oi) && i == oi,
+
+                DynamicData data => Equals(data),
+
+                _ => base.Equals(obj),
+            };
+        }
+
+        internal bool Equals(DynamicData other)
+        {
+            if (other is null)
+            {
+                return _element.ValueKind == JsonValueKind.Null;
+            }
+
+            if (_element.ValueKind != other._element.ValueKind)
+            {
+                return false;
+            }
+
+            return _element.ValueKind switch
+            {
+                JsonValueKind.String => _element.GetString() == other._element.GetString(),
+                JsonValueKind.Number => NumberEqual(other),
+                JsonValueKind.True => true,
+                JsonValueKind.False => true,
+                JsonValueKind.Null => true,
+                _ => base.Equals(other)
+            };
+        }
+
+        private bool NumberEqual(DynamicData other)
+        {
+            if (_element.TryGetDouble(out double d))
+            {
+                return other._element.TryGetDouble(out double od) && d == od;
+            }
+
+            if (_element.TryGetInt64(out long l))
+            {
+                return other._element.TryGetInt64(out long ol) && l == ol;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return _element.GetHashCode();
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
