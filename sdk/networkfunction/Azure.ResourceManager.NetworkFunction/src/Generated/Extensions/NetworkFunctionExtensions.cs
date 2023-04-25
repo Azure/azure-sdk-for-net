@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkFunction.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.NetworkFunction
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkFunction. </summary>
     public static partial class NetworkFunctionExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NetworkFunctionResourceGroupResourceExtension GetNetworkFunctionResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NetworkFunctionResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetworkFunctionResourceGroupResourceExtension GetNetworkFunctionResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NetworkFunctionResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NetworkFunctionSubscriptionResourceExtension GetNetworkFunctionSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NetworkFunctionSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetworkFunctionSubscriptionResourceExtension GetNetworkFunctionSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NetworkFunctionSubscriptionResourceExtension(client, scope);
             });
         }
         #region AzureTrafficCollectorResource
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public static AzureTrafficCollectorCollection GetAzureTrafficCollectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureTrafficCollectors();
+            return GetNetworkFunctionResourceGroupResourceExtension(resourceGroupResource).GetAzureTrafficCollectors();
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
+            return GetNetworkFunctionSubscriptionResourceExtension(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
+            return GetNetworkFunctionSubscriptionResourceExtension(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }
     }
 }

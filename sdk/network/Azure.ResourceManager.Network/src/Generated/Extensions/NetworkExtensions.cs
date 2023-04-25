@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Mock;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,659 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class to add extension methods to Azure.ResourceManager.Network. </summary>
     public static partial class NetworkExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ApplicationGatewayResourceExtension GetApplicationGatewayResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ApplicationGatewayResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationGatewayResourceExtension GetApplicationGatewayResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ApplicationGatewayResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ApplicationSecurityGroupResourceExtension GetApplicationSecurityGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ApplicationSecurityGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationSecurityGroupResourceExtension GetApplicationSecurityGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ApplicationSecurityGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static AzureFirewallResourceExtension GetAzureFirewallResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new AzureFirewallResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static AzureFirewallResourceExtension GetAzureFirewallResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new AzureFirewallResourceExtension(client, scope);
+            });
+        }
+
+        private static BastionHostResourceExtension GetBastionHostResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new BastionHostResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static BastionHostResourceExtension GetBastionHostResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new BastionHostResourceExtension(client, scope);
+            });
+        }
+
+        private static CustomIPPrefixResourceExtension GetCustomIPPrefixResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new CustomIPPrefixResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static CustomIPPrefixResourceExtension GetCustomIPPrefixResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new CustomIPPrefixResourceExtension(client, scope);
+            });
+        }
+
+        private static DdosProtectionPlanResourceExtension GetDdosProtectionPlanResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DdosProtectionPlanResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DdosProtectionPlanResourceExtension GetDdosProtectionPlanResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DdosProtectionPlanResourceExtension(client, scope);
+            });
+        }
+
+        private static DscpConfigurationResourceExtension GetDscpConfigurationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DscpConfigurationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DscpConfigurationResourceExtension GetDscpConfigurationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DscpConfigurationResourceExtension(client, scope);
+            });
+        }
+
+        private static ExpressRouteCircuitResourceExtension GetExpressRouteCircuitResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ExpressRouteCircuitResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ExpressRouteCircuitResourceExtension GetExpressRouteCircuitResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ExpressRouteCircuitResourceExtension(client, scope);
+            });
+        }
+
+        private static ExpressRouteCrossConnectionResourceExtension GetExpressRouteCrossConnectionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ExpressRouteCrossConnectionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ExpressRouteCrossConnectionResourceExtension GetExpressRouteCrossConnectionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ExpressRouteCrossConnectionResourceExtension(client, scope);
+            });
+        }
+
+        private static ExpressRouteGatewayResourceExtension GetExpressRouteGatewayResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ExpressRouteGatewayResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ExpressRouteGatewayResourceExtension GetExpressRouteGatewayResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ExpressRouteGatewayResourceExtension(client, scope);
+            });
+        }
+
+        private static ExpressRoutePortResourceExtension GetExpressRoutePortResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ExpressRoutePortResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ExpressRoutePortResourceExtension GetExpressRoutePortResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ExpressRoutePortResourceExtension(client, scope);
+            });
+        }
+
+        private static FirewallPolicyResourceExtension GetFirewallPolicyResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new FirewallPolicyResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static FirewallPolicyResourceExtension GetFirewallPolicyResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new FirewallPolicyResourceExtension(client, scope);
+            });
+        }
+
+        private static IPAllocationResourceExtension GetIPAllocationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new IPAllocationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static IPAllocationResourceExtension GetIPAllocationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new IPAllocationResourceExtension(client, scope);
+            });
+        }
+
+        private static IPGroupResourceExtension GetIPGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new IPGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static IPGroupResourceExtension GetIPGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new IPGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static LoadBalancerResourceExtension GetLoadBalancerResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LoadBalancerResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LoadBalancerResourceExtension GetLoadBalancerResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LoadBalancerResourceExtension(client, scope);
+            });
+        }
+
+        private static NatGatewayResourceExtension GetNatGatewayResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NatGatewayResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NatGatewayResourceExtension GetNatGatewayResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NatGatewayResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkInterfaceResourceExtension GetNetworkInterfaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkInterfaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkInterfaceResourceExtension GetNetworkInterfaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkInterfaceResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkProfileResourceExtension GetNetworkProfileResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkProfileResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkProfileResourceExtension GetNetworkProfileResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkProfileResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkResourceGroupResourceExtension GetNetworkResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkResourceGroupResourceExtension GetNetworkResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkSecurityGroupResourceExtension GetNetworkSecurityGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkSecurityGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkSecurityGroupResourceExtension GetNetworkSecurityGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkSecurityGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkSubscriptionResourceExtension GetNetworkSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkSubscriptionResourceExtension GetNetworkSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkVirtualApplianceResourceExtension GetNetworkVirtualApplianceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkVirtualApplianceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkVirtualApplianceResourceExtension GetNetworkVirtualApplianceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkVirtualApplianceResourceExtension(client, scope);
+            });
+        }
+
+        private static NetworkWatcherResourceExtension GetNetworkWatcherResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetworkWatcherResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetworkWatcherResourceExtension GetNetworkWatcherResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetworkWatcherResourceExtension(client, scope);
+            });
+        }
+
+        private static P2SVpnGatewayResourceExtension GetP2SVpnGatewayResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new P2SVpnGatewayResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static P2SVpnGatewayResourceExtension GetP2SVpnGatewayResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new P2SVpnGatewayResourceExtension(client, scope);
+            });
+        }
+
+        private static PrivateEndpointResourceExtension GetPrivateEndpointResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PrivateEndpointResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PrivateEndpointResourceExtension GetPrivateEndpointResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PrivateEndpointResourceExtension(client, scope);
+            });
+        }
+
+        private static PrivateLinkServiceResourceExtension GetPrivateLinkServiceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PrivateLinkServiceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PrivateLinkServiceResourceExtension GetPrivateLinkServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PrivateLinkServiceResourceExtension(client, scope);
+            });
+        }
+
+        private static PublicIPAddressResourceExtension GetPublicIPAddressResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PublicIPAddressResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PublicIPAddressResourceExtension GetPublicIPAddressResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PublicIPAddressResourceExtension(client, scope);
+            });
+        }
+
+        private static PublicIPPrefixResourceExtension GetPublicIPPrefixResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PublicIPPrefixResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static PublicIPPrefixResourceExtension GetPublicIPPrefixResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PublicIPPrefixResourceExtension(client, scope);
+            });
+        }
+
+        private static RouteFilterResourceExtension GetRouteFilterResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new RouteFilterResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static RouteFilterResourceExtension GetRouteFilterResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RouteFilterResourceExtension(client, scope);
+            });
+        }
+
+        private static RouteTableResourceExtension GetRouteTableResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new RouteTableResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static RouteTableResourceExtension GetRouteTableResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RouteTableResourceExtension(client, scope);
+            });
+        }
+
+        private static SecurityPartnerProviderResourceExtension GetSecurityPartnerProviderResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityPartnerProviderResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SecurityPartnerProviderResourceExtension GetSecurityPartnerProviderResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityPartnerProviderResourceExtension(client, scope);
+            });
+        }
+
+        private static ServiceEndpointPolicyResourceExtension GetServiceEndpointPolicyResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ServiceEndpointPolicyResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ServiceEndpointPolicyResourceExtension GetServiceEndpointPolicyResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ServiceEndpointPolicyResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualHubResourceExtension GetVirtualHubResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualHubResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualHubResourceExtension GetVirtualHubResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualHubResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualNetworkResourceExtension GetVirtualNetworkResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualNetworkResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualNetworkResourceExtension GetVirtualNetworkResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualNetworkResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualNetworkTapResourceExtension GetVirtualNetworkTapResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualNetworkTapResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualNetworkTapResourceExtension GetVirtualNetworkTapResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualNetworkTapResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualRouterResourceExtension GetVirtualRouterResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualRouterResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualRouterResourceExtension GetVirtualRouterResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualRouterResourceExtension(client, scope);
+            });
+        }
+
+        private static VirtualWanResourceExtension GetVirtualWanResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VirtualWanResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VirtualWanResourceExtension GetVirtualWanResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VirtualWanResourceExtension(client, scope);
+            });
+        }
+
+        private static VpnGatewayResourceExtension GetVpnGatewayResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VpnGatewayResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VpnGatewayResourceExtension GetVpnGatewayResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VpnGatewayResourceExtension(client, scope);
+            });
+        }
+
+        private static VpnServerConfigurationResourceExtension GetVpnServerConfigurationResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VpnServerConfigurationResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VpnServerConfigurationResourceExtension GetVpnServerConfigurationResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VpnServerConfigurationResourceExtension(client, scope);
+            });
+        }
+
+        private static VpnSiteResourceExtension GetVpnSiteResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new VpnSiteResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static VpnSiteResourceExtension GetVpnSiteResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new VpnSiteResourceExtension(client, scope);
+            });
+        }
+
+        private static WebApplicationFirewallPolicyResourceExtension GetWebApplicationFirewallPolicyResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new WebApplicationFirewallPolicyResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static WebApplicationFirewallPolicyResourceExtension GetWebApplicationFirewallPolicyResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new WebApplicationFirewallPolicyResourceExtension(client, scope);
             });
         }
         #region ApplicationGatewayResource
@@ -1708,7 +2333,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetApplicationGateways();
         }
 
         /// <summary>
@@ -1764,7 +2389,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
         public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationSecurityGroups();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetApplicationSecurityGroups();
         }
 
         /// <summary>
@@ -1820,7 +2445,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
         public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureFirewalls();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAzureFirewalls();
         }
 
         /// <summary>
@@ -1876,7 +2501,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
         public static BastionHostCollection GetBastionHosts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBastionHosts();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetBastionHosts();
         }
 
         /// <summary>
@@ -1932,7 +2557,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomIPPrefixes();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetCustomIPPrefixes();
         }
 
         /// <summary>
@@ -1990,7 +2615,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
         public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDdosCustomPolicies();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetDdosCustomPolicies();
         }
 
         /// <summary>
@@ -2046,7 +2671,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
         public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDdosProtectionPlans();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetDdosProtectionPlans();
         }
 
         /// <summary>
@@ -2102,7 +2727,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
         public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDscpConfigurations();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetDscpConfigurations();
         }
 
         /// <summary>
@@ -2158,7 +2783,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
         public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteCircuits();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetExpressRouteCircuits();
         }
 
         /// <summary>
@@ -2214,7 +2839,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteCrossConnections();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetExpressRouteCrossConnections();
         }
 
         /// <summary>
@@ -2270,7 +2895,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
         public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRoutePorts();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetExpressRoutePorts();
         }
 
         /// <summary>
@@ -2326,7 +2951,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
         public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFirewallPolicies();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetFirewallPolicies();
         }
 
         /// <summary>
@@ -2384,7 +3009,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
         public static IPAllocationCollection GetIPAllocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPAllocations();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetIPAllocations();
         }
 
         /// <summary>
@@ -2442,7 +3067,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
         public static IPGroupCollection GetIPGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPGroups();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetIPGroups();
         }
 
         /// <summary>
@@ -2500,7 +3125,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
         public static LoadBalancerCollection GetLoadBalancers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLoadBalancers();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetLoadBalancers();
         }
 
         /// <summary>
@@ -2558,7 +3183,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
         public static NatGatewayCollection GetNatGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNatGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNatGateways();
         }
 
         /// <summary>
@@ -2616,7 +3241,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkInterfaces();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNetworkInterfaces();
         }
 
         /// <summary>
@@ -2674,7 +3299,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
         public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkProfiles();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNetworkProfiles();
         }
 
         /// <summary>
@@ -2732,7 +3357,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
         public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkSecurityGroups();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNetworkSecurityGroups();
         }
 
         /// <summary>
@@ -2790,7 +3415,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
         public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkVirtualAppliances();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNetworkVirtualAppliances();
         }
 
         /// <summary>
@@ -2848,7 +3473,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
         public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkWatchers();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetNetworkWatchers();
         }
 
         /// <summary>
@@ -2904,7 +3529,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
         public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateEndpoints();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetPrivateEndpoints();
         }
 
         /// <summary>
@@ -2962,7 +3587,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
         public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkServices();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetPrivateLinkServices();
         }
 
         /// <summary>
@@ -3020,7 +3645,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
         public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPublicIPAddresses();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetPublicIPAddresses();
         }
 
         /// <summary>
@@ -3078,7 +3703,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
         public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPublicIPPrefixes();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetPublicIPPrefixes();
         }
 
         /// <summary>
@@ -3136,7 +3761,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
         public static RouteFilterCollection GetRouteFilters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRouteFilters();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetRouteFilters();
         }
 
         /// <summary>
@@ -3194,7 +3819,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
         public static RouteTableCollection GetRouteTables(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRouteTables();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetRouteTables();
         }
 
         /// <summary>
@@ -3252,7 +3877,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
         public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityPartnerProviders();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetSecurityPartnerProviders();
         }
 
         /// <summary>
@@ -3308,7 +3933,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
         public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceEndpointPolicies();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetServiceEndpointPolicies();
         }
 
         /// <summary>
@@ -3366,7 +3991,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworks();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualNetworks();
         }
 
         /// <summary>
@@ -3424,7 +4049,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
         public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualNetworkGateways();
         }
 
         /// <summary>
@@ -3480,7 +4105,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkGatewayConnections();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualNetworkGatewayConnections();
         }
 
         /// <summary>
@@ -3536,7 +4161,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
         public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocalNetworkGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetLocalNetworkGateways();
         }
 
         /// <summary>
@@ -3592,7 +4217,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
         public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkTaps();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualNetworkTaps();
         }
 
         /// <summary>
@@ -3648,7 +4273,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
         public static VirtualRouterCollection GetVirtualRouters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualRouters();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualRouters();
         }
 
         /// <summary>
@@ -3706,7 +4331,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
         public static VirtualWanCollection GetVirtualWans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualWans();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualWans();
         }
 
         /// <summary>
@@ -3762,7 +4387,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
         public static VpnSiteCollection GetVpnSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnSites();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVpnSites();
         }
 
         /// <summary>
@@ -3818,7 +4443,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
         public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnServerConfigurations();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVpnServerConfigurations();
         }
 
         /// <summary>
@@ -3874,7 +4499,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
         public static VirtualHubCollection GetVirtualHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualHubs();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVirtualHubs();
         }
 
         /// <summary>
@@ -3930,7 +4555,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
         public static VpnGatewayCollection GetVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetVpnGateways();
         }
 
         /// <summary>
@@ -3986,7 +4611,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
         public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetP2SVpnGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetP2SVpnGateways();
         }
 
         /// <summary>
@@ -4042,7 +4667,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
         public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteGateways();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetExpressRouteGateways();
         }
 
         /// <summary>
@@ -4098,7 +4723,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebApplicationFirewallPolicies();
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -4168,7 +4793,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4190,7 +4815,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
         }
 
         /// <summary>
@@ -4212,7 +4837,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4234,7 +4859,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -4256,7 +4881,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4278,7 +4903,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -4304,7 +4929,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupResourceExtension(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4330,7 +4955,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -4352,7 +4977,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4374,7 +4999,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
+            return GetNetworkResourceGroupResourceExtension(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
@@ -4382,7 +5007,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
         public static AzureWebCategoryCollection GetAzureWebCategories(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureWebCategories();
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAzureWebCategories();
         }
 
         /// <summary>
@@ -4440,7 +5065,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public static ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePortsLocations();
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetExpressRoutePortsLocations();
         }
 
         /// <summary>
@@ -4496,7 +5121,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public static NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualApplianceSkus();
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetNetworkVirtualApplianceSkus();
         }
 
         /// <summary>
@@ -4565,7 +5190,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaysAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4586,7 +5211,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewayResource> GetApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGateways(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -4607,7 +5232,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4628,7 +5253,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableServerVariablesApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServerVariablesApplicationGateways(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableServerVariablesApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -4649,7 +5274,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4670,7 +5295,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableRequestHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableRequestHeadersApplicationGateways(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableRequestHeadersApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -4691,7 +5316,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4712,7 +5337,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableResponseHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableResponseHeadersApplicationGateways(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAvailableResponseHeadersApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -4733,7 +5358,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4754,7 +5379,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -4774,7 +5399,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4794,7 +5419,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslOptions(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewayAvailableSslOptions(cancellationToken);
         }
 
         /// <summary>
@@ -4815,7 +5440,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4836,7 +5461,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -4861,7 +5486,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4886,7 +5511,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
+            return GetApplicationGatewayResourceExtension(subscriptionResource).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -4907,7 +5532,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationSecurityGroupsAsync(cancellationToken);
+            return GetApplicationSecurityGroupResourceExtension(subscriptionResource).GetApplicationSecurityGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4928,7 +5553,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationSecurityGroups(cancellationToken);
+            return GetApplicationSecurityGroupResourceExtension(subscriptionResource).GetApplicationSecurityGroups(cancellationToken);
         }
 
         /// <summary>
@@ -4950,7 +5575,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableDelegationsAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableDelegationsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4972,7 +5597,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableDelegations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableDelegations(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableDelegations(location, cancellationToken);
         }
 
         /// <summary>
@@ -4994,7 +5619,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServiceAliasesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableServiceAliasesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -5016,7 +5641,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServiceAliases(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableServiceAliases(location, cancellationToken);
         }
 
         /// <summary>
@@ -5037,7 +5662,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureFirewallResource> GetAzureFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallsAsync(cancellationToken);
+            return GetAzureFirewallResourceExtension(subscriptionResource).GetAzureFirewallsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5058,7 +5683,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureFirewallResource> GetAzureFirewalls(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewalls(cancellationToken);
+            return GetAzureFirewallResourceExtension(subscriptionResource).GetAzureFirewalls(cancellationToken);
         }
 
         /// <summary>
@@ -5079,7 +5704,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallFqdnTagsAsync(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAzureFirewallFqdnTagsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5100,7 +5725,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallFqdnTags(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAzureFirewallFqdnTags(cancellationToken);
         }
 
         /// <summary>
@@ -5121,7 +5746,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BastionHostResource> GetBastionHostsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBastionHostsAsync(cancellationToken);
+            return GetBastionHostResourceExtension(subscriptionResource).GetBastionHostsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5142,7 +5767,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BastionHostResource> GetBastionHosts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBastionHosts(cancellationToken);
+            return GetBastionHostResourceExtension(subscriptionResource).GetBastionHosts(cancellationToken);
         }
 
         /// <summary>
@@ -5167,7 +5792,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionResourceExtension(subscriptionResource).CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5192,7 +5817,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
         }
 
         /// <summary>
@@ -5213,7 +5838,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomIPPrefixesAsync(cancellationToken);
+            return GetCustomIPPrefixResourceExtension(subscriptionResource).GetCustomIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5234,7 +5859,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomIPPrefixes(cancellationToken);
+            return GetCustomIPPrefixResourceExtension(subscriptionResource).GetCustomIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -5255,7 +5880,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDdosProtectionPlansAsync(cancellationToken);
+            return GetDdosProtectionPlanResourceExtension(subscriptionResource).GetDdosProtectionPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5276,7 +5901,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDdosProtectionPlans(cancellationToken);
+            return GetDdosProtectionPlanResourceExtension(subscriptionResource).GetDdosProtectionPlans(cancellationToken);
         }
 
         /// <summary>
@@ -5297,7 +5922,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDscpConfigurationsAsync(cancellationToken);
+            return GetDscpConfigurationResourceExtension(subscriptionResource).GetDscpConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5318,7 +5943,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DscpConfigurationResource> GetDscpConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDscpConfigurations(cancellationToken);
+            return GetDscpConfigurationResourceExtension(subscriptionResource).GetDscpConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -5340,7 +5965,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableEndpointServicesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableEndpointServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -5362,7 +5987,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EndpointServiceResult> GetAvailableEndpointServices(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableEndpointServices(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailableEndpointServices(location, cancellationToken);
         }
 
         /// <summary>
@@ -5383,7 +6008,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCircuitsAsync(cancellationToken);
+            return GetExpressRouteCircuitResourceExtension(subscriptionResource).GetExpressRouteCircuitsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5404,7 +6029,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCircuits(cancellationToken);
+            return GetExpressRouteCircuitResourceExtension(subscriptionResource).GetExpressRouteCircuits(cancellationToken);
         }
 
         /// <summary>
@@ -5425,7 +6050,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteServiceProvidersAsync(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetExpressRouteServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5446,7 +6071,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteServiceProviders(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetExpressRouteServiceProviders(cancellationToken);
         }
 
         /// <summary>
@@ -5467,7 +6092,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCrossConnectionsAsync(cancellationToken);
+            return GetExpressRouteCrossConnectionResourceExtension(subscriptionResource).GetExpressRouteCrossConnectionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5488,7 +6113,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
+            return GetExpressRouteCrossConnectionResourceExtension(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
         }
 
         /// <summary>
@@ -5509,7 +6134,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePortsAsync(cancellationToken);
+            return GetExpressRoutePortResourceExtension(subscriptionResource).GetExpressRoutePortsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5530,7 +6155,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRoutePortResource> GetExpressRoutePorts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePorts(cancellationToken);
+            return GetExpressRoutePortResourceExtension(subscriptionResource).GetExpressRoutePorts(cancellationToken);
         }
 
         /// <summary>
@@ -5551,7 +6176,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallPoliciesAsync(cancellationToken);
+            return GetFirewallPolicyResourceExtension(subscriptionResource).GetFirewallPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5572,7 +6197,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FirewallPolicyResource> GetFirewallPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallPolicies(cancellationToken);
+            return GetFirewallPolicyResourceExtension(subscriptionResource).GetFirewallPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -5593,7 +6218,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPAllocationResource> GetIPAllocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPAllocationsAsync(cancellationToken);
+            return GetIPAllocationResourceExtension(subscriptionResource).GetIPAllocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5614,7 +6239,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPAllocationResource> GetIPAllocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPAllocations(cancellationToken);
+            return GetIPAllocationResourceExtension(subscriptionResource).GetIPAllocations(cancellationToken);
         }
 
         /// <summary>
@@ -5635,7 +6260,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPGroupResource> GetIPGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPGroupsAsync(cancellationToken);
+            return GetIPGroupResourceExtension(subscriptionResource).GetIPGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5656,7 +6281,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPGroupResource> GetIPGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPGroups(cancellationToken);
+            return GetIPGroupResourceExtension(subscriptionResource).GetIPGroups(cancellationToken);
         }
 
         /// <summary>
@@ -5677,7 +6302,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadBalancersAsync(cancellationToken);
+            return GetLoadBalancerResourceExtension(subscriptionResource).GetLoadBalancersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5698,7 +6323,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadBalancerResource> GetLoadBalancers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadBalancers(cancellationToken);
+            return GetLoadBalancerResourceExtension(subscriptionResource).GetLoadBalancers(cancellationToken);
         }
 
         /// <summary>
@@ -5724,7 +6349,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SwapPublicIPAddressesLoadBalancerAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetLoadBalancerResourceExtension(subscriptionResource).SwapPublicIPAddressesLoadBalancerAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5750,7 +6375,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SwapPublicIPAddressesLoadBalancer(waitUntil, location, content, cancellationToken);
+            return GetLoadBalancerResourceExtension(subscriptionResource).SwapPublicIPAddressesLoadBalancer(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -5771,7 +6396,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNatGatewaysAsync(cancellationToken);
+            return GetNatGatewayResourceExtension(subscriptionResource).GetNatGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5792,7 +6417,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NatGatewayResource> GetNatGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNatGateways(cancellationToken);
+            return GetNatGatewayResourceExtension(subscriptionResource).GetNatGateways(cancellationToken);
         }
 
         /// <summary>
@@ -5813,7 +6438,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
+            return GetNetworkInterfaceResourceExtension(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5834,7 +6459,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterfaceResource> GetNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkInterfaces(cancellationToken);
+            return GetNetworkInterfaceResourceExtension(subscriptionResource).GetNetworkInterfaces(cancellationToken);
         }
 
         /// <summary>
@@ -5855,7 +6480,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkProfilesAsync(cancellationToken);
+            return GetNetworkProfileResourceExtension(subscriptionResource).GetNetworkProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5876,7 +6501,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkProfileResource> GetNetworkProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkProfiles(cancellationToken);
+            return GetNetworkProfileResourceExtension(subscriptionResource).GetNetworkProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -5897,7 +6522,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkSecurityGroupsAsync(cancellationToken);
+            return GetNetworkSecurityGroupResourceExtension(subscriptionResource).GetNetworkSecurityGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5918,7 +6543,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkSecurityGroups(cancellationToken);
+            return GetNetworkSecurityGroupResourceExtension(subscriptionResource).GetNetworkSecurityGroups(cancellationToken);
         }
 
         /// <summary>
@@ -5939,7 +6564,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualAppliancesAsync(cancellationToken);
+            return GetNetworkVirtualApplianceResourceExtension(subscriptionResource).GetNetworkVirtualAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5960,7 +6585,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualAppliances(cancellationToken);
+            return GetNetworkVirtualApplianceResourceExtension(subscriptionResource).GetNetworkVirtualAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -5981,7 +6606,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkWatchersAsync(cancellationToken);
+            return GetNetworkWatcherResourceExtension(subscriptionResource).GetNetworkWatchersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6002,7 +6627,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkWatcherResource> GetNetworkWatchers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkWatchers(cancellationToken);
+            return GetNetworkWatcherResourceExtension(subscriptionResource).GetNetworkWatchers(cancellationToken);
         }
 
         /// <summary>
@@ -6023,7 +6648,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateEndpointsAsync(cancellationToken);
+            return GetPrivateEndpointResourceExtension(subscriptionResource).GetPrivateEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6044,7 +6669,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateEndpointResource> GetPrivateEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateEndpoints(cancellationToken);
+            return GetPrivateEndpointResourceExtension(subscriptionResource).GetPrivateEndpoints(cancellationToken);
         }
 
         /// <summary>
@@ -6066,7 +6691,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6088,7 +6713,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailablePrivateEndpointTypes(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAvailablePrivateEndpointTypes(location, cancellationToken);
         }
 
         /// <summary>
@@ -6109,7 +6734,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateLinkServicesAsync(cancellationToken);
+            return GetPrivateLinkServiceResourceExtension(subscriptionResource).GetPrivateLinkServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6130,7 +6755,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateLinkServices(cancellationToken);
+            return GetPrivateLinkServiceResourceExtension(subscriptionResource).GetPrivateLinkServices(cancellationToken);
         }
 
         /// <summary>
@@ -6156,7 +6781,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionResourceExtension(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6182,7 +6807,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -6204,7 +6829,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6226,7 +6851,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
         }
 
         /// <summary>
@@ -6247,7 +6872,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIPAddressResource> GetPublicIPAddressesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPAddressesAsync(cancellationToken);
+            return GetPublicIPAddressResourceExtension(subscriptionResource).GetPublicIPAddressesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6268,7 +6893,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIPAddressResource> GetPublicIPAddresses(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPAddresses(cancellationToken);
+            return GetPublicIPAddressResourceExtension(subscriptionResource).GetPublicIPAddresses(cancellationToken);
         }
 
         /// <summary>
@@ -6289,7 +6914,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPPrefixesAsync(cancellationToken);
+            return GetPublicIPPrefixResourceExtension(subscriptionResource).GetPublicIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6310,7 +6935,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIPPrefixResource> GetPublicIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPPrefixes(cancellationToken);
+            return GetPublicIPPrefixResourceExtension(subscriptionResource).GetPublicIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -6331,7 +6956,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RouteFilterResource> GetRouteFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteFiltersAsync(cancellationToken);
+            return GetRouteFilterResourceExtension(subscriptionResource).GetRouteFiltersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6352,7 +6977,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RouteFilterResource> GetRouteFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteFilters(cancellationToken);
+            return GetRouteFilterResourceExtension(subscriptionResource).GetRouteFilters(cancellationToken);
         }
 
         /// <summary>
@@ -6373,7 +6998,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RouteTableResource> GetRouteTablesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteTablesAsync(cancellationToken);
+            return GetRouteTableResourceExtension(subscriptionResource).GetRouteTablesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6394,7 +7019,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RouteTableResource> GetRouteTables(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteTables(cancellationToken);
+            return GetRouteTableResourceExtension(subscriptionResource).GetRouteTables(cancellationToken);
         }
 
         /// <summary>
@@ -6415,7 +7040,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityPartnerProvidersAsync(cancellationToken);
+            return GetSecurityPartnerProviderResourceExtension(subscriptionResource).GetSecurityPartnerProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6436,7 +7061,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityPartnerProviderResource> GetSecurityPartnerProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityPartnerProviders(cancellationToken);
+            return GetSecurityPartnerProviderResourceExtension(subscriptionResource).GetSecurityPartnerProviders(cancellationToken);
         }
 
         /// <summary>
@@ -6457,7 +7082,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBgpServiceCommunitiesAsync(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetBgpServiceCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6478,7 +7103,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BgpServiceCommunity> GetBgpServiceCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBgpServiceCommunities(cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetBgpServiceCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -6499,7 +7124,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
+            return GetServiceEndpointPolicyResourceExtension(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6520,7 +7145,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
+            return GetServiceEndpointPolicyResourceExtension(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
         }
 
         /// <summary>
@@ -6541,7 +7166,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceTagAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionResourceExtension(subscriptionResource).GetServiceTagAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6562,7 +7187,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceTagsListResult> GetServiceTag(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceTag(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetServiceTag(location, cancellationToken);
         }
 
         /// <summary>
@@ -6584,7 +7209,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6606,7 +7231,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetNetworkSubscriptionResourceExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -6627,7 +7252,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
+            return GetVirtualNetworkResourceExtension(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6648,7 +7273,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkResource> GetVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworks(cancellationToken);
+            return GetVirtualNetworkResourceExtension(subscriptionResource).GetVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -6669,7 +7294,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworkTapsAsync(cancellationToken);
+            return GetVirtualNetworkTapResourceExtension(subscriptionResource).GetVirtualNetworkTapsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6690,7 +7315,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkTapResource> GetVirtualNetworkTaps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworkTaps(cancellationToken);
+            return GetVirtualNetworkTapResourceExtension(subscriptionResource).GetVirtualNetworkTaps(cancellationToken);
         }
 
         /// <summary>
@@ -6711,7 +7336,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualRouterResource> GetVirtualRoutersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualRoutersAsync(cancellationToken);
+            return GetVirtualRouterResourceExtension(subscriptionResource).GetVirtualRoutersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6732,7 +7357,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualRouterResource> GetVirtualRouters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualRouters(cancellationToken);
+            return GetVirtualRouterResourceExtension(subscriptionResource).GetVirtualRouters(cancellationToken);
         }
 
         /// <summary>
@@ -6753,7 +7378,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualWanResource> GetVirtualWansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWansAsync(cancellationToken);
+            return GetVirtualWanResourceExtension(subscriptionResource).GetVirtualWansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6774,7 +7399,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualWanResource> GetVirtualWans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWans(cancellationToken);
+            return GetVirtualWanResourceExtension(subscriptionResource).GetVirtualWans(cancellationToken);
         }
 
         /// <summary>
@@ -6795,7 +7420,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnSiteResource> GetVpnSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnSitesAsync(cancellationToken);
+            return GetVpnSiteResourceExtension(subscriptionResource).GetVpnSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6816,7 +7441,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnSiteResource> GetVpnSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnSites(cancellationToken);
+            return GetVpnSiteResourceExtension(subscriptionResource).GetVpnSites(cancellationToken);
         }
 
         /// <summary>
@@ -6837,7 +7462,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnServerConfigurationsAsync(cancellationToken);
+            return GetVpnServerConfigurationResourceExtension(subscriptionResource).GetVpnServerConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6858,7 +7483,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnServerConfigurationResource> GetVpnServerConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnServerConfigurations(cancellationToken);
+            return GetVpnServerConfigurationResourceExtension(subscriptionResource).GetVpnServerConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -6879,7 +7504,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualHubResource> GetVirtualHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualHubsAsync(cancellationToken);
+            return GetVirtualHubResourceExtension(subscriptionResource).GetVirtualHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6900,7 +7525,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualHubResource> GetVirtualHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualHubs(cancellationToken);
+            return GetVirtualHubResourceExtension(subscriptionResource).GetVirtualHubs(cancellationToken);
         }
 
         /// <summary>
@@ -6921,7 +7546,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnGatewayResource> GetVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnGatewaysAsync(cancellationToken);
+            return GetVpnGatewayResourceExtension(subscriptionResource).GetVpnGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6942,7 +7567,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnGatewayResource> GetVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnGateways(cancellationToken);
+            return GetVpnGatewayResourceExtension(subscriptionResource).GetVpnGateways(cancellationToken);
         }
 
         /// <summary>
@@ -6963,7 +7588,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetP2SVpnGatewaysAsync(cancellationToken);
+            return GetP2SVpnGatewayResourceExtension(subscriptionResource).GetP2SVpnGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6984,7 +7609,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetP2SVpnGateways(cancellationToken);
+            return GetP2SVpnGatewayResourceExtension(subscriptionResource).GetP2SVpnGateways(cancellationToken);
         }
 
         /// <summary>
@@ -7005,7 +7630,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteGatewaysAsync(cancellationToken);
+            return GetExpressRouteGatewayResourceExtension(subscriptionResource).GetExpressRouteGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7026,7 +7651,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteGateways(cancellationToken);
+            return GetExpressRouteGatewayResourceExtension(subscriptionResource).GetExpressRouteGateways(cancellationToken);
         }
 
         /// <summary>
@@ -7047,7 +7672,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebApplicationFirewallPoliciesAsync(cancellationToken);
+            return GetWebApplicationFirewallPolicyResourceExtension(subscriptionResource).GetWebApplicationFirewallPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7068,7 +7693,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
+            return GetWebApplicationFirewallPolicyResourceExtension(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
         }
     }
 }
