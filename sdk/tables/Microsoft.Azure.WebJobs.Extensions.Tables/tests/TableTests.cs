@@ -80,7 +80,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             // Arrange
             var program = new BindToParameterBindingData();
-            var ext = new TableConverterExtensionConfigProvider();
 
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
