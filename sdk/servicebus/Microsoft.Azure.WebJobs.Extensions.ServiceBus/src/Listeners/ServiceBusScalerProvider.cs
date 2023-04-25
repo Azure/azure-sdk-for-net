@@ -29,10 +29,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             AzureComponentFactory azureComponentFactory;
             if ((triggerMetadata.Properties != null) && (triggerMetadata.Properties.TryGetValue(nameof(AzureComponentFactory), out object value)))
             {
+                // Managed identity is used for the connection - use the AzureComponentFactory passed from the ScaleConttroller.
                 azureComponentFactory = value as AzureComponentFactory;
             }
             else
             {
+                // Connection string is used for the connection - use the deafult AzureComponentFactory.
                 azureComponentFactory = serviceProvider.GetService<AzureComponentFactory>();
             }
 
