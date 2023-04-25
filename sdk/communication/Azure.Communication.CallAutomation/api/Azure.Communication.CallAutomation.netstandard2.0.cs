@@ -67,6 +67,7 @@ namespace Azure.Communication.CallAutomation
         protected CallAutomationClient() { }
         public CallAutomationClient(string connectionString) { }
         public CallAutomationClient(string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options) { }
+        public CallAutomationClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public CallAutomationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public CallAutomationClient(System.Uri pmaEndpoint, string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -262,9 +263,9 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallInvite
     {
-        public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber, System.Collections.Generic.IDictionary<string, string> sipHeaders = null) { }
+        public CallInvite(Azure.Communication.CommunicationUserIdentifier targetParticipant, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
+        public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetParticipant, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
+        public CallInvite(Azure.Communication.PhoneNumberIdentifier targetParticipant, Azure.Communication.PhoneNumberIdentifier callerIdNumber, System.Collections.Generic.IDictionary<string, string> sipHeaders = null) { }
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }
         public string SourceDisplayName { get { throw null; } set { } }
@@ -495,14 +496,14 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CreateGroupCallOptions
     {
-        public CreateGroupCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
+        public CreateGroupCallOptions(System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> targetParticipants, System.Uri callbackUri) { }
         public System.Uri AzureCognitiveServicesEndpointUrl { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
     }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
@@ -958,8 +959,8 @@ namespace Azure.Communication.CallAutomation
     public partial class RejectCallOptions
     {
         public RejectCallOptions(string incomingCallContext) { }
-        public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallRejectReason Reason { get { throw null; } set { } }
     }
     public partial class RemoveParticipantEventResult
     {

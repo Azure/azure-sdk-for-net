@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
-        internal CommunicationUserIdentifier Source { get; }
+        internal CommunicationUserIdentifier SourceIdentity { get; set; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -43,6 +43,17 @@ namespace Azure.Communication.CallAutomation
         public CallAutomationClient(string connectionString, CallAutomationClientOptions options)
             : this(
                   ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  Argument.CheckNotNull(options, nameof(options)))
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with azure key credential.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="keyCredential">Azure key credential acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri endpoint, AzureKeyCredential keyCredential, CallAutomationClientOptions options = default)
+            : this(
+                  Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                  Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                   Argument.CheckNotNull(options, nameof(options)))
         { }
 
@@ -63,15 +74,19 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
         : this(
-        pmaEndpoint,
-        options ?? new CallAutomationClientOptions(),
-        ConnectionString.Parse(connectionString))
+            pmaEndpoint,
+            options ?? new CallAutomationClientOptions(),
+            ConnectionString.Parse(connectionString))
         { }
         #endregion
 
         #region private constructors
         private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
             : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
+        { }
+
+        private CallAutomationClient(string endpoint, AzureKeyCredential keyCredential, CallAutomationClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
@@ -88,7 +103,7 @@ namespace Azure.Communication.CallAutomation
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
-            Source = options.Source;
+            SourceIdentity = options.Source;
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -234,7 +249,7 @@ namespace Azure.Communication.CallAutomation
                 request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
-            request.AnsweredByIdentifier = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source);
+            request.AnsweredByIdentifier = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity);
 
             return request;
         }
@@ -355,7 +370,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
-                request.CallRejectReason = options.CallRejectReason.ToString();
+                request.CallRejectReason = options.Reason.ToString();
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return await AzureCommunicationServicesRestClient.RejectCallAsync(
@@ -399,7 +414,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
-                request.CallRejectReason = options.CallRejectReason.ToString();
+                request.CallRejectReason = options.Reason.ToString();
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return AzureCommunicationServicesRestClient.RejectCall(
@@ -636,7 +651,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                SourceIdentity = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -663,7 +678,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                SourceIdentity = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -759,7 +774,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return Source;
+                return SourceIdentity;
             }
             catch (Exception ex)
             {

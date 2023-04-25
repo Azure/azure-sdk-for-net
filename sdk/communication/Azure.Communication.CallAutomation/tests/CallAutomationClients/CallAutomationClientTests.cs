@@ -20,11 +20,37 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             MediaStreamingAudioChannel.Mixed);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        public async Task AnswerCallAsyncWithAcsKeyInitialClient_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClientWithAcsKey(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+
+            var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
+            Assert.NotNull(response);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
 
             var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
+            Assert.NotNull(response);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCallWithAcsKeyInitialClient_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClientWithAcsKey(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+
+            var response = callAutomationClient.AnswerCall(incomingCallContext, callbackUri);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
@@ -173,7 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
-            rejectOption.CallRejectReason = reason;
+            rejectOption.Reason = reason;
 
             var response = await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false);
             Assert.NotNull(response);
@@ -186,7 +212,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
             RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
-            rejectOption.CallRejectReason = reason;
+            rejectOption.Reason = reason;
 
             var response = callAutomationClient.RejectCall(rejectOption);
             Assert.NotNull(response);
@@ -199,7 +225,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
-            rejectOption.CallRejectReason = reason;
+            rejectOption.Reason = reason;
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false));
             Assert.NotNull(ex);
@@ -212,7 +238,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
-            rejectOption.CallRejectReason = reason;
+            rejectOption.Reason = reason;
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(rejectOption));
             Assert.NotNull(ex);
@@ -326,11 +352,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateGroupCall))]
-        public async Task CreateGroupCallAsync_201Created(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, PhoneNumberIdentifier callerIdNumber)
+        public async Task CreateGroupCallAsync_201Created(IReadOnlyList<CommunicationIdentifier> targetParticipants, Uri callbackUri, PhoneNumberIdentifier callerIdNumber)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateGroupCallOptions options = new(
-                targets: targets,
+                targetParticipants: targetParticipants,
                 callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,

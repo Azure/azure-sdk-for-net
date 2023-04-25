@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
-        public CreateGroupCallOptions(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateGroupCallOptions(IReadOnlyList<CommunicationIdentifier> targetParticipants, Uri callbackUri)
         {
-            Targets = targets;
+            Targets = targetParticipants;
             CallbackUri = callbackUri;
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// Call invitee information.
         /// </summary>
         /// <value></value>
-        public IEnumerable<CommunicationIdentifier> Targets { get; }
+        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
 
         /// <summary>
         /// The callback Uri.

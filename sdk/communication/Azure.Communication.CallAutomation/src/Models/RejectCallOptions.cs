@@ -27,6 +27,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The reason for rejecting call.
         /// </summary>
-        public CallRejectReason CallRejectReason { get; set; } = CallRejectReason.None;
+        public CallRejectReason Reason { get; set; } = CallRejectReason.None;
     }
 }

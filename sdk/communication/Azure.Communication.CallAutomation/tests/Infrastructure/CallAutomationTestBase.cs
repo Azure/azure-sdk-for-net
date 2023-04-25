@@ -11,6 +11,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
     public class CallAutomationTestBase
     {
         protected const string ConnectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
+        protected Uri AcsEndpoint = new Uri("https://contoso.azure.com/");
+        protected const string AccessKey = "ZHVtbXlhY2Nlc3NrZXk=";
+        protected AzureKeyCredential KeyCredential = new AzureKeyCredential(AccessKey);
         protected const string DummyPayload = "{{" +
                                         "\"callConnectionId\": \"someCallConnectionId\"," +
                                         "\"serverCallId\": \"someServerCallId\"," +
@@ -75,6 +78,38 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             };
 
             return new CallAutomationClient(ConnectionString, callAutomationClientOptions);
+        }
+
+        internal CallAutomationClient CreateMockCallAutomationClientWithAcsKey(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
+        {
+            var mockResponse = new MockResponse(responseCode);
+
+            if (responseContent != null)
+            {
+                if (responseContent is string responseContentString)
+                {
+                    mockResponse.SetContent(responseContentString);
+                }
+                else if (responseContent is byte[] responseContentObjectArr)
+                {
+                    mockResponse.SetContent(responseContentObjectArr);
+                }
+            }
+
+            if (httpHeaders != null)
+            {
+                for (int i = 0; i < httpHeaders.Length; i++)
+                {
+                    mockResponse.AddHeader(httpHeaders[i]);
+                }
+            }
+
+            var callAutomationClientOptions = new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345"))
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+
+            return new CallAutomationClient(AcsEndpoint, KeyCredential, callAutomationClientOptions);
         }
 
         internal CallAutomationClient CreateMockCallAutomationClient(params MockResponse[] mockResponses)

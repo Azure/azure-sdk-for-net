@@ -13,12 +13,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
-        /// <param name="targetPhoneNumberIdentity"></param>
+        /// <param name="targetParticipant"></param>
         /// <param name="callerIdNumber"></param>
         /// /// <param name="sipHeaders"></param>
-        public CallInvite(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber, IDictionary<string, string> sipHeaders = null)
+        public CallInvite(PhoneNumberIdentifier targetParticipant, PhoneNumberIdentifier callerIdNumber, IDictionary<string, string> sipHeaders = null)
         {
-            Target = targetPhoneNumberIdentity;
+            Target = targetParticipant;
             SourceCallerIdNumber = callerIdNumber;
             SipHeaders= sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
         }
@@ -26,22 +26,22 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
-        /// <param name="targetIdentity"></param>
+        /// <param name="targetParticipant"></param>
         /// <param name="voipHeaders"></param>
-        public CallInvite(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        public CallInvite(CommunicationUserIdentifier targetParticipant, IDictionary<string, string> voipHeaders = null)
         {
-            Target = targetIdentity;
+            Target = targetParticipant;
             VoipHeaders= voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
-        /// <param name="targetIdentity"></param>
+        /// <param name="targetParticipant"></param>
         /// <param name="voipHeaders"></param>
-        public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        public CallInvite(MicrosoftTeamsUserIdentifier targetParticipant, IDictionary<string, string> voipHeaders = null)
         {
-            Target = targetIdentity;
+            Target = targetParticipant;
             VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
         }
 
