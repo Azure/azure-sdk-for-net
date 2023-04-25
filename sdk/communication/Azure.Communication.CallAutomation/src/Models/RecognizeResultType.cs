@@ -20,11 +20,11 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CollectTonesResultValue = "CollectTonesResult";
+        private const string DtmfResultValue = "DtmfResultValue";
         private const string ChoiceResultValue = "ChoiceResultValue";
 
         /// <summary> CollectTonesResult. </summary>
-        public static RecognizeResultType CollectTonesResult { get; } = new RecognizeResultType(CollectTonesResultValue);
+        public static RecognizeResultType CollectTonesResult { get; } = new RecognizeResultType(DtmfResultValue);
         /// <summary> ChoiceResult. </summary>
         public static RecognizeResultType ChoiceResult { get; } = new RecognizeResultType(ChoiceResultValue);
         /// <summary> Determines if two <see cref="RecognizeResultType"/> values are the same. </summary>

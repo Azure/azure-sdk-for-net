@@ -49,13 +49,12 @@
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
-    <Compile Include="Shared\ConstantDelayStrategy.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
-    <Compile Include="Shared\ExponentialDelayStrategy.cs" />
+    <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
@@ -65,12 +64,11 @@
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
-    <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
+    <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
-    <Compile Include="Shared\DelayStrategyInternal.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>

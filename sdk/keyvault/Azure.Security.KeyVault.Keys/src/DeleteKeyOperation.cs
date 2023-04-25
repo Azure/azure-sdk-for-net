@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             else
             {
-                _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteKeyOperation), new[]
+                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteKeyOperation), new[]
                 {
                     new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                     new KeyValuePair<string, string>("key", _value.Name),

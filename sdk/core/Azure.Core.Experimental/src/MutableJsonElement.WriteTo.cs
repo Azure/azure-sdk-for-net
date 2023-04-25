@@ -17,6 +17,32 @@ namespace Azure.Core.Json
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
             {
+                switch (change.Value)
+                {
+                    case int i:
+                        writer.WriteNumberValue(i);
+                        return;
+                    case long l:
+                        writer.WriteNumberValue(l);
+                        return;
+                    case double d:
+                        writer.WriteNumberValue(d);
+                        return;
+                    case float f:
+                        writer.WriteNumberValue(f);
+                        return;
+                    case bool b:
+                        writer.WriteBooleanValue(b);
+                        return;
+                    case null:
+                        writer.WriteNullValue();
+                        return;
+                    default:
+                        break;
+
+                        // Note: string is not included to let JsonElement handle escaping.
+                }
+
                 element = change.AsJsonElement();
                 highWaterMark = change.Index;
             }

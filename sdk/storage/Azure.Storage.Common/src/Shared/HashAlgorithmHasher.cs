@@ -4,6 +4,9 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage
 {
@@ -21,7 +24,28 @@ namespace Azure.Storage
             _hashAlgorithm = hashAlgorithm;
         }
 
-        public byte[] ComputeHash(Stream stream) => _hashAlgorithm.ComputeHash(stream);
+        public async Task<byte[]> ComputeHashInternal(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
+
+#if NET5_0_OR_GREATER
+            return async
+                ? await _hashAlgorithm.ComputeHashAsync(stream, cancellationToken)
+                    .ConfigureAwait(false)
+                : _hashAlgorithm.ComputeHash(stream);
+#else
+            await ChecksumCalculatingStream.GetReadStream(stream, AppendHash)
+                .CopyToInternal(Stream.Null, async, cancellationToken)
+                .ConfigureAwait(false);
+
+            var checksum = new byte[HashSizeInBytes];
+            GetFinalHash(checksum);
+            return checksum;
+#endif
+        }
 
         public void AppendHash(ReadOnlySpan<byte> content)
         {

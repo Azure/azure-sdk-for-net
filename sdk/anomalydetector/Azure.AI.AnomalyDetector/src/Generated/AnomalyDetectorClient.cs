@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -72,9 +72,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
-        /// This operation generates a model with an entire series, each point is detected
+        /// This operation generates a model with an entire series. Each point is detected
         /// with the same model. With this method, points before and after a certain point
-        /// are used to determine whether it is an anomaly. The entire detection can give
+        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
         /// user an overall status of the time series.
         /// </remarks>
         public virtual async Task<Response<UnivariateEntireDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
@@ -91,9 +91,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
-        /// This operation generates a model with an entire series, each point is detected
+        /// This operation generates a model with an entire series. Each point is detected
         /// with the same model. With this method, points before and after a certain point
-        /// are used to determine whether it is an anomaly. The entire detection can give
+        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
         /// user an overall status of the time series.
         /// </remarks>
         public virtual Response<UnivariateEntireDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
@@ -160,7 +160,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
-        /// This operation generates a model using the points that you sent into the API,
+        /// This operation generates a model by using the points that you sent in to the API
         /// and based on all data to determine whether the last point is anomalous.
         /// </remarks>
         public virtual async Task<Response<UnivariateLastDetectionResult>> DetectUnivariateLastPointAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
@@ -177,7 +177,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
-        /// This operation generates a model using the points that you sent into the API,
+        /// This operation generates a model by using the points that you sent in to the API
         /// and based on all data to determine whether the last point is anomalous.
         /// </remarks>
         public virtual Response<UnivariateLastDetectionResult> DetectUnivariateLastPoint(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
@@ -243,7 +243,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks> Evaluate change point score of every series point. </remarks>
+        /// <remarks> Evaluate the change point score of every series point. </remarks>
         public virtual async Task<Response<UnivariateChangePointDetectionResult>> DetectUnivariateChangePointAsync(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -257,7 +257,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks> Evaluate change point score of every series point. </remarks>
+        /// <remarks> Evaluate the change point score of every series point. </remarks>
         public virtual Response<UnivariateChangePointDetectionResult> DetectUnivariateChangePoint(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -323,8 +323,8 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// For asynchronous inference, get multivariate anomaly detection result based on
-        /// resultId returned by the BatchDetectAnomaly api.
+        /// For asynchronous inference, get a multivariate anomaly detection result based on the
+        /// resultId value that the BatchDetectAnomaly API returns.
         /// </remarks>
         public virtual async Task<Response<MultivariateDetectionResult>> GetMultivariateBatchDetectionResultValueAsync(string resultId, CancellationToken cancellationToken = default)
         {
@@ -351,8 +351,8 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// For asynchronous inference, get multivariate anomaly detection result based on
-        /// resultId returned by the BatchDetectAnomaly api.
+        /// For asynchronous inference, get a multivariate anomaly detection result based on the
+        /// resultId value that the BatchDetectAnomaly API returns.
         /// </remarks>
         public virtual Response<MultivariateDetectionResult> GetMultivariateBatchDetectionResultValue(string resultId, CancellationToken cancellationToken = default)
         {
@@ -431,12 +431,11 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
         /// Create and train a multivariate anomaly detection model. The request must
-        /// include a source parameter to indicate an externally accessible Azure blob
-        /// storage URI.There are two types of data input: An URI pointed to an Azure blob
-        /// storage folder which contains multiple CSV files, and each CSV file contains
-        /// two columns, timestamp and variable. Another type of input is an URI pointed to
-        /// a CSV file in Azure blob storage, which contains all the variables and a
-        /// timestamp column.
+        /// include a source parameter to indicate an Azure Blob
+        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage folder that contains multiple CSV files, where each CSV file has
+        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+        /// time stamp column.
         /// </remarks>
         public virtual async Task<Response<AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
@@ -453,12 +452,11 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
         /// Create and train a multivariate anomaly detection model. The request must
-        /// include a source parameter to indicate an externally accessible Azure blob
-        /// storage URI.There are two types of data input: An URI pointed to an Azure blob
-        /// storage folder which contains multiple CSV files, and each CSV file contains
-        /// two columns, timestamp and variable. Another type of input is an URI pointed to
-        /// a CSV file in Azure blob storage, which contains all the variables and a
-        /// timestamp column.
+        /// include a source parameter to indicate an Azure Blob
+        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage folder that contains multiple CSV files, where each CSV file has
+        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+        /// time stamp column.
         /// </remarks>
         public virtual Response<AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
@@ -577,7 +575,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Get detailed information of multivariate model, including the training status
+        /// Get detailed information about the multivariate model, including the training status
         /// and variables used in the model.
         /// </remarks>
         public virtual async Task<Response<AnomalyDetectionModel>> GetMultivariateModelValueAsync(string modelId, CancellationToken cancellationToken = default)
@@ -605,7 +603,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Get detailed information of multivariate model, including the training status
+        /// Get detailed information about the multivariate model, including the training status
         /// and variables used in the model.
         /// </remarks>
         public virtual Response<AnomalyDetectionModel> GetMultivariateModelValue(string modelId, CancellationToken cancellationToken = default)
@@ -686,12 +684,12 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Submit multivariate anomaly detection task with the modelId of trained model
-        /// and inference data, the input schema should be the same with the training
-        /// request. The request will complete asynchronously and return a resultId to
-        /// query the detection result.The request should be a source link to indicate an
-        /// externally accessible Azure storage Uri, either pointed to an Azure blob
-        /// storage folder, or pointed to a CSV file in Azure blob storage.
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The input schema should be the same with the training
+        /// request. The request will finish asynchronously and return a resultId value to
+        /// query the detection result. The request should be a source link to indicate an
+        /// externally accessible Azure Storage URI that either points to an Azure Blob
+        /// Storage folder or points to a CSV file in Azure Blob Storage.
         /// </remarks>
         public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -710,12 +708,12 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Submit multivariate anomaly detection task with the modelId of trained model
-        /// and inference data, the input schema should be the same with the training
-        /// request. The request will complete asynchronously and return a resultId to
-        /// query the detection result.The request should be a source link to indicate an
-        /// externally accessible Azure storage Uri, either pointed to an Azure blob
-        /// storage folder, or pointed to a CSV file in Azure blob storage.
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The input schema should be the same with the training
+        /// request. The request will finish asynchronously and return a resultId value to
+        /// query the detection result. The request should be a source link to indicate an
+        /// externally accessible Azure Storage URI that either points to an Azure Blob
+        /// Storage folder or points to a CSV file in Azure Blob Storage.
         /// </remarks>
         public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -785,14 +783,14 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> Request of last detection. </param>
+        /// <param name="options"> Request of the last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Submit multivariate anomaly detection task with the modelId of trained model
-        /// and inference data, and the inference data should be put into request body in a
-        /// JSON format. The request will complete synchronously and return the detection
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The inference data should be put into the request body in
+        /// JSON format. The request will finish synchronously and return the detection
         /// immediately in the response body.
         /// </remarks>
         public virtual async Task<Response<MultivariateLastDetectionResult>> DetectMultivariateLastAnomalyAsync(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
@@ -807,14 +805,14 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> Request of last detection. </param>
+        /// <param name="options"> Request of the last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Submit multivariate anomaly detection task with the modelId of trained model
-        /// and inference data, and the inference data should be put into request body in a
-        /// JSON format. The request will complete synchronously and return the detection
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The inference data should be put into the request body in
+        /// JSON format. The request will finish synchronously and return the detection
         /// immediately in the response body.
         /// </remarks>
         public virtual Response<MultivariateLastDetectionResult> DetectMultivariateLastAnomaly(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
@@ -884,8 +882,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List models of a resource. </remarks>
         public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
@@ -897,8 +895,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List models of a resource. </remarks>
         public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
@@ -910,8 +908,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -924,8 +922,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>

@@ -61,21 +61,6 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        [Ignore("Needs further investigation.")]
-        public void CanConvertToEnumerable()
-        {
-            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
-
-            IEnumerable enumerable = (IEnumerable)jsonData;
-
-            int expected = 0;
-            foreach (int i in enumerable)
-            {
-                Assert.AreEqual(expected++, i);
-            }
-        }
-
-        [Test]
         public void CanForEachOverIntArray()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
@@ -147,13 +132,13 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """);
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 foreach (dynamic value in json.Foo)
                 { }
             });
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 foreach (dynamic value in json.Bar)
                 { }
