@@ -105,6 +105,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.True(tableData.TryGetValue("Connection", out var connection));
             Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
             Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
+
+            // Check values
+            Assert.AreEqual("tableName", tableName.ToString());
+            Assert.AreEqual("partitionKey", partitionKey.ToString());
+            Assert.AreEqual("rowKey", rowKey.ToString());
+            Assert.AreEqual("0", take.ToString());
+            Assert.Null(connection);
+            Assert.Null(filter);
         }
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
@@ -202,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public ParameterBindingData Result { get; set; }
 
             public void Run(
-                [Table("test")] ParameterBindingData blobData)
+                [Table("tableName", "partitionKey", "rowKey")] ParameterBindingData blobData)
             {
                 this.Result = blobData;
             }
