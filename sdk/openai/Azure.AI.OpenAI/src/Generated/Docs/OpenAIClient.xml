@@ -184,6 +184,13 @@ Response response = await client.GetCompletionsAsync("<deploymentId>", RequestCo
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -304,14 +311,14 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
       text: string, # Required. The generated text for a given completions prompt.
       index: number, # Required. The ordered index associated with this completions choice.
       logprobs: {
-        tokens: [string], # Optional. The textual forms of tokens evaluated in this probability model.
-        token_logprobs: [number], # Optional. A collection of log probability values for the tokens in this completions data.
-        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. A mapping of tokens to maximum log probability values in this completions data.
-        text_offset: [number], # Optional. The text offsets associated with tokens in this completions data.
-      }, # Optional. The log probabilities model for tokens associated with this completions choice.
+        tokens: [string], # Required. The textual forms of tokens evaluated in this probability model.
+        token_logprobs: [number], # Required. A collection of log probability values for the tokens in this completions data.
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Required. A mapping of tokens to maximum log probability values in this completions data.
+        text_offset: [number], # Required. The text offsets associated with tokens in this completions data.
+      }, # Required. The log probabilities model for tokens associated with this completions choice.
       finish_reason: &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. Reason for finishing
     }
-  ], # Optional. The collection of completions choices associated with this completions response.
+  ], # Required. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
 Token limits and other settings may limit the number of choices generated.
   usage: {
@@ -343,6 +350,13 @@ Response response = client.GetCompletions("<deploymentId>", RequestContent.Creat
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -463,14 +477,14 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
       text: string, # Required. The generated text for a given completions prompt.
       index: number, # Required. The ordered index associated with this completions choice.
       logprobs: {
-        tokens: [string], # Optional. The textual forms of tokens evaluated in this probability model.
-        token_logprobs: [number], # Optional. A collection of log probability values for the tokens in this completions data.
-        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. A mapping of tokens to maximum log probability values in this completions data.
-        text_offset: [number], # Optional. The text offsets associated with tokens in this completions data.
-      }, # Optional. The log probabilities model for tokens associated with this completions choice.
+        tokens: [string], # Required. The textual forms of tokens evaluated in this probability model.
+        token_logprobs: [number], # Required. A collection of log probability values for the tokens in this completions data.
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Required. A mapping of tokens to maximum log probability values in this completions data.
+        text_offset: [number], # Required. The text offsets associated with tokens in this completions data.
+      }, # Required. The log probabilities model for tokens associated with this completions choice.
       finish_reason: &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. Reason for finishing
     }
-  ], # Optional. The collection of completions choices associated with this completions response.
+  ], # Required. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
 Token limits and other settings may limit the number of choices generated.
   usage: {
@@ -504,6 +518,8 @@ Response response = await client.GetChatCompletionsAsync("<deploymentId>", Reque
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -626,7 +642,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
       finish_reason: &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
       delta: ChatMessage, # Optional. The delta message content for a streaming response.
     }
-  ], # Optional. The collection of completions choices associated with this completions response.
+  ], # Required. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
 Token limits and other settings may limit the number of choices generated.
   usage: {
@@ -660,6 +676,8 @@ Response response = client.GetChatCompletions("<deploymentId>", RequestContent.C
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -782,7 +800,7 @@ represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1
       finish_reason: &quot;stopped&quot; | &quot;tokenLimitReached&quot; | &quot;contentFiltered&quot;, # Required. The reason that this chat completions choice completed its generated.
       delta: ChatMessage, # Optional. The delta message content for a streaming response.
     }
-  ], # Optional. The collection of completions choices associated with this completions response.
+  ], # Required. The collection of completions choices associated with this completions response.
 Generally, `n` choices are generated per provided prompt with a default value of 1.
 Token limits and other settings may limit the number of choices generated.
   usage: {

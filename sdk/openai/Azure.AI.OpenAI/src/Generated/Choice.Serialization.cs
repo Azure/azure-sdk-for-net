@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<CompletionsLogProbabilityModel> logprobs = default;
+            CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,10 +37,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                     continue;
                 }

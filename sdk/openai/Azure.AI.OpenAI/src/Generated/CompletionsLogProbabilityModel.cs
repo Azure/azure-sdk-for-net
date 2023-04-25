@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -14,12 +16,22 @@ namespace Azure.AI.OpenAI
     public partial class CompletionsLogProbabilityModel
     {
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
-        internal CompletionsLogProbabilityModel()
+        /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
+        /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
+        /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
+        /// <param name="textOffsets"> The text offsets associated with tokens in this completions data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokens"/>, <paramref name="tokenLogProbabilities"/>, <paramref name="topLogProbabilities"/> or <paramref name="textOffsets"/> is null. </exception>
+        internal CompletionsLogProbabilityModel(IEnumerable<string> tokens, IEnumerable<float?> tokenLogProbabilities, IEnumerable<IDictionary<string, float?>> topLogProbabilities, IEnumerable<int> textOffsets)
         {
-            Tokens = new ChangeTrackingList<string>();
-            TokenLogProbabilities = new ChangeTrackingList<float?>();
-            TopLogProbabilities = new ChangeTrackingList<IDictionary<string, float?>>();
-            TextOffsets = new ChangeTrackingList<int>();
+            Argument.AssertNotNull(tokens, nameof(tokens));
+            Argument.AssertNotNull(tokenLogProbabilities, nameof(tokenLogProbabilities));
+            Argument.AssertNotNull(topLogProbabilities, nameof(topLogProbabilities));
+            Argument.AssertNotNull(textOffsets, nameof(textOffsets));
+
+            Tokens = tokens.ToList();
+            TokenLogProbabilities = tokenLogProbabilities.ToList();
+            TopLogProbabilities = topLogProbabilities.ToList();
+            TextOffsets = textOffsets.ToList();
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>

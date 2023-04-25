@@ -20,18 +20,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
-            Optional<IReadOnlyList<IDictionary<string, float?>>> topLogprobs = default;
-            Optional<IReadOnlyList<int>> textOffset = default;
+            IReadOnlyList<string> tokens = default;
+            IReadOnlyList<float?> tokenLogprobs = default;
+            IReadOnlyList<IDictionary<string, float?>> topLogprobs = default;
+            IReadOnlyList<int> textOffset = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,10 +38,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("token_logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -63,10 +55,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("top_logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IDictionary<string, float?>> array = new List<IDictionary<string, float?>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -96,10 +84,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("text_offset"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -109,7 +93,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new CompletionsLogProbabilityModel(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
+            return new CompletionsLogProbabilityModel(tokens, tokenLogprobs, topLogprobs, textOffset);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

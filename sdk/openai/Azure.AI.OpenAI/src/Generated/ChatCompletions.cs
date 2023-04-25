@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -24,16 +25,22 @@ namespace Azure.AI.OpenAI
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
+        /// <param name="choices">
+        /// The collection of completions choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="usage"/> is null. </exception>
-        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, CompletionsUsage usage)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
+        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(choices, nameof(choices));
             Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
-            Choices = new ChangeTrackingList<ChatChoice>();
+            Choices = choices.ToList();
             Usage = usage;
         }
 
