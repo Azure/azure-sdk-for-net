@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class VirtualMachineConfiguration : IUtf8JsonSerializable
+    public partial class SapVirtualMachineConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element)
+        internal static SapVirtualMachineConfiguration DeserializeSapVirtualMachineConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string vmSize = default;
-            ImageReference imageReference = default;
-            OSProfile osProfile = default;
+            SapImageReference imageReference = default;
+            SapOSProfile osProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
                 {
-                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineConfiguration(vmSize, imageReference, osProfile);
+            return new SapVirtualMachineConfiguration(vmSize, imageReference, osProfile);
         }
     }
 }

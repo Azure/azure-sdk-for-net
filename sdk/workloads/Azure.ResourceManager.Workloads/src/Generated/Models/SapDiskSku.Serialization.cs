@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class StorageConfiguration : IUtf8JsonSerializable
+    internal partial class SapDiskSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransportFileShareConfiguration))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("transportFileShareConfiguration"u8);
-                writer.WriteObjectValue(TransportFileShareConfiguration);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static StorageConfiguration DeserializeStorageConfiguration(JsonElement element)
+        internal static SapDiskSku DeserializeSapDiskSku(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FileShareConfiguration> transportFileShareConfiguration = default;
+            Optional<DiskDetailsDiskSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transportFileShareConfiguration"u8))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value);
+                    name = new DiskDetailsDiskSkuName(property.Value.GetString());
                     continue;
                 }
             }
-            return new StorageConfiguration(transportFileShareConfiguration.Value);
+            return new SapDiskSku(Optional.ToNullable(name));
         }
     }
 }

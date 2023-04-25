@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class SapOSProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static OSProfile DeserializeOSProfile(JsonElement element)
+        internal static SapOSProfile DeserializeSapOSProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
-            Optional<OSConfiguration> osConfiguration = default;
+            Optional<SapOSConfiguration> osConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osConfiguration = OSConfiguration.DeserializeOSConfiguration(property.Value);
+                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value);
                     continue;
                 }
             }
-            return new OSProfile(adminUsername.Value, adminPassword.Value, osConfiguration.Value);
+            return new SapOSProfile(adminUsername.Value, adminPassword.Value, osConfiguration.Value);
         }
     }
 }

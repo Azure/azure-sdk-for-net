@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SoftwareConfiguration : IUtf8JsonSerializable
+    public partial class SapSoftwareConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static SoftwareConfiguration DeserializeSoftwareConfiguration(JsonElement element)
+        internal static SapSoftwareConfiguration DeserializeSapSoftwareConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

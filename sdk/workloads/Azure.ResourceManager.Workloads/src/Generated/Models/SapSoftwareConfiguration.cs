@@ -9,19 +9,19 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
     /// The SAP Software configuration Input.
-    /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
     /// </summary>
-    public abstract partial class SoftwareConfiguration
+    public abstract partial class SapSoftwareConfiguration
     {
-        /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>
-        protected SoftwareConfiguration()
+        /// <summary> Initializes a new instance of SapSoftwareConfiguration. </summary>
+        protected SapSoftwareConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of SapSoftwareConfiguration. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
-        internal SoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType)
+        internal SapSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType)
         {
             SoftwareInstallationType = softwareInstallationType;
         }

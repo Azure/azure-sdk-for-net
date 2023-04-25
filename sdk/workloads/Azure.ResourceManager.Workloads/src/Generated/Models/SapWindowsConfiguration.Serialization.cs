@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class WindowsConfiguration : IUtf8JsonSerializable
+    public partial class SapWindowsConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
+        internal static SapWindowsConfiguration DeserializeSapWindowsConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OSType osType = default;
+            SapOSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = new OSType(property.Value.GetString());
+                    osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
             }
-            return new WindowsConfiguration(osType);
+            return new SapWindowsConfiguration(osType);
         }
     }
 }

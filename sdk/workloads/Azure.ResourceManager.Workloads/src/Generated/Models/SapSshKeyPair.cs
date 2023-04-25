@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The SSH Key-pair used to authenticate with the VM. The key needs to be at least 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure](https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </summary>
-    public partial class SshKeyPair
+    public partial class SapSshKeyPair
     {
-        /// <summary> Initializes a new instance of SshKeyPair. </summary>
-        public SshKeyPair()
+        /// <summary> Initializes a new instance of SapSshKeyPair. </summary>
+        public SapSshKeyPair()
         {
         }
 
-        /// <summary> Initializes a new instance of SshKeyPair. </summary>
+        /// <summary> Initializes a new instance of SapSshKeyPair. </summary>
         /// <param name="publicKey"> SSH public key. </param>
         /// <param name="privateKey"> SSH private key. </param>
-        internal SshKeyPair(string publicKey, string privateKey)
+        internal SapSshKeyPair(string publicKey, string privateKey)
         {
             PublicKey = publicKey;
             PrivateKey = privateKey;

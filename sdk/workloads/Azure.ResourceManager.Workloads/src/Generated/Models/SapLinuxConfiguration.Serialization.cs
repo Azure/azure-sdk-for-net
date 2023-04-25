@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class LinuxConfiguration : IUtf8JsonSerializable
+    public partial class SapLinuxConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
+        internal static SapLinuxConfiguration DeserializeSapLinuxConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> disablePasswordAuthentication = default;
-            Optional<SshConfiguration> ssh = default;
-            Optional<SshKeyPair> sshKeyPair = default;
-            OSType osType = default;
+            Optional<SapSshConfiguration> ssh = default;
+            Optional<SapSshKeyPair> sshKeyPair = default;
+            SapOSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
+                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sshKeyPair"u8))
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sshKeyPair = SshKeyPair.DeserializeSshKeyPair(property.Value);
+                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = new OSType(property.Value.GetString());
+                    osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
             }
-            return new LinuxConfiguration(osType, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
+            return new SapLinuxConfiguration(osType, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
         }
     }
 }

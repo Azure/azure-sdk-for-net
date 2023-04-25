@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
-    public partial class ImageReference
+    public partial class SapImageReference
     {
-        /// <summary> Initializes a new instance of ImageReference. </summary>
-        public ImageReference()
+        /// <summary> Initializes a new instance of SapImageReference. </summary>
+        public SapImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of SapImageReference. </summary>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
         /// <param name="sku"> The image SKU. </param>
         /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or &apos;latest&apos;. Major, Minor, and Build are decimal numbers. Specify &apos;latest&apos; to use the latest version of an image available at deploy time. Even if you use &apos;latest&apos;, the VM image will not automatically update after deploy time even if a new version becomes available. </param>
-        internal ImageReference(string publisher, string offer, string sku, string version)
+        internal SapImageReference(string publisher, string offer, string sku, string version)
         {
             Publisher = publisher;
             Offer = offer;

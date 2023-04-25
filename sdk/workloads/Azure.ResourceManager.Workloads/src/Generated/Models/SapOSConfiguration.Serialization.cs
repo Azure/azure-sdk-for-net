@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class OSConfiguration : IUtf8JsonSerializable
+    public partial class SapOSConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static OSConfiguration DeserializeOSConfiguration(JsonElement element)
+        internal static SapOSConfiguration DeserializeSapOSConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Linux": return LinuxConfiguration.DeserializeLinuxConfiguration(element);
-                    case "Windows": return WindowsConfiguration.DeserializeWindowsConfiguration(element);
+                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element);
+                    case "Windows": return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element);
                 }
             }
             return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element);
