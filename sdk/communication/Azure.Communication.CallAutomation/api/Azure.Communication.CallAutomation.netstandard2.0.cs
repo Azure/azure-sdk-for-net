@@ -833,6 +833,7 @@ namespace Azure.Communication.CallAutomation
         public RecognizeResultType(string value) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeResultType ChoiceResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeResultType CollectTonesResult { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeResultType SpeechResult { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.RecognizeResultType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
