@@ -120,6 +120,9 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
+#mgmt-debug:    
+#    show-serialized-names: true
+
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
   SubResource: ComputeWriteableSubResourceData
@@ -258,6 +261,7 @@ rename-mapping:
   ExpandTypeForListVMs: GetVirtualMachineExpandType
   ExpandTypesForListVm: GetVirtualMachineExpandType
   SecurityPostureReference: ComputeSecurityPostureReference
+  RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
