@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceLocation"> Location of datasource. </param>
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
-        /// <param name="resourceUri"> Uri of the resource. </param>
-        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, Uri resourceUri)
+        /// <param name="resourceUriString"> Uri of the resource. </param>
+        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceLocation = resourceLocation;
             ResourceName = resourceName;
             ResourceType = resourceType;
-            ResourceUri = resourceUri;
+            ResourceUriString = resourceUriString;
         }
 
         /// <summary> DatasourceType of the resource. </summary>
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Resource Type of Datasource. </summary>
         public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
-        public Uri ResourceUri { get; set; }
+        public string ResourceUriString { get; set; }
     }
 }
