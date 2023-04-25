@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
 
         [RecordedTest]
         [Ignore("Invalid URI: The format of the URI could not be determined")]
-        public async Task VaultApiTests()
+        public async Task InstanceApiTests()
         {
             //1.CreateOrUpdate
             var collection = await GetInstanceCollection();

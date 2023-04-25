@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
                     ObjectType = "Datasource",
                     ResourceName = "testingDisk",
                     ResourceType = "Microsoft.Compute/disks",
-                    ResourceUri = new Uri("/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk"),
+                    ResourceUriString = "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk",
                     ResourceLocation = AzureLocation.SoutheastAsia,
                     DataSourceType = "Microsoft.Compute/disks"
                 }, new BackupInstancePolicyInfo(new ResourceIdentifier("/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2"))
