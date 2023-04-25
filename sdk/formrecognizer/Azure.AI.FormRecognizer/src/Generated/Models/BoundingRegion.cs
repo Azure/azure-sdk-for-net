@@ -15,5 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Bounding polygon on a specific page of the input. </summary>
     public readonly partial struct BoundingRegion
     {
+        /// <summary> Bounding polygon on the page, or the entire page if not specified. </summary>
+        public IReadOnlyList<float> Polygon { get; }
     }
 }

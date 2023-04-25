@@ -14,6 +14,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the content and location of a field value. </summary>
     public partial class DocumentField
     {
+        /// <summary> String value. </summary>
+        public string ValueString { get; }
+        /// <summary> Date value in YYYY-MM-DD format (ISO 8601). </summary>
+        public DateTimeOffset? ValueDate { get; }
+        /// <summary> Time value in hh:mm:ss format (ISO 8601). </summary>
+        public TimeSpan? ValueTime { get; }
+        /// <summary> Phone number value in E.164 format (ex. +19876543210). </summary>
+        public string ValuePhoneNumber { get; }
+        /// <summary> Integer value. </summary>
+        public long? ValueInteger { get; }
+        /// <summary> Selection mark value. </summary>
+        public V3SelectionMarkState? ValueSelectionMark { get; }
+        /// <summary> Presence of signature. </summary>
+        public DocumentSignatureType? ValueSignature { get; }
+        /// <summary> 3-letter country code value (ISO 3166-1 alpha-3). </summary>
+        public string ValueCountryRegion { get; }
+        /// <summary> Array of field values. </summary>
+        public IReadOnlyList<DocumentField> ValueArray { get; }
+        /// <summary> Dictionary of named field values. </summary>
+        public IReadOnlyDictionary<string, DocumentField> ValueObject { get; }
+        /// <summary> Currency value. </summary>
+        public CurrencyValue? ValueCurrency { get; }
+        /// <summary> Address value. </summary>
+        public AddressValue ValueAddress { get; }
+        /// <summary> Boolean value. </summary>
+        public bool? ValueBoolean { get; }
         /// <summary> Field content. </summary>
         public string Content { get; }
         /// <summary> Bounding regions covering the field. </summary>
