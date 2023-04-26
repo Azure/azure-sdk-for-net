@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string scope, string expand, string filter, string skipToken, int? top, Metrictype? metric)
+        internal HttpMessage CreateListRequest(string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<UsageDetailsListResult>> ListAsync(string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UsageDetailsListResult>> ListAsync(string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<UsageDetailsListResult> List(string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public Response<UsageDetailsListResult> List(string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string expand, string filter, string skipToken, int? top, Metrictype? metric)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<UsageDetailsListResult>> ListNextPageAsync(string nextLink, string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UsageDetailsListResult>> ListNextPageAsync(string nextLink, string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<UsageDetailsListResult> ListNextPage(string nextLink, string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public Response<UsageDetailsListResult> ListNextPage(string nextLink, string scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));

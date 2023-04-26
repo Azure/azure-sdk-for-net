@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Specifies the kind of usage details. </summary>
+    /// <summary>
+    /// Specifies the kind of usage details.
+    /// Serialized Name: UsageDetailsKind
+    /// </summary>
     internal readonly partial struct UsageDetailsKind : IEquatable<UsageDetailsKind>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary> legacy. </summary>
+        /// <summary>
+        /// legacy
+        /// Serialized Name: UsageDetailsKind.legacy
+        /// </summary>
         public static UsageDetailsKind Legacy { get; } = new UsageDetailsKind(LegacyValue);
-        /// <summary> modern. </summary>
+        /// <summary>
+        /// modern
+        /// Serialized Name: UsageDetailsKind.modern
+        /// </summary>
         public static UsageDetailsKind Modern { get; } = new UsageDetailsKind(ModernValue);
         /// <summary> Determines if two <see cref="UsageDetailsKind"/> values are the same. </summary>
         public static bool operator ==(UsageDetailsKind left, UsageDetailsKind right) => left.Equals(right);

@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<MonitorResponse>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorResponse>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<MonitorResponse> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
+        public Response<MonitorResponse> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 

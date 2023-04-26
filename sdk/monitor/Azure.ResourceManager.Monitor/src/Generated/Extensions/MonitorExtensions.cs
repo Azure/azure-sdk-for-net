@@ -608,9 +608,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMetricDefinitionsAsync(metricnamespace, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitionsAsync(metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -630,9 +630,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<MetricDefinition> GetMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMetricDefinitions(metricnamespace, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitions(metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<MonitorMetric> GetMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMetricsOptions();
+            options ??= new ArmResourceGetMonitorMetricsOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMetricsAsync(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -676,11 +676,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<MonitorMetric> GetMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorMetric> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMetricsOptions();
+            options ??= new ArmResourceGetMonitorMetricsOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMetrics(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetrics(options, cancellationToken);
         }
 
         /// <summary>
@@ -700,11 +700,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<SingleMetricBaseline> GetBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetBaselinesOptions();
+            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetBaselinesAsync(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselinesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -724,11 +724,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<SingleMetricBaseline> GetBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetBaselinesOptions();
+            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetBaselines(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselines(options, cancellationToken);
         }
 
         /// <summary>
@@ -748,9 +748,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMetricNamespacesAsync(startTime, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespacesAsync(startTime, cancellationToken);
         }
 
         /// <summary>
@@ -770,9 +770,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<MetricNamespace> GetMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMetricNamespaces(startTime, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespaces(startTime, cancellationToken);
         }
 
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>

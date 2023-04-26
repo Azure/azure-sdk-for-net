@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="rank"> The rank of the sensitivity label. </param>
         /// <param name="order"> The order of the sensitivity label. </param>
         /// <param name="enabled"> Indicates whether the label is enabled or not. </param>
-        internal SensitivityLabel(string displayName, string description, Rank? rank, int? order, bool? enabled)
+        internal SensitivityLabel(string displayName, string description, SensitivityLabelRank? rank, int? order, bool? enabled)
         {
             DisplayName = displayName;
             Description = description;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The description of the sensitivity label. </summary>
         public string Description { get; set; }
         /// <summary> The rank of the sensitivity label. </summary>
-        public Rank? Rank { get; set; }
+        public SensitivityLabelRank? Rank { get; set; }
         /// <summary> The order of the sensitivity label. </summary>
         public int? Order { get; set; }
         /// <summary> Indicates whether the label is enabled or not. </summary>

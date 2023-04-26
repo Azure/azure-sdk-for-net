@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="scope"> The scope associated with tags operations. This includes &apos;/subscriptions/{subscriptionId}/&apos; for subscription scope, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope and &apos;/providers/Microsoft.Management/managementGroups/{managementGroupId}&apos; for Management Group scope.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<TagsResult>> GetAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionTagsResult>> GetAsync(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        TagsResult value = default;
+                        ConsumptionTagsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsResult.DeserializeTagsResult(document.RootElement);
+                        value = ConsumptionTagsResult.DeserializeConsumptionTagsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((TagsResult)null, message.Response);
+                    return Response.FromValue((ConsumptionTagsResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="scope"> The scope associated with tags operations. This includes &apos;/subscriptions/{subscriptionId}/&apos; for subscription scope, &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope and &apos;/providers/Microsoft.Management/managementGroups/{managementGroupId}&apos; for Management Group scope.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<TagsResult> Get(string scope, CancellationToken cancellationToken = default)
+        public Response<ConsumptionTagsResult> Get(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        TagsResult value = default;
+                        ConsumptionTagsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsResult.DeserializeTagsResult(document.RootElement);
+                        value = ConsumptionTagsResult.DeserializeConsumptionTagsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((TagsResult)null, message.Response);
+                    return Response.FromValue((ConsumptionTagsResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
