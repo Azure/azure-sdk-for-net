@@ -5,14 +5,21 @@
 
 #nullable disable
 
+using System.Threading;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServices.Models;
 
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _operationsWithScopeClientDiagnostics;
+        private OperationsWithScopeRestOperations _operationsWithScopeRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
         {
@@ -24,6 +31,9 @@ namespace Azure.ResourceManager.ManagedServices
         internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics OperationsWithScopeClientDiagnostics => _operationsWithScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OperationsWithScopeRestOperations OperationsWithScopeRestClient => _operationsWithScopeRestClient ??= new OperationsWithScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,6 +60,48 @@ namespace Azure.ResourceManager.ManagedServices
         public virtual ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations()
         {
             return GetCachedClient(Client => new ManagedServicesMarketplaceRegistrationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a list of the operations with the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsWithScope_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.Operation> GetOperationsWithScopesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsWithScopeRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Models.Operation.DeserializeOperation, OperationsWithScopeClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetOperationsWithScopes", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of the operations with the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsWithScope_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.Operation> GetOperationsWithScopes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsWithScopeRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Models.Operation.DeserializeOperation, OperationsWithScopeClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetOperationsWithScopes", "value", null, cancellationToken);
         }
     }
 }

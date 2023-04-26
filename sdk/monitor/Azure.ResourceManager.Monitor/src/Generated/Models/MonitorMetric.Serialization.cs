@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class MonitorMetric
+    public partial class MonitorMetric
     {
         internal static MonitorMetric DeserializeMonitorMetric(JsonElement element)
         {
