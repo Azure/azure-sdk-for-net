@@ -24,11 +24,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Indicates that Delete is permitted.
         /// </summary>
-        Delete = 4,
-
-        /// <summary>
-        /// Indicates that all access rights are set.
-        /// </summary>
-        All = ~0
+        Delete = 4
     }
 }
