@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<UsageDetail> GetUsageDetailsAsync(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetUsageDetailsAsync(expand, filter, skipToken, top, metric, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionUsageDetailsAsync(expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<UsageDetail> GetUsageDetails(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetUsageDetails(expand, filter, skipToken, top, metric, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionUsageDetails(expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<Marketplace> GetMarketplacesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMarketplacesAsync(filter, top, skipToken, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionMarketPlacesAsync(filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<Marketplace> GetMarketplaces(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMarketplaces(filter, top, skipToken, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionMarketPlaces(filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<TagsResult>> GetTagAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionTagsResult>> GetConsumptionTagsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetTagAsync(cancellationToken).ConfigureAwait(false);
+            return await GetArmResourceExtensionClient(client, scope).GetConsumptionTagsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<TagsResult> GetTag(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionTagsResult> GetConsumptionTags(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetTag(cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionTags(cancellationToken);
         }
 
         /// <summary>
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<ChargeSummary> GetChargesAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionChargeSummary> GetConsumptionChargesAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetChargesAsync(startDate, endDate, filter, apply, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionChargesAsync(startDate, endDate, filter, apply, cancellationToken);
         }
 
         /// <summary>
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<ChargeSummary> GetCharges(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionChargeSummary> GetConsumptionCharges(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCharges(startDate, endDate, filter, apply, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionCharges(startDate, endDate, filter, apply, cancellationToken);
         }
 
         /// <summary>
@@ -523,11 +523,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static AsyncPageable<ConsumptionReservationSummary> GetReservationsSummariesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetArmResourceExtensionClient(client, scope).GetReservationsSummariesAsync(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsSummariesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static Pageable<ConsumptionReservationSummary> GetReservationsSummaries(this ArmClient client, ResourceIdentifier scope, ArmResourceGetReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionReservationSummary> GetConsumptionReservationsSummaries(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetArmResourceExtensionClient(client, scope).GetReservationsSummaries(options, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsSummaries(options, cancellationToken);
         }
 
         /// <summary>
@@ -576,9 +576,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<ConsumptionReservationDetail> GetReservationsDetailsAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetReservationsDetailsAsync(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsDetailsAsync(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
         }
 
         /// <summary>
@@ -602,9 +602,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<ConsumptionReservationDetail> GetReservationsDetails(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionReservationDetail> GetConsumptionReservationsDetails(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetReservationsDetails(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsDetails(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
         }
 
         /// <summary>
@@ -624,9 +624,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Single&apos;; properties/resourceType with allowed values [&apos;VirtualMachines&apos;, &apos;SQLDatabases&apos;, &apos;PostgreSQL&apos;, &apos;ManagedDisk&apos;, &apos;MySQL&apos;, &apos;RedHat&apos;, &apos;MariaDB&apos;, &apos;RedisCache&apos;, &apos;CosmosDB&apos;, &apos;SqlDataWarehouse&apos;, &apos;SUSELinux&apos;, &apos;AppService&apos;, &apos;BlockBlob&apos;, &apos;AzureDataExplorer&apos;, &apos;VMwareCloudSimple&apos;] and default value &apos;VirtualMachines&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last7Days&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<ReservationRecommendation> GetReservationRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetReservationRecommendationsAsync(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -646,9 +646,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Single&apos;; properties/resourceType with allowed values [&apos;VirtualMachines&apos;, &apos;SQLDatabases&apos;, &apos;PostgreSQL&apos;, &apos;ManagedDisk&apos;, &apos;MySQL&apos;, &apos;RedHat&apos;, &apos;MariaDB&apos;, &apos;RedisCache&apos;, &apos;CosmosDB&apos;, &apos;SqlDataWarehouse&apos;, &apos;SUSELinux&apos;, &apos;AppService&apos;, &apos;BlockBlob&apos;, &apos;AzureDataExplorer&apos;, &apos;VMwareCloudSimple&apos;] and default value &apos;VirtualMachines&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last7Days&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<ReservationRecommendation> GetReservationRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetReservationRecommendations(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendations(filter, cancellationToken);
         }
 
         /// <summary>
@@ -666,19 +666,19 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        public static async Task<Response<ReservationRecommendationDetailsModel>> GetReservationRecommendationDetailAsync(this ArmClient client, ResourceIdentifier scope, Scope scope, string region, Term term, LookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(region, nameof(region));
             Argument.AssertNotNull(product, nameof(product));
 
-            return await GetArmResourceExtensionClient(client, scope).GetReservationRecommendationDetailAsync(scope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
+            return await GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationDetailsAsync(reservationScope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -696,19 +696,19 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        public static Response<ReservationRecommendationDetailsModel> GetReservationRecommendationDetail(this ArmClient client, ResourceIdentifier scope, Scope scope, string region, Term term, LookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(region, nameof(region));
             Argument.AssertNotNull(product, nameof(product));
 
-            return GetArmResourceExtensionClient(client, scope).GetReservationRecommendationDetail(scope, region, term, lookBackPeriod, product, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationDetails(reservationScope, region, term, lookBackPeriod, product, cancellationToken);
         }
 
         /// <summary>

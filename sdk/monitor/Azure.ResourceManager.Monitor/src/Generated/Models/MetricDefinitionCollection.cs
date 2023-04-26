@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricDefinitionCollection(IEnumerable<MetricDefinition> value)
+        internal MetricDefinitionCollection(IEnumerable<MonitorMetricDefinition> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        internal MetricDefinitionCollection(IReadOnlyList<MetricDefinition> value)
+        internal MetricDefinitionCollection(IReadOnlyList<MonitorMetricDefinition> value)
         {
             Value = value;
         }
 
         /// <summary> the values for the metric definitions. </summary>
-        public IReadOnlyList<MetricDefinition> Value { get; }
+        public IReadOnlyList<MonitorMetricDefinition> Value { get; }
     }
 }

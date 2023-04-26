@@ -10,31 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing charge summary. </summary>
+    /// <summary>
+    /// Result of listing charge summary.
+    /// Serialized Name: ChargesListResult
+    /// </summary>
     internal partial class ChargesListResult
     {
         /// <summary> Initializes a new instance of ChargesListResult. </summary>
         internal ChargesListResult()
         {
-            Value = new ChangeTrackingList<ChargeSummary>();
+            Value = new ChangeTrackingList<ConsumptionChargeSummary>();
         }
 
         /// <summary> Initializes a new instance of ChargesListResult. </summary>
         /// <param name="value">
         /// The list of charge summary
-        /// Please note <see cref="ChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LegacyChargeSummary"/> and <see cref="ModernChargeSummary"/>.
+        /// Serialized Name: ChargesListResult.value
+        /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
         /// </param>
-        internal ChargesListResult(IReadOnlyList<ChargeSummary> value)
+        internal ChargesListResult(IReadOnlyList<ConsumptionChargeSummary> value)
         {
             Value = value;
         }
 
         /// <summary>
         /// The list of charge summary
-        /// Please note <see cref="ChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LegacyChargeSummary"/> and <see cref="ModernChargeSummary"/>.
+        /// Serialized Name: ChargesListResult.value
+        /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
         /// </summary>
-        public IReadOnlyList<ChargeSummary> Value { get; }
+        public IReadOnlyList<ConsumptionChargeSummary> Value { get; }
     }
 }

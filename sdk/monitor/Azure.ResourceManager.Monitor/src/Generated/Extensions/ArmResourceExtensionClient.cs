@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(string metricnamespace = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricDefinition.DeserializeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricDefinitions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricDefinition> GetMetricDefinitions(string metricnamespace = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricDefinition.DeserializeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricDefinitions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorMetric> GetMetricsAsync(ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetrics", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorMetric> GetMetrics(ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MonitorMetric> GetMonitorMetrics(ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetrics", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SingleMetricBaseline> GetBaselinesAsync(ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SingleMetricBaseline.DeserializeSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBaselines", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SingleMetricBaseline> GetBaselines(ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SingleMetricBaseline.DeserializeSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBaselines", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricNamespace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(string startTime = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(string startTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricNamespace.DeserializeMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricNamespace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricNamespace> GetMetricNamespaces(string startTime = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(string startTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricNamespace.DeserializeMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
     }
 }

@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IReadOnlyList<MetricNamespace> value = default;
+            IReadOnlyList<MonitorMetricNamespace> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MetricNamespace> array = new List<MetricNamespace>();
+                    List<MonitorMetricNamespace> array = new List<MonitorMetricNamespace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricNamespace.DeserializeMetricNamespace(item));
+                        array.Add(MonitorMetricNamespace.DeserializeMonitorMetricNamespace(item));
                     }
                     value = array;
                     continue;

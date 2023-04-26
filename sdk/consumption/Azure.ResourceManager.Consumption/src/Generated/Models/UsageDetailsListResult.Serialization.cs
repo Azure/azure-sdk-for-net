@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UsageDetail>> value = default;
+            Optional<IReadOnlyList<ConsumptionUsageDetail>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    List<UsageDetail> array = new List<UsageDetail>();
+                    List<ConsumptionUsageDetail> array = new List<ConsumptionUsageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UsageDetail.DeserializeUsageDetail(item));
+                        array.Add(ConsumptionUsageDetail.DeserializeConsumptionUsageDetail(item));
                     }
                     value = array;
                     continue;

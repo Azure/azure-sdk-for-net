@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UsageDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UsageDetail> GetUsageDetailsAsync(string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionUsageDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(Id, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, Id, expand, filter, skipToken, top, metric);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UsageDetail.DeserializeUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetUsageDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionUsageDetail.DeserializeConsumptionUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UsageDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UsageDetail> GetUsageDetails(string expand = null, string filter = null, string skipToken = null, int? top = null, Metrictype? metric = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionUsageDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(Id, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, Id, expand, filter, skipToken, top, metric);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UsageDetail.DeserializeUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetUsageDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionUsageDetail.DeserializeConsumptionUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Marketplace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Marketplace> GetMarketplacesAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionMarketplace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(Id, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, Id, filter, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Marketplace.DeserializeMarketplace, MarketplacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMarketplaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionMarketplace.DeserializeConsumptionMarketplace, MarketplacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Marketplace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Marketplace> GetMarketplaces(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionMarketplace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(Id, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, Id, filter, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Marketplace.DeserializeMarketplace, MarketplacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMarketplaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionMarketplace.DeserializeConsumptionMarketplace, MarketplacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagsResult>> GetTagAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionTagsResult>> GetConsumptionTagsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = TagsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetTag");
+            using var scope = TagsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetConsumptionTags");
             scope.Start();
             try
             {
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TagsResult> GetTag(CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionTagsResult> GetConsumptionTags(CancellationToken cancellationToken = default)
         {
-            using var scope = TagsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetTag");
+            using var scope = TagsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetConsumptionTags");
             scope.Start();
             try
             {
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ChargeSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChargeSummary> GetChargesAsync(string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionChargeSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionChargeSummary> GetConsumptionChargesAsync(string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(Id, startDate, endDate, filter, apply);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ChargeSummary.DeserializeChargeSummary, ChargesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetCharges", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConsumptionChargeSummary.DeserializeConsumptionChargeSummary, ChargesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionCharges", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChargeSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChargeSummary> GetCharges(string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionChargeSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionChargeSummary> GetConsumptionCharges(string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(Id, startDate, endDate, filter, apply);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ChargeSummary.DeserializeChargeSummary, ChargesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetCharges", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ConsumptionChargeSummary.DeserializeConsumptionChargeSummary, ChargesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionCharges", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationsSummariesAsync(ArmResourceGetReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(Id, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, Id, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationsSummaries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationSummary> GetReservationsSummaries(ArmResourceGetReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionReservationSummary> GetConsumptionReservationsSummaries(ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(Id, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, Id, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationsSummaries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -358,11 +358,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationsDetailsAsync(string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(Id, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, Id, startDate, endDate, filter, reservationId, reservationOrderId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationsDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationDetail> GetReservationsDetails(string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionReservationDetail> GetConsumptionReservationsDetails(string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(Id, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, Id, startDate, endDate, filter, reservationId, reservationOrderId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationsDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -407,12 +407,12 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Single&apos;; properties/resourceType with allowed values [&apos;VirtualMachines&apos;, &apos;SQLDatabases&apos;, &apos;PostgreSQL&apos;, &apos;ManagedDisk&apos;, &apos;MySQL&apos;, &apos;RedHat&apos;, &apos;MariaDB&apos;, &apos;RedisCache&apos;, &apos;CosmosDB&apos;, &apos;SqlDataWarehouse&apos;, &apos;SUSELinux&apos;, &apos;AppService&apos;, &apos;BlockBlob&apos;, &apos;AzureDataExplorer&apos;, &apos;VMwareCloudSimple&apos;] and default value &apos;VirtualMachines&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last7Days&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationRecommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationRecommendation> GetReservationRecommendationsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReservationRecommendation.DeserializeReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationRecommendations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -430,12 +430,12 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Single&apos;; properties/resourceType with allowed values [&apos;VirtualMachines&apos;, &apos;SQLDatabases&apos;, &apos;PostgreSQL&apos;, &apos;ManagedDisk&apos;, &apos;MySQL&apos;, &apos;RedHat&apos;, &apos;MariaDB&apos;, &apos;RedisCache&apos;, &apos;CosmosDB&apos;, &apos;SqlDataWarehouse&apos;, &apos;SUSELinux&apos;, &apos;AppService&apos;, &apos;BlockBlob&apos;, &apos;AzureDataExplorer&apos;, &apos;VMwareCloudSimple&apos;] and default value &apos;VirtualMachines&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last7Days&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationRecommendation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationRecommendation> GetReservationRecommendations(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReservationRecommendation.DeserializeReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetReservationRecommendations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -451,24 +451,24 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationRecommendationDetailsModel>> GetReservationRecommendationDetailAsync(Scope scope, string region, Term term, LookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            using var scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetReservationRecommendationDetail");
-            scope0.Start();
+            using var scope = ReservationRecommendationDetailsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetConsumptionReservationRecommendationDetails");
+            scope.Start();
             try
             {
-                var response = await ReservationRecommendationDetailsRestClient.GetAsync(Id, scope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
+                var response = await ReservationRecommendationDetailsRestClient.GetAsync(Id, reservationScope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -486,24 +486,24 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationRecommendationDetailsModel> GetReservationRecommendationDetail(Scope scope, string region, Term term, LookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            using var scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetReservationRecommendationDetail");
-            scope0.Start();
+            using var scope = ReservationRecommendationDetailsClientDiagnostics.CreateScope("ArmResourceExtensionClient.GetConsumptionReservationRecommendationDetails");
+            scope.Start();
             try
             {
-                var response = ReservationRecommendationDetailsRestClient.Get(Id, scope, region, term, lookBackPeriod, product, cancellationToken);
+                var response = ReservationRecommendationDetailsRestClient.Get(Id, reservationScope, region, term, lookBackPeriod, product, cancellationToken);
                 return response;
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

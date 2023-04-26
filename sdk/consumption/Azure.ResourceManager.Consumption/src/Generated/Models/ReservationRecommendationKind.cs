@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Specifies the kind of reservation recommendation. </summary>
+    /// <summary>
+    /// Specifies the kind of reservation recommendation.
+    /// Serialized Name: ReservationRecommendationKind
+    /// </summary>
     internal readonly partial struct ReservationRecommendationKind : IEquatable<ReservationRecommendationKind>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary> legacy. </summary>
+        /// <summary>
+        /// legacy
+        /// Serialized Name: ReservationRecommendationKind.legacy
+        /// </summary>
         public static ReservationRecommendationKind Legacy { get; } = new ReservationRecommendationKind(LegacyValue);
-        /// <summary> modern. </summary>
+        /// <summary>
+        /// modern
+        /// Serialized Name: ReservationRecommendationKind.modern
+        /// </summary>
         public static ReservationRecommendationKind Modern { get; } = new ReservationRecommendationKind(ModernValue);
         /// <summary> Determines if two <see cref="ReservationRecommendationKind"/> values are the same. </summary>
         public static bool operator ==(ReservationRecommendationKind left, ReservationRecommendationKind right) => left.Equals(right);

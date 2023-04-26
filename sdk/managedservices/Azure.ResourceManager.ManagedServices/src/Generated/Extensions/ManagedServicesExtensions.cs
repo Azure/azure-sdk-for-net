@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServices.Models;
 
 namespace Azure.ResourceManager.ManagedServices
 {
@@ -267,48 +266,6 @@ namespace Azure.ResourceManager.ManagedServices
         public static Response<ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
             return client.GetManagedServicesMarketplaceRegistrations(scope).Get(marketplaceIdentifier, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of the operations with the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.ManagedServices/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationsWithScope_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<Models.Operation> GetOperationsWithScopesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetOperationsWithScopesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of the operations with the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.ManagedServices/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationsWithScope_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<Models.Operation> GetOperationsWithScopes(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetOperationsWithScopes(cancellationToken);
         }
     }
 }

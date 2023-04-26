@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationRecommendation>> value = default;
+            Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
             Optional<string> nextLink = default;
             Optional<string> previousLink = default;
             foreach (var property in element.EnumerateObject())
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    List<ReservationRecommendation> array = new List<ReservationRecommendation>();
+                    List<ConsumptionReservationRecommendation> array = new List<ConsumptionReservationRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationRecommendation.DeserializeReservationRecommendation(item));
+                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item));
                     }
                     value = array;
                     continue;

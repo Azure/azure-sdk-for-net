@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChargeSummary>> value = default;
+            Optional<IReadOnlyList<ConsumptionChargeSummary>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    List<ChargeSummary> array = new List<ChargeSummary>();
+                    List<ConsumptionChargeSummary> array = new List<ConsumptionChargeSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChargeSummary.DeserializeChargeSummary(item));
+                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
                     }
                     value = array;
                     continue;
