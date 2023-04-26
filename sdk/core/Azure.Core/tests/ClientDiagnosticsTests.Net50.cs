@@ -490,7 +490,7 @@ namespace Azure.Core.Tests
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
                 scope.Start();
-                if (Activity.Current != null)
+                if (Activity.Current.IsAllDataRequested)
                 {
                     activeActivityCounts++;
                 }
@@ -522,7 +522,7 @@ namespace Azure.Core.Tests
                 scope.AddLink($"00-6e76af18746bae4eadc3581338bbe8b{i}-2899ebfdbdce904b-00", "foo=bar");
 
                 scope.Start();
-                if (Activity.Current != null)
+                if (Activity.Current.IsAllDataRequested)
                 {
                     activeActivityCounts++;
                 }

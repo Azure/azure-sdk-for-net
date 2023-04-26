@@ -182,8 +182,6 @@ namespace Azure.Core.Pipeline
             private string? _traceparent;
             private string? _tracestate;
 
-            private bool _isAllDataRequested = true;
-
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
@@ -266,12 +264,9 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
-                    _isAllDataRequested = _currentActivity.GetIsAllDataRequestedFlag();
-
-                    if (!_isAllDataRequested)
+                    if (!_currentActivity.GetIsAllDataRequested())
                     {
                         _sampleOutActivity = _currentActivity;
-                        _currentActivity.Stop();
                         _currentActivity = null;
 
                         return null;
@@ -344,7 +339,7 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
-                Activity? activity = ActivityExtensions.ActivitySourceStartActivity(
+                return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
                     (int)_kind,
@@ -353,7 +348,6 @@ namespace Azure.Core.Pipeline
                     links: GetActivitySourceLinkCollection(),
                     traceparent: _traceparent,
                     tracestate: _tracestate);
-                return activity;
             }
 
             public void SetStartTime(DateTime startTime)
@@ -387,21 +381,21 @@ namespace Azure.Core.Pipeline
 
             public void Dispose()
             {
-                if (_currentActivity == null)
+                var activity = _currentActivity ?? _sampleOutActivity;
+                if (activity == null)
                 {
                     return;
                 }
 
-                if (_currentActivity.Duration == TimeSpan.Zero)
-                    _currentActivity.SetEndTime(DateTime.UtcNow);
+                if (activity.Duration == TimeSpan.Zero)
+                    activity.SetEndTime(DateTime.UtcNow);
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
-                if (!_currentActivity.TryDispose())
+                if (!activity.TryDispose())
                 {
-                    _currentActivity.Stop();
+                    activity.Stop();
                 }
-                _sampleOutActivity?.Stop();
             }
         }
     }
@@ -553,7 +547,7 @@ namespace Azure.Core.Pipeline
             return GetTraceStateStringMethod(activity);
         }
 
-        public static bool GetIsAllDataRequestedFlag(this Activity activity)
+        public static bool GetIsAllDataRequested(this Activity activity)
         {
             if (GetAllDataRequestedMethod == null)
             {
