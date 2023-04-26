@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -20,11 +21,24 @@ namespace Azure.ResourceManager.ServiceLinker.Tests
         public ServiceLinkerTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
+            IgnoreKeyVaultDependencyVersions();
         }
 
         public ServiceLinkerTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
+            IgnoreKeyVaultDependencyVersions();
+        }
+
+        private void IgnoreKeyVaultDependencyVersions()
+        {
+            // Ignore the api-version of KeyVault operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
 
         [OneTimeTearDown]
