@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Qumulo
 namespace: Azure.ResourceManager.Qumulo
-require: https://github.com/Azure/azure-rest-api-specs/blob/aceee26b40a3251a1dbcc76e57fb1e0860f1c76d/specification/liftrqumulo/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b73e2d320f1ae530ea5e78625dfe14a921dcf011/specification/liftrqumulo/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
