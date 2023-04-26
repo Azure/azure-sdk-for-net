@@ -16,11 +16,41 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             new CommunicationUserIdentifier("id")
         };
-        private static readonly MediaFileSource _fileSource = new MediaFileSource(new System.Uri("file://path/to/file"));
+        private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
         private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
         private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>");
 
-        private static readonly PlayOptions _options = new PlayOptions()
+        private static readonly PlayOptions _fileOptions = new PlayOptions(_fileSource, _target)
+        {
+            Loop = false,
+            OperationContext = "context"
+        };
+
+        private static readonly PlayOptions _textOptions = new PlayOptions(_textSource, _target)
+        {
+            Loop = false,
+            OperationContext = "context"
+        };
+
+        private static readonly PlayOptions _ssmlOptions = new PlayOptions(_ssmlSource, _target)
+        {
+            Loop = false,
+            OperationContext = "context"
+        };
+
+        private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(_fileSource)
+        {
+            Loop = false,
+            OperationContext = "context"
+        };
+
+        private static readonly PlayToAllOptions _textPlayToAllOptions = new PlayToAllOptions(_textSource)
+        {
+            Loop = false,
+            OperationContext = "context"
+        };
+
+        private static readonly PlayToAllOptions _ssmlPlayToAllOptions = new PlayToAllOptions(_ssmlSource)
         {
             Loop = false,
             OperationContext = "context"
@@ -50,7 +80,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
             InterruptPrompt = true,
             OperationContext = "operationContext",
-            Prompt = new MediaFileSource(new Uri("https://localhost"))
+            Prompt = new FileSource(new Uri("https://localhost"))
         };
 
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
@@ -321,27 +351,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_fileOptions)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_filePlayToAllOptions)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_textSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_textOptions)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_textSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_textPlayToAllOptions)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_ssmlSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_ssmlOptions)
                 },
                 new Func<CallMedia, Task<Response<PlayResult>>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_ssmlSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_ssmlPlayToAllOptions)
                 },
             };
         }
@@ -390,27 +420,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_fileSource, _target, _options)
+                   callMedia => callMedia.Play(_fileOptions)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_fileSource, _options)
+                   callMedia => callMedia.PlayToAll(_filePlayToAllOptions)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_textSource, _target, _options)
+                   callMedia => callMedia.Play(_textOptions)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_textSource, _options)
+                   callMedia => callMedia.PlayToAll(_textPlayToAllOptions)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.Play(_ssmlSource, _target, _options)
+                   callMedia => callMedia.Play(_ssmlOptions)
                 },
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_ssmlSource, _options)
+                   callMedia => callMedia.PlayToAll(_ssmlPlayToAllOptions)
                 },
             };
         }

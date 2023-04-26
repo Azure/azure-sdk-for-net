@@ -7,16 +7,16 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The File Source. </summary>
-    public class MediaFileSource : PlaySource
+    public class FileSource : PlaySource
     {
         /// <summary> The Uri of the file. </summary>
         public Uri FileUri { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MediaFileSource"/>.
+        /// Initializes a new instance of <see cref="FileSource"/>.
         /// </summary>
         /// <param name="fileUri">File Uri.</param>
-        public MediaFileSource(Uri fileUri)
+        public FileSource(Uri fileUri)
         {
             FileUri = fileUri;
         }

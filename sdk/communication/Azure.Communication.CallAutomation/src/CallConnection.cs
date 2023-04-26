@@ -189,13 +189,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="target"> The target to transfer the call to.</param>
+        /// <param name="targetParticipant"> The target to transfer the call to.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite target, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite targetParticipant, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(target);
+            TransferToParticipantOptions options = new TransferToParticipantOptions(targetParticipant);
 
             return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -239,13 +239,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="target"> The target to transfer the call to.</param>
+        /// <param name="targetParticipant"> The target to transfer the call to.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite target, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite targetParticipant, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(target);
+            TransferToParticipantOptions options = new TransferToParticipantOptions(targetParticipant);
 
             return TransferCallToParticipant(options, cancellationToken);
         }
