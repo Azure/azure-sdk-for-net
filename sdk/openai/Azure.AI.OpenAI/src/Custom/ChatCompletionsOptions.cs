@@ -26,7 +26,6 @@ namespace Azure.AI.OpenAI
         public int? MaxTokens { get; set; }
 
         /// <inheritdoc cref="CompletionsOptions.NucleusSamplingFactor"/>
-        [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
 
         /// <inheritdoc cref="CompletionsOptions.PresencePenalty"/>

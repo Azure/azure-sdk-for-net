@@ -1,6 +1,8 @@
 directory: specification/cognitiveservices/OpenAI.Inference
 additionalDirectories:
   - specification/cognitiveservices/OpenAI.Authoring
-commit: 9e57370a9b5aa4ce43e5bf4819f78bf154a9474f
+commit: 9875670853ce5340877e6ab0c54f0d0e4a597727
 repo: Azure/azure-rest-api-specs
-cleanup: false
+
+# Uncomment this to retain .tsp files in the local environment
+# cleanup: false

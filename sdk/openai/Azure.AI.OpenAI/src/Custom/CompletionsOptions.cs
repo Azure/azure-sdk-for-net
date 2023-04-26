@@ -23,7 +23,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="ChoicesPerPrompt"/> is equivalent to 'n' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("N")]
         public int? ChoicesPerPrompt { get; set; }
 
         /// <summary>
@@ -56,7 +55,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="GenerationSampleCount"/> is equivalent to 'best_of' in the REST request schema.
         /// </remarks>.
-        [CodeGenMember("BestOf")]
         public int? GenerationSampleCount { get; set; }
 
         /// <summary>
@@ -67,7 +65,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="LogProbabilityCount"/> is equivalent to 'logprobs' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Logprobs")]
         public int? LogProbabilityCount { get; set; }
 
         /// <summary> Gets the maximum number of tokens to generate. Has minimum of 0. </summary>
@@ -90,7 +87,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="NucleusSamplingFactor"/> is equivalent to 'top_p' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
 
         /// <summary>
@@ -111,7 +107,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="Prompts"/> is equivalent to 'prompt' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Prompt")]
         public IList<string> Prompts { get; }
 
         /// <summary>
@@ -121,7 +116,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="StopSequences"/> is equivalent to 'stop' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Stop")]
         public IList<string> StopSequences { get; }
 
         /// <summary>
