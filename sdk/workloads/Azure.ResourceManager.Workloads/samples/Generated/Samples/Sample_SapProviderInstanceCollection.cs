@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "password",
                     DBPasswordUri = new Uri(""),
                     SapSid = "SID",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "password",
                     DBPasswordUri = new Uri(""),
                     SapSid = "SID",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SapSid = "sid",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SapSid = "sid",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                 ProviderSettings = new PrometheusOSProviderInstanceProperties()
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                     SapSid = "SID",
                 },
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                 ProviderSettings = new PrometheusOSProviderInstanceProperties()
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                     SapSid = "SID",
                 },
             };
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     Hostname = "hostname",
                     Sid = "sid",
                     ClusterName = "clusterName",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     Hostname = "hostname",
                     Sid = "sid",
                     ClusterName = "clusterName",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPasswordUri = new Uri(""),
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                     SslHostNameInCertificate = "xyz.domain.com",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SapSid = "SID",
                 },
             };
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SslHostNameInCertificate = "xyz.domain.com",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                     SapSid = "SID",
                 },
             };
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     SapClientId = "111",
                     SapPortNumber = "1234",
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     SapPasswordUri = new Uri(""),
                     SapClientId = "111",
                     SapPortNumber = "1234",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);

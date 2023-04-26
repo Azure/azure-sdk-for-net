@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform
         internal AppPlatformArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "AppPlatformArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "AppPlatformArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
