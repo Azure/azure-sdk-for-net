@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
     internal partial class InternalPhoneNumbersRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-12-01")
+        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-05-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -44,7 +44,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/areaCodes", false);
@@ -153,7 +153,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries", false);
             if (skip != null)
             {
@@ -225,7 +225,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/localities", false);
@@ -319,7 +319,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/offerings", false);
@@ -419,7 +419,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/:search", false);
@@ -495,7 +495,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/searchResults/", false);
             uri.AppendPath(searchId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -564,7 +564,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/:purchase", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -620,7 +620,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -691,7 +691,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -750,7 +750,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendPath("/capabilities", false);
@@ -825,7 +825,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -894,7 +894,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -955,7 +955,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers", false);
             if (skip != null)
             {
@@ -1021,7 +1021,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -1116,7 +1116,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -1193,7 +1193,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -1282,7 +1282,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -1373,7 +1373,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
