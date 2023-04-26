@@ -175,11 +175,11 @@ namespace Azure.Identity.Tests
 
             if (original is ISupportsDisableInstanceDiscovery && clone is ISupportsDisableInstanceDiscovery)
             {
-                Assert.AreEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.AreEqual(original.DisableAuthorityValidationAndInstanceDiscovery, clone.DisableAuthorityValidationAndInstanceDiscovery);
             }
             else
             {
-                Assert.AreNotEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.AreNotEqual(original.DisableAuthorityValidationAndInstanceDiscovery, clone.DisableAuthorityValidationAndInstanceDiscovery);
             }
 
             if (original is ISupportsTokenCachePersistenceOptions && clone is ISupportsTokenCachePersistenceOptions)
@@ -237,7 +237,7 @@ namespace Azure.Identity.Tests
         {
             public IList<string> AdditionallyAllowedTenants { get; } = new List<string>();
 
-            public bool DisableInstanceDiscovery { get; set; }
+            public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
 
             public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
@@ -247,7 +247,7 @@ namespace Azure.Identity.Tests
                 T options = new T
                 {
                     AdditionallyAllowedTenants = { Guid.NewGuid().ToString() },
-                    DisableInstanceDiscovery = true,
+                    DisableAuthorityValidationAndInstanceDiscovery = true,
                     TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                     AuthorityHost = AzureAuthorityHosts.AzureChina,
                     IsLoggingPIIEnabled = true,
@@ -321,7 +321,7 @@ namespace Azure.Identity.Tests
 
             if (source is ISupportsDisableInstanceDiscovery did)
             {
-                did.DisableInstanceDiscovery = true;
+                did.DisableAuthorityValidationAndInstanceDiscovery = true;
             }
 
             if (source is ISupportsTokenCachePersistenceOptions tcpo)
@@ -343,7 +343,7 @@ namespace Azure.Identity.Tests
 
             if (source is ISupportsDisableInstanceDiscovery didSource && destination is ISupportsDisableInstanceDiscovery didDestination)
             {
-                Assert.AreEqual(didSource.DisableInstanceDiscovery, didDestination.DisableInstanceDiscovery);
+                Assert.AreEqual(didSource.DisableAuthorityValidationAndInstanceDiscovery, didDestination.DisableAuthorityValidationAndInstanceDiscovery);
             }
 
             if (source is ISupportsTokenCachePersistenceOptions tcpoSource && destination is ISupportsTokenCachePersistenceOptions tcpoDestination)

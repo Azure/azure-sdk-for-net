@@ -98,10 +98,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguage = "en-US",
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"), 500)
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500),
             InterruptPrompt = true,
             OperationContext = "operationContext",
             Prompt = new TextSource("PlayTTS test text.")
@@ -113,10 +114,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguage = "en-US",
         };
 
-        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, 100L)
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500),
             InterruptPrompt = true,
             OperationContext = "operationContext",
             Prompt = new TextSource("PlayTTS test text.")

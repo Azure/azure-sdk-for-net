@@ -9,23 +9,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="RecognizeCompleted"/> event will be returned once the recognize is completed successfully.
+        /// <see cref="RecognizeCompletedEventData"/> event will be returned once the recognize is completed successfully.
         /// </summary>
-        public RecognizeCompleted SuccessEvent { get; }
+        public RecognizeCompletedEventData SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="RecognizeFailed"/> event will be returned once the recognize is completed unsuccessfully.
+        /// <see cref="RecognizeFailedEventData"/> event will be returned once the recognize is completed unsuccessfully.
         /// </summary>
-        public RecognizeFailed FailureEvent { get; }
+        public RecognizeFailedEventData FailureResult { get; }
 
-        internal StartRecognizingEventResult(bool isSuccessEvent, RecognizeCompleted successEvent, RecognizeFailed failureEvent)
+        internal StartRecognizingEventResult(bool isSuccess, RecognizeCompletedEventData successResult, RecognizeFailedEventData failureResult)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
         }
     }
 }

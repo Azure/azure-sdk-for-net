@@ -49,10 +49,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
             // wait for callConnected
-            var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+            var connectedEvent = await WaitForEvent<CallConnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.IsTrue(connectedEvent is CallConnectedEventData);
+            Assert.IsTrue(((CallConnectedEventData)connectedEvent!).CallConnectionId == callConnectionId);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -159,10 +159,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
                     // wait for callConnected
-                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var connectedEvent = await WaitForEvent<CallConnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.IsTrue(connectedEvent is CallConnectedEventData);
+                    Assert.IsTrue(((CallConnectedEventData)connectedEvent!).CallConnectionId == callConnectionId);
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -193,10 +193,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
-                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var disconnectedEvent = await WaitForEvent<CallDisconnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnectedEventData);
+                    Assert.IsTrue(((CallDisconnectedEventData)disconnectedEvent!).CallConnectionId == callConnectionId);
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -257,10 +257,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
                     // wait for callConnected
-                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var connectedEvent = await WaitForEvent<CallConnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.IsTrue(connectedEvent is CallConnectedEventData);
+                    Assert.IsTrue(((CallConnectedEventData)connectedEvent!).CallConnectionId == callConnectionId);
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -294,10 +294,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
-                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var disconnectedEvent = await WaitForEvent<CallDisconnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnectedEventData);
+                    Assert.IsTrue(((CallDisconnectedEventData)disconnectedEvent!).CallConnectionId == callConnectionId);
                     callConnectionId = null;
                 }
                 catch (Exception)

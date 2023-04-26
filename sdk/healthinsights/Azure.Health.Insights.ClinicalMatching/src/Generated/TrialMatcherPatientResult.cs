@@ -36,8 +36,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo)
         {
             Id = id;
-            Inferences = inferences.ToList();
-            NeededClinicalInfo = neededClinicalInfo.ToList();
+            Inferences = inferences;
+            NeededClinicalInfo = neededClinicalInfo;
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
+            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
             {
                 new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                 new KeyValuePair<string, string>("certificate", _value.Name),

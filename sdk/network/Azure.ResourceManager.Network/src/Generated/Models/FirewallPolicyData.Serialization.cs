@@ -73,10 +73,20 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("snat"u8);
                 writer.WriteObjectValue(Snat);
             }
+            if (Optional.IsDefined(Sql))
+            {
+                writer.WritePropertyName("sql"u8);
+                writer.WriteObjectValue(Sql);
+            }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
+            }
+            if (Optional.IsDefined(ExplicitProxy))
+            {
+                writer.WritePropertyName("explicitProxy"u8);
+                writer.WriteObjectValue(ExplicitProxy);
             }
             if (Optional.IsDefined(IntrusionDetection))
             {
@@ -119,7 +129,9 @@ namespace Azure.ResourceManager.Network
             Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
             Optional<FirewallPolicyInsights> insights = default;
             Optional<FirewallPolicySnat> snat = default;
+            Optional<FirewallPolicySQL> sql = default;
             Optional<DnsSettings> dnsSettings = default;
+            Optional<FirewallPolicyExplicitProxy> explicitProxy = default;
             Optional<FirewallPolicyIntrusionDetection> intrusionDetection = default;
             Optional<FirewallPolicyTransportSecurity> transportSecurity = default;
             Optional<FirewallPolicySku> sku = default;
@@ -294,6 +306,15 @@ namespace Azure.ResourceManager.Network
                             snat = FirewallPolicySnat.DeserializeFirewallPolicySnat(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("sql"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sql = FirewallPolicySQL.DeserializeFirewallPolicySQL(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("dnsSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -301,6 +322,15 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             dnsSettings = DnsSettings.DeserializeDnsSettings(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("explicitProxy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("intrusionDetection"u8))
@@ -334,7 +364,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, dnsSettings.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
         }
     }
 }

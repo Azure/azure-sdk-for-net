@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.Workloads
         public Azure.Core.ResourceIdentifier MonitorSubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiArmId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.RoutingPreference? RoutingPreference { get { throw null; } set { } }
-        public string StorageAccountArmId { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapRoutingPreference? RoutingPreference { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountArmId { get { throw null; } }
         public string ZoneRedundancyPreference { get { throw null; } set { } }
     }
     public partial class SapMonitorResource : Azure.ResourceManager.ArmResource
@@ -338,8 +338,8 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> Update(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -376,10 +376,10 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ApplicationServerConfiguration
     {
-        public ApplicationServerConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
+        public ApplicationServerConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
         public long InstanceCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
     public partial class ApplicationServerFullResourceNames
     {
@@ -415,10 +415,10 @@ namespace Azure.ResourceManager.Workloads.Models
     }
     public partial class CentralServerConfiguration
     {
-        public CentralServerConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
+        public CentralServerConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
         public long InstanceCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
     public partial class CentralServerFullResourceNames
     {
@@ -465,12 +465,12 @@ namespace Azure.ResourceManager.Workloads.Models
     }
     public partial class DatabaseConfiguration
     {
-        public DatabaseConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
+        public DatabaseConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration> DiskVolumeConfigurations { get { throw null; } }
         public long InstanceCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
     public partial class DatabaseServerFullResourceNames
     {
@@ -497,20 +497,20 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class DeployerVmPackages
     {
         public DeployerVmPackages() { }
+        public System.Uri PackageUri { get { throw null; } set { } }
         public string StorageAccountId { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class DeploymentConfiguration : Azure.ResourceManager.Workloads.Models.SapConfiguration
     {
         public DeploymentConfiguration() { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration InfrastructureConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
     }
     public partial class DeploymentWithOSConfiguration : Azure.ResourceManager.Workloads.Models.SapConfiguration
     {
@@ -518,13 +518,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration InfrastructureConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.OSSapConfiguration OSSapConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
     }
     public partial class DiscoveryConfiguration : Azure.ResourceManager.Workloads.Models.SapConfiguration
     {
         public DiscoveryConfiguration() { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } }
-        public string CentralServerVmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CentralServerVmId { get { throw null; } set { } }
         public string ManagedRgStorageAccountName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         public DiskVolumeConfiguration() { }
         public long? Count { get { throw null; } set { } }
-        public long? SizeGB { get { throw null; } set { } }
+        public long? SizeInGB { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } set { } }
     }
     public partial class EnqueueReplicationServerProperties
@@ -594,10 +594,10 @@ namespace Azure.ResourceManager.Workloads.Models
         public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
     }
-    public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
+    public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
     {
         public ExternalInstallationSoftwareConfiguration() { }
-        public string CentralServerVmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CentralServerVmId { get { throw null; } set { } }
     }
     public abstract partial class FileShareConfiguration
     {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public string SqlPort { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
         public string SslHostNameInCertificate { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class HighAvailabilitySoftwareConfiguration
     {
@@ -630,25 +630,10 @@ namespace Azure.ResourceManager.Workloads.Models
         public string FencingClientId { get { throw null; } set { } }
         public string FencingClientPassword { get { throw null; } set { } }
     }
-    public partial class ImageReference
-    {
-        public ImageReference() { }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
     public abstract partial class InfrastructureConfiguration
     {
         protected InfrastructureConfiguration(string appResourceGroup) { }
         public string AppResourceGroup { get { throw null; } set { } }
-    }
-    public partial class LinuxConfiguration : Azure.ResourceManager.Workloads.Models.OSConfiguration
-    {
-        public LinuxConfiguration() { }
-        public bool? DisablePasswordAuthentication { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SshKeyPair SshKeyPair { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SshPublicKey> SshPublicKeys { get { throw null; } }
     }
     public partial class LoadBalancerResourceNames
     {
@@ -689,9 +674,9 @@ namespace Azure.ResourceManager.Workloads.Models
     }
     public partial class MountFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration
     {
-        public MountFileShareConfiguration(string id, string privateEndpointId) { }
-        public string Id { get { throw null; } set { } }
-        public string PrivateEndpointId { get { throw null; } set { } }
+        public MountFileShareConfiguration(Azure.Core.ResourceIdentifier fileShareId, Azure.Core.ResourceIdentifier privateEndpointId) { }
+        public Azure.Core.ResourceIdentifier FileShareId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
     }
     public partial class MsSqlServerProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
@@ -703,23 +688,12 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceResourceNames
     {
         public NetworkInterfaceResourceNames() { }
         public string NetworkInterfaceName { get { throw null; } set { } }
-    }
-    public abstract partial class OSConfiguration
-    {
-        protected OSConfiguration() { }
-    }
-    public partial class OSProfile
-    {
-        public OSProfile() { }
-        public string AdminPassword { get { throw null; } set { } }
-        public string AdminUsername { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSConfiguration OSConfiguration { get { throw null; } set { } }
     }
     public partial class OSSapConfiguration
     {
@@ -735,7 +709,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public System.Uri PrometheusUri { get { throw null; } set { } }
         public string Sid { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class PrometheusOSProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
@@ -743,29 +717,11 @@ namespace Azure.ResourceManager.Workloads.Models
         public System.Uri PrometheusUri { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
     }
     public abstract partial class ProviderSpecificProperties
     {
         protected ProviderSpecificProperties() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RoutingPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.RoutingPreference>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RoutingPreference(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.RoutingPreference Default { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.RoutingPreference RouteAll { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.RoutingPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.RoutingPreference left, Azure.ResourceManager.Workloads.Models.RoutingPreference right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.RoutingPreference (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.RoutingPreference left, Azure.ResourceManager.Workloads.Models.RoutingPreference right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SapApplicationServerInstancePatch
     {
@@ -934,7 +890,15 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType left, Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
+    public partial class SapImageReference
+    {
+        public SapImageReference() { }
+        public string Offer { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
     {
         public SapInstallWithoutOSConfigSoftwareConfiguration(System.Uri bomUri, string sapBitsStorageAccountId, string softwareVersion) { }
         public System.Uri BomUri { get { throw null; } set { } }
@@ -983,6 +947,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TopSid { get { throw null; } }
     }
+    public partial class SapLinuxConfiguration : Azure.ResourceManager.Workloads.Models.SapOSConfiguration
+    {
+        public SapLinuxConfiguration() { }
+        public bool? DisablePasswordAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSshKeyPair SshKeyPair { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SapSshPublicKey> SshPublicKeys { get { throw null; } }
+    }
     public partial class SapMonitorPatch
     {
         public SapMonitorPatch() { }
@@ -1002,7 +973,18 @@ namespace Azure.ResourceManager.Workloads.Models
         public string SapSid { get { throw null; } set { } }
         public string SapUsername { get { throw null; } set { } }
         public System.Uri SslCertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapSslPreference? SslPreference { get { throw null; } set { } }
+    }
+    public abstract partial class SapOSConfiguration
+    {
+        protected SapOSConfiguration() { }
+    }
+    public partial class SapOSProfile
+    {
+        public SapOSProfile() { }
+        public string AdminPassword { get { throw null; } set { } }
+        public string AdminUsername { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapOSConfiguration OSConfiguration { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SapProductType : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapProductType>
@@ -1023,6 +1005,24 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapProductType left, Azure.ResourceManager.Workloads.Models.SapProductType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SapRoutingPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapRoutingPreference>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SapRoutingPreference(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.SapRoutingPreference Default { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapRoutingPreference RouteAll { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.SapRoutingPreference other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapRoutingPreference left, Azure.ResourceManager.Workloads.Models.SapRoutingPreference right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.SapRoutingPreference (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapRoutingPreference left, Azure.ResourceManager.Workloads.Models.SapRoutingPreference right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SapSizingRecommendationContent
     {
         public SapSizingRecommendationContent(Azure.Core.AzureLocation appLocation, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapDeploymentType deploymentType, long saps, long dbMemory, Azure.ResourceManager.Workloads.Models.SapDatabaseType databaseType) { }
@@ -1039,6 +1039,45 @@ namespace Azure.ResourceManager.Workloads.Models
     public abstract partial class SapSizingRecommendationResult
     {
         protected SapSizingRecommendationResult() { }
+    }
+    public abstract partial class SapSoftwareConfiguration
+    {
+        protected SapSoftwareConfiguration() { }
+    }
+    public partial class SapSshKeyPair
+    {
+        public SapSshKeyPair() { }
+        public string PrivateKey { get { throw null; } set { } }
+        public string PublicKey { get { throw null; } set { } }
+    }
+    public partial class SapSshPublicKey
+    {
+        public SapSshPublicKey() { }
+        public string KeyData { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SapSslPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapSslPreference>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SapSslPreference(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.SapSslPreference Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapSslPreference RootCertificate { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapSslPreference ServerCertificate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.SapSslPreference other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapSslPreference left, Azure.ResourceManager.Workloads.Models.SapSslPreference right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.SapSslPreference (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapSslPreference left, Azure.ResourceManager.Workloads.Models.SapSslPreference right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SapStopContent
+    {
+        public SapStopContent() { }
+        public long? SoftStopTimeoutSeconds { get { throw null; } set { } }
     }
     public partial class SapSupportedResourceSkusResult
     {
@@ -1147,7 +1186,18 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus left, Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceInitiatedSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
+    public partial class SapVirtualMachineConfiguration
+    {
+        public SapVirtualMachineConfiguration(string vmSize, Azure.ResourceManager.Workloads.Models.SapImageReference imageReference, Azure.ResourceManager.Workloads.Models.SapOSProfile osProfile) { }
+        public Azure.ResourceManager.Workloads.Models.SapImageReference ImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapOSProfile OSProfile { get { throw null; } set { } }
+        public string VmSize { get { throw null; } set { } }
+    }
+    public partial class SapWindowsConfiguration : Azure.ResourceManager.Workloads.Models.SapOSConfiguration
+    {
+        public SapWindowsConfiguration() { }
+    }
+    public partial class ServiceInitiatedSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SapSoftwareConfiguration
     {
         public ServiceInitiatedSoftwareConfiguration(System.Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey) { }
         public System.Uri BomUri { get { throw null; } set { } }
@@ -1165,13 +1215,13 @@ namespace Azure.ResourceManager.Workloads.Models
     }
     public partial class SingleServerConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration
     {
-        public SingleServerConfiguration(string appResourceGroup, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration) : base (default(string)) { }
+        public SingleServerConfiguration(string appResourceGroup, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration virtualMachineConfiguration) : base (default(string)) { }
         public Azure.ResourceManager.Workloads.Models.SingleServerCustomResourceNames CustomResourceNames { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration> DiskVolumeConfigurations { get { throw null; } }
         public bool? IsSecondaryIPEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
     public abstract partial class SingleServerCustomResourceNames
     {
@@ -1191,45 +1241,6 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         public SkipFileShareConfiguration() { }
     }
-    public abstract partial class SoftwareConfiguration
-    {
-        protected SoftwareConfiguration() { }
-    }
-    public partial class SshKeyPair
-    {
-        public SshKeyPair() { }
-        public string PrivateKey { get { throw null; } set { } }
-        public string PublicKey { get { throw null; } set { } }
-    }
-    public partial class SshPublicKey
-    {
-        public SshPublicKey() { }
-        public string KeyData { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SslPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.SslPreference>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SslPreference(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SslPreference Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SslPreference RootCertificate { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SslPreference ServerCertificate { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.SslPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SslPreference left, Azure.ResourceManager.Workloads.Models.SslPreference right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.SslPreference (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SslPreference left, Azure.ResourceManager.Workloads.Models.SslPreference right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class StopRequest
-    {
-        public StopRequest() { }
-        public long? SoftStopTimeoutSeconds { get { throw null; } set { } }
-    }
     public partial class SupportedConfigurationsDiskDetails
     {
         internal SupportedConfigurationsDiskDetails() { }
@@ -1238,7 +1249,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public long? MaximumSupportedDiskCount { get { throw null; } }
         public long? MbpsReadWrite { get { throw null; } }
         public long? MinimumSupportedDiskCount { get { throw null; } }
-        public long? SizeGB { get { throw null; } }
+        public long? SizeInGB { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } }
     }
     public partial class ThreeTierConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration
@@ -1280,13 +1291,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
-    public partial class VirtualMachineConfiguration
-    {
-        public VirtualMachineConfiguration(string vmSize, Azure.ResourceManager.Workloads.Models.ImageReference imageReference, Azure.ResourceManager.Workloads.Models.OSProfile osProfile) { }
-        public Azure.ResourceManager.Workloads.Models.ImageReference ImageReference { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSProfile OSProfile { get { throw null; } set { } }
-        public string VmSize { get { throw null; } set { } }
-    }
     public partial class VirtualMachineResourceNames
     {
         public VirtualMachineResourceNames() { }
@@ -1295,10 +1299,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.NetworkInterfaceResourceNames> NetworkInterfaces { get { throw null; } }
         public string OSDiskName { get { throw null; } set { } }
         public string VmName { get { throw null; } set { } }
-    }
-    public partial class WindowsConfiguration : Azure.ResourceManager.Workloads.Models.OSConfiguration
-    {
-        public WindowsConfiguration() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkloadMonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState>
