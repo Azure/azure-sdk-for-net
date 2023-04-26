@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
-                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                    //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
                         new InitContainerDefinitionContent($"{containerGroupName}init")
                         {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     DnsNameLabel = containerGroupName
                 },
                 RestartPolicy = ContainerGroupRestartPolicy.Never,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Diagnostics = new ContainerGroupDiagnostics(
                         logAnalytics: new ContainerGroupLogAnalytics(
                             workspaceId: "workspaceid",
