@@ -113,5 +113,35 @@ namespace Azure.Communication.PhoneNumbers
 
             return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
         }
+
+        /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
+        /// <param name="results"> Results of the search, this array will have one entry per requested phone number with the relevant operator information for each. </param>
+        /// <returns> A new <see cref="PhoneNumbers.OperatorInformationResult"/> instance for mocking. </returns>
+        public static OperatorInformationResult OperatorInformationResult(IEnumerable<OperatorInformation> results = null)
+        {
+            results ??= new List<OperatorInformation>();
+
+            return new OperatorInformationResult(results?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of OperatorInformation. </summary>
+        /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
+        /// <param name="numberType"> Type of service associated with the phone number. </param>
+        /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
+        /// <returns> A new <see cref="PhoneNumbers.OperatorInformation"/> instance for mocking. </returns>
+        public static OperatorInformation OperatorInformation(string phoneNumber = null, OperatorNumberType? numberType = null, OperatorDetails operatorDetails = null)
+        {
+            return new OperatorInformation(phoneNumber, numberType, operatorDetails);
+        }
+
+        /// <summary> Initializes a new instance of OperatorDetails. </summary>
+        /// <param name="name"> Name of the phone operator. </param>
+        /// <param name="mobileNetworkCode"> Mobile Network Code. </param>
+        /// <param name="mobileCountryCode"> Mobile Country Code. </param>
+        /// <returns> A new <see cref="PhoneNumbers.OperatorDetails"/> instance for mocking. </returns>
+        public static OperatorDetails OperatorDetails(string name = null, string mobileNetworkCode = null, string mobileCountryCode = null)
+        {
+            return new OperatorDetails(name, mobileNetworkCode, mobileCountryCode);
+        }
     }
 }
