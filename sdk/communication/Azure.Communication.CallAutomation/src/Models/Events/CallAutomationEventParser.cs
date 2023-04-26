@@ -19,9 +19,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
         /// </summary>
+        private const string EventSuffix = "EventData";
+
+        /// <summary>
+        /// Parsing a CallAutomation event from a CloudEvent.
+        /// </summary>
         /// <param name="cloudEvent"><see cref="CloudEvent"/>.</param>
-        /// <returns>A <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase Parse(CloudEvent cloudEvent)
+        /// <returns>A <see cref="CallAutomationEventData"/> object.</returns>
+        public static CallAutomationEventData Parse(CloudEvent cloudEvent)
         {
             return Deserialize(cloudEvent.Data.ToString(), cloudEvent.Type);
         }
@@ -30,8 +35,8 @@ namespace Azure.Communication.CallAutomation
         /// Parsing a CallAutomation event from BinaryData.
         /// </summary>
         /// <param name="json">event json in BinaryData format.</param>
-        /// <returns>A <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase Parse(BinaryData json)
+        /// <returns>A <see cref="CallAutomationEventData"/> object.</returns>
+        public static CallAutomationEventData Parse(BinaryData json)
         {
             CloudEvent cloudEvent = CloudEvent.Parse(json);
             return Deserialize(cloudEvent.Data.ToString(), cloudEvent.Type);
@@ -42,8 +47,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="eventData">the event data of a <see cref="CloudEvent"/> in string.</param>
         /// <param name="eventType">the event type of a <see cref="CloudEvent"/> in string.</param>
-        /// <returns>An array of <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase Parse(string eventData, string eventType)
+        /// <returns>An array of <see cref="CallAutomationEventData"/> object.</returns>
+        public static CallAutomationEventData Parse(string eventData, string eventType)
         {
             return Deserialize(eventData, eventType);
         }
@@ -52,10 +57,10 @@ namespace Azure.Communication.CallAutomation
         /// Parsing CallAutomation events from an array of CloudEvent.
         /// </summary>
         /// <param name="cloudEvents"><see cref="CloudEvent"/>.</param>
-        /// <returns>An array of <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase[] ParseMany(CloudEvent[] cloudEvents)
+        /// <returns>An array of <see cref="CallAutomationEventData"/> object.</returns>
+        public static CallAutomationEventData[] ParseMany(CloudEvent[] cloudEvents)
         {
-            var callAutomationEvents = new CallAutomationEventBase[cloudEvents.Length];
+            var callAutomationEvents = new CallAutomationEventData[cloudEvents.Length];
             for (int i = 0; i < cloudEvents.Length; i++)
             {
                 var cloudEvent = cloudEvents[i];
@@ -68,11 +73,11 @@ namespace Azure.Communication.CallAutomation
         /// Parsing CallAutomation events from BinaryData.
         /// </summary>
         /// <param name="json"> events json in BinaryData format.</param>
-        /// <returns>An array of <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase[] ParseMany(BinaryData json)
+        /// <returns>An array of <see cref="CallAutomationEventData"/> object.</returns>
+        public static CallAutomationEventData[] ParseMany(BinaryData json)
         {
             CloudEvent[] cloudEvents = CloudEvent.ParseMany(json);
-            var callAutomationEvents = new CallAutomationEventBase[cloudEvents.Length];
+            var callAutomationEvents = new CallAutomationEventData[cloudEvents.Length];
             for (int i = 0; i < cloudEvents.Length; i++)
             {
                 var cloudEvent = cloudEvents[i];
@@ -86,44 +91,55 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="eventData">the event data of a <see cref="CloudEvent"/> in string.</param>
         /// <param name="type">the event type of a <see cref="CloudEvent"/> in string.</param>
-        /// <returns>A <see cref="CallAutomationEventBase"/> object.</returns>
-        private static CallAutomationEventBase Deserialize(string eventData, string type)
+        /// <returns>A <see cref="CallAutomationEventData"/> object.</returns>
+        private static CallAutomationEventData Deserialize(string eventData, string type)
         {
             var eventType = type.Replace(EventPrefix, "");
+            eventType = eventType + EventSuffix;
             switch (eventType)
             {
-                case nameof(AddParticipantFailed):
-                    return AddParticipantFailed.Deserialize(eventData);
-                case nameof(AddParticipantSucceeded):
-                    return AddParticipantSucceeded.Deserialize(eventData);
-                case nameof(CallConnected):
-                    return CallConnected.Deserialize(eventData);
-                case nameof(CallDisconnected):
-                    return CallDisconnected.Deserialize(eventData);
-                case nameof(CallTransferAccepted):
-                    return CallTransferAccepted.Deserialize(eventData);
-                case nameof(CallTransferFailed):
-                    return CallTransferFailed.Deserialize(eventData);
-                case nameof(ParticipantsUpdated):
-                    return ParticipantsUpdated.Deserialize(eventData);
-                case nameof(RecordingStateChanged):
-                    return RecordingStateChanged.Deserialize(eventData);
-                case nameof(PlayCompleted):
-                    return PlayCompleted.Deserialize(eventData);
-                case nameof(PlayFailed):
-                    return PlayFailed.Deserialize(eventData);
-                case nameof(PlayCanceled):
-                    return PlayCanceled.Deserialize(eventData);
-                case nameof(RecognizeCompleted):
-                    return RecognizeCompleted.Deserialize(eventData);
-                case nameof(RecognizeFailed):
-                    return RecognizeFailed.Deserialize(eventData);
-                case nameof(RecognizeCanceled):
-                    return RecognizeCanceled.Deserialize(eventData);
-                case nameof(RemoveParticipantSucceeded):
-                    return RemoveParticipantSucceeded.Deserialize(eventData);
-                case nameof(RemoveParticipantFailed):
-                    return RemoveParticipantFailed.Deserialize(eventData);
+                case nameof(AddParticipantFailedEventData):
+                    return AddParticipantFailedEventData.Deserialize(eventData);
+                case nameof(AddParticipantSucceededEventData):
+                    return AddParticipantSucceededEventData.Deserialize(eventData);
+                case nameof(CallConnectedEventData):
+                    return CallConnectedEventData.Deserialize(eventData);
+                case nameof(CallDisconnectedEventData):
+                    return CallDisconnectedEventData.Deserialize(eventData);
+                case nameof(CallTransferAcceptedEventData):
+                    return CallTransferAcceptedEventData.Deserialize(eventData);
+                case nameof(CallTransferFailedEventData):
+                    return CallTransferFailedEventData.Deserialize(eventData);
+                case nameof(ParticipantsUpdatedEventData):
+                    return ParticipantsUpdatedEventData.Deserialize(eventData);
+                case nameof(RecordingStateChangedEventData):
+                    return RecordingStateChangedEventData.Deserialize(eventData);
+                case nameof(PlayCompletedEventData):
+                    return PlayCompletedEventData.Deserialize(eventData);
+                case nameof(PlayFailedEventData):
+                    return PlayFailedEventData.Deserialize(eventData);
+                case nameof(PlayCanceledEventData):
+                    return PlayCanceledEventData.Deserialize(eventData);
+                case nameof(RecognizeCompletedEventData):
+                    return RecognizeCompletedEventData.Deserialize(eventData);
+                case nameof(RecognizeFailedEventData):
+                    return RecognizeFailedEventData.Deserialize(eventData);
+                case nameof(RecognizeCanceledEventData):
+                    return RecognizeCanceledEventData.Deserialize(eventData);
+                case nameof(RemoveParticipantSucceededEventData):
+                    return RemoveParticipantSucceededEventData.Deserialize(eventData);
+                case nameof(RemoveParticipantFailedEventData):
+                    return RemoveParticipantFailedEventData.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionToneReceivedEventData):
+                    return ContinuousDtmfRecognitionToneReceivedEventData.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionToneFailedEventData):
+                    return ContinuousDtmfRecognitionToneFailedEventData.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionStoppedEventData):
+                    return ContinuousDtmfRecognitionStoppedEventData.Deserialize(eventData);
+                case nameof(SendDtmfCompletedEventData):
+                    return SendDtmfCompletedEventData.Deserialize(eventData);
+                case nameof(SendDtmfFailedEventData):
+                    return SendDtmfFailedEventData.Deserialize(eventData);
                 default:
                     return null;
             }

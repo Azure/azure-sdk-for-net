@@ -32,13 +32,14 @@
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IHasherExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageArgument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageCrc64Composer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />

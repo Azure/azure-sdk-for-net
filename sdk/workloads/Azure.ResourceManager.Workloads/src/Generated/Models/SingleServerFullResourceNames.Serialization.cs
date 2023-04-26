@@ -32,14 +32,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             Optional<VirtualMachineResourceNames> virtualMachine = default;
-            NamingPatternType namingPatternType = default;
+            SapNamingPatternType namingPatternType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualMachine = VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(property.Value);
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("namingPatternType"u8))
                 {
-                    namingPatternType = new NamingPatternType(property.Value.GetString());
+                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
                     continue;
                 }
             }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -25,7 +24,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of ModelState. </summary>
         /// <param name="epochIds">
-        /// This indicates the number of passes of the entire training dataset the
+        /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
         /// </param>
         /// <param name="trainLosses">
@@ -39,14 +38,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
         internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds)
         {
-            EpochIds = epochIds.ToList();
-            TrainLosses = trainLosses.ToList();
-            ValidationLosses = validationLosses.ToList();
-            LatenciesInSeconds = latenciesInSeconds.ToList();
+            EpochIds = epochIds;
+            TrainLosses = trainLosses;
+            ValidationLosses = validationLosses;
+            LatenciesInSeconds = latenciesInSeconds;
         }
 
         /// <summary>
-        /// This indicates the number of passes of the entire training dataset the
+        /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
         /// </summary>
         public IList<int> EpochIds { get; }

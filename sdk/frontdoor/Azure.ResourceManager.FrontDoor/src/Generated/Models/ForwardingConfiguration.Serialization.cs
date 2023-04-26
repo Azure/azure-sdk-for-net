@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardingProtocol = new FrontDoorForwardingProtocol(property.Value.GetString());
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

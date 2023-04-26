@@ -111,11 +111,14 @@ namespace Azure.Core.Json
         }
 
         /// <summary>
-        /// Gets the current JSON number as a double.
+        /// Attempts to represent the current JSON number as a <see cref="double"/>.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public double GetDouble()
+        /// <returns>
+        ///   <see langword="true"/> if the number can be represented as a <see cref="double"/>,
+        ///   <see langword="false"/> otherwise.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        public bool TryGetDouble(out double value)
         {
             EnsureValid();
 
@@ -124,22 +127,49 @@ namespace Azure.Core.Json
                 switch (change.Value)
                 {
                     case double d:
-                        return d;
+                        value = d;
+                        return true;
                     case JsonElement element:
-                        return element.GetDouble();
+                        return element.TryGetDouble(out value);
                     default:
-                        throw new InvalidOperationException($"Element at {_path} is not a double.");
+                        value = default;
+                        return false;
                 }
             }
 
-            return _element.GetDouble();
+            return _element.TryGetDouble(out value);
         }
 
         /// <summary>
-        /// Gets the current JSON number as an int.
+        /// Gets the current JSON number as a <see cref="double"/>.
         /// </summary>
-        /// <returns></returns>
-        public int GetInt32()
+        /// <returns>The current JSON number as a <see cref="double"/>.</returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        /// <exception cref="FormatException">The value cannot be represented as a <see cref="double"/>.</exception>
+        public double GetDouble()
+        {
+            if (!TryGetDouble(out double value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(double)));
+            }
+
+            return value;
+        }
+
+        private static string GetFormatExceptionText(string path, Type type)
+        {
+            return $"Element at {path} cannot be formatted as type '{type.ToString()}.";
+        }
+
+        /// <summary>
+        /// Attempts to represent the current JSON number as a <see cref="int"/>.
+        /// </summary>
+        /// <returns>
+        ///   <see langword="true"/> if the number can be represented as a <see cref="int"/>,
+        ///   <see langword="false"/> otherwise.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        public bool TryGetInt32(out int value)
         {
             EnsureValid();
 
@@ -148,22 +178,44 @@ namespace Azure.Core.Json
                 switch (change.Value)
                 {
                     case int i:
-                        return i;
+                        value = i;
+                        return true;
                     case JsonElement element:
-                        return element.GetInt32();
+                        return element.TryGetInt32(out value);
                     default:
-                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                        value = default;
+                        return false;
                 }
             }
 
-            return _element.GetInt32();
+            return _element.TryGetInt32(out value);
         }
 
         /// <summary>
-        /// Gets the current JSON number as a long.
+        /// Gets the current JSON number as a <see cref="int"/>.
         /// </summary>
-        /// <returns></returns>
-        public long GetInt64()
+        /// <returns>The current JSON number as a <see cref="int"/>.</returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        /// <exception cref="FormatException">The value cannot be represented as a <see cref="int"/>.</exception>
+        public int GetInt32()
+        {
+            if (!TryGetInt32(out int value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(int)));
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Attempts to represent the current JSON number as a <see cref="long"/>.
+        /// </summary>
+        /// <returns>
+        ///   <see langword="true"/> if the number can be represented as a <see cref="long"/>,
+        ///   <see langword="false"/> otherwise.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        public bool TryGetInt64(out long value)
         {
             EnsureValid();
 
@@ -172,22 +224,44 @@ namespace Azure.Core.Json
                 switch (change.Value)
                 {
                     case long l:
-                        return l;
+                        value = l;
+                        return true;
                     case JsonElement element:
-                        return element.GetInt64();
+                        return element.TryGetInt64(out value);
                     default:
-                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                        value = default;
+                        return false;
                 }
             }
 
-            return _element.GetInt64();
+            return _element.TryGetInt64(out value);
         }
 
         /// <summary>
-        /// Gets the current JSON number as a float.
+        /// Gets the current JSON number as a <see cref="long"/>.
         /// </summary>
-        /// <returns></returns>
-        public float GetSingle()
+        /// <returns>The current JSON number as a <see cref="long"/>.</returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        /// <exception cref="FormatException">The value cannot be represented as a <see cref="long"/>.</exception>
+        public long GetInt64()
+        {
+            if (!TryGetInt64(out long value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(long)));
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Attempts to represent the current JSON number as a <see cref="float"/>.
+        /// </summary>
+        /// <returns>
+        ///   <see langword="true"/> if the number can be represented as a <see cref="float"/>,
+        ///   <see langword="false"/> otherwise.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        public bool TryGetSingle(out float value)
         {
             EnsureValid();
 
@@ -196,15 +270,33 @@ namespace Azure.Core.Json
                 switch (change.Value)
                 {
                     case float f:
-                        return f;
+                        value = f;
+                        return true;
                     case JsonElement element:
-                        return element.GetSingle();
+                        return element.TryGetSingle(out value);
                     default:
-                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                        value = default;
+                        return false;
                 }
             }
 
-            return _element.GetSingle();
+            return _element.TryGetSingle(out value);
+        }
+
+        /// <summary>
+        /// Gets the current JSON number as a <see cref="float"/>.
+        /// </summary>
+        /// <returns>The current JSON number as a <see cref="float"/>.</returns>
+        /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
+        /// <exception cref="FormatException">The value cannot be represented as a <see cref="float"/>.</exception>
+        public float GetSingle()
+        {
+            if (!TryGetSingle(out float value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(float)));
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -483,12 +575,6 @@ namespace Azure.Core.Json
             Changes.AddChange(_path, element, true);
         }
 
-        internal void WriteTo(Utf8JsonWriter writer)
-        {
-            Utf8JsonReader reader = GetReaderForElement(_element);
-            _root.WriteElement(_path, _highWaterMark, ref reader, writer);
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -532,12 +618,11 @@ namespace Azure.Core.Json
 
         private byte[] GetRawBytes()
         {
-            Utf8JsonReader reader = GetReaderForElement(_element);
-
             using MemoryStream changedElementStream = new();
-            Utf8JsonWriter changedElementWriter = new(changedElementStream);
-            _root.WriteElement(_path, _highWaterMark, ref reader, changedElementWriter);
-            changedElementWriter.Flush();
+            using (Utf8JsonWriter changedElementWriter = new(changedElementStream))
+            {
+                WriteTo(changedElementWriter);
+            }
 
             return changedElementStream.ToArray();
         }
@@ -545,9 +630,11 @@ namespace Azure.Core.Json
         internal static Utf8JsonReader GetReaderForElement(JsonElement element)
         {
             using MemoryStream stream = new();
-            Utf8JsonWriter writer = new(stream);
-            element.WriteTo(writer);
-            writer.Flush();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                element.WriteTo(writer);
+            }
+
             return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 

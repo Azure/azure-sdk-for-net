@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -81,7 +80,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -100,7 +98,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -110,7 +107,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -125,7 +121,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             author = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value);

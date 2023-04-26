@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer
         /// Used for BMP files.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         Bmp
     }

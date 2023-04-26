@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -153,7 +152,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -172,7 +170,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeStarted = property0.Value.GetDateTimeOffset("O");
@@ -192,7 +188,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
@@ -207,7 +202,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new UpdateRunPropertiesState(property0.Value.GetString());
@@ -246,7 +240,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     startTimeUtc = property1.Value.GetDateTimeOffset("O");
@@ -256,7 +249,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     endTimeUtc = property1.Value.GetDateTimeOffset("O");
@@ -266,7 +258,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     lastUpdatedTimeUtc = property1.Value.GetDateTimeOffset("O");
@@ -276,7 +267,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     List<HciUpdateStep> array = new List<HciUpdateStep>();

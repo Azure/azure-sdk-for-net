@@ -18,7 +18,7 @@ namespace Azure.Core.Json
     {
         internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
-        private readonly Memory<byte> _original;
+        private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
         internal ChangeTracker Changes { get; } = new();
@@ -45,37 +45,48 @@ namespace Azure.Core.Json
         /// <summary>
         /// Writes the document to the provided stream as a JSON value.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="format"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <param name="stream">The stream to which to write the document.</param>
+        /// <param name="format">A format string indicating the format to use when writing the document.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="stream"/> parameter is <see langword="null"/>.</exception>
+        /// <exception cref="FormatException">Thrown if an unsupported value is passed for format.</exception>
+        /// <remarks>The value of <paramref name="format"/> can be default or 'J' to write the document as JSON.</remarks>
         public void WriteTo(Stream stream, StandardFormat format = default)
         {
-            // this is so we can add JSON Patch in the future
-            if (format != default)
+            Argument.AssertNotNull(stream, nameof(stream));
+
+            if (format != default && format.Symbol != 'J')
             {
-                throw new ArgumentOutOfRangeException(nameof(format));
+                throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON.");
             }
 
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             if (!Changes.HasChanges)
             {
                 Write(stream, _original.Span);
-                stream.Flush();
                 return;
             }
 
-            WriteRootElementTo(writer);
+            using Utf8JsonWriter writer = new(stream);
+            RootElement.WriteTo(writer);
         }
 
-        internal void WriteTo(Utf8JsonWriter writer)
+        /// <summary>
+        /// Writes the document to the provided stream as a JSON value.
+        /// </summary>
+        /// <param name="writer">The writer to which to write the document.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="writer"/> parameter is <see langword="null"/>.</exception>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public void WriteTo(Utf8JsonWriter writer)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            Argument.AssertNotNull(writer, nameof(writer));
+
             if (!Changes.HasChanges)
             {
                 _originalDocument.RootElement.WriteTo(writer);
                 return;
             }
 
-            WriteRootElementTo(writer);
+            RootElement.WriteTo(writer);
         }
 
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
@@ -97,10 +108,23 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
+        public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json)
+        {
+            var doc = JsonDocument.Parse(utf8Json);
+            return new MutableJsonDocument(doc, utf8Json);
+        }
+
+        /// <summary>
+        /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
+        /// </summary>
+        /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
+        /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new MutableJsonDocument(doc, utf8Json.ToArray().AsMemory());
+            return new MutableJsonDocument(doc, utf8Json.ToMemory());
         }
 
         /// <summary>
@@ -108,6 +132,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="json">The JSON string.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <exception cref="JsonException"><paramref name="json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(string json)
         {
             byte[] utf8 = Encoding.UTF8.GetBytes(json);
@@ -121,7 +146,7 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
+        internal MutableJsonDocument(JsonDocument jsonDocument, ReadOnlyMemory<byte> utf8Json)
         {
             _original = utf8Json;
             _originalDocument = jsonDocument;
@@ -143,9 +168,6 @@ namespace Azure.Core.Json
         /// <param name="type">The type of the value to convert. </param>
         internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
         {
-            if (value is JsonDocument)
-                throw new InvalidOperationException("Calling wrong constructor.");
-
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
             _originalDocument = JsonDocument.Parse(_original);

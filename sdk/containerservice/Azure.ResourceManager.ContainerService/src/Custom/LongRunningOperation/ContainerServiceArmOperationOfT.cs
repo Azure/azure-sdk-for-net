@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
         internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string interimApiVersion = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, interimApiVersion);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "ContainerServiceArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

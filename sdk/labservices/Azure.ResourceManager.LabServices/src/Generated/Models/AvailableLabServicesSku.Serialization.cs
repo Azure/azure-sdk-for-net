@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new AvailableLabServicesSkuTier(property.Value.GetString());
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value);
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableLabServicesSkuCapability> array = new List<AvailableLabServicesSkuCapability>();
@@ -90,7 +87,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -105,7 +101,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableLabServicesSkuCost> array = new List<AvailableLabServicesSkuCost>();
@@ -120,7 +115,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableLabServicesSkuRestrictions> array = new List<AvailableLabServicesSkuRestrictions>();

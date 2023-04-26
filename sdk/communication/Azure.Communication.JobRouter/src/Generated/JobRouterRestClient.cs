@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Deletes a job and all of its traces. </summary>
-        /// <param name="id"> Id of the job. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteJobAsync(string id, CancellationToken cancellationToken = default)
@@ -224,12 +224,12 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Deletes a job and all of its traces. </summary>
-        /// <param name="id"> Id of the job. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response DeleteJob(string id, CancellationToken cancellationToken = default)
@@ -246,7 +246,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="id"> Id of the job. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="dispositionCode">
         /// Indicates the outcome of the job, populate this field with your own custom values.
         /// If not provided, default value of &quot;Cancelled&quot; is set.
@@ -382,13 +382,13 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="id"> Id of the job. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="dispositionCode">
         /// Indicates the outcome of the job, populate this field with your own custom values.
         /// If not provided, default value of &quot;Cancelled&quot; is set.
@@ -414,7 +414,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -445,7 +445,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Completes an assigned job. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public async Task<Response<object>> CompleteJobActionAsync(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
@@ -471,14 +471,14 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Completes an assigned job. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public Response<object> CompleteJobAction(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
@@ -504,7 +504,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -542,7 +542,7 @@ namespace Azure.Communication.JobRouter
         /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
         /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public async Task<Response<object>> CloseJobActionAsync(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
@@ -569,7 +569,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -581,7 +581,7 @@ namespace Azure.Communication.JobRouter
         /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
         /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public Response<object> CloseJobAction(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
@@ -608,11 +608,11 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, int? maxpagesize)
+        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -636,9 +636,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("classificationPolicyId", classificationPolicyId, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -651,11 +651,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
         /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, maxpagesize);
+            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -667,7 +667,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -676,11 +676,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
         /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, maxpagesize);
+            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -692,7 +692,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -735,7 +735,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -762,7 +762,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -812,7 +812,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -844,7 +844,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -894,7 +894,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -926,7 +926,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -976,7 +976,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1008,7 +1008,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1051,7 +1051,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1078,7 +1078,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1103,7 +1103,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="patch"> Model of worker properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="patch"> Model of worker properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response<RouterWorker>> UpsertWorkerAsync(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
@@ -1129,13 +1129,13 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Creates or updates a worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="patch"> Model of worker properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="patch"> Model of worker properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
         public Response<RouterWorker> UpsertWorker(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
@@ -1161,7 +1161,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1203,7 +1203,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1230,7 +1230,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1267,7 +1267,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1289,11 +1289,11 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
+        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1317,9 +1317,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("hasCapacity", hasCapacity.Value, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1335,11 +1335,11 @@ namespace Azure.Communication.JobRouter
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1351,7 +1351,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1363,11 +1363,11 @@ namespace Azure.Communication.JobRouter
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1379,7 +1379,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1389,17 +1389,17 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
         /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, maxpagesize);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1411,7 +1411,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1421,17 +1421,17 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
         /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, maxpagesize);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1443,7 +1443,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1456,17 +1456,17 @@ namespace Azure.Communication.JobRouter
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1478,7 +1478,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1491,17 +1491,17 @@ namespace Azure.Communication.JobRouter
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1513,7 +1513,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

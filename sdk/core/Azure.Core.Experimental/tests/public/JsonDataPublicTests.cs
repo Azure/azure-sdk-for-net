@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core.Dynamic;
-using System.Text.Json;
-using NUnit.Framework;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
 {
@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanCreateFromJson()
         {
-            dynamic jsonData = new BinaryData("\"string\"").ToDynamic();
+            dynamic jsonData = new BinaryData("\"string\"").ToDynamicFromJson();
 
             Assert.AreEqual("string", (string)jsonData);
         }
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void DynamicCanConvertToIEnumerableDynamic()
         {
-            dynamic jsonData = new BinaryData("[1, null, \"s\"]").ToDynamic();
+            dynamic jsonData = new BinaryData("[1, null, \"s\"]").ToDynamicFromJson();
             int i = 0;
             foreach (var dynamicItem in jsonData)
             {
@@ -77,7 +77,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void DynamicCanConvertToIEnumerableInt()
         {
-            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamic();
+            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
             int i = 0;
             foreach (int dynamicItem in jsonData)
             {
@@ -91,14 +91,14 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void DynamicArrayHasLength()
         {
-            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamic();
+            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
             Assert.AreEqual(4, ((int[])jsonData).Length);
         }
 
         [Test]
         public void DynamicArrayForEach()
         {
-            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamic();
+            dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
             int expected = 0;
             foreach (int i in jsonData)
             {
@@ -109,7 +109,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanAccessProperties()
         {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
 
             Assert.AreEqual("Hello", (string)jsonData.primitive);
             Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanTestPropertyForNull()
         {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
 
             Assert.IsNull((int?)jsonData.OptionalInt);
             Assert.IsNull((string)jsonData.OptionalString);
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanAddStringToList()
         {
-            dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamic();
+            dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamicFromJson();
 
             List<string> list = new();
             list.Add(jsonData.value);
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanAddIntToList()
         {
-            dynamic jsonData = new BinaryData(new { value = 5 }).ToDynamic();
+            dynamic jsonData = new BinaryData(new { value = 5 }).ToDynamicFromJson();
 
             List<int> list = new();
             list.Add(jsonData.value);
@@ -150,19 +150,9 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore(reason: "TODO: Feature to be added in later version.")]
-        public void GetMemberIsCaseInsensitive()
-        {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
-
-            Assert.AreEqual("Hello", (string)jsonData.Primitive);
-            Assert.AreEqual(true, (bool)jsonData.Nested.NestedPrimitive);
-        }
-
-        [Test]
         public void CanReadIntsAsFloatingPoints()
         {
-            var json = new BinaryData("5").ToDynamic();
+            var json = new BinaryData("5").ToDynamicFromJson();
             dynamic jsonData = json;
 
             Assert.AreEqual(5, (float)jsonData);
@@ -178,7 +168,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void ReadingFloatingPointAsIntThrows()
         {
-            var json = new BinaryData("5.5").ToDynamic();
+            var json = new BinaryData("5.5").ToDynamicFromJson();
             dynamic jsonData = json;
             Assert.Throws<FormatException>(() => _ = (int)json);
             Assert.Throws<FormatException>(() => _ = (int)jsonData);
@@ -187,26 +177,9 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("Decide how to handle this case.")]
-        public void FloatOverflowThrows()
-        {
-            var json = new BinaryData("34028234663852885981170418348451692544000").ToDynamic();
-
-            JsonDocument doc = JsonDocument.Parse("34028234663852885981170418348451692544000");
-            float f = doc.RootElement.GetSingle();
-
-            dynamic jsonData = json;
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
-            Assert.Throws<OverflowException>(() => _ = (float)34028234663852885981170418348451692544000d);
-            Assert.Throws<OverflowException>(() => _ = (float)json);
-            Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-        }
-
-        [Test]
         public void CanAccessArrayValues()
         {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamic();
+            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamicFromJson();
 
             Assert.AreEqual(1, (int)jsonData.array[0]);
             Assert.AreEqual(2, (int)jsonData.array[1]);
@@ -216,27 +189,28 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanAccessJsonPropertiesWithDotnetIllegalCharacters()
         {
-            dynamic jsonData = new BinaryData("{ \"$foo\":\"Hello\" }").ToDynamic();
+            dynamic jsonData = new BinaryData("{ \"$foo\":\"Hello\" }").ToDynamicFromJson();
 
             Assert.AreEqual("Hello", (string)jsonData["$foo"]);
         }
 
         [Test]
-        [Ignore("Decide how to handle this case.")]
-        public void FloatUnderflowThrows()
+        [Ignore("Float behavior is different in JsonDocument depending on runtime version.")]
+        public void FloatOverflowThrows()
         {
-            var json = new BinaryData("-34028234663852885981170418348451692544000").ToDynamic();
+            var json = new BinaryData("34028234663852885981170418348451692544000").ToDynamicFromJson();
+
             dynamic jsonData = json;
-            Assert.Throws<OverflowException>(() => _ = (float)json);
-            Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+            Assert.Throws<FormatException>(() => _ = (float)json);
+            Assert.Throws<FormatException>(() => _ = (float)jsonData);
         }
 
         [Test]
         public void IntOverflowThrows()
         {
-            var json = new BinaryData("3402823466385288598").ToDynamic();
+            var json = new BinaryData("3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
             Assert.Throws<FormatException>(() => _ = (int)json);
             Assert.Throws<FormatException>(() => _ = (int)jsonData);
@@ -249,9 +223,25 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Float behavior is different in JsonDocument depending on runtime version.")]
+        public void FloatUnderflowThrows()
+        {
+            var json = new BinaryData("-34028234663852885981170418348451692544000").ToDynamicFromJson();
+            dynamic jsonData = json;
+
+            var doc = JsonDocument.Parse("-34028234663852885981170418348451692544000");
+            doc.RootElement.GetSingle();
+
+            Assert.Throws<FormatException>(() => _ = (float)json);
+            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+        }
+
+        [Test]
         public void IntUnderflowThrows()
         {
-            var json = new BinaryData("-3402823466385288598").ToDynamic();
+            var json = new BinaryData("-3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
             Assert.Throws<FormatException>(() => _ = (int)json);
             Assert.Throws<FormatException>(() => _ = (int)jsonData);
@@ -266,17 +256,17 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void ReadingArrayAsValueThrows()
         {
-            var json = new BinaryData("[1,3]").ToDynamic();
+            var json = new BinaryData("[1,3]").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<InvalidOperationException>(() => _ = (int)json);
-            Assert.Throws<InvalidOperationException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
         }
 
         [Test]
         public void RoundtripObjects()
         {
             var model = new SampleModel("Hello World", 5);
-            var roundtripped = (SampleModel)new BinaryData(model).ToDynamic();
+            var roundtripped = (SampleModel)new BinaryData(model).ToDynamicFromJson();
 
             Assert.AreEqual(model, roundtripped);
         }
@@ -288,7 +278,7 @@ namespace Azure.Core.Tests.Public
 
             // "O" is the only format supported by default JsonSerializer:
             // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
-            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamic().value;
+            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamicFromJson().value;
 
             var cast = (DateTimeOffset)nowJson;
 
@@ -298,7 +288,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanCastToIEnumerableOfT()
         {
-            dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamic();
+            dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamicFromJson();
 
             var enumerable = (IEnumerable<int>)data.array;
 
@@ -310,28 +300,82 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("To be implemented.")]
         public void EqualsHandlesStringsSpecial()
         {
-            dynamic json = new BinaryData("\"test\"").ToDynamic();
+            dynamic json = new BinaryData("\"test\"").ToDynamicFromJson();
 
             Assert.IsTrue(json.Equals("test"));
-            Assert.IsTrue(json.Equals(new BinaryData("\"test\"").ToDynamic()));
+            Assert.IsTrue(json == "test");
         }
 
         [Test]
-        [Ignore("To be implemented.")]
+        [TestCase("\"test\"", "\"test\"", true)]
+        [TestCase("1", "1.0", true)]
+        [TestCase("5.5", "5.5", true)]
+        [TestCase("true", "true", true)]
+        [TestCase("false", "false", true)]
+        [TestCase("null", "null", true)]
+        [TestCase("\"test\"", "\"wrong\"", false)]
+        [TestCase("\"test\"", "1", false)]
+        [TestCase("true", "false", false)]
+        [TestCase("1.1", "1.2", false)]
+        [TestCase("1", "1.2", false)]
+        [TestCase("1", "2", false)]
+        [TestCase("1", "null", false)]
+        [TestCase("1", "{ \"foo\": 1 }", false)]
+        public void EqualsPrimitiveValues(string a, string b, bool expected)
+        {
+            dynamic aJson = new BinaryData(a).ToDynamicFromJson();
+            dynamic bJson = new BinaryData(b).ToDynamicFromJson();
+
+            Assert.AreEqual(expected, aJson.Equals(bJson));
+            Assert.AreEqual(expected, aJson == bJson);
+            Assert.AreEqual(expected, bJson.Equals(aJson));
+            Assert.AreEqual(expected, bJson == aJson);
+        }
+
+        [Test]
+        public void EqualsNull()
+        {
+            dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
+            Assert.IsTrue(value.foo.Equals(null));
+            Assert.IsTrue(value.foo == null);
+
+            string nullString = null;
+            Assert.IsTrue(value.foo == nullString);
+            Assert.IsTrue(nullString == value.foo);
+
+            // Because the DLR resolves `==` for nullable value types to take the non-nullable
+            // value on the right-hand side, we'll still require a cast for nullable primitives.
+            int? nullInt = null;
+            Assert.IsTrue(value.foo == nullInt);
+            Assert.IsTrue(nullInt == (int?)value.foo);
+
+            bool? nullBool = null;
+            Assert.IsTrue(value.foo == nullBool);
+            Assert.IsTrue(nullBool == (bool?)value.foo);
+
+            // We cannot overload the equality operator with two nullable values, so
+            // the following is the consequence.
+            Assert.IsFalse(null == value.foo);
+
+            // However, this does give us a backdoor to differentiate between an
+            // absent property and a property whose JSON value is null, if we wanted to
+            // use it that way, although it's not really very nice.
+        }
+
+        [Test]
         public void EqualsForObjectsAndArrays()
         {
-            dynamic obj1 = new BinaryData(new { foo = "bar" }).ToDynamic();
-            dynamic obj2 = new BinaryData(new { foo = "bar" }).ToDynamic();
+            dynamic obj1 = new BinaryData(new { foo = "bar" }).ToDynamicFromJson();
+            dynamic obj2 = new BinaryData(new { foo = "bar" }).ToDynamicFromJson();
 
-            dynamic arr1 = new BinaryData(new[] { "bar" }).ToDynamic();
-            dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamic();
+            dynamic arr1 = new BinaryData(new[] { "bar" }).ToDynamicFromJson();
+            dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamicFromJson();
 
             // For objects and arrays, Equals provides reference equality.
-            Assert.AreEqual(obj1, obj2);
-            Assert.AreEqual(arr1, arr2);
+            Assert.AreEqual(obj1, obj1);
+            Assert.AreEqual(arr1, arr1);
 
             Assert.AreNotEqual(obj1, obj2);
             Assert.AreNotEqual(arr1, arr2);
@@ -340,8 +384,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void OperatorEqualsForBool()
         {
-            dynamic trueJson = new BinaryData("{ \"value\": true }").ToDynamic().value;
-            dynamic falseJson = new BinaryData("{ \"value\": false }").ToDynamic().value;
+            dynamic trueJson = new BinaryData("{ \"value\": true }").ToDynamicFromJson().value;
+            dynamic falseJson = new BinaryData("{ \"value\": false }").ToDynamicFromJson().value;
 
             Assert.IsTrue(trueJson == true);
             Assert.IsTrue(true == trueJson);
@@ -357,8 +401,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void OperatorEqualsForInt32()
         {
-            dynamic fiveJson = new BinaryData("{ \"value\": 5 }").ToDynamic().value;
-            dynamic sixJson = new BinaryData("{ \"value\": 6 }").ToDynamic().value;
+            dynamic fiveJson = new BinaryData("{ \"value\": 5 }").ToDynamicFromJson().value;
+            dynamic sixJson = new BinaryData("{ \"value\": 6 }").ToDynamicFromJson().value;
 
             Assert.IsTrue(fiveJson == 5);
             Assert.IsTrue(5 == fiveJson);
@@ -377,8 +421,8 @@ namespace Azure.Core.Tests.Public
             long max = long.MaxValue;
             long min = long.MinValue;
 
-            dynamic maxJson = new BinaryData($"{{ \"value\": { max } }}").ToDynamic().value;
-            dynamic minJson = new BinaryData($"{{ \"value\": { min } }}").ToDynamic().value;
+            dynamic maxJson = new BinaryData($"{{ \"value\": {max} }}").ToDynamicFromJson().value;
+            dynamic minJson = new BinaryData($"{{ \"value\": {min} }}").ToDynamicFromJson().value;
 
             Assert.IsTrue(maxJson == max);
             Assert.IsTrue(max == maxJson);
@@ -396,8 +440,8 @@ namespace Azure.Core.Tests.Public
         {
             float half = 0.5f;
 
-            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamic().value;
-            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamic().value;
+            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamicFromJson().value;
+            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamicFromJson().value;
 
             Assert.IsTrue(halfJson == half);
             Assert.IsTrue(half == halfJson);
@@ -414,8 +458,8 @@ namespace Azure.Core.Tests.Public
         {
             double half = 0.5;
 
-            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamic().value;
-            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamic().value;
+            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamicFromJson().value;
+            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamicFromJson().value;
 
             Assert.IsTrue(halfJson == half);
             Assert.IsTrue(half == halfJson);
@@ -431,8 +475,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void OperatorEqualsForString()
         {
-            dynamic fooJson = new BinaryData("\"foo\"").ToDynamic();
-            dynamic barJson = new BinaryData("\"bar\"").ToDynamic();
+            dynamic fooJson = new BinaryData("\"foo\"").ToDynamicFromJson();
+            dynamic barJson = new BinaryData("\"bar\"").ToDynamicFromJson();
 
             Assert.IsTrue(fooJson == "foo");
             Assert.IsTrue("foo" == fooJson);
@@ -446,48 +490,10 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
-        public void EqualsForStringNUnit()
-        {
-            dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamic();
-            var value = foo.Value;
-
-            Assert.AreEqual(value, "foo");
-            Assert.AreEqual("foo", value);
-
-            Assert.That(value, Is.EqualTo("foo"));
-            Assert.That("foo", Is.EqualTo(value));
-        }
-
-        [Test]
-        public async Task CanWriteToStream()
-        {
-            // Arrange
-            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamic();
-
-            // Act
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                DynamicData.WriteTo(stream, json);
-            }
-
-            // Assert
-
-            // Deserialize to model type to validate value was correctly written to stream.
-            stream.Position = 0;
-
-            var model = (SampleModel)await JsonSerializer.DeserializeAsync(stream, typeof(SampleModel));
-
-            Assert.AreEqual("Hi!", model.Message);
-            Assert.AreEqual(5, model.Number);
-        }
-
-        [Test]
         public async Task CanWriteToStream_JsonSerializer()
         {
             // Arrange
-            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamic();
+            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamicFromJson();
 
             // Act
             using var stream = new MemoryStream();

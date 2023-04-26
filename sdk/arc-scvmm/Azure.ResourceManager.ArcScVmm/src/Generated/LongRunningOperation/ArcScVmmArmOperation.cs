@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcScVmm
         internal ArcScVmmArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "ArcScVmmArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ArcScVmmArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

@@ -33,6 +33,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentOperationKind DocumentModelCompose { get; } = new DocumentOperationKind(DocumentModelComposeValue);
         /// <summary> Copy an existing document model to potentially a different resource, region, or subscription. </summary>
         public static DocumentOperationKind DocumentModelCopyTo { get; } = new DocumentOperationKind(DocumentModelCopyToValue);
+        /// <summary> Build a new custom classifier model. </summary>
+        public static DocumentOperationKind DocumentClassifierBuild { get; } = new DocumentOperationKind(DocumentClassifierBuildValue);
         /// <summary> Determines if two <see cref="DocumentOperationKind"/> values are the same. </summary>
         public static bool operator ==(DocumentOperationKind left, DocumentOperationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentOperationKind"/> values are not the same. </summary>
