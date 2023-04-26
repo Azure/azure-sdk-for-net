@@ -11,6 +11,8 @@ using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
 using System.Security.Cryptography;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
@@ -21,13 +23,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
-        protected const string VaultName = "KeyVault-rg01";
+        protected const string VaultName = "KeyVault-rg01-rg0155";
         protected const string Key1 = "key4";
         protected const string Key2 = "key5";
         protected const string Key3 = "key6";
 
         protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            IgnoreKeyVaultDependencyVersions();
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
@@ -115,6 +118,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             {
                 Assert.Ignore();
             }
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgName)
+        {
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.EastUS);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
+        protected async Task<KeyVaultResource> CreateKeyVault(ResourceGroupResource resourceGroup, string keyvaultName)
+        {
+            KeyVaultSku sku = new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard);
+            KeyVaultProperties properties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), sku);
+            KeyVaultCreateOrUpdateContent data = new KeyVaultCreateOrUpdateContent(resourceGroup.Data.Location, properties);
+            var keyvault = await resourceGroup.GetKeyVaults().CreateOrUpdateAsync(WaitUntil.Completed, keyvaultName, data);
+            return keyvault.Value;
         }
     }
 }

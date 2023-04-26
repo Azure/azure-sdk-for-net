@@ -477,6 +477,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("dependency resource have been deleted")]
         public async Task NamespaceSystemAssignedEncryptionTests()
         {
             //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted

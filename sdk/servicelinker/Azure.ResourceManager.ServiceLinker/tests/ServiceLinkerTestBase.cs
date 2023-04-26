@@ -30,17 +30,6 @@ namespace Azure.ResourceManager.ServiceLinker.Tests
             IgnoreKeyVaultDependencyVersions();
         }
 
-        private void IgnoreKeyVaultDependencyVersions()
-        {
-            // Ignore the api-version of KeyVault operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
-            {
-                GroupForReplace = "group"
-            });
-        }
-
         [OneTimeTearDown]
         public void Cleanup()
         {
