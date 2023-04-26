@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupResourceData>> GetBackupAsync(string subscriptionId, string resourceGroupName, string clusterName, string backupId, CancellationToken cancellationToken = default)
+        public async Task<Response<CassandraClusterBackupResourceData>> GetBackupAsync(string subscriptionId, string resourceGroupName, string clusterName, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -684,13 +684,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        BackupResourceData value = default;
+                        CassandraClusterBackupResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupResourceData.DeserializeBackupResourceData(document.RootElement);
+                        value = CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupResourceData)null, message.Response);
+                    return Response.FromValue((CassandraClusterBackupResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupResourceData> GetBackup(string subscriptionId, string resourceGroupName, string clusterName, string backupId, CancellationToken cancellationToken = default)
+        public Response<CassandraClusterBackupResourceData> GetBackup(string subscriptionId, string resourceGroupName, string clusterName, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -717,13 +717,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        BackupResourceData value = default;
+                        CassandraClusterBackupResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupResourceData.DeserializeBackupResourceData(document.RootElement);
+                        value = CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupResourceData)null, message.Response);
+                    return Response.FromValue((CassandraClusterBackupResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

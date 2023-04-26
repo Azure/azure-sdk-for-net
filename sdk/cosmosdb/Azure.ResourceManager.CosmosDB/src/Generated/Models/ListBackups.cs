@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ListBackups. </summary>
         internal ListBackups()
         {
-            Value = new ChangeTrackingList<BackupResourceData>();
+            Value = new ChangeTrackingList<CassandraClusterBackupResourceData>();
         }
 
         /// <summary> Initializes a new instance of ListBackups. </summary>
         /// <param name="value"> Container for array of backups. </param>
-        internal ListBackups(IReadOnlyList<BackupResourceData> value)
+        internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Container for array of backups. </summary>
-        public IReadOnlyList<BackupResourceData> Value { get; }
+        public IReadOnlyList<CassandraClusterBackupResourceData> Value { get; }
     }
 }

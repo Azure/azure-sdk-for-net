@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a BackupResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CassandraClusterResource" /> using the GetBackupResource method.
+    /// A Class representing a CassandraClusterBackupResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraClusterBackupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCassandraClusterBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraClusterResource" /> using the GetCassandraClusterBackupResource method.
     /// </summary>
-    public partial class BackupResource : ArmResource
+    public partial class CassandraClusterBackupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BackupResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CassandraClusterBackupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string backupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/backups/{backupId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _backupResourceCassandraClustersClientDiagnostics;
-        private readonly CassandraClustersRestOperations _backupResourceCassandraClustersRestClient;
-        private readonly BackupResourceData _data;
+        private readonly ClientDiagnostics _cassandraClusterBackupResourceCassandraClustersClientDiagnostics;
+        private readonly CassandraClustersRestOperations _cassandraClusterBackupResourceCassandraClustersRestClient;
+        private readonly CassandraClusterBackupResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupResource"/> class for mocking. </summary>
-        protected BackupResource()
+        /// <summary> Initializes a new instance of the <see cref="CassandraClusterBackupResource"/> class for mocking. </summary>
+        protected CassandraClusterBackupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CassandraClusterBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupResource(ArmClient client, BackupResourceData data) : this(client, data.Id)
+        internal CassandraClusterBackupResource(ArmClient client, CassandraClusterBackupResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraClusterBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BackupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CassandraClusterBackupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string backupResourceCassandraClustersApiVersion);
-            _backupResourceCassandraClustersRestClient = new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceCassandraClustersApiVersion);
+            _cassandraClusterBackupResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cassandraClusterBackupResourceCassandraClustersApiVersion);
+            _cassandraClusterBackupResourceCassandraClustersRestClient = new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraClusterBackupResourceCassandraClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupResourceData Data
+        public virtual CassandraClusterBackupResourceData Data
         {
             get
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraClusterBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResource.Get");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResource.Get");
             scope.Start();
             try
             {
-                var response = await _backupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraClusterBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CassandraClusterBackupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResource.Get");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResource.Get");
             scope.Start();
             try
             {
-                var response = _backupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraClusterBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,23 +13,23 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing the BackupResource data model.
+    /// A class representing the CassandraClusterBackupResource data model.
     /// A restorable backup of a Cassandra cluster.
     /// </summary>
-    public partial class BackupResourceData : ResourceData
+    public partial class CassandraClusterBackupResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of BackupResourceData. </summary>
-        public BackupResourceData()
+        /// <summary> Initializes a new instance of CassandraClusterBackupResourceData. </summary>
+        public CassandraClusterBackupResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceData. </summary>
+        /// <summary> Initializes a new instance of CassandraClusterBackupResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        internal BackupResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal CassandraClusterBackupResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupResource" /> and their operations.
-    /// Each <see cref="BackupResource" /> in the collection will belong to the same instance of <see cref="CassandraClusterResource" />.
-    /// To get a <see cref="BackupResourceCollection" /> instance call the GetBackupResources method from an instance of <see cref="CassandraClusterResource" />.
+    /// A class representing a collection of <see cref="CassandraClusterBackupResource" /> and their operations.
+    /// Each <see cref="CassandraClusterBackupResource" /> in the collection will belong to the same instance of <see cref="CassandraClusterResource" />.
+    /// To get a <see cref="CassandraClusterBackupResourceCollection" /> instance call the GetCassandraClusterBackupResources method from an instance of <see cref="CassandraClusterResource" />.
     /// </summary>
-    public partial class BackupResourceCollection : ArmCollection, IEnumerable<BackupResource>, IAsyncEnumerable<BackupResource>
+    public partial class CassandraClusterBackupResourceCollection : ArmCollection, IEnumerable<CassandraClusterBackupResource>, IAsyncEnumerable<CassandraClusterBackupResource>
     {
-        private readonly ClientDiagnostics _backupResourceCassandraClustersClientDiagnostics;
-        private readonly CassandraClustersRestOperations _backupResourceCassandraClustersRestClient;
+        private readonly ClientDiagnostics _cassandraClusterBackupResourceCassandraClustersClientDiagnostics;
+        private readonly CassandraClustersRestOperations _cassandraClusterBackupResourceCassandraClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupResourceCollection"/> class for mocking. </summary>
-        protected BackupResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="CassandraClusterBackupResourceCollection"/> class for mocking. </summary>
+        protected CassandraClusterBackupResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraClusterBackupResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BackupResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CassandraClusterBackupResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", BackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BackupResource.ResourceType, out string backupResourceCassandraClustersApiVersion);
-            _backupResourceCassandraClustersRestClient = new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceCassandraClustersApiVersion);
+            _cassandraClusterBackupResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterBackupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CassandraClusterBackupResource.ResourceType, out string cassandraClusterBackupResourceCassandraClustersApiVersion);
+            _cassandraClusterBackupResourceCassandraClustersRestClient = new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraClusterBackupResourceCassandraClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual async Task<Response<BackupResource>> GetAsync(string backupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraClusterBackupResource>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResourceCollection.Get");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _backupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraClusterBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,18 +106,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<BackupResource> Get(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraClusterBackupResource> Get(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResourceCollection.Get");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _backupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken);
+                var response = _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraClusterBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CassandraClusterBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CassandraClusterBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupResourceCassandraClustersRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new BackupResource(Client, BackupResourceData.DeserializeBackupResourceData(e)), _backupResourceCassandraClustersClientDiagnostics, Pipeline, "BackupResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterBackupResourceCassandraClustersRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraClusterBackupResource(Client, CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(e)), _cassandraClusterBackupResourceCassandraClustersClientDiagnostics, Pipeline, "CassandraClusterBackupResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CassandraClusterBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CassandraClusterBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupResourceCassandraClustersRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new BackupResource(Client, BackupResourceData.DeserializeBackupResourceData(e)), _backupResourceCassandraClustersClientDiagnostics, Pipeline, "BackupResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterBackupResourceCassandraClustersRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraClusterBackupResource(Client, CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(e)), _cassandraClusterBackupResourceCassandraClustersClientDiagnostics, Pipeline, "CassandraClusterBackupResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResourceCollection.Exists");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _backupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _backupResourceCassandraClustersClientDiagnostics.CreateScope("BackupResourceCollection.Exists");
+            using var scope = _cassandraClusterBackupResourceCassandraClustersClientDiagnostics.CreateScope("CassandraClusterBackupResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _backupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
+                var response = _cassandraClusterBackupResourceCassandraClustersRestClient.GetBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        IEnumerator<BackupResource> IEnumerable<BackupResource>.GetEnumerator()
+        IEnumerator<CassandraClusterBackupResource> IEnumerable<CassandraClusterBackupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BackupResource> IAsyncEnumerable<BackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CassandraClusterBackupResource> IAsyncEnumerable<CassandraClusterBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

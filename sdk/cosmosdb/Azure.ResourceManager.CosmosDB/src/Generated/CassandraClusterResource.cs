@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BackupResources in the CassandraCluster. </summary>
-        /// <returns> An object representing collection of BackupResources and their operations over a BackupResource. </returns>
-        public virtual BackupResourceCollection GetBackupResources()
+        /// <summary> Gets a collection of CassandraClusterBackupResources in the CassandraCluster. </summary>
+        /// <returns> An object representing collection of CassandraClusterBackupResources and their operations over a CassandraClusterBackupResource. </returns>
+        public virtual CassandraClusterBackupResourceCollection GetCassandraClusterBackupResources()
         {
-            return GetCachedClient(Client => new BackupResourceCollection(Client, Id));
+            return GetCachedClient(Client => new CassandraClusterBackupResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BackupResource>> GetBackupResourceAsync(string backupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraClusterBackupResource>> GetCassandraClusterBackupResourceAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            return await GetBackupResources().GetAsync(backupId, cancellationToken).ConfigureAwait(false);
+            return await GetCassandraClusterBackupResources().GetAsync(backupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupResource> GetBackupResource(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraClusterBackupResource> GetCassandraClusterBackupResource(string backupId, CancellationToken cancellationToken = default)
         {
-            return GetBackupResources().Get(backupId, cancellationToken);
+            return GetCassandraClusterBackupResources().Get(backupId, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraDataCenterResources in the CassandraCluster. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class BackupResourceData : IUtf8JsonSerializable
+    public partial class CassandraClusterBackupResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceData DeserializeBackupResourceData(JsonElement element)
+        internal static CassandraClusterBackupResourceData DeserializeCassandraClusterBackupResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new BackupResourceData(id, name, type, systemData.Value, properties.Value);
+            return new CassandraClusterBackupResourceData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

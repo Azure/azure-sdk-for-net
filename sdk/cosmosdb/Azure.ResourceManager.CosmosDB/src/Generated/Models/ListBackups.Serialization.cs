@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupResourceData>> value = default;
+            Optional<IReadOnlyList<CassandraClusterBackupResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<BackupResourceData> array = new List<BackupResourceData>();
+                    List<CassandraClusterBackupResourceData> array = new List<CassandraClusterBackupResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupResourceData.DeserializeBackupResourceData(item));
+                        array.Add(CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(item));
                     }
                     value = array;
                     continue;
