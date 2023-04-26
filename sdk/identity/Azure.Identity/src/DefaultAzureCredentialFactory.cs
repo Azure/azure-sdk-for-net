@@ -162,7 +162,7 @@ namespace Azure.Identity
 
             options.TenantId = Options.TenantId;
 
-            options.ProcessTimeout = Options.DeveloperCredentialTimeout;
+            options.ProcessTimeout = Options.CredentialProcessTimeout;
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
@@ -173,7 +173,7 @@ namespace Azure.Identity
 
             options.TenantId = Options.TenantId;
 
-            options.ProcessTimeout = Options.DeveloperCredentialTimeout;
+            options.ProcessTimeout = Options.CredentialProcessTimeout;
 
             return new AzureCliCredential(Pipeline, default, options);
         }
@@ -184,7 +184,7 @@ namespace Azure.Identity
 
             options.TenantId = Options.VisualStudioTenantId;
 
-            options.ProcessTimeout = Options.DeveloperCredentialTimeout;
+            options.ProcessTimeout = Options.CredentialProcessTimeout;
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, default, default, options);
         }
@@ -204,7 +204,7 @@ namespace Azure.Identity
 
             options.TenantId = Options.TenantId;
 
-            options.ProcessTimeout = Options.DeveloperCredentialTimeout;
+            options.ProcessTimeout = Options.CredentialProcessTimeout;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
         }
