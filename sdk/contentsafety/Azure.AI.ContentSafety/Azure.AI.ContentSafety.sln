@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Perf", "perf\Azure.AI.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.ContentSafety.Perf", "perf\Azure.AI.ContentSafety.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Tests", "tests\Azure.AI.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.ContentSafety.Tests", "tests\Azure.AI.ContentSafety.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.ContentSafety", "src\Azure.AI.ContentSafety.csproj", "{4711C99C-C4E1-49DE-849D-BA388334BBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.ContentSafety", "src\Azure.AI.ContentSafety.csproj", "{D57E62A5-01D2-4D1E-8E10-2A66345F38CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4711C99C-C4E1-49DE-849D-BA388334BBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4711C99C-C4E1-49DE-849D-BA388334BBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4711C99C-C4E1-49DE-849D-BA388334BBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4711C99C-C4E1-49DE-849D-BA388334BBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57E62A5-01D2-4D1E-8E10-2A66345F38CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57E62A5-01D2-4D1E-8E10-2A66345F38CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57E62A5-01D2-4D1E-8E10-2A66345F38CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57E62A5-01D2-4D1E-8E10-2A66345F38CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

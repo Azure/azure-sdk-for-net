@@ -29,57 +29,43 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "endpointPrefix": {
+            "defaultValue": "contentsafety",
+            "type": "string"
+        },
+        "endpointSuffix": {
+            "defaultValue": ".cognitiveservices.azure.com",
+            "type": "string"
         }
     },
     "variables": {
-        "secretValue": "Very secret value"
+        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2016-10-01",
-            "name": "[parameters('baseName')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[variables('uniqueSubDomainName')]",
             "location": "[parameters('location')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "ContentSafety",
             "properties": {
-                "sku": {
-                    "family": "A",
-                    "name": "premium"
-                },
-                "tenantId": "[parameters('tenantId')]",
-                "accessPolicies": [
-                    {
-                        "tenantId": "[parameters('tenantId')]",
-                        "objectId": "[parameters('testApplicationOid')]",
-                        "permissions": {
-                            "secrets": [
-                                "get"
-                            ]
-                        }
-                    }
-                ]
+                "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(parameters('baseName'), '/TestSecret')]",
-            "apiVersion": "2016-10-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-              "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
-            ],
-            "properties": {
-              "value": "[variables('secretValue')]"
-            }
-          }
+        }
     ],
     "outputs": {
-        "KEYVAULT_URL": {
+        "CONTENT_SAFETY_ENDPOINT": {
             "type": "string",
-            "value": "[reference(parameters('baseName')).vaultUri]"
+            "value": "[variables('endpointValue')]"
         },
-        "KEYVAULT_SECRET": {
+        "CONTENT_SAFETY_KEY": {
             "type": "string",
-            "value": "[variables('secretValue')]"
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
         }
     }
 }

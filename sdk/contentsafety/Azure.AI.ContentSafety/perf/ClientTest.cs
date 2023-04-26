@@ -8,7 +8,7 @@ using Azure.Identity;
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace Azure.AI.Perf
+namespace Azure.AI.ContentSafety.Perf
 {
     public class ClientTest : PerfTest<ClientTest.ClientPerfOptions>
     {
