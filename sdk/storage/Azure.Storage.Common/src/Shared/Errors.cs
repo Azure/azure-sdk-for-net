@@ -60,6 +60,9 @@ namespace Azure.Storage
             => new InvalidDataException($"Compared checksums did not match. Invalid data may have been written to the destination. Left: {Convert.ToBase64String(left.ToArray())} Right: {Convert.ToBase64String(right.ToArray())}");
 #endif
 
+        public static InvalidDataException HashMismatchOnStreamedDownload(string mismatchedRange)
+            => new InvalidDataException($"Detected invalid data while streaming to the destination. Range {mismatchedRange} produced mismatched checksum.");
+
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
             => new ArgumentException("Precalculated checksum not supported when potentially partitioning an upload.");
 
