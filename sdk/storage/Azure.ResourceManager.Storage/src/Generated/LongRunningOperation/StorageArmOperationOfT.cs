@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage
         internal StorageArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "StorageArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "StorageArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

@@ -201,9 +201,9 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
-        /// Specifies timeout for Developer credentials. e.g. Visual Studio, Azure CLI, Azure Powershell.
+        /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure Powershell.
         /// </summary>
-        public TimeSpan? DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(30);
+        public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
@@ -264,7 +264,7 @@ namespace Azure.Identity
         public bool ExcludeAzurePowerShellCredential { get; set; }
 
         /// <inheriteddoc/>
-        public bool DisableInstanceDiscovery { get; set; }
+        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
 
         internal override T Clone<T>()
         {
@@ -282,7 +282,7 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
-                dacClone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;
+                dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
                 dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;

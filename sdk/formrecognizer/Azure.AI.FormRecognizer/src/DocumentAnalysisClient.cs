@@ -111,6 +111,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
+        #region Document Models
+
         /// <summary>
         /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
         /// models provided by the Form Recognizer service.
@@ -363,6 +365,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        #endregion Document Models
+
+        #region Document Classifiers
+
         /// <summary>
         /// Classifies one or more documents using a document classifier built with custom documents.
         /// </summary>
@@ -550,5 +556,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw;
             }
         }
+
+        #endregion Document Classifiers
     }
 }

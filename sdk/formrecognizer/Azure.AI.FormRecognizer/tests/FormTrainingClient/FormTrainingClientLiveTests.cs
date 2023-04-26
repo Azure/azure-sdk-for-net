@@ -311,7 +311,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1001", ex.ErrorCode);
         }
 
-        #region management ops
+        #region administration ops
 
         [RecordedTest]
         [TestCase(true, true)]
@@ -397,7 +397,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1022", ex.ErrorCode);
         }
 
-        #endregion management ops
+        #endregion administration ops
 
         #region Copy
 

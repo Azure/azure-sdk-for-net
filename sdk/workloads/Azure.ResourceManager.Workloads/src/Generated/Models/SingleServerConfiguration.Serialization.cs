@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
-            VirtualMachineConfiguration virtualMachineConfiguration = default;
+            SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             Optional<DiskConfiguration> dbDiskConfiguration = default;
             Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))

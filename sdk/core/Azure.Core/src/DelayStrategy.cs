@@ -4,8 +4,6 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -46,7 +44,7 @@ namespace Azure.Core
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
-            return new ExponentialDelayStrategyInternal(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
+            return new ExponentialDelayStrategy(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
         }
 
         /// <summary>

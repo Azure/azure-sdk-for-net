@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -14,17 +17,22 @@ namespace Azure.Communication.CallAutomation
     internal partial class SendDtmfRequestInternal
     {
         /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
-        /// <param name="sendDtmfOptions"> Defines options for sending dtmf tones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendDtmfOptions"/> is null. </exception>
-        public SendDtmfRequestInternal(SendDtmfOptionsInternal sendDtmfOptions)
+        /// <param name="tones"> List of tones to be sent to target participant. </param>
+        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
+        public SendDtmfRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
         {
-            Argument.AssertNotNull(sendDtmfOptions, nameof(sendDtmfOptions));
+            Argument.AssertNotNull(tones, nameof(tones));
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
-            SendDtmfOptions = sendDtmfOptions;
+            Tones = tones.ToList();
+            TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Defines options for sending dtmf tones. </summary>
-        public SendDtmfOptionsInternal SendDtmfOptions { get; }
+        /// <summary> List of tones to be sent to target participant. </summary>
+        public IList<DtmfTone> Tones { get; }
+        /// <summary> Target participant of send DTMF. </summary>
+        public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }
