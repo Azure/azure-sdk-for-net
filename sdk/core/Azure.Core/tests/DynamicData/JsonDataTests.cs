@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using Azure.Core.Dynamic;
 using NUnit.Framework;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Core.Tests
 {
     public class JsonDataTests
     {

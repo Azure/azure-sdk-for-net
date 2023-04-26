@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core.Dynamic
+namespace Azure
 {
     /// <summary>
     /// Options for getting and setting DynamicData properties.

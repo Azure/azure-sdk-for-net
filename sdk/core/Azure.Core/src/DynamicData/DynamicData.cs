@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -28,9 +30,9 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
-        private DynamicJsonOptions _options;
+        private DynamicDataOptions _options;
 
-        internal DynamicData(MutableJsonElement element, DynamicJsonOptions options = default)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
         {
             _element = element;
             _options = options;
@@ -65,13 +67,13 @@ namespace Azure.Core.Dynamic
         private bool PascalCaseGetters()
         {
             return
-                _options.PropertyNameCasing == DynamicDataNameMapping.PascalCaseGetters ||
-                _options.PropertyNameCasing == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseGetters ||
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private bool CamelCaseSetters()
         {
-            return _options.PropertyNameCasing == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+            return _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private static string GetAsCamelCase(string value)
@@ -103,7 +105,7 @@ namespace Azure.Core.Dynamic
             {
                 JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
                 JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject(), _options),
-                _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind {_element.ValueKind}.  Cannot cast value to IEnumerable."),
+                _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind '{_element.ValueKind}'.  Cannot cast value to IEnumerable."),
             };
         }
 
@@ -111,7 +113,7 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (_options.PropertyNameCasing == DynamicDataNameMapping.None)
+            if (_options.NameMapping == DynamicDataNameMapping.None)
             {
                 _element = _element.SetProperty(name, value);
                 return null;
@@ -161,14 +163,14 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        private T ConvertTo<T>()
+        private T? ConvertTo<T>()
         {
             JsonElement element = _element.GetJsonElement();
 
             try
             {
 #if NET6_0_OR_GREATER
-                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions)!;
+                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
                 return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
@@ -176,7 +178,7 @@ namespace Azure.Core.Dynamic
             }
             catch (JsonException e)
             {
-                throw new InvalidCastException($"Unable to convert value of kind {element.ValueKind} to type {typeof(T)}.", e);
+                throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.", e);
             }
         }
 
@@ -193,6 +195,7 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)
         {
             if (obj is null)
@@ -277,6 +280,7 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return _element.GetHashCode();

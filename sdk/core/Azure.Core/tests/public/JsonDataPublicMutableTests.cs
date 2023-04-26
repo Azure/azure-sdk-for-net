@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using NUnit.Framework;
 

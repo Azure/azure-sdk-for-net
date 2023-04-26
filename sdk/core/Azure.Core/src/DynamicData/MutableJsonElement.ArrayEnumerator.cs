@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Json
 {
-    public partial struct MutableJsonElement
+    internal partial struct MutableJsonElement
     {
         /// <summary>
         /// An enumerable and enumerator for the contents of a mutable JSON array.

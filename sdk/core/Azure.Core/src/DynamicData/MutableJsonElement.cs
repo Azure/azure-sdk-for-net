@@ -14,7 +14,7 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON element.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public readonly partial struct MutableJsonElement
+    internal readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
@@ -52,7 +52,7 @@ namespace Azure.Core.Json
         {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"{_path} does not contain property called {name}");
+                throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
             }
 
             return value;
@@ -158,7 +158,7 @@ namespace Azure.Core.Json
 
         private static string GetFormatExceptionText(string path, Type type)
         {
-            return $"Element at {path} cannot be formatted as type '{type.ToString()}.";
+            return $"Element at '{path}' cannot be formatted as type '{type.ToString()}.";
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.Core.Json
                         {
                             return null;
                         }
-                        throw new InvalidOperationException($"Element at {_path} is not a string.");
+                        throw new InvalidOperationException($"Element at '{_path}' is not a string.");
                 }
             }
 
@@ -346,7 +346,7 @@ namespace Azure.Core.Json
                     case JsonElement element:
                         return element.GetBoolean();
                     default:
-                        throw new InvalidOperationException($"Element at {_path} is not a bool.");
+                        throw new InvalidOperationException($"Element at '{_path}' is not a bool.");
                 }
             }
 
@@ -429,7 +429,7 @@ namespace Azure.Core.Json
 
             if (!_element.TryGetProperty(name, out _))
             {
-                throw new InvalidOperationException($"Object does not have property: {name}.");
+                throw new InvalidOperationException($"Object does not have property: '{name}'.");
             }
 
             Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
@@ -582,10 +582,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.Value == null)
-                    return "null";
-
-                return change.Value.ToString()!;
+                return change.Value?.ToString() ?? "null";
             }
 
             // Account for changes to descendants of this element as well
@@ -594,7 +591,7 @@ namespace Azure.Core.Json
                 return Encoding.UTF8.GetString(GetRawBytes());
             }
 
-            return _element.ToString();
+            return _element.ToString() ?? "null";
         }
 
         internal JsonElement GetJsonElement()
@@ -647,7 +644,7 @@ namespace Azure.Core.Json
         {
             if (_element.ValueKind != JsonValueKind.Object)
             {
-                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+                throw new InvalidOperationException($"Expected an 'Object' type but was '{_element.ValueKind}'.");
             }
         }
 
@@ -655,7 +652,7 @@ namespace Azure.Core.Json
         {
             if (_element.ValueKind != JsonValueKind.Array)
             {
-                throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
+                throw new InvalidOperationException($"Expected an 'Array' type but was '{_element.ValueKind}'.");
             }
         }
 

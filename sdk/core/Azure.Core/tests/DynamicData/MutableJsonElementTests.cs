@@ -5,7 +5,7 @@ using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Core.Tests
 {
     internal class MutableJsonElementTests
     {
