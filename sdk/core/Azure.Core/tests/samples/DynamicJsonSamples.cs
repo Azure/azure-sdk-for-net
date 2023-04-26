@@ -18,7 +18,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:GetDynamicJson
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamic();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             #endregion
         }
 
@@ -29,8 +29,53 @@ namespace Azure.Core.Samples
 
             #region Snippet:GetDynamicJsonProperty
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamic();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             string name = widget.Name;
+            #endregion
+        }
+
+        [Test]
+        public async Task GetDynamicJsonOptionalProperty()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:GetDynamicJsonOptionalProperty
+            Response response = await client.GetWidgetAsync("123");
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+
+            // Check whether optional property is present
+            if (widget.Properties != null)
+            {
+                string color = widget.Properties.Color;
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task EnumerateDynamicJsonObject()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:EnumerateDynamicJsonObject
+            Response response = await client.GetWidgetAsync("123");
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+
+#if !SNIPPET
+            widget.Properties = new
+            {
+                color = "blue",
+                size = "small"
+            };
+#endif
+            foreach (dynamic property in widget.Properties)
+            {
+                UpdateWidget(property.Name, property.Value);
+            }
+
+            void UpdateWidget(string name, string value)
+            {
+                Console.WriteLine($"Widget has property {name}='{value}'.");
+            }
             #endregion
         }
 
@@ -41,7 +86,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:RoundTripAnonymousType
             Response response = client.GetWidget("123");
-            dynamic widget = response.Content.ToDynamic();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
             RequestContent update = RequestContent.Create(
                 new
@@ -63,11 +108,9 @@ namespace Azure.Core.Samples
 
             #region Snippet:RoundTripDynamicJson
             Response response = client.GetWidget("123");
-            dynamic widget = response.Content.ToDynamic();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
             widget.Name = "New Name";
-
-            // TODO: Add implicit cast to RequestContent?
 
             await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
             #endregion

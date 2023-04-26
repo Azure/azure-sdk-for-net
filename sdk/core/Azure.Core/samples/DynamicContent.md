@@ -1,6 +1,6 @@
 # Azure SDK Dynamic JSON samples
 
-Azure SDK client [Protocol methods](ProtocolMethods.md) do not take or return model types.  JSON response content can be accessed using BCL JSON types, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a dynamic layer over JSON APIs.
+Azure SDK client [protocol methods](ProtocolMethods.md) do not take or return model types.  JSON response content can be accessed using Base Class Library (BCL) types such as `JsonDocument`, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a dynamic layer over JSON APIs.
 
 ## Accessing Response Content
 
@@ -10,7 +10,7 @@ Dynamic content is obtained from the `Response` return value.
 
 ```C# Snippet:GetDynamicJson
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamic();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 ```
 
 ### Get a JSON property
@@ -19,7 +19,7 @@ JSON properties are read using dynamic member access.
 
 ```C# Snippet:GetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamic();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 string name = widget.Name;
 ```
 
@@ -27,13 +27,35 @@ string name = widget.Name;
 
 Optional properties are checked for null.
 
-[TODO: implement](https://github.com/Azure/azure-sdk-for-net/issues/33856)
+```C# Snippet:GetDynamicJsonOptionalProperty
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+
+// Check whether optional property is present
+if (widget.Properties != null)
+{
+    string color = widget.Properties.Color;
+}
+```
 
 ### Collections can be enumerated
 
-Dynamic JSON arrays are `IEnumerable` and can be iterated over with the `foreach` keyword.
+Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with the `foreach` keyword.
 
-[TODO: Add sample]
+```C# Snippet:EnumerateDynamicJsonObject
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+
+foreach (dynamic property in widget.Properties)
+{
+    UpdateWidget(property.Name, property.Value);
+}
+
+void UpdateWidget(string name, string value)
+{
+    Console.WriteLine($"Widget has property {name}='{value}'.");
+}
+```
 
 ## Setting Request Content
 
@@ -43,7 +65,7 @@ Implementing a round-trip scenario using anonymous types requires copying every 
 
 ```C# Snippet:RoundTripAnonymousType
 Response response = client.GetWidget("123");
-dynamic widget = response.Content.ToDynamic();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
 RequestContent update = RequestContent.Create(
     new
@@ -61,11 +83,9 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:RoundTripDynamicJson
 Response response = client.GetWidget("123");
-dynamic widget = response.Content.ToDynamic();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
 widget.Name = "New Name";
-
-// TODO: Add implicit cast to RequestContent?
 
 await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
 ```
