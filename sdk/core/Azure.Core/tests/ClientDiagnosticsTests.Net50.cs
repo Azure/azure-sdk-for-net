@@ -473,35 +473,6 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void OpenTelemetryCompatibilityWithTraceIdRatioBasedSampler()
-        {
-            using var _ = SetAppConfigSwitch();
-
-            // Open Telemetry Listener
-            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource($"Azure.*")
-                .SetSampler(new TraceIdRatioBasedSampler(0.1))
-                .Build();
-
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
-
-            int activeActivityCounts = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-                scope.Start();
-                if (Activity.Current.IsAllDataRequested) activeActivityCounts++;
-                scope.Dispose();
-            }
-
-            Assert.IsTrue(activeActivityCounts > 0, "No activities created");
-            Assert.IsTrue(activeActivityCounts < 20, "More than expected activities created");
-
-            Assert.IsNull(Activity.Current);
-        }
-
-        [Test]
-        [NonParallelizable]
         public void OpenTelemetryCompatibilityWithAlwaysOffSampler()
         {
             using var _ = SetAppConfigSwitch();
@@ -519,14 +490,15 @@ namespace Azure.Core.Tests
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
                 scope.Start();
-                if (Activity.Current.IsAllDataRequested)
+                if (Activity.Current != null)
+                {
                     activeActivityCounts++;
+                }
                 scope.Dispose();
+                Assert.IsNull(Activity.Current);
             }
 
             Assert.AreEqual(0, activeActivityCounts);
-
-            Assert.IsNull(Activity.Current);
         }
 
         [Test]
@@ -550,15 +522,15 @@ namespace Azure.Core.Tests
                 scope.AddLink($"00-6e76af18746bae4eadc3581338bbe8b{i}-2899ebfdbdce904b-00", "foo=bar");
 
                 scope.Start();
-
-                if (Activity.Current.IsAllDataRequested)
+                if (Activity.Current != null)
+                {
                     activeActivityCounts++;
+                }
                 scope.Dispose();
+                Assert.IsNull(Activity.Current);
             }
 
             Assert.AreEqual(4, activeActivityCounts); // 1 activity will be dropped due to sampler logic
-
-            Assert.IsNull(Activity.Current);
         }
 
         private class CustomSampler : Sampler

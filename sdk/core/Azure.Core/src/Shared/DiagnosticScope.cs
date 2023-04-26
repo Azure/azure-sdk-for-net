@@ -174,6 +174,8 @@ namespace Azure.Core.Pipeline
             private readonly object? _diagnosticSourceArgs;
 
             private Activity? _currentActivity;
+            private Activity? _sampleOutActivity;
+
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
@@ -202,10 +204,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    if (_isAllDataRequested)
-                    {
-                        _currentActivity?.AddObjectTag(name, value);
-                    }
+                    _currentActivity?.AddObjectTag(name, value);
                 }
             }
 
@@ -267,6 +266,17 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
+                    _isAllDataRequested = _currentActivity.GetIsAllDataRequestedFlag();
+
+                    if (!_isAllDataRequested)
+                    {
+                        _sampleOutActivity = _currentActivity;
+                        _currentActivity.Stop();
+                        _currentActivity = null;
+
+                        return null;
+                    }
+
                     _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
@@ -327,8 +337,6 @@ namespace Azure.Core.Pipeline
                     _currentActivity.Start();
                 }
 
-                _isAllDataRequested = _currentActivity?.GetIsAllDataRequestedFlag() ?? true;
-
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
                 return _currentActivity;
@@ -356,17 +364,14 @@ namespace Azure.Core.Pipeline
 
             public void MarkFailed(Exception? exception)
             {
-                if (_isAllDataRequested)
+                if (exception != null)
                 {
-                    if (exception != null)
-                    {
-                        _diagnosticSource?.Write(_activityName + ".Exception", exception);
-                    }
+                    _diagnosticSource?.Write(_activityName + ".Exception", exception);
+                }
 
-                    if (ActivityExtensions.SupportsActivitySource())
-                    {
-                        _currentActivity?.SetErrorStatus(exception?.ToString());
-                    }
+                if (ActivityExtensions.SupportsActivitySource())
+                {
+                    _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
             }
 
@@ -396,6 +401,7 @@ namespace Azure.Core.Pipeline
                 {
                     _currentActivity.Stop();
                 }
+                _sampleOutActivity?.Stop();
             }
         }
     }
