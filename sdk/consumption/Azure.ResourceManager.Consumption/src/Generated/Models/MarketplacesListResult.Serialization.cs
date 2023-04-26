@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Marketplace>> value = default;
+            Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    List<Marketplace> array = new List<Marketplace>();
+                    List<ConsumptionMarketplace> array = new List<ConsumptionMarketplace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Marketplace.DeserializeMarketplace(item));
+                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item));
                     }
                     value = array;
                     continue;

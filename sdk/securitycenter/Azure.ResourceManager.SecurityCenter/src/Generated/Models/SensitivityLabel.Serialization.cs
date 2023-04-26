@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<Rank> rank = default;
+            Optional<SensitivityLabelRank> rank = default;
             Optional<int> order = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    rank = property.Value.GetString().ToRank();
+                    rank = property.Value.GetString().ToSensitivityLabelRank();
                     continue;
                 }
                 if (property.NameEquals("order"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SingleMetricBaseline>> value = default;
+            Optional<IReadOnlyList<MonitorSingleMetricBaseline>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<SingleMetricBaseline> array = new List<SingleMetricBaseline>();
+                    List<MonitorSingleMetricBaseline> array = new List<MonitorSingleMetricBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SingleMetricBaseline.DeserializeSingleMetricBaseline(item));
+                        array.Add(MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(item));
                     }
                     value = array;
                     continue;

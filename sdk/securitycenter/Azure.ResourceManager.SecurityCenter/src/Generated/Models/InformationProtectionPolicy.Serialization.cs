@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<string> version = default;
             Optional<IDictionary<string, SensitivityLabel>> labels = default;
-            Optional<IDictionary<string, InformationType>> informationTypes = default;
+            Optional<IDictionary<string, SecurityInformationTypeInfo>> informationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, InformationType> dictionary = new Dictionary<string, InformationType>();
+                            Dictionary<string, SecurityInformationTypeInfo> dictionary = new Dictionary<string, SecurityInformationTypeInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, InformationType.DeserializeInformationType(property1.Value));
+                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value));
                             }
                             informationTypes = dictionary;
                             continue;

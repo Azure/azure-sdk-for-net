@@ -10,23 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period. </summary>
+    /// <summary>
+    /// Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period.
+    /// Serialized Name: UsageDetailsListResult
+    /// </summary>
     internal partial class UsageDetailsListResult
     {
         /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
         internal UsageDetailsListResult()
         {
-            Value = new ChangeTrackingList<UsageDetail>();
+            Value = new ChangeTrackingList<ConsumptionUsageDetail>();
         }
 
         /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
         /// <param name="value">
         /// The list of usage details.
-        /// Please note <see cref="UsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LegacyUsageDetail"/> and <see cref="ModernUsageDetail"/>.
+        /// Serialized Name: UsageDetailsListResult.value
+        /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
         /// </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal UsageDetailsListResult(IReadOnlyList<UsageDetail> value, string nextLink)
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: UsageDetailsListResult.nextLink
+        /// </param>
+        internal UsageDetailsListResult(IReadOnlyList<ConsumptionUsageDetail> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,11 +41,15 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The list of usage details.
-        /// Please note <see cref="UsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LegacyUsageDetail"/> and <see cref="ModernUsageDetail"/>.
+        /// Serialized Name: UsageDetailsListResult.value
+        /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
         /// </summary>
-        public IReadOnlyList<UsageDetail> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        public IReadOnlyList<ConsumptionUsageDetail> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: UsageDetailsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

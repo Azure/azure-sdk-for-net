@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourcePolicyTrackedResourcesAsync(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyTrackedResourcesAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResourcePolicyTrackedResources(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyTrackedResources(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<PolicyEvent> GetQueryResultsForResourcePolicyEventsAsync(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyEventsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -361,9 +361,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<PolicyEvent> GetQueryResultsForResourcePolicyEvents(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyEvents(policyEventType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<PolicyState> GetQueryResultsForResourcePolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyStatesAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<PolicyState> GetQueryResultsForResourcePolicyStates(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyState> GetPolicyStateQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQueryResultsForResourcePolicyStates(policyStateType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<PolicySummary> SummarizeForResourcePolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).SummarizeForResourcePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -453,9 +453,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<PolicySummary> SummarizeForResourcePolicyStates(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicySummary> SummarizePolicyStates(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).SummarizeForResourcePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricNamespaceCollection(IEnumerable<MetricNamespace> value)
+        internal MetricNamespaceCollection(IEnumerable<MonitorMetricNamespace> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        internal MetricNamespaceCollection(IReadOnlyList<MetricNamespace> value)
+        internal MetricNamespaceCollection(IReadOnlyList<MonitorMetricNamespace> value)
         {
             Value = value;
         }
 
         /// <summary> The values for the metric namespaces. </summary>
-        public IReadOnlyList<MetricNamespace> Value { get; }
+        public IReadOnlyList<MonitorMetricNamespace> Value { get; }
     }
 }

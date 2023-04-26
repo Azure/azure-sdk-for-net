@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public InformationProtectionPolicy()
         {
             Labels = new ChangeTrackingDictionary<string, SensitivityLabel>();
-            InformationTypes = new ChangeTrackingDictionary<string, InformationType>();
+            InformationTypes = new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>();
         }
 
         /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="version"> Describes the version of the policy. </param>
         /// <param name="labels"> Dictionary of sensitivity labels. </param>
         /// <param name="informationTypes"> The sensitivity information types. </param>
-        internal InformationProtectionPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedUtc, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, InformationType> informationTypes) : base(id, name, resourceType, systemData)
+        internal InformationProtectionPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedUtc, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, SecurityInformationTypeInfo> informationTypes) : base(id, name, resourceType, systemData)
         {
             LastModifiedUtc = lastModifiedUtc;
             Version = version;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Dictionary of sensitivity labels. </summary>
         public IDictionary<string, SensitivityLabel> Labels { get; }
         /// <summary> The sensitivity information types. </summary>
-        public IDictionary<string, InformationType> InformationTypes { get; }
+        public IDictionary<string, SecurityInformationTypeInfo> InformationTypes { get; }
     }
 }

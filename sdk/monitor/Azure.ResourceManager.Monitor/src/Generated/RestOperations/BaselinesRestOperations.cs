@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, ResultType? resultType)
+        internal HttpMessage CreateListRequest(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, MonitorResultType? resultType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resultType"> Allows retrieving only metadata of the baseline. On data request all information is retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<MetricBaselinesResponse>> ListAsync(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, ResultType? resultType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricBaselinesResponse>> ListAsync(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, MonitorResultType? resultType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resultType"> Allows retrieving only metadata of the baseline. On data request all information is retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<MetricBaselinesResponse> List(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, ResultType? resultType = null, CancellationToken cancellationToken = default)
+        public Response<MetricBaselinesResponse> List(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, MonitorResultType? resultType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
