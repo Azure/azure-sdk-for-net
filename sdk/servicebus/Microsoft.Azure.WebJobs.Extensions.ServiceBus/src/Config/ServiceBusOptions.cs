@@ -157,9 +157,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
         /// This is only considered when <see cref="MinMessageBatchSize"/> is set to larger than 1 and is otherwise unused.
         /// If less than <see cref="MinMessageBatchSize" /> events were available before the wait time elapses, the function
-        /// will be invoked with a partial batch.  Default is 60 seconds.  The longest allowed wait time is 10 minutes.
+        /// will be invoked with a partial batch. The longest allowed wait time is 10 minutes. This
+        /// value should be no longer then 50% of the longest message lock duration; for example, the LockDuration Property.
+        /// Otherwise, you may get lock exceptions when messages are pulled from the cache.
+        /// The default value is 30 seconds.
         /// </summary>
-        public TimeSpan MaxWaitTime { get; set; } = TimeSpan.FromSeconds(60);
+        public TimeSpan MaxWaitTime { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the

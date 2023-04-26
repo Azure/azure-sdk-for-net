@@ -245,9 +245,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     await _batchLoop.ConfigureAwait(false);
 
                     // Cancel any background monitoring tasks.
-                    _backgroundCacheMonitoringCts.Cancel();
-                    _backgroundCacheMonitoringCts.Dispose();
-                    _backgroundCacheMonitoringCts = null;
+                    if (_backgroundCacheMonitoringCts != null)
+                    {
+                        _backgroundCacheMonitoringCts.Cancel();
+                        _backgroundCacheMonitoringCts.Dispose();
+                        _backgroundCacheMonitoringCts = null;
+                    }
 
                     // Try to dispatch any already received messages.
                     await TryDispatchRemainingMessages(_monitoringCycleReceiver, _monitoringCycleMessageActions, _monitoringCycleReceiveActions, cancellationToken).ConfigureAwait(false);
@@ -478,22 +481,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             : new ServiceBusMessageActions(receiver);
                         var receiveActions = new ServiceBusReceiveActions(receiver);
 
-                        ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
-                        ServiceBusReceivedMessage[] batchMessages = Array.Empty<ServiceBusReceivedMessage>();
+                        ServiceBusReceivedMessage[] messagesArray = _supportMinBatchSize ? Array.Empty<ServiceBusReceivedMessage>() : messages.ToArray();
 
                         if (_supportMinBatchSize)
                         {
                             var acquiredSemaphore = false;
                             try
                             {
-                                if (!_cachedEventsGuard.Wait(0, _backgroundCacheMonitoringCts.Token))
+                                if (!_cachedEventsGuard.Wait(0, cancellationTokenSource.Token))
                                 {
-                                    await _cachedEventsGuard.WaitAsync(_backgroundCacheMonitoringCts.Token).ConfigureAwait(false);
+                                    await _cachedEventsGuard.WaitAsync(cancellationTokenSource.Token).ConfigureAwait(false);
                                 }
                                 acquiredSemaphore = true;
 
                                 // Get set of messages to use for batch here.
-                                batchMessages = _cachedMessagesManager.TryGetBatchofEventsWithCached(messagesArray);
+                                messagesArray = _cachedMessagesManager.TryGetBatchofEventsWithCached(messagesArray);
                             }
                             finally
                             {
@@ -504,15 +506,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             }
                         }
 
-                        if (batchMessages.Length > 0 || !_supportMinBatchSize)
+                        if (messagesArray.Length > 0 || !_supportMinBatchSize)
                         {
+                            if (_backgroundCacheMonitoringCts != null)
+                            {
+                                // Cancel all background monitoring when we invoke the function, it will be restarted if there are still messages in the cache.
+                                _backgroundCacheMonitoringCts.Cancel();
+                                _backgroundCacheMonitoringCts.Dispose();
+                                _backgroundCacheMonitoringCts = null;
+                            }
+
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
-                            batchMessages,
+                            messagesArray,
                             messageActions,
                             receiveActions,
                             _client.Value);
 
-                            await TriggerWithMessagesInternal(batchMessages, input, receiver, receiveActions, messageActions, cancellationToken).ConfigureAwait(false);
+                            await TriggerWithMessagesInternal(messagesArray, input, receiver, receiveActions, messageActions, cancellationToken).ConfigureAwait(false);
                         }
 
                         if (_cachedMessagesManager.HasCachedMessages && (_backgroundCacheMonitoringCts == null))
@@ -533,10 +543,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         // Close the session and release the session lock after draining all messages for the accepted session.
                         if (_isSessionsEnabled)
                         {
-                            // Cancel any background monitoring cycles that are in progress
-                            _backgroundCacheMonitoringCts.Cancel();
-                            _backgroundCacheMonitoringCts.Dispose();
-                            _backgroundCacheMonitoringCts = null;
+                            if (_backgroundCacheMonitoringCts != null)
+                            {
+                                // Cancel any background monitoring cycles that are in progress
+                                _backgroundCacheMonitoringCts.Cancel();
+                                _backgroundCacheMonitoringCts.Dispose();
+                                _backgroundCacheMonitoringCts = null;
+                            }
 
                             var messageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver);
                             var receiveActions = new ServiceBusReceiveActions(receiver);
@@ -570,7 +583,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         try
                         {
                             // Abandon any remaining session messages, they can be received again in the next iteration if the same session is accepted.
-                            await TryAbandonRemainingSessionMessages(receiver, cancellationTokenSource).ConfigureAwait(false);
+                            await TryAbandonRemainingSessionMessages(receiver, cancellationTokenSource.Token).ConfigureAwait(false);
 
                             // Use CancellationToken.None to attempt to close the receiver even when shutting down
                             await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
@@ -692,9 +705,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 ServiceBusReceivedMessage[] batchMessages;
                 try
                 {
-                    if (!_cachedEventsGuard.Wait(0, _backgroundCacheMonitoringCts.Token))
+                    if (!_cachedEventsGuard.Wait(0, cancellationToken))
                     {
-                        await _cachedEventsGuard.WaitAsync(_backgroundCacheMonitoringCts.Token).ConfigureAwait(false);
+                        await _cachedEventsGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
                     acquiredSemaphore = true;
 
@@ -722,7 +735,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
         }
 
-        private async Task TryAbandonRemainingSessionMessages(ServiceBusReceiver receiver, CancellationTokenSource cancellationToken)
+        private async Task TryAbandonRemainingSessionMessages(ServiceBusReceiver receiver, CancellationToken cancellationToken)
         {
             if (_cachedMessagesManager.HasCachedMessages)
             {
@@ -730,9 +743,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 ServiceBusReceivedMessage[] batchMessages;
                 try
                 {
-                    if (!_cachedEventsGuard.Wait(0, _backgroundCacheMonitoringCts.Token))
+                    if (!_cachedEventsGuard.Wait(0, cancellationToken))
                     {
-                        await _cachedEventsGuard.WaitAsync(_backgroundCacheMonitoringCts.Token).ConfigureAwait(false);
+                        await _cachedEventsGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
                     acquiredSemaphore = true;
 
@@ -770,6 +783,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             var acquiredSemaphore = false;
             try
             {
+                _cycleDuration = ValueStopwatch.StartNew();
+
                 // Wait max wait time after starting this task before checking the number of events.
                 while (_cycleDuration.GetElapsedTime() < _serviceBusOptions.MaxWaitTime && !backgroundCancellationToken.IsCancellationRequested)
                 {
@@ -798,15 +813,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
                 else
                 {
-                    // TODO
-                    //_logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation but there are no events still being held ({details})");
+                    _logger.LogDebug($"Service Bus Listener has waited MaxWaitTime since last invocation but there are no events still being held.");
                 }
 
                 // After one wait cycle, cancel the background task cancellation token source. It can be assumed that there will never be more than the
                 // minimum batch size number of events in the cache. The monitoring cycle will be restarted by the process events handler if needed.
-                _backgroundCacheMonitoringCts.Cancel();
-                _backgroundCacheMonitoringCts.Dispose();
-                _backgroundCacheMonitoringCts = null;
+                if (_backgroundCacheMonitoringCts != null)
+                {
+                    _backgroundCacheMonitoringCts.Cancel();
+                    _backgroundCacheMonitoringCts.Dispose();
+                    _backgroundCacheMonitoringCts = null;
+                }
             }
             catch (TaskCanceledException)
             {

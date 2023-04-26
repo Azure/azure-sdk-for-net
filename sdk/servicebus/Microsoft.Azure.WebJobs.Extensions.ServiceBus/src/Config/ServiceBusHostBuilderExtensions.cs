@@ -85,6 +85,11 @@ namespace Microsoft.Extensions.Hosting
 
                     section.Bind(options);
 
+                    if (options.MinMessageBatchSize > options.MaxMessageBatchSize)
+                    {
+                        throw new InvalidOperationException("The minimum message batch size must be less than the maximum message batch size");
+                    }
+
                     configure(options);
                 });
 
