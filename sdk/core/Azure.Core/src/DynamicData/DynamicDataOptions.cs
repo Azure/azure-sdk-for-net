@@ -13,7 +13,7 @@ namespace Azure
         /// </summary>
         public static readonly DynamicDataOptions Default = new()
         {
-            PropertyNameCasing = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
+            PropertyNameMapping = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
         };
 
         /// <summary>
@@ -24,6 +24,6 @@ namespace Azure
         /// <summary>
         /// Specifies how properties on <see cref="DynamicData"/> will be accessed in the underlying data buffer.
         /// </summary>
-        public DynamicDataNameMapping PropertyNameCasing { get; set; }
+        public DynamicDataNameMapping PropertyNameMapping { get; set; }
     }
 }

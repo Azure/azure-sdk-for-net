@@ -70,9 +70,9 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData data, DynamicDataNameMapping propertyNameCasing)
+        public static dynamic ToDynamicFromJson(this BinaryData data, DynamicDataNameMapping propertyNameMapping)
         {
-            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions() { PropertyNameCasing = propertyNameCasing });
+            return new DynamicData(MutableJsonDocument.Parse(data).RootElement, new DynamicDataOptions() { PropertyNameMapping = propertyNameMapping });
         }
 
         /// <summary>
