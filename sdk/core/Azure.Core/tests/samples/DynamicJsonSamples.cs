@@ -16,7 +16,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:GetDynamicJson
+            #region Snippet:AzureCoreGetDynamicJson
             Response response = await client.GetWidgetAsync("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             #endregion
@@ -27,7 +27,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:GetDynamicJsonProperty
+            #region Snippet:AzureCoreGetDynamicJsonProperty
             Response response = await client.GetWidgetAsync("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             string name = widget.Name;
@@ -39,7 +39,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:GetDynamicJsonOptionalProperty
+            #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = await client.GetWidgetAsync("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
@@ -56,7 +56,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:EnumerateDynamicJsonObject
+            #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = await client.GetWidgetAsync("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
@@ -84,7 +84,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:RoundTripAnonymousType
+            #region Snippet:AzureCoreRoundTripAnonymousType
             Response response = client.GetWidget("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 
@@ -106,7 +106,7 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:RoundTripDynamicJson
+            #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget("123");
             dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 

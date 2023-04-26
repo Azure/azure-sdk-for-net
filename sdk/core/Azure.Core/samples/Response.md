@@ -59,7 +59,7 @@ using (StreamReader reader = new StreamReader(contentStream))
 
 If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
 
-```C# Snippet:GetDynamicJsonProperty
+```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
 dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
 string name = widget.Name;
