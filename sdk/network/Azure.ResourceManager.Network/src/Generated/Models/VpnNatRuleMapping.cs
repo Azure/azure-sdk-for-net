@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of VpnNatRuleMapping. </summary>
         /// <param name="addressSpace"> Address space for Vpn NatRule mapping. </param>
-        internal VpnNatRuleMapping(string addressSpace)
+        /// <param name="portRange"> Port range for Vpn NatRule mapping. </param>
+        internal VpnNatRuleMapping(string addressSpace, string portRange)
         {
             AddressSpace = addressSpace;
+            PortRange = portRange;
         }
 
         /// <summary> Address space for Vpn NatRule mapping. </summary>
         public string AddressSpace { get; set; }
+        /// <summary> Port range for Vpn NatRule mapping. </summary>
+        public string PortRange { get; set; }
     }
 }
