@@ -445,6 +445,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("dependency resource have been deleted, temporary ignore")]
         public async Task UserAssignedEncryptionTests()
         {
             EventHubsNamespaceResource resource = null;
