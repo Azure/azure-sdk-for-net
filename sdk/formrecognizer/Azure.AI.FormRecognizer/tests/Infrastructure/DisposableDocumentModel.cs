@@ -3,13 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     /// <summary>
     /// Represents a model that has been built for test purposes. In order to create a new instance
-    /// of this class, the <see cref="BuildModelAsync"/> static method must be invoked. The built
+    /// of this class, the <see cref="BuildAsync"/> static method must be invoked. The built
     /// model will be deleted upon disposal.
     /// </summary>
     public class DisposableDocumentModel : IAsyncDisposable
@@ -21,18 +20,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Initializes a new instance of the <see cref="DisposableDocumentModel"/> class.
         /// </summary>
         /// <param name="client">The client to use for deleting the model upon disposal.</param>
-        /// <param name="modelId">The identifier of the model to delete upon disposal.</param>
-        private DisposableDocumentModel(DocumentModelAdministrationClient client, string modelId)
+        /// <param name="value">The model to associate with this instance. It will be deleted upon disposal.</param>
+        private DisposableDocumentModel(DocumentModelAdministrationClient client, DocumentModelDetails value)
         {
             _client = client;
-            ModelId = modelId;
+            Value = value;
         }
 
         /// <summary>
-        /// The identifier of the model this instance is associated with. It will be deleted upon
-        /// disposal.
+        /// The model this instance is associated with. It will be deleted upon disposal.
         /// </summary>
-        public string ModelId { get; }
+        public DocumentModelDetails Value { get; }
+
+        /// <summary>
+        /// The identifier of the model this instance is associated with.
+        /// </summary>
+        public string ModelId => Value.ModelId;
 
         /// <summary>
         /// Builds a model using the specified <see cref="DocumentModelAdministrationClient"/> and the specified set of training files. A
@@ -42,14 +45,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="trainingFilesUri">An externally accessible Azure Blob Storage container URI.</param>
         /// <param name="buildMode">The technique to use to build the model.</param>
         /// <param name="modelId">The identifier of the model.</param>
+        /// <param name="options">A set of options to apply when configuring the request.</param>
         /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
-        public static async Task<DisposableDocumentModel> BuildModelAsync(DocumentModelAdministrationClient client, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId)
+        public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId, BuildDocumentModelOptions options = null)
         {
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, buildMode, modelId);
+            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, buildMode, modelId, options: options);
 
-            Assert.IsTrue(operation.HasValue);
-
-            return new DisposableDocumentModel(client, operation.Value.ModelId);
+            return new DisposableDocumentModel(client, operation.Value);
         }
 
         /// <summary>
