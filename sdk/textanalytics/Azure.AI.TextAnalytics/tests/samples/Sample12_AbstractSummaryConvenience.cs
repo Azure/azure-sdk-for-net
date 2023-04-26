@@ -12,6 +12,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AbstractSummaryConvenience()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());

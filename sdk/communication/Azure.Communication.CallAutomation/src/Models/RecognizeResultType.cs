@@ -20,13 +20,16 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CollectTonesResultValue = "CollectTonesResult";
+        private const string DtmfResultValue = "DtmfResultValue";
         private const string ChoiceResultValue = "ChoiceResultValue";
+        private const string SpeechResultValue = "SpeechResultValue";
 
         /// <summary> CollectTonesResult. </summary>
-        public static RecognizeResultType CollectTonesResult { get; } = new RecognizeResultType(CollectTonesResultValue);
+        public static RecognizeResultType CollectTonesResult { get; } = new RecognizeResultType(DtmfResultValue);
         /// <summary> ChoiceResult. </summary>
         public static RecognizeResultType ChoiceResult { get; } = new RecognizeResultType(ChoiceResultValue);
+        /// <summary> SpeechResult. </summary>
+        public static RecognizeResultType SpeechResult { get; } = new RecognizeResultType(SpeechResultValue);
         /// <summary> Determines if two <see cref="RecognizeResultType"/> values are the same. </summary>
         public static bool operator ==(RecognizeResultType left, RecognizeResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecognizeResultType"/> values are not the same. </summary>
