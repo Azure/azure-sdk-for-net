@@ -72,6 +72,19 @@ namespace Azure.Core
         public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
+        public static RequestContent Create(DynamicData content)
+        {
+            Stream stream = new MemoryStream();
+            content.WriteTo(stream);
+            stream.Position = 0;
+            return Create(stream);
+        }
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
