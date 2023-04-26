@@ -6,12 +6,6 @@ This release adds Container Security Context property for Containers with Confid
 ### Features Added
 - Added Container Security Context for containers with Confidential ContainerGroupSku
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.3 (2023-02-16)
 
 ### Other Changes
