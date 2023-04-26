@@ -25,29 +25,22 @@ public static class WebPubSubOutputFunction
     #region Snippet:WebPubSubOutputFunction_Multiple
     // multiple output
     [Function("Notification1")]
-    public static MultipleActions MultipleActions([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
+    [WebPubSubOutput(Hub = "<web_pubsub_hub>", Connection = "<web_pubsub_connection_name>")]
+    public static WebPubSubAction[] MultipleActions([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
-        return new MultipleActions
+        return new WebPubSubAction[]
         {
-            SendToAll = new SendToAllAction
+            new SendToAllAction
             {
                 Data = BinaryData.FromString($"Hello SendToAll."),
                 DataType = WebPubSubDataType.Text
             },
-            AddUserToGroup = new AddUserToGroupAction
+            new AddUserToGroupAction
             {
                 UserId = "user A",
                 Group = "group A"
             }
         };
-    }
-    
-    public class MultipleActions
-    {
-        [WebPubSubOutput(Hub = "<web_pubsub_hub>")]
-        public SendToAllAction SendToAll { get; set; }
-        [WebPubSubOutput(Hub = "<web_pubsub_hub>")]
-        public AddUserToGroupAction AddUserToGroup { get; set; }
     }
     #endregion
 }
