@@ -67,13 +67,13 @@ namespace Azure
         private bool PascalCaseGetters()
         {
             return
-                _options.PropertyNameMapping == DynamicDataNameMapping.PascalCaseGetters ||
-                _options.PropertyNameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseGetters ||
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private bool CamelCaseSetters()
         {
-            return _options.PropertyNameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+            return _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private static string GetAsCamelCase(string value)
@@ -113,7 +113,7 @@ namespace Azure
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (_options.PropertyNameMapping == DynamicDataNameMapping.None)
+            if (_options.NameMapping == DynamicDataNameMapping.None)
             {
                 _element = _element.SetProperty(name, value);
                 return null;

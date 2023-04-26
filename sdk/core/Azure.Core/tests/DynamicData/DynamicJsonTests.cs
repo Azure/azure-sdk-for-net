@@ -435,7 +435,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                PropertyNameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseGetters
             };
 
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
@@ -473,7 +473,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                PropertyNameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseGetters
             };
 
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
@@ -527,7 +527,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                PropertyNameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseGetters
             };
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
 
@@ -627,7 +627,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                PropertyNameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseGetters
             };
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
 
@@ -679,7 +679,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanPassPropertyNameMappingEnumDirectly()
+        public void CanPassNameMappingEnumDirectly()
         {
             string json = """{ "foo" : 1 }""";
 
@@ -872,9 +872,9 @@ namespace Azure.Core.Tests
         }
 
         #region Helpers
-        internal static dynamic GetDynamicJson(string json, DynamicDataNameMapping propertyNameMapping = default)
+        internal static dynamic GetDynamicJson(string json, DynamicDataNameMapping nameMapping = default)
         {
-            return new BinaryData(json).ToDynamicFromJson(propertyNameMapping);
+            return new BinaryData(json).ToDynamicFromJson(nameMapping);
         }
 
         internal class CustomType
