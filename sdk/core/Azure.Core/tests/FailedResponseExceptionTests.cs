@@ -41,11 +41,12 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
 
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
             Assert.AreEqual("Value", value);
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
             Assert.AreEqual("123", requestId);
-            Assert.IsNull(exception.Response.ContentStream);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
@@ -67,11 +68,12 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
 
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
             Assert.AreEqual("Value", value);
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
             Assert.AreEqual("123", requestId);
-            Assert.IsNull(exception.Response.ContentStream);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
@@ -92,11 +94,12 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
 
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("Custom-Header", out var value));
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
             Assert.AreEqual("Value", value);
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
             Assert.AreEqual("123", requestId);
-            Assert.IsNull(exception.Response.ContentStream);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
@@ -160,13 +163,14 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
 
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("Content-Type", out var value));
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Content-Type", out var value));
             Assert.AreEqual("text/json", value);
-            Assert.IsTrue(exception.Response.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
             Assert.AreEqual("123", requestId);
-            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
-            Assert.AreEqual(0, exception.Response.ContentStream.Position);
-            Assert.AreEqual("{\"errorCode\": 1}", response.Content.ToString());
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
         }
 
         [Test]
@@ -186,10 +190,11 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+            Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
-            Assert.AreEqual(0, exception.Response.ContentStream.Position);
-            Assert.AreEqual("{\"errorCode\": 1}", response.Content.ToString());
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
         }
 
         [Test]
@@ -351,10 +356,11 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
-            Assert.AreEqual(0, exception.Response.ContentStream.Position);
-            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", response.Content.ToString());
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
         }
 
         [Test]
@@ -381,9 +387,10 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
 
-            Assert.IsInstanceOf<MemoryStream>(exception.Response.ContentStream);
-            Assert.AreEqual(0, exception.Response.ContentStream.Position);
-            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", response.Content.ToString());
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
         }
 
         [Test]
