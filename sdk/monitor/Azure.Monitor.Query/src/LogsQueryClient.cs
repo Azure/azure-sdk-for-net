@@ -439,6 +439,7 @@ namespace Azure.Monitor.Query
             try
             {
                 resource.TrimStart('/');
+                ResourceIdentifier.Parse(resourceId.ToString());
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -489,6 +490,7 @@ namespace Azure.Monitor.Query
             try
             {
                 resource.TrimStart('/');
+                ResourceIdentifier.Parse(resourceId.ToString());
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
