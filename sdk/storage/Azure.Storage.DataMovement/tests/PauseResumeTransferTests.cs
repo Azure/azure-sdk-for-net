@@ -230,10 +230,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -280,10 +280,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -325,7 +325,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void TryPauseTransferAsync_Error()
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -346,10 +346,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -401,10 +401,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -609,11 +609,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -656,11 +656,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -703,11 +703,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -757,11 +757,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
