@@ -1,31 +1,31 @@
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class BackupResource : Azure.ResourceManager.ArmResource
+    public partial class CassandraClusterBackupResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected BackupResource() { }
-        public virtual Azure.ResourceManager.CosmosDB.BackupResourceData Data { get { throw null; } }
+        protected CassandraClusterBackupResource() { }
+        public virtual Azure.ResourceManager.CosmosDB.CassandraClusterBackupResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string backupId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BackupResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.BackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.BackupResource>, System.Collections.IEnumerable
+    public partial class CassandraClusterBackupResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>, System.Collections.IEnumerable
     {
-        protected BackupResourceCollection() { }
+        protected CassandraClusterBackupResourceCollection() { }
         public virtual Azure.Response<bool> Exists(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource> Get(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.BackupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.BackupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource>> GetAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.BackupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.BackupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.BackupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.BackupResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> Get(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>> GetAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BackupResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class CassandraClusterBackupResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public BackupResourceData() { }
+        public CassandraClusterBackupResourceData() { }
         public System.DateTimeOffset? BackupResourceTimestamp { get { throw null; } set { } }
     }
     public partial class CassandraClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CassandraClusterResource>, System.Collections.IEnumerable
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource> GetBackupResource(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.BackupResource>> GetBackupResourceAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.BackupResourceCollection GetBackupResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource> GetCassandraClusterBackupResource(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource>> GetCassandraClusterBackupResourceAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.CassandraClusterBackupResourceCollection GetCassandraClusterBackupResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraDataCenterResource> GetCassandraDataCenter(string dataCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraDataCenterResource>> GetCassandraDataCenterAsync(string dataCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CassandraDataCenterCollection GetCassandraDataCenters() { throw null; }
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.CosmosDB
     {
         public static Azure.Response<bool> CheckNameExistsDatabaseAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<bool>> CheckNameExistsDatabaseAccountAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.BackupResource GetBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource> GetCassandraCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource>> GetCassandraClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource GetCassandraClusterBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraClusterResource GetCassandraClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CassandraClusterCollection GetCassandraClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.CosmosDB.CassandraClusterResource> GetCassandraClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
