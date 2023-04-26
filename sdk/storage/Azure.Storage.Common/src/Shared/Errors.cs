@@ -53,6 +53,13 @@ namespace Azure.Storage
         public static InvalidDataException HashMismatch(string hashHeaderName)
             => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");
 
+        public static InvalidDataException ChecksumMismatch(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right)
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+            => new InvalidDataException($"Compared checksums did not match. Invalid data may have been written to the destination. Left: {Convert.ToBase64String(left)} Right: {Convert.ToBase64String(right)}");
+#else
+            => new InvalidDataException($"Compared checksums did not match. Invalid data may have been written to the destination. Left: {Convert.ToBase64String(left.ToArray())} Right: {Convert.ToBase64String(right.ToArray())}");
+#endif
+
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
             => new ArgumentException("Precalculated checksum not supported when potentially partitioning an upload.");
 
