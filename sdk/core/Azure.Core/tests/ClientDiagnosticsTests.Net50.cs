@@ -8,6 +8,8 @@ using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 namespace Azure.Core.Tests
 {
@@ -18,13 +20,13 @@ namespace Azure.Core.Tests
         [TearDown]
         public void ResetFeatureSwitch()
         {
-            ActivityExtensions.ResetFeatureSwitch();
+            Pipeline.ActivityExtensions.ResetFeatureSwitch();
         }
 
         private static TestAppContextSwitch SetAppConfigSwitch()
         {
             var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
-            ActivityExtensions.ResetFeatureSwitch();
+            Pipeline.ActivityExtensions.ResetFeatureSwitch();
             return s;
         }
 
@@ -467,6 +469,81 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void OpenTelemetryCompatibilityWithAlwaysOffSampler()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Open Telemetry Listener
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource($"Azure.*")
+                .SetSampler(new AlwaysOffSampler())
+                .Build();
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+
+            int activeActivityCounts = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.Start();
+                if (Activity.Current.IsAllDataRequested)
+                {
+                    activeActivityCounts++;
+                }
+                scope.Dispose();
+                Assert.IsNull(Activity.Current);
+            }
+
+            Assert.AreEqual(0, activeActivityCounts);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void OpenTelemetryCompatibilityWithCustomSampler()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Open Telemetry Listener
+            using TracerProvider OTelTracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource($"Azure.*")
+                .SetSampler(new ParentBasedSampler(new CustomSampler()))
+                .Build();
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+
+            int activeActivityCounts = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.AddLink($"00-6e76af18746bae4eadc3581338bbe8b{i}-2899ebfdbdce904b-00", "foo=bar");
+
+                scope.Start();
+                if (Activity.Current.IsAllDataRequested)
+                {
+                    activeActivityCounts++;
+                }
+                scope.Dispose();
+                Assert.IsNull(Activity.Current);
+            }
+
+            Assert.AreEqual(4, activeActivityCounts); // 1 activity will be dropped due to sampler logic
+        }
+
+        private class CustomSampler : Sampler
+        {
+            public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
+            {
+                if (samplingParameters.Links.First().Context.TraceId.ToString() == "6e76af18746bae4eadc3581338bbe8b1")
+                {
+                    return new SamplingResult(SamplingDecision.Drop);
+                }
+
+                return new SamplingResult(SamplingDecision.RecordAndSample);
+            }
         }
     }
 #endif
