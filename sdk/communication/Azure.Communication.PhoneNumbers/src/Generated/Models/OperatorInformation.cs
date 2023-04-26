@@ -10,6 +10,10 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents metadata about a phone number that is controlled/provided by the phone number&apos;s operator. </summary>
     public partial class OperatorInformation
     {
+        /// <summary> Initializes a new instance of OperatorInformation. </summary>
+        internal OperatorInformation()
+        {
+        }
 
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
@@ -21,6 +25,9 @@ namespace Azure.Communication.PhoneNumbers
             NumberType = numberType;
             OperatorDetails = operatorDetails;
         }
+
+        /// <summary> E.164 formatted string representation of the phone number. </summary>
+        public string PhoneNumber { get; }
         /// <summary> Type of service associated with the phone number. </summary>
         public OperatorNumberType? NumberType { get; }
         /// <summary> Represents metadata describing the operator of a phone number. </summary>

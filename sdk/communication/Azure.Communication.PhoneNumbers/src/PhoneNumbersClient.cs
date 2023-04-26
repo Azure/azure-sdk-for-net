@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
@@ -16,6 +17,7 @@ namespace Azure.Communication.PhoneNumbers
     public class PhoneNumbersClient
     {
         internal InternalPhoneNumbersRestClient RestClient { get; }
+        internal OperatorInformationRestClient OperatorRestClient { get; }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly string _acceptedLanguage;
@@ -93,6 +95,7 @@ namespace Azure.Communication.PhoneNumbers
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, new Uri(endpoint), apiVersion);
+            OperatorRestClient = new OperatorInformationRestClient(clientDiagnostics, pipeline, new Uri(endpoint), apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
@@ -721,22 +724,46 @@ namespace Azure.Communication.PhoneNumbers
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Search for operator information associated with phone numbers. </summary>
-        /// <param name="searchRequest"> The search request specifying which phone numbers to retrieve operator information about. </param>
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<OperatorInformationSearchResult>> SearchOperatorInformationAsync(OperatorInformationSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchRequest, nameof(searchRequest));
-            return Task.FromResult(SearchOperatorInformation(searchRequest, cancellationToken));
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = await OperatorRestClient.SearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Search for operator information associated with phone numbers. </summary>
-        /// <param name="searchRequest"> The search request specifying which phone numbers to retrieve operator information about. </param>
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperatorInformationSearchResult> SearchOperatorInformation(OperatorInformationSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        public virtual Response<OperatorInformationResult> SearchOperatorInformation(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchRequest, nameof(searchRequest));
-            return null;
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = OperatorRestClient.Search(phoneNumbers, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
