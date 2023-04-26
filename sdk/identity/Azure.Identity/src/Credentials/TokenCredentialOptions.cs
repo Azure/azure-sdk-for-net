@@ -55,7 +55,7 @@ namespace Azure.Identity
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
 
             // copy ISupportsDisableInstanceDiscovery
-            CloneIfImplemented<ISupportsDisableInstanceDiscovery>(this, clone, (o, c) => c.DisableInstanceDiscovery = o.DisableInstanceDiscovery);
+            CloneIfImplemented<ISupportsDisableInstanceDiscovery>(this, clone, (o, c) => c.DisableAuthorityValidationAndInstanceDiscovery = o.DisableAuthorityValidationAndInstanceDiscovery);
 
             // copy ISupportsTokenCachePersistenceOptions
             CloneIfImplemented<ISupportsTokenCachePersistenceOptions>(this, clone, (o, c) => c.TokenCachePersistenceOptions = o.TokenCachePersistenceOptions);

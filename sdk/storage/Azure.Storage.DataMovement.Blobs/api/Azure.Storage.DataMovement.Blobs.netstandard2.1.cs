@@ -1,3 +1,23 @@
+namespace Azure.Storage.Blobs
+{
+    public static partial class BlobContainerClientExtensions
+    {
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.Blobs.Models.BlobContainerClientTransferOptions options) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, string blobDirectoryPrefix = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.Blobs.Models.BlobContainerClientTransferOptions options) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, string blobDirectoryPrefix = null) { throw null; }
+    }
+}
+namespace Azure.Storage.Blobs.Models
+{
+    public partial class BlobContainerClientTransferOptions
+    {
+        public BlobContainerClientTransferOptions() { }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions BlobContainerOptions { get { throw null; } set { } }
+        public string BlobDirectoryPrefix { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.TransferOptions TransferOptions { get { throw null; } set { } }
+    }
+}
 namespace Azure.Storage.DataMovement.Blobs
 {
     public partial class AppendBlobStorageResource : Azure.Storage.DataMovement.StorageResource

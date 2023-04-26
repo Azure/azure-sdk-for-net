@@ -494,7 +494,8 @@ namespace Azure.Storage.DataMovement.Tests
                     folder,
                     files,
                     destinationPrefix: dirName,
-                    waitTimeInSec: 10);
+                    waitTimeInSec: 10,
+                    options: options);
             }
             catch (Exception ex)
             {
@@ -544,7 +545,8 @@ namespace Azure.Storage.DataMovement.Tests
                     folder,
                     files,
                     destinationPrefix: dirName,
-                    waitTimeInSec: 10);
+                    waitTimeInSec: 10,
+                    options: options);
             }
             catch (Exception ex)
             {

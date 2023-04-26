@@ -30,6 +30,40 @@ namespace Azure.AI.AnomalyDetector
             Granularity = granularity;
         }
 
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by time stamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity"> Granularity is used to verify whether the input series is valid. </param>
+        /// <param name="customInterval">
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// not present, the API will determine the period automatically.
+        /// </param>
+        /// <param name="stableTrendWindow">
+        /// Argument that indicates an advanced model parameter. A default stableTrendWindow value will
+        /// be used in detection.
+        /// </param>
+        /// <param name="threshold">
+        /// Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+        /// value is, the larger the trend error is, which means less change point will
+        /// be accepted.
+        /// </param>
+        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold)
+        {
+            Series = series;
+            Granularity = granularity;
+            CustomInterval = customInterval;
+            Period = period;
+            StableTrendWindow = stableTrendWindow;
+            Threshold = threshold;
+        }
+
         /// <summary>
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.

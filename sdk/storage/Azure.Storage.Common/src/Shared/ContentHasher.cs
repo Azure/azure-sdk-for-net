@@ -359,5 +359,19 @@ namespace Azure.Storage
                 _ => throw Errors.InvalidArgument(nameof(algorithm))
             };
         }
+
+        public static (ReadOnlyMemory<byte> Checksum, StorageChecksumAlgorithm Algorithm) GetResponseChecksumOrDefault(Response response)
+        {
+            if (response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc))
+            {
+                return (crc, StorageChecksumAlgorithm.StorageCrc64);
+            }
+            if (response.Headers.TryGetValue("Content-MD5", out byte[] md5))
+            {
+                return (md5, StorageChecksumAlgorithm.MD5);
+            }
+
+            return (ReadOnlyMemory<byte>.Empty, StorageChecksumAlgorithm.None);
+        }
     }
 }
