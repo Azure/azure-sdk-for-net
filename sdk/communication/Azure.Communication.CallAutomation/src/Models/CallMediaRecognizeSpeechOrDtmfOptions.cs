@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOrDtmfOptions. </summary>
         public CallMediaRecognizeSpeechOrDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base(RecognizeInputType.SpeechOrDtmf, targetParticipant)
         {
-            EndSilenceTimeoutInMs = _defaultInterToneTimeout;
+            EndSilenceTimeoutInMs = _defaultEndSilenceTimeoutInMs;
             MaxTonesToCollect = maxTonesToCollect;
             StopTones = Array.Empty<DtmfTone>();
         }
