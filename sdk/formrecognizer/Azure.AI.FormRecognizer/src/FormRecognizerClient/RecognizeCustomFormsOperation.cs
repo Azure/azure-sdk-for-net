@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _serviceClient = operations;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             // TODO: Use regex to parse ids.
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -131,7 +131,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             // TODO: Use regex to parse ids.
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
