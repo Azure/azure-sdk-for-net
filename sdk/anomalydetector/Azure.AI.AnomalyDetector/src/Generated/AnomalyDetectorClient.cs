@@ -416,6 +416,10 @@ namespace Azure.AI.AnomalyDetector
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.
+        /// The model object will be created and returned in the response, but the
+        /// training process happens asynchronously. To check the training status, call
+        /// GetMultivariateModel with the modelId value and check the status field in the
+        /// modelInfo object.
         /// </remarks>
         public virtual async Task<Response<AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
@@ -437,6 +441,10 @@ namespace Azure.AI.AnomalyDetector
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.
+        /// The model object will be created and returned in the response, but the
+        /// training process happens asynchronously. To check the training status, call
+        /// GetMultivariateModel with the modelId value and check the status field in the
+        /// modelInfo object.
         /// </remarks>
         public virtual Response<AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {

@@ -21,7 +21,9 @@ namespace Azure.AI.AnomalyDetector
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection. The data schema should
-        /// be exactly the same as those used in the training phase.
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </param>
         /// <param name="topContributorCount">
         /// Number of top contributed
@@ -51,7 +53,9 @@ namespace Azure.AI.AnomalyDetector
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection. The data schema should
-        /// be exactly the same as those used in the training phase.
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </summary>
         public string DataSource { get; set; }
         /// <summary>

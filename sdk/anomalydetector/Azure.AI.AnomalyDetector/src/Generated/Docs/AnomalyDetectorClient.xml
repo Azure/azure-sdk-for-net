@@ -783,7 +783,9 @@ Schema for <c>MultivariateDetectionResult</c>:
       dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
       topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
@@ -866,7 +868,9 @@ Schema for <c>MultivariateDetectionResult</c>:
       dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
       topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
@@ -972,6 +976,10 @@ Storage URI that&apos;s accessible to the service. There are two types of data i
 Storage folder that contains multiple CSV files, where each CSV file has
 two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
 time stamp column.
+The model object will be created and returned in the response, but the
+training process happens asynchronously. To check the training status, call
+GetMultivariateModel with the modelId value and check the status field in the
+modelInfo object.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1150,6 +1158,10 @@ Storage URI that&apos;s accessible to the service. There are two types of data i
 Storage folder that contains multiple CSV files, where each CSV file has
 two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
 time stamp column.
+The model object will be created and returned in the response, but the
+training process happens asynchronously. To check the training status, call
+GetMultivariateModel with the modelId value and check the status field in the
+modelInfo object.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1534,7 +1546,9 @@ Schema for <c>MultivariateBatchDetectionOptions</c>:
   dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
   topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
@@ -1558,7 +1572,9 @@ Schema for <c>MultivariateDetectionResult</c>:
       dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
       topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
@@ -1646,7 +1662,9 @@ Schema for <c>MultivariateBatchDetectionOptions</c>:
   dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
   topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
@@ -1670,7 +1688,9 @@ Schema for <c>MultivariateDetectionResult</c>:
       dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
 It either points to an Azure Blob Storage folder or points to a CSV file in
 Azure Blob Storage, based on your data schema selection. The data schema should
-be exactly the same as those used in the training phase.
+be exactly the same as those used in the training phase. The input data must
+contain at least slidingWindow entries preceding the start time of the data
+to be detected.
       topContributorCount: number, # Required. Number of top contributed
 variables for one anomalous time stamp in the response. The default is
 10.
