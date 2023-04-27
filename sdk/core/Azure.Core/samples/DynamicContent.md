@@ -1,6 +1,6 @@
 # Azure SDK Dynamic JSON samples
 
-Azure SDK client [protocol methods](ProtocolMethods.md) do not take or return model types.  JSON response content can be accessed using Base Class Library (BCL) types such as `JsonDocument`, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a dynamic layer over JSON APIs.
+Azure SDK client [protocol methods](ProtocolMethods.md) take `RequestContent` as an input parameter and return `Response` as their return type.  These types hold raw JSON content that can be accessed using Base Class Library (BCL) types such as `JsonDocument`, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a [dynamic](https://learn.microsoft.com/dotnet/csharp/advanced-topics/interop/using-type-dynamic) layer over JSON APIs.
 
 ## Accessing Response Content
 
@@ -22,6 +22,8 @@ Response response = await client.GetWidgetAsync("123");
 dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
+
+If no parameter is passed to `ToDynamicFromJson()`, properties on the dynamic object are accessed using casing that exactly matches what's in the JSON content.  Passing `DynamicDataOptions.Default` enables properties to be accessed with PascalCase property names, and writes any added properties with camelCase names.
 
 ### Check whether an optional property is present
 
