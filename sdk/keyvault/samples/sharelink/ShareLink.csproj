@@ -30,7 +30,7 @@
 
   <ItemGroup Condition="'$(IsSample)' != 'true'">
     <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210602.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230427.2" PrivateAssets="All" />
     <PackageReference Update="Azure.Core" Version="1.26.0" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
@@ -38,13 +38,12 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed for Key Vault -->
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" LinkBase="Shared\KeyVault" />
+
+    <None Include="..\..\..\..\NuGet.Config" Link="NuGet.Config" />
   </ItemGroup>
 
   <Target Name="CopySource">
@@ -52,7 +51,7 @@
 
     <ItemGroup>
       <!-- Collect all sources and ensure they have a relative Link metadata property -->
-      <_Source Include="@(Compile->HasMetadata('Link'))" />
+      <_Source Include="@(Compile->HasMetadata('Link'));@(None->HasMetadata('Link'))" />
       <_Source Include="@(Compile)" Exclude="Program.cs" Condition="@(Compile->'%(Link)') == ''">
         <Link>%(RecursiveDir)\%(Filename)%(Extension)</Link>
       </_Source>
