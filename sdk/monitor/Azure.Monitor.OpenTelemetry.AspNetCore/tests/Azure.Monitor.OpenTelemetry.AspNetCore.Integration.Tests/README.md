@@ -5,7 +5,7 @@ For more information see: [.NET Azure SDK Test Framework](https://github.com/Azu
 
 ## Getting started
 
-### First Time Setup
+### First time setup
 
 To run these tests locally you must first create your test resources.
 
@@ -29,9 +29,16 @@ This file is not checked-in and represents your unique test environment.
 You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
 When running the tests locally, this is the Application Insights resource that telemetry will be published to.
 
-### Recording new tests
+### Recording New Tests
 
-TODO
+To record new tests, you must either
+
+- set the RecordTestMode in the ctor
+
+  `public MyTestClass(bool isAsync) : base(isAsync, RecordedTestMode.Record)`
+- or set the Test Mode environment variable
+
+  `$env:AZURE_TEST_MODE = 'Record'`
 
 ### Prerequisites
 

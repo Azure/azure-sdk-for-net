@@ -28,11 +28,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         private const string _logMessage = "Message via ILogger";
 
-        private readonly LogsQueryClient _logsQueryClient;
+        private LogsQueryClient? _logsQueryClient = null;
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live to the base ctor to run this test with a live resource.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync)
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record) { }
+
+        [RecordedTest]
+        public async Task VerifyDistro()
         {
+            // SETUP LOGS CLIENT
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
@@ -43,12 +47,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             ));
 
             _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
-        }
 
-        [RecordedTest]
-        public async Task VerifyDistro()
-        {
-            // SETUP
+            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var resourceAttributes = new Dictionary<string, object>
             {
                 { "service.name", _roleName },
@@ -118,9 +118,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 query: $"AppTraces | where Message == '{_logMessage}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
         }
 
+        private void InitializeLogsQueryClient()
+        {
+        }
+
         private async Task VerifyLogs(string description, string query)
         {
-            LogsTable? table = await _logsQueryClient.CheckForRecordAsync(query);
+            LogsTable? table = await _logsQueryClient!.CheckForRecordAsync(query);
 
             var rowCount = table?.Rows.Count;
             if (rowCount == null || rowCount == 0)
