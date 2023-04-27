@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Network
         {
             ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
             Subnets = new ChangeTrackingList<SubnetData>();
+            ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
@@ -38,7 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="serviceAlias"> The alias indicating if the policy belongs to a service. </param>
+        /// <param name="contextualServiceEndpointPolicies"> A collection of contextual service endpoint policy. </param>
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             Kind = kind;
@@ -46,6 +49,8 @@ namespace Azure.ResourceManager.Network
             Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            ServiceAlias = serviceAlias;
+            ContextualServiceEndpointPolicies = contextualServiceEndpointPolicies;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -60,5 +65,9 @@ namespace Azure.ResourceManager.Network
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The alias indicating if the policy belongs to a service. </summary>
+        public string ServiceAlias { get; set; }
+        /// <summary> A collection of contextual service endpoint policy. </summary>
+        public IList<string> ContextualServiceEndpointPolicies { get; }
     }
 }

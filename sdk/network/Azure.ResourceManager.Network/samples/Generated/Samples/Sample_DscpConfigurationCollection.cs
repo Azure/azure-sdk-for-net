@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateDSCPConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/DscpConfigurationCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/DscpConfigurationCreate.json
             // this example is just showing the usage of "DscpConfiguration_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,35 +46,31 @@ namespace Azure.ResourceManager.Network.Samples
             string dscpConfigurationName = "mydscpconfig";
             DscpConfigurationData data = new DscpConfigurationData()
             {
-                Markings =
+                QosDefinitionCollection =
 {
-46,10
+new DscpQosDefinition()
+{
+Markings =
+{
+1
 },
-                SourceIPRanges =
+SourceIPRanges =
 {
 new QosIPRange()
 {
 StartIP = "127.0.0.1",
 EndIP = "127.0.0.2",
-},new QosIPRange()
-{
-StartIP = "127.0.1.1",
-EndIP = "127.0.1.2",
 }
 },
-                DestinationIPRanges =
+DestinationIPRanges =
 {
 new QosIPRange()
 {
 StartIP = "127.0.10.1",
 EndIP = "127.0.10.2",
-},new QosIPRange()
-{
-StartIP = "127.0.11.1",
-EndIP = "127.0.11.2",
 }
 },
-                SourcePortRanges =
+SourcePortRanges =
 {
 new QosPortRange()
 {
@@ -86,19 +82,56 @@ Start = 20,
 End = 21,
 }
 },
-                DestinationPortRanges =
+DestinationPortRanges =
 {
 new QosPortRange()
 {
 Start = 15,
 End = 15,
-},new QosPortRange()
-{
-Start = 26,
-End = 27,
 }
 },
-                Protocol = ProtocolType.Tcp,
+Protocol = ProtocolType.Tcp,
+},new DscpQosDefinition()
+{
+Markings =
+{
+2
+},
+SourceIPRanges =
+{
+new QosIPRange()
+{
+StartIP = "12.0.0.1",
+EndIP = "12.0.0.2",
+}
+},
+DestinationIPRanges =
+{
+new QosIPRange()
+{
+StartIP = "12.0.10.1",
+EndIP = "12.0.10.2",
+}
+},
+SourcePortRanges =
+{
+new QosPortRange()
+{
+Start = 11,
+End = 12,
+}
+},
+DestinationPortRanges =
+{
+new QosPortRange()
+{
+Start = 51,
+End = 52,
+}
+},
+Protocol = ProtocolType.Udp,
+}
+},
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<DscpConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dscpConfigurationName, data);
@@ -116,7 +149,7 @@ End = 27,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDscpConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/DscpConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/DscpConfigurationGet.json
             // this example is just showing the usage of "DscpConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +183,7 @@ End = 27,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDscpConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/DscpConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/DscpConfigurationGet.json
             // this example is just showing the usage of "DscpConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +213,7 @@ End = 27,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetDscpConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/DscpConfigurationList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/DscpConfigurationList.json
             // this example is just showing the usage of "DscpConfiguration_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

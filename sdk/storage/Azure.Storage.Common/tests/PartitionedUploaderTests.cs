@@ -36,6 +36,8 @@ namespace Azure.Storage.Tests
         private readonly UploadTransferValidationOptions s_validationOptions = new UploadTransferValidationOptions();
         private readonly CancellationToken s_cancellation = new CancellationToken();
 
+        private static readonly object s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Storage.Tests");
+
         public PartitionedUploaderTests(bool async)
         {
             IsAsync = async;
@@ -45,7 +47,7 @@ namespace Azure.Storage.Tests
         {
             var mock = new Mock<PartitionedUploader<object, object>.CreateScope>(MockBehavior.Strict);
             mock.Setup(del => del(s_operationName))
-                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", s_operationName, new DiagnosticListener("Azure.Storage.Tests"), DiagnosticScope.ActivityKind.Client, false));
+                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", new DiagnosticListener("Azure.Storage.Tests"), null, s_activitySource, DiagnosticScope.ActivityKind.Client, false));
             return mock;
         }
 
