@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DrainPeriodInSeconds))
+            {
+                writer.WritePropertyName("drainPeriodInSeconds"u8);
+                writer.WriteNumberValue(DrainPeriodInSeconds.Value);
+            }
+            if (Optional.IsDefined(VirtualNetwork))
+            {
+                writer.WritePropertyName("virtualNetwork"u8);
+                JsonSerializer.Serialize(writer, VirtualNetwork);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -77,7 +87,10 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
             Optional<WritableSubResource> outboundRule = default;
             Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<int> drainPeriodInSeconds = default;
+            Optional<WritableSubResource> virtualNetwork = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -209,6 +222,20 @@ namespace Azure.ResourceManager.Network
                             outboundRules = array;
                             continue;
                         }
+                        if (property0.NameEquals("inboundNatRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            inboundNatRules = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -218,11 +245,29 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("drainPeriodInSeconds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            drainPeriodInSeconds = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetwork"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToNullable(provisioningState));
+            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork);
         }
     }
 }

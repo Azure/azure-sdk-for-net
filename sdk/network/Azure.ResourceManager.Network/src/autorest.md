@@ -7,8 +7,8 @@ azure-arm: true
 generate-model-factory: false
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
-tag: package-track2-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/ae5f241249f12e87e94e184ae5430518ac061a51/specification/network/resource-manager/readme.md
+# tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -18,6 +18,9 @@ model-namespace: true
 public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
+
+# mgmt-debug: 
+#   show-serialized-names: true
 
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
@@ -101,6 +104,80 @@ rename-mapping:
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
   EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
+  Action: RouteMapAction
+  ActionType: RuleMatchActionType
+  ActiveConfigurationParameter: ActiveConfigurationContent
+  ActiveConfigurationParameter.regions: -|azure-location
+  ActiveConnectivityConfiguration.region: -|azure-location
+  ActiveConnectivityConfiguration.commitTime: CommittedOn
+  AdminRule: NetworkAdminRule
+  ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayTierTypes.WAF: Waf
+  ApplicationGatewayTierTypes.WAF_v2: WafV2
+  ConfigurationGroup: NetworkConfigurationGroup
+  ConfigurationType: NetworkConfigurationDeploymentType
+  Criterion: RouteCriterion
+  DefaultAdminRule: NetworkDefaultAdminRule
+  EffectiveBaseSecurityAdminRule.id: ResourceId|arm-id
+  ExplicitProxy: FirewallPolicyExplicitProxy
+  IdpsQueryObject: IdpsQueryContent
+  FilterItems: IdpsQueryFilterItems
+  OrderBy: IdpsQueryOrderBy
+  Geo: CidrAdvertisingGeoCode
+  Geo.NAM: Nam
+  Hub: ConnectivityHub
+  IsGlobal: GlobalMeshSupportFlag
+  IsWorkloadProtected: WorkloadProtectedFlag
+  NextStep: RouteMapNextStepBehavior
+  Parameter: RouteMapActionParameter
+  QosDefinition: DscpQosDefinition
+  QueryResults: IdpsSignatureListResult
+  SingleQueryResult: IdpsSignatureResult
+  QueryRequestOptions: NetworkManagementQueryContent
+  SignatureOverridesFilterValuesQuery: SignatureOverridesFilterValuesQueryContent
+  SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
+  SlotType: SwapSlotType
+  UseHubGateway: HubGatewayUsageFlag
+  VirtualNetworkEncryption.enabled: IsEnabled
+  VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
+  CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
+  CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
+  VpnAuthenticationType.AAD: Aad
+  ApplicationGatewayWafDynamicManifestResult: ApplicationGatewayWafDynamicManifest
+  ApplicationGatewayWafDynamicManifestResultList: ApplicationGatewayWafDynamicManifestListResult
+  SignaturesOverrides: PolicySignaturesOverridesForIdps
+  SignaturesOverrides.id: -|arm-id
+  SignaturesOverrides.type: -|resource-type
+  SignaturesOverridesList: PolicySignaturesOverridesForIdpsListResult
+  SignaturesOverridesProperties: PolicySignaturesOverridesForIdpsProperties
+  StaticMember: NetworkGroupStaticMember
+  StaticMemberListResult: NetworkGroupStaticMemberListResult
+  AdminRuleCollection: AdminRuleGroup
+  AdminRuleCollectionListResult: AdminRuleGroupListResult
+  NetworkManagerConnection.properties.networkManagerId: -|arm-id
+  SwapResource: CloudServiceSwap
+  SwapResourceProperties: CloudServiceSwapProperties
+  SwapResourceListResult: CloudServiceSwapListResult
+  Hub.resourceType: -|resource-type
+  DelegationProperties: VirtualApplianceDelegationProperties
+  DeploymentStatus: NetworkManagerDeploymentState
+  NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
+  NetworkManagerDeploymentStatusParameter: NetworkManagerDeploymentStatusContent
+  GetInboundRoutesParameters: VirtualHubInboundRoutesContent
+  GetOutboundRoutesParameters: VirtualHubOutboundRoutesContent
+  IPPrefixesList: LearnedIPPrefixesListResult
+  NetworkManagerSecurityGroupItem.networkGroupId: -|arm-id
+  PrivateEndpointIPConfiguration.properties.privateIPAddress: -|ip-address
+  PublicIpDdosProtectionStatusResult.publicIpAddressId: -|arm-id
+  PublicIpDdosProtectionStatusResult.publicIpAddress: -|ip-address
+  PublicIpDdosProtectionStatusResult.ddosProtectionPlanId: -|arm-id
+  VpnClientParameters: VpnClientContent
+  VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
+  VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
+  ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
+
+keep-plural-resource-data:
+- PolicySignaturesOverridesForIdps
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -185,6 +262,7 @@ override-operation-name:
   ApplicationGateways_ListAvailableSslOptions: GetApplicationGatewayAvailableSslOptions
   ApplicationGateways_ListAvailableSslPredefinedPolicies: GetApplicationGatewayAvailableSslPredefinedPolicies
   ApplicationGateways_GetSslPredefinedPolicy: GetApplicationGatewaySslPredefinedPolicy
+  VirtualNetworkGateways_Generatevpnclientpackage: GenerateVpnClientPackage
 
 directive:
   - remove-operation: 'PutBastionShareableLink'
@@ -192,6 +270,12 @@ directive:
   - remove-operation: 'GetBastionShareableLink'
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
+  - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  - from: serviceEndpointPolicy.json
+    where: $.definitions
+    transform: >
+      $.ServiceEndpointPolicyDefinition.properties['type']['readOnly'] = true;
+    reason: Resource type should be readonly for this resource.
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
@@ -333,12 +417,10 @@ directive:
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
   - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.name
-    transform: 'return undefined'
-    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
-  - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.etag
-    transform: 'return undefined'
+    where: $.definitions
+    transform: >
+      delete $.VpnServerConfigurationProperties.properties.name;
+      delete $.VpnServerConfigurationProperties.properties.etag;
     reason: The same property is defined in VpnServerConfiguration and service only returns value there.
   - from: azureFirewall.json
     where: $.definitions
@@ -386,64 +468,47 @@ directive:
   - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
     where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
     transform: return "object";
-```
-
-### Tag: package-track2-preview
-
-4 definitions regarding `compute` service are ignored in this release.
-
-These settings apply only when `--tag=package-track2-preview` is specified on the command line.
-
-```yaml $(tag) == 'package-track2-preview'
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/applicationGateway.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/applicationSecurityGroup.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/availableDelegations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/availableServiceAliases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/azureFirewall.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/azureFirewallFqdnTag.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/azureWebCategory.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/bastionHost.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/checkDnsAvailability.json
-#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/cloudServiceNetworkInterface.json
-#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/cloudServicePublicIpAddress.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/customIpPrefix.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/ddosCustomPolicy.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/ddosProtectionPlan.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/dscpConfiguration.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/endpointService.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/expressRouteCircuit.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/expressRouteCrossConnection.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/expressRoutePort.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/firewallPolicy.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/ipAllocation.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/ipGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/loadBalancer.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/natGateway.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/network.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/networkInterface.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/networkProfile.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/networkSecurityGroup.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/networkVirtualAppliance.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/networkWatcher.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/operation.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/privateEndpoint.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/privateLinkService.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/publicIpAddress.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/publicIpPrefix.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/routeFilter.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/routeTable.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/securityPartnerProvider.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/serviceCommunity.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/serviceEndpointPolicy.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/serviceTags.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/usage.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualNetwork.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualNetworkGateway.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualNetworkTap.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualRouter.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualWan.json
-#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssNetworkInterface.json
-#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssPublicIpAddress.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/webapplicationfirewall.json
+  # Remove all files that not belong to Network
+  - from: cloudServiceNetworkInterface.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: cloudServicePublicIpAddress.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: vmssPublicIpAddress.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: vmssNetworkInterface.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: vmssNetworkInterface.json
+    where: $.definitions
+    transform: >
+      for (var def in $)
+      {
+          delete $[def];
+      }
+  - from: vmssNetworkInterface.json
+    where: $.parameters
+    transform: >
+      for (var param in $)
+      {
+          delete $[param];
+      }
 ```
