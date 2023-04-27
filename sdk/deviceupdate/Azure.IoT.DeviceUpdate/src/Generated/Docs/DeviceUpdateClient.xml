@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetUpdateAsync(String,String,String,ETag,RequestContext)">
+    <member name="GetUpdateAsync(string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -97,7 +97,7 @@ Schema for <c>Update</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdate(String,String,String,ETag,RequestContext)">
+    <member name="GetUpdate(string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdate with required parameters and parse the result.
 <code><![CDATA[
@@ -193,7 +193,7 @@ Schema for <c>Update</c>:
 
 </remarks>
     </member>
-    <member name="GetFileAsync(String,String,String,String,ETag,RequestContext)">
+    <member name="GetFileAsync(string,string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFileAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -272,7 +272,7 @@ Schema for <c>UpdateFile</c>:
 
 </remarks>
     </member>
-    <member name="GetFile(String,String,String,String,ETag,RequestContext)">
+    <member name="GetFile(string,string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFile with required parameters and parse the result.
 <code><![CDATA[
@@ -351,7 +351,7 @@ Schema for <c>UpdateFile</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatusAsync(String,ETag,RequestContext)">
+    <member name="GetOperationStatusAsync(string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -438,7 +438,7 @@ Schema for <c>UpdateOperation</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatus(String,ETag,RequestContext)">
+    <member name="GetOperationStatus(string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -525,7 +525,7 @@ Schema for <c>UpdateOperation</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdatesAsync(String,String,RequestContext)">
+    <member name="GetUpdatesAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdatesAsync and parse the result.
 <code><![CDATA[
@@ -623,7 +623,7 @@ Schema for <c>UpdateListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdates(String,String,RequestContext)">
+    <member name="GetUpdates(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdates and parse the result.
 <code><![CDATA[
@@ -721,7 +721,7 @@ Schema for <c>UpdateListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetProvidersAsync(RequestContext)">
+    <member name="GetProvidersAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProvidersAsync and parse the result.
 <code><![CDATA[
@@ -737,7 +737,7 @@ await foreach (var data in client.GetProvidersAsync())
 ]]></code>
 </example>
     </member>
-    <member name="GetProviders(RequestContext)">
+    <member name="GetProviders(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProviders and parse the result.
 <code><![CDATA[
@@ -753,7 +753,7 @@ foreach (var data in client.GetProviders())
 ]]></code>
 </example>
     </member>
-    <member name="GetNamesAsync(String,RequestContext)">
+    <member name="GetNamesAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetNamesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -769,7 +769,7 @@ await foreach (var data in client.GetNamesAsync("<provider>"))
 ]]></code>
 </example>
     </member>
-    <member name="GetNames(String,RequestContext)">
+    <member name="GetNames(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetNames with required parameters and parse the result.
 <code><![CDATA[
@@ -785,7 +785,7 @@ foreach (var data in client.GetNames("<provider>"))
 ]]></code>
 </example>
     </member>
-    <member name="GetVersionsAsync(String,String,String,RequestContext)">
+    <member name="GetVersionsAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetVersionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -813,7 +813,7 @@ await foreach (var data in client.GetVersionsAsync("<provider>", "<name>", "<fil
 ]]></code>
 </example>
     </member>
-    <member name="GetVersions(String,String,String,RequestContext)">
+    <member name="GetVersions(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetVersions with required parameters and parse the result.
 <code><![CDATA[
@@ -841,7 +841,7 @@ foreach (var data in client.GetVersions("<provider>", "<name>", "<filter>"))
 ]]></code>
 </example>
     </member>
-    <member name="GetFilesAsync(String,String,String,RequestContext)">
+    <member name="GetFilesAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFilesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -857,7 +857,7 @@ await foreach (var data in client.GetFilesAsync("<provider>", "<name>", "<versio
 ]]></code>
 </example>
     </member>
-    <member name="GetFiles(String,String,String,RequestContext)">
+    <member name="GetFiles(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFiles with required parameters and parse the result.
 <code><![CDATA[
@@ -873,7 +873,7 @@ foreach (var data in client.GetFiles("<provider>", "<name>", "<version>"))
 ]]></code>
 </example>
     </member>
-    <member name="GetOperationStatusesAsync(String,Int32,RequestContext)">
+    <member name="GetOperationStatusesAsync(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationStatusesAsync and parse the result.
 <code><![CDATA[
@@ -962,7 +962,7 @@ Schema for <c>UpdateOperationsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatuses(String,Int32,RequestContext)">
+    <member name="GetOperationStatuses(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationStatuses and parse the result.
 <code><![CDATA[
@@ -1051,7 +1051,7 @@ Schema for <c>UpdateOperationsListValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteUpdateAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteUpdateAsync(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteUpdateAsync with required parameters.
 <code><![CDATA[
@@ -1065,7 +1065,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="DeleteUpdate(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteUpdate(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteUpdate with required parameters.
 <code><![CDATA[
@@ -1079,7 +1079,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="StartImportUpdateAsync(WaitUntil,RequestContent,RequestContext)">
+    <member name="StartImportUpdateAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartImportUpdateAsync with required parameters and request content.
 <code><![CDATA[
@@ -1135,7 +1135,7 @@ Schema for <c>ImportUpdateInputItem</c>:
 
 </remarks>
     </member>
-    <member name="StartImportUpdate(WaitUntil,RequestContent,RequestContext)">
+    <member name="StartImportUpdate(global::Azure.WaitUntil,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartImportUpdate with required parameters and request content.
 <code><![CDATA[

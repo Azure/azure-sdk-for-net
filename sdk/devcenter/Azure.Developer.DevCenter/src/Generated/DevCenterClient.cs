@@ -67,7 +67,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -93,7 +93,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(String,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -118,7 +118,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
@@ -132,7 +132,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
@@ -146,7 +146,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(string,int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
@@ -160,7 +160,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(string,int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
@@ -177,7 +177,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(String,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,string,int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -196,7 +196,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(String,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,string,int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
