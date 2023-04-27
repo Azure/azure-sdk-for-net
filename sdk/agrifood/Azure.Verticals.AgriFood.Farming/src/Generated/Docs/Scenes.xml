@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DownloadAsync(String,RequestContext)">
+    <member name="DownloadAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DownloadAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -19,7 +19,7 @@ if (response.ContentStream != null)
 ]]></code>
 </example>
     </member>
-    <member name="Download(String,RequestContext)">
+    <member name="Download(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Download with required parameters and parse the result.
 <code><![CDATA[
@@ -37,7 +37,7 @@ if (response.ContentStream != null)
 ]]></code>
 </example>
     </member>
-    <member name="GetSatelliteDataIngestionJobDetailsAsync(String,RequestContext)">
+    <member name="GetSatelliteDataIngestionJobDetailsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -114,7 +114,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSatelliteDataIngestionJobDetails(String,RequestContext)">
+    <member name="GetSatelliteDataIngestionJobDetails(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -191,7 +191,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="SearchFeaturesAsync(String,RequestContent,Int32,Int32,RequestContext)">
+    <member name="SearchFeaturesAsync(string,global::Azure.Core.RequestContent,int?,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -316,7 +316,7 @@ to get next set of features.
 
 </remarks>
     </member>
-    <member name="SearchFeatures(String,RequestContent,Int32,Int32,RequestContext)">
+    <member name="SearchFeatures(string,global::Azure.Core.RequestContent,int?,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -441,7 +441,7 @@ to get next set of features.
 
 </remarks>
     </member>
-    <member name="GetStacFeatureAsync(String,String,RequestContext)">
+    <member name="GetStacFeatureAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -500,7 +500,7 @@ Its a GeoJSON geometry.
 
 </remarks>
     </member>
-    <member name="GetStacFeature(String,String,RequestContext)">
+    <member name="GetStacFeature(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStacFeature with required parameters and parse the result.
 <code><![CDATA[
@@ -559,7 +559,7 @@ Its a GeoJSON geometry.
 
 </remarks>
     </member>
-    <member name="GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)">
+    <member name="GetScenesAsync(string,string,string,string,global::System.DateTimeOffset?,global::System.DateTimeOffset?,double?,double?,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{double},global::System.Collections.Generic.IEnumerable{string},int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScenesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -629,7 +629,7 @@ Schema for <c>SceneListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="GetScenes(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)">
+    <member name="GetScenes(string,string,string,string,global::System.DateTimeOffset?,global::System.DateTimeOffset?,double?,double?,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{double},global::System.Collections.Generic.IEnumerable{string},int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScenes with required parameters and parse the result.
 <code><![CDATA[
@@ -699,7 +699,7 @@ Schema for <c>SceneListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateSatelliteDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSatelliteDataIngestionJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -862,7 +862,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSatelliteDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSatelliteDataIngestionJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[

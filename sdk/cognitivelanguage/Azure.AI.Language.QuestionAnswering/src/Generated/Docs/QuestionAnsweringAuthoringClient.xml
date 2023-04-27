@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetProjectDetailsAsync(String,RequestContext)">
+    <member name="GetProjectDetailsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -46,7 +46,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectDetails(String,RequestContext)">
+    <member name="GetProjectDetails(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjectDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -91,7 +91,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="CreateProjectAsync(String,RequestContent,RequestContext)">
+    <member name="CreateProjectAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -173,7 +173,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="CreateProject(String,RequestContent,RequestContext)">
+    <member name="CreateProject(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -255,7 +255,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetDeleteStatusAsync(String,RequestContext)">
+    <member name="GetDeleteStatusAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -293,7 +293,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeleteStatus(String,RequestContext)">
+    <member name="GetDeleteStatus(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeleteStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -331,7 +331,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetExportStatusAsync(String,String,RequestContext)">
+    <member name="GetExportStatusAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -368,7 +368,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetExportStatus(String,String,RequestContext)">
+    <member name="GetExportStatus(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetExportStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -405,7 +405,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetImportStatusAsync(String,String,RequestContext)">
+    <member name="GetImportStatusAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -443,7 +443,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetImportStatus(String,String,RequestContext)">
+    <member name="GetImportStatus(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetImportStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -481,7 +481,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeployStatusAsync(String,String,String,RequestContext)">
+    <member name="GetDeployStatusAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -519,7 +519,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeployStatus(String,String,String,RequestContext)">
+    <member name="GetDeployStatus(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeployStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -557,7 +557,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateSynonymsAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateSynonymsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSynonymsAsync with required parameters.
 <code><![CDATA[
@@ -611,7 +611,7 @@ Schema for <c>SynonymAssets</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSynonyms(String,RequestContent,RequestContext)">
+    <member name="UpdateSynonyms(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSynonyms with required parameters.
 <code><![CDATA[
@@ -665,7 +665,7 @@ Schema for <c>SynonymAssets</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdateSourcesStatusAsync(String,String,RequestContext)">
+    <member name="GetUpdateSourcesStatusAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -703,7 +703,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateSourcesStatus(String,String,RequestContext)">
+    <member name="GetUpdateSourcesStatus(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -741,7 +741,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateQnasStatusAsync(String,String,RequestContext)">
+    <member name="GetUpdateQnasStatusAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -779,7 +779,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateQnasStatus(String,String,RequestContext)">
+    <member name="GetUpdateQnasStatus(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -817,7 +817,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="AddFeedbackAsync(String,RequestContent,RequestContext)">
+    <member name="AddFeedbackAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AddFeedbackAsync with required parameters.
 <code><![CDATA[
@@ -871,7 +871,7 @@ Schema for <c>ActiveLearningFeedback</c>:
 
 </remarks>
     </member>
-    <member name="AddFeedback(String,RequestContent,RequestContext)">
+    <member name="AddFeedback(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AddFeedback with required parameters.
 <code><![CDATA[
@@ -925,7 +925,7 @@ Schema for <c>ActiveLearningFeedback</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectsAsync(RequestContext)">
+    <member name="GetProjectsAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
@@ -971,7 +971,7 @@ Schema for <c>ProjectsMetadataValue</c>:
 
 </remarks>
     </member>
-    <member name="GetProjects(RequestContext)">
+    <member name="GetProjects(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
@@ -1017,7 +1017,7 @@ Schema for <c>ProjectsMetadataValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsAsync(String,RequestContext)">
+    <member name="GetDeploymentsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1049,7 +1049,7 @@ Schema for <c>ProjectDeploymentsList</c>:
 
 </remarks>
     </member>
-    <member name="GetDeployments(String,RequestContext)">
+    <member name="GetDeployments(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDeployments with required parameters and parse the result.
 <code><![CDATA[
@@ -1081,7 +1081,7 @@ Schema for <c>ProjectDeploymentsList</c>:
 
 </remarks>
     </member>
-    <member name="GetSynonymsAsync(String,RequestContext)">
+    <member name="GetSynonymsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1111,7 +1111,7 @@ Schema for <c>SynonymAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetSynonyms(String,RequestContext)">
+    <member name="GetSynonyms(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSynonyms with required parameters and parse the result.
 <code><![CDATA[
@@ -1141,7 +1141,7 @@ Schema for <c>SynonymAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetSourcesAsync(String,RequestContext)">
+    <member name="GetSourcesAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSourcesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1179,7 +1179,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetSources(String,RequestContext)">
+    <member name="GetSources(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSources with required parameters and parse the result.
 <code><![CDATA[
@@ -1217,7 +1217,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetQnasAsync(String,String,RequestContext)">
+    <member name="GetQnasAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetQnasAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1315,7 +1315,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetQnas(String,String,RequestContext)">
+    <member name="GetQnas(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetQnas with required parameters and parse the result.
 <code><![CDATA[
@@ -1413,7 +1413,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="DeleteProjectAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteProjectAsync(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteProjectAsync with required parameters.
 <code><![CDATA[
@@ -1427,7 +1427,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="DeleteProject(WaitUntil,String,RequestContext)">
+    <member name="DeleteProject(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteProject with required parameters.
 <code><![CDATA[
@@ -1441,7 +1441,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="ExportAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="ExportAsync(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ExportAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1494,7 +1494,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="Export(WaitUntil,String,String,String,RequestContext)">
+    <member name="Export(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Export with required parameters and parse the result.
 <code><![CDATA[
@@ -1547,7 +1547,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="ImportAsync(WaitUntil,String,RequestContent,String,String,RequestContext)">
+    <member name="ImportAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ImportAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1745,7 +1745,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="Import(WaitUntil,String,RequestContent,String,String,RequestContext)">
+    <member name="Import(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Import with required parameters and parse the result.
 <code><![CDATA[
@@ -1943,7 +1943,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeployProjectAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeployProjectAsync(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeployProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1975,7 +1975,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="DeployProject(WaitUntil,String,String,RequestContext)">
+    <member name="DeployProject(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeployProject with required parameters and parse the result.
 <code><![CDATA[
@@ -2007,7 +2007,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSourcesAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateSourcesAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2075,7 +2075,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSources(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateSources(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSources with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2143,7 +2143,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="UpdateQnasAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateQnasAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2308,7 +2308,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="UpdateQnas(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateQnas(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
 <code><![CDATA[

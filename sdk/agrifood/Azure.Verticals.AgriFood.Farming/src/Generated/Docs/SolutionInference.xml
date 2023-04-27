@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CancelAsync(String,RequestContent,RequestContext)">
+    <member name="CancelAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -51,7 +51,7 @@ Not following this format may result into validation errors.
 
 </remarks>
     </member>
-    <member name="Cancel(String,RequestContent,RequestContext)">
+    <member name="Cancel(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Cancel with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -101,7 +101,7 @@ Not following this format may result into validation errors.
 
 </remarks>
     </member>
-    <member name="FetchAsync(String,RequestContent,RequestContext)">
+    <member name="FetchAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call FetchAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -151,7 +151,7 @@ Not following this format may result into validation errors.
 
 </remarks>
     </member>
-    <member name="Fetch(String,RequestContent,RequestContext)">
+    <member name="Fetch(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Fetch with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -201,7 +201,7 @@ Not following this format may result into validation errors.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -253,7 +253,7 @@ Not following this format may result into validation errors.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
 <code><![CDATA[

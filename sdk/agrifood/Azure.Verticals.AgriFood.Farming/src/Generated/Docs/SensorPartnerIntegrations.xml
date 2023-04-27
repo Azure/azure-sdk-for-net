@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -101,7 +101,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
@@ -201,7 +201,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorPartnerIntegrationAsync(String,String,RequestContext)">
+    <member name="GetSensorPartnerIntegrationAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPartnerIntegrationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -255,7 +255,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorPartnerIntegration(String,String,RequestContext)">
+    <member name="GetSensorPartnerIntegration(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPartnerIntegration with required parameters and parse the result.
 <code><![CDATA[
@@ -309,7 +309,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,String,RequestContext)">
+    <member name="DeleteAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -321,7 +321,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,String,RequestContext)">
+    <member name="Delete(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
@@ -333,7 +333,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckConsentAsync(String,String,String,RequestContext)">
+    <member name="CheckConsentAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckConsentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -363,7 +363,7 @@ Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
 
 </remarks>
     </member>
-    <member name="CheckConsent(String,String,String,RequestContext)">
+    <member name="CheckConsent(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckConsent with required parameters and parse the result.
 <code><![CDATA[
@@ -393,7 +393,7 @@ Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
 
 </remarks>
     </member>
-    <member name="GenerateConsentLinkAsync(String,String,RequestContext)">
+    <member name="GenerateConsentLinkAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GenerateConsentLinkAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -421,7 +421,7 @@ Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
 
 </remarks>
     </member>
-    <member name="GenerateConsentLink(String,String,RequestContext)">
+    <member name="GenerateConsentLink(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GenerateConsentLink with required parameters and parse the result.
 <code><![CDATA[
@@ -449,7 +449,7 @@ Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetSensorPartnerIntegrationsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensorPartnerIntegrationsAsync(string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPartnerIntegrationsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -515,7 +515,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorPartnerIntegrations(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensorPartnerIntegrations(string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPartnerIntegrations with required parameters and parse the result.
 <code><![CDATA[

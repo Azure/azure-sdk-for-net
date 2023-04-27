@@ -56,7 +56,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='DownloadAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='DownloadAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -81,7 +81,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='Download(String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='Download(string,global::Azure.RequestContext)']/*" />
         public virtual Response Download(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -107,7 +107,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -133,7 +133,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -162,7 +162,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeaturesAsync(String,RequestContent,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeaturesAsync(string,global::Azure.Core.RequestContent,int?,int?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SearchFeaturesAsync(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
@@ -192,7 +192,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeatures(String,RequestContent,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeatures(string,global::Azure.Core.RequestContent,int?,int?,global::Azure.RequestContext)']/*" />
         public virtual Response SearchFeatures(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
@@ -220,7 +220,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
@@ -248,7 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
@@ -289,7 +289,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="partyId"/>, <paramref name="boundaryId"/> or <paramref name="source"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenesAsync(string,string,string,string,global::System.DateTimeOffset?,global::System.DateTimeOffset?,double?,double?,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{double},global::System.Collections.Generic.IEnumerable{string},int?,string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
@@ -323,7 +323,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="partyId"/>, <paramref name="boundaryId"/> or <paramref name="source"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenes(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenes(string,string,string,string,global::System.DateTimeOffset?,global::System.DateTimeOffset?,double?,double?,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{double},global::System.Collections.Generic.IEnumerable{string},int?,string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
@@ -345,7 +345,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -374,7 +374,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));

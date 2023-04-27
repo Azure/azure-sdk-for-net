@@ -57,7 +57,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CancelAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response Cancel(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> FetchAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -141,7 +141,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response Fetch(string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -170,7 +170,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
@@ -199,7 +199,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdate(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));

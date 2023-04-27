@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetRasterizeJobAsync(String,RequestContext)">
+    <member name="GetRasterizeJobAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -64,7 +64,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetRasterizeJob(String,RequestContext)">
+    <member name="GetRasterizeJob(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRasterizeJob with required parameters and parse the result.
 <code><![CDATA[
@@ -127,7 +127,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateRasterizeJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateRasterizeJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -254,7 +254,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateRasterizeJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateRasterizeJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[

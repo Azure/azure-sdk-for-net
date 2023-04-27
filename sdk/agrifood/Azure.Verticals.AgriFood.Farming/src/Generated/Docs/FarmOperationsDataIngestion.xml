@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetJobDetailsAsync(String,RequestContext)">
+    <member name="GetJobDetailsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -68,7 +68,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetJobDetails(String,RequestContext)">
+    <member name="GetJobDetails(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetJobDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -135,7 +135,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -268,7 +268,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[

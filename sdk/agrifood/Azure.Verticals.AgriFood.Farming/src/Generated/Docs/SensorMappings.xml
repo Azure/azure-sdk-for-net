@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -107,7 +107,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
@@ -213,7 +213,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorMappingAsync(String,RequestContext)">
+    <member name="GetSensorMappingAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorMappingAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -269,7 +269,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorMapping(String,RequestContext)">
+    <member name="GetSensorMapping(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorMapping with required parameters and parse the result.
 <code><![CDATA[
@@ -325,7 +325,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,RequestContext)">
+    <member name="DeleteAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -337,7 +337,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,RequestContext)">
+    <member name="Delete(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
@@ -349,7 +349,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetSensorMappingsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensorMappingsAsync(global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorMappingsAsync and parse the result.
 <code><![CDATA[
@@ -417,7 +417,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorMappings(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensorMappings(global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorMappings and parse the result.
 <code><![CDATA[
