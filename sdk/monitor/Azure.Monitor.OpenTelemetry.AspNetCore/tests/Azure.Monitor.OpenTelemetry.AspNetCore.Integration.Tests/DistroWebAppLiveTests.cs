@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     {
         private const string _testServerUrl = "http://localhost:9999/";
 
-        // DEVELOPER TIP: Change this to something unique when working locally (Example "Test##") to easily find your records.
+        // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
         // Can search for all records in the portal using this query:   Union * | where AppRoleName == 'Test##'
         private const string _roleName = nameof(DistroWebAppLiveTests);
 
