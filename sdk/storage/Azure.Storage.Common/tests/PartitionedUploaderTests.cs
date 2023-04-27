@@ -428,5 +428,50 @@ namespace Azure.Storage.Tests
                 _ => throw Errors.InvalidArgument(nameof(dataType)),
             });
         }
+
+        [TestCase(DataType.BinaryData)]
+        [TestCase(DataType.UnseekableStream)]
+        [TestCase(DataType.SeekableStream)]
+        public void UseCallerCrc(DataType dataType)
+        {
+            // Given data for a partitioned upload
+            const int dataSize = 10 * Constants.KB;
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = Constants.KB,
+                MaximumTransferSize = Constants.KB
+            };
+            var data = TestHelper.GetRandomBuffer(dataSize);
+
+            // and a bad checksum
+            var garbageCrc = TestHelper.GetRandomBuffer(Constants.StorageCrc64SizeInBytes);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = new ReadOnlyMemory<byte>(garbageCrc)
+            };
+
+            // and a configured uploader
+            var mocks = GetMockBehaviors(dataSize, dataSize);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                transferOptions,
+                validationOptions,
+                operationName: s_operationName);
+
+            // Fail on upload since master CRC won't match composed block crcs, proof that the caller-supplied CRC was used
+            InvalidDataException exception = Assert.ThrowsAsync<InvalidDataException>(async () => await (dataType switch
+            {
+                DataType.SeekableStream => partitionedUploader.UploadInternal(new MemoryStream(data), default,
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                DataType.UnseekableStream => partitionedUploader.UploadInternal(new NonSeekableMemoryStream(data), data.Length,
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                DataType.BinaryData => partitionedUploader.UploadInternal(BinaryData.FromBytes(data),
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                _ => throw Errors.InvalidArgument(nameof(dataType)),
+            }));
+
+            Assert.IsTrue(exception.Message.Contains(Convert.ToBase64String(garbageCrc)));
+        }
     }
 }

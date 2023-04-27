@@ -222,7 +222,7 @@ namespace Azure.Storage
         /// or calculated over the course of upload with streamed data.
         /// This is NOT a composed value. Composition happens locally in the upload to validate against this value.
         /// </summary>
-        private IHasher _masterCrc;
+        private Func<Memory<byte>> _masterCrcSupplier = default;
 
         /// <summary>
         /// Gets <see cref="_validationAlgorithm"/> as <see cref="UploadTransferValidationOptions"/>.
@@ -296,7 +296,16 @@ namespace Azure.Storage
                 .ChecksumAlgorithm.ResolveAuto();
             if (!transferValidation.PrecalculatedChecksum.IsEmpty)
             {
-                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                if (UseMasterCrc)
+                {
+                    var userSuppliedMasterCrc = new Memory<byte>(new byte[transferValidation.PrecalculatedChecksum.Length]);
+                    transferValidation.PrecalculatedChecksum.CopyTo(userSuppliedMasterCrc);
+                    _masterCrcSupplier = () => userSuppliedMasterCrc;
+                }
+                else
+                {
+                    throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                }
             }
 
             _operationName = operationName;
@@ -332,10 +341,11 @@ namespace Azure.Storage
             }
 
             // can get master crc upfront in place
-            if (UseMasterCrc)
+            if (UseMasterCrc && _masterCrcSupplier == default)
             {
-                _masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
-                _masterCrc.AppendHash(content);
+                var masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
+                masterCrc.AppendHash(content);
+                _masterCrcSupplier = () => masterCrc.GetFinalHash();
             }
 
             // If the caller provided an explicit block size, we'll use it.
@@ -442,10 +452,11 @@ namespace Azure.Storage
             }
 
             // configure content stream to calculate master crc as it is read
-            if (UseMasterCrc)
+            if (UseMasterCrc && _masterCrcSupplier == default)
             {
-                _masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
-                content = ChecksumCalculatingStream.GetReadStream(content, _masterCrc.AppendHash);
+                var masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
+                content = ChecksumCalculatingStream.GetReadStream(content, masterCrc.AppendHash);
+                _masterCrcSupplier = () => masterCrc.GetFinalHash();
             }
 
             // If the caller provided an explicit block size, we'll use it.
@@ -683,7 +694,7 @@ namespace Azure.Storage
 
                 if (UseMasterCrc)
                 {
-                    var wholeCrc = _masterCrc.GetFinalHash();
+                    Memory<byte> wholeCrc = _masterCrcSupplier();
                     if (!_composedBlockCrc64.Span.SequenceEqual(wholeCrc.Span))
                     {
                         throw Errors.ChecksumMismatch(wholeCrc.Span, _composedBlockCrc64.Span);
@@ -810,7 +821,7 @@ namespace Azure.Storage
 
                 if (UseMasterCrc)
                 {
-                    var wholeCrc = _masterCrc.GetFinalHash();
+                    Memory<byte> wholeCrc = _masterCrcSupplier();
                     if (!_composedBlockCrc64.Span.SequenceEqual(wholeCrc.Span))
                     {
                         throw Errors.ChecksumMismatch(wholeCrc.Span, _composedBlockCrc64.Span);
