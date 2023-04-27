@@ -10,6 +10,7 @@ param(
   $CentralRepoId,
   # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
   # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+).*$".
+  # For sync-.github/workflows work, we use regex as "^sync-.github/workflows.*-(?<PrNumber>\d+).*$".
   $BranchRegex,
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
@@ -69,7 +70,7 @@ foreach ($res in $responses)
       LogError "No PR number found in the branch name. Please check the branch name [ $branchName ]. Skipping..."
       continue
     }
-      
+
     try {
       $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
       LogDebug "Found central PR pull request: $($centralPR.html_url)"
@@ -78,7 +79,7 @@ foreach ($res in $responses)
         continue
       }
     }
-    catch 
+    catch
     {
       # If there is no central PR for the PR number, log error and skip.
       LogError "Get-GitHubPullRequests failed with exception:`n$_"
@@ -107,15 +108,15 @@ foreach ($res in $responses)
         LogDebug "The branch $branch last commit date [ $commitDate ] is newer than the date $LastCommitOlderThan. Skipping."
         continue
       }
-      
+
       LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has a last commit date [ $commitDate ] that is older than $LastCommitOlderThan. "
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
       exit 1
     }
-  } 
-  
+  }
+
   try {
     if ($PSCmdlet.ShouldProcess("[ $branchName ] in [ $RepoId ]", "Deleting branches on cleanup script")) {
       Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
