@@ -8,24 +8,24 @@ This project is the Integration tests using the [Azure SDK TestFramework](https:
 
 To run these tests locally you must first create your test resources.
 
-First need to sign in to an Azure Subscription. This command requires the [Azure Powershell module](https://docs.microsoft.com/powershell/azure/install-az-ps).
+1. Connect to an Azure Subscription. This command requires the [Azure PowerShell module](https://docs.microsoft.com/powershell/azure/install-az-ps).
 
-```powershell
-Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-```
+    ```powershell
+    Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
+    ```
 
-Then run the New-TestResources cmd which will create the required test resources.
+2. Then run the New-TestResources cmd which will create the required test resources.
 
-```powershell
-eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory monitor
-```
+    ```powershell
+    eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory monitor
+    ```
 
-If this script fails, it should instruct you to install any missing dependencies.
+    If this script fails, it should instruct you to install any missing dependencies.
 
-When this script is finished, it will create a file called `test-resources.bicep` in your `monitor` directory.
-This file is not checked-in and represents your unique test environment.
+    When this script is finished, it will create a file called `test-resources.bicep` in your `monitor` directory.
+    This file is not checked-in and represents your unique test environment.
 
-You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
+3. You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
 When running the tests locally, this is the Application Insights resource that telemetry will be published to.
 
 ### Recording New Tests
