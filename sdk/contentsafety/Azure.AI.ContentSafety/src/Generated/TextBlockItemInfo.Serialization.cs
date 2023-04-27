@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     public partial class TextBlockItemInfo : IUtf8JsonSerializable
     {

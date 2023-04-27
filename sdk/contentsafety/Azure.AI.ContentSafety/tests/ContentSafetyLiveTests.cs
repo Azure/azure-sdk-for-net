@@ -3,13 +3,8 @@
 
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.ContentSafety.Models;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests

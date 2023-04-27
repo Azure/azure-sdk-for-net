@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The request of adding blockItems to text blocklist. </summary>
     public partial class AddBlockItemsOptions
@@ -23,6 +23,13 @@ namespace Azure.AI.ContentSafety.Models
             Argument.AssertNotNull(blockItems, nameof(blockItems));
 
             BlockItems = blockItems.ToList();
+        }
+
+        /// <summary> Initializes a new instance of AddBlockItemsOptions. </summary>
+        /// <param name="blockItems"> Array of blockItemInfo to add. </param>
+        internal AddBlockItemsOptions(IList<TextBlockItemInfo> blockItems)
+        {
+            BlockItems = blockItems;
         }
 
         /// <summary> Array of blockItemInfo to add. </summary>

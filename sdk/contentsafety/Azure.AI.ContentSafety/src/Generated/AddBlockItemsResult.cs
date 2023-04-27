@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The response of adding blockItems to text blocklist. </summary>
     public partial class AddBlockItemsResult
@@ -24,7 +23,7 @@ namespace Azure.AI.ContentSafety.Models
         /// <param name="value"> Array of blockItems added. </param>
         internal AddBlockItemsResult(IReadOnlyList<TextBlockItem> value)
         {
-            Value = value.ToList();
+            Value = value;
         }
 
         /// <summary> Array of blockItems added. </summary>

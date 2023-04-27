@@ -8,18 +8,18 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
-    public partial class RemoveBlockItemsOptions : IUtf8JsonSerializable
+    public partial class AddBlockItemsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("blockItemIds"u8);
+            writer.WritePropertyName("blockItems"u8);
             writer.WriteStartArray();
-            foreach (var item in BlockItemIds)
+            foreach (var item in BlockItems)
             {
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

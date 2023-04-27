@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis response of the text. </summary>
     public partial class AnalyzeTextResult
@@ -28,7 +27,7 @@ namespace Azure.AI.ContentSafety.Models
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
         internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult)
         {
-            BlocklistsMatchResults = blocklistsMatchResults.ToList();
+            BlocklistsMatchResults = blocklistsMatchResults;
             HateResult = hateResult;
             SelfHarmResult = selfHarmResult;
             SexualResult = sexualResult;

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis request of the image. </summary>
     public partial class AnalyzeImageOptions
@@ -23,6 +23,15 @@ namespace Azure.AI.ContentSafety.Models
 
             Image = image;
             Categories = new ChangeTrackingList<ImageCategory>();
+        }
+
+        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <param name="image"> The image needs to be analyzed. </param>
+        /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
+        internal AnalyzeImageOptions(ImageData image, IList<ImageCategory> categories)
+        {
+            Image = image;
+            Categories = categories;
         }
 
         /// <summary> The image needs to be analyzed. </summary>

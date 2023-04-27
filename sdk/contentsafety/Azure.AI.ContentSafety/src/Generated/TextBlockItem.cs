@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> Item in TextBlocklist. </summary>
     public partial class TextBlockItem

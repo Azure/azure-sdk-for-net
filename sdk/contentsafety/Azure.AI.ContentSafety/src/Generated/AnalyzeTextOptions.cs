@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis request of the text. </summary>
     public partial class AnalyzeTextOptions
@@ -24,6 +24,19 @@ namespace Azure.AI.ContentSafety.Models
             Text = text;
             Categories = new ChangeTrackingList<TextCategory>();
             BlocklistNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <param name="text"> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </param>
+        /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
+        /// <param name="blocklistNames"> The names of blocklists. </param>
+        /// <param name="breakByBlocklists"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
+        internal AnalyzeTextOptions(string text, IList<TextCategory> categories, IList<string> blocklistNames, bool? breakByBlocklists)
+        {
+            Text = text;
+            Categories = categories;
+            BlocklistNames = blocklistNames;
+            BreakByBlocklists = breakByBlocklists;
         }
 
         /// <summary> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </summary>

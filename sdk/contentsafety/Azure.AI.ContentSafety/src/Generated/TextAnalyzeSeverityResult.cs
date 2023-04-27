@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> Text analysis result. </summary>
     public partial class TextAnalyzeSeverityResult

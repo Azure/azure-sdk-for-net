@@ -8,20 +8,25 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
-    public partial class AddBlockItemsOptions : IUtf8JsonSerializable
+    public partial class AnalyzeImageOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("blockItems"u8);
-            writer.WriteStartArray();
-            foreach (var item in BlockItems)
+            writer.WritePropertyName("image"u8);
+            writer.WriteObjectValue(Image);
+            if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("categories"u8);
+                writer.WriteStartArray();
+                foreach (var item in Categories)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 

@@ -8,11 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
-    /// <summary>
-    /// Text analyze category
-    /// </summary>
+    /// <summary> Text analyze category. </summary>
     public readonly partial struct TextCategory : IEquatable<TextCategory>
     {
         private readonly string _value;

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The result of blocklist match. </summary>
     public partial class TextBlocklistMatchResult

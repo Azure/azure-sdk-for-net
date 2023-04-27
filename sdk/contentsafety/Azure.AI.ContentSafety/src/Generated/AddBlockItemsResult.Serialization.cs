@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     public partial class AddBlockItemsResult
     {

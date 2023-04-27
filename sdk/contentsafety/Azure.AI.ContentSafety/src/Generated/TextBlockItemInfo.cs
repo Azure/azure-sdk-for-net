@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> Block item info in text blocklist. </summary>
     public partial class TextBlockItemInfo
@@ -20,6 +20,15 @@ namespace Azure.AI.ContentSafety.Models
         {
             Argument.AssertNotNull(text, nameof(text));
 
+            Text = text;
+        }
+
+        /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
+        /// <param name="description"> Block item description. </param>
+        /// <param name="text"> Block item content. </param>
+        internal TextBlockItemInfo(string description, string text)
+        {
+            Description = description;
             Text = text;
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.ContentSafety.Models
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The request of removing blockItems from text blocklist. </summary>
     public partial class RemoveBlockItemsOptions
@@ -23,6 +23,13 @@ namespace Azure.AI.ContentSafety.Models
             Argument.AssertNotNull(blockItemIds, nameof(blockItemIds));
 
             BlockItemIds = blockItemIds.ToList();
+        }
+
+        /// <summary> Initializes a new instance of RemoveBlockItemsOptions. </summary>
+        /// <param name="blockItemIds"> Array of blockItemIds to remove. </param>
+        internal RemoveBlockItemsOptions(IList<string> blockItemIds)
+        {
+            BlockItemIds = blockItemIds;
         }
 
         /// <summary> Array of blockItemIds to remove. </summary>

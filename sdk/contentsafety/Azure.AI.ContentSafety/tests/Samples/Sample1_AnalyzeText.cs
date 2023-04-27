@@ -3,12 +3,7 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.AI.ContentSafety.Models;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

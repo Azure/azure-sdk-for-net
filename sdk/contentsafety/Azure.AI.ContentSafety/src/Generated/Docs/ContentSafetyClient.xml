@@ -811,7 +811,7 @@ Schema for <c>TextBlockItem</c>:
     </member>
     <member name="GetTextBlocklistsAsync(RequestContext)">
 <example>
-This sample shows how to call GetTextBlocklistsAsync and parse the result.
+This sample shows how to call GetTextBlocklistsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -843,7 +843,7 @@ Schema for <c>Array</c>:
     </member>
     <member name="GetTextBlocklists(RequestContext)">
 <example>
-This sample shows how to call GetTextBlocklists and parse the result.
+This sample shows how to call GetTextBlocklists with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -881,18 +881,6 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-await foreach (var data in client.GetTextBlocklistItemsAsync("<blocklistName>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-}
-]]></code>
-This sample shows how to call GetTextBlocklistItemsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
 await foreach (var data in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -920,18 +908,6 @@ Schema for <c>Array</c>:
     <member name="GetTextBlocklistItems(String,Int32,Int32,Int32,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistItems with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-foreach (var data in client.GetTextBlocklistItems("<blocklistName>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-}
-]]></code>
-This sample shows how to call GetTextBlocklistItems with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
