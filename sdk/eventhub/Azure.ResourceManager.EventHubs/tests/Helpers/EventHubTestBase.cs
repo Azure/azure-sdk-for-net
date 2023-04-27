@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            IgnoreKeyVaultDependencyVersions();
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");
