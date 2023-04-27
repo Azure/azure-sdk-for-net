@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         }
 
         [RecordedTest]
-        public async Task Test()
+        public async Task VerifyDistro()
         {
             // SETUP
             var resourceAttributes = new Dictionary<string, object>

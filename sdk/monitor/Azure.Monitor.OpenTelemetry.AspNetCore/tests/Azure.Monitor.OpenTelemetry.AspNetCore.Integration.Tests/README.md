@@ -5,12 +5,14 @@ For more information see: [.NET Azure SDK Test Framework](https://github.com/Azu
 
 ## Getting started
 
+### First Time Setup
+
 To run these tests locally you must first create your test resources.
 
-First need to sign in to an Azure Subscription. This command requires the [Azure Powershell module](https://learn.microsoft.com/powershell/azure/install-azure-powershell).
+First need to sign in to an Azure Subscription. This command requires the [Azure Powershell module](https://docs.microsoft.com/powershell/azure/install-az-ps).
 
 ```powershell
-Connect-AzAccount -Subscription $Subscription
+Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
 ```
 
 Then run the New-TestResources cmd which will create the required test resources.
@@ -26,6 +28,10 @@ This file is not checked-in and represents your unique test environment.
 
 You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
 When running the tests locally, this is the Application Insights resource that telemetry will be published to.
+
+### Recording new tests
+
+TODO
 
 ### Prerequisites
 
