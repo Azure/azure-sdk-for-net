@@ -11,6 +11,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApiManagement.Tests.ResourceProviderTests
@@ -19,9 +20,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
     {
         [Fact]
         [Trait("owner", "sasolank")]
-        public void CreateMultiRegionService()
+        public async void CreateMultiRegionService()
         {
-                      Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -68,6 +69,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName,
                     parameters: testBase.serviceProperties);
+
+                // Get service
+                createdService = await testBase.client.ApiManagementService.GetAsync(testBase.rgName, testBase.serviceName);
 
                 ValidateService(createdService,
                    testBase.serviceName,
