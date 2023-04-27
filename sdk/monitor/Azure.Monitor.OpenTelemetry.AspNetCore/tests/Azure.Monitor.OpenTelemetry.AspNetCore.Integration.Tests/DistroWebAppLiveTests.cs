@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private LogsQueryClient? _logsQueryClient = null;
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live to the base ctor to run this test with a live resource.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record) { }
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
         public async Task VerifyDistro()
