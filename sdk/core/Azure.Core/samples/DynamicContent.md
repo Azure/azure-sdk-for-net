@@ -15,7 +15,7 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 ### Get a JSON property
 
-JSON properties are read using dynamic member access.
+JSON members are read using dynamic property access.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
@@ -23,7 +23,9 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 
-If no parameter is passed to `ToDynamicFromJson()`, properties on the dynamic object are accessed using casing that exactly matches what's in the JSON content.  Passing `DynamicDataOptions.Default` enables properties to be accessed with PascalCase property names, and writes any added properties with camelCase names.
+You can learn what properties are available in the JSON content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
+
+If no parameter is passed to `ToDynamicFromJson()`, properties on the dynamic object are accessed using names that exactly match the members in the JSON content.  Passing `DynamicDataOptions.Default` enables properties to be accessed with PascalCase property names, and writes any added properties with camelCase names.
 
 ### Check whether an optional property is present
 

@@ -115,7 +115,7 @@ namespace Azure.Core.Samples
 
             widget.Name = "New Name";
 
-            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create((object)widget));
+            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
             #endregion
         }
 
