@@ -5,24 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class AzureBlobContentSource : IUtf8JsonSerializable
+    public partial class AzureBlobContentSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             writer.WriteEndObject();
+        }
+
+        internal static AzureBlobContentSource DeserializeAzureBlobContentSource(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri containerUrl = default;
+            Optional<string> prefix = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("containerUrl"u8))
+                {
+                    containerUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("prefix"u8))
+                {
+                    prefix = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new AzureBlobContentSource(containerUrl, prefix.Value);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Managed service identity (user assigned identities). </summary>
+    /// <summary> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </summary>
     public partial class UserAssignedServiceIdentity
     {
         /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>

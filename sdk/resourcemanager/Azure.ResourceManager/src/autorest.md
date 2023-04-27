@@ -14,6 +14,9 @@ head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 batch:
   - tag: package-common-type-2022-04
   - tag: package-resources-2022-09
@@ -272,6 +275,7 @@ rename-mapping:
   Selector: ResourceSelectorExpression
   SelectorKind: ResourceSelectorKind
   Location: LocationExpanded
+  ResourcesMoveContent.targetResourceGroup: targetResourceGroupId|arm-id
 
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.

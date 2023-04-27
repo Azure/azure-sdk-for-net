@@ -103,6 +103,17 @@ namespace Azure.ResourceManager.TestFramework
             });
         }
 
+        protected void IgnoreNetworkDependencyVersions()
+        {
+            // Ignore the api-version of Network operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         private ArmClient GetCleanupClient()
         {
             if (Mode != RecordedTestMode.Playback)
@@ -160,7 +171,7 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
 
-            return new ArmEnvironment(new Uri(endpoint), environment.ServiceManagementUrl ?? $"{endpoint}/.default");
+            return new ArmEnvironment(new Uri(endpoint), SessionEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]

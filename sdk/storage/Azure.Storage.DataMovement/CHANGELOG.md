@@ -1,7 +1,10 @@
 # Release History
 
-## 12.0.0-beta.2 (Unreleased)
+## 12.0.0-beta.2 (2023-04-26)
+- [BREAKING CHANGE] Combined `SingleTransferOptions` and `ContainerTransferOptions` into `TransferOptions`.
+- [BREAKING CHANGE] If `TransferOptions.CreateMode` is not specified, it will default to `StorageResourceCreateMode.Fail` instead of `Overwrite`.
 - Fix to prevent thread starvation on the DataTransfer.AwaitCompletion
+- Fix to prevent unnecessary OperationCancelledException's showing up in the TransferOptions.TransferFailed when cancelling a job.
 
 ## 12.0.0-beta.1 (2022-12-15)
 - This preview is the first release of a ground-up rewrite of our client data movement

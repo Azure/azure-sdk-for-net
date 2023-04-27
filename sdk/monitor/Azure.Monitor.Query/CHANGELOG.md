@@ -2,7 +2,8 @@
 
 ## 1.2.0-beta.1 (2023-04-11)
 ### Features Added
-Added Client Builder Extension methods for `LogsQueryClient` and `MetricsQueryClient`
+- Added Client Builder Extension methods for `LogsQueryClient` and `MetricsQueryClient`
+- Added the `QueryResource` method to `LogsQueryClient` to allow users to query Azure resources directly without the context of a workspace.
 
 ## 1.1.0 (2022-01-25)
 
