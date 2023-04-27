@@ -325,10 +325,22 @@ namespace Azure.Storage
 
             if (length < _singleUploadThreshold)
             {
-                UploadTransferValidationOptions validationOptions = ContentHasher.GetHashOrDefault(
+                UploadTransferValidationOptions validationOptions;
+                if (UseMasterCrc && _masterCrcSupplier != default)
+                {
+                    validationOptions = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                        PrecalculatedChecksum = _masterCrcSupplier(),
+                    };
+                }
+                else
+                {
+                    validationOptions = ContentHasher.GetHashOrDefault(
                     content,
                     ValidationOptions)
                     .ToUploadTransferValidationOptions();
+                }
                 return await _singleUploadBinaryDataInternal(
                     content,
                     args,
@@ -424,16 +436,28 @@ namespace Azure.Storage
             // If we know the length and it's small enough
             if (length < _singleUploadThreshold)
             {
-                IDisposable disposable = null;
+                using var bucket = new DisposableBucket();
                 UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
+                oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
 
                 // If not seekable, buffer and checksum if necessary.
                 if (!content.CanSeek)
                 {
-                    (content, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                        content, length.Value, length.Value, oneshotValidationOptions, async, cancellationToken)
-                        .ConfigureAwait(false);
-                    disposable = content;
+                    Stream bufferedContent;
+                    if (UseMasterCrc && _masterCrcSupplier != default)
+                    {
+                        bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
+                            content, length.Value, length.Value, _arrayPool,
+                            maxArrayPoolRentalSize: default, async, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
+                            content, length.Value, length.Value, oneshotValidationOptions, async, cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    bucket.Add(bufferedContent);
+                    content = bufferedContent;
                 }
 
                 // Upload it in a single request
@@ -447,7 +471,6 @@ namespace Azure.Storage
                     cancellationToken)
                     .ConfigureAwait(false);
 
-                disposable?.Dispose();
                 return result;
             }
 

@@ -432,7 +432,7 @@ namespace Azure.Storage.Tests
         [TestCase(DataType.BinaryData)]
         [TestCase(DataType.UnseekableStream)]
         [TestCase(DataType.SeekableStream)]
-        public void UseCallerCrc(DataType dataType)
+        public void UseCallerCrcPartitionedUpload(DataType dataType)
         {
             // Given data for a partitioned upload
             const int dataSize = 10 * Constants.KB;
@@ -472,6 +472,53 @@ namespace Azure.Storage.Tests
             }));
 
             Assert.IsTrue(exception.Message.Contains(Convert.ToBase64String(garbageCrc)));
+        }
+
+        [TestCase(DataType.BinaryData)]
+        [TestCase(DataType.UnseekableStream)]
+        [TestCase(DataType.SeekableStream)]
+        public async Task UseCallerCrcOneShotUpload(DataType dataType)
+        {
+            // Given data for a oneshot upload
+            const int dataSize = Constants.KB;
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = dataSize * 2,
+                MaximumTransferSize = dataSize * 2,
+            };
+            var data = TestHelper.GetRandomBuffer(dataSize);
+
+            // and a bad checksum
+            var garbageCrc = new ReadOnlyMemory<byte>(TestHelper.GetRandomBuffer(Constants.StorageCrc64SizeInBytes));
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = garbageCrc
+            };
+
+            // and a configured uploader
+            var mocks = GetMockBehaviors(dataSize, dataSize, validationOptionsAssertion: options =>
+                // Mock asserts the garbage CRC was passed to the client
+                Assert.IsTrue(garbageCrc.Span.SequenceEqual(options.PrecalculatedChecksum.Span)));
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                transferOptions,
+                validationOptions,
+                operationName: s_operationName);
+
+            // Act
+            await (dataType switch
+            {
+                DataType.SeekableStream => partitionedUploader.UploadInternal(new MemoryStream(data), default,
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                DataType.UnseekableStream => partitionedUploader.UploadInternal(new NonSeekableMemoryStream(data), data.Length,
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                DataType.BinaryData => partitionedUploader.UploadInternal(BinaryData.FromBytes(data),
+                    s_objectArgs, s_progress, IsAsync, s_cancellation),
+                _ => throw Errors.InvalidArgument(nameof(dataType)),
+            });
+
+            // mock will assert caller-crc was passed to client
         }
     }
 }
