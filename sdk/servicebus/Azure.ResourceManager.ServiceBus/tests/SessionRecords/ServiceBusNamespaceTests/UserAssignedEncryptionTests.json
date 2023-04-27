@@ -207,21 +207,21 @@
             "keyVaultProperties": [
               {
                 "keyName": "Sanitized",
-                "keyVaultUri": "https://KeyVault-rg01.vault.azure.net/",
+                "keyVaultUri": "https://keyvault-rg01.vault.azure.net/",
                 "identity": {
                   "userAssignedIdentity": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testservicebusRG-533/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity11720"
                 }
               },
               {
                 "keyName": "Sanitized",
-                "keyVaultUri": "https://KeyVault-rg01.vault.azure.net/",
+                "keyVaultUri": "https://keyvault-rg01.vault.azure.net/",
                 "identity": {
                   "userAssignedIdentity": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testservicebusRG-533/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity11720"
                 }
               },
               {
                 "keyName": "Sanitized",
-                "keyVaultUri": "https://KeyVault-rg01.vault.azure.net/",
+                "keyVaultUri": "https://keyvault-rg01.vault.azure.net/",
                 "identity": {
                   "userAssignedIdentity": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testservicebusRG-533/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity11720"
                 }
