@@ -695,11 +695,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private async Task TestMultiple_MinBatch<T>(Action<IHostBuilder> configurationDelegate = default)
         {
             // pre-populate queue before starting listener to allow batch receive to get multiple messages
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test4', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test5', 'Value': 'Value'}");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test4', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test5', 'Value': 'Value'}", "sessionId");
 
             var host = BuildSessionHost<T>(maxMessages: MaxBatchSize, minMessages: MinBatchSize, maxWaitTime: TimeSpan.FromSeconds(5));
             using (host)
@@ -966,7 +966,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public class TestBatchMinBatchSize
         {
             public static void Run(
-               [ServiceBusTrigger(FirstQueueNameKey)]
+               [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                ServiceBusReceivedMessage[] array)
             {
                 Assert.AreEqual(array.Length, MinBatchSize);
