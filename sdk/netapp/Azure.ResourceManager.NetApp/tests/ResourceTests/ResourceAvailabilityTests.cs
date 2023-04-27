@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync();
         }
 
-        [Test]
         [RecordedTest]
         public async Task CheckQuotaAvailability()
         {
@@ -35,7 +34,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.True(checkQuotaResult.Value.IsAvailable);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetQuotaLimit()
         {
@@ -43,7 +41,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(quotaLimitsResponse);
         }
 
-        [Test]
         [RecordedTest]
         public async Task ListQuotaLimits()
         {

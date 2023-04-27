@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayDelete.json
             // this example is just showing the usage of "VirtualNetworkGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateVirtualNetworkGatewayTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayUpdateTags.json
             // this example is just showing the usage of "VirtualNetworkGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetConnections_VirtualNetworkGatewaysListConnections()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaysListConnections.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewaysListConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_ListConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reset_ResetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayReset.json
             // this example is just showing the usage of "VirtualNetworkGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResetVpnClientSharedKey_ResetVpnClientSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGateways_ResetVpnClientSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Network.Samples
         // GenerateVPNClientPackage
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Generatevpnclientpackage_GenerateVPNClientPackage()
+        public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
             // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientParameters vpnClientParameters = new VpnClientParameters();
-            ArmOperation<string> lro = await virtualNetworkGateway.GeneratevpnclientpackageAsync(WaitUntil.Completed, vpnClientParameters);
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateVpnProfile_GenerateVirtualNetworkGatewayVPNProfile()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
             // this example is just showing the usage of "VirtualNetworkGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientParameters vpnClientParameters = new VpnClientParameters();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, vpnClientParameters);
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVpnProfilePackageUrl_GetVirtualNetworkGatewayVPNProfilePackageURL()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnProfilePackageUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBgpPeerStatus_GetVirtualNetworkGatewayBGPPeerStatus()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetBgpPeerStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SupportedVpnDevices_ListVirtualNetworkGatewaySupportedVPNDevices()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
             // this example is just showing the usage of "VirtualNetworkGateways_SupportedVpnDevices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayLearnedRoutes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayLearnedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdvertisedRoutes_GetVirtualNetworkGatewayAdvertisedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SetVpnclientIPsecParameters_SetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -482,11 +482,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = new VpnPacketCaptureStartParameters()
+            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent()
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, vpnPacketCaptureStartParameters: vpnPacketCaptureStartParameters);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithoutFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStartPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayStartPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopPacketCapture_StopPacketCaptureOnVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStopPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayStopPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters = new VpnPacketCaptureStopParameters()
+            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent()
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, vpnPacketCaptureStopParameters);
+            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVpnclientConnectionHealth_GetVirtualNetworkGatewayVpnclientConnectionHealth()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DisconnectVirtualNetworkGatewayVpnConnections_DisconnectVpnConnectionsFromVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
