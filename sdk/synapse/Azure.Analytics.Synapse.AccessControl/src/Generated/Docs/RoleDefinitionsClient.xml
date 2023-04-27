@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetRoleDefinitionsAsync(Boolean,String,RequestContext)">
+    <member name="GetRoleDefinitionsAsync(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionsAsync and parse the result.
 <code><![CDATA[
@@ -61,7 +61,7 @@ Schema for <c>SynapseRoleDefinition</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleDefinitions(Boolean,String,RequestContext)">
+    <member name="GetRoleDefinitions(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitions and parse the result.
 <code><![CDATA[
@@ -121,7 +121,7 @@ Schema for <c>SynapseRoleDefinition</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleDefinitionByIdAsync(String,RequestContext)">
+    <member name="GetRoleDefinitionByIdAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -170,7 +170,7 @@ Schema for <c>SynapseRoleDefinition</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleDefinitionById(String,RequestContext)">
+    <member name="GetRoleDefinitionById(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
 <code><![CDATA[
@@ -219,7 +219,7 @@ Schema for <c>SynapseRoleDefinition</c>:
 
 </remarks>
     </member>
-    <member name="GetScopesAsync(RequestContext)">
+    <member name="GetScopesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScopesAsync and parse the result.
 <code><![CDATA[
@@ -234,7 +234,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetScopes(RequestContext)">
+    <member name="GetScopes(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScopes and parse the result.
 <code><![CDATA[

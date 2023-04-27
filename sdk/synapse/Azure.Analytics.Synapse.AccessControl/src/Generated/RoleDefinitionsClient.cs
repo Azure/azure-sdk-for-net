@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(Boolean,String,RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(bool?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(Boolean,String,RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(bool?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionByIdAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionByIdAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionById(String,RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionById(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(RequestContext)']/*" />
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(global::Azure.RequestContext)']/*" />
         public virtual Response GetScopes(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
