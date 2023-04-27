@@ -175,7 +175,6 @@ namespace Azure.Storage.DataMovement.Tests
                     copyBlobInfo[i].DataTransfer = transfer;
                 }
 
-                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Assert
@@ -191,6 +190,7 @@ namespace Azure.Storage.DataMovement.Tests
                         await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                     }
                 }
+                failureTransferHolder.AssertFailureCheck();
             }
             catch (Exception ex)
             {
