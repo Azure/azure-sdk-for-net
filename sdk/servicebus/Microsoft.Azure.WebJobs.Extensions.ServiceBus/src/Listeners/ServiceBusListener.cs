@@ -525,7 +525,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             await TriggerWithMessagesInternal(messagesArray, input, receiver, receiveActions, messageActions, cancellationToken).ConfigureAwait(false);
                         }
 
-                        if (_cachedMessagesManager.HasCachedMessages && (_backgroundCacheMonitoringCts == null))
+                        if (_supportMinBatchSize && _cachedMessagesManager.HasCachedMessages)
                         {
                             if (_backgroundCacheMonitoringCts == null)
                             {
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private async Task TryDispatchRemainingMessages(ServiceBusReceiver receiver, ServiceBusMessageActions messageActions, ServiceBusReceiveActions receiveActions, CancellationToken cancellationToken)
         {
-            if (_cachedMessagesManager.HasCachedMessages)
+            if (_supportMinBatchSize && _cachedMessagesManager.HasCachedMessages)
             {
                 var acquiredSemaphore = false;
                 ServiceBusReceivedMessage[] batchMessages;
