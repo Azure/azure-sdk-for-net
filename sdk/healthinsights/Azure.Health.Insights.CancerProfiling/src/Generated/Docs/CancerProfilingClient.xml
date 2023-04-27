@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfileAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
+This is the advanced method. Use <see cref="InferCancerProfile(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)"/> for an overload that provides fully qualified model types.
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -166,7 +167,8 @@ Schema for <c>OncoPhenotypeResult</c>:
 
 </remarks>
     </member>
-    <member name="InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfile(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
+This is the advanced method. Use <see cref="InferCancerProfile(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)"/> for an overload that provides fully qualified model types.
 <example>
 This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
 <code><![CDATA[

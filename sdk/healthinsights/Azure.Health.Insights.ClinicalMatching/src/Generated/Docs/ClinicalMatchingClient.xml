@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="MatchTrialsAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="MatchTrialsAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
+This is the advanced method. Use <see cref="MatchTrials(global::Azure.WaitUntil,global::Azure.Health.Insights.ClinicalMatching.TrialMatcherData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)"/> for an overload that provides fully qualified model types.
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -290,7 +291,8 @@ Schema for <c>TrialMatcherResult</c>:
 
 </remarks>
     </member>
-    <member name="MatchTrials(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="MatchTrials(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
+This is the advanced method. Use <see cref="MatchTrials(global::Azure.WaitUntil,global::Azure.Health.Insights.ClinicalMatching.TrialMatcherData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)"/> for an overload that provides fully qualified model types.
 <example>
 This sample shows how to call MatchTrials with required parameters and request content, and how to parse the result.
 <code><![CDATA[
