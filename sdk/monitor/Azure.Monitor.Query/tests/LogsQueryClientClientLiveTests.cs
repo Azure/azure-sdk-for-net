@@ -809,6 +809,18 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsNull(results.Value.GetVisualization());
         }
 
+        [LiveOnly]
+        [Test]
+        public void VerifyQueryResourceInvalidId()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Remove(15, 36)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
+        }
+
         public static IEnumerable<FormattableStringWrapper> Queries
         {
             get
