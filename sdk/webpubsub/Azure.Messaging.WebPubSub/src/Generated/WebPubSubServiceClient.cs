@@ -40,7 +40,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseAllConnectionsAsync(IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseAllConnectionsAsync(global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -63,7 +63,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseAllConnections(IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseAllConnections(global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -88,7 +88,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImplAsync(String,IEnumerable,Int32,IEnumerable,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImplAsync(string,global::System.Collections.Generic.IEnumerable{string},int?,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
@@ -113,7 +113,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImpl(String,IEnumerable,Int32,IEnumerable,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImpl(string,global::System.Collections.Generic.IEnumerable{string},int?,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)']/*" />
         internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
@@ -139,7 +139,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAllAsync(RequestContent,ContentType,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAllAsync(global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -167,7 +167,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAll(RequestContent,ContentType,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAll(global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -194,7 +194,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnectionAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnectionAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -221,7 +221,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnection(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnection(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -247,7 +247,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImplAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImplAsync(string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -273,7 +273,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImpl(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImpl(string,global::Azure.RequestContext)']/*" />
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -301,7 +301,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnectionAsync(String,RequestContent,ContentType,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnectionAsync(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -330,7 +330,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnection(String,RequestContent,ContentType,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnection(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::Azure.RequestContext)']/*" />
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -357,7 +357,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroupsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroupsAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RemoveConnectionFromAllGroupsAsync(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -383,7 +383,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroups(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroups(string,global::Azure.RequestContext)']/*" />
         public virtual Response RemoveConnectionFromAllGroups(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -409,7 +409,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImplAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImplAsync(string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -435,7 +435,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImpl(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImpl(string,global::Azure.RequestContext)']/*" />
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -463,7 +463,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnectionsAsync(String,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnectionsAsync(string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -491,7 +491,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnections(String,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnections(string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -521,7 +521,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroupAsync(String,RequestContent,ContentType,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroupAsync(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -552,7 +552,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroup(String,RequestContent,ContentType,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroup(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -580,7 +580,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroupAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroupAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -608,7 +608,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroup(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroup(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -636,7 +636,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroupAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroupAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -664,7 +664,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroup(String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroup(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -693,7 +693,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermissionAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermissionAsync(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -722,7 +722,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermission(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermission(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -751,7 +751,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermissionAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermissionAsync(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -780,7 +780,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermission(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermission(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -809,7 +809,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermissionAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermissionAsync(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -838,7 +838,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermission(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermission(string,string,string,global::Azure.RequestContext)']/*" />
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -865,7 +865,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImplAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImplAsync(string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -891,7 +891,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImpl(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImpl(string,global::Azure.RequestContext)']/*" />
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -919,7 +919,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnectionsAsync(String,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnectionsAsync(string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -947,7 +947,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnections(String,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnections(string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -976,7 +976,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUserAsync(String,RequestContent,ContentType,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUserAsync(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1006,7 +1006,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUser(String,RequestContent,ContentType,String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUser(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,string,global::Azure.RequestContext)']/*" />
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1033,7 +1033,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroupsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroupsAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1059,7 +1059,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroups(String,RequestContext)']/*" />
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroups(string,global::Azure.RequestContext)']/*" />
         public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
