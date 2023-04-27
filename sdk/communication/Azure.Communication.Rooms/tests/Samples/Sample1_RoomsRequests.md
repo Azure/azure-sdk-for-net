@@ -18,13 +18,13 @@ To create a new  ACS room, call the `CreateRoom` or `CreateRoomAsync` function f
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 // Create communication users using the CommunicationIdentityClient
-CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
-CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
+Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
 
 DateTimeOffset validFrom = DateTimeOffset.UtcNow;
 DateTimeOffset validUntil = validFrom.AddDays(1);
-RoomParticipant participant1 = new RoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
-RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter};
+RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
+RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
 List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 {
     participant1,
@@ -68,8 +68,8 @@ Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 To add or update participants in an existing ACS room, call the `AddOrUpdateParticipants` or `AddOrUpdateParticipantsAsync` function from the RoomsClient.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
-CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
-RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
+Response<CommunicationUserIdentifier> communicationUser3 = await communicationIdentityClient.CreateUserAsync();
+RoomParticipant newParticipant = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Consumer };
 
 // Previous snippet for create room added participant2 as Presenter
 participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };

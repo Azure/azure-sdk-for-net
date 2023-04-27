@@ -5,7 +5,7 @@ Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso serve
 
 With the preview release of ACS Rooms, Contoso will be able to:
 
-    - Create a meeting space with known time coordinates (start/end time)
+    - Create a meeting space with known time coordinates (validFrom/validUntil)
     - Join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs
     - Add participants to a room
     - Assign pre-defined roles to room participants
@@ -31,7 +31,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`RoomsClient` provides the functionality to create room, update room, get room, list rooms, delete room, add participants, update participants, remove participant, and list participants.
+`RoomsClient` provides the functionality to create room, update room, get room, list rooms, delete room, add participants, update participants, remove participants, and list participants.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
@@ -55,13 +55,13 @@ The returned value is `Response<CommunicationRoom>` which contains created room 
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 // Create communication users using the CommunicationIdentityClient
-CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
-CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
+Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
 
 DateTimeOffset validFrom = DateTimeOffset.UtcNow;
 DateTimeOffset validUntil = validFrom.AddDays(1);
-RoomParticipant participant1 = new RoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
-RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter};
+RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
+RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
 List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 {
     participant1,
@@ -99,8 +99,8 @@ Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 In order to add new participants or update existing participants, call the `AddOrUpdateParticipants` or `AddOrUpdateParticipantsAsync` function from RoomsClient.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
-CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
-RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
+Response<CommunicationUserIdentifier> communicationUser3 = await communicationIdentityClient.CreateUserAsync();
+RoomParticipant newParticipant = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Consumer };
 
 // Previous snippet for create room added participant2 as Presenter
 participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
@@ -145,13 +145,13 @@ A `RequestFailedException` is thrown as a service response for any unsuccessful 
 try
 {
     CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-    CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
-    CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+    Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
+    Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
     DateTimeOffset validFrom = DateTimeOffset.UtcNow;
     DateTimeOffset validUntil = validFrom.AddDays(1);
     List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
-    RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-    RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+    RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value) { Role = ParticipantRole.Presenter };
+    RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Attendee };
     Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants);
     CommunicationRoom createRoomResult = createRoomResponse.Value;
 }
