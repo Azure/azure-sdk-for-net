@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
     public class DPInstanceTests : DataProtectionBackupManagementTestBase
     {
         public DPInstanceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<DataProtectionBackupInstanceCollection> GetInstanceCollection()
+        private async Task<(DataProtectionBackupInstanceCollection InstanceCollection, DataProtectionBackupPolicyCollection PolicyCollection)> GetInstanceCollection()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var vaultCollection = resourceGroup.GetDataProtectionBackupVaults();
@@ -28,19 +28,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
             var input = ResourceDataHelpers.GetVaultData();
             var lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataProtectionBackupVaultResource resource = lro.Value;
-            return resource.GetDataProtectionBackupInstances();
+
+            return (resource.GetDataProtectionBackupInstances(), resource.GetDataProtectionBackupPolicies());
         }
 
         [RecordedTest]
         [Ignore("Invalid URI: The format of the URI could not be determined")]
         public async Task InstanceApiTests()
         {
+            //0.prepare
+            (DataProtectionBackupInstanceCollection collection, DataProtectionBackupPolicyCollection policyCollection) = await GetInstanceCollection();
+            var policyData = ResourceDataHelpers.GetDiskPolicyData();
+            var policy = (await policyCollection.CreateOrUpdateAsync(WaitUntil.Completed, "diskpolicy2", policyData)).Value;
             //1.CreateOrUpdate
-            var collection = await GetInstanceCollection();
             var name = Recording.GenerateAssetName("instance");
             var name2 = Recording.GenerateAssetName("instance");
             var name3 = Recording.GenerateAssetName("instance");
-            var input = ResourceDataHelpers.GetInstanceData();
+            var input = ResourceDataHelpers.GetInstanceData(policy.Id, name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataProtectionBackupInstanceResource resource = lro.Value;
             Assert.AreEqual(name, resource.Data.Name);

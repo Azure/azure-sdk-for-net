@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         #region policy
         public static DataProtectionBackupPolicyData GetPolicyData()
         {
-            List<string> dataSource = new() { "Microsoft.Storage/storageAccounts/blobServices" };
+            List<string> dataSource = new() { "Microsoft.Compute/disks/blobServices" };
             List<DataProtectionBasePolicyRule> rules = new()
             {
                 new DataProtectionBackupRule(
@@ -78,6 +78,52 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
             return policyData;
         }
 
+        public static DataProtectionBackupPolicyData GetDiskPolicyData()
+        {
+            List<string> dataSource = new() { "Microsoft.Compute/disks" };
+            List<DataProtectionBasePolicyRule> rules = new()
+            {
+                new DataProtectionBackupRule(
+                    "Default",
+                    new DataStoreInfoBase(DataStoreType.OperationalStore, "DataStoreInfoBase"),
+                    new ScheduleBasedBackupTriggerContext(
+                        new DataProtectionBackupSchedule( new List<string>{ "R/2023-04-27T15:30:00+00:00/P1D" } ){ TimeZone = "UTC" },
+                        new List<DataProtectionBackupTaggingCriteria>{ new DataProtectionBackupTaggingCriteria(true, 99, new DataProtectionBackupRetentionTag("Default")) }
+                    ))
+                {
+                    BackupParameters = new DataProtectionBackupSettings("Incremental")
+                    {
+                        ObjectType = "AzureBackupParams"
+                    }
+                },
+                new DataProtectionRetentionRule(
+                    "Default",
+                    new List<SourceLifeCycle>
+                    {
+                        new SourceLifeCycle(
+                            new DataProtectionBackupAbsoluteDeleteSetting(XmlConvert.ToTimeSpan("P30D")),
+                            new DataStoreInfoBase(DataStoreType.OperationalStore, "DataStoreInfoBase")
+                            ),
+                        new SourceLifeCycle(
+                            new DataProtectionBackupAbsoluteDeleteSetting(XmlConvert.ToTimeSpan("P7D"))
+                            {
+                                ObjectType = "AbsoluteDeleteOption"
+                            },
+                            new DataStoreInfoBase(DataStoreType.OperationalStore, "DataStoreInfoBase")
+                            )
+                    }
+                    )
+                {
+                    IsDefault = true
+                }
+            };
+            var policyData = new DataProtectionBackupPolicyData()
+            {
+                Properties = new RuleBasedBackupPolicy(dataSource, rules)
+            };
+            return policyData;
+        }
+
         public static void AssertpolicyData(DataProtectionBackupPolicyData data1, DataProtectionBackupPolicyData data2)
         {
             AssertResource(data1, data2);
@@ -87,35 +133,43 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         #endregion
 
         #region Instance
-        public static DataProtectionBackupInstanceData GetInstanceData()
+        public static DataProtectionBackupInstanceData GetInstanceData(ResourceIdentifier policyId, String instanceName)
         {
-            var data = new DataProtectionBackupInstanceData()
+            var instanceData = new DataProtectionBackupInstanceData()
             {
-                Properties = new DataProtectionBackupInstanceProperties(new DataSourceInfo(new ResourceIdentifier("/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk"))
-                {
-                    ObjectType = "Datasource",
-                    ResourceName = "testingDisk",
-                    ResourceType = "Microsoft.Compute/disks",
-                    ResourceUriString = "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk",
-                    ResourceLocation = AzureLocation.SoutheastAsia,
-                    DataSourceType = "Microsoft.Compute/disks"
-                }, new BackupInstancePolicyInfo(new ResourceIdentifier("/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2"))
-                {
-                    PolicyParameters = new BackupInstancePolicySettings()
+                Properties = new DataProtectionBackupInstanceProperties(
+                    new DataSourceInfo(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0427/providers/Microsoft.Compute/disks/sdktestdisk"))
                     {
-                        DataStoreParametersList =
+                        ResourceUriString = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0427/providers/Microsoft.Compute/disks/sdktestdisk",
+                        DataSourceType = "Microsoft.Compute/disks",
+                        ResourceName = "sdktestdisk",
+                        ResourceType = new ResourceType("Microsoft.Compute/disks"),
+                        ResourceLocation = AzureLocation.EastUS,
+                        ObjectType = "Datasource"
+                    },
+                    new BackupInstancePolicyInfo(policyId)
+                    {
+                        PolicyParameters = new BackupInstancePolicySettings()
                         {
-                            new OperationalDataStoreSettings(DataStoreType.OperationalStore)
-                            {
-                                ResourceGroupId = new ResourceIdentifier("/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarOTDSRG")
-                            }
+                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters") }
                         }
                     },
-                }, "BackupInstance")
+                    "BackupInstance"
+                    )
                 {
+                    FriendlyName = instanceName,
+                    DataSourceSetInfo = new DataSourceSetInfo(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0427/providers/Microsoft.Compute/disks/sdktestdisk"))
+                    {
+                        ResourceUriString = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0427/providers/Microsoft.Compute/disks/sdktestdisk",
+                        DataSourceType = "Microsoft.Compute/disks",
+                        ResourceName = "sdktestdisk",
+                        ResourceType = new ResourceType("Microsoft.Compute/disks"),
+                        ResourceLocation = AzureLocation.EastUS,
+                        ObjectType = "Datasource"
+                    }
                 }
             };
-            return data;
+            return instanceData;
         }
         public static void AssertInstanceData(DataProtectionBackupInstanceData data1, DataProtectionBackupInstanceData data2)
         {
@@ -141,7 +195,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
                 StorageSettingType = StorageSettingType.ZoneRedundant
             }
             };
-            var data = new DataProtectionBackupVaultData(AzureLocation.EastUS, new Models.DataProtectionBackupVaultProperties(setting));
+            var data = new DataProtectionBackupVaultData(AzureLocation.EastUS, new Models.DataProtectionBackupVaultProperties(setting))
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            };
             return data;
         }
 
