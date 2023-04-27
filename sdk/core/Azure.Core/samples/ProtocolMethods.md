@@ -122,7 +122,7 @@ JSON properties can also be accessed using a dynamic layer.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 

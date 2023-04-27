@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -18,7 +17,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJson
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
             #endregion
         }
 
@@ -29,7 +28,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonProperty
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
             string name = widget.Name;
             #endregion
         }
@@ -41,7 +40,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
             // Check whether optional property is present
             if (widget.Properties != null)
@@ -58,7 +57,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = await client.GetWidgetAsync("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 #if !SNIPPET
             widget.Properties = new
@@ -86,7 +85,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripAnonymousType
             Response response = client.GetWidget("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
             RequestContent update = RequestContent.Create(
                 new
@@ -108,11 +107,11 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget("123");
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
             widget.Name = "New Name";
 
-            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
+            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create((object)widget));
             #endregion
         }
 

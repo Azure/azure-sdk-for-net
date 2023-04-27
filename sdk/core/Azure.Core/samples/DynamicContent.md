@@ -10,7 +10,7 @@ Dynamic content is obtained from the `Response` return value.
 
 ```C# Snippet:AzureCoreGetDynamicJson
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 ```
 
 ### Get a JSON property
@@ -19,7 +19,7 @@ JSON properties are read using dynamic member access.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 
@@ -29,7 +29,7 @@ Optional properties are checked for null.
 
 ```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 // Check whether optional property is present
 if (widget.Properties != null)
@@ -44,7 +44,7 @@ Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with 
 
 ```C# Snippet:AzureCoreEnumerateDynamicJsonObject
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 foreach (dynamic property in widget.Properties)
 {
@@ -65,7 +65,7 @@ Implementing a round-trip scenario using anonymous types requires copying every 
 
 ```C# Snippet:AzureCoreRoundTripAnonymousType
 Response response = client.GetWidget("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 RequestContent update = RequestContent.Create(
     new
@@ -83,11 +83,11 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 widget.Name = "New Name";
 
-await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
+await client.SetWidgetAsync((string)widget.Id, RequestContent.Create((object)widget));
 ```
 
 Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON values from scratch is not recommended.  For more details, please see [Blog post on MutableJsonDocument and DynamicJson].

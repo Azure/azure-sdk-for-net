@@ -61,7 +61,7 @@ If a service method does not return `Response<T>`, JSON content can be accessed 
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 
