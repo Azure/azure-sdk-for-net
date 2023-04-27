@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task NetAppAccountGetOperations()
         {
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsTrue(apiList.Count() > 1);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeleteNetAppAccount()
         {
@@ -82,7 +80,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeleteNetAppAccountWithActiveDirectory()
         {
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task UpdateNetAppAccountWithPut()
         {
@@ -137,7 +133,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             account2.Data.Tags.Should().Contain(keyValue);
         }
 
-        [Test]
         [RecordedTest]
         public async Task UpdateNetAppAccount()
         {
@@ -170,7 +165,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.NotNull(account1.Data.Encryption);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllNetAppAccountsByResourceGroup()
         {
@@ -199,7 +193,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyNetAppAccountProperties(account4, true);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllNetAppAccountsBySubscriptionResourceGroup()
         {

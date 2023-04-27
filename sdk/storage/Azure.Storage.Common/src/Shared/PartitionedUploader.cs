@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -214,6 +215,14 @@ namespace Azure.Storage
         /// Checksum algorithm to use for transfer validation.
         /// </summary>
         private readonly StorageChecksumAlgorithm _validationAlgorithm;
+        private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
+
+        /// <summary>
+        /// CRC calculation over the entire upload contents. This may be calculated upfront with in-memory data
+        /// or calculated over the course of upload with streamed data.
+        /// This is NOT a composed value. Composition happens locally in the upload to validate against this value.
+        /// </summary>
+        private IHasher _masterCrc;
 
         /// <summary>
         /// Gets <see cref="_validationAlgorithm"/> as <see cref="UploadTransferValidationOptions"/>.
@@ -322,6 +331,13 @@ namespace Azure.Storage
                     .ConfigureAwait(false);
             }
 
+            // can get master crc upfront in place
+            if (UseMasterCrc)
+            {
+                _masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
+                _masterCrc.AppendHash(content);
+            }
+
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
@@ -423,6 +439,13 @@ namespace Azure.Storage
 
                 disposable?.Dispose();
                 return result;
+            }
+
+            // configure content stream to calculate master crc as it is read
+            if (UseMasterCrc)
+            {
+                _masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
+                content = ChecksumCalculatingStream.GetReadStream(content, _masterCrc.AppendHash);
             }
 
             // If the caller provided an explicit block size, we'll use it.
@@ -589,6 +612,11 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
+                Memory<byte> _composedBlockCrc64 = UseMasterCrc
+                    ? new Memory<byte>(new byte[Constants.StorageCrc64SizeInBytes])
+                    : Memory<byte>.Empty;
+                long composedOriginalDataLength = 0;
+
                 // Partition the stream into individual blocks and stage them
                 if (async)
                 {
@@ -613,6 +641,12 @@ namespace Azure.Storage
                             cancellationToken).ConfigureAwait(false);
 
                         partitions.Add((block.AbsolutePosition, block.Length));
+                        if (UseMasterCrc)
+                        {
+                            _composedBlockCrc64 = StorageCrc64Composer.Compose(
+                                (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
+                                (block.ContentChecksum.ToArray(), block.Length));
+                        }
                     }
                 }
                 else
@@ -638,6 +672,21 @@ namespace Azure.Storage
                             cancellationToken).EnsureCompleted();
 
                         partitions.Add((block.AbsolutePosition, block.Length));
+                        if (UseMasterCrc)
+                        {
+                            _composedBlockCrc64 = StorageCrc64Composer.Compose(
+                                (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
+                                (block.ContentChecksum.ToArray(), block.Length));
+                        }
+                    }
+                }
+
+                if (UseMasterCrc)
+                {
+                    var wholeCrc = _masterCrc.GetFinalHash();
+                    if (!_composedBlockCrc64.Span.SequenceEqual(wholeCrc.Span))
+                    {
+                        throw Errors.ChecksumMismatch(wholeCrc.Span, _composedBlockCrc64.Span);
                     }
                 }
 
@@ -691,6 +740,11 @@ namespace Azure.Storage
                 // always be smaller than _maxWorkerCount
                 List<Task> runningTasks = new List<Task>();
 
+                Memory<byte> _composedBlockCrc64 = UseMasterCrc
+                    ? new Memory<byte>(new byte[Constants.StorageCrc64SizeInBytes])
+                    : Memory<byte>.Empty;
+                long composedOriginalDataLength = 0;
+
                 // Partition the stream into individual blocks
                 await foreach (ContentPartition<TContent> block in partitionContentAsync(
                     content,
@@ -703,6 +757,13 @@ namespace Azure.Storage
                      * contents; We need to record the partition data first before consuming the stream
                      * asynchronously. */
                     partitions.Add((block.AbsolutePosition, block.Length));
+
+                    if (UseMasterCrc)
+                    {
+                        _composedBlockCrc64 = StorageCrc64Composer.Compose(
+                            (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
+                            (block.ContentChecksum.ToArray(), block.Length));
+                    }
 
                     // Start staging the next block (but don't await the Task!)
                     Task task = stageContentAsync(
@@ -746,6 +807,15 @@ namespace Azure.Storage
                 // Wait for all the remaining blocks to finish staging and then
                 // commit the block list to complete the upload
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
+
+                if (UseMasterCrc)
+                {
+                    var wholeCrc = _masterCrc.GetFinalHash();
+                    if (!_composedBlockCrc64.Span.SequenceEqual(wholeCrc.Span))
+                    {
+                        throw Errors.ChecksumMismatch(wholeCrc.Span, _composedBlockCrc64.Span);
+                    }
+                }
 
                 // Calling internal method for easier mocking in PartitionedUploaderTests
                 return await _commitPartitionedUploadInternal(
