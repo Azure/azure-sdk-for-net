@@ -1,7 +1,6 @@
 # Azure Monitor Distro client library for .NET
 
-This project is the Integration tests using the Azure TestFramework.
-For more information see: [.NET Azure SDK Test Framework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md)
+This project is the Integration tests using the [Azure SDK TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md).
 
 ## Getting started
 
