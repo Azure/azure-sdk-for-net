@@ -90,8 +90,12 @@ namespace Azure.Core.Samples
             RequestContent update = RequestContent.Create(
                 new
                 {
-                    Id = (string)widget.Id,
-                    Name = "New Name"
+                    id = (string)widget.Id,
+                    name = "New Name",
+                    properties = new object[]
+                    {
+                        new { color = "blue" }
+                    }
 
                     // A forgotten field may be deleted!
                 }

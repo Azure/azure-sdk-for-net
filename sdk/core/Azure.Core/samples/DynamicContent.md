@@ -59,9 +59,9 @@ void UpdateWidget(string name, string value)
 }
 ```
 
-## Setting Request Content
+## Setting RequestContent
 
-Authoring JSON from scratch to pass as inputs to protocol methods is [done using anonymous types](ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
+It is recommended when authoring new JSON from scratch to pass to protocol methods that you [use anonymous types](ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
 
 Implementing a round-trip scenario using anonymous types requires copying every JSON property from the response content into the anonyous type, which can be verbose and error prone, as shown below.
 
@@ -72,8 +72,12 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 RequestContent update = RequestContent.Create(
     new
     {
-        Id = (string)widget.Id,
-        Name = "New Name"
+        id = (string)widget.Id,
+        name = "New Name",
+        properties = new object[]
+        {
+            new { color = "blue" }
+        }
 
         // A forgotten field may be deleted!
     }
