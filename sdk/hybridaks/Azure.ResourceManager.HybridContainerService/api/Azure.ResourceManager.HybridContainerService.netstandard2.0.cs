@@ -64,6 +64,8 @@ namespace Azure.ResourceManager.HybridContainerService
         public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetProvisionedClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource GetProvisionedClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -77,6 +79,8 @@ namespace Azure.ResourceManager.HybridContainerService
         public static Azure.ResourceManager.HybridContainerService.StorageSpaceCollection GetStorageSpaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult> GetVmSkusHybridContainerService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HybridContainerServiceVirtualNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>, System.Collections.IEnumerable
     {
@@ -573,6 +577,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public string ServiceCidr { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ServiceCidrs { get { throw null; } }
     }
+    public partial class OrchestratorProfile
+    {
+        internal OrchestratorProfile() { }
+        public bool? IsPreview { get { throw null; } }
+        public string OrchestratorType { get { throw null; } }
+        public string OrchestratorVersion { get { throw null; } }
+    }
+    public partial class OrchestratorVersionProfile
+    {
+        internal OrchestratorVersionProfile() { }
+        public bool? Default { get { throw null; } }
+        public bool? IsPreview { get { throw null; } }
+        public string OrchestratorType { get { throw null; } }
+        public string OrchestratorVersion { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.OrchestratorProfile> Upgrades { get { throw null; } }
+    }
+    public partial class OrchestratorVersionProfileListResult : Azure.ResourceManager.Models.ResourceData
+    {
+        internal OrchestratorVersionProfileListResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfile> Orchestrators { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.OSType>
     {
@@ -828,6 +853,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public VirtualNetworksPropertiesVmipPoolItem() { }
         public string EndIP { get { throw null; } set { } }
         public string StartIP { get { throw null; } set { } }
+    }
+    public partial class VmSkuListResult : Azure.ResourceManager.Models.ResourceData
+    {
+        internal VmSkuListResult() { }
+        public System.Collections.Generic.IReadOnlyList<string> VmSKUs { get { throw null; } }
     }
     public partial class WindowsProfile : Azure.ResourceManager.HybridContainerService.Models.WindowsProfileResponse
     {

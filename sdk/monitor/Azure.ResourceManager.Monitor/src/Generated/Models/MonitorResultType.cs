@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ResultType. </summary>
-    internal enum ResultType
+    /// <summary> The MonitorResultType. </summary>
+    public enum MonitorResultType
     {
         /// <summary> Data. </summary>
         Data,
