@@ -15,25 +15,23 @@ using NUnit.Framework;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 
-#if NET7_0
-
+#if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
         private const string _testServerUrl = "http://localhost:9999/";
 
-        // DEVELOPER TIP: CHANGE THIS TO SOMETHING UNIQUE WHEN WORKING LOCALLY
-        // EXAMPLE "Test##" TO EASILY FIND YOUR RECORDS.
-        // CAN SEARCH FOR ALL RECORDS IN THE PORTAL USING THIS QUERY:
-        // Union * | where AppRoleName == 'Test##'
+        // DEVELOPER TIP: Change this to something unique when working locally (Example "Test##") to easily find your records.
+        // Can search for all records in the portal using this query:   Union * | where AppRoleName == 'Test##'
         private const string _roleName = nameof(DistroWebAppLiveTests);
 
         private const string _logMessage = "Message via ILogger";
 
         private readonly LogsQueryClient _logsQueryClient;
 
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        // DEVELOPER TIP: Can pass RecordedTestMode.Live to the base ctor to run this test with a live resource.
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync)
         {
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
@@ -78,10 +76,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             {
                 app.Logger.LogInformation(_logMessage);
 
-                //using var client = new HttpClient();
-                //var response = client.GetAsync("https://www.bing.com/").Result;
-
-                //return $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}";
                 return "Response from Test Server";
             });
 
@@ -90,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ACT
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(_testServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server")); // verifies test server is running.
+            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
 
@@ -102,6 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             await app.StopAsync(); // shutdown to prevent collecting to log queries.
 
             // ASSERT
+            // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
             await VerifyLogs(
                 description: "Dependency for invoking HttpClient, from testhost",
                 query: $"AppDependencies | where Data == '{_testServerUrl}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
