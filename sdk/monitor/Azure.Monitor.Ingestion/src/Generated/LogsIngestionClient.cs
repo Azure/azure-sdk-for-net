@@ -65,7 +65,7 @@ namespace Azure.Monitor.Ingestion
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='UploadAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='UploadAsync(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
@@ -96,7 +96,7 @@ namespace Azure.Monitor.Ingestion
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='Upload(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='Upload(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));

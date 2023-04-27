@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="UploadAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadAsync(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UploadAsync with required parameters and request content.
 <code><![CDATA[
@@ -34,7 +34,7 @@ Console.WriteLine(response.Status);
 See error response code and error response message for more detail.
 </remarks>
     </member>
-    <member name="Upload(String,String,RequestContent,String,RequestContext)">
+    <member name="Upload(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Upload with required parameters and request content.
 <code><![CDATA[
