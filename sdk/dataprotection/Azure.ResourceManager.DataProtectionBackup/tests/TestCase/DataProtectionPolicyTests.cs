@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
     public class DataProtectionPolicyTests : DataProtectionBackupManagementTestBase
     {
         public DataProtectionPolicyTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

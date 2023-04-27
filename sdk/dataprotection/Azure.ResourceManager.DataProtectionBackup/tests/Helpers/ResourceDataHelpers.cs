@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         #region policy
         public static DataProtectionBackupPolicyData GetPolicyData()
         {
-            List<string> dataSource = new() { "Microsoft.Compute/disks/blobServices" };
+            List<string> dataSource = new() { "Microsoft.Storage/storageAccounts/blobServices" };
             List<DataProtectionBasePolicyRule> rules = new()
             {
                 new DataProtectionBackupRule(
