@@ -433,13 +433,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
+            string resource = resourceId.ToString().TrimStart('/');
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
-                ResourceIdentifier.Parse(resourceId.ToString());
+                resource = ResourceIdentifier.Parse(resource).Name;
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -484,13 +483,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
+            string resource = resourceId.ToString().TrimStart('/');
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
-                ResourceIdentifier.Parse(resourceId.ToString());
+                resource = ResourceIdentifier.Parse(resource).Name;
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
