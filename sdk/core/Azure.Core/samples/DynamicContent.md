@@ -1,6 +1,6 @@
 # Azure SDK Dynamic JSON samples
 
-Azure SDK client [protocol methods](ProtocolMethods.md) take `RequestContent` as an input parameter and return `Response` as their return type.  These types hold raw JSON content that can be accessed using Base Class Library (BCL) types such as `JsonDocument`, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a [dynamic](https://learn.microsoft.com/dotnet/csharp/advanced-topics/interop/using-type-dynamic) layer over JSON APIs.
+Azure SDK client [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md) take `RequestContent` as an input parameter and return `Response` as their return type.  These types hold raw JSON content that can be accessed using Base Class Library (BCL) types such as `JsonDocument`, but use of these APIs can result in code that is difficult to read and obscures the author's intent.  To improve the developer experience, Azure.Core provides a [dynamic](https://learn.microsoft.com/dotnet/csharp/advanced-topics/interop/using-type-dynamic) layer over JSON APIs.
 
 ## Accessing Response Content
 
@@ -61,7 +61,7 @@ void UpdateWidget(string name, string value)
 
 ## Setting RequestContent
 
-It is recommended when authoring new JSON from scratch to pass to protocol methods that you [use anonymous types](ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
+It is recommended when authoring new JSON from scratch to pass to protocol methods that you [use anonymous types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
 
 Implementing a round-trip scenario using anonymous types requires copying every JSON property from the response content into the anonyous type, which can be verbose and error prone, as shown below.
 

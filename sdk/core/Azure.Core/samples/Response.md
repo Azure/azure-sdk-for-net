@@ -65,7 +65,7 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 
-See [dynamic content samples](DynamicContent.md) for more details.
+See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.
 
 ## Accessing HTTP response well-known headers
 
