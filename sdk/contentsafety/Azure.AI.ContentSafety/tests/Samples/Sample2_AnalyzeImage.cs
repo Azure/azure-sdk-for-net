@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -27,17 +28,9 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             #region Snippet:ReadImageData
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-            //string text = File.ReadAllText(datapath);
-            BinaryData binaryData;
-            using (FileStream stream = new FileStream(datapath, FileMode.Open))
-            {
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    binaryData = new BinaryData(reader.ReadBytes((int)stream.Length));
-                }
-            }
-
-            ImageData image = new ImageData() { Content =  binaryData};
+            byte[] b = File.ReadAllBytes(datapath);
+            BinaryData binaryData = BinaryData.FromBytes(b);
+            ImageData image = new ImageData() { Content = binaryData };
 
             #endregion
 
