@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 };
 
                 var confContainerGroup = new ContainerGroupData(
-                    location: "eastus2euap",
+                    location: "westus",
                     containers: containers,
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
