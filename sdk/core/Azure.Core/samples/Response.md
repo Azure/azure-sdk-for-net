@@ -36,7 +36,19 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response content using Streams
+## Accessing HTTP response content with `dynamic`
+
+If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
+
+```C# Snippet:AzureCoreGetDynamicJsonProperty
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+string name = widget.Name;
+```
+
+See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.
+
+## Accessing HTTP response content with ContentStream
 
 ```C# Snippet:ResponseTContent
 // call a service method, which returns Response<T>
@@ -54,18 +66,6 @@ using (StreamReader reader = new StreamReader(contentStream))
     Console.WriteLine(reader.ReadToEnd());
 }
 ```
-
-## Accessing HTTP response content with `dynamic`
-
-If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
-
-```C# Snippet:AzureCoreGetDynamicJsonProperty
-Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
-string name = widget.Name;
-```
-
-See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.
 
 ## Accessing HTTP response well-known headers
 
