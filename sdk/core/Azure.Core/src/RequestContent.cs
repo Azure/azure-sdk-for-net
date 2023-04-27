@@ -76,13 +76,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
-        public static RequestContent Create(DynamicData content)
-        {
-            Stream stream = new MemoryStream();
-            content.WriteTo(stream);
-            stream.Position = 0;
-            return Create(stream);
-        }
+        public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -279,6 +273,35 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
+        }
+
+        private sealed class DynamicDataContent : RequestContent
+        {
+            private readonly DynamicData _data;
+
+            public DynamicDataContent(DynamicData data) => _data = data;
+
+            public override void Dispose()
+            {
+                _data.Dispose();
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = default;
+                return false;
+            }
+
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+                return Task.CompletedTask;
             }
         }
     }
