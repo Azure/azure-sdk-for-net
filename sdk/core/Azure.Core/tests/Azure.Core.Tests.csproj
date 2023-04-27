@@ -15,8 +15,9 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="System.Linq.Async" />
-    <PackageReference Include="Polly" />  
+    <PackageReference Include="Polly" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
@@ -52,6 +53,7 @@
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\src\Shared\ApiVersionString.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\GuidUtilities.cs" LinkBase="Shared" />
+    <Compile Remove="public/**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

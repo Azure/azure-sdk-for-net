@@ -70,6 +70,8 @@
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageCrc64Calculator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageCrc64Composer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" LinkBase="Shared" />

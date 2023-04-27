@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _dataTransfer._state.TrySetTransferStatus(StorageTransferStatus.Queued);
             _errorHandling = errorHandling;
-            _createMode = createMode;
+            _createMode = createMode == StorageResourceCreateMode.None ? StorageResourceCreateMode.Fail : createMode;
             _checkpointer = checkPointer;
             QueueChunkTask = queueChunkTask;
             _hasFailures = false;
