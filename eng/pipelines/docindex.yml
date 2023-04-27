@@ -16,7 +16,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipCheckoutNone: true
-          Paths: 
+          Paths:
             # This is for retrieving code owners for service level readme metadata
             - .github/CODEOWNERS
 
@@ -93,7 +93,7 @@ jobs:
           Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
         displayName: Set package source variable
         workingDirectory: $(DocRepoLocation)
-        
+
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -125,6 +125,14 @@ jobs:
             -ReadmeFolderRoot "api/overview/azure"
             -PackageSourceOverride $(PackageSourceOverride)
         displayName: Generate ToC for Daily docs
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+        displayName: Verify Required Docs Json Members
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
