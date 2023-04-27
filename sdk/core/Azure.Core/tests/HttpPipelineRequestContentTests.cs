@@ -111,15 +111,15 @@ namespace Azure.Core.Tests
             ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
 
             using JsonDocument doc = JsonDocument.Parse(json);
-            MemoryStream expected = new();
-            Utf8JsonWriter writer = new(expected);
+            using MemoryStream expected = new();
+            using Utf8JsonWriter writer = new(expected);
             doc.WriteTo(writer);
             writer.Flush();
             expected.Position = 0;
 
             using dynamic source = new BinaryData(json).ToDynamicFromJson();
-            RequestContent content = RequestContent.Create(source);
-            MemoryStream destination = new();
+            using RequestContent content = RequestContent.Create(source);
+            using MemoryStream destination = new();
 
             content.WriteTo(destination, default);
 
