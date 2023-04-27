@@ -1,8 +1,31 @@
 # Azure Monitor Distro client library for .NET
 
-This project is the Integration tests for the Distro client library.
+This project is the Integration tests using the Azure TestFramework.
+For more information see: [.NET Azure SDK Test Framework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md)
 
 ## Getting started
+
+To run these tests locally you must first create your test resources.
+
+First need to sign in to an Azure Subscription. This command requires the [Azure Powershell module](https://learn.microsoft.com/powershell/azure/install-azure-powershell).
+
+```powershell
+Connect-AzAccount -Subscription $Subscription
+```
+
+Then run the New-TestResources cmd which will create the required test resources.
+
+```powershell
+eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory monitor
+```
+
+If this script fails, it should instruct you to install any missing dependencies.
+
+When this script is finished, it will create a file called `test-resources.bicep` in your `monitor` directory.
+This file is not checked-in and represents your unique test environment.
+
+You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
+When running the tests locally, this is the Application Insights resource that telemetry will be published to.
 
 ### Prerequisites
 
