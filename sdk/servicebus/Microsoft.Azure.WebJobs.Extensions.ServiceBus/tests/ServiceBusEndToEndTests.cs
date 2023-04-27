@@ -195,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task TestBatch_MinBatchSize()
+         public async Task TestBatch_MinBatchSize()
         {
             await TestMultiple_MinBatch<TestBatchMinBatchSize>(
                 configurationDelegate: SetUpMinimumBatchSize);
@@ -767,7 +767,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         sbOptions.MinMessageBatchSize = MinBatchSize;
                         sbOptions.MaxMessageBatchSize = MaxBatchSize;
-                        sbOptions.MaxWaitTime = TimeSpan.FromSeconds(30);
+                        sbOptions.MaxWaitTime = TimeSpan.FromSeconds(5);
                     }));
 
         private static Action<IHostBuilder> DisableAutoComplete =>
@@ -1461,7 +1461,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.True(array.Length > MinBatchSize);
+                Assert.AreEqual(array.Length, MinBatchSize);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }

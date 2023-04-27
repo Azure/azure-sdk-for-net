@@ -495,7 +495,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 acquiredSemaphore = true;
 
                                 // Get set of messages to use for batch here.
-                                messagesArray = _cachedMessagesManager.TryGetBatchofEventsWithCached(messagesArray);
+                                messagesArray = _cachedMessagesManager.TryGetBatchofEventsWithCached(messages.ToArray());
                             }
                             finally
                             {
