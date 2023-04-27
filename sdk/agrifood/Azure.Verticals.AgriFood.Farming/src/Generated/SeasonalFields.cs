@@ -488,63 +488,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null)
+            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null)
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null)
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null)
+            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null)
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -642,63 +642,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null)
+            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null)
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null)
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null)
+            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null)
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (seasonalFieldIds != null)
+            if (seasonalFieldIds != null && Optional.IsCollectionDefined(seasonalFieldIds))
             {
                 foreach (var param in seasonalFieldIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

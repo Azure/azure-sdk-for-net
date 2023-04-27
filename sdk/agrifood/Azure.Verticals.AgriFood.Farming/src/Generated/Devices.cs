@@ -302,42 +302,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-partners/", false);
             uri.AppendPath(sensorPartnerId, true);
             uri.AppendPath("/devices", false);
-            if (parentDeviceIds != null)
+            if (parentDeviceIds != null && Optional.IsCollectionDefined(parentDeviceIds))
             {
                 foreach (var param in parentDeviceIds)
                 {
                     uri.AppendQuery("parentDeviceIds", param, true);
                 }
             }
-            if (deviceDataModelIds != null)
+            if (deviceDataModelIds != null && Optional.IsCollectionDefined(deviceDataModelIds))
             {
                 foreach (var param in deviceDataModelIds)
                 {
                     uri.AppendQuery("deviceDataModelIds", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

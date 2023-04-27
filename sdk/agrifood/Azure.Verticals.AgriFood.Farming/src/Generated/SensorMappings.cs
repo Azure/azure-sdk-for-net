@@ -282,56 +282,56 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sensor-mappings", false);
-            if (sensorIds != null)
+            if (sensorIds != null && Optional.IsCollectionDefined(sensorIds))
             {
                 foreach (var param in sensorIds)
                 {
                     uri.AppendQuery("sensorIds", param, true);
                 }
             }
-            if (sensorPartnerIds != null)
+            if (sensorPartnerIds != null && Optional.IsCollectionDefined(sensorPartnerIds))
             {
                 foreach (var param in sensorPartnerIds)
                 {
                     uri.AppendQuery("sensorPartnerIds", param, true);
                 }
             }
-            if (partyIds != null)
+            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
             {
                 foreach (var param in partyIds)
                 {
                     uri.AppendQuery("partyIds", param, true);
                 }
             }
-            if (boundaryIds != null)
+            if (boundaryIds != null && Optional.IsCollectionDefined(boundaryIds))
             {
                 foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("boundaryIds", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
