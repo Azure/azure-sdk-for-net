@@ -1,10 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.5.0 (2023-04-27)
 
 ### Bugs Fixed
 
@@ -12,6 +8,8 @@
 
 ### Other Changes
 
+- Bump api-version of `PolicyAssignments` to `2022-06-01`.
+- Bump api-version of `PolicyDefinitions` and `PolicySetDefinitions` to `2021-06-01`.
 - Introduced new property `TargetResourceGroupId` on `Azure.ResourceManager.Resources.Models.ResourcesMoveContent` to supersede `TargetResourceGroup` to emphasize this is accepting a `ResourceIdentifier` of the target resource group.
 
 ## 1.4.0 (2023-02-10)
