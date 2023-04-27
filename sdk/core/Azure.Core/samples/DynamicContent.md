@@ -95,7 +95,7 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
 widget.Name = "New Name";
 
-await client.SetWidgetAsync((string)widget.Id, RequestContent.Create((object)widget));
+await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
 ```
 
 Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON values from scratch is not recommended.  For more details, please see [Blog post on MutableJsonDocument and DynamicJson].
