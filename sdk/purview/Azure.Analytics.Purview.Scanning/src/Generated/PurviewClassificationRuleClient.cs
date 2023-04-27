@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetPropertiesAsync(global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetProperties(global::Azure.RequestContext)']/*" />
         public virtual Response GetProperties(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdate(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='DeleteAsync(global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
@@ -178,7 +178,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='Delete(global::Azure.RequestContext)']/*" />
         public virtual Response Delete(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(int,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(int,string,global::Azure.RequestContext)']/*" />
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersionsAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersionsAsync(global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(context);
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersions(RequestContext)']/*" />
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersions(global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(context);

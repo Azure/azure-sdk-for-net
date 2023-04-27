@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetReceivedInvitationAsync(String,RequestContext)">
+    <member name="GetReceivedInvitationAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -82,7 +82,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetReceivedInvitation(String,RequestContext)">
+    <member name="GetReceivedInvitation(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedInvitation with required parameters and parse the result.
 <code><![CDATA[
@@ -163,7 +163,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="RejectAsync(String,RequestContent,String,RequestContext)">
+    <member name="RejectAsync(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RejectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -330,7 +330,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="Reject(String,RequestContent,String,RequestContext)">
+    <member name="Reject(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Reject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -497,7 +497,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetReceivedInvitationsAsync(String,String,String,RequestContext)">
+    <member name="GetReceivedInvitationsAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedInvitationsAsync and parse the result.
 <code><![CDATA[
@@ -544,7 +544,7 @@ Schema for <c>ReceivedInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetReceivedInvitations(String,String,String,RequestContext)">
+    <member name="GetReceivedInvitations(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedInvitations and parse the result.
 <code><![CDATA[

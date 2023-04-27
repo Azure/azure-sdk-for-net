@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntity(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntity(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntity(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulkAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulkAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityInBulkAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulk(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulk(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntityInBulk(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -213,7 +213,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollection(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response MoveEntitiesToCollection(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));

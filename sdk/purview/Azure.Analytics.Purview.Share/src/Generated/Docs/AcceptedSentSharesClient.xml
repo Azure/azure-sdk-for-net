@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetAcceptedSentShareAsync(String,String,RequestContext)">
+    <member name="GetAcceptedSentShareAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAcceptedSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -49,7 +49,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetAcceptedSentShare(String,String,RequestContext)">
+    <member name="GetAcceptedSentShare(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAcceptedSentShare with required parameters and parse the result.
 <code><![CDATA[
@@ -97,7 +97,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetAcceptedSentSharesAsync(String,String,RequestContext)">
+    <member name="GetAcceptedSentSharesAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAcceptedSentSharesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -144,7 +144,7 @@ Schema for <c>AcceptedSentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAcceptedSentShares(String,String,RequestContext)">
+    <member name="GetAcceptedSentShares(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAcceptedSentShares with required parameters and parse the result.
 <code><![CDATA[
@@ -191,7 +191,7 @@ Schema for <c>AcceptedSentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="ReinstateAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="ReinstateAsync(global::Azure.WaitUntil,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ReinstateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -289,7 +289,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="Reinstate(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="Reinstate(global::Azure.WaitUntil,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Reinstate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -387,7 +387,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="RevokeAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="RevokeAsync(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RevokeAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -448,7 +448,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="Revoke(WaitUntil,String,String,String,RequestContext)">
+    <member name="Revoke(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Revoke with required parameters and parse the result.
 <code><![CDATA[
@@ -509,7 +509,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateExpirationAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="UpdateExpirationAsync(global::Azure.WaitUntil,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateExpirationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -607,7 +607,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateExpiration(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="UpdateExpiration(global::Azure.WaitUntil,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateExpiration with required parameters and request content, and how to parse the result.
 <code><![CDATA[

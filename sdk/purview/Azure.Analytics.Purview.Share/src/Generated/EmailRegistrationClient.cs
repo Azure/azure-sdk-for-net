@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='ActivateAsync(RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='ActivateAsync(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> ActivateAsync(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Activate(RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Activate(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Response Activate(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='RegisterAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='RegisterAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Register(String,RequestContext)']/*" />
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Register(string,global::Azure.RequestContext)']/*" />
         public virtual Response Register(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");

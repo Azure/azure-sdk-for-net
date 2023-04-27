@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedInvitationAsync(string receivedInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedInvitationName, nameof(receivedInvitationName));
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitation(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitation(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetReceivedInvitation(string receivedInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedInvitationName, nameof(receivedInvitationName));
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='RejectAsync(String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='RejectAsync(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RejectAsync(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedInvitationName, nameof(receivedInvitationName));
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='Reject(String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='Reject(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Response Reject(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedInvitationName, nameof(receivedInvitationName));
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationsAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationsAsync(string,string,string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetReceivedInvitationsAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedInvitationsRequest(skipToken, filter, orderby, context);
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitations(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitations(string,string,string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetReceivedInvitations(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedInvitationsRequest(skipToken, filter, orderby, context);

@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRuleAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRuleAsync(global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRule(RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRule(global::Azure.RequestContext)']/*" />
         public virtual Response GetResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRuleAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRuleAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRule(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRule(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRuleAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRuleAsync(global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRule(RequestContext)']/*" />
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRule(global::Azure.RequestContext)']/*" />
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
