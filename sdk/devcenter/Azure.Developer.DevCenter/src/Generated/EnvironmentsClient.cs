@@ -67,7 +67,11 @@ namespace Azure.Developer.DevCenter
             _apiVersion = options.Version;
         }
 
-        /// <summary> Gets an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets an environment
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -75,7 +79,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUserAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUserAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetEnvironmentByUserAsync(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -95,7 +99,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets an environment
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -103,7 +111,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUser(String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUser(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetEnvironmentByUser(string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -123,7 +131,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Partially updates an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Partially updates an environment
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -132,7 +144,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironmentAsync(String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironmentAsync(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UpdateEnvironmentAsync(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -153,7 +165,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Partially updates an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Partially updates an environment
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -162,7 +178,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironment(String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironment(string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Response UpdateEnvironment(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -183,14 +199,18 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Get a catalog item from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a catalog item from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemAsync(string catalogItemId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -209,14 +229,18 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Get a catalog item from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a catalog item from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItem(String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItem(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetCatalogItem(string catalogItemId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -235,7 +259,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Get a specific catalog item version from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific catalog item version from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="version"> The version of the catalog item. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -243,7 +271,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemVersionAsync(string catalogItemId, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -263,7 +291,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Get a specific catalog item version from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific catalog item version from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="version"> The version of the catalog item. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -271,7 +303,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersion(String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersion(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetCatalogItemVersion(string catalogItemId, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -291,12 +323,16 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Lists the environments for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the environments for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
@@ -304,12 +340,16 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the environments for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the environments for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironments(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
@@ -317,7 +357,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the environments for a project and user. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the environments for a project and user.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -325,7 +369,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUserAsync(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUserAsync(string,int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsByUserAsync(string userId = "me", int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -335,7 +379,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the environments for a project and user. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the environments for a project and user.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -343,7 +391,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUser(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUser(string,int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentsByUser(string userId = "me", int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -353,12 +401,16 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
-        /// <summary> Lists latest version of all catalog items available for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists latest version of all catalog items available for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemsAsync(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemsAsync(int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogItemsAsync(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
@@ -366,12 +418,16 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
-        /// <summary> Lists latest version of all catalog items available for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists latest version of all catalog items available for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItems(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItems(int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogItems(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
@@ -379,7 +435,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
-        /// <summary> List all versions of a catalog item from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]List all versions of a catalog item from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -387,7 +447,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionsAsync(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionsAsync(string,int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -397,7 +457,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
-        /// <summary> List all versions of a catalog item from a project. </summary>
+        /// <summary>
+        /// [Protocol Method]List all versions of a catalog item from a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="catalogItemId"> The unique id of the catalog item. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -405,7 +469,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersions(String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersions(string,int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
@@ -415,12 +479,16 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
-        /// <summary> Lists all environment types configured for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists all environment types configured for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
@@ -428,12 +496,16 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
-        /// <summary> Lists all environment types configured for a project. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists all environment types configured for a project.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(Int32,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentTypes(int? maxCount = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
@@ -441,7 +513,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
-        /// <summary> Creates or updates an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates an environment.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -451,7 +527,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -472,7 +548,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Creates or updates an environment. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates an environment.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -482,7 +562,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -503,7 +583,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Deletes an environment and all its associated resources. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes an environment and all its associated resources
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -512,7 +596,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAsync(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -532,7 +616,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Deletes an environment and all its associated resources. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes an environment and all its associated resources
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -541,7 +629,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironment(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironment(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)']/*" />
         public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string environmentName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -561,7 +649,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Executes a deploy action. </summary>
+        /// <summary>
+        /// [Protocol Method]Executes a deploy action
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -571,7 +663,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentActionAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation> DeployEnvironmentActionAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -592,7 +684,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Executes a deploy action. </summary>
+        /// <summary>
+        /// [Protocol Method]Executes a deploy action
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -602,7 +698,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='DeployEnvironmentAction(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Operation DeployEnvironmentAction(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -623,7 +719,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Executes a custom action. </summary>
+        /// <summary>
+        /// [Protocol Method]Executes a custom action
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -633,7 +733,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentActionAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation> CustomEnvironmentActionAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -654,7 +754,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Executes a custom action. </summary>
+        /// <summary>
+        /// [Protocol Method]Executes a custom action
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -664,7 +768,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CustomEnvironmentAction(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Operation CustomEnvironmentAction(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));

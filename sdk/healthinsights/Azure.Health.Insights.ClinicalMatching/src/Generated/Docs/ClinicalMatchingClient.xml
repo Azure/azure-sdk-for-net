@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="MatchTrialsAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="MatchTrialsAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -290,7 +290,7 @@ Schema for <c>TrialMatcherResult</c>:
 
 </remarks>
     </member>
-    <member name="MatchTrials(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="MatchTrials(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call MatchTrials with required parameters and request content, and how to parse the result.
 <code><![CDATA[
