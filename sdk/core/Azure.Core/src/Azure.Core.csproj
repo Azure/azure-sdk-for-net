@@ -54,7 +54,7 @@
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
-    <Compile Include="Shared\EmptyReponse.cs" />
+    <Compile Include="Shared\EmptyResponse.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\ExponentialDelayStrategy.cs" />
     <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />

@@ -8,9 +8,9 @@ using System.Net;
 
 namespace Azure.Core
 {
-    internal class EmptyReponse : Response
+    internal class EmptyResponse : Response
     {
-        public EmptyReponse(HttpStatusCode status)
+        public EmptyResponse(HttpStatusCode status)
         {
             Status = (int)status;
             ReasonPhrase = status.ToString();
