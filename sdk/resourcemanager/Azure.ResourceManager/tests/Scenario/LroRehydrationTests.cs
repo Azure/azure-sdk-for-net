@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -41,9 +40,6 @@ namespace Azure.ResourceManager.Tests
             var response = rgOp.GetRawResponse();
             Assert.AreEqual(201, response.Status);
             Assert.AreEqual(200, rehydratedOrgResponse.Status);
-            //Assert.AreEqual(response.Status, rehydratedOrgResponse.Status);
-            //Assert.AreEqual(response.ReasonPhrase, rehydratedOrgResponse.ReasonPhrase);
-            //Assert.AreEqual(response.ClientRequestId, rehydratedOrgResponse.ClientRequestId);
             Assert.AreEqual(response.IsError, rehydratedOrgResponse.IsError);
             Assert.AreEqual(response.Headers.Count(), rehydratedOrgResponse.Headers.Count());
 
@@ -56,11 +52,10 @@ namespace Azure.ResourceManager.Tests
             var rehydratedDeleteOperation = new ArmOperation(Client, deleteOpId);
             var rehydatedDeleteResponse = await rehydratedDeleteOperation.UpdateStatusAsync();
             Assert.AreEqual(200, deleteResponse.Status);
-            Assert.AreEqual(404, rehydatedDeleteResponse.Status);
-            //TODO: turn 404 to 200
+            Assert.AreEqual(200, rehydatedDeleteResponse.Status);
+            Assert.AreEqual(deleteResponse.ReasonPhrase, rehydatedDeleteResponse.ReasonPhrase);
             Assert.IsFalse(deleteResponse.IsError);
-            Assert.IsTrue(rehydatedDeleteResponse.IsError);
-            //Assert.AreEqual(deleteResponse.ClientRequestId, rehydatedDeleteResponse.ClientRequestId);
+            Assert.IsFalse(rehydatedDeleteResponse.IsError);
             Assert.AreEqual(deleteResponse.Headers.Count(), rehydatedDeleteResponse.Headers.Count());
         }
 

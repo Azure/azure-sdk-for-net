@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -315,10 +315,11 @@ namespace Azure.Core
                 return state.RawResponse;
             }
 
-            // if this is a fake delete lro with 404, just return response
+            // if this is a fake delete lro with 404, just return an empty 200 response
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
-                return state.RawResponse;
+                //return state.RawResponse;
+                return new EmptyReponse(HttpStatusCode.OK);
             }
 
             throw state.OperationFailedException!;
