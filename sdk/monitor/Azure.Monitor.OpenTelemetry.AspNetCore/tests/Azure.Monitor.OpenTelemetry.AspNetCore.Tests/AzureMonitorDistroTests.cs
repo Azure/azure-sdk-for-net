@@ -46,7 +46,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             // TODO: Validate request content
             Assert.True(transport.Requests.Count > 0);
 
-            await app.StopAsync();
             await app.DisposeAsync();
         }
 
