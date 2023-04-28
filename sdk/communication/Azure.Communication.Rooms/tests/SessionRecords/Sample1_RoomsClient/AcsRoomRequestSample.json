@@ -8,31 +8,31 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-5fe63e0685a3be49aee0fdf3a24b163e-7f4e4f995cd79641-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "928051a88cdd1a154afa91aab4606455",
+        "traceparent": "00-442c7f6d5affdf5023a4db3248de9025-367ea6c3b30855ff-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b479679419d5235ee725c50e48681c8d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:42 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:22 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
-        "Content-Length": "31",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01, 2023-08-01",
+        "Content-Length": "101",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:49 GMT",
-        "MS-CV": "BN2w5pPLT0eNO/CoOy7i8A.2.0",
+        "Date": "Wed, 19 Apr 2023 20:55:21 GMT",
+        "MS-CV": "cSHmiTP2q0ugz4nWcLfF7g.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0EEF7YwAAAACDRmvipzA8QZuGPuHmRqifREVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0OVVAZAAAAAAZw\u002BwEDsyTRovS7cl//sFhWVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "928051a88cdd1a154afa91aab4606455",
-        "X-Processing-Time": "44ms"
+        "x-ms-client-request-id": "b479679419d5235ee725c50e48681c8d",
+        "X-Processing-Time": "19ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "Sanitized"
+          "id": "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_00000018-3b2e-8d84-1985-094822008bbe"
         }
       }
     },
@@ -44,170 +44,96 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-17a175fcad7f864888ee2aeaa14c0da1-a2adf172226cf041-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7a1661608a4376fa171b98eb856536d5",
+        "traceparent": "00-c182c12d8e0ab1178a2a45ec97bbfeda-811f09cd9c54e4ed-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5cf401ecc3abe608c8c5b59324275b72",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:43 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:22 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
-        "Content-Length": "31",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01, 2023-08-01",
+        "Content-Length": "101",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:50 GMT",
-        "MS-CV": "zzb3WK7uLkqd/lw1kDSBYg.2.0",
+        "Date": "Wed, 19 Apr 2023 20:55:21 GMT",
+        "MS-CV": "AKEhTB8E9Eyk8wxAmAzmvw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0EUF7YwAAAAC5LeKoExMlRYBweDrKgP\u002B9REVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0OVVAZAAAAAACeJP8mi9yT7Z4OTJATBnUWVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "7a1661608a4376fa171b98eb856536d5",
-        "X-Processing-Time": "39ms"
+        "x-ms-client-request-id": "5cf401ecc3abe608c8c5b59324275b72",
+        "X-Processing-Time": "18ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "Sanitized"
+          "id": "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_00000018-3b2e-8dc3-1985-094822008bbf"
         }
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/rooms?api-version=2022-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/rooms?api-version=2023-03-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "272",
         "Content-Type": "application/json",
-        "Repeatability-First-Sent": "2022-11-21T09:12:43.8409677Z",
-        "Repeatability-Request-ID": "31463d4d-6bc2-4948-8be2-2dee3391e2f6",
-        "traceparent": "00-df243e4d7a746a478198d1ff17fedf98-6069984bc971844a-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "6f0d0185a5922155ee49c1cc3ab5ccfa",
+        "Repeatability-First-Sent": "Wed, 19 Apr 2023 20:55:22 GMT",
+        "Repeatability-Request-ID": "3445df16-55e6-4335-969c-8fce4b4d44e1",
+        "traceparent": "00-0072f0484670310f188530ab6c9d78b9-6f899e5cee9ab64f-00",
+        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a147c79957c622e9325cdd6eb992f29",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:43 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:22 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "validFrom": "Sanitized",
         "validUntil": "Sanitized",
-        "roomJoinPolicy": "InviteOnly",
-        "participants": [
-          {
-            "communicationIdentifier": {
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Presenter"
-          },
-          {
-            "communicationIdentifier": {
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
+        "participants": {
+          "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_00000018-3b2e-8d84-1985-094822008bbe": {
             "role": "Attendee"
+          },
+          "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_00000018-3b2e-8dc3-1985-094822008bbf": {
+            "role": "Presenter"
           }
-        ]
+        }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-04-07, 2022-02-01",
+        "api-supported-versions": "2021-04-07, 2022-02-01, 2023-03-31-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:50 GMT",
-        "Location": "99415706769026201",
-        "MS-CV": "7JSA3cThjEayrJCSL22yUw.0",
+        "Date": "Wed, 19 Apr 2023 20:55:21 GMT",
+        "Location": "99480510117079369",
+        "MS-CV": "RxgftzKDnkajE\u002BKTUgiaqg.0",
         "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0EkF7YwAAAAA7XIPO1YHBSYMGIzp8ugmTREVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0OVVAZAAAAAD5\u002Br1D4IcsSIYVKTN9EPWDWVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "99415706769026201",
-        "createdDateTime": "2022-11-21T09:12:50.7730419\u002B00:00",
-        "validFrom": "2022-11-21T09:12:43.8409677\u002B00:00",
-        "validUntil": "2022-11-22T09:12:43.8409677\u002B00:00",
-        "roomJoinPolicy": "InviteOnly",
-        "participants": [
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Presenter"
-          },
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Attendee"
-          }
-        ]
+        "id": "99480510117079369",
+        "createdAt": "2023-04-19T20:55:22.0420618\u002B00:00",
+        "validFrom": "2023-04-19T20:55:22.815897\u002B00:00",
+        "validUntil": "2023-04-20T20:55:22.815897\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/rooms?api-version=2022-02-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "95",
-        "Content-Type": "application/json",
-        "Repeatability-First-Sent": "2022-11-21T09:12:44.3947827Z",
-        "Repeatability-Request-ID": "e53bbf2a-1ce5-4476-b818-34cae04dc996",
-        "traceparent": "00-17f5ad2d3870ac4786a45d68ed760722-4792ae61f60d504a-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "de28b8e4fa131d59560a7bc2f42a94e5",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:44 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "validFrom": "Sanitized",
-        "validUntil": "Sanitized",
-        "roomJoinPolicy": "CommunicationServiceUsers"
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "api-supported-versions": "2021-04-07, 2022-02-01",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:51 GMT",
-        "Location": "99495691606637406",
-        "MS-CV": "Q9r/pNxy/kaYCGXA9wZXcA.0",
-        "Repeatability-Result": "accepted",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0E0F7YwAAAACiLblSUtVoTI/Dn7Yuzv3aREVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Cache": "CONFIG_NOCACHE"
-      },
-      "ResponseBody": {
-        "id": "99495691606637406",
-        "createdDateTime": "2022-11-21T09:12:51.3199015\u002B00:00",
-        "validFrom": "2022-11-21T09:12:43.8409677\u002B00:00",
-        "validUntil": "2022-11-22T09:12:43.8409677\u002B00:00",
-        "roomJoinPolicy": "CommunicationServiceUsers",
-        "participants": []
-      }
-    },
-    {
-      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2022-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2023-03-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "50",
-        "Content-Type": "application/json",
-        "traceparent": "00-af00339b1d2c0748bdf9b5874b7e104c-a461b0e90c83404c-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b325bcc3f553bac20cf58cf9c92d3b61",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-0ce4794b42d9c02f5121490dd3f746ff-14376068495189c5-00",
+        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b215aea25f51d17b5f93eb0f64caffbf",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:44 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -216,121 +142,82 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-04-07, 2022-02-01",
+        "api-supported-versions": "2021-04-07, 2022-02-01, 2023-03-31-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:51 GMT",
-        "MS-CV": "TJWdQyESFkekiIX1vKtaAQ.0",
+        "Date": "Wed, 19 Apr 2023 20:55:22 GMT",
+        "MS-CV": "uyKspF3evk6kx/dvQlExZg.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0E0F7YwAAAACUsN1F9uH0SaAhBArWE6d1REVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0OlVAZAAAAABIM057imL1SYXxWZRbOPRNWVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "99415706769026201",
-        "createdDateTime": "2022-11-21T09:12:50.7730419\u002B00:00",
-        "validFrom": "2022-11-21T09:12:43.8409677\u002B00:00",
-        "validUntil": "2022-11-22T09:12:43.8409677\u002B00:00",
-        "roomJoinPolicy": "InviteOnly",
-        "participants": [
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Presenter"
-          },
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Attendee"
-          }
-        ]
+        "id": "99480510117079369",
+        "createdAt": "2023-04-19T20:55:22.0420618\u002B00:00",
+        "validFrom": "2023-04-19T20:55:22.815897\u002B00:00",
+        "validUntil": "2023-05-19T20:55:22.815897\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2022-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2023-03-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2ce9bb136602f543a9230b118dbde401-bd6f671facbdda4b-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "cd069e4f583c8ac1a7ef188829922cc3",
+        "traceparent": "00-26e0da0740713000cee5e0b48d004ccc-e9410fc1425f4db7-00",
+        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cc9552c9f2545611d391c885f531fb2f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:45 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-04-07, 2022-02-01",
+        "api-supported-versions": "2021-04-07, 2022-02-01, 2023-03-31-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Nov 2022 09:12:52 GMT",
-        "MS-CV": "Qc4aEsAxpUWXEia5C9EQ1A.0",
+        "Date": "Wed, 19 Apr 2023 20:55:22 GMT",
+        "MS-CV": "sYR1whIJ4U2Qmdb9F6RHDg.0",
+        "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0FEF7YwAAAABPtvAHyhiMTr8h71Lir5bhREVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0OlVAZAAAAACAuwWosgoiSKhcG5MnkES9WVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "99415706769026201",
-        "createdDateTime": "2022-11-21T09:12:50.7730419\u002B00:00",
-        "validFrom": "2022-11-21T09:12:43.8409677\u002B00:00",
-        "validUntil": "2022-11-22T09:12:43.8409677\u002B00:00",
-        "roomJoinPolicy": "InviteOnly",
-        "participants": [
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Presenter"
-          },
-          {
-            "communicationIdentifier": {
-              "rawId": "Sanitized",
-              "communicationUser": {
-                "id": "Sanitized"
-              }
-            },
-            "role": "Attendee"
-          }
-        ]
+        "id": "99480510117079369",
+        "createdAt": "2023-04-19T20:55:22.0420618\u002B00:00",
+        "validFrom": "2023-04-19T20:55:22.815897\u002B00:00",
+        "validUntil": "2023-05-19T20:55:22.815897\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2022-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/rooms/Sanitized?api-version=2023-03-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c7126111ba6d62478b4f193963b66691-d065b80e42e85847-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20221117.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7e09dcb41990eea7f56dd21e6d5f5429",
+        "traceparent": "00-961ca7a01abee8e985ba22b2a30b0d3b-eb56a80fcf4bdcc4-00",
+        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20230419.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "76f18c96a9111a210043cae8a91ffec9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 21 Nov 2022 09:12:45 GMT",
+        "x-ms-date": "Wed, 19 Apr 2023 20:55:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-04-07, 2022-02-01",
-        "Date": "Mon, 21 Nov 2022 09:12:52 GMT",
-        "MS-CV": "nQK0jpwKt0mBmo3qMIsESg.0",
-        "X-Azure-Ref": "0FEF7YwAAAADsPm923TIjQIpa0sKxQ8eZREVMMDFFREdFMDYxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "api-supported-versions": "2021-04-07, 2022-02-01, 2023-03-31-preview",
+        "Date": "Wed, 19 Apr 2023 20:55:22 GMT",
+        "MS-CV": "wiQBr6pMBECjF5GWLYUK1Q.0",
+        "Request-Context": "appId=",
+        "X-Azure-Ref": "0OlVAZAAAAABKsM/Z9x43SpmFZKC3/8cXWVZSMzExMDAwMTE1MDUzAGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING_ROOMS": "endpoint=https://rooms-e2e-prod.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1520989064"
+    "COMMUNICATION_CONNECTION_STRING_ROOMS": "endpoint=https://rooms-ppe-us.ppe.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1873558480"
   }
 }
