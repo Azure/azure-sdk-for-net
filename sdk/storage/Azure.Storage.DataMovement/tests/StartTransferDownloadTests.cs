@@ -1162,14 +1162,8 @@ namespace Azure.Storage.DataMovement.Tests
                 string localSourceFile = Path.Combine(testDirectory.DirectoryPath, blobNames[i]);
                 await CreatePageBlob(container, localSourceFile, blobNames[i], size);
 
-                // Set up event handler for the respective blob
-                options[i].TransferFailed += (TransferFailedEventArgs args) =>
-                {
-                    return Task.CompletedTask;
-                };
-
                 // Create destination file path
-                string destFile = Path.GetTempPath() + Path.GetRandomFileName();
+                string destFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
 
                 downloadedBlobInfo.Add(new VerifyDownloadBlobContentInfo(
                     localSourceFile,
@@ -1203,7 +1197,6 @@ namespace Azure.Storage.DataMovement.Tests
                 downloadedBlobInfo[i].DataTransfer = transfer;
             }
 
-            failureTransferHolder.AssertFailureCheck();
             for (int i = 0; i < downloadedBlobInfo.Count; i++)
             {
                 // Assert
@@ -1215,6 +1208,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Verify Download
                 CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
             }
+            failureTransferHolder.AssertFailureCheck();
         }
 
         [RecordedTest]

@@ -402,7 +402,8 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory,
                 files,
                 destinationPrefix: dirName,
-                waitTimeInSec: 10);
+                waitTimeInSec: 10,
+                options: options);
         }
 
         [Test]
@@ -442,7 +443,8 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory,
                 files,
                 destinationPrefix: dirName,
-                waitTimeInSec: 10);
+                waitTimeInSec: 10,
+                options: options);
         }
 
         [Test]

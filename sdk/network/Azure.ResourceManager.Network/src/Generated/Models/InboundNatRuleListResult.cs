@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of InboundNatRuleListResult. </summary>
-        /// <param name="value"> A list of inbound nat rules in a load balancer. </param>
+        /// <param name="value"> A list of inbound NAT rules in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal InboundNatRuleListResult(IReadOnlyList<InboundNatRuleData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             NextLink = nextLink;
         }
 
-        /// <summary> A list of inbound nat rules in a load balancer. </summary>
+        /// <summary> A list of inbound NAT rules in a load balancer. </summary>
         public IReadOnlyList<InboundNatRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }

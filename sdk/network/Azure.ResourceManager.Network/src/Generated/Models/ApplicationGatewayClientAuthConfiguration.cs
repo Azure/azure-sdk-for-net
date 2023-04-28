@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway client authentication configuration. </summary>
-    internal partial class ApplicationGatewayClientAuthConfiguration
+    public partial class ApplicationGatewayClientAuthConfiguration
     {
         /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
         public ApplicationGatewayClientAuthConfiguration()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
         /// <param name="verifyClientCertIssuerDN"> Verify client certificate issuer name on the application gateway. </param>
-        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN)
+        /// <param name="verifyClientRevocation"> Verify client certificate revocation status. </param>
+        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation)
         {
             VerifyClientCertIssuerDN = verifyClientCertIssuerDN;
+            VerifyClientRevocation = verifyClientRevocation;
         }
 
         /// <summary> Verify client certificate issuer name on the application gateway. </summary>
         public bool? VerifyClientCertIssuerDN { get; set; }
+        /// <summary> Verify client certificate revocation status. </summary>
+        public ApplicationGatewayClientRevocationOption? VerifyClientRevocation { get; set; }
     }
 }
