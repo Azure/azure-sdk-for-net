@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
-            if (options.IncludeReadOnlyProperties)
+            if (options.IgnoreReadOnlyProperties)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("hasWhiskers"u8);
             writer.WriteBooleanValue(HasWhiskers);
 
-            if (options.HandleAdditionalProperties)
+            if (options.IgnoreAdditionalProperties)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -104,7 +104,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     continue;
                 }
 
-                if (options.HandleAdditionalProperties)
+                if (options.IgnoreAdditionalProperties)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

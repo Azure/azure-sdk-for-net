@@ -42,7 +42,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
-            if (options.IncludeReadOnlyProperties)
+            if (options.IgnoreReadOnlyProperties)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (options.HandleAdditionalProperties)
+            if (options.IgnoreAdditionalProperties)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -101,7 +101,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     continue;
                 }
 
-                if (options.HandleAdditionalProperties)
+                if (options.IgnoreAdditionalProperties)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
