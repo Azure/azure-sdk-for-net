@@ -165,7 +165,24 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
-        public void AddServiceBus_ThrowsArgumentNull_WhenServiceBusOptionsIsNull()
+        public void ConfigureOptionsThrowWhenMaxWaitTimeIsTooLarge()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxWaitTime", "00:05:00" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void AddServiceBus_ThrowArgumentNull_WhenServiceBusOptionsIsNull()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>

@@ -90,6 +90,11 @@ namespace Microsoft.Extensions.Hosting
                         throw new InvalidOperationException("The minimum message batch size must be less than the maximum message batch size");
                     }
 
+                    if (options.MaxWaitTime > TimeSpan.FromSeconds(150))
+                    {
+                        throw new InvalidOperationException("The maximum wait time must be less than 2 minutes and 30 seconds.");
+                    }
+
                     configure(options);
                 });
 
