@@ -69,6 +69,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)']/*" />
         public virtual async Task<Operation<OncoPhenotypeResult>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
@@ -86,6 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)']/*" />
         public virtual Operation<OncoPhenotypeResult> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
@@ -104,7 +106,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)']/*" />
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferCancerProfileAsync(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -132,7 +134,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)']/*" />
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> InferCancerProfile(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));

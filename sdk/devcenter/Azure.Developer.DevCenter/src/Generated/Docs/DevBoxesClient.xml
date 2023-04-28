@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetPoolAsync(String,RequestContext)">
+    <member name="GetPoolAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPoolAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -62,7 +62,7 @@ Schema for <c>Pool</c>:
 
 </remarks>
     </member>
-    <member name="GetPool(String,RequestContext)">
+    <member name="GetPool(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPool with required parameters and parse the result.
 <code><![CDATA[
@@ -123,7 +123,7 @@ Schema for <c>Pool</c>:
 
 </remarks>
     </member>
-    <member name="GetScheduleByPoolAsync(String,String,RequestContext)">
+    <member name="GetScheduleByPoolAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScheduleByPoolAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -158,7 +158,7 @@ Schema for <c>Schedule</c>:
 
 </remarks>
     </member>
-    <member name="GetScheduleByPool(String,String,RequestContext)">
+    <member name="GetScheduleByPool(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScheduleByPool with required parameters and parse the result.
 <code><![CDATA[
@@ -193,7 +193,7 @@ Schema for <c>Schedule</c>:
 
 </remarks>
     </member>
-    <member name="GetDevBoxByUserAsync(String,String,RequestContext)">
+    <member name="GetDevBoxByUserAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDevBoxByUserAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -287,7 +287,7 @@ Schema for <c>DevBox</c>:
 
 </remarks>
     </member>
-    <member name="GetDevBoxByUser(String,String,RequestContext)">
+    <member name="GetDevBoxByUser(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDevBoxByUser with required parameters and parse the result.
 <code><![CDATA[
@@ -381,7 +381,7 @@ Schema for <c>DevBox</c>:
 
 </remarks>
     </member>
-    <member name="GetRemoteConnectionAsync(String,String,RequestContext)">
+    <member name="GetRemoteConnectionAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRemoteConnectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -421,7 +421,7 @@ Schema for <c>RemoteConnection</c>:
 
 </remarks>
     </member>
-    <member name="GetRemoteConnection(String,String,RequestContext)">
+    <member name="GetRemoteConnection(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRemoteConnection with required parameters and parse the result.
 <code><![CDATA[
@@ -461,7 +461,7 @@ Schema for <c>RemoteConnection</c>:
 
 </remarks>
     </member>
-    <member name="GetUpcomingActionAsync(String,String,String,RequestContext)">
+    <member name="GetUpcomingActionAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpcomingActionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -509,7 +509,7 @@ Schema for <c>UpcomingAction</c>:
 
 </remarks>
     </member>
-    <member name="GetUpcomingAction(String,String,String,RequestContext)">
+    <member name="GetUpcomingAction(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpcomingAction with required parameters and parse the result.
 <code><![CDATA[
@@ -557,7 +557,7 @@ Schema for <c>UpcomingAction</c>:
 
 </remarks>
     </member>
-    <member name="SkipUpcomingActionAsync(String,String,String,RequestContext)">
+    <member name="SkipUpcomingActionAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SkipUpcomingActionAsync with required parameters.
 <code><![CDATA[
@@ -579,7 +579,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SkipUpcomingAction(String,String,String,RequestContext)">
+    <member name="SkipUpcomingAction(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SkipUpcomingAction with required parameters.
 <code><![CDATA[
@@ -601,7 +601,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DelayUpcomingActionAsync(String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayUpcomingActionAsync(string,string,global::System.DateTimeOffset,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DelayUpcomingActionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -649,7 +649,7 @@ Schema for <c>UpcomingAction</c>:
 
 </remarks>
     </member>
-    <member name="DelayUpcomingAction(String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayUpcomingAction(string,string,global::System.DateTimeOffset,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DelayUpcomingAction with required parameters and parse the result.
 <code><![CDATA[
@@ -697,7 +697,7 @@ Schema for <c>UpcomingAction</c>:
 
 </remarks>
     </member>
-    <member name="GetPoolsAsync(Int32,String,RequestContext)">
+    <member name="GetPoolsAsync(int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPoolsAsync and parse the result.
 <code><![CDATA[
@@ -771,7 +771,7 @@ Schema for <c>PoolListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetPools(Int32,String,RequestContext)">
+    <member name="GetPools(int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPools and parse the result.
 <code><![CDATA[
@@ -845,7 +845,7 @@ Schema for <c>PoolListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSchedulesByPoolAsync(String,Int32,String,RequestContext)">
+    <member name="GetSchedulesByPoolAsync(string,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSchedulesByPoolAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -893,7 +893,7 @@ Schema for <c>ScheduleListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSchedulesByPool(String,Int32,String,RequestContext)">
+    <member name="GetSchedulesByPool(string,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSchedulesByPool with required parameters and parse the result.
 <code><![CDATA[
@@ -941,7 +941,7 @@ Schema for <c>ScheduleListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDevBoxesByUserAsync(String,String,Int32,RequestContext)">
+    <member name="GetDevBoxesByUserAsync(string,string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDevBoxesByUserAsync and parse the result.
 <code><![CDATA[
@@ -1037,7 +1037,7 @@ Schema for <c>DevBoxListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDevBoxesByUser(String,String,Int32,RequestContext)">
+    <member name="GetDevBoxesByUser(string,string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDevBoxesByUser and parse the result.
 <code><![CDATA[
@@ -1133,7 +1133,7 @@ Schema for <c>DevBoxListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetUpcomingActionsAsync(String,String,RequestContext)">
+    <member name="GetUpcomingActionsAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpcomingActionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1183,7 +1183,7 @@ Schema for <c>UpcomingActionsListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetUpcomingActions(String,String,RequestContext)">
+    <member name="GetUpcomingActions(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetUpcomingActions with required parameters and parse the result.
 <code><![CDATA[
@@ -1233,7 +1233,7 @@ Schema for <c>UpcomingActionsListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateDevBoxAsync(WaitUntil,String,RequestContent,String,RequestContext)">
+    <member name="CreateDevBoxAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateDevBoxAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1379,7 +1379,7 @@ Schema for <c>DevBox</c>:
 
 </remarks>
     </member>
-    <member name="CreateDevBox(WaitUntil,String,RequestContent,String,RequestContext)">
+    <member name="CreateDevBox(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateDevBox with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1525,7 +1525,7 @@ Schema for <c>DevBox</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDevBoxAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteDevBoxAsync(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteDevBoxAsync with required parameters.
 <code><![CDATA[
@@ -1549,7 +1549,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="DeleteDevBox(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteDevBox(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteDevBox with required parameters.
 <code><![CDATA[
@@ -1573,7 +1573,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="StartDevBoxAsync(WaitUntil,String,String,RequestContext)">
+    <member name="StartDevBoxAsync(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartDevBoxAsync with required parameters.
 <code><![CDATA[
@@ -1597,7 +1597,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="StartDevBox(WaitUntil,String,String,RequestContext)">
+    <member name="StartDevBox(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartDevBox with required parameters.
 <code><![CDATA[
@@ -1621,7 +1621,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="StopDevBoxAsync(WaitUntil,String,String,Boolean,RequestContext)">
+    <member name="StopDevBoxAsync(global::Azure.WaitUntil,string,string,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StopDevBoxAsync with required parameters.
 <code><![CDATA[
@@ -1645,7 +1645,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="StopDevBox(WaitUntil,String,String,Boolean,RequestContext)">
+    <member name="StopDevBox(global::Azure.WaitUntil,string,string,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StopDevBox with required parameters.
 <code><![CDATA[

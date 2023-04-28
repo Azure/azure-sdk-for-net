@@ -1,7 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfileAsync(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call InferCancerProfileAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var oncoPhenotypeData = new OncoPhenotypeData(
+new PatientRecord[] 
+{
+    new PatientRecord(
+"<id>")
+{
+        Info = new PatientInfo(
+)
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement(
+"<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(
+DocumentType.Note, "<id>", new DocumentContent(
+DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new OncoPhenotypeModelConfiguration(
+)
+{
+        Verbose = true,
+        IncludeEvidence = true,
+        InferenceTypes = 
+{
+            OncoPhenotypeInferenceType.TumorSite
+        },
+        CheckForCancerCase = true,
+    },
+};
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
+    <member name="InferCancerProfile(global::Azure.WaitUntil,global::Azure.Health.Insights.CancerProfiling.OncoPhenotypeData,string,global::System.DateTimeOffset?,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call InferCancerProfile with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var oncoPhenotypeData = new OncoPhenotypeData(
+new PatientRecord[] 
+{
+    new PatientRecord(
+"<id>")
+{
+        Info = new PatientInfo(
+)
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement(
+"<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(
+DocumentType.Note, "<id>", new DocumentContent(
+DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new OncoPhenotypeModelConfiguration(
+)
+{
+        Verbose = true,
+        IncludeEvidence = true,
+        InferenceTypes = 
+{
+            OncoPhenotypeInferenceType.TumorSite
+        },
+        CheckForCancerCase = true,
+    },
+};
+var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
+    <member name="InferCancerProfileAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -166,7 +284,7 @@ Schema for <c>OncoPhenotypeResult</c>:
 
 </remarks>
     </member>
-    <member name="InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfile(global::Azure.WaitUntil,global::Azure.Core.RequestContent,string,global::System.DateTimeOffset?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
 <code><![CDATA[

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetProjectAsync(String,RequestContext)">
+    <member name="GetProjectAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -30,7 +30,7 @@ Schema for <c>Project</c>:
 
 </remarks>
     </member>
-    <member name="GetProject(String,RequestContext)">
+    <member name="GetProject(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProject with required parameters and parse the result.
 <code><![CDATA[
@@ -59,7 +59,7 @@ Schema for <c>Project</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectsAsync(String,Int32,RequestContext)">
+    <member name="GetProjectsAsync(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
@@ -101,7 +101,7 @@ Schema for <c>ProjectListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetProjects(String,Int32,RequestContext)">
+    <member name="GetProjects(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
@@ -143,7 +143,7 @@ Schema for <c>ProjectListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDevBoxesAsync(String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesAsync(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesAsync and parse the result.
 <code><![CDATA[
@@ -239,7 +239,7 @@ Schema for <c>DevBoxListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDevBoxes(String,Int32,RequestContext)">
+    <member name="GetAllDevBoxes(string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxes and parse the result.
 <code><![CDATA[
@@ -335,7 +335,7 @@ Schema for <c>DevBoxListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDevBoxesByUserAsync(String,String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesByUserAsync(string,string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
 <code><![CDATA[
@@ -431,7 +431,7 @@ Schema for <c>DevBoxListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDevBoxesByUser(String,String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesByUser(string,string,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesByUser and parse the result.
 <code><![CDATA[
