@@ -319,7 +319,7 @@ namespace Azure.Core
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
                 //return state.RawResponse;
-                return new EmptyResponse(HttpStatusCode.OK);
+                return new EmptyReponse(HttpStatusCode.OK);
             }
 
             throw state.OperationFailedException!;
