@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System.Threading;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -13,6 +16,11 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _eventsClientDiagnostics;
+        private EventsRestOperations _eventsRestClient;
+        private ClientDiagnostics _childResourcesClientDiagnostics;
+        private ChildResourcesRestOperations _childResourcesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
         {
@@ -24,6 +32,11 @@ namespace Azure.ResourceManager.ResourceHealth
         internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EventsRestOperations EventsRestClient => _eventsRestClient ??= new EventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ChildResourcesClientDiagnostics => _childResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ChildResourcesRestOperations ChildResourcesRestClient => _childResourcesRestClient ??= new ChildResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,6 +56,100 @@ namespace Azure.ResourceManager.ResourceHealth
         public virtual ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatus()
         {
             return new ResourceHealthChildAvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "childAvailabilityStatuses", "current"));
+        }
+
+        /// <summary>
+        /// Lists current service health events for given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListBySingleResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventData> GetEventsBySingleResourceAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventData.DeserializeEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists current service health events for given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListBySingleResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventData> GetEventsBySingleResource(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventData.DeserializeEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatusData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetChildResourcesAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(Id, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, Id, filter, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetChildResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetChildResources(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(Id, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, Id, filter, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetChildResources", "value", "nextLink", cancellationToken);
         }
     }
 }
