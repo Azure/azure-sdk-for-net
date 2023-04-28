@@ -86,7 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(_testServerUrl).ConfigureAwait(false);
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
-            //Assert.True(res.Equals("Response from Test Server"), $"Response from test server: '{res}'");
 
             // SHUTDOWN
 
@@ -95,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             //tracerProvider.ForceFlush();
             //tracerProvider.Shutdown();
 
-            await app.StopAsync(); // shutdown to prevent collecting to log queries.
+            await app.StopAsync(); // shutdown to prevent collecting the log queries.
 
             // ASSERT
             // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
