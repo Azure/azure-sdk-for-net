@@ -71,12 +71,13 @@ rename-rules:
 rename-mapping:
   CheckMhsmNameAvailabilityResult: ManagedHsmNameAvailabilityResult
   CheckMhsmNameAvailabilityResult.nameAvailable : IsNameAvailable 
+  CheckMhsmNameAvailabilityParameters: MhsmNameAvailabilityParameters
   Reason: ManagedHsmNameUnavailableReason
   ActivationStatus: ManagedHSMSecurityDomainActivationStatus
   Attributes: SecretBaseAttributes
   GeoReplicationRegionProvisioningState: ManagedHsmGeoReplicatedRegionProvisioningState
   ManagedHsmPrivateEndpointConnectionItemData.id: -|arm-id
-  
+
 prompted-enum-values: Default
 
 directive:

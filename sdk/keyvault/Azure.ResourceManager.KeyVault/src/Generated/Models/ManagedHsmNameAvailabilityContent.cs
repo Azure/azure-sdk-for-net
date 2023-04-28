@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
-    public partial class CheckManagedHsmNameAvailabilityContent
+    public partial class ManagedHsmNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckManagedHsmNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmNameAvailabilityContent. </summary>
         /// <param name="name"> The managed hsm name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckManagedHsmNameAvailabilityContent(string name)
+        public ManagedHsmNameAvailabilityContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

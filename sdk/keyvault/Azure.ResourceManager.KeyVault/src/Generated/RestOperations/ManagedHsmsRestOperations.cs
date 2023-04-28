@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateCheckManagedHsmNameAvailabilityRequest(string subscriptionId, CheckManagedHsmNameAvailabilityContent content)
+        internal HttpMessage CreateCheckManagedHsmNameAvailabilityRequest(string subscriptionId, ManagedHsmNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(string subscriptionId, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(string subscriptionId, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(string subscriptionId, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(string subscriptionId, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));

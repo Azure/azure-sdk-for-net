@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailability");
             scope.Start();
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailability");
             scope.Start();
