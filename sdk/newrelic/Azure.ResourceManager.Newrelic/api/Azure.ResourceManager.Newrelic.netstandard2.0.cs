@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Newrelic
         public Azure.ResourceManager.Newrelic.Models.NewRelicAccountProperties NewRelicAccountProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.OrgCreationSource? OrgCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.PlanData PlanData { get { throw null; } set { } }
-        public Azure.ResourceManager.Newrelic.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Newrelic.Models.UserInfo UserInfo { get { throw null; } set { } }
     }
     public partial class TagRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Newrelic.TagRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Newrelic.TagRuleResource>, System.Collections.IEnumerable
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Newrelic
         public TagRuleData() { }
         public Azure.ResourceManager.Newrelic.Models.LogRules LogRules { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.MetricRules MetricRules { get { throw null; } set { } }
-        public Azure.ResourceManager.Newrelic.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class TagRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -168,19 +168,6 @@ namespace Azure.ResourceManager.Newrelic.Models
         public AppServicesGetContent(string userEmail) { }
         public System.Collections.Generic.IList<string> AzureResourceIds { get { throw null; } }
         public string UserEmail { get { throw null; } }
-    }
-    public static partial class ArmNewrelicModelFactory
-    {
-        public static Azure.ResourceManager.Newrelic.Models.AccountResource AccountResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, string region = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.AppServiceInfo AppServiceInfo(string azureResourceId = null, string agentVersion = null, string agentStatus = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.MetricsStatusResponse MetricsStatusResponse(System.Collections.Generic.IEnumerable<string> azureResourceIds = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.MonitoredResource MonitoredResource(string id = null, Azure.ResourceManager.Newrelic.Models.SendingMetricsStatus? sendingMetrics = default(Azure.ResourceManager.Newrelic.Models.SendingMetricsStatus?), string reasonForMetricsStatus = null, Azure.ResourceManager.Newrelic.Models.SendingLogsStatus? sendingLogs = default(Azure.ResourceManager.Newrelic.Models.SendingLogsStatus?), string reasonForLogsStatus = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Newrelic.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Newrelic.Models.ProvisioningState?), Azure.ResourceManager.Newrelic.Models.MonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Newrelic.Models.MonitoringStatus?), Azure.ResourceManager.Newrelic.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Newrelic.Models.MarketplaceSubscriptionStatus?), string marketplaceSubscriptionId = null, Azure.ResourceManager.Newrelic.Models.NewRelicAccountProperties newRelicAccountProperties = null, Azure.ResourceManager.Newrelic.Models.UserInfo userInfo = null, Azure.ResourceManager.Newrelic.Models.PlanData planData = null, Azure.ResourceManager.Newrelic.Models.LiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Newrelic.Models.LiftrResourceCategory?), int? liftrResourcePreference = default(int?), Azure.ResourceManager.Newrelic.Models.OrgCreationSource? orgCreationSource = default(Azure.ResourceManager.Newrelic.Models.OrgCreationSource?), Azure.ResourceManager.Newrelic.Models.AccountCreationSource? accountCreationSource = default(Azure.ResourceManager.Newrelic.Models.AccountCreationSource?)) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.OrganizationResource OrganizationResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string organizationName = null, Azure.ResourceManager.Newrelic.Models.BillingSource? billingSource = default(Azure.ResourceManager.Newrelic.Models.BillingSource?)) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.PlanDataResource PlanDataResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Newrelic.Models.PlanData planData = null, Azure.ResourceManager.Newrelic.Models.OrgCreationSource? orgCreationSource = default(Azure.ResourceManager.Newrelic.Models.OrgCreationSource?), Azure.ResourceManager.Newrelic.Models.AccountCreationSource? accountCreationSource = default(Azure.ResourceManager.Newrelic.Models.AccountCreationSource?)) { throw null; }
-        public static Azure.ResourceManager.Newrelic.TagRuleData TagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Newrelic.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Newrelic.Models.ProvisioningState?), Azure.ResourceManager.Newrelic.Models.LogRules logRules = null, Azure.ResourceManager.Newrelic.Models.MetricRules metricRules = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.VmExtensionPayload VmExtensionPayload(string ingestionKey = null) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.VmInfo VmInfo(string vmId = null, string agentVersion = null, string agentStatus = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingCycle : System.IEquatable<Azure.ResourceManager.Newrelic.Models.BillingCycle>
@@ -345,11 +332,36 @@ namespace Azure.ResourceManager.Newrelic.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Newrelic.Models.UserInfo UserInfo { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NewrelicProvisioningState : System.IEquatable<Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NewrelicProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState left, Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState left, Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NewRelicSingleSignOnProperties
     {
         public NewRelicSingleSignOnProperties() { }
         public string EnterpriseAppId { get { throw null; } set { } }
-        public Azure.ResourceManager.Newrelic.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Newrelic.Models.NewrelicProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.SingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
     }
@@ -392,31 +404,6 @@ namespace Azure.ResourceManager.Newrelic.Models
         public Azure.ResourceManager.Newrelic.Models.AccountCreationSource? AccountCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.OrgCreationSource? OrgCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.Newrelic.Models.PlanData PlanData { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Newrelic.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Newrelic.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Newrelic.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Newrelic.Models.ProvisioningState left, Azure.ResourceManager.Newrelic.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Newrelic.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Newrelic.Models.ProvisioningState left, Azure.ResourceManager.Newrelic.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SendAadLogsStatus : System.IEquatable<Azure.ResourceManager.Newrelic.Models.SendAadLogsStatus>
