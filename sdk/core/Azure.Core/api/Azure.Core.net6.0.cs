@@ -17,6 +17,9 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.DynamicDataNameMapping nameMapping) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.DynamicDataOptions options) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -42,6 +45,53 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
+    {
+        internal DynamicData() { }
+        public void Dispose() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.DynamicData? left, object? right) { throw null; }
+        public static implicit operator bool (Azure.DynamicData value) { throw null; }
+        public static implicit operator double (Azure.DynamicData value) { throw null; }
+        public static implicit operator int (Azure.DynamicData value) { throw null; }
+        public static implicit operator long (Azure.DynamicData value) { throw null; }
+        public static implicit operator bool? (Azure.DynamicData value) { throw null; }
+        public static implicit operator double? (Azure.DynamicData value) { throw null; }
+        public static implicit operator int? (Azure.DynamicData value) { throw null; }
+        public static implicit operator long? (Azure.DynamicData value) { throw null; }
+        public static implicit operator float? (Azure.DynamicData value) { throw null; }
+        public static implicit operator float (Azure.DynamicData value) { throw null; }
+        public static implicit operator string (Azure.DynamicData value) { throw null; }
+        public static bool operator !=(Azure.DynamicData? left, object? right) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum DynamicDataNameMapping
+    {
+        None = 0,
+        PascalCaseGetters = 1,
+        PascalCaseGettersCamelCaseSetters = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct DynamicDataOptions
+    {
+        private int _dummyPrimitive;
+        public static readonly Azure.DynamicDataOptions Default;
+        public DynamicDataOptions() { throw null; }
+        public Azure.DynamicDataNameMapping NameMapping { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynamicDataProperty
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Name { get { throw null; } }
+        public Azure.DynamicData Value { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum ErrorOptions
@@ -139,8 +189,10 @@ namespace Azure
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public virtual Azure.Response WaitForCompletionResponse(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -149,8 +201,10 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasValue { get; }
         public abstract T Value { get; }
+        public virtual Azure.Response<T> WaitForCompletion(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -526,6 +580,7 @@ namespace Azure.Core
     public abstract partial class RequestContent : System.IDisposable
     {
         protected RequestContent() { }
+        public static Azure.Core.RequestContent Create(Azure.DynamicData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }

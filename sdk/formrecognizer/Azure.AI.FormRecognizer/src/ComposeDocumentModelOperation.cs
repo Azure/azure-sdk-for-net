@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
+            _operationInternal = new(this, _diagnostics, rawResponse: postResponse);
 
             Id = location.Split('/').Last().Split('?').FirstOrDefault();
         }
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(ComposeDocumentModelOperation));
+            _operationInternal = new(this, _diagnostics, rawResponse: null, nameof(ComposeDocumentModelOperation));
         }
 
         /// <summary>

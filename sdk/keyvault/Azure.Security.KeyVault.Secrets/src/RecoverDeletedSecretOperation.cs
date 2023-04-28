@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
+            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedSecretOperation" /> for mocking. </summary>

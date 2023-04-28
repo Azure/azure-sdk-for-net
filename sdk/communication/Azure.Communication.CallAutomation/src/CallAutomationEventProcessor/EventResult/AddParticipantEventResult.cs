@@ -9,28 +9,28 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="AddParticipantSucceeded"/> event will be returned when the participant joined the call successfully.
+        /// <see cref="AddParticipantSucceededEventData"/> event will be returned when the participant joined the call successfully.
         /// </summary>
-        public AddParticipantSucceeded SuccessEvent { get; }
+        public AddParticipantSucceededEventData SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="AddParticipantFailed"/> event will be returned when the participant did not join the call.
+        /// <see cref="AddParticipantFailedEventData"/> event will be returned when the participant did not join the call.
         /// </summary>
-        public AddParticipantFailed FailureEvent { get; }
+        public AddParticipantFailedEventData FailureResult { get; }
 
         /// <summary>
         /// <see cref="CommunicationIdentifier"/> Participant that was added or removed from the call.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
-        internal AddParticipantEventResult(bool isSuccessEvent, AddParticipantSucceeded successEvent, AddParticipantFailed failureEvent, CommunicationIdentifier participant)
+        internal AddParticipantEventResult(bool isSuccess, AddParticipantSucceededEventData successResult, AddParticipantFailedEventData failureResult, CommunicationIdentifier participant)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
             Participant = participant;
         }
     }

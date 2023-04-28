@@ -43,11 +43,21 @@ namespace Azure.Storage.Blobs
         private readonly long _rangeSize;
 
         /// <summary>
-        /// Validation options to specify on transactions for this download operation.
-        /// This downloader may alter the options it sends to individual download requests,
-        /// but will on obey the user-specified options on the overall download.
+        /// Validation algorithm to use for individual download requests.
         /// </summary>
-        private readonly DownloadTransferValidationOptions _validationOptions;
+        private readonly StorageChecksumAlgorithm _validationAlgorithm;
+
+        /// <summary>
+        /// The validation options to send to individual download requests.
+        /// Tells the client not to perform the checksum validation, leaving
+        /// it to this class to perform that work.
+        /// </summary>
+        private DownloadTransferValidationOptions ValidationOptions
+            => new DownloadTransferValidationOptions
+            {
+                ChecksumAlgorithm = _validationAlgorithm,
+                AutoValidateChecksum = false
+            };
 
         private readonly IProgress<long> _progress;
 
@@ -96,13 +106,14 @@ namespace Azure.Storage.Blobs
                     : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
+            Argument.AssertNotNull(transferValidation, nameof(transferValidation));
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(transferValidation?.AutoValidateChecksum ?? true))
+            if (!transferValidation.AutoValidateChecksum)
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
 
-            _validationOptions = transferValidation;
+            _validationAlgorithm = transferValidation.ChecksumAlgorithm;
             _progress = progress;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
@@ -135,7 +146,7 @@ namespace Azure.Storage.Blobs
                     _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -151,7 +162,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -224,7 +235,7 @@ namespace Azure.Storage.Blobs
                     runningTasks.Enqueue(_client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -259,14 +270,14 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    using BlobDownloadStreamingResult result =
+                    Response<BlobDownloadStreamingResult> response =
                         await runningTasks.Dequeue().ConfigureAwait(false);
 
                     // Even though the BlobDownloadInfo is returned immediately,
                     // CopyToAsync causes ConsumeQueuedTask to wait until the
                     // download is complete
                     await CopyToAsync(
-                        result,
+                        response,
                         destination,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -307,7 +318,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,
@@ -318,7 +329,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,
@@ -374,7 +385,7 @@ namespace Azure.Storage.Blobs
                     Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
-                        _validationOptions,
+                        ValidationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,
@@ -411,19 +422,33 @@ namespace Azure.Storage.Blobs
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        private static async Task CopyToAsync(
-            BlobDownloadStreamingResult result,
+        private async Task CopyToAsync(
+            Response<BlobDownloadStreamingResult> response,
             Stream destination,
             CancellationToken cancellationToken)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            using Stream source = result.Content;
+            using IHasher hasher = ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
+            using Stream rawSource = response.Value.Content;
+            using Stream source = hasher != null
+                ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
+                : rawSource;
 
             await source.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
+
+            if (hasher != null)
+            {
+                Memory<byte> calculatedChecksum = hasher.GetFinalHash();
+                var responseChecksum = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
+                if (!calculatedChecksum.Span.SequenceEqual(responseChecksum.Checksum.Span))
+                {
+                    throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
+                }
+            }
         }
 
         private static void CopyTo(

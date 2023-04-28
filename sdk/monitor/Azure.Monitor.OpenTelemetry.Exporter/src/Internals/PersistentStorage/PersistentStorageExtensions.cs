@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {

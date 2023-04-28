@@ -25,9 +25,11 @@ namespace Azure.ResourceManager.Network.Models
         private const string ProvisioningValue = "Provisioning";
         private const string ProvisionedValue = "Provisioned";
         private const string CommissioningValue = "Commissioning";
+        private const string CommissionedNoInternetAdvertiseValue = "CommissionedNoInternetAdvertise";
         private const string CommissionedValue = "Commissioned";
         private const string DecommissioningValue = "Decommissioning";
         private const string DeprovisioningValue = "Deprovisioning";
+        private const string DeprovisionedValue = "Deprovisioned";
 
         /// <summary> Provisioning. </summary>
         public static CommissionedState Provisioning { get; } = new CommissionedState(ProvisioningValue);
@@ -35,12 +37,16 @@ namespace Azure.ResourceManager.Network.Models
         public static CommissionedState Provisioned { get; } = new CommissionedState(ProvisionedValue);
         /// <summary> Commissioning. </summary>
         public static CommissionedState Commissioning { get; } = new CommissionedState(CommissioningValue);
+        /// <summary> CommissionedNoInternetAdvertise. </summary>
+        public static CommissionedState CommissionedNoInternetAdvertise { get; } = new CommissionedState(CommissionedNoInternetAdvertiseValue);
         /// <summary> Commissioned. </summary>
         public static CommissionedState Commissioned { get; } = new CommissionedState(CommissionedValue);
         /// <summary> Decommissioning. </summary>
         public static CommissionedState Decommissioning { get; } = new CommissionedState(DecommissioningValue);
         /// <summary> Deprovisioning. </summary>
         public static CommissionedState Deprovisioning { get; } = new CommissionedState(DeprovisioningValue);
+        /// <summary> Deprovisioned. </summary>
+        public static CommissionedState Deprovisioned { get; } = new CommissionedState(DeprovisionedValue);
         /// <summary> Determines if two <see cref="CommissionedState"/> values are the same. </summary>
         public static bool operator ==(CommissionedState left, CommissionedState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommissionedState"/> values are not the same. </summary>

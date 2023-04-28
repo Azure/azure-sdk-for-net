@@ -382,5 +382,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             return "Unknown";
         }
+
+        internal static string? GetAzNameSpace(this AzMonList tagObjects)
+        {
+            return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeAzureNameSpace)?.ToString();
+        }
     }
 }

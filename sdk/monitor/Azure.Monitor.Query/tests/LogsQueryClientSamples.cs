@@ -379,5 +379,33 @@ namespace Azure.Monitor.Query.Tests
             }
             #endregion
         }
+
+        [Test]
+        [Explicit]
+        public async Task QueryResource()
+        {
+            #region Snippet:QueryResource
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+                "search *",
+                new QueryTimeRange(TimeSpan.FromDays(5)));
+
+            var resultTable = results.Value.Table;
+
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    Console.WriteLine(row);
+                }
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
+            }
+            #endregion
+        }
     }
 }
