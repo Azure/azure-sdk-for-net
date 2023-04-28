@@ -46,7 +46,11 @@ namespace Azure.Analytics.Purview.Administration
             _endpoint = endpoint;
         }
 
-        /// <summary> Get a resource set config service model. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a resource set config service model.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -67,7 +71,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Get a resource set config service model. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a resource set config service model.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -88,7 +96,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Creates or updates an resource set config. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates an resource set config.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -113,7 +125,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Creates or updates an resource set config. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates an resource set config.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -138,7 +154,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a ResourceSetRuleConfig resource.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -159,7 +179,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a ResourceSetRuleConfig resource.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>

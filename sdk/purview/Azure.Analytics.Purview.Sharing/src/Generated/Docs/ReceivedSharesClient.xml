@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetReceivedShareAsync(String,RequestContext)">
+    <member name="GetReceivedShareAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -58,7 +58,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetReceivedShare(String,RequestContext)">
+    <member name="GetReceivedShare(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShare with required parameters and parse the result.
 <code><![CDATA[
@@ -115,7 +115,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,String,RequestContext)">
+    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ActivateTenantEmailRegistrationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -194,7 +194,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="ActivateTenantEmailRegistration(RequestContent,String,RequestContext)">
+    <member name="ActivateTenantEmailRegistration(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ActivateTenantEmailRegistration with required parameters and parse the result.
 <code><![CDATA[
@@ -273,7 +273,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="RegisterTenantEmailRegistrationAsync(String,RequestContext)">
+    <member name="RegisterTenantEmailRegistrationAsync(string,RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistrationAsync and parse the result.
 <code><![CDATA[
@@ -327,7 +327,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="RegisterTenantEmailRegistration(String,RequestContext)">
+    <member name="RegisterTenantEmailRegistration(string,RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistration and parse the result.
 <code><![CDATA[
@@ -381,7 +381,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedSharesAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllAttachedReceivedSharesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -426,7 +426,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllAttachedReceivedShares(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedShares(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllAttachedReceivedShares with required parameters and parse the result.
 <code><![CDATA[
@@ -471,7 +471,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedSharesAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllDetachedReceivedSharesAsync and parse the result.
 <code><![CDATA[
@@ -516,7 +516,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDetachedReceivedShares(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedShares(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllDetachedReceivedShares and parse the result.
 <code><![CDATA[
@@ -561,7 +561,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceReceivedShareAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -692,7 +692,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceReceivedShare(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShare(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceReceivedShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -823,7 +823,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteReceivedShareAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShareAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -867,7 +867,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReceivedShare(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShare(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteReceivedShare with required parameters and parse the result.
 <code><![CDATA[
