@@ -7,7 +7,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
     using Azure.Core.TestFramework;
 
-    public class MonitorExporterTestEnvironment : TestEnvironment
+    public class AzureMonitorTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// Connection String is used to connect to an Application Insights resource.

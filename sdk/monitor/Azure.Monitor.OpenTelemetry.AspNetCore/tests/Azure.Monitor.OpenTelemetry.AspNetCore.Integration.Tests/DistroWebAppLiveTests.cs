@@ -18,7 +18,7 @@ using OpenTelemetry.Resources;
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
-    public class DistroWebAppLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
+    public class DistroWebAppLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
         private const string TestServerUrl = "http://localhost:9998/";
 
