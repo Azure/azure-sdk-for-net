@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
-        private const string _testServerUrl = "http://localhost:9999/";
+        private const string _testServerUrl = "http://localhost:9998/";
 
         // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
         // Can search for all records in the portal using this query:   Union * | where AppRoleName == 'Test##'
@@ -30,7 +30,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         private LogsQueryClient? _logsQueryClient = null;
 
-        // DEVELOPER TIP: Can pass RecordedTestMode.Live to the base ctor to run this test with a live resource.
+        // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
+        // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
         public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
@@ -83,13 +84,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ACT
             using var httpClient = new HttpClient();
-
-            //var test = await httpClient.GetAsync(_testServerUrl);
-            //test.EnsureSuccessStatusCode();
-
             var res = await httpClient.GetStringAsync(_testServerUrl).ConfigureAwait(false);
-            // Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
-            Assert.True(res.Equals("Response from Test Server"), $"Response from test server: '{res}'");
+            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+            //Assert.True(res.Equals("Response from Test Server"), $"Response from test server: '{res}'");
 
             // SHUTDOWN
 
@@ -121,10 +118,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             await VerifyLogs(
                 description: "ILogger LogInformation, from WebApp",
                 query: $"AppTraces | where Message == '{_logMessage}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
-        }
-
-        private void InitializeLogsQueryClient()
-        {
         }
 
         private async Task VerifyLogs(string description, string query)
