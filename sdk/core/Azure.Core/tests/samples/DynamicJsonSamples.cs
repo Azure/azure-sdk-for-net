@@ -31,6 +31,41 @@ namespace Azure.Core.Samples
             dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
             string name = widget.Name;
             #endregion
+
+            Assert.IsTrue(name == "Widget");
+        }
+
+        [Test]
+        public async Task SetDynamicJsonProperty()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreSetDynamicJsonProperty
+            Response response = await client.GetWidgetAsync("123");
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            widget.Name = "New Name";
+            #endregion
+
+            Assert.IsTrue(widget.Name == "New Name");
+        }
+
+        [Test]
+        public async Task GetDynamicJsonArrayValue()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreGetDynamicJsonArrayValue
+            Response response = await client.GetWidgetAsync("123");
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+#if !SNIPPET
+            widget.Values = new int[] { 1, 2, 3 };
+#endif
+
+            // JSON is "{ values = [1, 2, 3] }"
+            int value = widget.Values[0];
+            #endregion
+
+            Assert.IsTrue(value == 1);
         }
 
         [Test]
@@ -48,6 +83,8 @@ namespace Azure.Core.Samples
                 string color = widget.Properties.Color;
             }
             #endregion
+
+            Assert.IsTrue(widget.Properties == null);
         }
 
         [Test]
@@ -76,6 +113,48 @@ namespace Azure.Core.Samples
                 Console.WriteLine($"Widget has property {name}='{value}'.");
             }
             #endregion
+
+            Assert.IsTrue(widget.Properties.Color == "blue");
+        }
+
+        [Test]
+        public async Task CastDynamicJsonToPOCO()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreCastDynamicJsonToPOCO
+            Response response = await client.GetWidgetAsync("123");
+            dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            Widget widget = (Widget)content;
+            #endregion
+
+            Assert.IsTrue(widget.Name == "Widget");
+        }
+
+        #region Snippet:AzureCoreDynamicJsonPOCO
+        public class Widget
+        {
+            public string Name { get; set; }
+        }
+        #endregion
+
+        [Test]
+        public async Task GetPropertyWithInvalidCharacters()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreGetDynamicPropertyInvalidCharacters
+            Response response = await client.GetWidgetAsync("123");
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+#if !SNIPPET
+            widget["$id"] = "foo";
+#endif
+
+            /// JSON is """{ $id = "foo" }"""
+            string id = widget["$id"];
+            #endregion
+
+            Assert.IsTrue(id == "foo");
         }
 
         [Test]

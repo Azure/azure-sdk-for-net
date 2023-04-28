@@ -23,13 +23,35 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string name = widget.Name;
 ```
 
-You can learn what properties are available in the JSON content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
+You can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
 
-If no parameter is passed to `ToDynamicFromJson()`, properties on the dynamic object are accessed using names that exactly match the members in the JSON content.  Passing `DynamicDataOptions.Default` enables properties to be accessed with PascalCase property names, and writes any added properties with camelCase names.
+If no parameter is passed to `ToDynamicFromJson()`, properties names must exactly match the member names in the JSON content.  Passing `DynamicDataOptions.Default` will enable properties to be accessed using PascalCase property names, and will write any added properties with camelCase names.
+
+### Set a JSON property
+
+JSON members can be set on the dynamic object.
+
+```C# Snippet:AzureCoreSetDynamicJsonProperty
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+widget.Name = "New Name";
+```
+
+### Access an array value
+
+JSON array values are accessed using array indexers.
+
+```C# Snippet:AzureCoreGetDynamicJsonArrayValue
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+
+// JSON is "{ values = [1, 2, 3] }"
+int value = widget.Values[0];
+```
 
 ### Check whether an optional property is present
 
-Optional properties are checked for null.
+Optional properties will return null if not present in the JSON content.
 
 ```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
 Response response = await client.GetWidgetAsync("123");
@@ -42,7 +64,7 @@ if (widget.Properties != null)
 }
 ```
 
-### Collections can be enumerated
+### Enumerate a collection
 
 Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with the `foreach` keyword.
 
@@ -61,11 +83,40 @@ void UpdateWidget(string name, string value)
 }
 ```
 
-## Setting RequestContent
+### Cast to a POCO type
 
-It is recommended when authoring new JSON from scratch to pass to protocol methods that you [use anonymous types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
+Dynamic JSON objects can be cast to CLR types using the cast operator.
 
-Implementing a round-trip scenario using anonymous types requires copying every JSON property from the response content into the anonyous type, which can be verbose and error prone, as shown below.
+```C# Snippet:AzureCoreCastDynamicJsonToPOCO
+Response response = await client.GetWidgetAsync("123");
+dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+Widget widget = (Widget)content;
+```
+
+```C# Snippet:AzureCoreDynamicJsonPOCO
+public class Widget
+{
+    public string Name { get; set; }
+}
+```
+
+### Get a property with invalid C# characters in the name
+
+JSON members whose names have characters that are not valid for property names in C# can be accessed using property indexers.
+
+```C# Snippet:AzureCoreGetDynamicPropertyInvalidCharacters
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+
+/// JSON is """{ $id = "foo" }"""
+string id = widget["$id"];
+```
+
+## Round-tripping values
+
+To author new JSON, it is recommended to [use anonymous types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
+
+Implementing a round-trip scenario using anonymous types requires copying every JSON property from the response content into the anonyous type, and can be verbose and error prone, as shown below.
 
 ```C# Snippet:AzureCoreRoundTripAnonymousType
 Response response = client.GetWidget("123");
@@ -98,4 +149,4 @@ widget.Name = "New Name";
 await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
 ```
 
-Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON values from scratch is not recommended.  For more details, please see [Blog post on MutableJsonDocument and DynamicJson].
+Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON payloads from scratch is not recommended.
