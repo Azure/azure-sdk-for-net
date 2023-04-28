@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="level"> Level of insight. </param>
         /// <param name="eventLevel"> Level of event. </param>
         /// <param name="externalIncidentId"> The id of the Incident. </param>
+        /// <param name="reason"> The reason for the Incident. </param>
         /// <param name="article"> Article of event. </param>
         /// <param name="links"> Useful links of event. </param>
         /// <param name="impactStartOn"> It provides the Timestamp for when the health impacting event started. </param>
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="additionalInformation"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
-        internal EventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventTypeValue? eventType, EventSourceValue? eventSource, EventStatusValue? status, string title, string summary, string header, LevelValue? level, EventLevelValue? eventLevel, string externalIncidentId, EventPropertiesArticle article, IReadOnlyList<Link> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<Impact> impact, EventPropertiesRecommendedActions recommendedActions, IReadOnlyList<Faq> faqs, bool? isHIR, bool? enableMicrosoftSupport, string description, bool? platformInitiated, bool? enableChatWithUs, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, EventPropertiesAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
+        internal EventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventTypeValue? eventType, EventSourceValue? eventSource, EventStatusValue? status, string title, string summary, string header, LevelValue? level, EventLevelValue? eventLevel, string externalIncidentId, string reason, EventPropertiesArticle article, IReadOnlyList<Link> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<Impact> impact, EventPropertiesRecommendedActions recommendedActions, IReadOnlyList<Faq> faqs, bool? isHIR, bool? enableMicrosoftSupport, string description, bool? platformInitiated, bool? enableChatWithUs, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, EventPropertiesAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
         {
             EventType = eventType;
             EventSource = eventSource;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Level = level;
             EventLevel = eventLevel;
             ExternalIncidentId = externalIncidentId;
+            Reason = reason;
             Article = article;
             Links = links;
             ImpactStartOn = impactStartOn;
@@ -108,14 +110,10 @@ namespace Azure.ResourceManager.ResourceHealth
         public EventLevelValue? EventLevel { get; }
         /// <summary> The id of the Incident. </summary>
         public string ExternalIncidentId { get; }
+        /// <summary> The reason for the Incident. </summary>
+        public string Reason { get; }
         /// <summary> Article of event. </summary>
-        internal EventPropertiesArticle Article { get; }
-        /// <summary> Article content of event. </summary>
-        public string ArticleContent
-        {
-            get => Article?.ArticleContent;
-        }
-
+        public EventPropertiesArticle Article { get; }
         /// <summary> Useful links of event. </summary>
         public IReadOnlyList<Link> Links { get; }
         /// <summary> It provides the Timestamp for when the health impacting event started. </summary>

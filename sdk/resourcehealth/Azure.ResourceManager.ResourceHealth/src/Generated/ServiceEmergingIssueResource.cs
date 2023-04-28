@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A Class representing an EmergingIssuesGetResult along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EmergingIssuesGetResultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEmergingIssuesGetResultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetEmergingIssuesGetResult method.
+    /// A Class representing a ServiceEmergingIssue along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceEmergingIssueResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServiceEmergingIssueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetServiceEmergingIssue method.
     /// </summary>
-    public partial class EmergingIssuesGetResultResource : ArmResource
+    public partial class ServiceEmergingIssueResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EmergingIssuesGetResultResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ServiceEmergingIssueResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(IssueNameParameter issueName)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _emergingIssuesGetResultEmergingIssuesClientDiagnostics;
-        private readonly EmergingIssuesRestOperations _emergingIssuesGetResultEmergingIssuesRestClient;
-        private readonly EmergingIssuesGetResultData _data;
+        private readonly ClientDiagnostics _serviceEmergingIssueEmergingIssuesClientDiagnostics;
+        private readonly EmergingIssuesRestOperations _serviceEmergingIssueEmergingIssuesRestClient;
+        private readonly ServiceEmergingIssueData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="EmergingIssuesGetResultResource"/> class for mocking. </summary>
-        protected EmergingIssuesGetResultResource()
+        /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueResource"/> class for mocking. </summary>
+        protected ServiceEmergingIssueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EmergingIssuesGetResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ServiceEmergingIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EmergingIssuesGetResultResource(ArmClient client, EmergingIssuesGetResultData data) : this(client, data.Id)
+        internal ServiceEmergingIssueResource(ArmClient client, ServiceEmergingIssueData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EmergingIssuesGetResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EmergingIssuesGetResultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceEmergingIssueResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _emergingIssuesGetResultEmergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string emergingIssuesGetResultEmergingIssuesApiVersion);
-            _emergingIssuesGetResultEmergingIssuesRestClient = new EmergingIssuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, emergingIssuesGetResultEmergingIssuesApiVersion);
+            _serviceEmergingIssueEmergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceEmergingIssueEmergingIssuesApiVersion);
+            _serviceEmergingIssueEmergingIssuesRestClient = new EmergingIssuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEmergingIssueEmergingIssuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EmergingIssuesGetResultData Data
+        public virtual ServiceEmergingIssueData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EmergingIssuesGetResultResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceEmergingIssueResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultResource.Get");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueResource.Get");
             scope.Start();
             try
             {
-                var response = await _emergingIssuesGetResultEmergingIssuesRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEmergingIssueEmergingIssuesRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EmergingIssuesGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EmergingIssuesGetResultResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEmergingIssueResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultResource.Get");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueResource.Get");
             scope.Start();
             try
             {
-                var response = _emergingIssuesGetResultEmergingIssuesRestClient.Get(Id.Name, cancellationToken);
+                var response = _serviceEmergingIssueEmergingIssuesRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EmergingIssuesGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

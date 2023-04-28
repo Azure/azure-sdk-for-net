@@ -17,53 +17,53 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A Class representing an AvailabilityStatus along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvailabilityStatusResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvailabilityStatusResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAvailabilityStatus method.
+    /// A Class representing a ResourceHealthChildAvailabilityStatus along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceHealthChildAvailabilityStatusResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceHealthChildAvailabilityStatusResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetResourceHealthChildAvailabilityStatus method.
     /// </summary>
-    public partial class AvailabilityStatusResource : ArmResource
+    public partial class ResourceHealthChildAvailabilityStatusResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AvailabilityStatusResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ResourceHealthChildAvailabilityStatusResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
-            var resourceId = $"{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current";
+            var resourceId = $"{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _availabilityStatusClientDiagnostics;
-        private readonly AvailabilityStatusesRestOperations _availabilityStatusRestClient;
+        private readonly ClientDiagnostics _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesClientDiagnostics;
+        private readonly ChildAvailabilityStatusesRestOperations _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesRestClient;
         private readonly ResourceHealthAvailabilityStatusData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AvailabilityStatusResource"/> class for mocking. </summary>
-        protected AvailabilityStatusResource()
+        /// <summary> Initializes a new instance of the <see cref="ResourceHealthChildAvailabilityStatusResource"/> class for mocking. </summary>
+        protected ResourceHealthChildAvailabilityStatusResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvailabilityStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ResourceHealthChildAvailabilityStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AvailabilityStatusResource(ArmClient client, ResourceHealthAvailabilityStatusData data) : this(client, data.Id)
+        internal ResourceHealthChildAvailabilityStatusResource(ArmClient client, ResourceHealthAvailabilityStatusData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvailabilityStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceHealthChildAvailabilityStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AvailabilityStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceHealthChildAvailabilityStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _availabilityStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string availabilityStatusApiVersion);
-            _availabilityStatusRestClient = new AvailabilityStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, availabilityStatusApiVersion);
+            _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceHealthChildAvailabilityStatusChildAvailabilityStatusesApiVersion);
+            _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesRestClient = new ChildAvailabilityStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthChildAvailabilityStatusChildAvailabilityStatusesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/availabilityStatuses";
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/childAvailabilityStatuses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,27 +91,27 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AvailabilityStatuses_GetByResource</description>
+        /// <description>ChildAvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvailabilityStatusResource>> GetAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceHealthChildAvailabilityStatusResource>> GetAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _availabilityStatusClientDiagnostics.CreateScope("AvailabilityStatusResource.Get");
+            using var scope = _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesClientDiagnostics.CreateScope("ResourceHealthChildAvailabilityStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _availabilityStatusRestClient.GetByResourceAsync(Id.Parent, filter, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesRestClient.GetByResourceAsync(Id.Parent, filter, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilityStatusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthChildAvailabilityStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,27 +125,27 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AvailabilityStatuses_GetByResource</description>
+        /// <description>ChildAvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvailabilityStatusResource> Get(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceHealthChildAvailabilityStatusResource> Get(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _availabilityStatusClientDiagnostics.CreateScope("AvailabilityStatusResource.Get");
+            using var scope = _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesClientDiagnostics.CreateScope("ResourceHealthChildAvailabilityStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _availabilityStatusRestClient.GetByResource(Id.Parent, filter, expand, cancellationToken);
+                var response = _resourceHealthChildAvailabilityStatusChildAvailabilityStatusesRestClient.GetByResource(Id.Parent, filter, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilityStatusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthChildAvailabilityStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

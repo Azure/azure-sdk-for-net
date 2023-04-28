@@ -85,6 +85,25 @@ namespace Azure.ResourceManager.ResourceHealth
         }
         #endregion
 
+        #region ResourceHealthChildAvailabilityStatusResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceHealthChildAvailabilityStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthChildAvailabilityStatusResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthChildAvailabilityStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthChildAvailabilityStatusResource" /> object. </returns>
+        public static ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ResourceHealthChildAvailabilityStatusResource.ValidateResourceId(id);
+                return new ResourceHealthChildAvailabilityStatusResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region MetadataEntityResource
         /// <summary>
         /// Gets an object representing a <see cref="MetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
@@ -180,20 +199,20 @@ namespace Azure.ResourceManager.ResourceHealth
         }
         #endregion
 
-        #region EmergingIssuesGetResultResource
+        #region ServiceEmergingIssueResource
         /// <summary>
-        /// Gets an object representing an <see cref="EmergingIssuesGetResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmergingIssuesGetResultResource.CreateResourceIdentifier" /> to create an <see cref="EmergingIssuesGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceEmergingIssueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEmergingIssueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEmergingIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EmergingIssuesGetResultResource" /> object. </returns>
-        public static EmergingIssuesGetResultResource GetEmergingIssuesGetResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceEmergingIssueResource" /> object. </returns>
+        public static ServiceEmergingIssueResource GetServiceEmergingIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EmergingIssuesGetResultResource.ValidateResourceId(id);
-                return new EmergingIssuesGetResultResource(client, id);
+                ServiceEmergingIssueResource.ValidateResourceId(id);
+                return new ServiceEmergingIssueResource(client, id);
             }
             );
         }
@@ -206,6 +225,15 @@ namespace Azure.ResourceManager.ResourceHealth
         public static AvailabilityStatusResource GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
         {
             return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus();
+        }
+
+        /// <summary> Gets an object representing a ResourceHealthChildAvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ResourceHealthChildAvailabilityStatusResource" /> object. </returns>
+        public static ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetResourceHealthChildAvailabilityStatus();
         }
 
         /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
@@ -384,12 +412,12 @@ namespace Azure.ResourceManager.ResourceHealth
             return tenantResource.GetTenantEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
-        public static EmergingIssuesGetResultCollection GetEmergingIssuesGetResults(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
+        public static ServiceEmergingIssueCollection GetServiceEmergingIssues(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEmergingIssuesGetResults();
+            return GetTenantResourceExtensionClient(tenantResource).GetServiceEmergingIssues();
         }
 
         /// <summary>
@@ -409,9 +437,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static async Task<Response<EmergingIssuesGetResultResource>> GetEmergingIssuesGetResultAsync(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetEmergingIssuesGetResults().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetServiceEmergingIssues().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -431,9 +459,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static Response<EmergingIssuesGetResultResource> GetEmergingIssuesGetResult(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public static Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetEmergingIssuesGetResults().Get(issueName, cancellationToken);
+            return tenantResource.GetServiceEmergingIssues().Get(issueName, cancellationToken);
         }
     }
 }

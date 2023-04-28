@@ -14,9 +14,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class EmergingIssuesGetResultData
+    public partial class ServiceEmergingIssueData
     {
-        internal static EmergingIssuesGetResultData DeserializeEmergingIssuesGetResultData(JsonElement element)
+        internal static ServiceEmergingIssueData DeserializeServiceEmergingIssueData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new EmergingIssuesGetResultData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), Optional.ToList(statusBanners), Optional.ToList(statusActiveEvents));
+            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), Optional.ToList(statusBanners), Optional.ToList(statusActiveEvents));
         }
     }
 }

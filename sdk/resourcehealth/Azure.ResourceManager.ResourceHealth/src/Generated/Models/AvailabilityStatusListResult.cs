@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of AvailabilityStatusListResult. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AvailabilityStatusListResult(IEnumerable<AvailabilityStatusData> value)
+        internal AvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatusData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of AvailabilityStatusListResult. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <param name="nextLink"> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </param>
-        internal AvailabilityStatusListResult(IReadOnlyList<AvailabilityStatusData> value, string nextLink)
+        internal AvailabilityStatusListResult(IReadOnlyList<ResourceHealthAvailabilityStatusData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of availabilityStatuses. </summary>
-        public IReadOnlyList<AvailabilityStatusData> Value { get; }
+        public IReadOnlyList<ResourceHealthAvailabilityStatusData> Value { get; }
         /// <summary> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </summary>
         public string NextLink { get; }
     }

@@ -4,19 +4,27 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: ResourceHealth
 namespace: Azure.ResourceManager.ResourceHealth
-require: https://github.com/Azure/azure-rest-api-specs/tree/5ad3e3cef3193e676d3d4abe80423515f19c9a1e/specification/resourcehealth/resource-manager/readme.md
-# tag: package-preview-2022-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/56b585b014e28a73a0a7831e27b93fa803effead/specification/resourcehealth/resource-manager/readme.md
+# tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 rename-mapping:
   Link.type: LinkType
+  EmergingIssuesGetResult: ServiceEmergingIssue
+
+prepend-rp-prefix:
+  - AvailabilityStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,5 +59,6 @@ rename-rules:
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: SubscriptionResourceHealthEventImpactedResource
   /providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: TenantResourceHealthEventImpactedResource
+  /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current: ResourceHealthChildAvailabilityStatus
 
 ```

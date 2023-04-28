@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<LevelValue> level = default;
             Optional<EventLevelValue> eventLevel = default;
             Optional<string> externalIncidentId = default;
+            Optional<string> reason = default;
             Optional<EventPropertiesArticle> article = default;
             Optional<IReadOnlyList<Link>> links = default;
             Optional<DateTimeOffset> impactStartTime = default;
@@ -151,6 +152,11 @@ namespace Azure.ResourceManager.ResourceHealth
                         if (property0.NameEquals("externalIncidentId"u8))
                         {
                             externalIncidentId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("reason"u8))
+                        {
+                            reason = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("article"u8))
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new EventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value);
+            return new EventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value);
         }
     }
 }

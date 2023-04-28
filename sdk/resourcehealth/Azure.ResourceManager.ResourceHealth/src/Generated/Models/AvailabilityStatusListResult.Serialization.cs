@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            IReadOnlyList<AvailabilityStatusData> value = default;
+            IReadOnlyList<ResourceHealthAvailabilityStatusData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AvailabilityStatusData> array = new List<AvailabilityStatusData>();
+                    List<ResourceHealthAvailabilityStatusData> array = new List<ResourceHealthAvailabilityStatusData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityStatusData.DeserializeAvailabilityStatusData(item));
+                        array.Add(ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(item));
                     }
                     value = array;
                     continue;

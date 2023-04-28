@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.ResourceHealth
             return GetCachedClient(Client => new TenantEventCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
-        public virtual EmergingIssuesGetResultCollection GetEmergingIssuesGetResults()
+        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
+        public virtual ServiceEmergingIssueCollection GetServiceEmergingIssues()
         {
-            return GetCachedClient(Client => new EmergingIssuesGetResultCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceEmergingIssueCollection(Client, Id));
         }
     }
 }

@@ -12,9 +12,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class AvailabilityStatusData
+    public partial class ResourceHealthAvailabilityStatusData
     {
-        internal static AvailabilityStatusData DeserializeAvailabilityStatusData(JsonElement element)
+        internal static ResourceHealthAvailabilityStatusData DeserializeResourceHealthAvailabilityStatusData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new AvailabilityStatusData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value);
+            return new ResourceHealthAvailabilityStatusData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value);
         }
     }
 }

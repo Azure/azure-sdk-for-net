@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             Optional<string> action = default;
             Optional<Uri> actionUrl = default;
+            Optional<string> actionUrlComment = default;
             Optional<string> actionUrlText = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,13 +39,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     actionUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("_ActionUrl.Comment"u8))
+                {
+                    actionUrlComment = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("actionUrlText"u8))
                 {
                     actionUrlText = property.Value.GetString();
                     continue;
                 }
             }
-            return new RecommendedAction(action.Value, actionUrl.Value, actionUrlText.Value);
+            return new RecommendedAction(action.Value, actionUrl.Value, actionUrlComment.Value, actionUrlText.Value);
         }
     }
 }

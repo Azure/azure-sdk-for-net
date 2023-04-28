@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    internal partial class EventPropertiesArticle
+    public partial class EventPropertiesArticle
     {
         internal static EventPropertiesArticle DeserializeEventPropertiesArticle(JsonElement element)
         {
@@ -19,6 +20,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             Optional<string> articleContent = default;
+            Optional<string> articleId = default;
+            Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("articleContent"u8))
@@ -26,8 +29,22 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     articleContent = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("articleId"u8))
+                {
+                    articleId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new EventPropertiesArticle(articleContent.Value);
+            return new EventPropertiesArticle(articleContent.Value, articleId.Value, parameters.Value);
         }
     }
 }

@@ -12,24 +12,24 @@ using Azure.ResourceManager.ResourceHealth.Models;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing the AvailabilityStatus data model.
+    /// A class representing the ResourceHealthAvailabilityStatus data model.
     /// availabilityStatus of a resource.
     /// </summary>
-    public partial class AvailabilityStatusData : ResourceData
+    public partial class ResourceHealthAvailabilityStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailabilityStatusData. </summary>
-        internal AvailabilityStatusData()
+        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusData. </summary>
+        internal ResourceHealthAvailabilityStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityStatusData. </summary>
+        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="properties"> Properties of availability state. </param>
-        internal AvailabilityStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, AvailabilityStatusProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceHealthAvailabilityStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, AvailabilityStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EmergingIssuesGetResultResource" /> and their operations.
-    /// Each <see cref="EmergingIssuesGetResultResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get an <see cref="EmergingIssuesGetResultCollection" /> instance call the GetEmergingIssuesGetResults method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ServiceEmergingIssueResource" /> and their operations.
+    /// Each <see cref="ServiceEmergingIssueResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="ServiceEmergingIssueCollection" /> instance call the GetServiceEmergingIssues method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class EmergingIssuesGetResultCollection : ArmCollection, IEnumerable<EmergingIssuesGetResultResource>, IAsyncEnumerable<EmergingIssuesGetResultResource>
+    public partial class ServiceEmergingIssueCollection : ArmCollection, IEnumerable<ServiceEmergingIssueResource>, IAsyncEnumerable<ServiceEmergingIssueResource>
     {
-        private readonly ClientDiagnostics _emergingIssuesGetResultEmergingIssuesClientDiagnostics;
-        private readonly EmergingIssuesRestOperations _emergingIssuesGetResultEmergingIssuesRestClient;
+        private readonly ClientDiagnostics _serviceEmergingIssueEmergingIssuesClientDiagnostics;
+        private readonly EmergingIssuesRestOperations _serviceEmergingIssueEmergingIssuesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EmergingIssuesGetResultCollection"/> class for mocking. </summary>
-        protected EmergingIssuesGetResultCollection()
+        /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueCollection"/> class for mocking. </summary>
+        protected ServiceEmergingIssueCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EmergingIssuesGetResultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal EmergingIssuesGetResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceEmergingIssueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _emergingIssuesGetResultEmergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", EmergingIssuesGetResultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EmergingIssuesGetResultResource.ResourceType, out string emergingIssuesGetResultEmergingIssuesApiVersion);
-            _emergingIssuesGetResultEmergingIssuesRestClient = new EmergingIssuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, emergingIssuesGetResultEmergingIssuesApiVersion);
+            _serviceEmergingIssueEmergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ServiceEmergingIssueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceEmergingIssueResource.ResourceType, out string serviceEmergingIssueEmergingIssuesApiVersion);
+            _serviceEmergingIssueEmergingIssuesRestClient = new EmergingIssuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEmergingIssueEmergingIssuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EmergingIssuesGetResultResource>> GetAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceEmergingIssueResource>> GetAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultCollection.Get");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Get");
             scope.Start();
             try
             {
-                var response = await _emergingIssuesGetResultEmergingIssuesRestClient.GetAsync(issueName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEmergingIssueEmergingIssuesRestClient.GetAsync(issueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EmergingIssuesGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EmergingIssuesGetResultResource> Get(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEmergingIssueResource> Get(IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultCollection.Get");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Get");
             scope.Start();
             try
             {
-                var response = _emergingIssuesGetResultEmergingIssuesRestClient.Get(issueName, cancellationToken);
+                var response = _serviceEmergingIssueEmergingIssuesRestClient.Get(issueName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EmergingIssuesGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EmergingIssuesGetResultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EmergingIssuesGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceEmergingIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceEmergingIssueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _emergingIssuesGetResultEmergingIssuesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emergingIssuesGetResultEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmergingIssuesGetResultResource(Client, EmergingIssuesGetResultData.DeserializeEmergingIssuesGetResultData(e)), _emergingIssuesGetResultEmergingIssuesClientDiagnostics, Pipeline, "EmergingIssuesGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EmergingIssuesGetResultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EmergingIssuesGetResultResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceEmergingIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceEmergingIssueResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _emergingIssuesGetResultEmergingIssuesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emergingIssuesGetResultEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmergingIssuesGetResultResource(Client, EmergingIssuesGetResultData.DeserializeEmergingIssuesGetResultData(e)), _emergingIssuesGetResultEmergingIssuesClientDiagnostics, Pipeline, "EmergingIssuesGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultCollection.Exists");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _emergingIssuesGetResultEmergingIssuesRestClient.GetAsync(issueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEmergingIssueEmergingIssuesRestClient.GetAsync(issueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(IssueNameParameter issueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _emergingIssuesGetResultEmergingIssuesClientDiagnostics.CreateScope("EmergingIssuesGetResultCollection.Exists");
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Exists");
             scope.Start();
             try
             {
-                var response = _emergingIssuesGetResultEmergingIssuesRestClient.Get(issueName, cancellationToken: cancellationToken);
+                var response = _serviceEmergingIssueEmergingIssuesRestClient.Get(issueName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        IEnumerator<EmergingIssuesGetResultResource> IEnumerable<EmergingIssuesGetResultResource>.GetEnumerator()
+        IEnumerator<ServiceEmergingIssueResource> IEnumerable<ServiceEmergingIssueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<EmergingIssuesGetResultResource> IAsyncEnumerable<EmergingIssuesGetResultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceEmergingIssueResource> IAsyncEnumerable<ServiceEmergingIssueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Article of event. </summary>
-    internal partial class EventPropertiesArticle
+    public partial class EventPropertiesArticle
     {
         /// <summary> Initializes a new instance of EventPropertiesArticle. </summary>
         internal EventPropertiesArticle()
@@ -17,12 +19,49 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Initializes a new instance of EventPropertiesArticle. </summary>
         /// <param name="articleContent"> Article content of event. </param>
-        internal EventPropertiesArticle(string articleContent)
+        /// <param name="articleId"> Article Id. </param>
+        /// <param name="parameters"> It provides a map of parameter name and value. </param>
+        internal EventPropertiesArticle(string articleContent, string articleId, BinaryData parameters)
         {
             ArticleContent = articleContent;
+            ArticleId = articleId;
+            Parameters = parameters;
         }
 
         /// <summary> Article content of event. </summary>
         public string ArticleContent { get; }
+        /// <summary> Article Id. </summary>
+        public string ArticleId { get; }
+        /// <summary>
+        /// It provides a map of parameter name and value
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Parameters { get; }
     }
 }

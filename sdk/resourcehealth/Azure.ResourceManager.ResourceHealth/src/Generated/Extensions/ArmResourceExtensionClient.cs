@@ -37,5 +37,12 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             return new AvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "availabilityStatuses", "current"));
         }
+
+        /// <summary> Gets an object representing a ResourceHealthChildAvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <returns> Returns a <see cref="ResourceHealthChildAvailabilityStatusResource" /> object. </returns>
+        public virtual ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatus()
+        {
+            return new ResourceHealthChildAvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "childAvailabilityStatuses", "current"));
+        }
     }
 }

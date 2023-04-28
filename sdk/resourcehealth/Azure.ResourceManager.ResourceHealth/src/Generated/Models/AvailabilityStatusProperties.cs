@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="reasonType"> When the resource&apos;s availabilityState is Unavailable, it describes where the health impacting event was originated. Examples are planned, unplanned, user initiated or an outage etc. </param>
         /// <param name="context"> When an event is created, it can either be triggered by a customer or the platform of the resource and this field will illustrate that. This field is connected to the category field in this object. </param>
         /// <param name="category"> When a context field is set to Platform, this field will reflect if the event was planned or unplanned. If the context field does not have a value of Platform, then this field will be ignored. </param>
+        /// <param name="articleId"> The Article Id. </param>
         /// <param name="rootCauseAttributionOn"> When the resource&apos;s availabilityState is Unavailable, it provides the Timestamp for when the health impacting event was received. </param>
         /// <param name="healthEventType"> In case of an availability impacting event, it describes when the health impacting event was originated. Examples are Lifecycle, Downtime, Fault Analysis etc. </param>
         /// <param name="healthEventCause"> In case of an availability impacting event, it describes where the health impacting event was originated. Examples are PlatformInitiated, UserInitiated etc. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        internal AvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionETA, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, AvailabilityStatusPropertiesRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
+        internal AvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionETA, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, AvailabilityStatusPropertiesRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             ReasonType = reasonType;
             Context = context;
             Category = category;
+            ArticleId = articleId;
             RootCauseAttributionOn = rootCauseAttributionOn;
             HealthEventType = healthEventType;
             HealthEventCause = healthEventCause;
@@ -78,6 +80,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Context { get; }
         /// <summary> When a context field is set to Platform, this field will reflect if the event was planned or unplanned. If the context field does not have a value of Platform, then this field will be ignored. </summary>
         public string Category { get; }
+        /// <summary> The Article Id. </summary>
+        public string ArticleId { get; }
         /// <summary> When the resource&apos;s availabilityState is Unavailable, it provides the Timestamp for when the health impacting event was received. </summary>
         public DateTimeOffset? RootCauseAttributionOn { get; }
         /// <summary> In case of an availability impacting event, it describes when the health impacting event was originated. Examples are Lifecycle, Downtime, Fault Analysis etc. </summary>

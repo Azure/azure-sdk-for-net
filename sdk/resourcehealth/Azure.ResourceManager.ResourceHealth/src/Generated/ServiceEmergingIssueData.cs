@@ -14,19 +14,19 @@ using Azure.ResourceManager.ResourceHealth.Models;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing the EmergingIssuesGetResult data model.
+    /// A class representing the ServiceEmergingIssue data model.
     /// The Get EmergingIssues operation response.
     /// </summary>
-    public partial class EmergingIssuesGetResultData : ResourceData
+    public partial class ServiceEmergingIssueData : ResourceData
     {
-        /// <summary> Initializes a new instance of EmergingIssuesGetResultData. </summary>
-        internal EmergingIssuesGetResultData()
+        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
+        internal ServiceEmergingIssueData()
         {
             StatusBanners = new ChangeTrackingList<StatusBanner>();
             StatusActiveEvents = new ChangeTrackingList<StatusActiveEvent>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssuesGetResultData. </summary>
+        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="refreshTimestamp"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
         /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
         /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        internal EmergingIssuesGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshTimestamp, IReadOnlyList<StatusBanner> statusBanners, IReadOnlyList<StatusActiveEvent> statusActiveEvents) : base(id, name, resourceType, systemData)
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshTimestamp, IReadOnlyList<StatusBanner> statusBanners, IReadOnlyList<StatusActiveEvent> statusActiveEvents) : base(id, name, resourceType, systemData)
         {
             RefreshTimestamp = refreshTimestamp;
             StatusBanners = statusBanners;

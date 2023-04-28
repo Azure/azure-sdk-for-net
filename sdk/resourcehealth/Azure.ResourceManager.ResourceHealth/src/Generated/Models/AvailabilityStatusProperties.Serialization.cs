@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<string> reasonType = default;
             Optional<string> context = default;
             Optional<string> category = default;
+            Optional<string> articleId = default;
             Optional<DateTimeOffset> rootCauseAttributionTime = default;
             Optional<string> healthEventType = default;
             Optional<string> healthEventCause = default;
@@ -78,6 +79,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("articleId"u8))
+                {
+                    articleId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("rootCauseAttributionTime"u8))
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new AvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents));
+            return new AvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents));
         }
     }
 }

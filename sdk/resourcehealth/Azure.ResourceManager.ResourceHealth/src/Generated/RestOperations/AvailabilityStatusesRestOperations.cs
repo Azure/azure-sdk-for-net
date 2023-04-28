@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<AvailabilityStatusData>> GetByResourceAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthAvailabilityStatusData>> GetByResourceAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusData value = default;
+                        ResourceHealthAvailabilityStatusData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailabilityStatusData.DeserializeAvailabilityStatusData(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvailabilityStatusData)null, message.Response);
+                    return Response.FromValue((ResourceHealthAvailabilityStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<AvailabilityStatusData> GetByResource(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthAvailabilityStatusData> GetByResource(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -270,13 +270,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusData value = default;
+                        ResourceHealthAvailabilityStatusData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailabilityStatusData.DeserializeAvailabilityStatusData(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvailabilityStatusData)null, message.Response);
+                    return Response.FromValue((ResourceHealthAvailabilityStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
