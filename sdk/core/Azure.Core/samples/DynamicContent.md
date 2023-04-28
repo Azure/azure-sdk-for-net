@@ -112,7 +112,7 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 string id = widget["$id"];
 ```
 
-## Round-tripping values
+## Setting RequestContent
 
 To author new JSON, it is recommended to [use anonymous types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
 
