@@ -437,6 +437,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
                 string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
@@ -486,6 +487,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
                 string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
