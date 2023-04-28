@@ -398,9 +398,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
             var modelId = Recording.GenerateId();
 
-            await BuildDisposableDocumentClassifierAsync(modelId);
+            await BuildDisposableDocumentModelAsync(modelId);
 
-            var response = await client.DeleteDocumentClassifierAsync(modelId);
+            var response = await client.DeleteDocumentModelAsync(modelId);
 
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
