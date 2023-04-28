@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents metadata about a phone number that is controlled/provided by the phone number&apos;s operator. </summary>
+    /// <summary> Represents metadata about a phone number that is controlled/provided by that phone number&apos;s operator. </summary>
     public partial class OperatorInformation
     {
         /// <summary> Initializes a new instance of OperatorInformation. </summary>

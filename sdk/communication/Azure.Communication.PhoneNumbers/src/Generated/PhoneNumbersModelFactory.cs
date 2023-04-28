@@ -115,7 +115,10 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
-        /// <param name="results"> Results of the search, this array will have one entry per requested phone number with the relevant operator information for each. </param>
+        /// <param name="results">
+        /// Results of a search.
+        /// This array will have one entry per requested phone number which will contain the relevant operator information.
+        /// </param>
         /// <returns> A new <see cref="PhoneNumbers.OperatorInformationResult"/> instance for mocking. </returns>
         public static OperatorInformationResult OperatorInformationResult(IEnumerable<OperatorInformation> results = null)
         {

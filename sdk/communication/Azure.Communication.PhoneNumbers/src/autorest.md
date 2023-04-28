@@ -10,7 +10,7 @@ public-clients: true
 tag: package-phonenumber-2023-05-01-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/48cdf337c4731fbfc8f464334aa274e643435321/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d2d8fefce8af0077f70071534fe0509a74b60308/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -31,4 +31,12 @@ directive:
   where: $.paths.*.post.parameters[?(@.name == "countryCode")]
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.PhoneNumberSearchResult.properties.error.x-ms-enum
+  transform: >
+    $["name"] = "PhoneNumberSearchResultError";
 ```

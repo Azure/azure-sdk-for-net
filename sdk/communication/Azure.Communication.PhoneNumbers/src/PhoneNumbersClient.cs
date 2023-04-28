@@ -17,7 +17,6 @@ namespace Azure.Communication.PhoneNumbers
     public class PhoneNumbersClient
     {
         internal InternalPhoneNumbersRestClient RestClient { get; }
-        internal OperatorInformationRestClient OperatorRestClient { get; }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly string _acceptedLanguage;
@@ -95,7 +94,6 @@ namespace Azure.Communication.PhoneNumbers
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, new Uri(endpoint), apiVersion);
-            OperatorRestClient = new OperatorInformationRestClient(clientDiagnostics, pipeline, new Uri(endpoint), apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
@@ -735,7 +733,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = await OperatorRestClient.SearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -756,7 +754,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = OperatorRestClient.Search(phoneNumbers, cancellationToken);
+                var response = RestClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
                 return response;
             }
             catch (Exception e)

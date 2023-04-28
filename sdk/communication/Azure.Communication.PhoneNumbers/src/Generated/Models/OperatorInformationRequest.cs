@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents a search request for operator information about phone numbers. </summary>
+    /// <summary> Represents a search request for operator information for the given phone numbers. </summary>
     internal partial class OperatorInformationRequest
     {
         /// <summary> Initializes a new instance of OperatorInformationRequest. </summary>
@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Phone numbers to search for operator information. </summary>
+        /// <summary> Phone number(s) whose operator information is being requested. </summary>
         public IList<string> PhoneNumbers { get; }
     }
 }
