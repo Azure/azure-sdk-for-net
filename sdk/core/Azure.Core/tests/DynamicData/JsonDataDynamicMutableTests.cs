@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core.GeoJson;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -55,7 +56,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" });
+            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" }, new JsonSerializerOptions());
 
             Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
         }
@@ -88,7 +89,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new GeoPoint(1, 2));
+            json.a = new MutableJsonDocument(new GeoPoint(1, 2), new JsonSerializerOptions());
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }

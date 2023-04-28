@@ -25,35 +25,16 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertObjectToModel()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("""
+            dynamic data = BinaryData.FromString(
+                """
                 {
-                    "Message": "Hi",
-                    "Number" : 5
+                    "message": "Hi",
+                    "number" : 5
                 }
-                """);
+                """).ToDynamicFromJson(DynamicDataOptions.Default);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
-
-        [Test]
-        public void CanConvertObjectToModelWithExtraProperties()
-        {
-            // TODO: this is just how JsonSerializer works - change this
-            // test to do something useful.
-            dynamic data = JsonDataTestHelpers.CreateFromJson("""
-                {
-                    "Message": "Hi",
-                    "Number" : 5,
-                    "Invalid" : "Not on SampleModel"
-                }
-                """);
-
-            SampleModel model = data;
-
-            Assert.AreEqual("Hi", model.Message);
-            Assert.AreEqual(5, model.Number);
-        }
-
         #endregion
 
         #region GetMember tests

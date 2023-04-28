@@ -16,8 +16,6 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(JsonConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
-        internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
-
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
@@ -156,14 +154,6 @@ namespace Azure.Core.Json
         /// Creates a new JsonData object which represents the given object.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        internal MutableJsonDocument(object? value) : this(value, DefaultJsonSerializerOptions)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <param name="type">The type of the value to convert. </param>
         internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
@@ -178,7 +168,7 @@ namespace Azure.Core.Json
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document);
+                return new MutableJsonDocument(document, options);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)

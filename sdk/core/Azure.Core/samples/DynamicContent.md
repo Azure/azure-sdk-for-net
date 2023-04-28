@@ -83,26 +83,6 @@ void PrintWidget(string name, string value)
 }
 ```
 
-### Cast to a POCO type
-
-Dynamic JSON objects can be cast to CLR types using the cast operator.
-
-```C# Snippet:AzureCoreCastDynamicJsonToPOCO
-Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson();
-
-// JSON is `{ "id" : "123", "name" : "Widget" }`
-Widget widget = (Widget)content;
-```
-
-```C# Snippet:AzureCoreDynamicJsonPOCO
-public class Widget
-{
-    public string Id { get; set; }
-    public string Name { get; set; }
-}
-```
-
 ### Get a property with invalid C# characters in the name
 
 JSON members whose names have characters that are not valid for property names in C# can be accessed using property indexers.
@@ -128,6 +108,28 @@ client.SetWidget(RequestContent.Create(widget));
 ```
 
 If no parameter is passed to `ToDynamicFromJson()`, properties names must exactly match the member names in the JSON content.  Passing `DynamicDataOptions.Default` will enable properties to be accessed using PascalCase property names, and will write any added properties with camelCase names.
+
+### Cast to a POCO type
+
+Dynamic JSON objects can be cast to CLR types using the cast operator.
+
+```C# Snippet:AzureCoreCastDynamicJsonToPOCO
+Response response = client.GetWidget();
+dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+
+// JSON is `{ "id" : "123", "name" : "Widget" }`
+Widget widget = (Widget)content;
+```
+
+```C# Snippet:AzureCoreDynamicJsonPOCO
+public class Widget
+{
+    public string Id { get; set; }
+    public string Name { get; set; }
+}
+```
+
+Passing `DynamicDataOptions.Default` will deserialize the type from JSON with case-insensitive property names.
 
 ## Setting RequestContent
 

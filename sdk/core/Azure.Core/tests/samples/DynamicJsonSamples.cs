@@ -120,7 +120,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson();
+            dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -211,7 +211,7 @@ namespace Azure.Core.Samples
             #endregion
 
             Assert.IsTrue(id == "123");
-            Assert.IsTrue(widget.Name == "New Names");
+            Assert.IsTrue(widget.Name == "New Name");
         }
 
         private WidgetsClient GetMockClient()
