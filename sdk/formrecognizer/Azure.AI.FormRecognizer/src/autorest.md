@@ -184,9 +184,10 @@ directive:
     transform: >
       $.format = undefined;
 
-# Removing new properties in ResourceDetails from the list of required properties, otherwise deserialization breaks when calling older service versions.
+# Removing new property 'customNeuralDocumentModelBuilds' in ResourceDetails from the list of required properties, otherwise deserialization breaks when calling older service versions.
   - from: swagger-document
-    where: $.definitions.ResourceDetails
+    where: $.definitions.ResourceDetails.required
     transform: >
-      $.required = [ "customDocumentModels" ];
+      $.splice($.indexOf("customNeuralDocumentModelBuilds"), 1);
+      return $;
 ```
