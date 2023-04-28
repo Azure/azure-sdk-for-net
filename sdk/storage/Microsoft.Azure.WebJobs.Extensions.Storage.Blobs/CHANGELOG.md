@@ -1,5 +1,15 @@
 # Release History
 
+## 5.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.1.2 (2023-04-27)
 - Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
 
