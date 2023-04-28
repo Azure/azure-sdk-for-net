@@ -16,7 +16,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -40,6 +40,16 @@ rename-mapping:
   StatusActiveEvent: EmergingIssueActiveEventType
   StatusBanner: EmergingIssueBannerType
   Update: EventUpdate
+  Event.properties.isHIR: IsHirEvent
+  Event.properties.platformInitiated: IsPlatformInitiated
+  StatusActiveEvent.published: IsPublished
+  EventTypeValues.RCA: Rca
+  MetadataSupportedValueDetail.resourceTypes: -|resource-type
+  AvailabilityStatusProperties.resolutionETA: ResolutionEta
+  EventImpactedResource.properties.targetResourceType: -|resource-type
+  EventImpactedResource.properties.targetResourceId: -|arm-id
+  EmergingIssuesGetResult.properties.refreshTimestamp: RefreshedOn
+  Update.updateDateTime: UpdatedOn
 
 prepend-rp-prefix:
   - AvailabilityStatus
@@ -78,6 +88,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Url: Uri
+
+override-operation-name:
+  Events_ListBySingleResource: GetHealthEventsOfSingleResource
+  ChildResources_List: GetHealthStatusOfChildResources
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: ResourceHealthEventImpactedResource

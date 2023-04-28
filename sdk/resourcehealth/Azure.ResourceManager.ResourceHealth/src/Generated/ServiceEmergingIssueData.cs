@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="refreshTimestamp"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
+        /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
         /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
         /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshTimestamp, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents) : base(id, name, resourceType, systemData)
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshedOn, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents) : base(id, name, resourceType, systemData)
         {
-            RefreshTimestamp = refreshTimestamp;
+            RefreshedOn = refreshedOn;
             StatusBanners = statusBanners;
             StatusActiveEvents = statusActiveEvents;
         }
 
         /// <summary> Timestamp for when last time refreshed for ongoing emerging issue. </summary>
-        public DateTimeOffset? RefreshTimestamp { get; }
+        public DateTimeOffset? RefreshedOn { get; }
         /// <summary> The list of emerging issues of banner type. </summary>
         public IReadOnlyList<EmergingIssueBannerType> StatusBanners { get; }
         /// <summary> The list of emerging issues of active event type. </summary>

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of RecommendedAction. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUrlComment"> the comment for the Action. </param>
-        /// <param name="actionUrlText"> Substring of action, it describes which text should host the action URL. </param>
-        internal RecommendedAction(string action, Uri actionUri, string actionUrlComment, string actionUrlText)
+        /// <param name="actionUriComment"> the comment for the Action. </param>
+        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
+        internal RecommendedAction(string action, Uri actionUri, string actionUriComment, string actionUriText)
         {
             Action = action;
             ActionUri = actionUri;
-            ActionUrlComment = actionUrlComment;
-            ActionUrlText = actionUrlText;
+            ActionUriComment = actionUriComment;
+            ActionUriText = actionUriText;
         }
 
         /// <summary> Recommended action. </summary>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Link to the action. </summary>
         public Uri ActionUri { get; }
         /// <summary> the comment for the Action. </summary>
-        public string ActionUrlComment { get; }
+        public string ActionUriComment { get; }
         /// <summary> Substring of action, it describes which text should host the action URL. </summary>
-        public string ActionUrlText { get; }
+        public string ActionUriText { get; }
     }
 }

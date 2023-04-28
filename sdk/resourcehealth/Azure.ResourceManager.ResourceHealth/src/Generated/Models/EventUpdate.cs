@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Initializes a new instance of EventUpdate. </summary>
         /// <param name="summary"> Summary text for the given update for the service health event. </param>
-        /// <param name="updateOn"> It provides the Timestamp for the given update for the service health event. </param>
-        internal EventUpdate(string summary, DateTimeOffset? updateOn)
+        /// <param name="updatedOn"> It provides the Timestamp for the given update for the service health event. </param>
+        internal EventUpdate(string summary, DateTimeOffset? updatedOn)
         {
             Summary = summary;
-            UpdateOn = updateOn;
+            UpdatedOn = updatedOn;
         }
 
         /// <summary> Summary text for the given update for the service health event. </summary>
         public string Summary { get; }
         /// <summary> It provides the Timestamp for the given update for the service health event. </summary>
-        public DateTimeOffset? UpdateOn { get; }
+        public DateTimeOffset? UpdatedOn { get; }
     }
 }

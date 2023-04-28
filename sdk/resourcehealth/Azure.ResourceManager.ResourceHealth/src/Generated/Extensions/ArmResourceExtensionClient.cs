@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceHealthEventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthEventData> GetEventsBySingleResourceAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthEventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthEventData> GetEventsBySingleResource(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatusData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetChildResourcesAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResourcesAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(Id, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, Id, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetChildResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetHealthStatusOfChildResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetChildResources(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResources(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(Id, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, Id, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetChildResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData, ChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetHealthStatusOfChildResources", "value", "nextLink", cancellationToken);
         }
     }
 }

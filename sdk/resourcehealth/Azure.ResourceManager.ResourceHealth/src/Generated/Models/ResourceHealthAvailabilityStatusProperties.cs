@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="healthEventCause"> In case of an availability impacting event, it describes where the health impacting event was originated. Examples are PlatformInitiated, UserInitiated etc. </param>
         /// <param name="healthEventCategory"> In case of an availability impacting event, it describes the category of a PlatformInitiated health impacting event. Examples are Planned, Unplanned etc. </param>
         /// <param name="healthEventId"> It is a unique Id that identifies the event. </param>
-        /// <param name="resolutionETA"> When the resource&apos;s availabilityState is Unavailable and the reasonType is not User Initiated, it provides the date and time for when the issue is expected to be resolved. </param>
+        /// <param name="resolutionEta"> When the resource&apos;s availabilityState is Unavailable and the reasonType is not User Initiated, it provides the date and time for when the issue is expected to be resolved. </param>
         /// <param name="occuredOn"> Timestamp for when last change in health status occurred. </param>
         /// <param name="reasonChronicity"> Chronicity of the availability transition. </param>
         /// <param name="reportedOn"> Timestamp for when the health was last checked. </param>
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        internal ResourceHealthAvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionETA, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, AvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
+        internal ResourceHealthAvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, AvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             HealthEventCause = healthEventCause;
             HealthEventCategory = healthEventCategory;
             HealthEventId = healthEventId;
-            ResolutionETA = resolutionETA;
+            ResolutionEta = resolutionEta;
             OccuredOn = occuredOn;
             ReasonChronicity = reasonChronicity;
             ReportedOn = reportedOn;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> It is a unique Id that identifies the event. </summary>
         public string HealthEventId { get; }
         /// <summary> When the resource&apos;s availabilityState is Unavailable and the reasonType is not User Initiated, it provides the date and time for when the issue is expected to be resolved. </summary>
-        public DateTimeOffset? ResolutionETA { get; }
+        public DateTimeOffset? ResolutionEta { get; }
         /// <summary> Timestamp for when last change in health status occurred. </summary>
         public DateTimeOffset? OccuredOn { get; }
         /// <summary> Chronicity of the availability transition. </summary>

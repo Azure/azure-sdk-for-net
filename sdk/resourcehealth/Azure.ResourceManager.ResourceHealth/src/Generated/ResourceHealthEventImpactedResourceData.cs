@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
         /// <param name="info"> Additional information. </param>
-        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceType, string targetResourceId, string targetRegion, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
+        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> Resource type within Microsoft cloud. </summary>
-        public string TargetResourceType { get; }
+        public ResourceType? TargetResourceType { get; }
         /// <summary> Identity for resource within Microsoft cloud. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Impacted resource region name. </summary>
         public string TargetRegion { get; }
         /// <summary> Additional information. </summary>

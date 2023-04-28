@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         private const string ServiceIssueValue = "ServiceIssue";
         private const string PlannedMaintenanceValue = "PlannedMaintenance";
         private const string HealthAdvisoryValue = "HealthAdvisory";
-        private const string RCAValue = "RCA";
+        private const string RcaValue = "RCA";
         private const string EmergingIssuesValue = "EmergingIssues";
         private const string SecurityAdvisoryValue = "SecurityAdvisory";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> HealthAdvisory. </summary>
         public static EventTypeValue HealthAdvisory { get; } = new EventTypeValue(HealthAdvisoryValue);
         /// <summary> RCA. </summary>
-        public static EventTypeValue RCA { get; } = new EventTypeValue(RCAValue);
+        public static EventTypeValue Rca { get; } = new EventTypeValue(RcaValue);
         /// <summary> EmergingIssues. </summary>
         public static EventTypeValue EmergingIssues { get; } = new EventTypeValue(EmergingIssuesValue);
         /// <summary> SecurityAdvisory. </summary>

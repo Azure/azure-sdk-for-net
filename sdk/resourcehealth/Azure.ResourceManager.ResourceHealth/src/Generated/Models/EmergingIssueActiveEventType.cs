@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="cloud"> The cloud type of this active event. </param>
         /// <param name="severity"> The severity level of this active event. </param>
         /// <param name="stage"> The stage of this active event. </param>
-        /// <param name="published"> The boolean value of this active event if published or not. </param>
+        /// <param name="isPublished"> The boolean value of this active event if published or not. </param>
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <param name="impacts"> The list of emerging issues impacts. </param>
-        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, EventSeverityLevel? severity, EventStageValue? stage, bool? published, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts)
+        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, EventSeverityLevel? severity, EventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts)
         {
             Title = title;
             Description = description;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Cloud = cloud;
             Severity = severity;
             Stage = stage;
-            Published = published;
+            IsPublished = isPublished;
             LastModifiedOn = lastModifiedOn;
             Impacts = impacts;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> The stage of this active event. </summary>
         public EventStageValue? Stage { get; }
         /// <summary> The boolean value of this active event if published or not. </summary>
-        public bool? Published { get; }
+        public bool? IsPublished { get; }
         /// <summary> The last time modified on this banner. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The list of emerging issues impacts. </summary>

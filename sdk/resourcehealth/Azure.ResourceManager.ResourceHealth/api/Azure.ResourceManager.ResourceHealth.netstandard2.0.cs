@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.ResourceHealth
         public System.DateTimeOffset? ImpactMitigationOn { get { throw null; } }
         public System.DateTimeOffset? ImpactStartOn { get { throw null; } }
         public string ImpactType { get { throw null; } }
-        public bool? IsHIR { get { throw null; } }
+        public bool? IsHirEvent { get { throw null; } }
+        public bool? IsPlatformInitiated { get { throw null; } }
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue? Level { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventLink> Links { get { throw null; } }
-        public bool? PlatformInitiated { get { throw null; } }
         public int? Priority { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.EventRecommendedActions RecommendedActions { get { throw null; } }
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.ResourceHealth
         internal ResourceHealthEventImpactedResourceData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem> Info { get { throw null; } }
         public string TargetRegion { get { throw null; } }
-        public string TargetResourceId { get { throw null; } }
-        public string TargetResourceType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceType? TargetResourceType { get { throw null; } }
     }
     public partial class ResourceHealthEventResource : Azure.ResourceManager.ArmResource
     {
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ResourceHealth
     }
     public static partial class ResourceHealthExtensions
     {
-        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetChildResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetChildResourcesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetEventsBySingleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetEventsBySingleResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResourcesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource GetResourceHealthAvailabilityStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource GetResourceHealthAvailabilityStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ServiceEmergingIssueData : Azure.ResourceManager.Models.ResourceData
     {
         internal ServiceEmergingIssueData() { }
-        public System.DateTimeOffset? RefreshTimestamp { get { throw null; } }
+        public System.DateTimeOffset? RefreshedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType> StatusActiveEvents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType> StatusBanners { get { throw null; } }
     }
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Cloud { get { throw null; } }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact> Impacts { get { throw null; } }
+        public bool? IsPublished { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public bool? Published { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel? Severity { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.EventStageValue? Stage { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue EmergingIssues { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue HealthAdvisory { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue PlannedMaintenance { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue RCA { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue Rca { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue SecurityAdvisory { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue ServiceIssue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventTypeValue other) { throw null; }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal EventUpdate() { }
         public string Summary { get { throw null; } }
-        public System.DateTimeOffset? UpdateOn { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ImpactedRegion
     {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal MetadataSupportedValueDetail() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceType> ResourceTypes { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReasonChronicityType : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType>
@@ -607,8 +607,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal RecommendedAction() { }
         public string Action { get { throw null; } }
         public System.Uri ActionUri { get { throw null; } }
-        public string ActionUrlComment { get { throw null; } }
-        public string ActionUrlText { get { throw null; } }
+        public string ActionUriComment { get { throw null; } }
+        public string ActionUriText { get { throw null; } }
     }
     public partial class ResourceHealthAvailabilityStatusProperties
     {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateRecentlyResolved RecentlyResolved { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.RecommendedAction> RecommendedActions { get { throw null; } }
         public System.DateTimeOffset? ReportedOn { get { throw null; } }
-        public System.DateTimeOffset? ResolutionETA { get { throw null; } }
+        public System.DateTimeOffset? ResolutionEta { get { throw null; } }
         public System.DateTimeOffset? RootCauseAttributionOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent> ServiceImpactingEvents { get { throw null; } }
         public string Summary { get { throw null; } }

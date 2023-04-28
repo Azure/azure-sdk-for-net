@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ResourceHealth
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceType> targetResourceType = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             Optional<string> targetRegion = default;
             Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
             foreach (var property in element.EnumerateObject())
@@ -66,12 +66,20 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         if (property0.NameEquals("targetResourceType"u8))
                         {
-                            targetResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetResourceId"u8))
                         {
-                            targetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetRegion"u8))
@@ -97,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, targetResourceType.Value, targetResourceId.Value, targetRegion.Value, Optional.ToList(info));
+            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, Optional.ToList(info));
         }
     }
 }

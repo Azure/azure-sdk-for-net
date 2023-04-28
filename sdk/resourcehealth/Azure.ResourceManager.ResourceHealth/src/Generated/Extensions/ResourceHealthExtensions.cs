@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<ResourceHealthEventData> GetEventsBySingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResourceAsync(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResourceAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<ResourceHealthEventData> GetEventsBySingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResource(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResource(filter, cancellationToken);
         }
 
         /// <summary>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<ResourceHealthAvailabilityStatusData> GetChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetChildResourcesAsync(filter, expand, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthStatusOfChildResourcesAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<ResourceHealthAvailabilityStatusData> GetChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetChildResources(filter, expand, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthStatusOfChildResources(filter, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>

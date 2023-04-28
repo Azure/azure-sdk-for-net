@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
         internal MetadataSupportedValueDetail()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            ResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
         /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="resourceTypes"> The list of associated resource types. </param>
-        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<string> resourceTypes)
+        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes)
         {
             Id = id;
             DisplayName = displayName;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> The display name. </summary>
         public string DisplayName { get; }
         /// <summary> The list of associated resource types. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IReadOnlyList<ResourceType> ResourceTypes { get; }
     }
 }
