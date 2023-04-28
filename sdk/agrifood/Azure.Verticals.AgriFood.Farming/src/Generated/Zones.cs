@@ -50,7 +50,11 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified zone resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a specified zone resource under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="zoneId"> Id of the zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -58,7 +62,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZoneAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZoneAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetZoneAsync(string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -78,7 +82,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified zone resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a specified zone resource under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="zoneId"> Id of the zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -86,7 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZone(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZone(string,string,RequestContext)']/*" />
         public virtual Response GetZone(string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -106,7 +114,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a Zone resource. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a Zone resource.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="zoneId"> Id of the zone resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -115,7 +127,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string zoneId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -136,7 +148,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a Zone resource. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a Zone resource.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="zoneId"> Id of the zone resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -145,7 +161,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string zoneId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -166,7 +182,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified zone resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a specified zone resource under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="zoneId"> Id of the zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -174,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -194,7 +214,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified zone resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a specified zone resource under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="zoneId"> Id of the zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -202,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="zoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -222,14 +246,18 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get a cascade delete job for specified job id. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a cascade delete job for specified job id.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -248,14 +276,18 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get a cascade delete job for specified job id. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a cascade delete job for specified job id.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -274,7 +306,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of zone resources under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of zone resources under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="types"> Types of the Zones. </param>
         /// <param name="managementZoneIds"> ManagementZoneIds of the Zones. </param>
@@ -300,7 +336,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesByPartyIdAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetZonesByPartyIdAsync(string partyId, IEnumerable<string> types = null, IEnumerable<string> managementZoneIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -310,7 +346,11 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Zones.GetZonesByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of zone resources under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of zone resources under a particular party.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="types"> Types of the Zones. </param>
         /// <param name="managementZoneIds"> ManagementZoneIds of the Zones. </param>
@@ -336,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetZonesByPartyId(string partyId, IEnumerable<string> types = null, IEnumerable<string> managementZoneIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -346,7 +386,11 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Zones.GetZonesByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of zone resources across all parties. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of zone resources across all parties.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="types"> Types of the Zones. </param>
         /// <param name="managementZoneIds"> ManagementZoneIds of the Zones. </param>
         /// <param name="sources"> Sources of the Zones. </param>
@@ -369,7 +413,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZonesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetZonesAsync(IEnumerable<string> types = null, IEnumerable<string> managementZoneIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetZonesRequest(types, managementZoneIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -377,7 +421,11 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Zones.GetZones", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of zone resources across all parties. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of zone resources across all parties.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="types"> Types of the Zones. </param>
         /// <param name="managementZoneIds"> ManagementZoneIds of the Zones. </param>
         /// <param name="sources"> Sources of the Zones. </param>
@@ -400,7 +448,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZones(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='GetZones(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetZones(IEnumerable<string> types = null, IEnumerable<string> managementZoneIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetZonesRequest(types, managementZoneIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -408,7 +456,11 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Zones.GetZones", "value", "nextLink", context);
         }
 
-        /// <summary> Create a cascade delete job for specified zone. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a cascade delete job for specified zone.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>
@@ -418,7 +470,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -439,7 +491,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a cascade delete job for specified zone. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a cascade delete job for specified zone.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>
@@ -449,7 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/Zones.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string zoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -480,49 +536,49 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/zones", false);
-            if (types != null)
+            if (types != null && Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (managementZoneIds != null)
+            if (managementZoneIds != null && Optional.IsCollectionDefined(managementZoneIds))
             {
                 foreach (var param in managementZoneIds)
                 {
                     uri.AppendQuery("managementZoneIds", param, true);
                 }
             }
-            if (sources != null)
+            if (sources != null && Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -620,49 +676,49 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/zones", false);
-            if (types != null)
+            if (types != null && Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (managementZoneIds != null)
+            if (managementZoneIds != null && Optional.IsCollectionDefined(managementZoneIds))
             {
                 foreach (var param in managementZoneIds)
                 {
                     uri.AppendQuery("managementZoneIds", param, true);
                 }
             }
-            if (sources != null)
+            if (sources != null && Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

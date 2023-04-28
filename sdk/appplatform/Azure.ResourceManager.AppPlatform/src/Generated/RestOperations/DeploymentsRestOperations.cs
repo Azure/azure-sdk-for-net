@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppPlatform
             uri.AppendPath(appName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (version != null)
+            if (version != null && Optional.IsCollectionDefined(version))
             {
                 foreach (var param in version)
                 {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.AppPlatform
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (version != null)
+            if (version != null && Optional.IsCollectionDefined(version))
             {
                 foreach (var param in version)
                 {

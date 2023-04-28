@@ -50,7 +50,11 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Create a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -59,7 +63,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -80,7 +84,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -89,7 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -110,7 +118,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -118,7 +130,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDeviceAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDeviceAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeviceAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -138,7 +150,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -146,7 +162,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevice(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevice(string,string,RequestContext)']/*" />
         public virtual Response GetDevice(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -166,7 +182,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -174,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -194,7 +214,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a device entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a device entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -202,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -222,7 +246,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of device resources. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of device resources.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="parentDeviceIds"> Id&apos;s of the parent devices. </param>
         /// <param name="deviceDataModelIds"> Id&apos;s of the device data models. </param>
@@ -247,7 +275,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevicesAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevicesAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string sensorPartnerId, IEnumerable<string> parentDeviceIds = null, IEnumerable<string> deviceDataModelIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -257,7 +285,11 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Devices.GetDevices", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of device resources. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a paginated list of device resources.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="parentDeviceIds"> Id&apos;s of the parent devices. </param>
         /// <param name="deviceDataModelIds"> Id&apos;s of the device data models. </param>
@@ -282,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevices(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevices(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDevices(string sensorPartnerId, IEnumerable<string> parentDeviceIds = null, IEnumerable<string> deviceDataModelIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
@@ -302,42 +334,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-partners/", false);
             uri.AppendPath(sensorPartnerId, true);
             uri.AppendPath("/devices", false);
-            if (parentDeviceIds != null)
+            if (parentDeviceIds != null && Optional.IsCollectionDefined(parentDeviceIds))
             {
                 foreach (var param in parentDeviceIds)
                 {
                     uri.AppendQuery("parentDeviceIds", param, true);
                 }
             }
-            if (deviceDataModelIds != null)
+            if (deviceDataModelIds != null && Optional.IsCollectionDefined(deviceDataModelIds))
             {
                 foreach (var param in deviceDataModelIds)
                 {
                     uri.AppendQuery("deviceDataModelIds", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
