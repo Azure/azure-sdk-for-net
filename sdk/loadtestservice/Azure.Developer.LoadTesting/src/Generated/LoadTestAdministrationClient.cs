@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTestAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTestAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -96,7 +96,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTest(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateTest(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -123,7 +123,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -149,7 +149,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTest(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTest(string,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -175,7 +175,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -201,7 +201,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTest(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTest(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -230,7 +230,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         internal virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -261,7 +261,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         internal virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -290,7 +290,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -318,7 +318,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetTestFile(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -346,7 +346,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFileAsync(string,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -374,7 +374,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(String,String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='DeleteTestFile(string,string,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteTestFile(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -402,7 +402,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -430,7 +430,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateAppComponents(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -457,7 +457,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -483,7 +483,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponents(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponents(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetAppComponents(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -510,7 +510,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -538,7 +538,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrUpdateServerMetricsConfig(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -565,7 +565,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -591,7 +591,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -617,7 +617,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -634,7 +634,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(String,RequestContext)']/*" />
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
