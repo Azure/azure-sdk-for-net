@@ -4,19 +4,19 @@
 namespace Azure
 {
     /// <summary>
-    /// TODO
+    /// Provides the client options for serializing models.
     /// </summary>
     public class SerializableOptions
     {
         /// <summary>
         /// TODO
         /// </summary>
-        public bool IncludeReadOnlyProperties { get; set; } = true;
+        public bool IgnoreReadOnlyProperties { get; set; } = false;
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool HandleAdditionalProperties { get; set; } = true;
+        public bool IgnoreAdditionalProperties { get; set; } = false;
 
         /// <summary>
         /// TODO
