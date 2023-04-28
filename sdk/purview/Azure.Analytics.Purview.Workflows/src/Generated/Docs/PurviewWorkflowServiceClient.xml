@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetWorkflowAsync(Guid,RequestContext)">
+    <member name="GetWorkflowAsync(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -56,7 +56,7 @@ Schema for <c>Workflow</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflow(Guid,RequestContext)">
+    <member name="GetWorkflow(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflow with required parameters and parse the result.
 <code><![CDATA[
@@ -111,7 +111,7 @@ Schema for <c>Workflow</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceWorkflowAsync(Guid,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceWorkflowAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceWorkflowAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -227,7 +227,7 @@ Schema for <c>Workflow</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceWorkflow(Guid,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceWorkflow(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceWorkflow with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -343,7 +343,7 @@ Schema for <c>Workflow</c>:
 
 </remarks>
     </member>
-    <member name="DeleteWorkflowAsync(Guid,RequestContext)">
+    <member name="DeleteWorkflowAsync(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteWorkflowAsync with required parameters.
 <code><![CDATA[
@@ -356,7 +356,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteWorkflow(Guid,RequestContext)">
+    <member name="DeleteWorkflow(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteWorkflow with required parameters.
 <code><![CDATA[
@@ -369,7 +369,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SubmitUserRequestsAsync(RequestContent,RequestContext)">
+    <member name="SubmitUserRequestsAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SubmitUserRequestsAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -460,7 +460,7 @@ Schema for <c>UserRequestResponse</c>:
 
 </remarks>
     </member>
-    <member name="SubmitUserRequests(RequestContent,RequestContext)">
+    <member name="SubmitUserRequests(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SubmitUserRequests with required request content, and how to parse the result.
 <code><![CDATA[
@@ -551,7 +551,7 @@ Schema for <c>UserRequestResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunAsync(Guid,RequestContext)">
+    <member name="GetWorkflowRunAsync(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -610,7 +610,7 @@ Schema for <c>WorkflowRun</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRun(Guid,RequestContext)">
+    <member name="GetWorkflowRun(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRun with required parameters and parse the result.
 <code><![CDATA[
@@ -669,7 +669,7 @@ Schema for <c>WorkflowRun</c>:
 
 </remarks>
     </member>
-    <member name="CancelWorkflowRunAsync(Guid,RequestContent,RequestContext)">
+    <member name="CancelWorkflowRunAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelWorkflowRunAsync with required parameters.
 <code><![CDATA[
@@ -709,7 +709,7 @@ Schema for <c>WorkflowRunCancelRequest</c>:
 
 </remarks>
     </member>
-    <member name="CancelWorkflowRun(Guid,RequestContent,RequestContext)">
+    <member name="CancelWorkflowRun(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelWorkflowRun with required parameters.
 <code><![CDATA[
@@ -749,7 +749,7 @@ Schema for <c>WorkflowRunCancelRequest</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTaskAsync(Guid,RequestContext)">
+    <member name="GetWorkflowTaskAsync(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTaskAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -866,7 +866,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetWorkflowTask(Guid,RequestContext)">
+    <member name="GetWorkflowTask(global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTask with required parameters and parse the result.
 <code><![CDATA[
@@ -983,7 +983,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="ApproveApprovalTaskAsync(Guid,RequestContent,RequestContext)">
+    <member name="ApproveApprovalTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ApproveApprovalTaskAsync with required parameters.
 <code><![CDATA[
@@ -1023,7 +1023,7 @@ Schema for <c>ApprovalResponseComment</c>:
 
 </remarks>
     </member>
-    <member name="ApproveApprovalTask(Guid,RequestContent,RequestContext)">
+    <member name="ApproveApprovalTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ApproveApprovalTask with required parameters.
 <code><![CDATA[
@@ -1063,7 +1063,7 @@ Schema for <c>ApprovalResponseComment</c>:
 
 </remarks>
     </member>
-    <member name="RejectApprovalTaskAsync(Guid,RequestContent,RequestContext)">
+    <member name="RejectApprovalTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RejectApprovalTaskAsync with required parameters.
 <code><![CDATA[
@@ -1103,7 +1103,7 @@ Schema for <c>ApprovalResponseComment</c>:
 
 </remarks>
     </member>
-    <member name="RejectApprovalTask(Guid,RequestContent,RequestContext)">
+    <member name="RejectApprovalTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RejectApprovalTask with required parameters.
 <code><![CDATA[
@@ -1143,7 +1143,7 @@ Schema for <c>ApprovalResponseComment</c>:
 
 </remarks>
     </member>
-    <member name="ReassignWorkflowTaskAsync(Guid,RequestContent,RequestContext)">
+    <member name="ReassignWorkflowTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ReassignWorkflowTaskAsync with required parameters.
 <code><![CDATA[
@@ -1193,7 +1193,7 @@ Schema for <c>ReassignCommand</c>:
 
 </remarks>
     </member>
-    <member name="ReassignWorkflowTask(Guid,RequestContent,RequestContext)">
+    <member name="ReassignWorkflowTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ReassignWorkflowTask with required parameters.
 <code><![CDATA[
@@ -1243,7 +1243,7 @@ Schema for <c>ReassignCommand</c>:
 
 </remarks>
     </member>
-    <member name="UpdateTaskStatusAsync(Guid,RequestContent,RequestContext)">
+    <member name="UpdateTaskStatusAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateTaskStatusAsync with required parameters and request content.
 <code><![CDATA[
@@ -1287,7 +1287,7 @@ Schema for <c>TaskUpdateCommand</c>:
 
 </remarks>
     </member>
-    <member name="UpdateTaskStatus(Guid,RequestContent,RequestContext)">
+    <member name="UpdateTaskStatus(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateTaskStatus with required parameters and request content.
 <code><![CDATA[
@@ -1331,7 +1331,7 @@ Schema for <c>TaskUpdateCommand</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowsAsync(RequestContext)">
+    <member name="GetWorkflowsAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowsAsync and parse the result.
 <code><![CDATA[
@@ -1385,7 +1385,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflows(RequestContext)">
+    <member name="GetWorkflows(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflows and parse the result.
 <code><![CDATA[
@@ -1439,7 +1439,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRunsAsync(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -1507,7 +1507,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRuns(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1575,7 +1575,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasksAsync(string,global::System.Collections.Generic.IEnumerable{string},string,int?,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasksAsync and parse the result.
 <code><![CDATA[
@@ -1667,7 +1667,7 @@ Schema for <c>TasksListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasks(string,global::System.Collections.Generic.IEnumerable{string},string,int?,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasks and parse the result.
 <code><![CDATA[

@@ -60,14 +60,23 @@ namespace Azure.Analytics.Purview.Sharing
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a received share by unique id. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a received share by unique id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Get a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShareAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShareAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedShareAsync(string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
@@ -86,14 +95,23 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Get a received share by unique id. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a received share by unique id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Get a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShare(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShare(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetReceivedShare(string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
@@ -112,14 +130,23 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Activates the tenant and email combination using the activation code received. </summary>
+        /// <summary>
+        /// [Protocol Method]Activates the tenant and email combination using the activation code received.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Activates the email registration for current tenant
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> ActivateTenantEmailRegistrationAsync(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -138,14 +165,23 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Activates the tenant and email combination using the activation code received. </summary>
+        /// <summary>
+        /// [Protocol Method]Activates the tenant and email combination using the activation code received.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Activates the email registration for current tenant
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)']/*" />
         public virtual Response ActivateTenantEmailRegistration(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -164,12 +200,21 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Registers the tenant and email combination for activation. </summary>
+        /// <summary>
+        /// [Protocol Method]Registers the tenant and email combination for activation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Register an email for the current tenant
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistrationAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistrationAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RegisterTenantEmailRegistrationAsync(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.RegisterTenantEmailRegistration");
@@ -186,12 +231,21 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Registers the tenant and email combination for activation. </summary>
+        /// <summary>
+        /// [Protocol Method]Registers the tenant and email combination for activation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Register an email for the current tenant
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistration(String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistration(string,global::Azure.RequestContext)']/*" />
         public virtual Response RegisterTenantEmailRegistration(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.RegisterTenantEmailRegistration");
@@ -208,7 +262,16 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Get a list of attached received shares. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a list of attached received shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List attached received shares
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -217,7 +280,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(string,string,string,string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
@@ -227,7 +290,16 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary> Get a list of attached received shares. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a list of attached received shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List attached received shares
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -236,7 +308,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(string,string,string,string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
@@ -246,14 +318,23 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary> Get a list of detached received shares. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a list of detached received shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List detached received shares
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(string,string,string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDetachedReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
@@ -261,14 +342,23 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary> Get a list of detached received shares. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a list of detached received shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List detached received shares
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(string,string,string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDetachedReceivedShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
@@ -276,7 +366,16 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary> Create or replace a received share. </summary>
+        /// <summary>
+        /// [Protocol Method]Create or replace a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Update changes to a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -285,7 +384,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShareAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrReplaceReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
@@ -305,7 +404,16 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Create or replace a received share. </summary>
+        /// <summary>
+        /// [Protocol Method]Create or replace a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Update changes to a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -314,7 +422,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShare(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShare(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrReplaceReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
@@ -334,7 +442,16 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Deletes a received share. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a received share
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Delete a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -342,7 +459,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShareAsync(WaitUntil,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShareAsync(global::Azure.WaitUntil,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
@@ -361,7 +478,16 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary> Deletes a received share. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a received share
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Delete a received share
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareId"> Id of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -369,7 +495,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShare(WaitUntil,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShare(global::Azure.WaitUntil,string,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));

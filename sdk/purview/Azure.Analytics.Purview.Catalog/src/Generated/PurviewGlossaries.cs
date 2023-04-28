@@ -50,7 +50,11 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all glossaries registered with Atlas.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -58,7 +62,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossariesAsync(Int32,Int32,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossariesAsync(int?,int?,string,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
@@ -75,7 +79,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all glossaries registered with Atlas.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -83,7 +91,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaries(Int32,Int32,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaries(int?,int?,string,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
@@ -100,13 +108,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -125,13 +137,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossary(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossary(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateGlossary(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -150,13 +166,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create glossary category in bulk. </summary>
+        /// <summary>
+        /// [Protocol Method]Create glossary category in bulk.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoriesAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoriesAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -175,13 +195,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create glossary category in bulk. </summary>
+        /// <summary>
+        /// [Protocol Method]Create glossary category in bulk.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategories(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategories(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateGlossaryCategories(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -200,13 +224,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary category. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoryAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoryAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -225,13 +253,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary category. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategory(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategory(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateGlossaryCategory(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -250,14 +282,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get specific glossary category by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoryAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoryAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -276,14 +312,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get specific glossary category by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategory(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategory(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -302,7 +342,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary category by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary category by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -310,7 +354,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategoryAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategoryAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -330,7 +374,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary category by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary category by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -338,7 +386,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategory(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategory(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -358,14 +406,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary category. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategoryAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategoryAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -384,14 +436,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary category. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategory(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategory(string,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -410,7 +466,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary category partially. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary category partially.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -418,7 +478,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategoryAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategoryAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -438,7 +498,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary category partially. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary category partially.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -446,7 +510,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategory(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategory(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -466,7 +530,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -476,7 +544,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -495,7 +563,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -505,7 +577,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategories(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -524,7 +596,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all terms associated with the specific category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -534,7 +610,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -553,7 +629,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all terms associated with the specific category.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -563,7 +643,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -582,14 +662,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary term. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermAsync(RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermAsync(global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -608,14 +692,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a glossary term. </summary>
+        /// <summary>
+        /// [Protocol Method]Create a glossary term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerm(RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerm(global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response CreateGlossaryTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -634,7 +722,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific glossary term by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
@@ -643,7 +735,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermAsync(String,Boolean,IEnumerable,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermAsync(string,bool?,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -662,7 +754,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific glossary term by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
@@ -671,7 +767,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerm(String,Boolean,IEnumerable,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerm(string,bool?,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -690,7 +786,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary term by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -699,7 +799,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTermAsync(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTermAsync(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -719,7 +819,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary term by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -728,7 +832,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTerm(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTerm(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -748,14 +852,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary term. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTermAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTermAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -774,14 +882,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary term. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTerm(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTerm(string,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -800,7 +912,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary term partially. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary term partially.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -809,7 +925,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTermAsync(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTermAsync(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -829,7 +945,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary term partially. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary term partially.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -838,7 +958,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTerm(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTerm(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -858,14 +978,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create glossary terms in bulk. </summary>
+        /// <summary>
+        /// [Protocol Method]Create glossary terms in bulk.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermsAsync(RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermsAsync(global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -884,14 +1008,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create glossary terms in bulk. </summary>
+        /// <summary>
+        /// [Protocol Method]Create glossary terms in bulk.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerms(RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerms(global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -910,7 +1038,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related objects assigned with the specified term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -920,7 +1052,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -939,7 +1071,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related objects assigned with the specified term.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -949,7 +1085,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -968,7 +1104,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Assign the given term to the provided list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Assign the given term to the provided list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -976,7 +1116,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -996,7 +1136,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Assign the given term to the provided list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Assign the given term to the provided list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1004,7 +1148,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntities(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntities(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1024,7 +1168,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1032,7 +1180,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntitiesAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntitiesAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1052,7 +1200,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1060,7 +1212,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntities(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntities(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1080,7 +1232,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1088,7 +1244,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1108,7 +1264,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete the term assignment for the given list of related objects.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1116,7 +1276,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1136,7 +1296,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1146,7 +1310,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTermsAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1165,7 +1329,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <summary>
+        /// [Protocol Method]Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1175,7 +1343,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTerms(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -1194,14 +1362,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific Glossary by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1220,14 +1392,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific Glossary by its GUID.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossary(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossary(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1246,7 +1422,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1254,7 +1434,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1274,7 +1454,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the given glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the given glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1282,7 +1466,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossary(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossary(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1302,14 +1486,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1328,14 +1516,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Delete a glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossary(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossary(string,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1354,7 +1546,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the categories belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1364,7 +1560,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1383,7 +1579,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the categories belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1393,7 +1593,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1412,7 +1612,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the category headers belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1422,7 +1626,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1441,7 +1645,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the category headers belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1451,7 +1659,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1470,7 +1678,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific glossary with detailed information.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1478,7 +1690,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossaryAsync(String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossaryAsync(string,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1497,7 +1709,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specific glossary with detailed information.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1505,7 +1721,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossary(String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossary(string,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1524,7 +1740,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1533,7 +1753,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryAsync(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryAsync(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1553,7 +1773,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <summary>
+        /// [Protocol Method]Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1562,7 +1786,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossary(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossary(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1582,7 +1806,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get terms belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -1593,7 +1821,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(string,bool?,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1612,7 +1840,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get terms belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -1623,7 +1855,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(string,bool?,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1642,7 +1874,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get term headers belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1652,7 +1888,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1671,7 +1907,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <summary>
+        /// [Protocol Method]Get term headers belonging to a specific glossary.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1681,7 +1921,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(String,Int32,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(string,int?,int?,string,global::Azure.RequestContext)']/*" />
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1700,14 +1940,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the status of import csv operation. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the status of import csv operation
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatusAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatusAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
@@ -1726,14 +1970,18 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the status of import csv operation. </summary>
+        /// <summary>
+        /// [Protocol Method]Get the status of import csv operation
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatus(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatus(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
@@ -1752,7 +2000,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Export Glossary Terms as csv file. </summary>
+        /// <summary>
+        /// [Protocol Method]Export Glossary Terms as csv file
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1761,7 +2013,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsvAsync(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsvAsync(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1781,7 +2033,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Export Glossary Terms as csv file. </summary>
+        /// <summary>
+        /// [Protocol Method]Export Glossary Terms as csv file
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1790,7 +2046,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsv(String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsv(string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1810,7 +2066,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get terms by glossary name. </summary>
+        /// <summary>
+        /// [Protocol Method]Get terms by glossary name.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1820,7 +2080,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(String,Int32,Int32,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(string,int?,int?,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
@@ -1839,7 +2099,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get terms by glossary name. </summary>
+        /// <summary>
+        /// [Protocol Method]Get terms by glossary name.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1849,7 +2113,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(String,Int32,Int32,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(string,int?,int?,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
@@ -1868,7 +2132,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <summary>
+        /// [Protocol Method]Import Glossary Terms from local csv file
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1878,7 +2146,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvAsync(WaitUntil,String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1898,7 +2166,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <summary>
+        /// [Protocol Method]Import Glossary Terms from local csv file
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1908,7 +2180,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsv(WaitUntil,String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsv(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -1928,7 +2200,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <summary>
+        /// [Protocol Method]Import Glossary Terms from local csv file by glossaryName
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1938,7 +2214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryNameAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
@@ -1958,7 +2234,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <summary>
+        /// [Protocol Method]Import Glossary Terms from local csv file by glossaryName
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1968,7 +2248,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,String,RequestContent,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryName(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,bool?,global::Azure.RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
@@ -2221,7 +2501,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            if (excludeRelationshipTypeList != null)
+            if (excludeRelationshipTypeList != null && Optional.IsCollectionDefined(excludeRelationshipTypeList))
             {
                 foreach (var param in excludeRelationshipTypeList)
                 {

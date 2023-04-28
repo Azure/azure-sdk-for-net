@@ -32,11 +32,15 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
-        /// <summary> Lists roles for Purview Account. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists roles for Purview Account
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRolesAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRolesAsync(global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
@@ -44,11 +48,15 @@ namespace Azure.Analytics.Purview.Administration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
         }
 
-        /// <summary> Lists roles for Purview Account. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists roles for Purview Account
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRoles(RequestContext)']/*" />
+        /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRoles(global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);

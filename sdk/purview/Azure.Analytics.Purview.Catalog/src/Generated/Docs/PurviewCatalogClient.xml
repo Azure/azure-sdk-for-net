@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="SearchAsync(RequestContent,RequestContext)">
+    <member name="SearchAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SearchAsync and parse the result.
 <code><![CDATA[
@@ -138,7 +138,7 @@ Schema for <c>SearchResult</c>:
 
 </remarks>
     </member>
-    <member name="Search(RequestContent,RequestContext)">
+    <member name="Search(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Search and parse the result.
 <code><![CDATA[
@@ -275,7 +275,7 @@ Schema for <c>SearchResult</c>:
 
 </remarks>
     </member>
-    <member name="SuggestAsync(RequestContent,RequestContext)">
+    <member name="SuggestAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SuggestAsync and parse the result.
 <code><![CDATA[
@@ -347,7 +347,7 @@ Schema for <c>SuggestResult</c>:
 
 </remarks>
     </member>
-    <member name="Suggest(RequestContent,RequestContext)">
+    <member name="Suggest(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Suggest and parse the result.
 <code><![CDATA[
@@ -419,7 +419,7 @@ Schema for <c>SuggestResult</c>:
 
 </remarks>
     </member>
-    <member name="BrowseAsync(RequestContent,RequestContext)">
+    <member name="BrowseAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call BrowseAsync and parse the result.
 <code><![CDATA[
@@ -488,7 +488,7 @@ Schema for <c>BrowseResult</c>:
 
 </remarks>
     </member>
-    <member name="Browse(RequestContent,RequestContext)">
+    <member name="Browse(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Browse and parse the result.
 <code><![CDATA[
@@ -557,7 +557,7 @@ Schema for <c>BrowseResult</c>:
 
 </remarks>
     </member>
-    <member name="AutoCompleteAsync(RequestContent,RequestContext)">
+    <member name="AutoCompleteAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AutoCompleteAsync and parse the result.
 <code><![CDATA[
@@ -614,7 +614,7 @@ Schema for <c>AutoCompleteResult</c>:
 
 </remarks>
     </member>
-    <member name="AutoComplete(RequestContent,RequestContext)">
+    <member name="AutoComplete(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AutoComplete and parse the result.
 <code><![CDATA[

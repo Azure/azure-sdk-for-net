@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSentShareAsync(String,RequestContext)">
+    <member name="GetSentShareAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -51,7 +51,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentShare(String,RequestContext)">
+    <member name="GetSentShare(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShare with required parameters and parse the result.
 <code><![CDATA[
@@ -101,7 +101,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentShareInvitationAsync(String,String,RequestContext)">
+    <member name="GetSentShareInvitationAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -166,7 +166,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSentShareInvitation(String,String,RequestContext)">
+    <member name="GetSentShareInvitation(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
@@ -231,7 +231,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateSentShareInvitationAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitationAsync(string,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSentShareInvitationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -368,7 +368,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateSentShareInvitation(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitation(string,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSentShareInvitation with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -505,7 +505,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserSentShareInvitationAsync(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitationAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -581,7 +581,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserSentShareInvitation(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitation(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
@@ -657,7 +657,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetAllSentSharesAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllSentSharesAsync(string,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllSentSharesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -702,7 +702,7 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShares(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShares(string,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllSentShares with required parameters and parse the result.
 <code><![CDATA[
@@ -747,7 +747,7 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShareInvitationsAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShareInvitationsAsync(string,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllSentShareInvitationsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -792,7 +792,7 @@ Schema for <c>SentShareInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShareInvitations(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShareInvitations(string,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllSentShareInvitations with required parameters and parse the result.
 <code><![CDATA[
@@ -837,7 +837,7 @@ Schema for <c>SentShareInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceSentShareAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShareAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceSentShareAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -970,7 +970,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceSentShare(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShare(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceSentShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1103,7 +1103,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShareAsync(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1147,7 +1147,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShare(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShare(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteSentShare with required parameters and parse the result.
 <code><![CDATA[
@@ -1191,7 +1191,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareInvitationAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitationAsync(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1235,7 +1235,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareInvitation(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitation(global::Azure.WaitUntil,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[

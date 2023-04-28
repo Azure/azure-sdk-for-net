@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSentShareAsync(String,RequestContext)">
+    <member name="GetSentShareAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -48,7 +48,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentShare(String,RequestContext)">
+    <member name="GetSentShare(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShare with required parameters and parse the result.
 <code><![CDATA[
@@ -95,7 +95,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -198,7 +198,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -301,7 +301,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentSharesAsync(String,String,String,RequestContext)">
+    <member name="GetSentSharesAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentSharesAsync and parse the result.
 <code><![CDATA[
@@ -348,7 +348,7 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSentShares(String,String,String,RequestContext)">
+    <member name="GetSentShares(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSentShares and parse the result.
 <code><![CDATA[
@@ -395,7 +395,7 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteAsync(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -411,7 +411,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 Delete a sent share
 </remarks>
     </member>
-    <member name="Delete(WaitUntil,String,RequestContext)">
+    <member name="Delete(global::Azure.WaitUntil,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[

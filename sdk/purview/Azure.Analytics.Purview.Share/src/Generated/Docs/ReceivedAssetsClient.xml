@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetReceivedAssetsAsync(String,String,RequestContext)">
+    <member name="GetReceivedAssetsAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedAssetsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -48,7 +48,7 @@ Schema for <c>ReceivedAssetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetReceivedAssets(String,String,RequestContext)">
+    <member name="GetReceivedAssets(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetReceivedAssets with required parameters and parse the result.
 <code><![CDATA[

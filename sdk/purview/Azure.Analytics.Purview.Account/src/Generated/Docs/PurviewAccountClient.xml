@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetAccountPropertiesAsync(RequestContext)">
+    <member name="GetAccountPropertiesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAccountPropertiesAsync and parse the result.
 <code><![CDATA[
@@ -128,7 +128,7 @@ External cloud identifier used as part of scanning configuration.
 
 </remarks>
     </member>
-    <member name="GetAccountProperties(RequestContext)">
+    <member name="GetAccountProperties(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAccountProperties and parse the result.
 <code><![CDATA[
@@ -255,7 +255,7 @@ External cloud identifier used as part of scanning configuration.
 
 </remarks>
     </member>
-    <member name="UpdateAccountPropertiesAsync(RequestContent,RequestContext)">
+    <member name="UpdateAccountPropertiesAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateAccountPropertiesAsync and parse the result.
 <code><![CDATA[
@@ -407,7 +407,7 @@ External cloud identifier used as part of scanning configuration.
 
 </remarks>
     </member>
-    <member name="UpdateAccountProperties(RequestContent,RequestContext)">
+    <member name="UpdateAccountProperties(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateAccountProperties and parse the result.
 <code><![CDATA[
@@ -559,7 +559,7 @@ External cloud identifier used as part of scanning configuration.
 
 </remarks>
     </member>
-    <member name="GetAccessKeysAsync(RequestContext)">
+    <member name="GetAccessKeysAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAccessKeysAsync and parse the result.
 <code><![CDATA[
@@ -588,7 +588,7 @@ Schema for <c>AccessKeys</c>:
 
 </remarks>
     </member>
-    <member name="GetAccessKeys(RequestContext)">
+    <member name="GetAccessKeys(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAccessKeys and parse the result.
 <code><![CDATA[
@@ -617,7 +617,7 @@ Schema for <c>AccessKeys</c>:
 
 </remarks>
     </member>
-    <member name="RegenerateAccessKeyAsync(RequestContent,RequestContext)">
+    <member name="RegenerateAccessKeyAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RegenerateAccessKeyAsync and parse the result.
 <code><![CDATA[
@@ -671,7 +671,7 @@ Schema for <c>AccessKeys</c>:
 
 </remarks>
     </member>
-    <member name="RegenerateAccessKey(RequestContent,RequestContext)">
+    <member name="RegenerateAccessKey(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RegenerateAccessKey and parse the result.
 <code><![CDATA[
@@ -725,7 +725,7 @@ Schema for <c>AccessKeys</c>:
 
 </remarks>
     </member>
-    <member name="GetCollectionsAsync(String,RequestContext)">
+    <member name="GetCollectionsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
@@ -791,7 +791,7 @@ Schema for <c>CollectionListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetCollections(String,RequestContext)">
+    <member name="GetCollections(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
@@ -857,7 +857,7 @@ Schema for <c>CollectionListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetResourceSetRulesAsync(String,RequestContext)">
+    <member name="GetResourceSetRulesAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRulesAsync and parse the result.
 <code><![CDATA[
@@ -1070,7 +1070,7 @@ Schema for <c>ResourceSetRuleConfigListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetResourceSetRules(String,RequestContext)">
+    <member name="GetResourceSetRules(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRules and parse the result.
 <code><![CDATA[

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetEmbeddingsAsync(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddingsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -89,7 +89,7 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="GetEmbeddings(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -177,7 +177,7 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
+    <member name="GetCompletionsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -339,7 +339,7 @@ Schema for <c>Completions</c>:
 
 </remarks>
     </member>
-    <member name="GetCompletions(String,RequestContent,RequestContext)">
+    <member name="GetCompletions(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCompletions with required parameters and parse the result.
 <code><![CDATA[
