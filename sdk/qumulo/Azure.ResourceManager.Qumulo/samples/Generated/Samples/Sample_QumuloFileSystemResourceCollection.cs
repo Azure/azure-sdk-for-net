@@ -248,7 +248,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("przdlsmlzsszphnixq"), new MarketplaceDetails("x", "eiyhbmpwgezcmzrrfoiskuxlcvwojf", "wfmokfdjbwpjhz")
             {
                 MarketplaceSubscriptionId = "ujrcqvxfnhxxheoth",
-            }, StorageSku.Standard, new QumuloUserDetails("viptslwulnpaupfljvnjeq"), "neqctctqdmjezfgt", "ekceujoecaashtjlsgcymnrdozk", 9)
+            }, StorageSku.Standard, new QumuloUserDetails()
+            {
+                Email = "viptslwulnpaupfljvnjeq",
+            }, "neqctctqdmjezfgt", "ekceujoecaashtjlsgcymnrdozk", 9)
             {
                 Identity = new ManagedServiceIdentity("None")
                 {
@@ -306,7 +309,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaa"), new MarketplaceDetails("aaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaa", "aa")
             {
                 MarketplaceSubscriptionId = "aaaaaaaaaaaaa",
-            }, StorageSku.Standard, new QumuloUserDetails("viptslwulnpaupfljvnjeq"), "aaaaaaaaaa", "ekceujoecaashtjlsgcymnrdozk", 9);
+            }, StorageSku.Standard, new QumuloUserDetails()
+            {
+                Email = "viptslwulnpaupfljvnjeq",
+            }, "aaaaaaaaaa", "ekceujoecaashtjlsgcymnrdozk", 9);
             ArmOperation<QumuloFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileSystemName, data);
             QumuloFileSystemResource result = lro.Value;
 

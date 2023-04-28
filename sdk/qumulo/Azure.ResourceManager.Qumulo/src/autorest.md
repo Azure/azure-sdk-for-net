@@ -15,6 +15,11 @@ generate-model-factory: false
 modelerfour:
   flatten-payloads: false
 
+directive:
+  - from: Qumulo.Storage.json
+    where: $.definitions
+    transform: delete $.UserDetails.required
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

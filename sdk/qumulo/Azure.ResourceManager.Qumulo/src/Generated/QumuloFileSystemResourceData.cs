@@ -91,7 +91,12 @@ namespace Azure.ResourceManager.Qumulo
         public string UserDetailsEmail
         {
             get => UserDetails is null ? default : UserDetails.Email;
-            set => UserDetails = new QumuloUserDetails(value);
+            set
+            {
+                if (UserDetails is null)
+                    UserDetails = new QumuloUserDetails();
+                UserDetails.Email = value;
+            }
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
