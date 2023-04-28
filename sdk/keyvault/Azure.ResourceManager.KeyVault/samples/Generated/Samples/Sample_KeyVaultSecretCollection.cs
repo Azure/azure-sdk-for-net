@@ -16,7 +16,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault.Samples
 {
-    public partial class Sample_SecretCollection
+    public partial class Sample_KeyVaultSecretCollection
     {
         // Create a secret
         [NUnit.Framework.Test]
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this SecretResource
-            SecretCollection collection = keyVault.GetSecrets();
+            // get the collection of this KeyVaultSecretResource
+            KeyVaultSecretCollection collection = keyVault.GetKeyVaultSecrets();
 
             // invoke the operation
             string secretName = "secret-name";
-            SecretCreateOrUpdateContent content = new SecretCreateOrUpdateContent(new SecretProperties()
+            KeyVaultSecretCreateOrUpdateContent content = new KeyVaultSecretCreateOrUpdateContent(new SecretProperties()
             {
                 Value = "secret-value",
             });
-            ArmOperation<SecretResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, secretName, content);
-            SecretResource result = lro.Value;
+            ArmOperation<KeyVaultSecretResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, secretName, content);
+            KeyVaultSecretResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this SecretResource
-            SecretCollection collection = keyVault.GetSecrets();
+            // get the collection of this KeyVaultSecretResource
+            KeyVaultSecretCollection collection = keyVault.GetKeyVaultSecrets();
 
             // invoke the operation
             string secretName = "secret-name";
-            SecretResource result = await collection.GetAsync(secretName);
+            KeyVaultSecretResource result = await collection.GetAsync(secretName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this SecretResource
-            SecretCollection collection = keyVault.GetSecrets();
+            // get the collection of this KeyVaultSecretResource
+            KeyVaultSecretCollection collection = keyVault.GetKeyVaultSecrets();
 
             // invoke the operation
             string secretName = "secret-name";
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this SecretResource
-            SecretCollection collection = keyVault.GetSecrets();
+            // get the collection of this KeyVaultSecretResource
+            KeyVaultSecretCollection collection = keyVault.GetKeyVaultSecrets();
 
             // invoke the operation and iterate over the result
-            await foreach (SecretResource item in collection.GetAllAsync())
+            await foreach (KeyVaultSecretResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

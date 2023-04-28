@@ -15,7 +15,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault.Samples
 {
-    public partial class Sample_SecretResource
+    public partial class Sample_KeyVaultSecretResource
     {
         // Update a secret
         [NUnit.Framework.Test]
@@ -30,24 +30,24 @@ namespace Azure.ResourceManager.KeyVault.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecretResource created on azure
-            // for more information of creating SecretResource, please refer to the document of SecretResource
+            // this example assumes you already have this KeyVaultSecretResource created on azure
+            // for more information of creating KeyVaultSecretResource, please refer to the document of KeyVaultSecretResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sample-group";
             string vaultName = "sample-vault";
             string secretName = "secret-name";
-            ResourceIdentifier secretResourceId = SecretResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, secretName);
-            SecretResource secret = client.GetSecretResource(secretResourceId);
+            ResourceIdentifier keyVaultSecretResourceId = KeyVaultSecretResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, secretName);
+            KeyVaultSecretResource keyVaultSecret = client.GetKeyVaultSecretResource(keyVaultSecretResourceId);
 
             // invoke the operation
-            SecretPatch patch = new SecretPatch()
+            KeyVaultSecretPatch patch = new KeyVaultSecretPatch()
             {
                 Properties = new SecretPatchProperties()
                 {
                     Value = "secret-value2",
                 },
             };
-            SecretResource result = await secret.UpdateAsync(patch);
+            KeyVaultSecretResource result = await keyVaultSecret.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.KeyVault.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecretResource created on azure
-            // for more information of creating SecretResource, please refer to the document of SecretResource
+            // this example assumes you already have this KeyVaultSecretResource created on azure
+            // for more information of creating KeyVaultSecretResource, please refer to the document of KeyVaultSecretResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sample-group";
             string vaultName = "sample-vault";
             string secretName = "secret-name";
-            ResourceIdentifier secretResourceId = SecretResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, secretName);
-            SecretResource secret = client.GetSecretResource(secretResourceId);
+            ResourceIdentifier keyVaultSecretResourceId = KeyVaultSecretResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, secretName);
+            KeyVaultSecretResource keyVaultSecret = client.GetKeyVaultSecretResource(keyVaultSecretResourceId);
 
             // invoke the operation
-            SecretResource result = await secret.GetAsync();
+            KeyVaultSecretResource result = await keyVaultSecret.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

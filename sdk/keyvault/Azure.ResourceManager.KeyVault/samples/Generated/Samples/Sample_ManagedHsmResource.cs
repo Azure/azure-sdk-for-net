@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckManagedHsmNameAvailabilityContent content = new CheckManagedHsmNameAvailabilityContent("sample-mhsm");
+            ManagedHsmNameAvailabilityContent content = new ManagedHsmNameAvailabilityContent("sample-mhsm");
             ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
