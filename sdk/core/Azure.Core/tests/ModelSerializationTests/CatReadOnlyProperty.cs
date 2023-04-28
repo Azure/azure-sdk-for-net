@@ -14,10 +14,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public CatReadOnlyProperty(double weight, string latinName, string name, bool isHungry, bool hasWhiskers) : base(weight, "Felis catus", name, isHungry)
         {
-            CatLatinName = LatinName;
-            CatIsHungry = IsHungry;
-            CatWeight = Weight;
-            CatName = Name;
             HasWhiskers = hasWhiskers;
         }
 
@@ -27,11 +23,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
         }
 
         public bool HasWhiskers { get; set; } = true;
-
-        private string CatLatinName;
-        private bool CatIsHungry;
-        private double CatWeight;
-        private string CatName;
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
@@ -43,11 +34,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 writer.WriteStringValue(LatinName);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(CatName);
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("isHungry"u8);
-            writer.WriteBooleanValue(CatIsHungry);
+            writer.WriteBooleanValue(IsHungry);
             writer.WritePropertyName("weight"u8);
-            writer.WriteNumberValue(CatWeight);
+            writer.WriteNumberValue(Weight);
             writer.WritePropertyName("hasWhiskers"u8);
             writer.WriteBooleanValue(HasWhiskers);
 
@@ -122,11 +113,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(stream);
                 var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.CatLatinName = model.LatinName;
-                this.CatWeight = model.Weight;
-                this.CatIsHungry = model.IsHungry;
+                this.Weight = model.Weight;
+                this.IsHungry = model.IsHungry;
                 this.HasWhiskers = model.HasWhiskers;
-                this.CatIsHungry = model.CatIsHungry;
+                this.IsHungry = model.IsHungry;
                 bytesConsumed = stream.Length;
                 return true;
             }

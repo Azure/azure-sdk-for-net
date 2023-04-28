@@ -8,39 +8,24 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class Animal : IJsonSerializable, IUtf8JsonSerializable
+    public class DogListProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
+        public List<string> FoodConsumed { get; set; } = new List<string> {"kibble", "egg", "peanut butter"};
 
-        public bool IsHungry { get; set; } = false;
-        public double Weight { get; set; } = 1.1;
-        public string LatinName { get; private set; } = "Animalia";
-        public string Name { get; set; } = "Animal";
-
-        public Animal()
+        public DogListProperty(string name) : base(name)
         {
+            Name = name;
         }
 
-        public Animal(double weight, string latinName, string name, bool isHungry)
+        internal DogListProperty(double weight, string latinName, string name, bool isHungry, List<string> foodConsumed, Dictionary<string, BinaryData> rawData) : base(weight, latinName, name, isHungry, rawData)
         {
-            Weight = weight;
-            LatinName = latinName;
-            Name = name;
-            IsHungry = isHungry;
-        }
-
-        internal Animal(double weight, string latinName, string name, bool isHungry, Dictionary<string, BinaryData> rawData)
-        {
-            Weight = weight;
-            LatinName = latinName;
-            Name = name;
-            IsHungry = isHungry;
             RawData = rawData;
+            FoodConsumed = foodConsumed;
         }
 
-        internal Animal(string name)
+        public DogListProperty()
         {
-            Name = name;
         }
 
         #region Serialization
@@ -59,6 +44,14 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
+            writer.WritePropertyName("foodConsumed"u8);
+            writer.WriteStartArray();
+            foreach (var item in FoodConsumed)
+            {
+                writer.WriteStringValue($"{item}");
+            }
+            writer.WriteEndArray();
+
             if (options.IgnoreAdditionalProperties)
             {
                 //write out the raw data
@@ -66,7 +59,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 {
                     writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(property.Value);
 #else
                     JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
 #endif
@@ -75,14 +68,15 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, SerializableOptions options)
+        internal static DogListProperty DeserializeDogListProperty(JsonElement element, SerializableOptions options)
         {
             double weight = default;
             string name = "";
             string latinName = "";
             bool isHungry = default;
-
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            List<string> foodConsumed = new List<string>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weight"u8))
@@ -105,29 +99,36 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     isHungry = property.Value.GetBoolean();
                     continue;
                 }
-
+                if (property.NameEquals("foodConsumed"u8))
+                {
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        foodConsumed.Add(item.GetString());
+                    }
+                    continue;
+                }
                 if (options.IgnoreAdditionalProperties)
                 {
-                    //this means it's an unknown property we got
+                    //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new Animal(weight, latinName, name, isHungry, rawData);
+            return new DogListProperty(weight, latinName, name, isHungry, foodConsumed, rawData);
         }
         #endregion
 
         #region InterfaceImplementation
-        public bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
+        public new bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
         {
             bytesConsumed = 0;
             try
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.LatinName = model.LatinName;
+                var model = DeserializeDogListProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
+                this.Name = model.Name;
                 this.Weight = model.Weight;
                 this.IsHungry = model.IsHungry;
-                this.Name = model.Name;
+                this.FoodConsumed = model.FoodConsumed;
                 this.RawData = model.RawData;
                 bytesConsumed = stream.Length;
                 return true;
@@ -138,7 +139,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
         }
 
-        public bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
+        public new bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
         {
             bytesWritten = 0;
             try
@@ -151,7 +152,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
                 ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
                 writer.Flush();
-                bytesWritten = stream.Length;
+                bytesWritten = (int)stream.Length;
                 return true;
             }
             catch
