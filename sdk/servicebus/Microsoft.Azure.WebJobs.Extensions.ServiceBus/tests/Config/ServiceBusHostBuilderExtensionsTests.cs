@@ -147,6 +147,24 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
+        public void ConfigureOptionsThrowWhenMaxIsLessThanMinBatchSize()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxMessageBatchSize", "100" },
+                    { $"{extensionPath}:MinMessageBatchSize", "170" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
         public void AddServiceBus_ThrowsArgumentNull_WhenServiceBusOptionsIsNull()
         {
             IHost host = new HostBuilder()

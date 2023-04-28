@@ -439,12 +439,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     {
                         try
                         {
-                            // TODO: TEMPORARY ASSERTION
-                            if (_backgroundCacheMonitoringCts != null)
-                            {
-                                throw new Exception($"No messages should be waiting in the cache if the receiver is closed. There are {_cachedMessagesManager.CachedMessages.Count} messages in the cache.");
-                            }
-
                             ServiceBusSessionReceiver sessionReceiver = await sessionClient.AcceptNextSessionAsync(
                                 _entityPath,
                                 new ServiceBusSessionReceiverOptions
