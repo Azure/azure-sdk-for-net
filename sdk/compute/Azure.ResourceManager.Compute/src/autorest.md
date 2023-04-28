@@ -120,7 +120,7 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
-#mgmt-debug:    
+#mgmt-debug:
 #    show-serialized-names: true
 
 rename-mapping:
@@ -361,4 +361,8 @@ directive:
   - from: swagger-document
     where: $.definitions.KeyVaultSecretReference
     transform: $["x-csharp-usage"] = "converter";
+  # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
+  - from: restorePoint.json
+    where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
+    transform: $["x-ms-client-name"] = "DataDiskList";
 ```

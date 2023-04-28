@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (Optional.IsCollectionDefined(DataDiskList))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataDisks)
+                foreach (var item in DataDiskList)
                 {
                     writer.WriteObjectValue(item);
                 }
