@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetResourceSetRuleAsync(RequestContext)">
+    <member name="GetResourceSetRuleAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRuleAsync and parse the result.
 <code><![CDATA[
@@ -201,7 +201,7 @@ Schema for <c>ResourceSetRuleConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetResourceSetRule(RequestContext)">
+    <member name="GetResourceSetRule(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRule and parse the result.
 <code><![CDATA[
@@ -401,7 +401,7 @@ Schema for <c>ResourceSetRuleConfig</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateResourceSetRuleAsync(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateResourceSetRuleAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the result.
 <code><![CDATA[
@@ -838,7 +838,7 @@ Schema for <c>ResourceSetRuleConfig</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateResourceSetRule(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateResourceSetRule(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateResourceSetRule and parse the result.
 <code><![CDATA[
@@ -1275,7 +1275,7 @@ Schema for <c>ResourceSetRuleConfig</c>:
 
 </remarks>
     </member>
-    <member name="DeleteResourceSetRuleAsync(RequestContext)">
+    <member name="DeleteResourceSetRuleAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteResourceSetRuleAsync.
 <code><![CDATA[
@@ -1288,7 +1288,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteResourceSetRule(RequestContext)">
+    <member name="DeleteResourceSetRule(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteResourceSetRule.
 <code><![CDATA[

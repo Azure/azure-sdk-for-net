@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -3572,7 +3572,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
 <code><![CDATA[
@@ -7143,7 +7143,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetPropertiesAsync(RequestContext)">
+    <member name="GetPropertiesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPropertiesAsync and parse the result.
 <code><![CDATA[
@@ -8940,7 +8940,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetProperties(RequestContext)">
+    <member name="GetProperties(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProperties and parse the result.
 <code><![CDATA[
@@ -10737,7 +10737,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="DeleteAsync(RequestContext)">
+    <member name="DeleteAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteAsync and parse the result.
 <code><![CDATA[
@@ -12534,7 +12534,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="Delete(RequestContext)">
+    <member name="Delete(global::Azure.RequestContext)">
 <example>
 This sample shows how to call Delete and parse the result.
 <code><![CDATA[
@@ -14331,7 +14331,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetScansAsync(RequestContext)">
+    <member name="GetScansAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScansAsync and parse the result.
 <code><![CDATA[
@@ -14430,7 +14430,7 @@ Schema for <c>ScanListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetScans(RequestContext)">
+    <member name="GetScans(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScans and parse the result.
 <code><![CDATA[

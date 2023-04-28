@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetMetadataRolesAsync(RequestContext)">
+    <member name="GetMetadataRolesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataRolesAsync and parse the result.
 <code><![CDATA[
@@ -15,7 +15,7 @@ await foreach (var data in client.GetMetadataRolesAsync())
 ]]></code>
 </example>
     </member>
-    <member name="GetMetadataRoles(RequestContext)">
+    <member name="GetMetadataRoles(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataRoles and parse the result.
 <code><![CDATA[

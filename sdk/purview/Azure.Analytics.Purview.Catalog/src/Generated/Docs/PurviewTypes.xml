@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetBusinessMetadataDefByGuidAsync(String,RequestContext)">
+    <member name="GetBusinessMetadataDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBusinessMetadataDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -138,7 +138,7 @@ Schema for <c>AtlasBusinessMetadataDef</c>:
 
 </remarks>
     </member>
-    <member name="GetBusinessMetadataDefByGuid(String,RequestContext)">
+    <member name="GetBusinessMetadataDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBusinessMetadataDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -275,7 +275,7 @@ Schema for <c>AtlasBusinessMetadataDef</c>:
 
 </remarks>
     </member>
-    <member name="GetBusinessMetadataDefByNameAsync(String,RequestContext)">
+    <member name="GetBusinessMetadataDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBusinessMetadataDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -412,7 +412,7 @@ Schema for <c>AtlasBusinessMetadataDef</c>:
 
 </remarks>
     </member>
-    <member name="GetBusinessMetadataDefByName(String,RequestContext)">
+    <member name="GetBusinessMetadataDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBusinessMetadataDefByName with required parameters and parse the result.
 <code><![CDATA[
@@ -549,7 +549,7 @@ Schema for <c>AtlasBusinessMetadataDef</c>:
 
 </remarks>
     </member>
-    <member name="GetClassificationDefByGuidAsync(String,RequestContext)">
+    <member name="GetClassificationDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -701,7 +701,7 @@ only be applied to those entityTypes.
 
 </remarks>
     </member>
-    <member name="GetClassificationDefByGuid(String,RequestContext)">
+    <member name="GetClassificationDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -853,7 +853,7 @@ only be applied to those entityTypes.
 
 </remarks>
     </member>
-    <member name="GetClassificationDefByNameAsync(String,RequestContext)">
+    <member name="GetClassificationDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1005,7 +1005,7 @@ only be applied to those entityTypes.
 
 </remarks>
     </member>
-    <member name="GetClassificationDefByName(String,RequestContext)">
+    <member name="GetClassificationDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationDefByName with required parameters and parse the result.
 <code><![CDATA[
@@ -1157,7 +1157,7 @@ only be applied to those entityTypes.
 
 </remarks>
     </member>
-    <member name="GetEntityDefinitionByGuidAsync(String,RequestContext)">
+    <member name="GetEntityDefinitionByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEntityDefinitionByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1333,7 +1333,7 @@ Schema for <c>AtlasEntityDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEntityDefinitionByGuid(String,RequestContext)">
+    <member name="GetEntityDefinitionByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEntityDefinitionByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -1509,7 +1509,7 @@ Schema for <c>AtlasEntityDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEntityDefinitionByNameAsync(String,RequestContext)">
+    <member name="GetEntityDefinitionByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEntityDefinitionByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1685,7 +1685,7 @@ Schema for <c>AtlasEntityDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEntityDefinitionByName(String,RequestContext)">
+    <member name="GetEntityDefinitionByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEntityDefinitionByName with required parameters and parse the result.
 <code><![CDATA[
@@ -1861,7 +1861,7 @@ Schema for <c>AtlasEntityDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEnumDefByGuidAsync(String,RequestContext)">
+    <member name="GetEnumDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEnumDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1974,7 +1974,7 @@ Schema for <c>AtlasEnumDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEnumDefByGuid(String,RequestContext)">
+    <member name="GetEnumDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEnumDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -2087,7 +2087,7 @@ Schema for <c>AtlasEnumDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEnumDefByNameAsync(String,RequestContext)">
+    <member name="GetEnumDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEnumDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2200,7 +2200,7 @@ Schema for <c>AtlasEnumDef</c>:
 
 </remarks>
     </member>
-    <member name="GetEnumDefByName(String,RequestContext)">
+    <member name="GetEnumDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEnumDefByName with required parameters and parse the result.
 <code><![CDATA[
@@ -2313,7 +2313,7 @@ Schema for <c>AtlasEnumDef</c>:
 
 </remarks>
     </member>
-    <member name="GetRelationshipDefByGuidAsync(String,RequestContext)">
+    <member name="GetRelationshipDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRelationshipDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2485,7 +2485,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetRelationshipDefByGuid(String,RequestContext)">
+    <member name="GetRelationshipDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRelationshipDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -2657,7 +2657,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetRelationshipDefByNameAsync(String,RequestContext)">
+    <member name="GetRelationshipDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRelationshipDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2829,7 +2829,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetRelationshipDefByName(String,RequestContext)">
+    <member name="GetRelationshipDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRelationshipDefByName with required parameters and parse the result.
 <code><![CDATA[
@@ -3001,7 +3001,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetStructDefByGuidAsync(String,RequestContext)">
+    <member name="GetStructDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStructDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3487,7 +3487,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetStructDefByGuid(String,RequestContext)">
+    <member name="GetStructDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStructDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -3973,7 +3973,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetStructDefByNameAsync(String,RequestContext)">
+    <member name="GetStructDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStructDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4459,7 +4459,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetStructDefByName(String,RequestContext)">
+    <member name="GetStructDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetStructDefByName with required parameters and parse the result.
 <code><![CDATA[
@@ -4945,7 +4945,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionByGuidAsync(String,RequestContext)">
+    <member name="GetTypeDefinitionByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5046,7 +5046,7 @@ Schema for <c>AtlasTypeDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionByGuid(String,RequestContext)">
+    <member name="GetTypeDefinitionByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -5147,7 +5147,7 @@ Schema for <c>AtlasTypeDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionByNameAsync(String,RequestContext)">
+    <member name="GetTypeDefinitionByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5248,7 +5248,7 @@ Schema for <c>AtlasTypeDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionByName(String,RequestContext)">
+    <member name="GetTypeDefinitionByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionByName with required parameters and parse the result.
 <code><![CDATA[
@@ -5349,7 +5349,7 @@ Schema for <c>AtlasTypeDef</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTypeByNameAsync(String,RequestContext)">
+    <member name="DeleteTypeByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTypeByNameAsync with required parameters.
 <code><![CDATA[
@@ -5362,7 +5362,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteTypeByName(String,RequestContext)">
+    <member name="DeleteTypeByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTypeByName with required parameters.
 <code><![CDATA[
@@ -5375,7 +5375,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetAllTypeDefinitionsAsync(Boolean,String,RequestContext)">
+    <member name="GetAllTypeDefinitionsAsync(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
@@ -5991,7 +5991,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetAllTypeDefinitions(Boolean,String,RequestContext)">
+    <member name="GetAllTypeDefinitions(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAllTypeDefinitions and parse the result.
 <code><![CDATA[
@@ -6607,7 +6607,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="CreateTypeDefinitionsAsync(RequestContent,RequestContext)">
+    <member name="CreateTypeDefinitionsAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
@@ -8055,7 +8055,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="CreateTypeDefinitions(RequestContent,RequestContext)">
+    <member name="CreateTypeDefinitions(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateTypeDefinitions and parse the result.
 <code><![CDATA[
@@ -9503,7 +9503,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="UpdateAtlasTypeDefinitionsAsync(RequestContent,RequestContext)">
+    <member name="UpdateAtlasTypeDefinitionsAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateAtlasTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
@@ -10951,7 +10951,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="UpdateAtlasTypeDefinitions(RequestContent,RequestContext)">
+    <member name="UpdateAtlasTypeDefinitions(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateAtlasTypeDefinitions and parse the result.
 <code><![CDATA[
@@ -12399,7 +12399,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="DeleteTypeDefinitionsAsync(RequestContent,RequestContext)">
+    <member name="DeleteTypeDefinitionsAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTypeDefinitionsAsync.
 <code><![CDATA[
@@ -13257,7 +13257,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="DeleteTypeDefinitions(RequestContent,RequestContext)">
+    <member name="DeleteTypeDefinitions(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTypeDefinitions.
 <code><![CDATA[
@@ -14115,7 +14115,7 @@ of the container and children are totally independent.
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionHeadersAsync(Boolean,String,RequestContext)">
+    <member name="GetTypeDefinitionHeadersAsync(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionHeadersAsync and parse the result.
 <code><![CDATA[
@@ -14157,7 +14157,7 @@ Schema for <c>AtlasTypeDefHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetTypeDefinitionHeaders(Boolean,String,RequestContext)">
+    <member name="GetTypeDefinitionHeaders(bool?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTypeDefinitionHeaders and parse the result.
 <code><![CDATA[
@@ -14199,7 +14199,7 @@ Schema for <c>AtlasTypeDefHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetTermTemplateDefByGuidAsync(String,RequestContext)">
+    <member name="GetTermTemplateDefByGuidAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTermTemplateDefByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -14336,7 +14336,7 @@ Schema for <c>TermTemplateDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTermTemplateDefByGuid(String,RequestContext)">
+    <member name="GetTermTemplateDefByGuid(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTermTemplateDefByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -14473,7 +14473,7 @@ Schema for <c>TermTemplateDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTermTemplateDefByNameAsync(String,RequestContext)">
+    <member name="GetTermTemplateDefByNameAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTermTemplateDefByNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -14610,7 +14610,7 @@ Schema for <c>TermTemplateDef</c>:
 
 </remarks>
     </member>
-    <member name="GetTermTemplateDefByName(String,RequestContext)">
+    <member name="GetTermTemplateDefByName(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTermTemplateDefByName with required parameters and parse the result.
 <code><![CDATA[

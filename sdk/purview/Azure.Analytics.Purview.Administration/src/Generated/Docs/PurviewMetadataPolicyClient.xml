@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="UpdateMetadataPolicyAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateMetadataPolicyAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateMetadataPolicyAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -174,7 +174,7 @@ Schema for <c>MetadataPolicy</c>:
 
 </remarks>
     </member>
-    <member name="UpdateMetadataPolicy(String,RequestContent,RequestContext)">
+    <member name="UpdateMetadataPolicy(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateMetadataPolicy with required parameters and parse the result.
 <code><![CDATA[
@@ -347,7 +347,7 @@ Schema for <c>MetadataPolicy</c>:
 
 </remarks>
     </member>
-    <member name="GetMetadataPolicyAsync(String,RequestContext)">
+    <member name="GetMetadataPolicyAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataPolicyAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -420,7 +420,7 @@ Schema for <c>MetadataPolicy</c>:
 
 </remarks>
     </member>
-    <member name="GetMetadataPolicy(String,RequestContext)">
+    <member name="GetMetadataPolicy(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataPolicy with required parameters and parse the result.
 <code><![CDATA[
@@ -493,7 +493,7 @@ Schema for <c>MetadataPolicy</c>:
 
 </remarks>
     </member>
-    <member name="GetMetadataPoliciesAsync(RequestContext)">
+    <member name="GetMetadataPoliciesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataPoliciesAsync and parse the result.
 <code><![CDATA[
@@ -507,7 +507,7 @@ await foreach (var data in client.GetMetadataPoliciesAsync())
 ]]></code>
 </example>
     </member>
-    <member name="GetMetadataPolicies(RequestContext)">
+    <member name="GetMetadataPolicies(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMetadataPolicies and parse the result.
 <code><![CDATA[

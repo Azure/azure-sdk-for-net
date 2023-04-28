@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="ActivateAsync(RequestContent,String,RequestContext)">
+    <member name="ActivateAsync(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call ActivateAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -80,7 +80,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="Activate(RequestContent,String,RequestContext)">
+    <member name="Activate(global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Activate with required parameters and parse the result.
 <code><![CDATA[
@@ -159,7 +159,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="RegisterAsync(String,RequestContext)">
+    <member name="RegisterAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RegisterAsync and parse the result.
 <code><![CDATA[
@@ -213,7 +213,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="Register(String,RequestContext)">
+    <member name="Register(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Register and parse the result.
 <code><![CDATA[

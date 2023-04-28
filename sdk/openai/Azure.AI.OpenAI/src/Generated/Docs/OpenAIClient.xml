@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetEmbeddingsAsync(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddingsAsync(string,global::Azure.AI.OpenAI.EmbeddingsOptions,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetEmbeddingsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var embeddingsOptions = new EmbeddingsOptions(
+"<input>")
+{
+    User = "<User>",
+    InputType = "<InputType>",
+};
+var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="GetEmbeddings(string,global::Azure.AI.OpenAI.EmbeddingsOptions,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetEmbeddings with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var embeddingsOptions = new EmbeddingsOptions(
+"<input>")
+{
+    User = "<User>",
+    InputType = "<InputType>",
+};
+var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="GetEmbeddingsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -89,7 +125,7 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="GetEmbeddings(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -177,7 +213,83 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
+    <member name="GetCompletionsAsync(string,global::Azure.AI.OpenAI.CompletionsOptions,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetCompletionsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var completionsOptions = new CompletionsOptions(
+)
+{
+    Prompts = 
+{
+        "<null>"
+    },
+    MaxTokens = 1234,
+    Temperature = 3.14,
+    NucleusSamplingFactor = 3.14,
+    TokenSelectionBiases = 
+{
+        ["key"] = 1234,
+    },
+    User = "<User>",
+    ChoicesPerPrompt = 1234,
+    LogProbabilityCount = 1234,
+    Echo = true,
+    StopSequences = 
+{
+        "<null>"
+    },
+    PresencePenalty = 3.14,
+    FrequencyPenalty = 3.14,
+    GenerationSampleCount = 1234,
+};
+var result = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="GetCompletions(string,global::Azure.AI.OpenAI.CompletionsOptions,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetCompletions with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var completionsOptions = new CompletionsOptions(
+)
+{
+    Prompts = 
+{
+        "<null>"
+    },
+    MaxTokens = 1234,
+    Temperature = 3.14,
+    NucleusSamplingFactor = 3.14,
+    TokenSelectionBiases = 
+{
+        ["key"] = 1234,
+    },
+    User = "<User>",
+    ChoicesPerPrompt = 1234,
+    LogProbabilityCount = 1234,
+    Echo = true,
+    StopSequences = 
+{
+        "<null>"
+    },
+    PresencePenalty = 3.14,
+    FrequencyPenalty = 3.14,
+    GenerationSampleCount = 1234,
+};
+var result = client.GetCompletions("<deploymentId>", completionsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="GetCompletionsAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -339,7 +451,7 @@ Schema for <c>Completions</c>:
 
 </remarks>
     </member>
-    <member name="GetCompletions(String,RequestContent,RequestContext)">
+    <member name="GetCompletions(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCompletions with required parameters and parse the result.
 <code><![CDATA[

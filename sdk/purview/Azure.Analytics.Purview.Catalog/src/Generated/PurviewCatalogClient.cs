@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SearchAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Search(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response Search(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SuggestAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SuggestAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Suggest(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Suggest(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='BrowseAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='BrowseAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Browse(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Browse(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response Browse(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoCompleteAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoCompleteAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoComplete(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoComplete(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetKeyVaultReferenceAsync(String,RequestContext)">
+    <member name="GetKeyVaultReferenceAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeyVaultReferenceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="GetKeyVaultReference(String,RequestContext)">
+    <member name="GetKeyVaultReference(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeyVaultReference with required parameters and parse the result.
 <code><![CDATA[
@@ -71,7 +71,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateKeyVaultReferenceAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateKeyVaultReferenceAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -139,7 +139,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateKeyVaultReference(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateKeyVaultReference(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateKeyVaultReference with required parameters and parse the result.
 <code><![CDATA[
@@ -207,7 +207,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="DeleteKeyVaultReferenceAsync(String,RequestContext)">
+    <member name="DeleteKeyVaultReferenceAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteKeyVaultReferenceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -242,7 +242,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="DeleteKeyVaultReference(String,RequestContext)">
+    <member name="DeleteKeyVaultReference(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteKeyVaultReference with required parameters and parse the result.
 <code><![CDATA[
@@ -277,7 +277,7 @@ Schema for <c>AzureKeyVault</c>:
 
 </remarks>
     </member>
-    <member name="GetScanRulesetAsync(String,RequestContext)">
+    <member name="GetScanRulesetAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScanRulesetAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -826,7 +826,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetScanRuleset(String,RequestContext)">
+    <member name="GetScanRuleset(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScanRuleset with required parameters and parse the result.
 <code><![CDATA[
@@ -1375,7 +1375,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateScanRulesetAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateScanRulesetAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateScanRulesetAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -2479,7 +2479,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateScanRuleset(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateScanRuleset(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateScanRuleset with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -3583,7 +3583,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="DeleteScanRulesetAsync(String,RequestContext)">
+    <member name="DeleteScanRulesetAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteScanRulesetAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4132,7 +4132,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="DeleteScanRuleset(String,RequestContext)">
+    <member name="DeleteScanRuleset(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteScanRuleset with required parameters and parse the result.
 <code><![CDATA[
@@ -4681,7 +4681,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsForDataSourceAsync(String,RequestContext)">
+    <member name="GetSystemRulesetsForDataSourceAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsForDataSourceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5230,7 +5230,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsForDataSource(String,RequestContext)">
+    <member name="GetSystemRulesetsForDataSource(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsForDataSource with required parameters and parse the result.
 <code><![CDATA[
@@ -5779,7 +5779,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsForVersionAsync(Int32,String,RequestContext)">
+    <member name="GetSystemRulesetsForVersionAsync(int,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsForVersionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -6340,7 +6340,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsForVersion(Int32,String,RequestContext)">
+    <member name="GetSystemRulesetsForVersion(int,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsForVersion with required parameters and parse the result.
 <code><![CDATA[
@@ -6901,7 +6901,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetLatestSystemRulesetsAsync(String,RequestContext)">
+    <member name="GetLatestSystemRulesetsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLatestSystemRulesetsAsync and parse the result.
 <code><![CDATA[
@@ -7462,7 +7462,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetLatestSystemRulesets(String,RequestContext)">
+    <member name="GetLatestSystemRulesets(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLatestSystemRulesets and parse the result.
 <code><![CDATA[
@@ -8023,7 +8023,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetKeyVaultReferencesAsync(RequestContext)">
+    <member name="GetKeyVaultReferencesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeyVaultReferencesAsync and parse the result.
 <code><![CDATA[
@@ -8059,7 +8059,7 @@ Schema for <c>AzureKeyVaultListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetKeyVaultReferences(RequestContext)">
+    <member name="GetKeyVaultReferences(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeyVaultReferences and parse the result.
 <code><![CDATA[
@@ -8095,7 +8095,7 @@ Schema for <c>AzureKeyVaultListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetClassificationRulesAsync(RequestContext)">
+    <member name="GetClassificationRulesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationRulesAsync and parse the result.
 <code><![CDATA[
@@ -8127,7 +8127,7 @@ Schema for <c>ClassificationRuleListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetClassificationRules(RequestContext)">
+    <member name="GetClassificationRules(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetClassificationRules and parse the result.
 <code><![CDATA[
@@ -8159,7 +8159,7 @@ Schema for <c>ClassificationRuleListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDataSourcesAsync(RequestContext)">
+    <member name="GetDataSourcesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDataSourcesAsync and parse the result.
 <code><![CDATA[
@@ -8268,7 +8268,7 @@ Schema for <c>DataSourceListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDataSources(RequestContext)">
+    <member name="GetDataSources(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetDataSources and parse the result.
 <code><![CDATA[
@@ -8377,7 +8377,7 @@ Schema for <c>DataSourceListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetScanRulesetsAsync(RequestContext)">
+    <member name="GetScanRulesetsAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScanRulesetsAsync and parse the result.
 <code><![CDATA[
@@ -8415,7 +8415,7 @@ Schema for <c>ScanRulesetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetScanRulesets(RequestContext)">
+    <member name="GetScanRulesets(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetScanRulesets and parse the result.
 <code><![CDATA[
@@ -8453,7 +8453,7 @@ Schema for <c>ScanRulesetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsAsync(RequestContext)">
+    <member name="GetSystemRulesetsAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsAsync and parse the result.
 <code><![CDATA[
@@ -8491,7 +8491,7 @@ Schema for <c>SystemScanRulesetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSystemRulesets(RequestContext)">
+    <member name="GetSystemRulesets(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesets and parse the result.
 <code><![CDATA[
@@ -8529,7 +8529,7 @@ Schema for <c>SystemScanRulesetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsVersionsAsync(String,RequestContext)">
+    <member name="GetSystemRulesetsVersionsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsVersionsAsync and parse the result.
 <code><![CDATA[
@@ -8580,7 +8580,7 @@ Schema for <c>SystemScanRulesetListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSystemRulesetsVersions(String,RequestContext)">
+    <member name="GetSystemRulesetsVersions(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSystemRulesetsVersions and parse the result.
 <code><![CDATA[

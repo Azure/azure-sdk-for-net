@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowAsync(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowAsync(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowAsync(Guid workflowId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflow");
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflow(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflow(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual Response GetWorkflow(Guid workflowId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflow");
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflowAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflowAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceWorkflowAsync(Guid workflowId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflow(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflow(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CreateOrReplaceWorkflow(Guid workflowId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='DeleteWorkflowAsync(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='DeleteWorkflowAsync(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> DeleteWorkflowAsync(Guid workflowId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.DeleteWorkflow");
@@ -184,7 +184,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='DeleteWorkflow(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='DeleteWorkflow(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual Response DeleteWorkflow(Guid workflowId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.DeleteWorkflow");
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequestsAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequestsAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> SubmitUserRequestsAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequests(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequests(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response SubmitUserRequests(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunAsync(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunAsync(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowRunAsync(Guid workflowRunId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowRun");
@@ -278,7 +278,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRun(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRun(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual Response GetWorkflowRun(Guid workflowRunId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowRun");
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CancelWorkflowRunAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CancelWorkflowRunAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> CancelWorkflowRunAsync(Guid workflowRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -328,7 +328,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CancelWorkflowRun(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CancelWorkflowRun(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response CancelWorkflowRun(Guid workflowRunId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -352,7 +352,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTaskAsync(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTaskAsync(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowTaskAsync(Guid taskId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowTask");
@@ -374,7 +374,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTask(Guid,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTask(global::System.Guid,global::Azure.RequestContext)']/*" />
         public virtual Response GetWorkflowTask(Guid taskId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowTask");
@@ -398,7 +398,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ApproveApprovalTaskAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ApproveApprovalTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> ApproveApprovalTaskAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -424,7 +424,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ApproveApprovalTask(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ApproveApprovalTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response ApproveApprovalTask(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -450,7 +450,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='RejectApprovalTaskAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='RejectApprovalTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> RejectApprovalTaskAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -476,7 +476,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='RejectApprovalTask(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='RejectApprovalTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response RejectApprovalTask(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReassignWorkflowTaskAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReassignWorkflowTaskAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> ReassignWorkflowTaskAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -528,7 +528,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReassignWorkflowTask(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReassignWorkflowTask(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response ReassignWorkflowTask(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -554,7 +554,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatusAsync(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatusAsync(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> UpdateTaskStatusAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -580,7 +580,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatus(Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatus(global::System.Guid,global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response UpdateTaskStatus(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -603,7 +603,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowsAsync(RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowsAsync(global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowsAsync(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
@@ -615,7 +615,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflows(RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflows(global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflows(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
@@ -632,7 +632,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},int?,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -649,7 +649,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},int?,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -669,7 +669,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(string,global::System.Collections.Generic.IEnumerable{string},string,int?,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -689,7 +689,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(string,global::System.Collections.Generic.IEnumerable{string},string,int?,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -797,11 +797,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null)
+            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -863,7 +863,7 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("viewMode", viewMode, true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -879,11 +879,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (taskTypes != null)
+            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
             {
                 uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
             }
-            if (taskStatuses != null)
+            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
             {
                 uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
             }

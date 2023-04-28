@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(string,string,int?,int?,bool?,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(string,string,bool?,int?,int?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(string,string,bool?,int?,int?,global::Azure.RequestContext)']/*" />
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,global::Azure.RequestContext)']/*" />
         public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));

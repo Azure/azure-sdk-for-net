@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetFilterAsync(RequestContext)">
+    <member name="GetFilterAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFilterAsync and parse the result.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Schema for <c>Filter</c>:
 
 </remarks>
     </member>
-    <member name="GetFilter(RequestContext)">
+    <member name="GetFilter(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetFilter and parse the result.
 <code><![CDATA[
@@ -71,7 +71,7 @@ Schema for <c>Filter</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateFilterAsync(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateFilterAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
 <code><![CDATA[
@@ -143,7 +143,7 @@ Schema for <c>Filter</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateFilter(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateFilter(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateFilter and parse the result.
 <code><![CDATA[
@@ -215,7 +215,7 @@ Schema for <c>Filter</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -7498,7 +7498,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
 <code><![CDATA[
@@ -14781,7 +14781,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetPropertiesAsync(RequestContext)">
+    <member name="GetPropertiesAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetPropertiesAsync and parse the result.
 <code><![CDATA[
@@ -18180,7 +18180,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetProperties(RequestContext)">
+    <member name="GetProperties(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetProperties and parse the result.
 <code><![CDATA[
@@ -21579,7 +21579,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="DeleteAsync(RequestContext)">
+    <member name="DeleteAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteAsync and parse the result.
 <code><![CDATA[
@@ -24978,7 +24978,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="Delete(RequestContext)">
+    <member name="Delete(global::Azure.RequestContext)">
 <example>
 This sample shows how to call Delete and parse the result.
 <code><![CDATA[
@@ -28377,7 +28377,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="RunScanAsync(String,String,RequestContext)">
+    <member name="RunScanAsync(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RunScanAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -28440,7 +28440,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="RunScan(String,String,RequestContext)">
+    <member name="RunScan(string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call RunScan with required parameters and parse the result.
 <code><![CDATA[
@@ -28503,7 +28503,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CancelScanAsync(String,RequestContext)">
+    <member name="CancelScanAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelScanAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -28555,7 +28555,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CancelScan(String,RequestContext)">
+    <member name="CancelScan(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelScan with required parameters and parse the result.
 <code><![CDATA[
@@ -28607,7 +28607,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetTriggerAsync(RequestContext)">
+    <member name="GetTriggerAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTriggerAsync and parse the result.
 <code><![CDATA[
@@ -28684,7 +28684,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="GetTrigger(RequestContext)">
+    <member name="GetTrigger(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetTrigger and parse the result.
 <code><![CDATA[
@@ -28761,7 +28761,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateTriggerAsync(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateTriggerAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTriggerAsync and parse the result.
 <code><![CDATA[
@@ -28930,7 +28930,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateTrigger(RequestContent,RequestContext)">
+    <member name="CreateOrUpdateTrigger(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTrigger and parse the result.
 <code><![CDATA[
@@ -29099,7 +29099,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTriggerAsync(RequestContext)">
+    <member name="DeleteTriggerAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTriggerAsync and parse the result.
 <code><![CDATA[
@@ -29176,7 +29176,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTrigger(RequestContext)">
+    <member name="DeleteTrigger(global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteTrigger and parse the result.
 <code><![CDATA[
@@ -29253,7 +29253,7 @@ Schema for <c>Trigger</c>:
 
 </remarks>
     </member>
-    <member name="GetRunsAsync(RequestContext)">
+    <member name="GetRunsAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRunsAsync and parse the result.
 <code><![CDATA[
@@ -29342,7 +29342,7 @@ Schema for <c>ScanHistoryListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetRuns(RequestContext)">
+    <member name="GetRuns(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRuns and parse the result.
 <code><![CDATA[
