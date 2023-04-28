@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a secret. </summary>
-    public partial class SecretCreateOrUpdateContent
+    public partial class KeyVaultSecretCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SecretCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of KeyVaultSecretCreateOrUpdateContent. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SecretCreateOrUpdateContent(SecretProperties properties)
+        public KeyVaultSecretCreateOrUpdateContent(SecretProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 

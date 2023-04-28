@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters.Tags.InitializeFrom(Tags);
             ArmOperation<KeyVaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
-            var secretCollection = rawVault.Value.GetSecrets();
+            var secretCollection = rawVault.Value.GetKeyVaultSecrets();
             // CreateOrUpdate
             string secretName = Recording.GenerateAssetName("secret");
             SecretProperties secretProperties = new SecretProperties()
             {
                 Value = "secret-value",
             };
-            var data = new SecretCreateOrUpdateContent(secretProperties);
+            var data = new KeyVaultSecretCreateOrUpdateContent(secretProperties);
             var secret = await secretCollection.CreateOrUpdateAsync(WaitUntil.Completed, secretName, data);
             ValidateSecret(secret.Value.Data, secretName);
 

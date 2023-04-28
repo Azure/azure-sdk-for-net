@@ -78,6 +78,9 @@ rename-mapping:
   GeoReplicationRegionProvisioningState: ManagedHsmGeoReplicatedRegionProvisioningState
   ManagedHsmPrivateEndpointConnectionItemData.id: -|arm-id
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}: KeyVaultSecret
+
 prompted-enum-values: Default
 
 directive:

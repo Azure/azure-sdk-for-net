@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetKeyVaultPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecretResources in the KeyVault. </summary>
-        /// <returns> An object representing collection of SecretResources and their operations over a SecretResource. </returns>
-        public virtual SecretCollection GetSecrets()
+        /// <summary> Gets a collection of KeyVaultSecretResources in the KeyVault. </summary>
+        /// <returns> An object representing collection of KeyVaultSecretResources and their operations over a KeyVaultSecretResource. </returns>
+        public virtual KeyVaultSecretCollection GetKeyVaultSecrets()
         {
-            return GetCachedClient(Client => new SecretCollection(Client, Id));
+            return GetCachedClient(Client => new KeyVaultSecretCollection(Client, Id));
         }
 
         /// <summary>
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecretResource>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultSecretResource>> GetKeyVaultSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            return await GetSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
+            return await GetKeyVaultSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecretResource> GetSecret(string secretName, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultSecretResource> GetKeyVaultSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            return GetSecrets().Get(secretName, cancellationToken);
+            return GetKeyVaultSecrets().Get(secretName, cancellationToken);
         }
 
         /// <summary>

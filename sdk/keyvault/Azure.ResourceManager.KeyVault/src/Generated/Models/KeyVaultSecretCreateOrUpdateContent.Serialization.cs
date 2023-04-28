@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class KeyVaultSecretCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

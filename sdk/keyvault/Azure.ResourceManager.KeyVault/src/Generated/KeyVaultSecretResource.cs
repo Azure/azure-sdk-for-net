@@ -18,46 +18,46 @@ using Azure.ResourceManager.KeyVault.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A Class representing a Secret along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecretResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecretResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource" /> using the GetSecret method.
+    /// A Class representing a KeyVaultSecret along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KeyVaultSecretResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetKeyVaultSecretResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource" /> using the GetKeyVaultSecret method.
     /// </summary>
-    public partial class SecretResource : ArmResource
+    public partial class KeyVaultSecretResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecretResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="KeyVaultSecretResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string secretName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _secretClientDiagnostics;
-        private readonly SecretsRestOperations _secretRestClient;
+        private readonly ClientDiagnostics _keyVaultSecretSecretsClientDiagnostics;
+        private readonly SecretsRestOperations _keyVaultSecretSecretsRestClient;
         private readonly SecretData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SecretResource"/> class for mocking. </summary>
-        protected SecretResource()
+        /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretResource"/> class for mocking. </summary>
+        protected KeyVaultSecretResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecretResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "KeyVaultSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecretResource(ArmClient client, SecretData data) : this(client, data.Id)
+        internal KeyVaultSecretResource(ArmClient client, SecretData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecretResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecretResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal KeyVaultSecretResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string secretApiVersion);
-            _secretRestClient = new SecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, secretApiVersion);
+            _keyVaultSecretSecretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string keyVaultSecretSecretsApiVersion);
+            _keyVaultSecretSecretsRestClient = new SecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretSecretsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecretResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultSecretResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _secretClientDiagnostics.CreateScope("SecretResource.Get");
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Get");
             scope.Start();
             try
             {
-                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _keyVaultSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecretResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultSecretResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _secretClientDiagnostics.CreateScope("SecretResource.Get");
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Get");
             scope.Start();
             try
             {
-                var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _keyVaultSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="patch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SecretResource>> UpdateAsync(SecretPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultSecretResource>> UpdateAsync(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _secretClientDiagnostics.CreateScope("SecretResource.Update");
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();
             try
             {
-                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
+                var response = await _keyVaultSecretSecretsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,16 +201,16 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="patch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SecretResource> Update(SecretPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultSecretResource> Update(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _secretClientDiagnostics.CreateScope("SecretResource.Update");
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();
             try
             {
-                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
+                var response = _keyVaultSecretSecretsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

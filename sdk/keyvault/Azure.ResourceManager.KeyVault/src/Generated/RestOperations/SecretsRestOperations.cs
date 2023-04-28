@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecretData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<SecretData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecretData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<SecretData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecretData> Update(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretPatch patch, CancellationToken cancellationToken = default)
+        public Response<SecretData> Update(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
