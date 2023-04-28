@@ -4852,6 +4852,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public RestorePointSourceVmStorageProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RestorePointSourceVmDataDisk> DataDiskList { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RestorePointSourceVmDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointSourceVmOSDisk OSDisk { get { throw null; } set { } }
     }
     public partial class RetrieveBootDiagnosticsDataResult

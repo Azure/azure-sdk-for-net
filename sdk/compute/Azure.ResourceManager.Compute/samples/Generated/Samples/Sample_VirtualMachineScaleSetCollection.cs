@@ -1516,9 +1516,9 @@ EnableIPForwarding = true,
 }
 },
                     },
-                    SecurityPostureReference = new SecurityPostureReference()
+                    SecurityPostureReference = new ComputeSecurityPostureReference()
                     {
-                        Id = "/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest",
+                        Id = new ResourceIdentifier("/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest"),
                     },
                 },
                 Overprovision = true,
