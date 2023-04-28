@@ -44,6 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             };
 
             var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules));
+            AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
 
             Assert.NotNull(createExceptionPolicyResponse.Value);
 
@@ -83,8 +84,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
             Assert.AreEqual(exceptionPolicyName, exceptionPolicy.Name);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
         }
 
         [Test]
@@ -129,6 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules));
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
             Assert.NotNull(createExceptionPolicyResponse.Value);
 
             var exceptionPolicy = createExceptionPolicyResponse.Value;
@@ -174,8 +174,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
             Assert.AreEqual(exceptionPolicyName, exceptionPolicy.Name);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
         }
 
         #endregion Exception Policy Tests

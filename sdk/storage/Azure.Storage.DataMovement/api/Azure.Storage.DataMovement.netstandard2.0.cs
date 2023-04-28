@@ -84,9 +84,10 @@ namespace Azure.Storage.DataMovement
     }
     public enum StorageResourceCreateMode
     {
-        Overwrite = 0,
-        Fail = 1,
-        Skip = 2,
+        None = 0,
+        Overwrite = 1,
+        Fail = 2,
+        Skip = 3,
     }
     public enum StorageResourceType
     {

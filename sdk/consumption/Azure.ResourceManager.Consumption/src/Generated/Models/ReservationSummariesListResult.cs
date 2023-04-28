@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing reservation summaries. </summary>
+    /// <summary>
+    /// Result of listing reservation summaries.
+    /// Serialized Name: ReservationSummariesListResult
+    /// </summary>
     internal partial class ReservationSummariesListResult
     {
         /// <summary> Initializes a new instance of ReservationSummariesListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ReservationSummariesListResult. </summary>
-        /// <param name="value"> The list of reservation summaries. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The list of reservation summaries.
+        /// Serialized Name: ReservationSummariesListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ReservationSummariesListResult.nextLink
+        /// </param>
         internal ReservationSummariesListResult(IReadOnlyList<ConsumptionReservationSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of reservation summaries. </summary>
+        /// <summary>
+        /// The list of reservation summaries.
+        /// Serialized Name: ReservationSummariesListResult.value
+        /// </summary>
         public IReadOnlyList<ConsumptionReservationSummary> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ReservationSummariesListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

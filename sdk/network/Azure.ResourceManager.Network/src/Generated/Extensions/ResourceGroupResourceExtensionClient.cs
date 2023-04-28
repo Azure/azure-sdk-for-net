@@ -83,6 +83,14 @@ namespace Azure.ResourceManager.Network
             return GetCachedClient(Client => new BastionHostCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceName"> The name of the cloud service. </param>
+        /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
+        public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
+        {
+            return new CloudServiceSwapCollection(Client, Id, resourceName);
+        }
+
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
@@ -172,6 +180,13 @@ namespace Azure.ResourceManager.Network
         public virtual NetworkInterfaceCollection GetNetworkInterfaces()
         {
             return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
+        public virtual NetworkManagerCollection GetNetworkManagers()
+        {
+            return GetCachedClient(Client => new NetworkManagerCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>

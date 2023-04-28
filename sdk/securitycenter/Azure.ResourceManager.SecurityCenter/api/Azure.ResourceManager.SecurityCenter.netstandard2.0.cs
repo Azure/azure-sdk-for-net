@@ -931,6 +931,8 @@ namespace Azure.ResourceManager.SecurityCenter
     }
     public static partial class SecurityCenterExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName informationProtectionPolicyName, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy informationProtectionPolicy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName informationProtectionPolicyName, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy informationProtectionPolicy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -985,6 +987,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolutions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.GovernanceAssignmentResource GetGovernanceAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy> GetInformationProtectionPolicies(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.IngestionSettingResource> GetIngestionSetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ingestionSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IngestionSettingResource>> GetIngestionSettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ingestionSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.IngestionSettingResource GetIngestionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1042,6 +1046,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource GetSecurityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityAssessmentCollection GetSecurityAssessments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessmentsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource> GetSecurityAutomation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string automationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource>> GetSecurityAutomationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string automationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityAutomationResource GetSecurityAutomationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1085,6 +1091,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution> GetSecuritySolutions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution> GetSecuritySolutionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecuritySubAssessmentResource GetSecuritySubAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecuritySubAssessmentResource> GetSecuritySubAssessments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string workspaceSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string workspaceSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2824,6 +2832,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public InformationProtectionAwsOffering() { }
         public string InformationProtectionCloudRoleArn { get { throw null; } set { } }
     }
+    public partial class InformationProtectionKeyword
+    {
+        public InformationProtectionKeyword() { }
+        public bool? CanBeNumeric { get { throw null; } set { } }
+        public bool? Custom { get { throw null; } set { } }
+        public bool? Excluded { get { throw null; } set { } }
+        public string Pattern { get { throw null; } set { } }
+    }
+    public partial class InformationProtectionPolicy : Azure.ResourceManager.Models.ResourceData
+    {
+        public InformationProtectionPolicy() { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityInformationTypeInfo> InformationTypes { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SensitivityLabel> Labels { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InformationProtectionPolicyName : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InformationProtectionPolicyName(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName Custom { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName Effective { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName left, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName left, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IngestionConnectionString
     {
         internal IngestionConnectionString() { }
@@ -4206,6 +4248,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SecurityInformationTypeInfo
+    {
+        public SecurityInformationTypeInfo() { }
+        public bool? Custom { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionKeyword> Keywords { get { throw null; } }
+        public int? Order { get { throw null; } set { } }
+        public System.Guid? RecommendedLabelId { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityScoreODataExpand : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand>
     {
@@ -4377,6 +4430,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityValueType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityValueType left, Azure.ResourceManager.SecurityCenter.Models.SecurityValueType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SensitivityLabel
+    {
+        public SensitivityLabel() { }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        public int? Order { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.SensitivityLabelRank? Rank { get { throw null; } set { } }
+    }
+    public enum SensitivityLabelRank
+    {
+        None = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+        Critical = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServerVulnerabilityAssessmentPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState>
