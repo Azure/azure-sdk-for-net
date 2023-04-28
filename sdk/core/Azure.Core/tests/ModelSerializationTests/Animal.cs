@@ -8,6 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
+    //TEST
     public class Animal : IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
