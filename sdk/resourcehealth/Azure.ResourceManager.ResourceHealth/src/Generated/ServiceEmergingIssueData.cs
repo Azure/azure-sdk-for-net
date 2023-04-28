@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
         internal ServiceEmergingIssueData()
         {
-            StatusBanners = new ChangeTrackingList<StatusBanner>();
-            StatusActiveEvents = new ChangeTrackingList<StatusActiveEvent>();
+            StatusBanners = new ChangeTrackingList<EmergingIssueBannerType>();
+            StatusActiveEvents = new ChangeTrackingList<EmergingIssueActiveEventType>();
         }
 
         /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="refreshTimestamp"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
         /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
         /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshTimestamp, IReadOnlyList<StatusBanner> statusBanners, IReadOnlyList<StatusActiveEvent> statusActiveEvents) : base(id, name, resourceType, systemData)
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshTimestamp, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents) : base(id, name, resourceType, systemData)
         {
             RefreshTimestamp = refreshTimestamp;
             StatusBanners = statusBanners;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Timestamp for when last time refreshed for ongoing emerging issue. </summary>
         public DateTimeOffset? RefreshTimestamp { get; }
         /// <summary> The list of emerging issues of banner type. </summary>
-        public IReadOnlyList<StatusBanner> StatusBanners { get; }
+        public IReadOnlyList<EmergingIssueBannerType> StatusBanners { get; }
         /// <summary> The list of emerging issues of active event type. </summary>
-        public IReadOnlyList<StatusActiveEvent> StatusActiveEvents { get; }
+        public IReadOnlyList<EmergingIssueActiveEventType> StatusActiveEvents { get; }
     }
 }

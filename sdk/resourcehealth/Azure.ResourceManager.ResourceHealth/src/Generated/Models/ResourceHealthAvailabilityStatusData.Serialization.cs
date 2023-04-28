@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<AvailabilityStatusProperties> properties = default;
+            Optional<ResourceHealthAvailabilityStatusProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         continue;
                     }
-                    properties = AvailabilityStatusProperties.DeserializeAvailabilityStatusProperties(property.Value);
+                    properties = ResourceHealthAvailabilityStatusProperties.DeserializeResourceHealthAvailabilityStatusProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

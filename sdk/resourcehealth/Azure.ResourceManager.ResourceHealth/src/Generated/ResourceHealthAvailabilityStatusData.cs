@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="properties"> Properties of availability state. </param>
-        internal ResourceHealthAvailabilityStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, AvailabilityStatusProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceHealthAvailabilityStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceHealthAvailabilityStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Azure Resource Manager geo location of the resource. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Properties of availability state. </summary>
-        public AvailabilityStatusProperties Properties { get; }
+        public ResourceHealthAvailabilityStatusProperties Properties { get; }
     }
 }

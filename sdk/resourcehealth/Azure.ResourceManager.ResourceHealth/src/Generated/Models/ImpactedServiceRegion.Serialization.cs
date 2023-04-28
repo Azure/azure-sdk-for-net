@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<IReadOnlyList<string>> impactedSubscriptions = default;
             Optional<IReadOnlyList<string>> impactedTenants = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<IReadOnlyList<Update>> updates = default;
+            Optional<IReadOnlyList<EventUpdate>> updates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedRegion"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    List<Update> array = new List<Update>();
+                    List<EventUpdate> array = new List<EventUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Update.DeserializeUpdate(item));
+                        array.Add(EventUpdate.DeserializeEventUpdate(item));
                     }
                     updates = array;
                     continue;

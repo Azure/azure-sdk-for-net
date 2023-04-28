@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceEmergingIssueResource>> GetAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceEmergingIssueResource>> GetAsync(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Get");
             scope.Start();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceEmergingIssueResource> Get(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEmergingIssueResource> Get(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Get");
             scope.Start();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Exists");
             scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.Exists");
             scope.Start();

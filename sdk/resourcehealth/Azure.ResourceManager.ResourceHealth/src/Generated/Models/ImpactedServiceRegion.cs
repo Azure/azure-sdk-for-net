@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         {
             ImpactedSubscriptions = new ChangeTrackingList<string>();
             ImpactedTenants = new ChangeTrackingList<string>();
-            Updates = new ChangeTrackingList<Update>();
+            Updates = new ChangeTrackingList<EventUpdate>();
         }
 
         /// <summary> Initializes a new instance of ImpactedServiceRegion. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="impactedTenants"> List tenant impacted by the service health event. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the last update for the service health event. </param>
         /// <param name="updates"> List of updates for given service health event. </param>
-        internal ImpactedServiceRegion(string impactedRegion, EventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<Update> updates)
+        internal ImpactedServiceRegion(string impactedRegion, EventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<EventUpdate> updates)
         {
             ImpactedRegion = impactedRegion;
             Status = status;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> It provides the Timestamp for when the last update for the service health event. </summary>
         public DateTimeOffset? LastUpdateOn { get; }
         /// <summary> List of updates for given service health event. </summary>
-        public IReadOnlyList<Update> Updates { get; }
+        public IReadOnlyList<EventUpdate> Updates { get; }
     }
 }

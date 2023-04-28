@@ -16,15 +16,38 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug: 
-#   show-serialized-names: true
+#mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   Link.type: LinkType
   EmergingIssuesGetResult: ServiceEmergingIssue
+  AvailabilityStatusPropertiesRecentlyResolved: AvailabilityStateRecentlyResolved
+  EventPropertiesArticle: EventArticle
+  EventPropertiesRecommendedActions: EventRecommendedActions
+  EventPropertiesRecommendedActionsItem: EventRecommendedActionsItem
+  Events: ResourceHealthEventListResult
+  LevelValues: EventInsightLevelValues
+  Faq: EventFaq
+  Impact: EventImpact
+  IssueNameParameter: IssueNameContent
+  Link: EventLink
+  LinkDisplayText: EventLinkDisplayText
+  LinkTypeValues: EventLinkTypeValues
+  Scenario: MetadataEntityScenario
+  SeverityValues: EventSeverityLevel
+  StageValues: EventStageValues
+  StatusActiveEvent: EmergingIssueActiveEventType
+  StatusBanner: EmergingIssueBannerType
+  Update: EventUpdate
 
 prepend-rp-prefix:
   - AvailabilityStatus
+  - AvailabilityStatusProperties
+  - Event
+  - MetadataEntity
+  - EventImpactedResource
+  - KeyValueItem
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -57,8 +80,11 @@ rename-rules:
   Etag: ETag|etag
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: SubscriptionResourceHealthEventImpactedResource
+  /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: ResourceHealthEventImpactedResource
+  /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}: ResourceHealthEvent
   /providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: TenantResourceHealthEventImpactedResource
+  /providers/Microsoft.ResourceHealth/events/{eventTrackingId}: TenantResourceHealthEvent
+  /{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current: ResourceHealthAvailabilityStatus
   /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current: ResourceHealthChildAvailabilityStatus
 
 ```

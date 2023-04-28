@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ResourceHealth
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
-        public virtual SubscriptionEventCollection GetSubscriptionEvents()
+        /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ResourceHealthEventResources and their operations over a ResourceHealthEventResource. </returns>
+        public virtual ResourceHealthEventCollection GetResourceHealthEvents()
         {
-            return GetCachedClient(Client => new SubscriptionEventCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceHealthEventCollection(Client, Id));
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> refreshTimestamp = default;
-            Optional<IReadOnlyList<StatusBanner>> statusBanners = default;
-            Optional<IReadOnlyList<StatusActiveEvent>> statusActiveEvents = default;
+            Optional<IReadOnlyList<EmergingIssueBannerType>> statusBanners = default;
+            Optional<IReadOnlyList<EmergingIssueActiveEventType>> statusActiveEvents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            List<StatusBanner> array = new List<StatusBanner>();
+                            List<EmergingIssueBannerType> array = new List<EmergingIssueBannerType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StatusBanner.DeserializeStatusBanner(item));
+                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item));
                             }
                             statusBanners = array;
                             continue;
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            List<StatusActiveEvent> array = new List<StatusActiveEvent>();
+                            List<EmergingIssueActiveEventType> array = new List<EmergingIssueActiveEventType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StatusActiveEvent.DeserializeStatusActiveEvent(item));
+                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item));
                             }
                             statusActiveEvents = array;
                             continue;

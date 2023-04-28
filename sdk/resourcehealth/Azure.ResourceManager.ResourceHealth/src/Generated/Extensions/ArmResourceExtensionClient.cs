@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ResourceHealth
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a AvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
-        public virtual AvailabilityStatusResource GetAvailabilityStatus()
+        /// <summary> Gets an object representing a ResourceHealthAvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <returns> Returns a <see cref="ResourceHealthAvailabilityStatusResource" /> object. </returns>
+        public virtual ResourceHealthAvailabilityStatusResource GetResourceHealthAvailabilityStatus()
         {
-            return new AvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "availabilityStatuses", "current"));
+            return new ResourceHealthAvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "availabilityStatuses", "current"));
         }
 
         /// <summary> Gets an object representing a ResourceHealthChildAvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventData> GetEventsBySingleResourceAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthEventData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthEventData> GetEventsBySingleResourceAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventData.DeserializeEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventData> GetEventsBySingleResource(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthEventData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthEventData> GetEventsBySingleResource(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventData.DeserializeEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEventsBySingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

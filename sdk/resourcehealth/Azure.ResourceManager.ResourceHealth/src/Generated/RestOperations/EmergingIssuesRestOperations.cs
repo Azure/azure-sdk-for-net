@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        internal HttpMessage CreateGetRequest(IssueNameParameter issueName)
+        internal HttpMessage CreateGetRequest(IssueNameContent issueName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Gets Azure services&apos; emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ServiceEmergingIssueData>> GetAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceEmergingIssueData>> GetAsync(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(issueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Gets Azure services&apos; emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ServiceEmergingIssueData> Get(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public Response<ServiceEmergingIssueData> Get(IssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(issueName);
             _pipeline.Send(message, cancellationToken);

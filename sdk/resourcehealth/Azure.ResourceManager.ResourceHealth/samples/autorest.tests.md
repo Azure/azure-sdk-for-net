@@ -12,4 +12,5 @@ testgen:
   sample: true
   skipped-operations:
   - Events_ListBySingleResource
+  - ChildResources_List
 ```
