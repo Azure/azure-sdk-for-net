@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The information about the tone. </summary>
@@ -16,12 +13,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ToneInfo. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
+        internal ToneInfo(int sequenceId, DtmfTone tone)
+        {
+            SequenceId = sequenceId;
+            Tone = tone;
+        }
+
+        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
+        /// <param name="tone"></param>
         /// <param name="participantId"> The id of participant. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantId"/> is null. </exception>
         internal ToneInfo(int sequenceId, DtmfTone tone, string participantId)
         {
-            Argument.AssertNotNull(participantId, nameof(participantId));
-
             SequenceId = sequenceId;
             Tone = tone;
             ParticipantId = participantId;

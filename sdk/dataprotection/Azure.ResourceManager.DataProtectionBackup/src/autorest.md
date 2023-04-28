@@ -172,11 +172,13 @@ rename-mapping:
   Datasource.resourceID: -|arm-id
   Datasource.resourceLocation: -|azure-location
   Datasource.resourceType: -|resource-type
+  Datasource.resourceUri: ResourceUriString
   DatasourceSet: DataSourceSetInfo
   DatasourceSet.datasourceType: DataSourceType
   DatasourceSet.resourceID: -|arm-id
   DatasourceSet.resourceLocation: -|azure-location
   DatasourceSet.resourceType: -|resource-type
+  DatasourceSet.resourceUri: ResourceUriString
   PolicyInfo: BackupInstancePolicyInfo
   PolicyInfo.policyId: -|arm-id
   ValidationType: BackupValidationType

@@ -28,4 +28,12 @@ testgen:
   - ReservationsSummaries_ListByReservationOrderAndReservation
   - Budgets_CreateOrUpdate
   - PriceSheet_GetByBillingPeriod
+  - UsageDetails_List
+  - Marketplaces_List
+  - Tags_Get
+  - Charges_List
+  - ReservationsSummaries_List
+  - ReservationsDetails_List
+  - ReservationRecommendations_List
+  - ReservationRecommendationDetails_Get
 ```

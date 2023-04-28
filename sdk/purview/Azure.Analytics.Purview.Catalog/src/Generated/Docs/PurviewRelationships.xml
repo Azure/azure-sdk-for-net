@@ -142,7 +142,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -153,7 +153,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -168,7 +168,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -179,7 +179,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -328,7 +328,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -339,7 +339,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -354,7 +354,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -365,7 +365,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -514,7 +514,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -525,7 +525,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -540,7 +540,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -551,7 +551,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -700,7 +700,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -711,7 +711,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -726,7 +726,7 @@ Schema for <c>AtlasRelationship</c>:
   end1: {
     guid: string, # Optional. The GUID of the object.
     typeName: string, # Optional. The name of the type.
-    uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+    uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
   guid: string, # Optional. The GUID of the relationship.
@@ -737,7 +737,7 @@ Schema for <c>AtlasRelationship</c>:
   updateTime: number, # Optional. The update time of the record.
   updatedBy: string, # Optional. The user who updated the record.
   version: number, # Optional. The version of the relationship.
-  attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+  attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
   typeName: string, # Optional. The name of the type.
   lastModifiedTS: string, # Optional. ETag for concurrency control.
 }
@@ -833,7 +833,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
     end1: {
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
     }, # Optional. Reference to an object-instance of an Atlas type - like entity.
     end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
     guid: string, # Optional. The GUID of the relationship.
@@ -844,7 +844,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
     updateTime: number, # Optional. The update time of the record.
     updatedBy: string, # Optional. The user who updated the record.
     version: number, # Optional. The version of the relationship.
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Atlas relationship instance.
@@ -941,7 +941,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
     end1: {
       guid: string, # Optional. The GUID of the object.
       typeName: string, # Optional. The name of the type.
-      uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+      uniqueAttributes: Dictionary&lt;string, any&gt;, # Optional. The unique attributes of the object.
     }, # Optional. Reference to an object-instance of an Atlas type - like entity.
     end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
     guid: string, # Optional. The GUID of the relationship.
@@ -952,7 +952,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
     updateTime: number, # Optional. The update time of the record.
     updatedBy: string, # Optional. The user who updated the record.
     version: number, # Optional. The version of the relationship.
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. Atlas relationship instance.

@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<DedicatedHost>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an dedicated host .
+        /// Update a dedicated host .
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -203,6 +203,36 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists all available dedicated host sizes to which the specified
+        /// dedicated host can be resized. NOTE: The dedicated host sizes
+        /// provided can be used to only scale up the existing dedicated host.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='hostGroupName'>
+        /// The name of the dedicated host group.
+        /// </param>
+        /// <param name='hostName'>
+        /// The name of the dedicated host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<string>>> ListAvailableSizesWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a dedicated host .
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -234,7 +264,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<DedicatedHost>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an dedicated host .
+        /// Update a dedicated host .
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

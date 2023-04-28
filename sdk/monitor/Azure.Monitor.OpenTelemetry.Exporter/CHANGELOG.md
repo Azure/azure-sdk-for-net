@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  ([#35664](https://github.com/Azure/azure-sdk-for-net/pull/35664))
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0-beta2
+
 ## 1.0.0-beta.10 (2023-04-11)
 
 ### Bugs Fixed
