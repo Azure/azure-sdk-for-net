@@ -8,13 +8,12 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    //TEST
     public class Animal : IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public bool IsHungry { get; set; } = false;
-        public double Weight { get; set; } = 0;
+        public double Weight { get; set; } = 1.1;
         public string LatinName { get; private set; } = "Animalia";
         public string Name { get; set; } = "Animal";
 
@@ -37,6 +36,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Name = name;
             IsHungry = isHungry;
             RawData = rawData;
+        }
+
+        internal Animal(string name)
+        {
+            Name = name;
         }
 
         #region Serialization

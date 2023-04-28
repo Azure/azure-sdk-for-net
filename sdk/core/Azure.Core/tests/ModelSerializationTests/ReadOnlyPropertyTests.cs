@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class SerializableTests
+    public class ReadOnlyPropertyTests
     {
         private readonly SerializableOptions _wireOptions = new SerializableOptions { IncludeReadOnlyProperties = false };
         private readonly SerializableOptions _objectOptions = new SerializableOptions();
