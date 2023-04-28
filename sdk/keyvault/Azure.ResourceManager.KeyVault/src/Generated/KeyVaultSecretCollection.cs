@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, SecretData.DeserializeSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, SecretData.DeserializeSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

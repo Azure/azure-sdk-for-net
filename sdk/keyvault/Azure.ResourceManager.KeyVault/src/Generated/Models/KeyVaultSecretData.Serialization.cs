@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class SecretData : IUtf8JsonSerializable
+    public partial class KeyVaultSecretData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteEndObject();
         }
 
-        internal static SecretData DeserializeSecretData(JsonElement element)
+        internal static KeyVaultSecretData DeserializeKeyVaultSecretData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new SecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new KeyVaultSecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

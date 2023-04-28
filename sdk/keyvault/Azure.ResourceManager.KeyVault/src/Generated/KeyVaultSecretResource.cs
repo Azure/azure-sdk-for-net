@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault
 
         private readonly ClientDiagnostics _keyVaultSecretSecretsClientDiagnostics;
         private readonly SecretsRestOperations _keyVaultSecretSecretsRestClient;
-        private readonly SecretData _data;
+        private readonly KeyVaultSecretData _data;
 
         /// <summary> Initializes a new instance of the <see cref="KeyVaultSecretResource"/> class for mocking. </summary>
         protected KeyVaultSecretResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of the <see cref = "KeyVaultSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KeyVaultSecretResource(ArmClient client, SecretData data) : this(client, data.Id)
+        internal KeyVaultSecretResource(ArmClient client, KeyVaultSecretData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecretData Data
+        public virtual KeyVaultSecretData Data
         {
             get
             {

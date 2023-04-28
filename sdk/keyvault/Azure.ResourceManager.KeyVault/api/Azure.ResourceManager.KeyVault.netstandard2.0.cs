@@ -206,11 +206,18 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.KeyVaultSecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultSecretResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public partial class KeyVaultSecretData : Azure.ResourceManager.Models.ResourceData
+    {
+        public KeyVaultSecretData(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class KeyVaultSecretResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KeyVaultSecretResource() { }
-        public virtual Azure.ResourceManager.KeyVault.SecretData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.KeyVaultSecretData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string secretName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultSecretResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -309,13 +316,6 @@ namespace Azure.ResourceManager.KeyVault
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.ManagedHsmResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.ManagedHsmResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.ManagedHsmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.ManagedHsmResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KeyVault.ManagedHsmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SecretData : Azure.ResourceManager.Models.ResourceData
-    {
-        public SecretData(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.KeyVault.Models

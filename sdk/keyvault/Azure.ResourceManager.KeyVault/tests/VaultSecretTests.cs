@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ValidateSecret(list.FirstOrDefault().Data, secretName);
         }
 
-        private void ValidateSecret(SecretData secret, string secretName)
+        private void ValidateSecret(KeyVaultSecretData secret, string secretName)
         {
             Assert.IsNotNull(secret);
             Assert.AreEqual(secretName, secret.Name);

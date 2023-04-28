@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecretData>> value = default;
+            Optional<IReadOnlyList<KeyVaultSecretData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<SecretData> array = new List<SecretData>();
+                    List<KeyVaultSecretData> array = new List<KeyVaultSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretData.DeserializeSecretData(item));
+                        array.Add(KeyVaultSecretData.DeserializeKeyVaultSecretData(item));
                     }
                     value = array;
                     continue;

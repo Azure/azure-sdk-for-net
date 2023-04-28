@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing the Secret data model.
+    /// A class representing the KeyVaultSecret data model.
     /// Resource information with extended details.
     /// </summary>
-    public partial class SecretData : ResourceData
+    public partial class KeyVaultSecretData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecretData. </summary>
+        /// <summary> Initializes a new instance of KeyVaultSecretData. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SecretData(SecretProperties properties)
+        public KeyVaultSecretData(SecretProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SecretData. </summary>
+        /// <summary> Initializes a new instance of KeyVaultSecretData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="properties"> Properties of the secret. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal SecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecretProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal KeyVaultSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecretProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;

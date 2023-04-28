@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SecretData resourceData = result.Data;
+            KeyVaultSecretData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SecretData resourceData = result.Data;
+            KeyVaultSecretData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SecretData resourceData = item.Data;
+                KeyVaultSecretData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
