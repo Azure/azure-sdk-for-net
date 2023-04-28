@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Azure.CoreWCF.AzureQueueStorage</AssemblyName>
+    <PackageId>Azure.CoreWCF.AzureQueueStorage</PackageId>
+    <RootNamespace />
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="NuGet.Commands" VersionOverride="6.5.0" />
+    <PackageReference Include="System.IO.Pipelines" VersionOverride="6.0.3" />
+    <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.0-preview1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CoreWCF\Configuration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.5-beta1.23165.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23165.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.435">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

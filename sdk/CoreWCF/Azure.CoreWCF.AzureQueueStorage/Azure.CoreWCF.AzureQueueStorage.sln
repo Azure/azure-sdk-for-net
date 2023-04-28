@@ -1,0 +1,81 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0B5D4C83-181F-44AD-8F24-95599BFD66B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{73CF9B6D-0B40-422E-8F55-9D0C134E9E37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DAAE6286-93E2-4F2B-81D2-A32A9F024595}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\azure-pipelines-ci.yml = ..\azure-pipelines-ci.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\Directory.Build.props = ..\Directory.Build.props
+		..\Directory.Build.targets = ..\Directory.Build.targets
+		..\GitVersion.yml = ..\GitVersion.yml
+		..\nuspec.props = ..\nuspec.props
+		..\resources.props = ..\resources.props
+		..\resources.targets = ..\resources.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{1026C1CC-83E8-444C-9B16-28E68C50A727}"
+	ProjectSection(SolutionItems) = preProject
+		..\templates\BuildStage.yml = ..\templates\BuildStage.yml
+		..\templates\CodeSignStage.yml = ..\templates\CodeSignStage.yml
+		..\templates\PackStage.yml = ..\templates\PackStage.yml
+		..\templates\PublishStage.yml = ..\templates\PublishStage.yml
+		..\templates\TestStage.yml = ..\templates\TestStage.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.CoreWCF.AzureQueueStorage", "src\Azure.CoreWCF.AzureQueueStorage.csproj", "{7335E4E7-CC37-4EDC-9570-3638B4C28461}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.CoreWCF.AzureQueueStorage.Tests", "tests\Azure.CoreWCF.AzureQueueStorage.Tests.csproj", "{9682A2EB-E4CD-4AF3-8F28-763F5D107969}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|x64.Build.0 = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Debug|x86.Build.0 = Debug|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|x64.ActiveCfg = Release|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|x64.Build.0 = Release|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|x86.ActiveCfg = Release|Any CPU
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461}.Release|x86.Build.0 = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|x64.Build.0 = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Debug|x86.Build.0 = Debug|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|x64.ActiveCfg = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|x64.Build.0 = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|x86.ActiveCfg = Release|Any CPU
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1026C1CC-83E8-444C-9B16-28E68C50A727} = {DAAE6286-93E2-4F2B-81D2-A32A9F024595}
+		{7335E4E7-CC37-4EDC-9570-3638B4C28461} = {0B5D4C83-181F-44AD-8F24-95599BFD66B8}
+		{9682A2EB-E4CD-4AF3-8F28-763F5D107969} = {73CF9B6D-0B40-422E-8F55-9D0C134E9E37}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C86AC5B-B946-48AD-A3A5-0E1A29EDA4CF}
+	EndGlobalSection
+EndGlobal
