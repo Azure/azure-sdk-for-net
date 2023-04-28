@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLanguagesAsync(String,String,String,ETag,RequestContext)">
+    <member name="GetLanguagesAsync(string,string,string,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetLanguagesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var result = await client.GetLanguagesAsync("<clientTraceId>", "<scope>", "<acceptLanguage>", "<ifNoneMatch>");
+]]></code>
+</example>
+    </member>
+    <member name="GetLanguages(string,string,string,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call GetLanguages with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var result = client.GetLanguages("<clientTraceId>", "<scope>", "<acceptLanguage>", "<ifNoneMatch>");
+]]></code>
+</example>
+    </member>
+    <member name="GetLanguagesAsync(string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLanguagesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -48,7 +70,7 @@ Schema for <c>GetLanguagesResult</c>:
 
 </remarks>
     </member>
-    <member name="GetLanguages(String,String,String,ETag,RequestContext)">
+    <member name="GetLanguages(string,string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLanguages with required parameters and parse the result.
 <code><![CDATA[
@@ -95,7 +117,31 @@ Schema for <c>GetLanguagesResult</c>:
 
 </remarks>
     </member>
-    <member name="TranslateAsync(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)">
+    <member name="TranslateAsync(global::System.Collections.Generic.IEnumerable{string},object,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call TranslateAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = await client.TranslateAsync(new String[]{"<to>"}, requestBody, "<clientTraceId>", "<from>", "<textType>", "<category>", "<profanityAction>", "<profanityMarker>", true, true, "<suggestedFrom>", "<fromScript>", "<toScript>", true);
+]]></code>
+</example>
+    </member>
+    <member name="Translate(global::System.Collections.Generic.IEnumerable{string},object,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call Translate with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = client.Translate(new String[]{"<to>"}, requestBody, "<clientTraceId>", "<from>", "<textType>", "<category>", "<profanityAction>", "<profanityMarker>", true, true, "<suggestedFrom>", "<fromScript>", "<toScript>", true);
+]]></code>
+</example>
+    </member>
+    <member name="TranslateAsync(global::System.Collections.Generic.IEnumerable{string},global::Azure.Core.RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call TranslateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -196,7 +242,7 @@ converted into Arab script.
 
 </remarks>
     </member>
-    <member name="Translate(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)">
+    <member name="Translate(global::System.Collections.Generic.IEnumerable{string},global::Azure.Core.RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Translate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -297,7 +343,31 @@ converted into Arab script.
 
 </remarks>
     </member>
-    <member name="TransliterateAsync(String,String,String,RequestContent,String,RequestContext)">
+    <member name="TransliterateAsync(string,string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call TransliterateAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = await client.TransliterateAsync("<language>", "<fromScript>", "<toScript>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="Transliterate(string,string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call Transliterate with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = client.Transliterate("<language>", "<fromScript>", "<toScript>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="TransliterateAsync(string,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call TransliterateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -356,7 +426,7 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="Transliterate(String,String,String,RequestContent,String,RequestContext)">
+    <member name="Transliterate(string,string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call Transliterate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -415,7 +485,31 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="FindSentenceBoundariesAsync(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundariesAsync(object,string,string,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call FindSentenceBoundariesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = await client.FindSentenceBoundariesAsync(requestBody, "<clientTraceId>", "<language>", "<script>");
+]]></code>
+</example>
+    </member>
+    <member name="FindSentenceBoundaries(object,string,string,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call FindSentenceBoundaries with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = client.FindSentenceBoundaries(requestBody, "<clientTraceId>", "<language>", "<script>");
+]]></code>
+</example>
+    </member>
+    <member name="FindSentenceBoundariesAsync(global::Azure.Core.RequestContent,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call FindSentenceBoundariesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -479,7 +573,7 @@ The length of the array is the number of sentences, and the values are the lengt
 
 </remarks>
     </member>
-    <member name="FindSentenceBoundaries(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundaries(global::Azure.Core.RequestContent,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call FindSentenceBoundaries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -543,7 +637,31 @@ The length of the array is the number of sentences, and the values are the lengt
 
 </remarks>
     </member>
-    <member name="LookupDictionaryEntriesAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntriesAsync(string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call LookupDictionaryEntriesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = await client.LookupDictionaryEntriesAsync("<from>", "<to>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="LookupDictionaryEntries(string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call LookupDictionaryEntries with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = client.LookupDictionaryEntries("<from>", "<to>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="LookupDictionaryEntriesAsync(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryEntriesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -647,7 +765,7 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="LookupDictionaryEntries(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntries(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryEntries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -751,7 +869,31 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="LookupDictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamplesAsync(string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call LookupDictionaryExamplesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = await client.LookupDictionaryExamplesAsync("<from>", "<to>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="LookupDictionaryExamples(string,string,object,string,global::System.Threading.CancellationToken)">
+<example>
+This sample shows how to call LookupDictionaryExamples with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new TextTranslationClient(endpoint);
+
+var requestBody = null;
+var result = client.LookupDictionaryExamples("<from>", "<to>", requestBody, "<clientTraceId>");
+]]></code>
+</example>
+    </member>
+    <member name="LookupDictionaryExamplesAsync(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryExamplesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -845,7 +987,7 @@ This value may be an empty string.
 
 </remarks>
     </member>
-    <member name="LookupDictionaryExamples(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamples(string,string,global::Azure.Core.RequestContent,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryExamples with required parameters and request content, and how to parse the result.
 <code><![CDATA[

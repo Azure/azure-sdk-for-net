@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetServiceStatusAsync(RequestContext)">
+    <member name="GetServiceStatusAsync(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetServiceStatusAsync.
 <code><![CDATA[
@@ -12,7 +12,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetServiceStatus(RequestContext)">
+    <member name="GetServiceStatus(global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetServiceStatus.
 <code><![CDATA[
