@@ -20,13 +20,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
-        private const string _testServerUrl = "http://localhost:9998/";
+        private const string TestServerUrl = "http://localhost:9998/";
 
         // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
         // Can search for all records in the portal via Log Analytics using this query:   Union * | where AppRoleName == 'Test##'
-        private const string _roleName = nameof(DistroWebAppLiveTests);
+        private const string RoleName = nameof(DistroWebAppLiveTests);
 
-        private const string _logMessage = "Message via ILogger";
+        private const string LogMessage = "Message via ILogger";
 
         private LogsQueryClient? _logsQueryClient = null;
 
@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var resourceAttributes = new Dictionary<string, object>
             {
-                { "service.name", _roleName },
+                { "service.name", RoleName },
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault();
@@ -75,16 +75,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var app = builder.Build();
             app.MapGet("/", () =>
             {
-                app.Logger.LogInformation(_logMessage);
+                app.Logger.LogInformation(LogMessage);
 
                 return "Response from Test Server";
             });
 
-            _ = app.RunAsync(_testServerUrl);
+            _ = app.RunAsync(TestServerUrl);
 
             // ACT
             using var httpClient = new HttpClient();
-            var res = await httpClient.GetStringAsync(_testServerUrl).ConfigureAwait(false);
+            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
@@ -99,28 +99,28 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ASSERT
             // NOTE: The following queries are using the LogAnalytics schema.
             // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
-            await VerifyLogs(
+            await VerifyTelemetry(
                 description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{_testServerUrl}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
 
-            await VerifyLogs(
+            await VerifyTelemetry(
                 description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{_testServerUrl}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
 
-            await VerifyLogs(
+            await VerifyTelemetry(
                 description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{_roleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
 
-            await VerifyLogs(
+            await VerifyTelemetry(
                 description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{_roleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
+                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
 
-            await VerifyLogs(
+            await VerifyTelemetry(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{_logMessage}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated");
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
         }
 
-        private async Task VerifyLogs(string description, string query)
+        private async Task VerifyTelemetry(string description, string query)
         {
             LogsTable? table = await _logsQueryClient!.CheckForRecordAsync(query);
 
