@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -44,9 +43,10 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
             widget.name = "New Name";
+            client.SetWidget(RequestContent.Create(widget));
             #endregion
 
-            Assert.IsTrue(widget.Name == "New Name");
+            Assert.IsTrue(widget.name == "New Name");
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Core.Samples
             widget.values = new int[] { 1, 2, 3 };
 #endif
 
-            // JSON is "{ values = [1, 2, 3] }"
+            // JSON is `{ "values" : [1, 2, 3] }`
             int value = widget.values[0];
             #endregion
 
@@ -75,16 +75,16 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
             // Check whether optional property is present
-            if (widget.Properties != null)
+            if (widget.details != null)
             {
-                string color = widget.Properties.Color;
+                string color = widget.details.color;
             }
             #endregion
 
-            Assert.IsTrue(widget.Properties == null);
+            Assert.IsTrue(widget.details.color == "blue");
         }
 
         [Test]
@@ -94,27 +94,21 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
-#if !SNIPPET
-            widget.Properties = new
+            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
+            foreach (dynamic property in widget.details)
             {
-                color = "blue",
-                size = "small"
-            };
-#endif
-            foreach (dynamic property in widget.Properties)
-            {
-                UpdateWidget(property.Name, property.Value);
+                PrintWidget(property.Name, property.Value);
             }
 
-            void UpdateWidget(string name, string value)
+            void PrintWidget(string name, string value)
             {
                 Console.WriteLine($"Widget has property {name}='{value}'.");
             }
             #endregion
 
-            Assert.IsTrue(widget.Properties.Color == "blue");
+            Assert.IsTrue(widget.details.color == "blue");
         }
 
         [Test]
@@ -125,15 +119,19 @@ namespace Azure.Core.Samples
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
             dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+
+            // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
             #endregion
 
+            Assert.IsTrue(widget.Id == "123");
             Assert.IsTrue(widget.Name == "Widget");
         }
 
         #region Snippet:AzureCoreDynamicJsonPOCO
         public class Widget
         {
+            public string Id { get; set; }
             public string Name { get; set; }
         }
         #endregion
@@ -145,16 +143,16 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicPropertyInvalidCharacters
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson();
 #if !SNIPPET
-            widget["$id"] = "foo";
+            widget["$id"] = "123";
 #endif
 
-            /// JSON is """{ $id = "foo" }"""
+            /// JSON is `{ "$id" = "123" }`
             string id = widget["$id"];
             #endregion
 
-            Assert.IsTrue(id == "foo");
+            Assert.IsTrue(id == "123");
         }
 
         [Test]
@@ -164,7 +162,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripAnonymousType
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
             RequestContent update = RequestContent.Create(
                 new
@@ -179,12 +177,13 @@ namespace Azure.Core.Samples
                     // A forgotten field may be deleted!
                 }
             );
+
             client.SetWidget(update);
             #endregion
         }
 
         [Test]
-        public async Task SetWidgetDynamicJson()
+        public void SetWidgetDynamicJson()
         {
             WidgetsClient client = GetMockClient();
 
@@ -194,14 +193,32 @@ namespace Azure.Core.Samples
 
             widget.Name = "New Name";
 
-            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
+            client.SetWidget(RequestContent.Create(widget));
             #endregion
         }
 
         private WidgetsClient GetMockClient()
         {
-            string initial = @"{ ""Id"" : ""123"", ""Name"" : ""Widget"" }";
-            string updated = @"{ ""Id"" : ""123"", ""Name"" : ""New Name"" }";
+            string initial = """
+                {
+                    "id" : "123",
+                    "name" : "Widget",
+                    "details" : {
+                        "color" : "blue",
+                        "size" : "small"
+                    }
+                }
+                """;
+            string updated = """
+                {
+                    "id" : "123",
+                    "name" : "New Name",
+                    "details" : {
+                        "color" : "blue",
+                        "size" : "small"
+                    }
+                }
+                """;
 
             WidgetsClientOptions options = new WidgetsClientOptions()
             {
