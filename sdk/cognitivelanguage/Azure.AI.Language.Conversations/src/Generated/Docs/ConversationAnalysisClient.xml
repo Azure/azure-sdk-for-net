@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AnalyzeConversationAsync(RequestContent,RequestContext)">
+    <member name="AnalyzeConversationAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AnalyzeConversationAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -129,7 +129,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="AnalyzeConversation(RequestContent,RequestContext)">
+    <member name="AnalyzeConversation(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call AnalyzeConversation with required request content, and how to parse the result.
 <code><![CDATA[
@@ -257,7 +257,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetAnalyzeConversationJobStatusAsync(Guid,Boolean,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatusAsync(global::System.Guid,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -343,7 +343,7 @@ Schema for <c>AnalyzeConversationJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetAnalyzeConversationJobStatus(Guid,Boolean,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatus(global::System.Guid,bool?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAnalyzeConversationJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -429,7 +429,7 @@ Schema for <c>AnalyzeConversationJobState</c>:
 
 </remarks>
     </member>
-    <member name="StartAnalyzeConversationAsync(WaitUntil,RequestContent,RequestContext)">
+    <member name="StartAnalyzeConversationAsync(global::Azure.WaitUntil,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartAnalyzeConversationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -604,7 +604,7 @@ Schema for <c>AnalyzeConversationJobState</c>:
 
 </remarks>
     </member>
-    <member name="StartAnalyzeConversation(WaitUntil,RequestContent,RequestContext)">
+    <member name="StartAnalyzeConversation(global::Azure.WaitUntil,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call StartAnalyzeConversation with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -779,7 +779,7 @@ Schema for <c>AnalyzeConversationJobState</c>:
 
 </remarks>
     </member>
-    <member name="CancelAnalyzeConversationJobAsync(WaitUntil,Guid,RequestContext)">
+    <member name="CancelAnalyzeConversationJobAsync(global::Azure.WaitUntil,global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelAnalyzeConversationJobAsync with required parameters.
 <code><![CDATA[
@@ -796,7 +796,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 Cancel a long-running Text Analysis conversations job.
 </remarks>
     </member>
-    <member name="CancelAnalyzeConversationJob(WaitUntil,Guid,RequestContext)">
+    <member name="CancelAnalyzeConversationJob(global::Azure.WaitUntil,global::System.Guid,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CancelAnalyzeConversationJob with required parameters.
 <code><![CDATA[

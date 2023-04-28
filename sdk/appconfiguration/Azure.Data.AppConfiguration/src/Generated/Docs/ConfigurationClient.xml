@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CheckKeysAsync(String,String,String,RequestContext)">
+    <member name="CheckKeysAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeysAsync.
 <code><![CDATA[
@@ -21,7 +21,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeys(String,String,String,RequestContext)">
+    <member name="CheckKeys(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeys.
 <code><![CDATA[
@@ -41,7 +41,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeyValuesAsync(String,String,String,String,IEnumerable,String,RequestContext)">
+    <member name="CheckKeyValuesAsync(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeyValuesAsync.
 <code><![CDATA[
@@ -61,7 +61,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeyValues(String,String,String,String,IEnumerable,String,RequestContext)">
+    <member name="CheckKeyValues(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeyValues.
 <code><![CDATA[
@@ -81,7 +81,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetConfigurationSettingAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="GetConfigurationSettingAsync(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSettingAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -131,7 +131,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSetting(String,String,String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="GetConfigurationSetting(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSetting with required parameters and parse the result.
 <code><![CDATA[
@@ -181,7 +181,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="SetConfigurationSettingAsync(String,RequestContent,ContentType,String,MatchConditions,RequestContext)">
+    <member name="SetConfigurationSettingAsync(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SetConfigurationSettingAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -261,7 +261,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="SetConfigurationSetting(String,RequestContent,ContentType,String,MatchConditions,RequestContext)">
+    <member name="SetConfigurationSetting(string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call SetConfigurationSetting with required parameters and parse the result.
 <code><![CDATA[
@@ -341,7 +341,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteConfigurationSettingAsync(String,String,ETag,RequestContext)">
+    <member name="DeleteConfigurationSettingAsync(string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteConfigurationSettingAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -391,7 +391,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteConfigurationSetting(String,String,ETag,RequestContext)">
+    <member name="DeleteConfigurationSetting(string,string,global::Azure.ETag?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteConfigurationSetting with required parameters and parse the result.
 <code><![CDATA[
@@ -441,7 +441,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CheckKeyValueAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="CheckKeyValueAsync(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeyValueAsync with required parameters.
 <code><![CDATA[
@@ -461,7 +461,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckKeyValue(String,String,String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="CheckKeyValue(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckKeyValue with required parameters.
 <code><![CDATA[
@@ -481,7 +481,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckSnapshotsAsync(String,RequestContext)">
+    <member name="CheckSnapshotsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckSnapshotsAsync.
 <code><![CDATA[
@@ -501,7 +501,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckSnapshots(String,RequestContext)">
+    <member name="CheckSnapshots(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckSnapshots.
 <code><![CDATA[
@@ -521,7 +521,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="GetSnapshotAsync(string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSnapshotAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -583,7 +583,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)">
+    <member name="GetSnapshot(string,global::System.Collections.Generic.IEnumerable{string},global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSnapshot with required parameters and parse the result.
 <code><![CDATA[
@@ -645,7 +645,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshotStatusAsync(String,RequestContent,MatchConditions,RequestContext)">
+    <member name="UpdateSnapshotStatusAsync(string,global::Azure.Core.RequestContent,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSnapshotStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -721,7 +721,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshotStatus(String,RequestContent,MatchConditions,RequestContext)">
+    <member name="UpdateSnapshotStatus(string,global::Azure.Core.RequestContent,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call UpdateSnapshotStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -797,7 +797,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="CheckSnapshotAsync(String,MatchConditions,RequestContext)">
+    <member name="CheckSnapshotAsync(string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckSnapshotAsync with required parameters.
 <code><![CDATA[
@@ -817,7 +817,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckSnapshot(String,MatchConditions,RequestContext)">
+    <member name="CheckSnapshot(string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckSnapshot with required parameters.
 <code><![CDATA[
@@ -837,7 +837,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckLabelsAsync(String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckLabelsAsync(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckLabelsAsync.
 <code><![CDATA[
@@ -857,7 +857,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckLabels(String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckLabels(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckLabels.
 <code><![CDATA[
@@ -877,7 +877,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CreateReadOnlyLockAsync(String,String,MatchConditions,RequestContext)">
+    <member name="CreateReadOnlyLockAsync(string,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateReadOnlyLockAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -927,7 +927,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateReadOnlyLock(String,String,MatchConditions,RequestContext)">
+    <member name="CreateReadOnlyLock(string,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateReadOnlyLock with required parameters and parse the result.
 <code><![CDATA[
@@ -977,7 +977,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReadOnlyLockAsync(String,String,MatchConditions,RequestContext)">
+    <member name="DeleteReadOnlyLockAsync(string,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteReadOnlyLockAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1027,7 +1027,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReadOnlyLock(String,String,MatchConditions,RequestContext)">
+    <member name="DeleteReadOnlyLock(string,string,global::Azure.MatchConditions,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteReadOnlyLock with required parameters and parse the result.
 <code><![CDATA[
@@ -1077,7 +1077,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CheckRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckRevisionsAsync(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckRevisionsAsync.
 <code><![CDATA[
@@ -1097,7 +1097,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="CheckRevisions(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="CheckRevisions(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call CheckRevisions.
 <code><![CDATA[
@@ -1117,7 +1117,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetOperationDetailsAsync(String,RequestContext)">
+    <member name="GetOperationDetailsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1157,7 +1157,7 @@ Schema for <c>OperationDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationDetails(String,RequestContext)">
+    <member name="GetOperationDetails(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOperationDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -1197,7 +1197,7 @@ Schema for <c>OperationDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetKeysAsync(String,String,String,RequestContext)">
+    <member name="GetKeysAsync(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeysAsync and parse the result.
 <code><![CDATA[
@@ -1235,7 +1235,7 @@ Schema for <c>KeyListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetKeys(String,String,String,RequestContext)">
+    <member name="GetKeys(string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetKeys and parse the result.
 <code><![CDATA[
@@ -1273,7 +1273,7 @@ Schema for <c>KeyListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,String,RequestContext)">
+    <member name="GetConfigurationSettingsAsync(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSettingsAsync and parse the result.
 <code><![CDATA[
@@ -1325,7 +1325,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettings(String,String,String,String,IEnumerable,String,RequestContext)">
+    <member name="GetConfigurationSettings(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetConfigurationSettings and parse the result.
 <code><![CDATA[
@@ -1377,7 +1377,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshotsAsync(String,String,IEnumerable,IEnumerable,RequestContext)">
+    <member name="GetSnapshotsAsync(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSnapshotsAsync and parse the result.
 <code><![CDATA[
@@ -1441,7 +1441,7 @@ Schema for <c>SnapshotListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshots(String,String,IEnumerable,IEnumerable,RequestContext)">
+    <member name="GetSnapshots(string,string,global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSnapshots and parse the result.
 <code><![CDATA[
@@ -1505,7 +1505,7 @@ Schema for <c>SnapshotListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetLabelsAsync(String,String,String,IEnumerable,RequestContext)">
+    <member name="GetLabelsAsync(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLabelsAsync and parse the result.
 <code><![CDATA[
@@ -1543,7 +1543,7 @@ Schema for <c>LabelListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetLabels(String,String,String,IEnumerable,RequestContext)">
+    <member name="GetLabels(string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetLabels and parse the result.
 <code><![CDATA[
@@ -1581,7 +1581,7 @@ Schema for <c>LabelListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="GetRevisionsAsync(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRevisionsAsync and parse the result.
 <code><![CDATA[
@@ -1633,7 +1633,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetRevisions(String,String,String,String,IEnumerable,RequestContext)">
+    <member name="GetRevisions(string,string,string,string,global::System.Collections.Generic.IEnumerable{string},global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetRevisions and parse the result.
 <code><![CDATA[
@@ -1685,7 +1685,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="CreateSnapshotAsync(WaitUntil,String,RequestContent,ContentType,RequestContext)">
+    <member name="CreateSnapshotAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSnapshotAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1794,7 +1794,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="CreateSnapshot(WaitUntil,String,RequestContent,ContentType,RequestContext)">
+    <member name="CreateSnapshot(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.Core.ContentType,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSnapshot with required parameters and request content, and how to parse the result.
 <code><![CDATA[

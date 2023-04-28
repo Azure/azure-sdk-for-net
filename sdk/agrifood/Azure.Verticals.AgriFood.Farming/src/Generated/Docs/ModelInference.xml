@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetBiomassModelJobAsync(String,RequestContext)">
+    <member name="GetBiomassModelJobAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBiomassModelJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -80,7 +80,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetBiomassModelJob(String,RequestContext)">
+    <member name="GetBiomassModelJob(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetBiomassModelJob with required parameters and parse the result.
 <code><![CDATA[
@@ -159,7 +159,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorPlacementModelJobAsync(String,RequestContext)">
+    <member name="GetSensorPlacementModelJobAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPlacementModelJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -234,7 +234,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorPlacementModelJob(String,RequestContext)">
+    <member name="GetSensorPlacementModelJob(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSensorPlacementModelJob with required parameters and parse the result.
 <code><![CDATA[
@@ -309,7 +309,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSoilMoistureModelJobAsync(String,RequestContext)">
+    <member name="GetSoilMoistureModelJobAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSoilMoistureModelJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -396,7 +396,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSoilMoistureModelJob(String,RequestContext)">
+    <member name="GetSoilMoistureModelJob(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetSoilMoistureModelJob with required parameters and parse the result.
 <code><![CDATA[
@@ -483,7 +483,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateBiomassModelJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateBiomassModelJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateBiomassModelJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -654,7 +654,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateBiomassModelJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateBiomassModelJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateBiomassModelJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -825,7 +825,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSensorPlacementModelJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSensorPlacementModelJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSensorPlacementModelJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -984,7 +984,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSensorPlacementModelJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSensorPlacementModelJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSensorPlacementModelJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1143,7 +1143,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSoilMoistureModelJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSoilMoistureModelJobAsync(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSoilMoistureModelJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1340,7 +1340,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSoilMoistureModelJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSoilMoistureModelJob(global::Azure.WaitUntil,string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateSoilMoistureModelJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetWeatherDataAsync(RequestContent,RequestContext)">
+    <member name="GetWeatherDataAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWeatherDataAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -221,7 +221,7 @@ Schema for <c>WeatherDataProviderResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetWeatherData(RequestContent,RequestContext)">
+    <member name="GetWeatherData(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetWeatherData with required request content, and how to parse the result.
 <code><![CDATA[

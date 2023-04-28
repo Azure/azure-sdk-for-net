@@ -55,7 +55,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetWeatherDataAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -80,7 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response GetWeatherData(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
