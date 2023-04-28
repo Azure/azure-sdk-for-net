@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private const string _testServerUrl = "http://localhost:9998/";
 
         // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
-        // Can search for all records in the portal using this query:   Union * | where AppRoleName == 'Test##'
+        // Can search for all records in the portal via Log Analytics using this query:   Union * | where AppRoleName == 'Test##'
         private const string _roleName = nameof(DistroWebAppLiveTests);
 
         private const string _logMessage = "Message via ILogger";
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [RecordedTest]
         public async Task VerifyDistro()
         {
-            // SETUP LOGS CLIENT
+            // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
@@ -97,6 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             await app.StopAsync(); // shutdown to prevent collecting the log queries.
 
             // ASSERT
+            // NOTE: The following queries are using the LogAnalytics schema.
             // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
             await VerifyLogs(
                 description: "Dependency for invoking HttpClient, from testhost",
