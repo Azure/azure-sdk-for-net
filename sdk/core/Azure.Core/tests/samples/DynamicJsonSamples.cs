@@ -77,6 +77,8 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
 
+            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
+
             // Check whether optional property is present
             if (widget.details != null)
             {
@@ -118,7 +120,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic content = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -167,7 +169,7 @@ namespace Azure.Core.Samples
             RequestContent update = RequestContent.Create(
                 new
                 {
-                    id = (string)widget.Id,
+                    id = (string)widget.id,
                     name = "New Name",
                     properties = new object[]
                     {
@@ -190,11 +192,26 @@ namespace Azure.Core.Samples
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
-
             widget.Name = "New Name";
-
             client.SetWidget(RequestContent.Create(widget));
             #endregion
+        }
+
+        [Test]
+        public void UseDynamicDataDefaults()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreUseDynamicDataDefaults
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            string id = widget.Id;
+            widget.Name = "New Name";
+            client.SetWidget(RequestContent.Create(widget));
+            #endregion
+
+            Assert.IsTrue(id == "123");
+            Assert.IsTrue(widget.Name == "New Names");
         }
 
         private WidgetsClient GetMockClient()
