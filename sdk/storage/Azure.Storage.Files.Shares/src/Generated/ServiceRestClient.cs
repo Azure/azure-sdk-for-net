@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

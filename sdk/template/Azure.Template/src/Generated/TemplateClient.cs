@@ -60,14 +60,23 @@ namespace Azure.Template
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a specified secret from a given key vault. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specified secret from a given key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecretAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecretAsync(string,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetSecretAsync(string secretName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
@@ -86,14 +95,23 @@ namespace Azure.Template
             }
         }
 
-        /// <summary> Get a specified secret from a given key vault. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a specified secret from a given key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecret(String,RequestContext)']/*" />
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecret(string,global::Azure.RequestContext)']/*" />
         public virtual Response GetSecret(string secretName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
