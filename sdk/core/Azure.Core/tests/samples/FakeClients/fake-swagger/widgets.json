@@ -1,4 +1,8 @@
 ﻿{
+    "info": {
+        "version": "1.0",
+        "title": "widgets"
+    },
     "swagger": "2.0",
     "x-ms-parameterized-host": {
         "hostTemplate": "{endpoint}",
@@ -23,21 +27,17 @@
         "application/json"
     ],
     "paths": {
-        "/widgets/{id}": {
+        "/widgets": {
             "get": {
+                "operationId": "Get",
                 "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "200": {
                         "schema": {
                             "$ref": "#/definitions/Widget"
-                        }
+                        },
+                        "description": "Success response."
                     },
                     "default": {
                         "description": "Error response."
@@ -45,6 +45,7 @@
                 }
             },
             "put": {
+                "operationId": "Set",
                 "parameters": [
                     {
                         "name": "widget",
@@ -54,7 +55,15 @@
                             "$ref": "#/definitions/Widget"
                         }
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response."
+                    },
+                    "default": {
+                        "description": "Error response."
+                    }
+                }
             }
         }
     },

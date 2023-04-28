@@ -57,23 +57,17 @@ namespace Azure.Core.Samples
             _endpoint = endpoint;
         }
 
-        /// <summary> Get a widget. </summary>
-        /// <param name="id"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='GetWidgetAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetWidgetAsync(string id, RequestContext context = null)
+        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='GetWidgetAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetWidgetAsync(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             using var scope = ClientDiagnostics.CreateScope("WidgetsClient.GetWidget");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetWidgetRequest(id, context);
+                using HttpMessage message = CreateGetWidgetRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -83,23 +77,17 @@ namespace Azure.Core.Samples
             }
         }
 
-        /// <summary> Get a widget. </summary>
-        /// <param name="id"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='GetWidget(String,RequestContext)']/*" />
-        public virtual Response GetWidget(string id, RequestContext context = null)
+        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='GetWidget(RequestContext)']/*" />
+        public virtual Response GetWidget(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             using var scope = ClientDiagnostics.CreateScope("WidgetsClient.GetWidget");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetWidgetRequest(id, context);
+                using HttpMessage message = CreateGetWidgetRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -109,25 +97,21 @@ namespace Azure.Core.Samples
             }
         }
 
-        /// <summary> Set a widget. </summary>
-        /// <param name="id"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='SetWidgetAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> SetWidgetAsync(string id, RequestContent content, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='SetAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> SetWidgetAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("WidgetsClient.SetWidget");
+            using var scope = ClientDiagnostics.CreateScope("WidgetsClient.Set");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetWidgetRequest(id, content, context);
+                using HttpMessage message = CreateSetRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -137,25 +121,21 @@ namespace Azure.Core.Samples
             }
         }
 
-        /// <summary> Set a widget. </summary>
-        /// <param name="id"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='SetWidget(String,RequestContent,RequestContext)']/*" />
-        public virtual Response SetWidget(string id, RequestContent content, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='Set(RequestContent,RequestContext)']/*" />
+        public virtual Response SetWidget(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("WidgetsClient.SetWidget");
+            using var scope = ClientDiagnostics.CreateScope("WidgetsClient.Set");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetWidgetRequest(id, content, context);
+                using HttpMessage message = CreateSetRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -165,31 +145,28 @@ namespace Azure.Core.Samples
             }
         }
 
-        internal HttpMessage CreateGetWidgetRequest(string id, RequestContext context)
+        internal HttpMessage CreateGetWidgetRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/widgets/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath("/widgets", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateSetWidgetRequest(string id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/widgets/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath("/widgets", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

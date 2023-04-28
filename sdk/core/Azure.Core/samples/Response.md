@@ -41,9 +41,9 @@ foreach (HttpHeader header in http.Headers)
 If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
-Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
-string name = widget.Name;
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson();
+string name = widget.name;
 ```
 
 See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.

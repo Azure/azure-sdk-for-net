@@ -121,9 +121,9 @@ var name = doc.RootElement.GetProperty("name").GetString();
 JSON properties can also be accessed using a dynamic layer.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
-Response response = await client.GetWidgetAsync("123");
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
-string name = widget.Name;
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson();
+string name = widget.name;
 ```
 
 ## Configuration And Customization
