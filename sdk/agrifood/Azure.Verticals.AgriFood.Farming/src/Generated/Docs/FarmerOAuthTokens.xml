@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetOAuthConnectionLinkAsync(RequestContent,RequestContext)">
+    <member name="GetOAuthConnectionLinkAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOAuthConnectionLinkAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -53,7 +53,7 @@ Schema for <c>OAuthConnectRequest</c>:
 
 </remarks>
     </member>
-    <member name="GetOAuthConnectionLink(RequestContent,RequestContext)">
+    <member name="GetOAuthConnectionLink(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetOAuthConnectionLink with required request content, and how to parse the result.
 <code><![CDATA[
@@ -105,7 +105,7 @@ Schema for <c>OAuthConnectRequest</c>:
 
 </remarks>
     </member>
-    <member name="GetCascadeDeleteJobDetailsAsync(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetailsAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -154,7 +154,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetCascadeDeleteJobDetails(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetails(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -203,7 +203,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetAuthenticatedFarmersDetailsAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAuthenticatedFarmersDetailsAsync(global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},bool?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
 <code><![CDATA[
@@ -252,7 +252,7 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAuthenticatedFarmersDetails(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAuthenticatedFarmersDetails(global::System.Collections.Generic.IEnumerable{string},global::System.Collections.Generic.IEnumerable{string},bool?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,global::System.DateTimeOffset?,int?,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
 <code><![CDATA[
@@ -301,7 +301,7 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJobAsync(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -351,7 +351,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJob(global::Azure.WaitUntil,string,string,string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[

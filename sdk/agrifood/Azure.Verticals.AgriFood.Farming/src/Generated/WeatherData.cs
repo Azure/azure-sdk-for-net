@@ -49,13 +49,17 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Returns a list of WeatherData. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a list of WeatherData.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetWeatherDataAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -74,13 +78,17 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a list of WeatherData. </summary>
+        /// <summary>
+        /// [Protocol Method]Returns a list of WeatherData.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(global::Azure.Core.RequestContent,global::Azure.RequestContext)']/*" />
         public virtual Response GetWeatherData(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DetectUnivariateEntireSeriesAsync(RequestContent,RequestContext)">
+    <member name="DetectUnivariateEntireSeriesAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateEntireSeriesAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -140,7 +140,7 @@ severe the anomaly is. For normal points, the severity is always 0.
 
 </remarks>
     </member>
-    <member name="DetectUnivariateEntireSeries(RequestContent,RequestContext)">
+    <member name="DetectUnivariateEntireSeries(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateEntireSeries with required request content, and how to parse the result.
 <code><![CDATA[
@@ -279,7 +279,7 @@ severe the anomaly is. For normal points, the severity is always 0.
 
 </remarks>
     </member>
-    <member name="DetectUnivariateLastPointAsync(RequestContent,RequestContext)">
+    <member name="DetectUnivariateLastPointAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateLastPointAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -409,7 +409,7 @@ severe the anomaly is. For normal points, the severity is always 0.
 
 </remarks>
     </member>
-    <member name="DetectUnivariateLastPoint(RequestContent,RequestContext)">
+    <member name="DetectUnivariateLastPoint(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateLastPoint with required request content, and how to parse the result.
 <code><![CDATA[
@@ -539,7 +539,7 @@ severe the anomaly is. For normal points, the severity is always 0.
 
 </remarks>
     </member>
-    <member name="DetectUnivariateChangePointAsync(RequestContent,RequestContext)">
+    <member name="DetectUnivariateChangePointAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateChangePointAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -634,7 +634,7 @@ array is consistent with the input series.
 
 </remarks>
     </member>
-    <member name="DetectUnivariateChangePoint(RequestContent,RequestContext)">
+    <member name="DetectUnivariateChangePoint(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateChangePoint with required request content, and how to parse the result.
 <code><![CDATA[
@@ -729,7 +729,7 @@ array is consistent with the input series.
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResultAsync(String,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResultAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -812,7 +812,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResult(String,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResult(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
 <code><![CDATA[
@@ -895,7 +895,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="TrainMultivariateModelAsync(RequestContent,RequestContext)">
+    <member name="TrainMultivariateModelAsync(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call TrainMultivariateModelAsync with required request content, and how to parse the result.
 <code><![CDATA[
@@ -1073,7 +1073,7 @@ information.
 
 </remarks>
     </member>
-    <member name="TrainMultivariateModel(RequestContent,RequestContext)">
+    <member name="TrainMultivariateModel(global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call TrainMultivariateModel with required request content, and how to parse the result.
 <code><![CDATA[
@@ -1251,7 +1251,7 @@ information.
 
 </remarks>
     </member>
-    <member name="DeleteMultivariateModelAsync(String,RequestContext)">
+    <member name="DeleteMultivariateModelAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModelAsync with required parameters.
 <code><![CDATA[
@@ -1267,7 +1267,7 @@ Console.WriteLine(response.Status);
 Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="DeleteMultivariateModel(String,RequestContext)">
+    <member name="DeleteMultivariateModel(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModel with required parameters.
 <code><![CDATA[
@@ -1283,7 +1283,7 @@ Console.WriteLine(response.Status);
 Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="GetMultivariateModelAsync(String,RequestContext)">
+    <member name="GetMultivariateModelAsync(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModelAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1379,7 +1379,7 @@ information.
 
 </remarks>
     </member>
-    <member name="GetMultivariateModel(String,RequestContext)">
+    <member name="GetMultivariateModel(string,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModel with required parameters and parse the result.
 <code><![CDATA[
@@ -1475,7 +1475,7 @@ information.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomalyAsync(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomalyAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1587,7 +1587,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomaly(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomaly(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1699,7 +1699,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomalyAsync(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomalyAsync(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateLastAnomalyAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1811,7 +1811,7 @@ Schema for <c>MultivariateLastDetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomaly(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomaly(string,global::Azure.Core.RequestContent,global::Azure.RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateLastAnomaly with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1923,7 +1923,7 @@ Schema for <c>MultivariateLastDetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
+    <member name="GetMultivariateModelsAsync(int?,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModelsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2014,7 +2014,7 @@ information.
 
 </remarks>
     </member>
-    <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
+    <member name="GetMultivariateModels(int?,int?,global::Azure.RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModels with required parameters and parse the result.
 <code><![CDATA[
