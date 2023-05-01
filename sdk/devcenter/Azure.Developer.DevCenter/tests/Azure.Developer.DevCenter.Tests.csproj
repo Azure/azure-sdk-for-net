@@ -21,8 +21,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="SessionRecords\EnvironmentCreateTests\" />
-    <Folder Include="SessionRecords\DevBoxCreateTests\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
   
 </Project>
