@@ -2,27 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
     public class JsonDataTests
     {
-        //[Test]
-        //public void CanCreateFromJson()
-        //{
-        //    var jsonData = DynamicJsonTests.GetDynamicJson("\"string\"");
-
-        //    Assert.AreEqual("\"string\"", jsonData.ToJsonString());
-        //}
-
-        //[Test]
-        //public void CanCreateFromNull()
-        //{
-        //    var jsonData = new JsonData(null);
-        //    Assert.AreEqual(JsonValueKind.Null, jsonData.Kind);
-        //}
-
         [Test]
         public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonAsType<string>("\"string\""));
 
@@ -105,44 +91,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
         }
 
-        //[Test]
-        //public void EqualsProvidesValueEqualityPrimitives()
-        //{
-        //    Assert.AreEqual(new JsonData(1), new JsonData(1));
-        //    Assert.AreEqual(new JsonData(true), new JsonData(true));
-        //    Assert.AreEqual(new JsonData(false), new JsonData(false));
-        //    Assert.AreEqual(new JsonData("hello"), new JsonData("hello"));
-        //    Assert.AreEqual(new JsonData(null), new JsonData(null));
-        //}
+        [Test]
+        public void CanRoundTripSerialize()
+        {
+            dynamic orig = DynamicJsonTests.GetDynamicJson(
+                """
+                {
+                    "property" : "hello"
+                }
+                """);
 
-        //[Test]
-        //public void EqualsAndNull()
-        //{
-        //    Assert.AreNotEqual(new JsonData(null), null);
-        //    Assert.AreNotEqual(null, new JsonData(null));
-        //}
+            void validate(dynamic d)
+            {
+                Assert.IsTrue(d.property == "hello");
 
-        //[Test]
-        //public void JsonDataInPOCOsWorks()
-        //{
-        //    JsonData orig = new JsonData(new
-        //    {
-        //        property = new JsonData("hello")
-        //    });
+                int count = 0;
+                foreach (dynamic item in d)
+                {
+                    count++;
+                }
 
-        //    void validate(JsonData d)
-        //    {
-        //        Assert.AreEqual(JsonValueKind.Object, d.Kind);
-        //        Assert.AreEqual(d.Properties.Count(), 1);
-        //        Assert.AreEqual(d.Get("property"), "hello");
-        //    }
+                Assert.IsTrue(count == 1);
+            }
 
-        //    validate(orig);
+            validate(orig);
 
-        //    JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
+            dynamic roundTrip = JsonSerializer.Deserialize<DynamicData>(JsonSerializer.Serialize(orig, orig.GetType()));
 
-        //    validate(roundTrip);
-        //}
+            validate(roundTrip);
+        }
 
         private T JsonAsType<T>(string json)
         {
