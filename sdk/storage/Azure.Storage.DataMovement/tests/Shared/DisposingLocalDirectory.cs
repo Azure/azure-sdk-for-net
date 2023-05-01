@@ -33,5 +33,15 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
         }
+
+        public static DisposingLocalDirectory GetTestDirectory(string directoryPath = default)
+        {
+            if (string.IsNullOrEmpty(directoryPath))
+            {
+                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            }
+            Directory.CreateDirectory(directoryPath);
+            return new DisposingLocalDirectory(directoryPath);
+        }
     }
 }

@@ -116,50 +116,39 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourceBlobDirectoryName = "foo";
-            string tempFolder = Path.GetTempPath();
-            string sourceFolderPath = CreateRandomDirectory(tempFolder, sourceBlobDirectoryName);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
 
-            try
-            {
-                List<string> blobNames = new List<string>();
+            List<string> blobNames = new List<string>();
 
-                string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
-                string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, size);
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName2, size);
-                blobNames.Add(blobName1);
-                blobNames.Add(blobName2);
+            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, size);
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName2, size);
+            blobNames.Add(blobName1);
+            blobNames.Add(blobName2);
 
-                string subDirName = "bar";
-                CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-                string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName3, size);
-                blobNames.Add(blobName3);
+            string subDirName = "bar";
+            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
+            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName3, size);
+            blobNames.Add(blobName3);
 
-                string subDirName2 = "pik";
-                CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-                string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName4, size);
-                blobNames.Add(blobName4);
+            string subDirName2 = "pik";
+            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
+            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName4, size);
+            blobNames.Add(blobName4);
 
-                string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
 
-                await DownloadBlobDirectoryAndVerify(
-                    test.Container,
-                    sourceBlobDirectoryName,
-                    sourceFolderPath,
-                    blobNames,
-                    destinationFolder,
-                    waitInSec).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(sourceFolderPath, true);
-            }
+            await DownloadBlobDirectoryAndVerify(
+                test.Container,
+                sourceBlobDirectoryName,
+                sourceFolderPath,
+                blobNames,
+                destinationFolder,
+                waitInSec).ConfigureAwait(false);
         }
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
@@ -174,50 +163,39 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourceBlobDirectoryName = "foo";
-            string tempFolder = Path.GetTempPath();
-            string sourceFolderPath = CreateRandomDirectory(tempFolder, sourceBlobDirectoryName);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
 
-            try
-            {
-                List<string> blobNames = new List<string>();
+            List<string> blobNames = new List<string>();
 
-                string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
-                string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, size);
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName2, size);
-                blobNames.Add(blobName1);
-                blobNames.Add(blobName2);
+            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, size);
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName2, size);
+            blobNames.Add(blobName1);
+            blobNames.Add(blobName2);
 
-                string subDirName = "bar";
-                CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-                string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName3, size);
-                blobNames.Add(blobName3);
+            string subDirName = "bar";
+            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
+            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName3, size);
+            blobNames.Add(blobName3);
 
-                string subDirName2 = "pik";
-                CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-                string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName4, size);
-                blobNames.Add(blobName4);
+            string subDirName2 = "pik";
+            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
+            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName4, size);
+            blobNames.Add(blobName4);
 
-                string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
 
-                await DownloadBlobDirectoryAndVerify(
-                    test.Container,
-                    sourceBlobDirectoryName,
-                    sourceFolderPath,
-                    blobNames,
-                    destinationFolder,
-                    waitInSec).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(sourceFolderPath, true);
-            }
+            await DownloadBlobDirectoryAndVerify(
+                test.Container,
+                sourceBlobDirectoryName,
+                sourceFolderPath,
+                blobNames,
+                destinationFolder,
+                waitInSec).ConfigureAwait(false);
         }
 
         [Test]
@@ -226,41 +204,29 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
-            string tempFolder = CreateRandomDirectory(Path.GetTempPath());
-            string sourceFolderPath = CreateRandomDirectory(tempFolder);
-            try
-            {
-                string sourceBlobDirectoryName = sourceFolderPath.Substring(tempFolder.Length + 1);
-                string folder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string sourceBlobDirectoryName = "foo";
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-                // Initialize transferManager
-                TransferManager transferManager = new TransferManager();
+            // Initialize transferManager
+            TransferManager transferManager = new TransferManager();
 
-                StorageResourceContainer sourceResource =
-                    new BlobDirectoryStorageResourceContainer(test.Container, sourceBlobDirectoryName);
-                StorageResourceContainer destinationResource =
-                    new LocalDirectoryStorageResourceContainer(folder);
+            StorageResourceContainer sourceResource =
+                new BlobDirectoryStorageResourceContainer(test.Container, sourceBlobDirectoryName);
+            StorageResourceContainer destinationResource =
+                new LocalDirectoryStorageResourceContainer(destinationFolder);
 
-                DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-                await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
-                List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
+            List<string> localItemsAfterDownload = Directory.GetFiles(destinationFolder, "*", SearchOption.AllDirectories).ToList();
 
-                // Assert
-                Assert.IsEmpty(localItemsAfterDownload);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(sourceFolderPath, true);
-            }
+            // Assert
+            Assert.IsEmpty(localItemsAfterDownload);
         }
 
         [Test]
@@ -269,33 +235,23 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
-
-            string tempFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string tempFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             string sourceFolderPath = CreateRandomDirectory(tempFolder);
-            try
-            {
-                string sourceBlobDirectoryName = sourceFolderPath.Substring(tempFolder.Length + 1);
-                string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, Constants.KB);
-                List<string> blobNames = new List<string>() { blobName1 };
 
-                string destinationFolder = CreateRandomDirectory(sourceFolderPath);
+            string sourceBlobDirectoryName = sourceFolderPath.Substring(tempFolder.Length + 1);
+            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, Constants.KB);
+            List<string> blobNames = new List<string>() { blobName1 };
 
-                await DownloadBlobDirectoryAndVerify(
-                    test.Container,
-                    sourceBlobDirectoryName,
-                    sourceFolderPath,
-                    blobNames,
-                    destinationFolder).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(sourceFolderPath, true);
-            }
+            string destinationFolder = CreateRandomDirectory(sourceFolderPath);
+
+            await DownloadBlobDirectoryAndVerify(
+                test.Container,
+                sourceBlobDirectoryName,
+                sourceFolderPath,
+                blobNames,
+                destinationFolder).ConfigureAwait(false);
         }
 
         [Test]
@@ -305,44 +261,35 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
-            string tempFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string tempFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             string blobDirectoryName = "foo";
             string fullSourceFolderPath = CreateRandomDirectory(tempFolder, blobDirectoryName);
-            try
-            {
-                List<string> blobNames = new List<string>();
-                string subDir1 = CreateRandomDirectory(fullSourceFolderPath, "bar").Substring(fullSourceFolderPath.Length + 1);
-                string blobName1 = Path.Combine(blobDirectoryName, subDir1, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, Constants.KB);
-                blobNames.Add(blobName1);
-                string subDir2 = CreateRandomDirectory(fullSourceFolderPath, "rul").Substring(fullSourceFolderPath.Length + 1);
-                string blobName2 = Path.Combine(blobDirectoryName, subDir2, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName2, Constants.KB);
-                blobNames.Add(blobName2);
-                string subDir3 = CreateRandomDirectory(fullSourceFolderPath, "pik").Substring(fullSourceFolderPath.Length + 1);
-                string blobName3 = Path.Combine(blobDirectoryName, subDir3, GetNewBlobName());
-                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName3, Constants.KB);
-                blobNames.Add(blobName3);
 
-                string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            List<string> blobNames = new List<string>();
+            string subDir1 = CreateRandomDirectory(fullSourceFolderPath, "bar").Substring(fullSourceFolderPath.Length + 1);
+            string blobName1 = Path.Combine(blobDirectoryName, subDir1, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName1, Constants.KB);
+            blobNames.Add(blobName1);
+            string subDir2 = CreateRandomDirectory(fullSourceFolderPath, "rul").Substring(fullSourceFolderPath.Length + 1);
+            string blobName2 = Path.Combine(blobDirectoryName, subDir2, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName2, Constants.KB);
+            blobNames.Add(blobName2);
+            string subDir3 = CreateRandomDirectory(fullSourceFolderPath, "pik").Substring(fullSourceFolderPath.Length + 1);
+            string blobName3 = Path.Combine(blobDirectoryName, subDir3, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName3, Constants.KB);
+            blobNames.Add(blobName3);
 
-                string sourceBlobPrefix = fullSourceFolderPath.Substring(tempFolder.Length + 1);
+            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
 
-                await DownloadBlobDirectoryAndVerify(
-                    sourceContainer: test.Container,
-                    sourceBlobPrefix: sourceBlobPrefix,
-                    sourceFilePrefix: fullSourceFolderPath,
-                    blobNames,
-                    destinationFolder).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(fullSourceFolderPath, true);
-            }
+            string sourceBlobPrefix = fullSourceFolderPath.Substring(tempFolder.Length + 1);
+
+            await DownloadBlobDirectoryAndVerify(
+                sourceContainer: test.Container,
+                sourceBlobPrefix: sourceBlobPrefix,
+                sourceFilePrefix: fullSourceFolderPath,
+                blobNames,
+                destinationFolder).ConfigureAwait(false);
         }
 
         [Test]
@@ -355,39 +302,30 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
-            string tempFolder = Path.GetTempPath();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string tempFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
             string sourceBlobDirectoryName = "foo";
             string fullPath = CreateRandomDirectory(tempFolder, sourceBlobDirectoryName);
-            try
-            {
-                List<string> blobNames = new List<string>();
 
-                string subDir = default;
-                for (int i = 0; i < level; i++)
-                {
-                    subDir = CreateRandomDirectory(fullPath, $"folder{i}");
-                    string blobName = Path.Combine(sourceBlobDirectoryName, subDir.Substring(fullPath.Length + 1), GetNewBlobName());
-                    await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName, Constants.KB);
-                    blobNames.Add(blobName);
-                }
+            List<string> blobNames = new List<string>();
 
-                string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            string subDir = default;
+            for (int i = 0; i < level; i++)
+            {
+                subDir = CreateRandomDirectory(fullPath, $"folder{i}");
+                string blobName = Path.Combine(sourceBlobDirectoryName, subDir.Substring(fullPath.Length + 1), GetNewBlobName());
+                await CreateBlockBlobAndSourceFile(test.Container, tempFolder, blobName, Constants.KB);
+                blobNames.Add(blobName);
+            }
 
-                await DownloadBlobDirectoryAndVerify(
-                    test.Container,
-                    sourceBlobDirectoryName,
-                    fullPath,
-                    blobNames,
-                    destinationFolder).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(fullPath, true);
-            }
+            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+
+            await DownloadBlobDirectoryAndVerify(
+                test.Container,
+                sourceBlobDirectoryName,
+                fullPath,
+                blobNames,
+                destinationFolder).ConfigureAwait(false);
         }
         #endregion DirectoryDownloadTests
 
@@ -450,33 +388,27 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
-            {
-                // Create transfer to do a AwaitCompletion
-                TransferOptions options = new TransferOptions();
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
-                DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    destinationFolder,
-                    1,
-                    options: options);
+            // Create transfer to do a AwaitCompletion
+            TransferOptions options = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                destinationFolder,
+                1,
+                options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
-                // Assert
-                failureTransferHolder.AssertFailureCheck();
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
         }
 
         //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -486,41 +418,35 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
+            TransferOptions options = new TransferOptions()
             {
-                TransferOptions options = new TransferOptions()
-                {
-                    CreateMode = StorageResourceCreateMode.Fail
-                };
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-                // Create at least one of the dest files to make it fail
-                File.Create(Path.Combine(destinationFolder, "blob1")).Close();
+            // Create at least one of the dest files to make it fail
+            File.Create(Path.Combine(destinationFolder, "blob1")).Close();
 
-                // Create transfer to do a AwaitCompletion
-                DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    destinationFolder,
-                    1,
-                    options: options);
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                destinationFolder,
+                1,
+                options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
-                // Assert
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
-                Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -530,41 +456,35 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
+            // Create transfer options with Skipping available
+            TransferOptions options = new TransferOptions()
             {
-                // Create transfer options with Skipping available
-                TransferOptions options = new TransferOptions()
-                {
-                    CreateMode = StorageResourceCreateMode.Skip
-                };
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-                // Create at least one of the dest files to make it fail
-                File.Create(Path.Combine(destinationFolder, "blob1")).Close();
+            // Create at least one of the dest files to make it fail
+            File.Create(Path.Combine(destinationFolder, "blob1")).Close();
 
-                // Create transfer to do a AwaitCompletion
-                DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    destinationFolder,
-                    1,
-                    options: options);
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                destinationFolder,
+                1,
+                options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
-                // Assert
-                failureTransferHolder.AssertFailureCheck();
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
         }
 
         [Test]
@@ -573,34 +493,28 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
-            {
-                // Create transfer to do a EnsureCompleted
-                TransferOptions options = new TransferOptions();
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            // Create transfer to do a EnsureCompleted
+            TransferOptions options = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-                DataTransfer transfer = await CreateStartTransfer(
-                        test.Container,
-                        destinationFolder,
-                        1,
-                        options: options);
+            DataTransfer transfer = await CreateStartTransfer(
+                    test.Container,
+                    destinationFolder,
+                    1,
+                    options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                transfer.EnsureCompleted(cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
 
-                // Assert
-                failureTransferHolder.AssertFailureCheck();
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
         }
 
         //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -610,41 +524,35 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
+            TransferOptions options = new TransferOptions()
             {
-                TransferOptions options = new TransferOptions()
-                {
-                    CreateMode = StorageResourceCreateMode.Fail
-                };
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-                // Create at least one of the dest files to make it fail
-                File.Create(Path.Combine(destinationFolder, "blob1")).Close();
+            // Create at least one of the dest files to make it fail
+            File.Create(Path.Combine(destinationFolder, "blob1")).Close();
 
-                // Create transfer to do a AwaitCompletion
-                DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    destinationFolder,
-                    1,
-                    options: options);
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                destinationFolder,
+                1,
+                options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                transfer.EnsureCompleted(cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
 
-                // Assert
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
-                Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -654,41 +562,35 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            try
+            // Create transfer options with Skipping available
+            TransferOptions options = new TransferOptions()
             {
-                // Create transfer options with Skipping available
-                TransferOptions options = new TransferOptions()
-                {
-                    CreateMode = StorageResourceCreateMode.Skip
-                };
-                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+                CreateMode = StorageResourceCreateMode.Skip
+            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-                // Create at least one of the dest files to make it fail
-                File.Create(Path.Combine(destinationFolder, "blob1")).Close();
+            // Create at least one of the dest files to make it fail
+            File.Create(Path.Combine(destinationFolder, "blob1")).Close();
 
-                // Create transfer to do a EnsureCompleted
-                DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    destinationFolder,
-                    1,
-                    options: options);
+            // Create transfer to do a EnsureCompleted
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                destinationFolder,
+                1,
+                options: options);
 
-                // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                transfer.EnsureCompleted(cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
 
-                // Assert
-                failureTransferHolder.AssertFailureCheck();
-                Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
-            }
-            finally
-            {
-                Directory.Delete(destinationFolder, true);
-            }
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
         }
         #endregion
     }
