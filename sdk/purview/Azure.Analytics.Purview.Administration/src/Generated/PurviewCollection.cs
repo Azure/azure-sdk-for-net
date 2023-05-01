@@ -49,7 +49,11 @@ namespace Azure.Analytics.Purview.Administration
             _collectionName = collectionName;
         }
 
-        /// <summary> Get a collection. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a collection
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -70,7 +74,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Get a collection. </summary>
+        /// <summary>
+        /// [Protocol Method]Get a collection
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -91,7 +99,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Creates or updates a collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a collection entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -116,7 +128,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Creates or updates a collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a collection entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -141,7 +157,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Deletes a Collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a Collection entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -162,7 +182,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Deletes a Collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a Collection entity.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -183,7 +207,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets the parent name and parent friendly name chains that represent the collection path.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -204,7 +232,11 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets the parent name and parent friendly name chains that represent the collection path.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -225,12 +257,16 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> Lists the child collections names in the collection. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the child collections names in the collection.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNamesAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNamesAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
@@ -238,12 +274,16 @@ namespace Azure.Analytics.Purview.Administration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the child collections names in the collection. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists the child collections names in the collection.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNames(String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNames(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetChildCollectionNames(string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
