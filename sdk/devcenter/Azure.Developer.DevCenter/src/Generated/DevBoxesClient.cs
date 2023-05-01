@@ -67,14 +67,18 @@ namespace Azure.Developer.DevCenter
             _apiVersion = options.Version;
         }
 
-        /// <summary> Gets a pool. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a pool
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetPoolAsync(string poolName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -93,14 +97,18 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets a pool. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a pool
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,RequestContext)']/*" />
         public virtual Response GetPool(string poolName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -119,7 +127,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets a schedule. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a schedule.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="scheduleName"> The name of a schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -127,7 +139,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPoolAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPoolAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetScheduleByPoolAsync(string poolName, string scheduleName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -147,7 +159,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets a schedule. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a schedule.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="scheduleName"> The name of a schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -155,7 +171,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPool(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPool(string,string,RequestContext)']/*" />
         public virtual Response GetScheduleByPool(string poolName, string scheduleName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -175,7 +191,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -183,7 +203,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUserAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUserAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDevBoxByUserAsync(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -203,7 +223,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -211,7 +235,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUser(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUser(string,string,RequestContext)']/*" />
         public virtual Response GetDevBoxByUser(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -231,7 +255,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets RDP Connection info. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets RDP Connection info
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -239,7 +267,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRemoteConnectionAsync(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -259,7 +287,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets RDP Connection info. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets RDP Connection info
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -267,7 +299,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,RequestContext)']/*" />
         public virtual Response GetRemoteConnection(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -287,7 +319,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -296,7 +332,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetUpcomingActionAsync(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -317,7 +353,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Gets an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Gets an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -326,7 +366,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingAction(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingAction(string,string,string,RequestContext)']/*" />
         public virtual Response GetUpcomingAction(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -347,7 +387,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Skips an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Skips an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -356,7 +400,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingActionAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingActionAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> SkipUpcomingActionAsync(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -377,7 +421,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Skips an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Skips an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -386,7 +434,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingAction(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingAction(string,string,string,RequestContext)']/*" />
         public virtual Response SkipUpcomingAction(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -407,7 +455,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Delays an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Delays an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="delayUntil"> The delayed action time (UTC). </param>
@@ -417,7 +469,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingActionAsync(String,String,DateTimeOffset,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingActionAsync(string,string,DateTimeOffset,string,RequestContext)']/*" />
         public virtual async Task<Response> DelayUpcomingActionAsync(string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -438,7 +490,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Delays an Upcoming Action. </summary>
+        /// <summary>
+        /// [Protocol Method]Delays an Upcoming Action.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="delayUntil"> The delayed action time (UTC). </param>
@@ -448,7 +504,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingAction(String,String,DateTimeOffset,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingAction(string,string,DateTimeOffset,string,RequestContext)']/*" />
         public virtual Response DelayUpcomingAction(string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -469,13 +525,17 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Lists available pools. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists available pools
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxCount = null, string filter = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
@@ -483,13 +543,17 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary> Lists available pools. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists available pools
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetPools(int? maxCount = null, string filter = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
@@ -497,7 +561,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary> Lists available schedules for a pool. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists available schedules for a pool.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
@@ -506,7 +574,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPoolAsync(String,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPoolAsync(string,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -516,7 +584,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
         }
 
-        /// <summary> Lists available schedules for a pool. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists available schedules for a pool.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
@@ -525,7 +597,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPool(String,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPool(string,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
@@ -535,7 +607,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
         }
 
-        /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists Dev Boxes in the project for a particular user.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
@@ -544,7 +620,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUserAsync(String,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -554,7 +630,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
         }
 
-        /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists Dev Boxes in the project for a particular user.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
@@ -563,7 +643,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUser(String,String,Int32,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUser(string,string,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -573,7 +653,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
         }
 
-        /// <summary> Lists upcoming actions on a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists upcoming actions on a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -581,7 +665,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionsAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionsAsync(string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetUpcomingActionsAsync(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -592,7 +676,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
         }
 
-        /// <summary> Lists upcoming actions on a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Lists upcoming actions on a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -600,7 +688,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActions(String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActions(string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetUpcomingActions(string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -611,7 +699,11 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
         }
 
-        /// <summary> Creates or updates a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -621,7 +713,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBoxAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBoxAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -642,7 +734,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Creates or updates a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Creates or updates a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -652,7 +748,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBox(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBox(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateDevBox(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -673,7 +769,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Deletes a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -682,7 +782,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBoxAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBoxAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -702,7 +802,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Deletes a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Deletes a Dev Box.
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -711,7 +815,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBox(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBox(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation DeleteDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -731,7 +835,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Starts a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Starts a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -740,7 +848,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBoxAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBoxAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -760,7 +868,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Starts a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Starts a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -769,7 +881,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBox(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBox(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation StartDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -789,7 +901,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Stops a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Stops a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -799,7 +915,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBoxAsync(WaitUntil,String,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBoxAsync(WaitUntil,string,string,bool?,RequestContext)']/*" />
         public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", bool? hibernate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -819,7 +935,11 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary> Stops a Dev Box. </summary>
+        /// <summary>
+        /// [Protocol Method]Stops a Dev Box
+        /// <list type="bullet">
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -829,7 +949,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBox(WaitUntil,String,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBox(WaitUntil,string,string,bool?,RequestContext)']/*" />
         public virtual Operation StopDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", bool? hibernate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
