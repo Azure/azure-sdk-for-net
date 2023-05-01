@@ -1,0 +1,49 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/catalogs?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-e309955b94076e429ceeef3173fa0210-4b54afd2e8e9c348-00",
+        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a1e1a3d252f3c4ebba54c443c6f74d49",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "68",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 01 May 2023 20:55:14 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "a1e1a3d252f3c4ebba54c443c6f74d49",
+        "x-ms-correlation-request-id": "762c5faf-fff9-4b17-8a7a-4b6314240411",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2023-05-01T20:56:14.0946079Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "sdk-default-catalog"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "CLIENT_ID": "82759f53-fe56-4a00-a282-dc1990e29267",
+    "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
+    "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
+    "DEFAULT_TEST_USER_NAME": "sdk_integration_test_1@fidalgoppe010.onmicrosoft.com",
+    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
+    "RandomSeed": "835120664",
+    "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97",
+    "TENANT_ID": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd"
+  }
+}

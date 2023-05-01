@@ -107,10 +107,10 @@ namespace Azure.Developer.DevCenter.Tests
                 }
 
                 string envDefinitionsName = envDefinitionsNameJson.ToString();
-                // Assert.AreEqual(TestEnvironment.EnvironmentTypeName, envDefinitionsName);
+                Console.WriteLine(envDefinitionsName);
             }
 
-            Assert.AreEqual(1, numberOfEnvDefinitions);
+            Assert.AreEqual(3, numberOfEnvDefinitions);
         }
     }
 }
