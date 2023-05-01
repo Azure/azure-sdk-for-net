@@ -205,6 +205,16 @@ resource environmentRoleAssignment 'Microsoft.Authorization/roleAssignments@2020
   }
 }
 
+resource devcenterRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  name: guid(resourceGroup().id, devcenter.name, projectAdminRoleDefinitionId, testUserOid)
+  scope: devcenter
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', projectAdminRoleDefinitionId)
+    principalId: testUserOid
+    principalType: 'User'
+}
+}
+
 resource devBoxRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   name: guid(resourceGroup().id, project.name, projectAdminRoleDefinitionId, testUserOid)
   scope: project
