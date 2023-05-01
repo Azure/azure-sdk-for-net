@@ -149,9 +149,12 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            foreach (var param in to)
+            if (to != null && Optional.IsCollectionDefined(to))
             {
-                uri.AppendQuery("to", param, true);
+                foreach (var param in to)
+                {
+                    uri.AppendQuery("to", param, true);
+                }
             }
             if (@from != null)
             {
