@@ -51,25 +51,6 @@ namespace Azure.ResourceManager.Sql
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region RecoverableDatabaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoverableDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoverableDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableDatabaseResource" /> object. </returns>
-        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RecoverableDatabaseResource.ValidateResourceId(id);
-                return new RecoverableDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region DataMaskingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="DataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1514,25 +1495,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region LogicalDatabaseTransparentDataEncryptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicalDatabaseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> object. </returns>
-        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
-                return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region BackupShortTermRetentionPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="BackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1666,25 +1628,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region RestorableDroppedDatabaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RestorableDroppedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorableDroppedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource" /> object. </returns>
-        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RestorableDroppedDatabaseResource.ValidateResourceId(id);
-                return new RestorableDroppedDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region RestorableDroppedManagedDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="RestorableDroppedManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1756,25 +1699,6 @@ namespace Azure.ResourceManager.Sql
             {
                 ManagedInstanceServerTrustCertificateResource.ValidateResourceId(id);
                 return new ManagedInstanceServerTrustCertificateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ElasticPoolResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticPoolResource" /> object. </returns>
-        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ElasticPoolResource.ValidateResourceId(id);
-                return new ElasticPoolResource(client, id);
             }
             );
         }
@@ -2312,6 +2236,44 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
+        #region SqlDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlDatabaseResource.ValidateResourceId(id);
+                return new SqlDatabaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ElasticPoolResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticPoolResource" /> object. </returns>
+        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ElasticPoolResource.ValidateResourceId(id);
+                return new ElasticPoolResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ManagedDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2350,44 +2312,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ManagedInstanceServerConfigurationOptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceServerConfigurationOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceServerConfigurationOptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerConfigurationOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource" /> object. </returns>
-        public static ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceServerConfigurationOptionResource.ValidateResourceId(id);
-                return new ManagedInstanceServerConfigurationOptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SqlDatabaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
-        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseResource.ValidateResourceId(id);
-                return new SqlDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ManagedLedgerDigestUploadResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedLedgerDigestUploadResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2402,6 +2326,63 @@ namespace Azure.ResourceManager.Sql
             {
                 ManagedLedgerDigestUploadResource.ValidateResourceId(id);
                 return new ManagedLedgerDigestUploadResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RecoverableDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoverableDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoverableDatabaseResource" /> object. </returns>
+        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RecoverableDatabaseResource.ValidateResourceId(id);
+                return new RecoverableDatabaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RestorableDroppedDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource" /> object. </returns>
+        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RestorableDroppedDatabaseResource.ValidateResourceId(id);
+                return new RestorableDroppedDatabaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedInstanceServerConfigurationOptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceServerConfigurationOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceServerConfigurationOptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerConfigurationOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource" /> object. </returns>
+        public static ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedInstanceServerConfigurationOptionResource.ValidateResourceId(id);
+                return new ManagedInstanceServerConfigurationOptionResource(client, id);
             }
             );
         }
@@ -2440,6 +2421,25 @@ namespace Azure.ResourceManager.Sql
             {
                 ManagedInstanceStartStopScheduleResource.ValidateResourceId(id);
                 return new ManagedInstanceStartStopScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region LogicalDatabaseTransparentDataEncryptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicalDatabaseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> object. </returns>
+        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
             }
             );
         }

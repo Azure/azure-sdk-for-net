@@ -245,6 +245,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ElasticPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ElasticPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
@@ -252,7 +253,9 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } set { } }
+        public double? MinCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings PerDatabaseSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolState? State { get { throw null; } }
     }
@@ -928,12 +931,13 @@ namespace Azure.ResourceManager.Sql
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? CreateMode { get { throw null; } set { } }
-        public string CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
-        public string CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestorePoint { get { throw null; } }
         public Azure.Core.ResourceIdentifier FailoverGroupId { get { throw null; } }
+        public bool? IsLedgerOn { get { throw null; } set { } }
         public string LastBackupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LongTermRetentionBackupResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
@@ -1398,7 +1402,7 @@ namespace Azure.ResourceManager.Sql
         public string Collation { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
         public string DnsZone { get { throw null; } }
-        public string DnsZonePartner { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DnsZonePartner { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }
@@ -2189,12 +2193,12 @@ namespace Azure.ResourceManager.Sql
     public partial class RecoverableDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.RecoverableDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecoverableDatabaseResource>, System.Collections.IEnumerable
     {
         protected RecoverableDatabaseCollection() { }
-        public virtual Azure.Response<bool> Exists(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> Get(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> Get(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.RecoverableDatabaseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.RecoverableDatabaseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetAsync(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.RecoverableDatabaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.RecoverableDatabaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RecoverableDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecoverableDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -2204,6 +2208,7 @@ namespace Azure.ResourceManager.Sql
         public RecoverableDatabaseData() { }
         public string Edition { get { throw null; } }
         public string ElasticPoolName { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.SqlDatabaseKey> Keys { get { throw null; } }
         public System.DateTimeOffset? LastAvailableBackupOn { get { throw null; } }
         public string ServiceLevelObjective { get { throw null; } }
     }
@@ -2214,8 +2219,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.RecoverableDatabaseData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> Get(string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetAsync(string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RecoverableManagedDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.RecoverableManagedDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecoverableManagedDatabaseResource>, System.Collections.IEnumerable
     {
@@ -4388,8 +4393,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> GetOutboundFirewallRule(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> GetOutboundFirewallRuleAsync(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.OutboundFirewallRuleCollection GetOutboundFirewallRules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RecoverableDatabaseCollection GetRecoverableDatabases() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5824,12 +5829,15 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ElasticPoolPatch
     {
         public ElasticPoolPatch() { }
+        public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } set { } }
+        public double? MinCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings PerDatabaseSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -6471,12 +6479,13 @@ namespace Azure.ResourceManager.Sql.Models
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? CreateMode { get { throw null; } set { } }
-        public string CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
-        public string CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestorePoint { get { throw null; } }
         public Azure.Core.ResourceIdentifier FailoverGroupId { get { throw null; } }
+        public bool? IsLedgerOn { get { throw null; } set { } }
         public string LastBackupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LongTermRetentionBackupResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
@@ -6685,7 +6694,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Collation { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
         public string DnsZone { get { throw null; } }
-        public string DnsZonePartner { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DnsZonePartner { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }

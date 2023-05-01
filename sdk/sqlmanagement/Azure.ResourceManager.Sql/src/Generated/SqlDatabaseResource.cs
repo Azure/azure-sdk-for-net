@@ -669,55 +669,6 @@ namespace Azure.ResourceManager.Sql
             return GetWorkloadGroups().Get(workloadGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptionResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
-        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
-        {
-            return GetCachedClient(Client => new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransparentDataEncryptions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryptionResource>> GetLogicalDatabaseTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return await GetLogicalDatabaseTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransparentDataEncryptions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<LogicalDatabaseTransparentDataEncryptionResource> GetLogicalDatabaseTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return GetLogicalDatabaseTransparentDataEncryptions().Get(tdeName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of BackupShortTermRetentionPolicyResources in the SqlDatabase. </summary>
         /// <returns> An object representing collection of BackupShortTermRetentionPolicyResources and their operations over a BackupShortTermRetentionPolicyResource. </returns>
         public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
@@ -1063,6 +1014,55 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlServerDatabaseReplicationLinkResource> GetSqlServerDatabaseReplicationLink(string linkId, CancellationToken cancellationToken = default)
         {
             return GetSqlServerDatabaseReplicationLinks().Get(linkId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptionResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
+        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
+        {
+            return GetCachedClient(Client => new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a logical database&apos;s transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TransparentDataEncryptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryptionResource>> GetLogicalDatabaseTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return await GetLogicalDatabaseTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a logical database&apos;s transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TransparentDataEncryptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<LogicalDatabaseTransparentDataEncryptionResource> GetLogicalDatabaseTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return GetLogicalDatabaseTransparentDataEncryptions().Get(tdeName, cancellationToken);
         }
 
         /// <summary>
