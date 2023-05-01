@@ -138,11 +138,7 @@ namespace Azure.Storage.Blobs.Batch
             return message;
         }
 
-        /// <summary>
-        /// [Protocol Method]The Batch operation allows multiple API calls to be embedded into a single HTTP request.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
@@ -172,11 +168,7 @@ namespace Azure.Storage.Blobs.Batch
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]The Batch operation allows multiple API calls to be embedded into a single HTTP request.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
