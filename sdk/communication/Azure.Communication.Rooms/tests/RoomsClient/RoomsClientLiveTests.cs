@@ -153,7 +153,7 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
-        public async Task GetRoomsLiveTest()
+        public async Task GetRoomsLiveTest_FirstRoomIsNotNull_Succeed()
         {
             // Arrange
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
