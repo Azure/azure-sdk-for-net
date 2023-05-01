@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,16 +14,47 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="callInvite"></param>
-        public TransferToParticipantOptions(CallInvite callInvite)
+        /// <param name="targetPhoneNumberIdentity"></param>
+        /// <param name="sipHeaders"></param>
+        public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity, IDictionary<string, string> sipHeaders = null)
         {
-            CallInvite = callInvite;
+            Target = targetPhoneNumberIdentity;
+            SipHeaders = sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
         }
 
         /// <summary>
-        /// Call invitee information.
+        /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        public CallInvite CallInvite { get; }
+        /// <param name="targetIdentity"></param>
+        /// <param name="voipHeaders"></param>
+        public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        {
+            Target = targetIdentity;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+        }
+
+        /// <summary>
+        /// Creates a new TransferToParticipantOptions object.
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        /// <param name="voipHeaders"></param>
+        public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        {
+            Target = targetIdentity;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+        }
+
+        /// <summary>
+        /// The target callee.
+        /// </summary>
+        /// <value></value>
+        public CommunicationIdentifier Target { get; }
+
+        /// <summary> Dictionary of VOIP headers. </summary>
+        public IDictionary<string, string> VoipHeaders { get; }
+
+        /// <summary> Dictionary of SIP headers. </summary>
+        public IDictionary<string, string> SipHeaders { get; }
 
         /// <summary>
         /// The operationContext for this transfer call.
