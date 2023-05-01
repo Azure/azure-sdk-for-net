@@ -7,7 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -412,6 +414,53 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
                     parameter: sourceBearerToken)
+            };
+
+            // Act
+            await destinationResource.CopyBlockFromUriAsync(
+                sourceResource: sourceResource,
+                overwrite: false,
+                range: new HttpRange(0, blockLength),
+                options: options);
+            await destinationResource.CompleteTransferAsync();
+
+            // Assert
+            await destinationClient.ExistsAsync();
+            BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
+            Assert.NotNull(result);
+            byte[] blockData = new byte[blockLength];
+            Array.Copy(data, 0, blockData, 0, blockLength);
+            TestHelper.AssertSequenceEqual(blockData, result.Content.AsBytes().ToArray());
+        }
+
+        [RecordedTest]
+        public async Task CopyBlockFromUriAsync_OAuth_Token()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+
+            var data = GetRandomBuffer(4 * Constants.KB);
+            var blockLength = Constants.KB;
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceClient.UploadAsync(
+                    content: stream);
+            }
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+
+            // Convert TokenCredential to HttpAuthorization
+            TokenCredential sourceBearerToken = Tenants.GetOAuthCredential();
+            string[] scopes = new string[] { "https://storage.azure.com/.default" };
+            AccessToken accessToken = await sourceBearerToken.GetTokenAsync(new TokenRequestContext(scopes), CancellationToken.None);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceAuthentication = new HttpAuthorization(
+                    scheme: "Bearer",
+                    parameter: accessToken.Token)
             };
 
             // Act
