@@ -269,9 +269,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ServerFarmId { get; set; }
 
         /// <summary>
-        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if
-        /// reserved; otherwise,
-        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// Gets or sets true, if reserved;
+        /// otherwise false
         /// </summary>
         [JsonProperty(PropertyName = "properties.reserved")]
         public bool? Reserved { get; set; }
