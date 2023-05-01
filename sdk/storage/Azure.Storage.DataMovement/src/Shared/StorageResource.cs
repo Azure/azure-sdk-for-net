@@ -17,7 +17,10 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public abstract class StorageResource : StorageResourceBase
     {
-        internal TokenCredential _tokenCredential;
+        /// <summary>
+        /// If the storage resource authenticates using OAuth, then we leave this specified.
+        /// </summary>
+        internal ResourceAuthScheme _authScheme;
 
         /// <summary>
         /// For Mocking.
