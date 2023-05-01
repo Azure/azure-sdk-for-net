@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Queue was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         private static async Task<QueueProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Queue was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             var properties = new QueueProperties(name);
@@ -223,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No queues were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         public static void NormalizeDescription(this QueueProperties description, string baseAddress)

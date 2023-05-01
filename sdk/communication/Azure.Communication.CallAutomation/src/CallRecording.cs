@@ -551,7 +551,7 @@ namespace Azure.Communication.CallAutomation
                     case 200:
                         return message.Response;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -594,7 +594,7 @@ namespace Azure.Communication.CallAutomation
                     case 200:
                         return message.Response;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)

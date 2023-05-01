@@ -719,14 +719,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
@@ -780,14 +773,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }

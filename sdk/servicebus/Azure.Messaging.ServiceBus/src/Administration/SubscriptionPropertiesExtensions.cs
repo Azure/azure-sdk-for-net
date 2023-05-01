@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Subscription was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         public static async Task<List<SubscriptionProperties>> ParsePagedResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No subscriptions were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         private static async Task<SubscriptionProperties> ParseFromEntryElementAsync(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Subscription was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in subscriptionXml.Elements())

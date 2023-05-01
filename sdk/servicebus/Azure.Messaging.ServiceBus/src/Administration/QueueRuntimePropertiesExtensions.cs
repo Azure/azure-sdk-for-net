@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Queue was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         private static async Task<QueueRuntimeProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Queue was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in qdXml.Elements())
@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No queues were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
     }
 }

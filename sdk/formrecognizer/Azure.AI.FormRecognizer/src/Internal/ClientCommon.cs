@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<FormRecognizerError> errors, string errorMessage = default)
+        public static RequestFailedException CreateExceptionForFailedOperation(Response response, IReadOnlyList<FormRecognizerError> errors, string errorMessage = default)
         {
             string errorCode = default;
 
@@ -68,17 +68,13 @@ namespace Azure.AI.FormRecognizer
             }
 
             var responseError = new ResponseError(errorCode, errorMessage);
-            return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, responseError, errorInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, responseError, errorInfo);
+            return new RequestFailedException(response, null, responseError, errorInfo);
         }
 
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, ResponseError error)
+        public static RequestFailedException CreateExceptionForFailedOperation(Response response, ResponseError error)
         {
             var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
-            return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error, additionalInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, error, additionalInfo);
+            return new RequestFailedException(response, null, error, additionalInfo);
         }
 
         public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
@@ -38,6 +39,7 @@ namespace Azure
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(string message) : this(0, message)
         {
         }
@@ -45,6 +47,7 @@ namespace Azure
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(string message, Exception? innerException) : this(0, message, innerException)
         {
         }
@@ -52,6 +55,7 @@ namespace Azure
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The message that describes the error.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message)
             : this(status, message, null)
         {
@@ -61,6 +65,7 @@ namespace Azure
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, Exception? innerException)
             : this(status, message, null, innerException)
         {
@@ -71,6 +76,7 @@ namespace Azure
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="errorCode">The service specific error code.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
             : base(message, innerException)
         {
@@ -108,7 +114,18 @@ namespace Azure
         /// <param name="response">The response to obtain error details from.</param>
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         public RequestFailedException(Response response, Exception? innerException)
-            : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
+            : this(response, innerException, null)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        /// <param name="error">The error information to use when constructing the exception message. If null, this will be parsed from the Response body.</param>
+        /// <param name="additionalInfo">Additional information to include in the exception message. This will also be stored in the <see cref="Exception.Data"/> property.</param>
+        public RequestFailedException(Response response, Exception? innerException, ResponseError? error, IDictionary<string, string>? additionalInfo = null)
+            : this(response.Status, GetRequestFailedExceptionContent(response, error, additionalInfo), innerException)
         {
             _response = response;
         }
@@ -137,11 +154,20 @@ namespace Azure
         /// </summary>
         public Response? GetRawResponse() => _response;
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response)
+        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, ResponseError? error, IDictionary<string, string>? additionalInfo)
         {
             BufferResponseIfNeeded(response);
 
-            bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? data) : response.RequestFailedDetailsParser.TryParse(response, out error, out data);
+            // only attempt to parse the error and additional info if not already provided.
+            if (error == null && additionalInfo == null)
+            {
+                bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out error, out additionalInfo) : response.RequestFailedDetailsParser.TryParse(response, out error, out additionalInfo);
+                if (!parseSuccess)
+                {
+                    error = null;
+                    additionalInfo = null;
+                }
+            }
             StringBuilder messageBuilder = new();
 
             messageBuilder
@@ -167,12 +193,12 @@ namespace Azure
                     .AppendLine();
             }
 
-            if (parseSuccess && data != null && data.Count > 0)
+            if (additionalInfo is { Count: > 0 })
             {
                 messageBuilder
                     .AppendLine()
                     .AppendLine("Additional Information:");
-                foreach (KeyValuePair<string, string> info in data)
+                foreach (KeyValuePair<string, string> info in additionalInfo)
                 {
                     messageBuilder
                         .Append(info.Key)
@@ -201,7 +227,7 @@ namespace Azure
             }
 
             var formatMessage = messageBuilder.ToString();
-            return (formatMessage, error?.Code, data);
+            return (formatMessage, error?.Code, additionalInfo);
         }
 
         private static void BufferResponseIfNeeded(Response response)

@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 false,
                 "Unknown error.",
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         private static async Task<NamespaceProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     false,
                     "Unknown error.",
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in nsInfoXml.Elements())

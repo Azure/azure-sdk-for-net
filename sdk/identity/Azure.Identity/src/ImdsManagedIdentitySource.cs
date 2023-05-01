@@ -120,7 +120,7 @@ namespace Azure.Identity
 
             if (baseMessage != null)
             {
-                string message = await Pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, new ResponseError(null, baseMessage), null, async).ConfigureAwait(false);
+                string message = new RequestFailedException(response, null, new ResponseError(null, baseMessage)).Message;
 
                 var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
 

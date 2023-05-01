@@ -64,9 +64,7 @@ namespace Azure.Security.ConfidentialLedger
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
                 var error = new ResponseError(null, exceptionMessage);
-                var ex = async
-                    ? await _client.ClientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, error).ConfigureAwait(false)
-                    : _client.ClientDiagnostics.CreateRequestFailedException(statusResponse, error);
+                var ex = new RequestFailedException(statusResponse, null, error);
                 return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
