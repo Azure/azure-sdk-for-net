@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteTriggeredWebJobResource" /> and their operations.
-    /// Each <see cref="WebSiteTriggeredWebJobResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSiteTriggeredWebJobCollection" /> instance call the GetWebSiteTriggeredWebJobs method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSiteTriggeredwebJobResource" /> and their operations.
+    /// Each <see cref="WebSiteTriggeredwebJobResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="WebSiteTriggeredwebJobCollection" /> instance call the GetWebSiteTriggeredwebJobs method from an instance of <see cref="WebSiteResource" />.
     /// </summary>
-    public partial class WebSiteTriggeredWebJobCollection : ArmCollection, IEnumerable<WebSiteTriggeredWebJobResource>, IAsyncEnumerable<WebSiteTriggeredWebJobResource>
+    public partial class WebSiteTriggeredwebJobCollection : ArmCollection, IEnumerable<WebSiteTriggeredwebJobResource>, IAsyncEnumerable<WebSiteTriggeredwebJobResource>
     {
-        private readonly ClientDiagnostics _webSiteTriggeredWebJobWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteTriggeredWebJobWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteTriggeredwebJobWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteTriggeredwebJobWebAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredWebJobCollection"/> class for mocking. </summary>
-        protected WebSiteTriggeredWebJobCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredwebJobCollection"/> class for mocking. </summary>
+        protected WebSiteTriggeredwebJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredWebJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredwebJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WebSiteTriggeredWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteTriggeredwebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteTriggeredWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteTriggeredWebJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteTriggeredWebJobResource.ResourceType, out string webSiteTriggeredWebJobWebAppsApiVersion);
-            _webSiteTriggeredWebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteTriggeredWebJobWebAppsApiVersion);
+            _webSiteTriggeredwebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteTriggeredwebJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebSiteTriggeredwebJobResource.ResourceType, out string webSiteTriggeredwebJobWebAppsApiVersion);
+            _webSiteTriggeredwebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteTriggeredwebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual async Task<Response<WebSiteTriggeredWebJobResource>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteTriggeredwebJobResource>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _webSiteTriggeredWebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobCollection.Get");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredWebJobWebAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteTriggeredWebJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteTriggeredwebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,18 +106,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<WebSiteTriggeredWebJobResource> Get(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteTriggeredwebJobResource> Get(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _webSiteTriggeredWebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobCollection.Get");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredWebJobWebAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
+                var response = _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteTriggeredWebJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteTriggeredwebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteTriggeredWebJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteTriggeredWebJobResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteTriggeredwebJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteTriggeredwebJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteTriggeredWebJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteTriggeredWebJobResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteTriggeredwebJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteTriggeredwebJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _webSiteTriggeredWebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobCollection.Exists");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredWebJobWebAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _webSiteTriggeredWebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobCollection.Exists");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredWebJobWebAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                var response = _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<WebSiteTriggeredWebJobResource> IEnumerable<WebSiteTriggeredWebJobResource>.GetEnumerator()
+        IEnumerator<WebSiteTriggeredwebJobResource> IEnumerable<WebSiteTriggeredwebJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WebSiteTriggeredWebJobResource> IAsyncEnumerable<WebSiteTriggeredWebJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebSiteTriggeredwebJobResource> IAsyncEnumerable<WebSiteTriggeredwebJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

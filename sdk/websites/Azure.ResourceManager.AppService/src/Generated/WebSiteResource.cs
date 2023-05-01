@@ -1294,11 +1294,11 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
         }
 
-        /// <summary> Gets a collection of WebSiteTriggeredWebJobResources in the WebSite. </summary>
-        /// <returns> An object representing collection of WebSiteTriggeredWebJobResources and their operations over a WebSiteTriggeredWebJobResource. </returns>
-        public virtual WebSiteTriggeredWebJobCollection GetWebSiteTriggeredWebJobs()
+        /// <summary> Gets a collection of WebSiteTriggeredwebJobResources in the WebSite. </summary>
+        /// <returns> An object representing collection of WebSiteTriggeredwebJobResources and their operations over a WebSiteTriggeredwebJobResource. </returns>
+        public virtual WebSiteTriggeredwebJobCollection GetWebSiteTriggeredwebJobs()
         {
-            return GetCachedClient(Client => new WebSiteTriggeredWebJobCollection(Client, Id));
+            return GetCachedClient(Client => new WebSiteTriggeredwebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -1319,9 +1319,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteTriggeredWebJobResource>> GetWebSiteTriggeredWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteTriggeredwebJobResource>> GetWebSiteTriggeredwebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            return await GetWebSiteTriggeredWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteTriggeredwebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1342,9 +1342,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteTriggeredWebJobResource> GetWebSiteTriggeredWebJob(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteTriggeredwebJobResource> GetWebSiteTriggeredwebJob(string webJobName, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteTriggeredWebJobs().Get(webJobName, cancellationToken);
+            return GetWebSiteTriggeredwebJobs().Get(webJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteWebJobResources in the WebSite. </summary>

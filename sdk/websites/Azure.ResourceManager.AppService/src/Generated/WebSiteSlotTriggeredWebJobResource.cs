@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of WebSiteTriggeredWebJobHistoryResources in the WebSiteSlotTriggeredWebJob. </summary>
-        /// <returns> An object representing collection of WebSiteTriggeredWebJobHistoryResources and their operations over a WebSiteTriggeredWebJobHistoryResource. </returns>
-        public virtual WebSiteTriggeredWebJobHistoryCollection GetWebSiteTriggeredWebJobHistories()
+        /// <summary> Gets a collection of WebSiteSlotTriggeredWebJobHistoryResources in the WebSiteSlotTriggeredWebJob. </summary>
+        /// <returns> An object representing collection of WebSiteSlotTriggeredWebJobHistoryResources and their operations over a WebSiteSlotTriggeredWebJobHistoryResource. </returns>
+        public virtual WebSiteSlotTriggeredWebJobHistoryCollection GetWebSiteSlotTriggeredWebJobHistories()
         {
-            return GetCachedClient(Client => new WebSiteTriggeredWebJobHistoryCollection(Client, Id));
+            return GetCachedClient(Client => new WebSiteSlotTriggeredWebJobHistoryCollection(Client, Id));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteTriggeredWebJobHistoryResource>> GetWebSiteTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotTriggeredWebJobHistoryResource>> GetWebSiteSlotTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await GetWebSiteTriggeredWebJobHistories().GetAsync(id, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteSlotTriggeredWebJobHistories().GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteTriggeredWebJobHistoryResource> GetWebSiteTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotTriggeredWebJobHistoryResource> GetWebSiteSlotTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteTriggeredWebJobHistories().Get(id, cancellationToken);
+            return GetWebSiteSlotTriggeredWebJobHistories().Get(id, cancellationToken);
         }
 
         /// <summary>
