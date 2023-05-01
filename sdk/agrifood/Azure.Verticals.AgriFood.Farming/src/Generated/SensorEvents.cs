@@ -50,8 +50,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
+        /// [Protocol Method]Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
         /// Returns last 90 days events when startDateTime and endDateTime are not provided.
+        /// <list type="bullet">
+        /// </list>
         /// </summary>
         /// <param name="sensorId"> Id of the associated sensor. </param>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
@@ -68,7 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorId"/> or <paramref name="sensorPartnerId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEventsAsync(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorEventsAsync(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, bool? excludeDuplicateEvents = null, RequestContext context = null)
         {
             Argument.AssertNotNull(sensorId, nameof(sensorId));
@@ -89,8 +91,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
+        /// [Protocol Method]Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
         /// Returns last 90 days events when startDateTime and endDateTime are not provided.
+        /// <list type="bullet">
+        /// </list>
         /// </summary>
         /// <param name="sensorId"> Id of the associated sensor. </param>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
@@ -107,7 +111,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorId"/> or <paramref name="sensorPartnerId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEvents(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual Response GetSensorEvents(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, bool? excludeDuplicateEvents = null, RequestContext context = null)
         {
             Argument.AssertNotNull(sensorId, nameof(sensorId));
