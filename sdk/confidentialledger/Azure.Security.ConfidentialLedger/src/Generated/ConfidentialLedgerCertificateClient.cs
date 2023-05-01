@@ -35,11 +35,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         {
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets identity information for a Confidential Ledger instance.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
@@ -65,11 +61,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets identity information for a Confidential Ledger instance.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>

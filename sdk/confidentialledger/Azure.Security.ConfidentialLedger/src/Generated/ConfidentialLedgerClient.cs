@@ -34,16 +34,7 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the constitution used for governance.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// The constitution is a script that assesses and applies proposals from consortium members.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the constitution used for governance. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -64,16 +55,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the constitution used for governance.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// The constitution is a script that assesses and applies proposals from consortium members.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the constitution used for governance. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -94,16 +76,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets quotes for all nodes of the Confidential Ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets quotes for all nodes of the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -124,16 +97,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets quotes for all nodes of the Confidential Ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets quotes for all nodes of the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -154,16 +118,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Writes a ledger entry.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Writes a ledger entry. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -189,16 +144,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Writes a ledger entry.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Writes a ledger entry. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -224,16 +170,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -260,16 +197,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -296,11 +224,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a receipt certifying ledger contents at a particular transaction id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
@@ -326,11 +250,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a receipt certifying ledger contents at a particular transaction id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
@@ -356,11 +276,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an entry identified by a transaction id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
@@ -386,11 +302,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an entry identified by a transaction id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
@@ -416,16 +328,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the current value available in the ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the current value available in the ledger. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -447,16 +350,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the current value available in the ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the current value available in the ledger. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -478,11 +372,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a user from the Confidential Ledger.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
@@ -507,11 +397,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a user from the Confidential Ledger.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
@@ -536,11 +422,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
@@ -565,11 +447,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
@@ -594,16 +472,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Adds a user or updates a user&apos;s fields.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A JSON merge patch is applied for existing users
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Adds a user or updates a user&apos;s fields. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -630,16 +499,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Adds a user or updates a user&apos;s fields.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A JSON merge patch is applied for existing users
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Adds a user or updates a user&apos;s fields. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -666,16 +526,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the consortium members.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Consortium members can manage the Confidential Ledger.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -687,16 +538,7 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the consortium members.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Consortium members can manage the Confidential Ledger.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -708,16 +550,7 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Retrieves a list of collection ids present in the Confidential Ledger
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Collection ids are user-created collections of ledger entries
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -729,16 +562,7 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Retrieves a list of collection ids present in the Confidential Ledger
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Collection ids are user-created collections of ledger entries
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -750,16 +574,7 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets ledger entries from a collection corresponding to a range.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets ledger entries from a collection corresponding to a range. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -774,16 +589,7 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets ledger entries from a collection corresponding to a range.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets ledger entries from a collection corresponding to a range. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
