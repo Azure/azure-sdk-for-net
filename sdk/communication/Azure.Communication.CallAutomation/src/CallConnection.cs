@@ -189,6 +189,38 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
+
+            return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Transfer this call to a participant. </summary>
         /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -224,6 +256,38 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
+
+            return TransferCallToParticipant(options, cancellationToken);
         }
 
         /// <summary> Transfer the call. </summary>
