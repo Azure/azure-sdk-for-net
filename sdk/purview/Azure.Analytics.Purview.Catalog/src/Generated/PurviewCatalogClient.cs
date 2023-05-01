@@ -61,11 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets data using search.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -90,11 +86,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets data using search.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets data using search. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -119,11 +111,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get search suggestions by query criteria.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -148,11 +136,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get search suggestions by query criteria.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get search suggestions by query criteria. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -177,11 +161,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Browse entities by path or entity type.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Browse entities by path or entity type. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -206,11 +186,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Browse entities by path or entity type.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Browse entities by path or entity type. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -235,11 +211,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get auto complete options.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -264,11 +236,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get auto complete options.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get auto complete options. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

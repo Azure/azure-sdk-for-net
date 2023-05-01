@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Sharing
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a sent share by guid.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a sent share by guid. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareId"/> is null. </exception>
@@ -95,16 +86,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a sent share by guid.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a sent share by guid. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareId"/> is null. </exception>
@@ -130,16 +112,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get sent share invitation for a given sent share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get recipient for a given sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get sent share invitation for a given sent share. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -167,16 +140,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get sent share invitation for a given sent share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get recipient for a given sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get sent share invitation for a given sent share. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -204,16 +168,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a sent share invitation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a recipient for a given sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a sent share invitation. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -243,16 +198,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a sent share invitation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a recipient for a given sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a sent share invitation. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -282,16 +228,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Notifies the recipient of the sent share invitation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Notifies the user recipient of the sent share invitation, does not apply to service invitations.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Notifies the recipient of the sent share invitation. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -320,16 +257,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Notifies the recipient of the sent share invitation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Notifies the user recipient of the sent share invitation, does not apply to service invitations.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Notifies the recipient of the sent share invitation. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -358,16 +286,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of sent shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of sent shares. </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -386,16 +305,7 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of sent shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of sent shares. </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -414,16 +324,7 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all sent share invitations in a sent share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent share recipients
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all sent share invitations in a sent share. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -443,16 +344,7 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all sent share invitations in a sent share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent share recipients
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all sent share invitations in a sent share. </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -472,16 +364,7 @@ namespace Azure.Analytics.Purview.Sharing
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or replace a sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create or replace a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or replace a sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -510,16 +393,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or replace a sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create or replace a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or replace a sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -548,16 +422,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -584,16 +449,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -620,16 +476,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete Invitation in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete Invitation in a share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
@@ -658,16 +505,7 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete Invitation in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete Invitation in a share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>

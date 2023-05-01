@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get an accepted share with acceptedSentShareName to a particular sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get an accepted share with acceptedSentShareName to a particular sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -97,16 +88,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get an accepted share with acceptedSentShareName to a particular sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get an accepted share with acceptedSentShareName to a particular sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -134,16 +116,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List of accepted shares for the current sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get list of accepted sent shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List of accepted shares for the current sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -161,16 +134,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AcceptedSentSharesClient.GetAcceptedSentShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List of accepted shares for the current sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get list of accepted sent shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List of accepted shares for the current sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -188,16 +152,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AcceptedSentSharesClient.GetAcceptedSentShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Reinstate a revoked accepted sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Reinstate a revoked accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reinstate a revoked accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -229,16 +184,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Reinstate a revoked accepted sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Reinstate a revoked accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reinstate a revoked accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -270,16 +216,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Revoke an accepted sent share&apos;s access
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Revoke an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Revoke an accepted sent share&apos;s access. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -309,16 +246,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Revoke an accepted sent share&apos;s access
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Revoke an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Revoke an accepted sent share&apos;s access. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -348,16 +276,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the expiration date of an active accepted sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Update the expiration date of an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the expiration date of an active accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -389,16 +308,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the expiration date of an active accepted sent share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Update the expiration date of an accepted sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the expiration date of an active accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>

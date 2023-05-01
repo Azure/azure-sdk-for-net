@@ -48,11 +48,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Create or update an entity in Atlas.
+        /// [Protocol Method] Create or update an entity in Atlas.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -79,11 +77,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Create or update an entity in Atlas.
+        /// [Protocol Method] Create or update an entity in Atlas.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -109,11 +105,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List entities in bulk identified by its GUIDs.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
@@ -141,11 +133,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List entities in bulk identified by its GUIDs.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
@@ -174,11 +162,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Create or update entities in Atlas in bulk.
+        /// [Protocol Method] Create or update entities in Atlas in bulk.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -205,11 +191,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Create or update entities in Atlas in bulk.
+        /// [Protocol Method] Create or update entities in Atlas in bulk.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -235,11 +219,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a list of entities in bulk identified by their GUIDs or unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
@@ -264,11 +244,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a list of entities in bulk identified by their GUIDs or unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
@@ -293,11 +269,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Associate a classification to multiple entities in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Associate a classification to multiple entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -322,11 +294,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Associate a classification to multiple entities in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Associate a classification to multiple entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -351,11 +319,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get complete definition of an entity given its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
@@ -383,11 +347,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get complete definition of an entity given its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
@@ -416,12 +376,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Update entity partially - create or update entity attribute identified by its GUID.
+        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its GUID.
         /// Supports only primitive attribute type and entity references.
         /// It does not support updating complex types like arrays, and maps.
         /// Null updates are not possible.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
@@ -453,12 +411,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Update entity partially - create or update entity attribute identified by its GUID.
+        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its GUID.
         /// Supports only primitive attribute type and entity references.
         /// It does not support updating complex types like arrays, and maps.
         /// Null updates are not possible.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
@@ -489,11 +445,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete an entity identified by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -519,11 +471,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete an entity identified by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -549,11 +497,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List classifications for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -581,11 +525,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List classifications for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -613,11 +553,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a given classification from an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -645,11 +581,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a given classification from an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -677,11 +609,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List classifications for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -707,11 +635,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List classifications for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -737,11 +661,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add classifications to an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -769,11 +689,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add classifications to an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -801,11 +717,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update classifications to an existing entity represented by a guid.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -833,11 +745,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update classifications to an existing entity represented by a guid.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -866,14 +774,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Get complete definition of an entity given its type and unique attribute.
+        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -904,14 +810,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Get complete definition of an entity given its type and unique attribute.
+        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -942,7 +846,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Update entity partially - Allow a subset of attributes to be updated on
+        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on
         /// an entity which is identified by its type and unique attribute  eg: Referenceable.qualifiedName.
         /// Null updates are not possible.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
@@ -950,8 +854,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -982,7 +884,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Update entity partially - Allow a subset of attributes to be updated on
+        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on
         /// an entity which is identified by its type and unique attribute  eg: Referenceable.qualifiedName.
         /// Null updates are not possible.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
@@ -990,8 +892,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1022,14 +922,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Delete an entity identified by its type and unique attributes.
+        /// [Protocol Method] Delete an entity identified by its type and unique attributes.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1058,14 +956,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Delete an entity identified by its type and unique attributes.
+        /// [Protocol Method] Delete an entity identified by its type and unique attributes.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1093,11 +989,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a given classification from an entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a given classification from an entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1126,11 +1018,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a given classification from an entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a given classification from an entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1159,11 +1047,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add classification to the entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add classification to the entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1192,11 +1076,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add classification to the entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add classification to the entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1225,11 +1105,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update classification on an entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update classification on an entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1258,11 +1134,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update classification on an entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update classification on an entity identified by its type and unique attributes. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -1291,11 +1163,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set classifications on entities in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set classifications on entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -1320,11 +1188,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set classifications on entities in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set classifications on entities in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -1350,7 +1214,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Bulk API to retrieve list of entities identified by its unique attributes.
+        /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
@@ -1361,8 +1225,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The REST request would look something like this
         /// 
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -1393,7 +1255,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Bulk API to retrieve list of entities identified by its unique attributes.
+        /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
@@ -1404,8 +1266,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The REST request would look something like this
         /// 
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -1435,11 +1295,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get entity header given its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -1465,11 +1321,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get entity header given its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -1495,11 +1347,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Remove business metadata from an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1526,11 +1374,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Remove business metadata from an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1557,11 +1401,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add business metadata to an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add business metadata to an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
@@ -1589,11 +1429,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add business metadata to an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add business metadata to an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
@@ -1621,11 +1457,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete business metadata attributes from an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete business metadata attributes from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1654,11 +1486,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete business metadata attributes from an entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete business metadata attributes from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1687,11 +1515,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add or update business metadata attributes
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add or update business metadata attributes. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1720,11 +1544,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add or update business metadata attributes
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add or update business metadata attributes. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1753,11 +1573,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the sample Template for uploading/creating bulk BusinessMetaData
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1778,11 +1594,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the sample Template for uploading/creating bulk BusinessMetaData
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1803,11 +1615,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Upload the file for creating Business Metadata in BULK
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Upload the file for creating Business Metadata in BULK. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1829,11 +1637,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Upload the file for creating Business Metadata in BULK
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Upload the file for creating Business Metadata in BULK. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1855,11 +1659,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]delete given labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1886,11 +1686,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]delete given labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1917,11 +1713,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1948,11 +1740,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1979,11 +1767,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]add given labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] add given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2010,11 +1794,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]add given labels to a given entity
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] add given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2041,11 +1821,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -2073,11 +1849,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -2105,11 +1877,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -2137,11 +1905,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -2169,11 +1933,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
@@ -2201,11 +1961,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
