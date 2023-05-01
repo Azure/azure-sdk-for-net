@@ -60,11 +60,7 @@ namespace Azure.Developer.LoadTesting
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Create and start a new test run with the given name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create and start a new test run with the given name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="oldTestRunId"> Existing test run identifier that should be rerun, if this is provided, the test will run with the JMX file, configuration and app components from the existing test run. You can override the configuration values for new test run in the request body. </param>
@@ -93,11 +89,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create and start a new test run with the given name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create and start a new test run with the given name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="oldTestRunId"> Existing test run identifier that should be rerun, if this is provided, the test will run with the JMX file, configuration and app components from the existing test run. You can override the configuration values for new test run in the request body. </param>
@@ -126,11 +118,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get test run details by name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get test run details by name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -156,11 +144,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get test run details by name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get test run details by name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -186,11 +170,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a test run by its name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a test run by its name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -216,11 +196,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a test run by its name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a test run by its name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -246,11 +222,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get test run file by file name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get test run file by file name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Test run file name with file extension. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -278,11 +250,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get test run file by file name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get test run file by file name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Test run file name with file extension. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -310,11 +278,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stop test run by name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stop test run by name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -340,11 +304,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stop test run by name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stop test run by name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -370,11 +330,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List the metric namespaces for a load test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the metric namespaces for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -400,11 +356,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List the metric namespaces for a load test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the metric namespaces for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -430,11 +382,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List the metric definitions for a load test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the metric definitions for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -462,11 +410,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List the metric definitions for a load test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the metric definitions for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -494,11 +438,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Associate an app component (collection of azure resources) to a test run
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Associate an app component (collection of azure resources) to a test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -526,11 +466,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Associate an app component (collection of azure resources) to a test run
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Associate an app component (collection of azure resources) to a test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -558,11 +494,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get associated app component (collection of azure resources) for the given test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get associated app component (collection of azure resources) for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -588,11 +520,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get associated app component (collection of azure resources) for the given test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get associated app component (collection of azure resources) for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -618,11 +546,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Configure server metrics for a test run
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Configure server metrics for a test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -650,11 +574,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Configure server metrics for a test run
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Configure server metrics for a test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -682,11 +602,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List server metrics configuration for the given test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List server metrics configuration for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -712,11 +628,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List server metrics configuration for the given test run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List server metrics configuration for the given test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -742,11 +654,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List the dimension values for the given metric dimension name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the dimension values for the given metric dimension name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricName"> Metric name. </param>
@@ -772,11 +680,7 @@ namespace Azure.Developer.LoadTesting
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List the dimension values for the given metric dimension name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List the dimension values for the given metric dimension name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricName"> Metric name. </param>
