@@ -26,11 +26,8 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [SetUp]
-        public async Task SetUp()
+        public void SetUp()
         {
-            Mode = RecordedTestMode.Record;
-            await base.StartTestRecordingAsync();
-
             _environmentsClient = GetEnvironmentsClient();
         }
 
