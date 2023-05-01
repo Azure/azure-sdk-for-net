@@ -24,7 +24,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
+        private StreamToUriJobPart(
+            StreamToUriTransferJob job,
+            int partNumber,
+            bool isFinalPart)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -36,6 +39,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -53,6 +57,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
@@ -66,6 +71,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -84,13 +90,17 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
-            int partNumber)
+            int partNumber,
+            bool isFinalPart)
         {
             // Create Job Part file as we're intializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
-                partNumber: partNumber);
-            await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                partNumber: partNumber,
+                isFinalPart: isFinalPart);
+            await part.AddJobPartToCheckpointerAsync(
+                chunksTotal: 1, // For now we only store 1 chunk
+                isFinalPart: isFinalPart).ConfigureAwait(false);
             return part;
         }
 
@@ -99,6 +109,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
@@ -110,10 +121,13 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                length: length);
+                length: length,
+                isFinalPart: isFinalPart);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(
+                    chunksTotal: 1,
+                    isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }
@@ -147,10 +161,12 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await QueueChunkToChannelAsync(CreateDestinationResource(
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await CreateDestinationResource(
                             blockSize: length,
                             length: length,
-                            singleCall: true)).ConfigureAwait(false);
+                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -174,10 +190,11 @@ namespace Azure.Storage.DataMovement
                     {
                         // Queue paritioned block task
                         await QueueChunkToChannelAsync(
-                            StageBlockInternal(
+                            async () =>
+                            await StageBlockInternal(
                                 rangeList[0].Offset,
                                 rangeList[0].Length,
-                                length)).ConfigureAwait(false);
+                                length).ConfigureAwait(false)).ConfigureAwait(false);
                     }
                 }
             }
@@ -373,10 +390,12 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannelAsync(StageBlockInternal(
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await StageBlockInternal(
                     block.Offset,
                     block.Length,
-                    completeLength)).ConfigureAwait(false);
+                    completeLength).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 

@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber)
+        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber, bool isFinalPart)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -42,6 +42,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -59,6 +60,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
@@ -72,6 +74,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -90,13 +93,15 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
             ServiceToServiceTransferJob job,
-            int partNumber)
+            int partNumber,
+            bool isFinalPart)
         {
             // Create Job Part file as we're intializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                 job: job,
-                partNumber: partNumber);
-            await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                partNumber: partNumber,
+                isFinalPart: isFinalPart);
+            await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
             return part;
         }
 
@@ -105,6 +110,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
@@ -116,10 +122,11 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
+                isFinalPart: isFinalPart,
                 length: length);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }
@@ -156,14 +163,18 @@ namespace Azure.Storage.DataMovement
             {
                 // Perform a one call method to copy the resource.
                 await QueueChunkToChannelAsync(
-                    StartSingleCallCopy(length, true)).ConfigureAwait(false);
+                    async () =>
+                    await StartSingleCallCopy(length, true).ConfigureAwait(false))
+                    .ConfigureAwait(false);
             }
             else // For now we default to sync copy
             {
                 if (_initialTransferSize >= length)
                 {
                     await QueueChunkToChannelAsync(
-                        StartSingleCallCopy(length, false)).ConfigureAwait(false);
+                        async () =>
+                        await StartSingleCallCopy(length, false).ConfigureAwait(false))
+                        .ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -185,10 +196,11 @@ namespace Azure.Storage.DataMovement
                     {
                         // Queue paritioned block task
                         await QueueChunkToChannelAsync(
-                            PutBlockFromUri(
-                                commitBlockList[0].Offset,
-                                commitBlockList[0].Length,
-                                length)).ConfigureAwait(false);
+                            async () =>
+                            await PutBlockFromUri(
+                                offset: commitBlockList[0].Offset,
+                                blockLength: commitBlockList[0].Length,
+                                expectedLength: length).ConfigureAwait(false)).ConfigureAwait(false);
                     }
                 }
                 else
@@ -334,10 +346,12 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in commitBlockList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannelAsync(PutBlockFromUri(
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await PutBlockFromUri(
                         block.Offset,
                         block.Length,
-                        expectedLength)).ConfigureAwait(false);
+                        expectedLength).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 

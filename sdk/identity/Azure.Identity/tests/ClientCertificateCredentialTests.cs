@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
             var options = new ClientCertificateCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                DisableAuthorityValidationAndInstanceDiscovery = config.DisableAuthorityValidationAndInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
             };
             var pipeline = CredentialPipeline.GetInstance(options);

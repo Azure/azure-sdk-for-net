@@ -101,7 +101,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantFailed AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantFailedEventData AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantFailedInternal(
                 callConnectionId,
@@ -112,13 +112,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantFailed(internalObject);
+            return new AddParticipantFailedEventData(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantSucceededEventData AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantSucceededInternal(
                 callConnectionId,
@@ -129,13 +129,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantSucceeded(internalObject);
+            return new AddParticipantSucceededEventData(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
+        public static ParticipantsUpdatedEventData ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
                 callConnectionId,
@@ -147,13 +147,13 @@ namespace Azure.Communication.CallAutomation
                     : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
-            return new ParticipantsUpdated(internalObject);
+            return new ParticipantsUpdatedEventData(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of remove participant failed event.
         /// </summary>
-        public static RemoveParticipantFailed RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static RemoveParticipantFailedEventData RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantFailedInternal(
                 callConnectionId,
@@ -164,13 +164,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new RemoveParticipantFailed(internalObject);
+            return new RemoveParticipantFailedEventData(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of remove participant success event.
         /// </summary>
-        public static RemoveParticipantSucceeded RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static RemoveParticipantSucceededEventData RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantSucceededInternal(
                 callConnectionId,
@@ -181,7 +181,7 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new RemoveParticipantSucceeded(internalObject);
+            return new RemoveParticipantSucceededEventData(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
@@ -194,12 +194,13 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeCompletedEventData"/> instance for mocking. </returns>
+        public static RecognizeCompletedEventData RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, DtmfResult dtmfResult = null, ChoiceResult choiceResult = null, SpeechResult speechResult = null)
         {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
+            return new RecognizeCompletedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, dtmfResult, choiceResult, speechResult);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
@@ -229,11 +230,11 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeDtmfCompleted"/> instance for mocking. </returns>
-        internal static RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
+        internal static RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, DtmfResult dtmfResult = null)
         {
-            return new RecognizeDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult);
+            return new RecognizeDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, dtmfResult);
         }
     }
 }

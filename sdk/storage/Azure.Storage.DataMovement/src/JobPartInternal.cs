@@ -106,6 +106,12 @@ namespace Azure.Storage.DataMovement
         internal long? Length;
 
         /// <summary>
+        /// Defines whether or not this was the final part in the list call. This would determine
+        /// whether or not we needed to keep listing in the job.
+        /// </summary>
+        public bool IsFinalPart { get; internal set; }
+
+        /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
         public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
@@ -154,6 +160,7 @@ namespace Azure.Storage.DataMovement
             TransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
+            bool isFinalPart,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
@@ -175,6 +182,7 @@ namespace Azure.Storage.DataMovement
             _progressTracker = progressTracker;
             _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
+            IsFinalPart = isFinalPart;
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
@@ -212,7 +220,7 @@ namespace Azure.Storage.DataMovement
         /// when we're looking to stop/pause the job part.
         /// </summary>
         /// <returns></returns>
-        public async Task QueueChunkToChannelAsync(Task chunkTask)
+        public async Task QueueChunkToChannelAsync(Func<Task> chunkTask)
         {
             // Attach TaskCompletionSource
             TaskCompletionSource<bool> chunkCompleted = new TaskCompletionSource<bool>(
@@ -224,7 +232,7 @@ namespace Azure.Storage.DataMovement
             await QueueChunk(
                 async () =>
                 {
-                    await chunkTask.ConfigureAwait(false);
+                    await Task.Run(chunkTask).ConfigureAwait(false);
                     chunkCompleted.SetResult(true);
                     await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
@@ -247,7 +255,7 @@ namespace Azure.Storage.DataMovement
         /// and any chunks is still processing to be cancelled is will be set to <see cref="StorageTransferStatus.CancellationInProgress"/>
         /// until the chunks finish then it will be set to <see cref="StorageTransferStatus.CompletedWithFailedTransfers"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The task to wait until the cancellation has been triggered.</returns>
         internal async Task TriggerCancellationAsync()
         {
             if (!_cancellationToken.IsCancellationRequested)
@@ -394,9 +402,17 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async virtual Task AddJobPartToCheckpointer(int chunksTotal)
+        /// <summary>
+        /// Serializes the respective job part and adds it to the checkpointer.
+        /// </summary>
+        /// <param name="chunksTotal">Number of chunks in the job part.</param>
+        /// <param name="isFinalPart">Defines if this part is the last job part of the job.</param>
+        /// <returns></returns>
+        public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal, bool isFinalPart)
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader(StorageTransferStatus.InProgress);
+            JobPartPlanHeader header = this.ToJobPartPlanHeader(
+                jobStatus: StorageTransferStatus.InProgress,
+                isFinalPart: isFinalPart);
             using (Stream stream = new MemoryStream())
             {
                 header.Serialize(stream);
