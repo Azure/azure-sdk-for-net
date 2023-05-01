@@ -61,11 +61,7 @@ namespace Azure.Analytics.Purview.Workflows
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -87,11 +83,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -113,11 +105,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or replace a workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or replace a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -143,11 +131,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or replace a workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or replace a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -173,11 +157,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -199,11 +179,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a workflow.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -225,11 +201,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -254,11 +226,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -283,11 +251,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a workflow run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -309,11 +273,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a workflow run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -335,11 +295,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Cancel a workflow run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Cancel a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -365,11 +321,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Cancel a workflow run.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Cancel a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -395,11 +347,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a workflow task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -421,11 +369,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a workflow task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -447,11 +391,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Approve an approval task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Approve an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -477,11 +417,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Approve an approval task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Approve an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -507,11 +443,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Reject an approval task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reject an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -537,11 +469,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Reject an approval task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reject an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -567,11 +495,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Reassign a workflow task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reassign a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -597,11 +521,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Reassign a workflow task.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Reassign a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -627,11 +547,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the status of a workflow task request.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the status of a workflow task request. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -657,11 +573,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the status of a workflow task request.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the status of a workflow task request. </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -687,11 +599,7 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List all workflows.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all workflows. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -703,11 +611,7 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all workflows.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all workflows. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -719,11 +623,7 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List workflow runs.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List workflow runs. </summary>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
@@ -740,11 +640,7 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List workflow runs.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List workflow runs. </summary>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
@@ -761,11 +657,7 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all workflow tasks.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all workflow tasks. </summary>
         /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
@@ -785,11 +677,7 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all workflow tasks.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all workflow tasks. </summary>
         /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>

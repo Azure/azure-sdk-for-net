@@ -67,11 +67,7 @@ namespace Azure.Analytics.Purview.Scanning
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -92,11 +88,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -117,11 +109,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or Updates a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or Updates a classification rule. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -143,11 +131,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or Updates a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or Updates a classification rule. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -169,11 +153,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -194,11 +174,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -219,11 +195,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Sets Classification Action on a specific classification rule version.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -249,11 +221,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Sets Classification Action on a specific classification rule version.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -279,11 +247,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the rule versions of a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -295,11 +259,7 @@ namespace Azure.Analytics.Purview.Scanning
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the rule versions of a classification rule
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>

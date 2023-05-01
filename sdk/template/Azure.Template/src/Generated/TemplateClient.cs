@@ -60,16 +60,7 @@ namespace Azure.Template
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specified secret from a given key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specified secret from a given key vault. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
@@ -95,16 +86,7 @@ namespace Azure.Template
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specified secret from a given key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specified secret from a given key vault. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>

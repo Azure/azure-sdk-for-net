@@ -50,11 +50,7 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all glossaries registered with Atlas.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all glossaries registered with Atlas. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -79,11 +75,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all glossaries registered with Atlas.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all glossaries registered with Atlas. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -108,11 +100,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -137,11 +125,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -166,11 +150,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create glossary category in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create glossary category in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -195,11 +175,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create glossary category in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create glossary category in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -224,11 +200,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary category. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -253,11 +225,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary category. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -282,11 +250,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get specific glossary category by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
@@ -312,11 +276,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get specific glossary category by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
@@ -342,11 +302,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary category by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -374,11 +330,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary category by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -406,11 +358,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
@@ -436,11 +384,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
@@ -466,11 +410,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary category partially.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -498,11 +438,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary category partially.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -530,11 +466,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -563,11 +495,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -596,11 +524,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all terms associated with the specific category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all terms associated with the specific category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -629,11 +553,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all terms associated with the specific category.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all terms associated with the specific category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -662,11 +582,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary term. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -692,11 +608,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a glossary term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a glossary term. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -722,11 +634,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific glossary term by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
@@ -754,11 +662,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific glossary term by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
@@ -786,11 +690,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary term by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -819,11 +719,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary term by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -852,11 +748,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
@@ -882,11 +774,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
@@ -912,11 +800,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary term partially.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -945,11 +829,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary term partially.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -978,11 +858,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create glossary terms in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create glossary terms in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1008,11 +884,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create glossary terms in bulk.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create glossary terms in bulk. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1038,11 +910,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related objects assigned with the specified term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related objects assigned with the specified term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1071,11 +939,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related objects assigned with the specified term.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related objects assigned with the specified term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1104,11 +968,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Assign the given term to the provided list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Assign the given term to the provided list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1136,11 +996,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Assign the given term to the provided list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Assign the given term to the provided list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1168,11 +1024,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1200,11 +1052,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1232,11 +1080,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1264,11 +1108,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the term assignment for the given list of related objects.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1296,11 +1136,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1329,11 +1165,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1362,11 +1194,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific Glossary by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
@@ -1392,11 +1220,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific Glossary by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
@@ -1422,11 +1246,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1454,11 +1274,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the given glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the given glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1486,11 +1302,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
@@ -1516,11 +1328,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
@@ -1546,11 +1354,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the categories belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the categories belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1579,11 +1383,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the categories belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the categories belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1612,11 +1412,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the category headers belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the category headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1645,11 +1441,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the category headers belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the category headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1678,11 +1470,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific glossary with detailed information.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1709,11 +1497,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specific glossary with detailed information.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1740,11 +1524,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1773,11 +1553,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1806,11 +1582,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get terms belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -1840,11 +1612,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get terms belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -1874,11 +1642,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get term headers belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get term headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1907,11 +1671,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get term headers belonging to a specific glossary.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get term headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -1940,11 +1700,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the status of import csv operation
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
@@ -1970,11 +1726,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the status of import csv operation
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
@@ -2000,11 +1752,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Export Glossary Terms as csv file
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -2033,11 +1781,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Export Glossary Terms as csv file
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -2066,11 +1810,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get terms by glossary name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -2099,11 +1839,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get terms by glossary name.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -2132,11 +1868,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import Glossary Terms from local csv file
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import Glossary Terms from local csv file. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -2166,11 +1898,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import Glossary Terms from local csv file
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import Glossary Terms from local csv file. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -2200,11 +1928,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import Glossary Terms from local csv file by glossaryName
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import Glossary Terms from local csv file by glossaryName. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -2234,11 +1958,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import Glossary Terms from local csv file by glossaryName
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import Glossary Terms from local csv file by glossaryName. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>

@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get asset in a sentShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get asset in a sentShare. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -97,16 +88,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get asset in a sentShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get asset in a sentShare. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -134,16 +116,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List Assets in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List assets on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List Assets in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -163,16 +136,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List Assets in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List assets on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List Assets in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -192,16 +156,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Adds a new asset to an existing share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Adds a new asset to an existing share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -232,16 +187,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Adds a new asset to an existing share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Adds a new asset to an existing share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -272,16 +218,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete asset in a sentShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete asset in a sentShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -310,16 +247,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete asset in a sentShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete an asset on a sent share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete asset in a sentShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>

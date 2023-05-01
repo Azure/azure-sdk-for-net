@@ -46,11 +46,7 @@ namespace Azure.Analytics.Purview.Catalog
             _endpoint = endpoint;
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a new relationship between entities.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a new relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -75,11 +71,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a new relationship between entities.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a new relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -104,11 +96,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update an existing relationship between entities.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update an existing relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -133,11 +121,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update an existing relationship between entities.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update an existing relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -162,11 +146,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get relationship information between entities by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -193,11 +173,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get relationship information between entities by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -224,11 +200,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a relationship between entities by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -254,11 +226,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete a relationship between entities by its GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>

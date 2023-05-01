@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a cascade delete job for specified insight.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a cascade delete job for specified insight. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -80,11 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a cascade delete job for specified insight.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a cascade delete job for specified insight. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -110,11 +102,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates insight entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates insight entity. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -153,11 +141,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates insight entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates insight entity. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -196,11 +180,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified insight resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified insight resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -237,11 +217,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified insight resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified insight resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -278,11 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified insight resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified insight resource. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -319,11 +291,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified insight resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified insight resource. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -360,11 +328,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of insight resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of insight resources. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
@@ -412,11 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of insight resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of insight resources. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
@@ -464,11 +424,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>
@@ -505,11 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>

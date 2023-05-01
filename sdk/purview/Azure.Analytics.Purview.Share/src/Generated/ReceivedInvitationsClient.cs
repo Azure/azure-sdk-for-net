@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the received invitation identified by name
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a received invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
@@ -95,16 +86,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the received invitation identified by name
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a received invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
@@ -130,16 +112,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Rejects the received invitation identified by name
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Reject a received invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -168,16 +141,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Rejects the received invitation identified by name
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Reject a received invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -206,16 +170,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the received invitations.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List received invitations
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the received invitations. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -230,16 +185,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedInvitationsClient.GetReceivedInvitations", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the received invitations.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List received invitations
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the received invitations. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>

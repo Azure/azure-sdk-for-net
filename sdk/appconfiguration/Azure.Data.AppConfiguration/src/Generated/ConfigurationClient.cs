@@ -29,11 +29,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -57,11 +53,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -85,11 +77,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -116,11 +104,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -147,11 +131,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates a key-value. </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
@@ -181,11 +161,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates a key-value. </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
@@ -215,11 +191,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> The key of the key-value to retrieve. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -249,11 +221,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> The key of the key-value to retrieve. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -283,11 +251,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -309,11 +273,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -335,11 +295,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the state of a key-value snapshot.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the state of a key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -368,11 +324,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the state of a key-value snapshot.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the state of a key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -401,11 +353,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> The name of the key-value snapshot to check. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -432,11 +380,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> The name of the key-value snapshot to check. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -463,11 +407,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -492,11 +432,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -521,11 +457,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Locks a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Locks a key-value. </summary>
         /// <param name="key"> The key of the key-value to lock. </param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -553,11 +485,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Locks a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Locks a key-value. </summary>
         /// <param name="key"> The key of the key-value to lock. </param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -585,11 +513,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Unlocks a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Unlocks a key-value. </summary>
         /// <param name="key"> The key of the key-value to unlock. </param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -617,11 +541,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Unlocks a key-value.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Unlocks a key-value. </summary>
         /// <param name="key"> The key of the key-value to unlock. </param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -649,11 +569,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -679,11 +595,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Requests the headers and status of the given resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Requests the headers and status of the given resource. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -709,11 +621,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the state of a long running operation.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the state of a long running operation. </summary>
         /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
@@ -738,11 +646,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the state of a long running operation.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the state of a long running operation. </summary>
         /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
@@ -767,11 +671,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of keys.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of keys. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -786,11 +686,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of keys.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of keys. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -805,11 +701,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of key-values.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of key-values. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -827,11 +719,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of key-values.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of key-values. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -849,11 +737,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of labels.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of labels. </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -869,11 +753,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of labels.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of labels. </summary>
         /// <param name="name"> A filter for the name of the returned labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
@@ -889,11 +769,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of key-value revisions.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of key-value revisions. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -910,11 +786,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of key-value revisions.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of key-value revisions. </summary>
         /// <param name="key"> A filter used to match keys. </param>
         /// <param name="label"> A filter used to match labels. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
@@ -931,11 +803,7 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates a key-value snapshot.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates a key-value snapshot. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -965,11 +833,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates a key-value snapshot.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates a key-value snapshot. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>

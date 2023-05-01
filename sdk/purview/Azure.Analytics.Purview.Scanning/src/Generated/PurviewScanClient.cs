@@ -72,11 +72,7 @@ namespace Azure.Analytics.Purview.Scanning
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a filter
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a filter. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -97,11 +93,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a filter
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a filter. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -122,11 +114,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a filter
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a filter. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -148,11 +136,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a filter
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a filter. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -174,11 +158,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates an instance of a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates an instance of a scan. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -203,11 +183,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates an instance of a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates an instance of a scan. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -232,11 +208,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a scan information
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a scan information. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -257,11 +229,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a scan information
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a scan information. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -282,11 +250,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes the scan associated with the data source
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes the scan associated with the data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -307,11 +271,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes the scan associated with the data source
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes the scan associated with the data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -332,11 +292,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Runs the scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -363,11 +319,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Runs the scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -394,11 +346,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Cancels a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
@@ -424,11 +372,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Cancels a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
@@ -454,11 +398,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets trigger information
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets trigger information. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -479,11 +419,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets trigger information
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets trigger information. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -504,11 +440,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates an instance of a trigger
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates an instance of a trigger. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -533,11 +465,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates an instance of a trigger
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates an instance of a trigger. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -562,11 +490,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes the trigger associated with the scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes the trigger associated with the scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -587,11 +511,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes the trigger associated with the scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes the trigger associated with the scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -612,11 +532,7 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the scan history of a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the scan history of a scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -628,11 +544,7 @@ namespace Azure.Analytics.Purview.Scanning
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists the scan history of a scan
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists the scan history of a scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>

@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified season resource. </summary>
         /// <param name="seasonId"> Id of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
@@ -80,11 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified season resource. </summary>
         /// <param name="seasonId"> Id of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
@@ -110,11 +102,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a season resource. </summary>
         /// <param name="seasonId"> Id of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -142,11 +130,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a season resource. </summary>
         /// <param name="seasonId"> Id of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -174,11 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified season resource. </summary>
         /// <param name="seasonId"> Id of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
@@ -204,11 +184,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified season resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified season resource. </summary>
         /// <param name="seasonId"> Id of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
@@ -234,11 +210,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of season resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of season resources. </summary>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
@@ -271,11 +243,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Seasons.GetSeasons", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of season resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of season resources. </summary>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>

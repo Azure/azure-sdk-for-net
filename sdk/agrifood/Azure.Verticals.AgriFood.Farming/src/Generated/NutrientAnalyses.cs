@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified nutrient analysis resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -82,11 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified nutrient analysis resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -114,11 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a nutrient analysis resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -148,11 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a nutrient analysis resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -182,11 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified nutrient analysis resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -214,11 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified nutrient analysis resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -246,11 +222,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of nutrient analysis resources across all parties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -284,11 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalyses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of nutrient analysis resources across all parties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -322,11 +290,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalyses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of nutrient analysis resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
@@ -365,11 +329,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalysesByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of nutrient analysis resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="parentType">
         /// Type of the parent it belongs to.

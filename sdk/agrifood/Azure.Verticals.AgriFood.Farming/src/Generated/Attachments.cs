@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -82,11 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -114,11 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates an attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates an attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -147,11 +135,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates an attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates an attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -180,11 +164,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -212,11 +192,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified attachment resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -244,11 +220,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns attachment as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -276,11 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns attachment as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -308,11 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of attachment resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of attachment resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes">
@@ -350,11 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of attachment resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of attachment resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes">

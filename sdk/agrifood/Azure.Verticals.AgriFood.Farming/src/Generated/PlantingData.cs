@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specified planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specified planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -82,11 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a specified planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a specified planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -114,11 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates an planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates an planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -148,11 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates an planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates an planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -182,11 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -214,11 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified planting data resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified planting data resource under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -246,11 +222,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get cascade delete job for planting data resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get cascade delete job for planting data resource. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -276,11 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get cascade delete job for planting data resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get cascade delete job for planting data resource. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -306,11 +274,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of planting data resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of planting data resources under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
@@ -359,11 +323,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingData.GetAllPlantingDataByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of planting data resources under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of planting data resources under a particular party. </summary>
         /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
@@ -412,11 +372,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingData.GetAllPlantingDataByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of planting data resources across all parties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of planting data resources across all parties. </summary>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -460,11 +416,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingData.GetAllPlantingData", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of planting data resources across all parties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of planting data resources across all parties. </summary>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -508,11 +460,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingData.GetAllPlantingData", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Create cascade delete job for planting data resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create cascade delete job for planting data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
         /// <param name="partyId"> Id of the party. </param>
@@ -543,11 +491,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create cascade delete job for planting data resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create cascade delete job for planting data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
         /// <param name="partyId"> Id of the party. </param>

@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a received share by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a received share by name. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> is null. </exception>
@@ -95,16 +86,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a received share by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a received share by name. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> is null. </exception>
@@ -130,16 +112,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a received share in the given account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a received share in the given account. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -167,16 +140,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a received share in the given account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a received share in the given account. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -204,16 +168,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of received shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List received shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of received shares. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -228,16 +183,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of received shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List received shares
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of received shares. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -252,16 +198,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetReceivedShares", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a received share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -288,16 +225,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a received share
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>

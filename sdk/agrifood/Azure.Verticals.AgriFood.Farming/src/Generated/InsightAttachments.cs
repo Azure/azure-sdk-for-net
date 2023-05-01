@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates insight entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates insight entity. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -92,11 +88,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates insight entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates insight entity. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -134,11 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified insight resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified insight resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -175,11 +163,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a specified insight resource under a particular party.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a specified insight resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -216,11 +200,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified insight resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified insight resource. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -257,11 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a specified insight resource.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a specified insight resource. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -298,11 +274,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns insight-attachment as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns insight-attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -339,11 +311,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns insight-attachment as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns insight-attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
@@ -380,11 +348,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of insight resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of insight resources. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
@@ -424,11 +388,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "InsightAttachments.GetInsightAttachmentsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of insight resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of insight resources. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>

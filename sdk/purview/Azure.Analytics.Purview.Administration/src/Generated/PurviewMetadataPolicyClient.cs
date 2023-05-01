@@ -34,11 +34,7 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates a metadata policy
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -65,11 +61,7 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates a metadata policy
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -96,11 +88,7 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a metadata policy
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
@@ -126,11 +114,7 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a metadata policy
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
@@ -156,11 +140,7 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List or Get metadata policies
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List or Get metadata policies. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -172,11 +152,7 @@ namespace Azure.Analytics.Purview.Administration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List or Get metadata policies
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List or Get metadata policies. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>

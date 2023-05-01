@@ -61,11 +61,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the requested project metadata.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the requested project metadata. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -91,11 +87,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the requested project metadata.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the requested project metadata. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -121,11 +113,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or update a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or update a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -153,11 +141,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or update a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or update a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -185,11 +169,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a Project delete job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -215,11 +195,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a Project delete job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -245,11 +221,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an Export job, once job completes, returns the project metadata, and assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an Export job, once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -277,11 +249,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an Export job, once job completes, returns the project metadata, and assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an Export job, once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -309,11 +277,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an Import job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an Import job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -341,11 +305,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of an Import job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of an Import job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -373,11 +333,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a Deploy job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a Deploy job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
@@ -407,11 +363,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a Deploy job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a Deploy job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
@@ -441,11 +393,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates all the synonyms of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -473,11 +421,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates all the synonyms of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -505,11 +449,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of update sources job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of update sources job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -537,11 +477,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of update sources job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of update sources job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -569,11 +505,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of update QnAs job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of update QnAs job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -601,11 +533,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of update QnAs job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of update QnAs job. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -633,11 +561,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add Active Learning feedback
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -665,11 +589,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Add Active Learning feedback
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Add Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -697,11 +617,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all projects for a user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all projects for a user. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -713,11 +629,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all projects for a user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all projects for a user. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -729,11 +641,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all deployments of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -750,11 +658,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all deployments of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -771,11 +675,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the synonyms of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -792,11 +692,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the synonyms of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -813,11 +709,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the sources of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -834,11 +726,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the sources of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -855,11 +743,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the QnAs of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -877,11 +761,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets all the QnAs of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -899,11 +779,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -930,11 +806,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete the project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete the project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -961,11 +833,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Export project metadata and assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Export project metadata and assets. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -994,11 +862,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Export project metadata and assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Export project metadata and assets. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -1027,11 +891,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import project assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import project assets. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1061,11 +921,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import project assets.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import project assets. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1095,11 +951,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deploy project to production.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deploy project to production. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
@@ -1128,11 +980,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deploy project to production.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deploy project to production. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
@@ -1161,11 +1009,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the sources of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the sources of a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1195,11 +1039,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the sources of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the sources of a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1229,11 +1069,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the QnAs of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the QnAs of a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1263,11 +1099,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Updates the QnAs of a project.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Updates the QnAs of a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
