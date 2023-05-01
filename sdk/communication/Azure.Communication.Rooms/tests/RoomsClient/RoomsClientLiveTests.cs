@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Communication.Rooms;
+using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,12 +22,13 @@ namespace Azure.Communication.Rooms.Tests
         {
         }
 
-        [Test]
-        public async Task AcsRoomRequestLiveWithoutParticipantsTest()
+        [TestCase(AuthMethod.ConnectionString, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingTokenCredential")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
+        public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod)
         {
             // Arrange
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
-            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            RoomsClient roomsClient = CreateClient(authMethod);
 
             var validFrom = DateTimeOffset.UtcNow;
             var validUntil = validFrom.AddDays(1);
