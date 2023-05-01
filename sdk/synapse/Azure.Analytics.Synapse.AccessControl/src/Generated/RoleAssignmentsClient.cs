@@ -60,11 +60,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Check if the given principalId has access to perform list of actions at a given scope.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -90,11 +86,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Check if the given principalId has access to perform list of actions at a given scope.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -120,11 +112,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List role assignments.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List role assignments. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
@@ -149,11 +137,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List role assignments.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List role assignments. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
@@ -178,11 +162,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create role assignment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
@@ -211,11 +191,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create role assignment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
@@ -244,11 +220,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get role assignment by role assignment Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
@@ -274,11 +246,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get role assignment by role assignment Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
@@ -304,11 +272,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete role assignment by role assignment Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -335,11 +299,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete role assignment by role assignment Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
