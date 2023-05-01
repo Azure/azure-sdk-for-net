@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetProjectsBoxSucceeds()
+        public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
             await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync())
@@ -51,7 +51,7 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetProjectBoxSucceeds()
+        public async Task GetProjectSucceeds()
         {
             Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
 
