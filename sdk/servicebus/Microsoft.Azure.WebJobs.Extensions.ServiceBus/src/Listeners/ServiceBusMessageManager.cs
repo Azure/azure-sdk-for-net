@@ -15,7 +15,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 	{
 		private int _maxBatchSize;
 		private int _minBatchSize;
-		private string _sessionId;
 
 		// This is internal for mocking purposes only.
 		internal Queue<ServiceBusReceivedMessage> CachedMessages { get; set; }
@@ -28,20 +27,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 			}
 		}
 
-        public string SessionId
-        {
-            get
-            {
-                return _sessionId;
-            }
-        }
-
-        public ServiceBusMessageManager(int maxBatchSize, int minBatchSize, string sessionID=null)
+        public ServiceBusMessageManager(int maxBatchSize, int minBatchSize)
 		{
 			CachedMessages = new Queue<ServiceBusReceivedMessage>();
 			_maxBatchSize = maxBatchSize;
 			_minBatchSize = minBatchSize;
-			_sessionId = sessionID;
 		}
 
 		public void ClearEventCache()
@@ -58,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 		/// <param name="messages">An array of messages to either add to a batch or cache.</param>
 		/// <param name="allowPartialBatch">True if batches smaller than the minimum batch size can be returned.</param>
 		/// <returns></returns>
-		public ServiceBusReceivedMessage[] TryGetBatchofEventsWithCached(ServiceBusReceivedMessage[] messages = null, bool allowPartialBatch = false)
+		public ServiceBusReceivedMessage[] TryGetBatchofMessagesWithCached(ServiceBusReceivedMessage[] messages = null, bool allowPartialBatch = false)
 		{
             ServiceBusReceivedMessage[] messagesToReturn;
 			var inputMessages = messages?.Length ?? 0;
