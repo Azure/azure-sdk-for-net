@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or update an integration with a sensor partner.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or update an integration with a sensor partner. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be created. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -84,11 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create or update an integration with a sensor partner.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create or update an integration with a sensor partner. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be created. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -118,11 +110,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a partner integration model entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a partner integration model entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -150,11 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a partner integration model entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a partner integration model entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -182,11 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a partner integration model entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a partner integration model entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -214,11 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a partner integration model entity.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a partner integration model entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -246,11 +222,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Checks consent for partner integration.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Checks consent for partner integration. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="key"> Partner integration key. </param>
@@ -280,11 +252,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Checks consent for partner integration.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Checks consent for partner integration. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="key"> Partner integration key. </param>
@@ -314,11 +282,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Generates partner integration consent link.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Generates partner integration consent link. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -346,11 +310,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Generates partner integration consent link.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Generates partner integration consent link. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration object. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -378,11 +338,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets partner integration models.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets partner integration models. </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="integrationIds"> Ids of the partner integration models. </param>
         /// <param name="partyIds"> Ids of the parties. </param>
@@ -417,11 +373,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorPartnerIntegrations.GetSensorPartnerIntegrations", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets partner integration models.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets partner integration models. </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="integrationIds"> Ids of the partner integration models. </param>
         /// <param name="partyIds"> Ids of the parties. </param>

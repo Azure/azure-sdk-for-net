@@ -50,11 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns file Stream as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns file Stream as response for the given input filePath. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
@@ -79,11 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Downloads and returns file Stream as response for the given input filePath.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Downloads and returns file Stream as response for the given input filePath. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
@@ -108,11 +100,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a satellite data ingestion job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a satellite data ingestion job. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -138,11 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a satellite data ingestion job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a satellite data ingestion job. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -168,11 +152,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
         /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
@@ -202,11 +182,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
         /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
@@ -236,11 +212,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
         /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -268,11 +240,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
         /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -300,11 +268,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of scene resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of scene resources. </summary>
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
@@ -338,11 +302,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Returns a paginated list of scene resources.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of scene resources. </summary>
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
@@ -376,11 +336,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a satellite data ingestion job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a satellite data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -409,11 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create a satellite data ingestion job.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create a satellite data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>

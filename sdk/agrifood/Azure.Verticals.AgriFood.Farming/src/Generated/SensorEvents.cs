@@ -50,10 +50,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method]Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
+        /// [Protocol Method] Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
         /// Returns last 90 days events when startDateTime and endDateTime are not provided.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="sensorId"> Id of the associated sensor. </param>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
@@ -91,10 +89,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method]Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
+        /// [Protocol Method] Returns a list of sensor events data. Time span for query is limited to 90 days at a time.
         /// Returns last 90 days events when startDateTime and endDateTime are not provided.
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="sensorId"> Id of the associated sensor. </param>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
