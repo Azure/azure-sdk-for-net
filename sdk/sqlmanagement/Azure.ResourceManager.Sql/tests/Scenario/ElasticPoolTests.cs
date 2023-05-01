@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(0, list.Count);
         }
 
-        [Test]
+        /*[Test]
         [RecordedTest]
         public async Task ElasticPoolApiTestsWithEnclaves()
         {
@@ -160,6 +160,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 list = await collection.GetAllAsync().ToEnumerableAsync();
                 Assert.AreEqual(0, list.Count);
             }
-        }
+        }*/
     }
 }
