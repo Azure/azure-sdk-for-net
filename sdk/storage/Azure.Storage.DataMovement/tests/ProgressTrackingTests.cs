@@ -23,6 +23,12 @@ namespace Azure.Storage.DataMovement.Tests
             Console.WriteLine(message);
         }
 
+        private void BytesProgress(long bytesTransferred)
+        {
+            string message = $"Bytes: {bytesTransferred}";
+            Console.WriteLine(message);
+        }
+
         [Test]
         public async Task ProgressTracking_DirectoryUpload()
         {
@@ -47,9 +53,11 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainer(testContainer.Container);
 
             IProgress<StorageTransferProgress> progressHandler = new Progress<StorageTransferProgress>(Progress);
+            IProgress<long> bytesTransferredHandler = new Progress<long>(BytesProgress);
             TransferOptions options = new TransferOptions()
             {
-                ProgressHandler = progressHandler
+                ProgressHandler = progressHandler,
+                BytesTransferredHandler = bytesTransferredHandler
             };
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);

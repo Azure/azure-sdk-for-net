@@ -44,6 +44,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
 
+        private TransferProgressTracker _progressTracker;
+
         /// <summary>
         /// Specifies the source resource.
         /// </summary>
@@ -150,6 +152,7 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
+            TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
@@ -169,6 +172,7 @@ namespace Azure.Storage.DataMovement
             _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
+            _progressTracker = progressTracker;
             _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
             PartTransferStatusEventHandler = jobPartEventHandler;
@@ -311,6 +315,7 @@ namespace Azure.Storage.DataMovement
         internal void ReportBytesWritten(long bytesTransferred)
         {
             _dataTransfer._state.UpdateTransferBytes(bytesTransferred);
+            _progressTracker.IncrementBytesTransferred(bytesTransferred);
         }
 
         public async virtual Task InvokeSingleCompletedArg()

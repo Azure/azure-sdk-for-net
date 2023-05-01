@@ -37,10 +37,15 @@ namespace Azure.Storage.DataMovement.Models
         public string ResumeFromCheckpointId { get; set; }
 
         /// <summary>
-        /// Optional. An object for tracking progress of all transfers.
+        /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
         /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
         /// </summary>
         public IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional. An <see cref="IProgress{Long}"/> for tracking number of bytes transferred during a transfer.
+        /// </summary>
+        public IProgress<long> BytesTransferredHandler { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.

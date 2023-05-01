@@ -199,7 +199,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.BytesTransferredHandler);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.BytesTransferredHandler);
         }
 
         public void Dispose()
