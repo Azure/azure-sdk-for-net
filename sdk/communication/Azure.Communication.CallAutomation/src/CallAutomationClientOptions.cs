@@ -28,14 +28,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of the <see cref="CallAutomationClientOptions"/>.
         /// </summary>
-        public CallAutomationClientOptions(ServiceVersion version = LatestVersion, CommunicationUserIdentifier source = null)
+        public CallAutomationClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
                 ServiceVersion.V2023_01_15_Preview => "2023-01-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-            Source = source;
         }
 
         /// <summary>
