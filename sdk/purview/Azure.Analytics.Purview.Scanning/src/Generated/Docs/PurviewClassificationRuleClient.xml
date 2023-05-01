@@ -537,7 +537,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="TagVersionAsync(Int32,String,RequestContext)">
+    <member name="TagVersionAsync(int,string,RequestContext)">
 <example>
 This sample shows how to call TagVersionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -589,7 +589,7 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="TagVersion(Int32,String,RequestContext)">
+    <member name="TagVersion(int,string,RequestContext)">
 <example>
 This sample shows how to call TagVersion with required parameters and parse the result.
 <code><![CDATA[

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetDeviceClassAsync(String,RequestContext)">
+    <member name="GetDeviceClassAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -54,7 +54,7 @@ Schema for <c>DeviceClass</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClass(String,RequestContext)">
+    <member name="GetDeviceClass(string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClass with required parameters and parse the result.
 <code><![CDATA[
@@ -107,7 +107,7 @@ Schema for <c>DeviceClass</c>:
 
 </remarks>
     </member>
-    <member name="UpdateDeviceClassAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateDeviceClassAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateDeviceClassAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -172,7 +172,7 @@ Schema for <c>DeviceClass</c>:
 
 </remarks>
     </member>
-    <member name="UpdateDeviceClass(String,RequestContent,RequestContext)">
+    <member name="UpdateDeviceClass(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateDeviceClass with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -237,7 +237,7 @@ Schema for <c>DeviceClass</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeviceClassAsync(String,RequestContext)">
+    <member name="DeleteDeviceClassAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeviceClassAsync with required parameters.
 <code><![CDATA[
@@ -250,7 +250,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteDeviceClass(String,RequestContext)">
+    <member name="DeleteDeviceClass(string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeviceClass with required parameters.
 <code><![CDATA[
@@ -263,7 +263,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetDeviceAsync(String,RequestContext)">
+    <member name="GetDeviceAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -348,7 +348,7 @@ Schema for <c>Device</c>:
 
 </remarks>
     </member>
-    <member name="GetDevice(String,RequestContext)">
+    <member name="GetDevice(string,RequestContext)">
 <example>
 This sample shows how to call GetDevice with required parameters and parse the result.
 <code><![CDATA[
@@ -433,7 +433,7 @@ Schema for <c>Device</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceModuleAsync(String,String,RequestContext)">
+    <member name="GetDeviceModuleAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceModuleAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -518,7 +518,7 @@ Schema for <c>Device</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceModule(String,String,RequestContext)">
+    <member name="GetDeviceModule(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceModule with required parameters and parse the result.
 <code><![CDATA[
@@ -669,7 +669,7 @@ Schema for <c>UpdateCompliance</c>:
 
 </remarks>
     </member>
-    <member name="GetGroupAsync(String,RequestContext)">
+    <member name="GetGroupAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetGroupAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -710,7 +710,7 @@ Schema for <c>Group</c>:
 
 </remarks>
     </member>
-    <member name="GetGroup(String,RequestContext)">
+    <member name="GetGroup(string,RequestContext)">
 <example>
 This sample shows how to call GetGroup with required parameters and parse the result.
 <code><![CDATA[
@@ -751,7 +751,7 @@ Schema for <c>Group</c>:
 
 </remarks>
     </member>
-    <member name="DeleteGroupAsync(String,RequestContext)">
+    <member name="DeleteGroupAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGroupAsync with required parameters.
 <code><![CDATA[
@@ -764,7 +764,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteGroup(String,RequestContext)">
+    <member name="DeleteGroup(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGroup with required parameters.
 <code><![CDATA[
@@ -777,7 +777,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetUpdateComplianceForGroupAsync(String,RequestContext)">
+    <member name="GetUpdateComplianceForGroupAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateComplianceForGroupAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -810,7 +810,7 @@ Schema for <c>UpdateCompliance</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdateComplianceForGroup(String,RequestContext)">
+    <member name="GetUpdateComplianceForGroup(string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateComplianceForGroup with required parameters and parse the result.
 <code><![CDATA[
@@ -843,7 +843,7 @@ Schema for <c>UpdateCompliance</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentAsync(String,String,RequestContext)">
+    <member name="GetDeploymentAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -910,7 +910,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="GetDeployment(String,String,RequestContext)">
+    <member name="GetDeployment(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeployment with required parameters and parse the result.
 <code><![CDATA[
@@ -977,7 +977,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateDeploymentAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateDeploymentAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateDeploymentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1135,7 +1135,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateDeployment(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateDeployment(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateDeployment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1293,7 +1293,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeploymentAsync(String,String,RequestContext)">
+    <member name="DeleteDeploymentAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentAsync with required parameters.
 <code><![CDATA[
@@ -1306,7 +1306,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteDeployment(String,String,RequestContext)">
+    <member name="DeleteDeployment(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeployment with required parameters.
 <code><![CDATA[
@@ -1319,7 +1319,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetDeploymentStatusAsync(String,String,RequestContext)">
+    <member name="GetDeploymentStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1396,7 +1396,7 @@ Schema for <c>DeploymentStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentStatus(String,String,RequestContext)">
+    <member name="GetDeploymentStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -1473,7 +1473,7 @@ Schema for <c>DeploymentStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupAsync(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1508,7 +1508,7 @@ Schema for <c>DeviceClassSubgroup</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroup(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroup(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroup with required parameters and parse the result.
 <code><![CDATA[
@@ -1543,7 +1543,7 @@ Schema for <c>DeviceClassSubgroup</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeviceClassSubgroupAsync(String,String,RequestContext)">
+    <member name="DeleteDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeviceClassSubgroupAsync with required parameters.
 <code><![CDATA[
@@ -1556,7 +1556,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteDeviceClassSubgroup(String,String,RequestContext)">
+    <member name="DeleteDeviceClassSubgroup(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeviceClassSubgroup with required parameters.
 <code><![CDATA[
@@ -1569,7 +1569,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetDeviceClassSubgroupUpdateComplianceAsync(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupUpdateComplianceAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupUpdateComplianceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1602,7 +1602,7 @@ Schema for <c>UpdateCompliance</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupUpdateCompliance(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupUpdateCompliance(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupUpdateCompliance with required parameters and parse the result.
 <code><![CDATA[
@@ -1635,7 +1635,7 @@ Schema for <c>UpdateCompliance</c>:
 
 </remarks>
     </member>
-    <member name="GetBestUpdatesForDeviceClassSubgroupAsync(String,String,RequestContext)">
+    <member name="GetBestUpdatesForDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroupAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1680,7 +1680,7 @@ Schema for <c>DeviceClassSubgroupUpdatableDevices</c>:
 
 </remarks>
     </member>
-    <member name="GetBestUpdatesForDeviceClassSubgroup(String,String,RequestContext)">
+    <member name="GetBestUpdatesForDeviceClassSubgroup(string,string,RequestContext)">
 <example>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroup with required parameters and parse the result.
 <code><![CDATA[
@@ -1725,7 +1725,7 @@ Schema for <c>DeviceClassSubgroupUpdatableDevices</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentForDeviceClassSubgroupAsync(String,String,String,RequestContext)">
+    <member name="GetDeploymentForDeviceClassSubgroupAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentForDeviceClassSubgroupAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1792,7 +1792,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentForDeviceClassSubgroup(String,String,String,RequestContext)">
+    <member name="GetDeploymentForDeviceClassSubgroup(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentForDeviceClassSubgroup with required parameters and parse the result.
 <code><![CDATA[
@@ -1859,7 +1859,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeploymentForDeviceClassSubgroupAsync(String,String,String,RequestContext)">
+    <member name="DeleteDeploymentForDeviceClassSubgroupAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroupAsync with required parameters.
 <code><![CDATA[
@@ -1872,7 +1872,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteDeploymentForDeviceClassSubgroup(String,String,String,RequestContext)">
+    <member name="DeleteDeploymentForDeviceClassSubgroup(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroup with required parameters.
 <code><![CDATA[
@@ -1885,7 +1885,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="StopDeploymentAsync(String,String,String,RequestContext)">
+    <member name="StopDeploymentAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call StopDeploymentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1952,7 +1952,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="StopDeployment(String,String,String,RequestContext)">
+    <member name="StopDeployment(string,string,string,RequestContext)">
 <example>
 This sample shows how to call StopDeployment with required parameters and parse the result.
 <code><![CDATA[
@@ -2019,7 +2019,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="RetryDeploymentAsync(String,String,String,RequestContext)">
+    <member name="RetryDeploymentAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call RetryDeploymentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2086,7 +2086,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="RetryDeployment(String,String,String,RequestContext)">
+    <member name="RetryDeployment(string,string,string,RequestContext)">
 <example>
 This sample shows how to call RetryDeployment with required parameters and parse the result.
 <code><![CDATA[
@@ -2153,7 +2153,7 @@ Schema for <c>Deployment</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupDeploymentStatusAsync(String,String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupDeploymentStatusAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2214,7 +2214,7 @@ Schema for <c>DeviceClassSubgroupDeploymentStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupDeploymentStatus(String,String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupDeploymentStatus(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -2275,7 +2275,7 @@ Schema for <c>DeviceClassSubgroupDeploymentStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatusAsync(String,ETag,RequestContext)">
+    <member name="GetOperationStatusAsync(string,ETag?,RequestContext)">
 <example>
 This sample shows how to call GetOperationStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2346,7 +2346,7 @@ Schema for <c>DeviceOperation</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatus(String,ETag,RequestContext)">
+    <member name="GetOperationStatus(string,ETag?,RequestContext)">
 <example>
 This sample shows how to call GetOperationStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -2417,7 +2417,7 @@ Schema for <c>DeviceOperation</c>:
 
 </remarks>
     </member>
-    <member name="StartLogCollectionAsync(String,RequestContent,RequestContext)">
+    <member name="StartLogCollectionAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call StartLogCollectionAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -2508,7 +2508,7 @@ Schema for <c>LogCollection</c>:
 
 </remarks>
     </member>
-    <member name="StartLogCollection(String,RequestContent,RequestContext)">
+    <member name="StartLogCollection(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call StartLogCollection with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -2599,7 +2599,7 @@ Schema for <c>LogCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetLogCollectionAsync(String,RequestContext)">
+    <member name="GetLogCollectionAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetLogCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2642,7 +2642,7 @@ Schema for <c>LogCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetLogCollection(String,RequestContext)">
+    <member name="GetLogCollection(string,RequestContext)">
 <example>
 This sample shows how to call GetLogCollection with required parameters and parse the result.
 <code><![CDATA[
@@ -2685,7 +2685,7 @@ Schema for <c>LogCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetLogCollectionDetailedStatusAsync(String,RequestContext)">
+    <member name="GetLogCollectionDetailedStatusAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetLogCollectionDetailedStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2736,7 +2736,7 @@ Schema for <c>LogCollectionOperationDetailedStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetLogCollectionDetailedStatus(String,RequestContext)">
+    <member name="GetLogCollectionDetailedStatus(string,RequestContext)">
 <example>
 This sample shows how to call GetLogCollectionDetailedStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -2787,7 +2787,7 @@ Schema for <c>LogCollectionOperationDetailedStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassesAsync(String,RequestContext)">
+    <member name="GetDeviceClassesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassesAsync and parse the result.
 <code><![CDATA[
@@ -2854,7 +2854,7 @@ Schema for <c>DeviceClassesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClasses(String,RequestContext)">
+    <member name="GetDeviceClasses(string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClasses and parse the result.
 <code><![CDATA[
@@ -2921,7 +2921,7 @@ Schema for <c>DeviceClassesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetInstallableUpdatesForDeviceClassesAsync(String,RequestContext)">
+    <member name="GetInstallableUpdatesForDeviceClassesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2959,7 +2959,7 @@ Schema for <c>UpdateInfoListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetInstallableUpdatesForDeviceClasses(String,RequestContext)">
+    <member name="GetInstallableUpdatesForDeviceClasses(string,RequestContext)">
 <example>
 This sample shows how to call GetInstallableUpdatesForDeviceClasses with required parameters and parse the result.
 <code><![CDATA[
@@ -2997,7 +2997,7 @@ Schema for <c>UpdateInfoListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDevicesAsync(String,RequestContext)">
+    <member name="GetDevicesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDevicesAsync and parse the result.
 <code><![CDATA[
@@ -3097,7 +3097,7 @@ Schema for <c>DevicesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDevices(String,RequestContext)">
+    <member name="GetDevices(string,RequestContext)">
 <example>
 This sample shows how to call GetDevices and parse the result.
 <code><![CDATA[
@@ -3197,7 +3197,7 @@ Schema for <c>DevicesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetGroupsAsync(String,RequestContext)">
+    <member name="GetGroupsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetGroupsAsync and parse the result.
 <code><![CDATA[
@@ -3253,7 +3253,7 @@ Schema for <c>GroupsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetGroups(String,RequestContext)">
+    <member name="GetGroups(string,RequestContext)">
 <example>
 This sample shows how to call GetGroups and parse the result.
 <code><![CDATA[
@@ -3309,7 +3309,7 @@ Schema for <c>GroupsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetBestUpdatesForGroupsAsync(String,RequestContext)">
+    <member name="GetBestUpdatesForGroupsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3355,7 +3355,7 @@ Schema for <c>DeviceClassSubgroupUpdatableDevicesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetBestUpdatesForGroups(String,RequestContext)">
+    <member name="GetBestUpdatesForGroups(string,RequestContext)">
 <example>
 This sample shows how to call GetBestUpdatesForGroups with required parameters and parse the result.
 <code><![CDATA[
@@ -3401,7 +3401,7 @@ Schema for <c>DeviceClassSubgroupUpdatableDevicesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsForGroupsAsync(String,String,RequestContext)">
+    <member name="GetDeploymentsForGroupsAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsForGroupsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3486,7 +3486,7 @@ Schema for <c>DeploymentsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsForGroups(String,String,RequestContext)">
+    <member name="GetDeploymentsForGroups(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsForGroups with required parameters and parse the result.
 <code><![CDATA[
@@ -3571,7 +3571,7 @@ Schema for <c>DeploymentsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupsForGroupsAsync(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupsForGroupsAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupsForGroupsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3621,7 +3621,7 @@ Schema for <c>DeviceClassSubgroupsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceClassSubgroupsForGroups(String,String,RequestContext)">
+    <member name="GetDeviceClassSubgroupsForGroups(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceClassSubgroupsForGroups with required parameters and parse the result.
 <code><![CDATA[
@@ -3671,7 +3671,7 @@ Schema for <c>DeviceClassSubgroupsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsForDeviceClassSubgroupsAsync(String,String,String,RequestContext)">
+    <member name="GetDeploymentsForDeviceClassSubgroupsAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroupsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3756,7 +3756,7 @@ Schema for <c>DeploymentsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsForDeviceClassSubgroups(String,String,String,RequestContext)">
+    <member name="GetDeploymentsForDeviceClassSubgroups(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroups with required parameters and parse the result.
 <code><![CDATA[
@@ -3841,7 +3841,7 @@ Schema for <c>DeploymentsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(String,String,String,String,RequestContext)">
+    <member name="GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3892,7 +3892,7 @@ Schema for <c>DeploymentDeviceStatesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeviceStatesForDeviceClassSubgroupDeployments(String,String,String,String,RequestContext)">
+    <member name="GetDeviceStatesForDeviceClassSubgroupDeployments(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeployments with required parameters and parse the result.
 <code><![CDATA[
@@ -3943,7 +3943,7 @@ Schema for <c>DeploymentDeviceStatesListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatusesAsync(String,Int32,RequestContext)">
+    <member name="GetOperationStatusesAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetOperationStatusesAsync and parse the result.
 <code><![CDATA[
@@ -4016,7 +4016,7 @@ Schema for <c>DeviceOperationsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationStatuses(String,Int32,RequestContext)">
+    <member name="GetOperationStatuses(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetOperationStatuses and parse the result.
 <code><![CDATA[
@@ -4177,7 +4177,7 @@ Schema for <c>LogCollectionListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetHealthOfDevicesAsync(String,RequestContext)">
+    <member name="GetHealthOfDevicesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetHealthOfDevicesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4219,7 +4219,7 @@ Schema for <c>DeviceHealthListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetHealthOfDevices(String,RequestContext)">
+    <member name="GetHealthOfDevices(string,RequestContext)">
 <example>
 This sample shows how to call GetHealthOfDevices with required parameters and parse the result.
 <code><![CDATA[
