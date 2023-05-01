@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core.GeoJson;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -55,7 +56,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" });
+            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" }, new JsonSerializerOptions());
 
             Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
         }
@@ -88,7 +89,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new GeoPoint(1, 2));
+            json.a = new MutableJsonDocument(new GeoPoint(1, 2), new JsonSerializerOptions());
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
@@ -110,19 +111,19 @@ namespace Azure.Core.Tests
 
         public static IEnumerable<object[]> PrimitiveValues()
         {
-            yield return new object[] { "string", "\"string\""};
-            yield return new object[] {1L, "1"};
-            yield return new object[] {1, "1"};
-            yield return new object[] {1.0, "1"};
+            yield return new object[] { "string", "\"string\"" };
+            yield return new object[] { 1L, "1" };
+            yield return new object[] { 1, "1" };
+            yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
             yield return new object[] {1.1D, "1.1"};
             yield return new object[] {1.1F, "1.1"};
 #else
-            yield return new object[] {1.1D, "1.1000000000000001"};
-            yield return new object[] {1.1F, "1.10000002" };
+            yield return new object[] { 1.1D, "1.1000000000000001" };
+            yield return new object[] { 1.1F, "1.10000002" };
 #endif
-            yield return new object[] {true, "true"};
-            yield return new object[] {false, "false"};
+            yield return new object[] { true, "true" };
+            yield return new object[] { false, "false" };
         }
     }
 }
