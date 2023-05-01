@@ -6,9 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "34d1f8244028a00ae0d9c8d562596047",
+        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f34e705ee7f91868a3e3068e2258a603",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,13 +16,13 @@
         "Connection": "keep-alive",
         "Content-Length": "68",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 May 2023 20:55:24 GMT",
+        "Date": "Mon, 01 May 2023 21:53:57 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "34d1f8244028a00ae0d9c8d562596047",
-        "x-ms-correlation-request-id": "194b42df-6546-4c21-8670-10133d069f3f",
+        "x-ms-client-request-id": "f34e705ee7f91868a3e3068e2258a603",
+        "x-ms-correlation-request-id": "7706d3f5-5608-4579-b4a1-bcedfdaba608",
         "X-Rate-Limit-Limit": "1m",
-        "X-Rate-Limit-Remaining": "298",
-        "X-Rate-Limit-Reset": "2023-05-01T20:56:15.7793983Z"
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2023-05-01T21:54:57.0538114Z"
       },
       "ResponseBody": {
         "value": [
@@ -35,14 +34,9 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "CLIENT_ID": "82759f53-fe56-4a00-a282-dc1990e29267",
     "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
     "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
-    "DEFAULT_TEST_USER_NAME": "sdk_integration_test_1@fidalgoppe010.onmicrosoft.com",
     "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
-    "RandomSeed": "1910291448",
-    "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97",
-    "TENANT_ID": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd"
+    "RandomSeed": "1548604041"
   }
 }

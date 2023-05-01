@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,6 +12,7 @@ namespace Azure.Developer.DevCenter.Tests
 {
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
+        private const string EnvName = "DevTestEnv";
         private DeploymentEnvironmentsClient _environmentsClient;
 
         internal DeploymentEnvironmentsClient GetEnvironmentsClient() =>
@@ -111,6 +110,167 @@ namespace Azure.Developer.DevCenter.Tests
             }
 
             Assert.AreEqual(3, numberOfEnvDefinitions);
+        }
+
+        [RecordedTest]
+        public async Task GetEnvironmentDefinitionsByCatalogAsyncSucceeds()
+        {
+            var numberOfEnvDefinitions = 0;
+            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName))
+            {
+                numberOfEnvDefinitions++;
+                JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
+
+                if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
+                {
+                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                }
+
+                string envDefinitionsName = envDefinitionsNameJson.ToString();
+                Console.WriteLine(envDefinitionsName);
+            }
+
+            Assert.AreEqual(3, numberOfEnvDefinitions);
+        }
+
+        [RecordedTest]
+        public async Task GetEnvironmentSucceeds()
+        {
+            await SetUpEnvironmentAsync();
+
+            Response getEnvResponse = await _environmentsClient.GetEnvironmentAsync(TestEnvironment.ProjectName, EnvName);
+            JsonElement getEnvData = JsonDocument.Parse(getEnvResponse.ContentStream).RootElement;
+
+            if (!getEnvData.TryGetProperty("name", out var envNameJson))
+            {
+                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+            }
+
+            string envName = envNameJson.ToString();
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
+
+            await DeleteEnvironmentAsync();
+        }
+
+        [RecordedTest]
+        public async Task GetEnvironmentsSucceeds()
+        {
+            var numberOfEnvironments = await GetEnvironmentsAsync();
+
+            if (numberOfEnvironments == 0)
+            {
+                await SetUpEnvironmentAsync();
+            }
+
+            numberOfEnvironments = await GetEnvironmentsAsync();
+            Assert.AreEqual(1, numberOfEnvironments);
+
+            await DeleteEnvironmentAsync();
+        }
+
+        [RecordedTest]
+        public async Task GetAllEnvironmentsSucceeds()
+        {
+            var numberOfEnvironments = await GetAllEnvironemtnsAsync();
+
+            if (numberOfEnvironments == 0)
+            {
+                await SetUpEnvironmentAsync();
+            }
+
+            numberOfEnvironments = await GetAllEnvironemtnsAsync();
+            Assert.AreEqual(1, numberOfEnvironments);
+
+            await DeleteEnvironmentAsync();
+        }
+
+        private async Task<int> GetAllEnvironemtnsAsync()
+        {
+            var numberOfEnvironments = 0;
+            await foreach (BinaryData environmentsData in _environmentsClient.GetAllEnvironmentsAsync(TestEnvironment.ProjectName))
+            {
+                numberOfEnvironments++;
+                JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
+
+                if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
+                {
+                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                }
+
+                string envName = environmentNameJson.ToString();
+                Console.WriteLine(envName);
+            }
+
+            return numberOfEnvironments;
+        }
+
+        private async Task<int> GetEnvironmentsAsync()
+        {
+            var numberOfEnvironments = 0;
+            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(TestEnvironment.ProjectName))
+            {
+                numberOfEnvironments++;
+                JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
+
+                if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
+                {
+                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                }
+
+                string envName = environmentNameJson.ToString();
+                Console.WriteLine(envName);
+            }
+
+            return numberOfEnvironments;
+        }
+
+        private async Task SetUpEnvironmentAsync()
+        {
+            string envDefinitionsName = string.Empty;
+
+            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName))
+            {
+                JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
+
+                if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
+                {
+                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                }
+
+                envDefinitionsName = envDefinitionsNameJson.ToString();
+                break;
+            }
+
+            var content = new
+            {
+                catalogItemName = envDefinitionsName,
+                catalogName = TestEnvironment.CatalogName,
+                environmentType = TestEnvironment.EnvironmentTypeName,
+            };
+
+            Operation<BinaryData> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
+                WaitUntil.Completed,
+                TestEnvironment.ProjectName,
+                EnvName,
+                RequestContent.Create(content));
+
+            BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
+            JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
+
+            var provisioningState = environment.GetProperty("provisioningState").ToString();
+            Assert.IsTrue(provisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task DeleteEnvironmentAsync()
+        {
+            Operation environmentDeleteOperation = await _environmentsClient.DeleteEnvironmentAsync(
+                WaitUntil.Completed,
+                TestEnvironment.ProjectName,
+                EnvName,
+                userId: TestEnvironment.UserId);
+
+            await environmentDeleteOperation.WaitForCompletionResponseAsync();
+            Console.WriteLine($"Completed environment deletion.");
         }
     }
 }

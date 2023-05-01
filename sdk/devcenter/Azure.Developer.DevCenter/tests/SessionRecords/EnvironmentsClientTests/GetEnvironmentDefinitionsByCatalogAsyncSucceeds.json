@@ -1,13 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/environmentDefinitions?api-version=2023-01-01-preview",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/catalogs/sdk-default-catalog/environmentDefinitions?api-version=2023-01-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "traceparent": "00-f97171f1ed384b1dad9d81b5799030bf-3796819768434bd8-00",
         "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c331fc54aec35e9af8144cc9e0e5b6ed",
+        "x-ms-client-request-id": "28a0e55d37c01981fe88a75472b9c073",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,13 +17,13 @@
         "Connection": "keep-alive",
         "Content-Length": "3118",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 May 2023 21:53:58 GMT",
+        "Date": "Mon, 01 May 2023 21:32:34 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "c331fc54aec35e9af8144cc9e0e5b6ed",
-        "x-ms-correlation-request-id": "0b613e0b-6615-4ee8-a9d3-617a1fd3ea63",
+        "x-ms-client-request-id": "28a0e55d37c01981fe88a75472b9c073",
+        "x-ms-correlation-request-id": "b4d0975f-bef2-460f-a025-42c82101ee32",
         "X-Rate-Limit-Limit": "1m",
-        "X-Rate-Limit-Remaining": "298",
-        "X-Rate-Limit-Reset": "2023-05-01T21:54:56.3532634Z"
+        "X-Rate-Limit-Remaining": "297",
+        "X-Rate-Limit-Reset": "2023-05-01T21:33:24.2892148Z"
       },
       "ResponseBody": {
         "value": [
@@ -104,8 +105,9 @@
     }
   ],
   "Variables": {
+    "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
     "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
     "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
-    "RandomSeed": "1132417899"
+    "RandomSeed": "1822662521"
   }
 }

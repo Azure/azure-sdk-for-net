@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fc94f3040e4166408988168549e5c127-24434c405060d049-00",
-        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0d5a3b4cff643d66c7b8bd349fb02b66",
+        "traceparent": "00-1c3eaeb200f781578a2b08d238fe9233-dcf21bb8fafe2ba3-00",
+        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0c131769a47991a572217c16733693d3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,13 +17,13 @@
         "Connection": "keep-alive",
         "Content-Length": "35",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 May 2023 20:55:25 GMT",
+        "Date": "Mon, 01 May 2023 21:53:57 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "0d5a3b4cff643d66c7b8bd349fb02b66",
-        "x-ms-correlation-request-id": "6f99df48-e783-46f2-9a72-0575551b516f",
+        "x-ms-client-request-id": "0c131769a47991a572217c16733693d3",
+        "x-ms-correlation-request-id": "f8d7109d-2f54-4bdb-9e8d-f026002fa357",
         "X-Rate-Limit-Limit": "1m",
-        "X-Rate-Limit-Remaining": "297",
-        "X-Rate-Limit-Reset": "2023-05-01T20:56:14.0946079Z"
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2023-05-01T21:54:57.6228688Z"
       },
       "ResponseBody": {
         "name": "sdk-default-catalog"
@@ -34,6 +34,6 @@
     "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
     "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
     "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
-    "RandomSeed": "1170362296"
+    "RandomSeed": "407151500"
   }
 }
