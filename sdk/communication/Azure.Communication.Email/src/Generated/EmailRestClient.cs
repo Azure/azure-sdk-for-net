@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -29,7 +30,7 @@ namespace Azure.Communication.Email
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public EmailRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public EmailRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-03-31")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -76,7 +77,7 @@ namespace Azure.Communication.Email
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -104,7 +105,7 @@ namespace Azure.Communication.Email
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -132,7 +133,7 @@ namespace Azure.Communication.Email
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
+        /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
@@ -150,13 +151,13 @@ namespace Azure.Communication.Email
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message0.Response);
             }
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
+        /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public ResponseWithHeaders<EmailSendHeaders> Send(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
@@ -174,7 +175,7 @@ namespace Azure.Communication.Email
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message0.Response);
+                    throw new RequestFailedException(message0.Response);
             }
         }
     }

@@ -126,4 +126,6 @@ directive:
       $['/providers/Microsoft.BillingBenefits/savingsPlans'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
   - remove-operation: Operation_List
 
+models-to-treat-empty-string-as-null:
+  - BillingBenefitsAppliedScopeProperties
 ```

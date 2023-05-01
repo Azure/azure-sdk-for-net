@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string TestDispatcherRegEx = @"https://incomingcalldispatcher.azurewebsites.net";
         private const string TestDispatcherQNameRegEx = @"(?<=\?q=)(.*)";
 
-        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>> _eventstore;
+        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>> _eventstore;
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private RecordedEventListener _recordedEventListener;
         private HttpPipeline _pipeline;
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [SetUp]
         public void TestSetup()
         {
-            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
+            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
             _recordedEventListener = new RecordedEventListener(Mode, GetSessionFilePath(), CreateServiceBusClient);
 
@@ -76,11 +76,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            await DeRegisterCallBackWithDispatcher();
-            await _recordedEventListener.DisposeAsync();
-            _eventstore.Clear();
-            _incomingcontextstore.Clear();
-            await Task.CompletedTask;
+            try
+            {
+                await _recordedEventListener.DisposeAsync();
+                _eventstore.Clear();
+                _incomingcontextstore.Clear();
+                await Task.CompletedTask;
+            }
+            catch
+            { }
         }
 
         public bool SkipCallingServerInteractionLiveTests
@@ -138,7 +142,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return null;
         }
 
-        protected async Task<CallAutomationEventBase?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
+        protected async Task<CallAutomationEventData?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
         {
             var timeOutTime = DateTime.Now.Add(timeOut);
             while (DateTime.Now < timeOutTime)
@@ -242,7 +246,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 else
                 {
                     // for call automation callback events
-                    CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
+                    CallAutomationEventData callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
 
                     if (_eventstore.TryGetValue(callBackEvent.CallConnectionId, out var mylist))
                     {
@@ -250,7 +254,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     }
                     else
                     {
-                        ConcurrentDictionary<Type, CallAutomationEventBase> events = new ConcurrentDictionary<Type, CallAutomationEventBase>();
+                        ConcurrentDictionary<Type, CallAutomationEventData> events = new ConcurrentDictionary<Type, CallAutomationEventData>();
                         events.TryAdd(callBackEvent.GetType(), callBackEvent);
                         _eventstore.Add(callBackEvent.CallConnectionId, events);
                     }

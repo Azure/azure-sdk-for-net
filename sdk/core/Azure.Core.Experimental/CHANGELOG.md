@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.26 (Unreleased)
+## 0.1.0-preview.27 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.26 (2023-04-10)
+
+### Features Added
+
+- Added basic debugger support for DynamicData
+### Breaking Changes
+
+- Removed `DynamicJson` type, and moved its functionality into `DynamicData`.
+- Sealed the `DynamicData` type.
+- Renamed `DynamicJsonNameMapping` enum to `DynamicDataNameMapping`.
+- Renamed `DynamicJsonProperty` to `DynamicDataProperty`.
+- Renamed `ToDynamic()` extension method on `BinaryData` to `ToDynamicFromJson()`.
+- Removed `DynamicJson.ArrayEnumerator` and `DynamicJson.ObjectEnumerator` types.
+### Bugs Fixed
+
+- Use root `DynamicJsonOptions` in child elements, arrays, and object enumerators.
 
 ## 0.1.0-preview.25 (2023-03-02)
 

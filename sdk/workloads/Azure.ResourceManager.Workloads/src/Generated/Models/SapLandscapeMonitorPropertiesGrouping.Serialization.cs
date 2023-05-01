@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();

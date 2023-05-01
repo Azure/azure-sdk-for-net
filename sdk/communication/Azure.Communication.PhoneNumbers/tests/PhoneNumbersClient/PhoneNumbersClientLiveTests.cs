@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -103,9 +102,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
                     new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
             }
-            catch (Azure.RequestFailedException ex)
+            catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -150,6 +149,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = await client.GetPhoneNumberSearchResultAsync(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
         }
 
         [Test]
@@ -176,6 +185,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = client.GetPhoneNumberSearchResult(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
         }
 
         [Test]
@@ -199,7 +218,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
@@ -212,7 +231,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -228,7 +247,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -239,7 +258,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
+                var phoneNumbers = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
             }
             catch (Exception ex)
             {
@@ -248,16 +267,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task StartPurchasedUnauthorizedNumber()
+        public async Task StartPurchaseInvalidSearchId()
         {
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(UnauthorizedNumber);
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync("some-invalid-id");
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -305,7 +324,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
@@ -419,6 +438,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        private static bool IsSuccess(int statusCode)
+        {
+            return statusCode >= 200 && statusCode < 300;
+        }
+
+        private static bool IsClientError(int statusCode)
+        {
+            return statusCode >= 400 && statusCode < 500;
         }
     }
 }

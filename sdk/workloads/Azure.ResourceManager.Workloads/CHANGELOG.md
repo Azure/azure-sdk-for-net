@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-04-28)
+
+This release is first stable release for the Workloads Management library.
+
+### Breaking Changes
+- ACSS: Removed SharedGalleryImageId and ExactVersion from ImageReference.
+- Prepended `Sap` to simple model names.
+- Optimized the name of some models
+- Upgrade dependent `Azure.Core` to `1.30.0`.
 
 ## 1.0.0-beta.3 (2023-03-06)
 

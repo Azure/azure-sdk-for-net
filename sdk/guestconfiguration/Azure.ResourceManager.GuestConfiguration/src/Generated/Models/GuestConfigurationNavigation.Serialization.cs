@@ -127,7 +127,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        contentUri = null;
                         continue;
                     }
                     contentUri = new Uri(property.Value.GetString());
@@ -172,7 +171,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
@@ -187,7 +185,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();

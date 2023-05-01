@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourcePlatform = new ProjectSourcePlatform(property0.Value.GetString());
@@ -180,7 +176,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value);
@@ -190,7 +185,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetPlatform = new ProjectTargetPlatform(property0.Value.GetString());
@@ -200,7 +194,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -210,7 +203,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
@@ -220,7 +212,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
@@ -230,7 +221,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DatabaseInfo> array = new List<DatabaseInfo>();
@@ -245,7 +235,6 @@ namespace Azure.ResourceManager.DataMigration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProjectProvisioningState(property0.Value.GetString());

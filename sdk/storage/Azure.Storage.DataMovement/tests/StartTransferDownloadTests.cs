@@ -13,6 +13,8 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Shared;
 using System.Data.Common;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -39,24 +41,21 @@ namespace Azure.Storage.DataMovement.Tests
         {
             public readonly string SourceLocalPath;
             public readonly string DestinationLocalPath;
-            public SingleTransferOptions DownloadOptions;
+            public TransferOptions DownloadOptions;
             public DataTransfer DataTransfer;
             public bool CompletedStatus;
-            public Exception Exception;
 
             public VerifyDownloadBlobContentInfo(
                 string sourceFile,
                 string destinationFile,
-                SingleTransferOptions downloadOptions,
-                bool completed,
-                Exception exception)
+                TransferOptions downloadOptions,
+                bool completed)
             {
                 SourceLocalPath = sourceFile;
                 DestinationLocalPath = destinationFile;
                 DownloadOptions = downloadOptions;
                 CompletedStatus = completed;
                 DataTransfer = default;
-                Exception = exception;
             }
         };
 
@@ -78,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
-            List<SingleTransferOptions> options = default)
+            List<TransferOptions> options = default)
         {
             // Populate blobNames list for number of blobs to be created
             if (blobNames == default || blobNames?.Count < 0)
@@ -98,10 +97,10 @@ namespace Azure.Storage.DataMovement.Tests
             // Populate blobNames list for number of blobs to be created
             if (options == default || options?.Count < 0)
             {
-                options ??= new List<SingleTransferOptions>(blobCount);
+                options ??= new List<TransferOptions>(blobCount);
                 for (int i = 0; i < blobCount; i++)
                 {
-                    options.Add(new SingleTransferOptions());
+                    options.Add(new TransferOptions());
                 }
             }
             else
@@ -109,6 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -125,7 +125,6 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     // Set up Blob to be downloaded
                     bool completed = false;
-                    Exception exception = null;
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
                     string localSourceFile = Path.GetTempFileName();
@@ -141,11 +140,6 @@ namespace Azure.Storage.DataMovement.Tests
                         }
                         return Task.CompletedTask;
                     };
-                    options[i].TransferFailed += (TransferFailedEventArgs args) =>
-                    {
-                        exception = args.Exception;
-                        return Task.CompletedTask;
-                    };
 
                     // Create destination file path
                     string destFile = Path.GetTempPath() + Path.GetRandomFileName();
@@ -154,8 +148,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -186,10 +179,6 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
@@ -199,6 +188,7 @@ namespace Azure.Storage.DataMovement.Tests
                     // Verify Download
                     CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
                 }
+                failureTransferHolder.AssertFailureCheck();
             }
             catch (Exception ex)
             {
@@ -251,11 +241,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -273,11 +263,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -305,7 +295,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip,
             };
@@ -358,7 +348,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to fail and keep track of the failure.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
@@ -400,7 +390,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(sourceResourceCheck);
             Assert.IsTrue(destinationResourceCheck);
             Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
+            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwrite file.");
         }
 
         [RecordedTest]
@@ -408,7 +398,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long size = Constants.KB;
             int waitTimeInSec = 10;
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
                 MaximumTransferChunkSize = 200,
@@ -417,7 +407,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
@@ -431,10 +421,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             bool seenInProgress = false;
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
             options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
@@ -445,17 +434,13 @@ namespace Azure.Storage.DataMovement.Tests
                 return Task.CompletedTask;
             };
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
             Assert.IsTrue(seenInProgress);
         }
 
@@ -544,12 +529,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -602,7 +587,7 @@ namespace Azure.Storage.DataMovement.Tests
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
-            List<SingleTransferOptions> options = default)
+            List<TransferOptions> options = default)
         {
             // Populate blobNames list for number of blobs to be created
             if (blobNames == default || blobNames?.Count < 0)
@@ -622,10 +607,10 @@ namespace Azure.Storage.DataMovement.Tests
             // Populate blobNames list for number of blobs to be created
             if (options == default || options?.Count < 0)
             {
-                options ??= new List<SingleTransferOptions>(blobCount);
+                options ??= new List<TransferOptions>(blobCount);
                 for (int i = 0; i < blobCount; i++)
                 {
-                    options.Add(new SingleTransferOptions());
+                    options.Add(new TransferOptions());
                 }
             }
             else
@@ -633,6 +618,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -649,19 +635,11 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < blobCount; i++)
                 {
                     bool completed = false;
-                    Exception exception = null;
                     // Set up Blob to be downloaded
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
                     string localSourceFile = Path.GetTempFileName();
                     await CreateAppendBlob(container, localSourceFile, blobNames[i], size);
-
-                    // Set up event handler for the respective blob
-                    options[i].TransferFailed += (TransferFailedEventArgs args) =>
-                    {
-                        exception = args.Exception;
-                        return Task.CompletedTask;
-                    };
 
                     // Create destination file path
                     string destFile = Path.GetTempPath() + Path.GetRandomFileName();
@@ -670,8 +648,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -698,13 +675,10 @@ namespace Azure.Storage.DataMovement.Tests
                     downloadedBlobInfo[i].DataTransfer = transfer;
                 }
 
+                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
@@ -766,11 +740,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -788,11 +762,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -820,7 +794,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip,
             };
@@ -834,6 +808,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -845,6 +820,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
+            failureTransferHolder.AssertFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
@@ -873,7 +849,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to fail and keep track of the failure.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
@@ -915,7 +891,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(sourceResourceCheck);
             Assert.IsTrue(destinationResourceCheck);
             Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
+            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwrite file.");
         }
 
         [RecordedTest]
@@ -924,10 +900,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
             options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
@@ -937,27 +912,16 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    exceptionMessage = args.Exception.Message;
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
@@ -966,7 +930,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            Exception exception = default;
             string blobName = GetNewBlobName();
             int size = Constants.KB;
 
@@ -981,19 +944,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Attempt a transfer even though the destination already exists.
             TransferManager transferManager = new TransferManager();
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                // We can't Assert here or else it takes down everything.
-                if (args.Exception != default)
-                {
-                    exception = args.Exception;
-                }
-                return Task.CompletedTask;
-            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             StorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
             StorageResource destinationResource = new LocalFileStorageResource(destFile);
@@ -1004,9 +959,8 @@ namespace Azure.Storage.DataMovement.Tests
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
-
-            Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         [RecordedTest]
@@ -1018,9 +972,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
                 size: size,
@@ -1043,9 +997,9 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
             string exceptionMessage = default;
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
                 size: size,
@@ -1105,7 +1059,7 @@ namespace Azure.Storage.DataMovement.Tests
             // and run through.
             long size = Constants.KB;
             int waitTimeInSec = 10;
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
                 MaximumTransferChunkSize = 200,
@@ -1114,7 +1068,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
@@ -1192,7 +1146,7 @@ namespace Azure.Storage.DataMovement.Tests
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
-            List<SingleTransferOptions> options = default)
+            List<TransferOptions> options = default)
         {
             // Populate blobNames list for number of blobs to be created
             if (blobNames == default || blobNames?.Count < 0)
@@ -1212,10 +1166,10 @@ namespace Azure.Storage.DataMovement.Tests
             // Populate blobNames list for number of blobs to be created
             if (options == default || options?.Count < 0)
             {
-                options ??= new List<SingleTransferOptions>(blobCount);
+                options ??= new List<TransferOptions>(blobCount);
                 for (int i = 0; i < blobCount; i++)
                 {
-                    options.Add(new SingleTransferOptions());
+                    options.Add(new TransferOptions());
                 }
             }
             else
@@ -1223,6 +1177,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -1239,7 +1194,6 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < blobCount; i++)
                 {
                     bool completed = false;
-                    Exception exception = null;
                     // Set up Blob to be downloaded
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
@@ -1249,7 +1203,6 @@ namespace Azure.Storage.DataMovement.Tests
                     // Set up event handler for the respective blob
                     options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
-                        exception = args.Exception;
                         return Task.CompletedTask;
                     };
 
@@ -1260,8 +1213,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -1292,10 +1244,6 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
@@ -1304,6 +1252,7 @@ namespace Azure.Storage.DataMovement.Tests
                     // Verify Download
                     CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
                 }
+                failureTransferHolder.AssertFailureCheck();
             }
             catch (Exception ex)
             {
@@ -1351,11 +1300,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -1373,11 +1322,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -1405,7 +1354,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip,
             };
@@ -1458,7 +1407,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to fail and keep track of the failure.
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
@@ -1500,7 +1449,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(sourceResourceCheck);
             Assert.IsTrue(destinationResourceCheck);
             Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
+            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwrite file.");
         }
 
         [RecordedTest]
@@ -1508,7 +1457,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long size = 12 * Constants.KB;
             int waitTimeInSec = 10;
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
                 MaximumTransferChunkSize = Constants.KB,
@@ -1517,7 +1466,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
@@ -1530,11 +1479,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             bool progressSeen = false;
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
             options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
@@ -1545,17 +1492,13 @@ namespace Azure.Storage.DataMovement.Tests
                 return Task.CompletedTask;
             };
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
             Assert.IsTrue(progressSeen);
         }
 
@@ -1588,7 +1531,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             string exceptionMessage = default;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions();
+            TransferOptions options = new TransferOptions();
             options.TransferStatus += (TransferStatusEventArgs args) =>
             {
                 // Assert
@@ -1608,7 +1551,7 @@ namespace Azure.Storage.DataMovement.Tests
                 return Task.CompletedTask;
             };
 
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
                 size: size,
@@ -1671,12 +1614,12 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumConcurrency = concurrency,
             };
 
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512,
             };
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -1719,7 +1662,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             int concurrency,
             bool createFailedCondition = false,
-            SingleTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             // Arrange
@@ -1780,10 +1723,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
@@ -1800,6 +1744,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         [RecordedTest]
@@ -1809,7 +1755,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // Create transfer options with Skipping available
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip
             };
@@ -1856,10 +1802,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
@@ -1876,6 +1823,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
 
         [RecordedTest]
@@ -1885,7 +1834,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // Create transfer options with Skipping available
-            SingleTransferOptions options = new SingleTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip
             };

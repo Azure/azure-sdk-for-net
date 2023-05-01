@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FederatedIdentityCredentialData> array = new List<FederatedIdentityCredentialData>();
