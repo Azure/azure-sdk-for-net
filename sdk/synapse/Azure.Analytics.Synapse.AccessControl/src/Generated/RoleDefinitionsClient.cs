@@ -60,11 +60,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]List role definitions.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -87,11 +83,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List role definitions.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -114,11 +106,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get role definition by role definition Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
@@ -144,11 +132,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get role definition by role definition Id.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
@@ -174,11 +158,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List rbac scopes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -199,11 +179,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List rbac scopes.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
