@@ -153,6 +153,30 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
+        public async Task GetRoomsLiveTest()
+        {
+            // Arrange
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            // First create a room to ensure that the list rooms will not be empty.
+            CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
+            try
+            {
+                AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
+                CommunicationRoom firstActiveRoom = allActiveRooms.GetAsyncEnumerator().Current;
+                Assert.IsNotNull(firstActiveRoom.Id);
+                Assert.IsNotNull(firstActiveRoom.CreatedAt);
+                Assert.IsNotNull(firstActiveRoom.ValidFrom);
+                Assert.IsNotNull(firstActiveRoom.ValidUntil);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+
+            await roomsClient.DeleteRoomAsync(createdRoom.Id);
+        }
+
+            [Test]
         public async Task RoomParticipantsAddUpdateAndRemoveLiveTest()
         {
             // Arrange
