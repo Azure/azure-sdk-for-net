@@ -55,16 +55,7 @@ namespace Azure.Monitor.Ingestion
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Ingestion API used to directly ingest data using Data Collection Rules
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// See error response code and error response message for more detail.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -95,16 +86,7 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Ingestion API used to directly ingest data using Data Collection Rules
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// See error response code and error response message for more detail.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>

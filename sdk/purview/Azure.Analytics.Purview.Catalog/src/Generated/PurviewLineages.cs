@@ -49,11 +49,7 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = apiVersion;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get lineage info of the entity specified by GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -85,11 +81,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get lineage info of the entity specified by GUID.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -121,11 +113,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Return immediate next page lineage info about entity with pagination
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Return immediate next page lineage info about entity with pagination. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -156,11 +144,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Return immediate next page lineage info about entity with pagination
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Return immediate next page lineage info about entity with pagination. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -192,15 +176,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Returns lineage info about entity.
+        /// [Protocol Method] Returns lineage info about entity.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
         /// attr:[attrName]=[attrValue]
         /// 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
@@ -234,15 +216,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method]Returns lineage info about entity.
+        /// [Protocol Method] Returns lineage info about entity.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
         /// attr:[attrName]=[attrValue]
         /// 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
-        /// <list type="bullet">
-        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>

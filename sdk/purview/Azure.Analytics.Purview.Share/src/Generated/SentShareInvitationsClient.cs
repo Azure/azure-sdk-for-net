@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get Invitation for a given share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get Invitation for a given share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -97,16 +88,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get Invitation for a given share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get Invitation for a given share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -134,16 +116,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create/Update a sent share invitation in the given account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create/Update a sent share invitation in the given account. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -173,16 +146,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Create/Update a sent share invitation in the given account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Create/Update a sent share invitation in the given account. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -212,16 +176,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete Invitation in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete Invitation in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -249,16 +204,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete Invitation in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete a sent share invitation
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete Invitation in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -286,16 +232,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List all Invitations in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent share invitations
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all Invitations in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -315,16 +252,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List all Invitations in a share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List sent share invitations
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List all Invitations in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>

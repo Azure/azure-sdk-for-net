@@ -60,16 +60,7 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Get AssetMapping in a receivedShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an asset mapping for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get AssetMapping in a receivedShare. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -97,16 +88,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get AssetMapping in a receivedShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Get an asset mapping for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get AssetMapping in a receivedShare. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -134,16 +116,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]List AssetMappings in a received share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List asset mappings for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List AssetMappings in a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -163,16 +136,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]List AssetMappings in a received share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// List asset mappings for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] List AssetMappings in a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -192,16 +156,7 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Maps a source asset in the sent share to a destination asset in the received share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create an asset mapping on a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -232,16 +187,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Maps a source asset in the sent share to a destination asset in the received share.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Create an asset mapping on a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -272,16 +218,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete AssetMapping in a receivedShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete an asset mapping for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete AssetMapping in a receivedShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -310,16 +247,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delete AssetMapping in a receivedShare.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Delete an asset mapping for a received share
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delete AssetMapping in a receivedShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
