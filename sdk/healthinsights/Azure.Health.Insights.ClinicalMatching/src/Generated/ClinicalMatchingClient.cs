@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary>
-        /// [Protocol Method]Create Trial Matcher job
+        /// [Protocol Method] Create Trial Matcher job
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         }
 
         /// <summary>
-        /// [Protocol Method]Create Trial Matcher job
+        /// [Protocol Method] Create Trial Matcher job
         /// <list type="bullet">
         /// <item>
         /// <description>

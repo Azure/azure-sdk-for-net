@@ -67,11 +67,7 @@ namespace Azure.Developer.DevCenter
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a pool
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
@@ -97,11 +93,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a pool
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
@@ -127,11 +119,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a schedule.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a schedule. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="scheduleName"> The name of a schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -159,11 +147,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a schedule.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a schedule. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="scheduleName"> The name of a schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -191,11 +175,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a Dev Box. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -223,11 +203,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a Dev Box. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -255,11 +231,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets RDP Connection info
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets RDP Connection info. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -287,11 +259,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets RDP Connection info
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets RDP Connection info. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -319,11 +287,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -353,11 +317,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -387,11 +347,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Skips an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Skips an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -421,11 +377,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Skips an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Skips an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -455,11 +407,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delays an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delays an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="delayUntil"> The delayed action time (UTC). </param>
@@ -490,11 +438,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Delays an Upcoming Action.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Delays an Upcoming Action. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="upcomingActionId"> The upcoming action id. </param>
         /// <param name="delayUntil"> The delayed action time (UTC). </param>
@@ -525,11 +469,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists available pools
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists available pools. </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -543,11 +483,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists available pools
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists available pools. </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -561,11 +497,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists available schedules for a pool.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists available schedules for a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
@@ -584,11 +516,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists available schedules for a pool.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists available schedules for a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
@@ -607,11 +535,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists Dev Boxes in the project for a particular user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists Dev Boxes in the project for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
@@ -630,11 +554,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists Dev Boxes in the project for a particular user.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists Dev Boxes in the project for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
@@ -653,11 +573,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists upcoming actions on a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists upcoming actions on a Dev Box. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -676,11 +592,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Lists upcoming actions on a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Lists upcoming actions on a Dev Box. </summary>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -699,11 +611,7 @@ namespace Azure.Developer.DevCenter
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -734,11 +642,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -769,11 +673,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -802,11 +702,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a Dev Box.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -835,11 +731,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Starts a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Starts a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -868,11 +760,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Starts a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Starts a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -901,11 +789,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stops a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stops a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
@@ -935,11 +819,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stops a Dev Box
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stops a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>

@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.CancerProfiling
         }
 
         /// <summary>
-        /// [Protocol Method]Create Onco Phenotype job
+        /// [Protocol Method] Create Onco Phenotype job
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.CancerProfiling
         }
 
         /// <summary>
-        /// [Protocol Method]Create Onco Phenotype job
+        /// [Protocol Method] Create Onco Phenotype job
         /// <list type="bullet">
         /// <item>
         /// <description>

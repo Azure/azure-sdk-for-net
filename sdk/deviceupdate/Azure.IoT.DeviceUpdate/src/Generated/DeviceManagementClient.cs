@@ -65,11 +65,7 @@ namespace Azure.IoT.DeviceUpdate
             _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the properties of a device class.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -95,11 +91,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the properties of a device class.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -125,11 +117,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update device class details.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update device class details. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -157,11 +145,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Update device class details.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Update device class details. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -189,11 +173,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -219,11 +199,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -249,11 +225,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
@@ -279,11 +251,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
@@ -309,11 +277,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -341,11 +305,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -373,11 +333,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -398,11 +354,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -423,11 +375,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device group properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device group properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -453,11 +401,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the device group properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the device group properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -483,11 +427,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -513,11 +453,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -543,11 +479,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -573,11 +505,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -603,11 +531,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the deployment properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the deployment properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -635,11 +559,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the deployment properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the deployment properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -667,11 +587,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -701,11 +617,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Creates or updates a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Creates or updates a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -735,11 +647,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -767,11 +675,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -799,11 +703,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -831,11 +731,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -863,11 +759,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -895,11 +787,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -927,11 +815,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -959,11 +843,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -991,11 +871,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1023,11 +899,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1055,11 +927,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the best available update for a device class subgroup and a count of how many devices need this update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the best available update for a device class subgroup and a count of how many devices need this update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1087,11 +955,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the best available update for a device class subgroup and a count of how many devices need this update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the best available update for a device class subgroup and a count of how many devices need this update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1119,11 +983,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the deployment properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the deployment properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1153,11 +1013,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the deployment properties.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the deployment properties. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1187,11 +1043,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class subgroup deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class subgroup deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1221,11 +1073,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Deletes a device class subgroup deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Deletes a device class subgroup deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1255,11 +1103,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stops a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stops a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1289,11 +1133,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Stops a deployment.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Stops a deployment. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1323,11 +1163,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Retries a deployment with failed devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retries a deployment with failed devices. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1357,11 +1193,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Retries a deployment with failed devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retries a deployment with failed devices. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1391,11 +1223,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1425,11 +1253,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -1459,11 +1283,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Retrieve operation status.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1490,11 +1310,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Retrieve operation status.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1521,11 +1337,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Start the device diagnostics log collection on specified devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Start the device diagnostics log collection on specified devices. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1553,11 +1365,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Start the device diagnostics log collection on specified devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Start the device diagnostics log collection on specified devices. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1585,11 +1393,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the device diagnostics log collection
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the device diagnostics log collection. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
@@ -1615,11 +1419,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the device diagnostics log collection
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the device diagnostics log collection. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
@@ -1645,11 +1445,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get log collection with detailed status
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get log collection with detailed status. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
@@ -1675,11 +1471,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Get log collection with detailed status
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get log collection with detailed status. </summary>
         /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
@@ -1705,11 +1497,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1722,11 +1510,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1739,11 +1523,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of installable updates for a device class.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of installable updates for a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -1760,11 +1540,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of installable updates for a device class.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of installable updates for a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
@@ -1781,11 +1557,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of devices connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1798,11 +1570,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevices", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of devices connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1815,11 +1583,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevices", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of all device groups.  The $default group will always be returned first.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of all device groups.  The $default group will always be returned first. </summary>
         /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1832,11 +1596,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of all device groups.  The $default group will always be returned first.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of all device groups.  The $default group will always be returned first. </summary>
         /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1849,11 +1609,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the best available updates for a device group and a count of how many devices need each update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the best available updates for a device group and a count of how many devices need each update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -1870,11 +1626,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the best available updates for a device group and a count of how many devices need each update.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the best available updates for a device group and a count of how many devices need each update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -1891,11 +1643,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of deployments for a device group.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of deployments for a device group. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1913,11 +1661,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of deployments for a device group.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of deployments for a device group. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1935,11 +1679,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1957,11 +1697,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1979,11 +1715,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of deployments for a device class subgroup.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of deployments for a device class subgroup. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
@@ -2003,11 +1735,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of deployments for a device class subgroup.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of deployments for a device class subgroup. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
@@ -2027,11 +1755,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -2053,11 +1777,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
@@ -2079,11 +1799,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2097,11 +1813,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2115,11 +1827,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all device diagnostics log collections
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all device diagnostics log collections. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -2131,11 +1839,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get all device diagnostics log collections
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get all device diagnostics log collections. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -2147,11 +1851,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get list of device health
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get list of device health. </summary>
         /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -2167,11 +1867,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Get list of device health
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Get list of device health. </summary>
         /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -2187,11 +1883,7 @@ namespace Azure.IoT.DeviceUpdate
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method]Import existing devices from IoT Hub. This is a long-running-operation; use Operation-Location response header value to check for operation status.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import existing devices from IoT Hub. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2217,11 +1909,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary>
-        /// [Protocol Method]Import existing devices from IoT Hub. This is a long-running-operation; use Operation-Location response header value to check for operation status.
-        /// <list type="bullet">
-        /// </list>
-        /// </summary>
+        /// <summary> [Protocol Method] Import existing devices from IoT Hub. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
