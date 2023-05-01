@@ -94,12 +94,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanRoundTripSerialize()
         {
-            dynamic orig = DynamicJsonTests.GetDynamicJson(
+            dynamic orig = new BinaryData(
                 """
                 {
                     "property" : "hello"
                 }
-                """);
+                """).ToDynamicFromJson();
 
             void validate(dynamic d)
             {
