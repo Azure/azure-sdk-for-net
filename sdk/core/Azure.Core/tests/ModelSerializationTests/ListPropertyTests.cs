@@ -104,19 +104,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             stream.Position = 0;
             var actualJson = new StreamReader(stream).ReadToEnd();
 
-            var expectedJson = """
-                {
-                  "latinName": "Animalia",
-                  "name": "Doggo",
-                  "isHungry": false,
-                  "weight": 1.1,
-                  "foodConsumed": [
-                    "kibble",
-                    "egg",
-                    "peanut butter"
-                  ]
-                }
-                """;
+            var expectedJson = "{\r\n  \"name\": \"Doggo\",\r\n  \"isHungry\": false,\r\n  \"weight\": 1.1,\r\n  \"foodConsumed\": [\r\n    \"kibble\",\r\n    \"egg\",\r\n    \"peanut butter\"\r\n  ]\r\n}";
 
             Assert.AreEqual(expectedJson, actualJson);
         }
