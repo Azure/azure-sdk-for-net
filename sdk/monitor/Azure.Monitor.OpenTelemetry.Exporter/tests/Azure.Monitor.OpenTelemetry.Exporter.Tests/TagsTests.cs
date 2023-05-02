@@ -293,7 +293,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = CreateTestActivity(tagObjects, activityKind);
             activityTagsProcessor.CategorizeTags(activity);
 
-            Assert.True(activityTagsProcessor.HasAzureNameSpace);
+            Assert.True(activityTagsProcessor.HasAzureNamespace);
             Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
 
             Assert.Equal(activity.Kind == ActivityKind.Server ? 3 : 4, activityTagsProcessor.MappedTags.Length);
