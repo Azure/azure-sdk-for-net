@@ -106,7 +106,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-4061d8f5-9c36-7ba1-c8f0-6f2d825a2c98?sv=2022-11-02\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
+      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-4061d8f5-9c36-7ba1-c8f0-6f2d825a2c98?sv=2023-01-03\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -146,7 +146,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-7e0a01c5-6926-6579-c078-a1f9691658b0?sv=2022-11-02\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
+      "RequestUri": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-7e0a01c5-6926-6579-c078-a1f9691658b0?sv=2023-01-03\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -156,7 +156,7 @@
         "User-Agent": "azsdk-net-Storage.Blobs/12.17.0-alpha.20230421.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "7dac889a-d639-87f9-9c42-0bdb23a01451",
-        "x-ms-copy-source": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-4061d8f5-9c36-7ba1-c8f0-6f2d825a2c98?sv=2022-11-02\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
+        "x-ms-copy-source": "https://amandadev2.blob.core.windows.net/test-container-76972af6-ae0c-fe6f-9616-24ebe3abf24f/test-blob-4061d8f5-9c36-7ba1-c8f0-6f2d825a2c98?sv=2023-01-03\u0026st=2023-04-22T05%3A40%3A26Z\u0026se=2023-04-22T07%3A40%3A26Z\u0026sr=b\u0026sp=racwd\u0026sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2022-11-02"
       },
