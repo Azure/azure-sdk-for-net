@@ -270,8 +270,8 @@ namespace Azure
     public partial class SerializableOptions
     {
         public SerializableOptions() { }
-        public bool HandleAdditionalProperties { get { throw null; } set { } }
-        public bool IncludeReadOnlyProperties { get { throw null; } set { } }
+        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
+        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
         public bool PrettyPrint { get { throw null; } set { } }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
