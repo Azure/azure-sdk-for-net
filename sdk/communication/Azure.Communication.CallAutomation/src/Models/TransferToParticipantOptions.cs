@@ -14,8 +14,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetPhoneNumberIdentity"></param>
-        /// <param name="sipHeaders"></param>
+        /// <param name="targetPhoneNumberIdentity"> The target to transfer the call to. </param>
+        /// <param name="sipHeaders"> Custom Context Sip headers. </param>
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity, IDictionary<string, string> sipHeaders = null)
         {
             Target = targetPhoneNumberIdentity;
@@ -25,8 +25,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetIdentity"></param>
-        /// <param name="voipHeaders"></param>
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="voipHeaders"> Custom Context Voip headers. </param>
         public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
         {
             Target = targetIdentity;
@@ -36,8 +36,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetIdentity"></param>
-        /// <param name="voipHeaders"></param>
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="voipHeaders"> Custom Context Voip headers. </param>
         public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
         {
             Target = targetIdentity;
