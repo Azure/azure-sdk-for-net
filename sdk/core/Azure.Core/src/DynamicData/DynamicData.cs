@@ -30,16 +30,21 @@ namespace Azure
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
-        private DynamicDataOptions _options;
-        private JsonSerializerOptions _serializerOptions;
+
+        private readonly DynamicDataOptions _options;
+        private readonly JsonSerializerOptions _serializerOptions;
 
         internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
         {
             _element = element;
             _options = options;
-            _serializerOptions = options.NameMapping == DynamicDataNameMapping.None ?
-                new JsonSerializerOptions() :
-                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+
+            _serializerOptions = new JsonSerializerOptions();
+
+            if (options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters)
+            {
+                _serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            }
         }
 
         internal void WriteTo(Stream stream)
