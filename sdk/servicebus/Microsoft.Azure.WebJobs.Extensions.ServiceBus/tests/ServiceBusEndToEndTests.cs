@@ -767,7 +767,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         sbOptions.MinMessageBatchSize = MinBatchSize;
                         sbOptions.MaxMessageBatchSize = MaxBatchSize;
-                        sbOptions.MaxWaitTime = TimeSpan.FromSeconds(5);
+                        sbOptions.MaxBatchWaitTime = TimeSpan.FromSeconds(5);
                     }));
 
         private static Action<IHostBuilder> DisableAutoComplete =>

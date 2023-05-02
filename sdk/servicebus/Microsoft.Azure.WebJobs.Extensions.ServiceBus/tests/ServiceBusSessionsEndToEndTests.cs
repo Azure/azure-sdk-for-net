@@ -476,7 +476,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         }
                         if (maxWaitTime != null)
                         {
-                            sbOptions.MaxWaitTime = maxWaitTime.Value;
+                            sbOptions.MaxBatchWaitTime = maxWaitTime.Value;
                         }
                     }))
                 .ConfigureServices(services =>

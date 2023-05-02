@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, options.MaxConcurrentCalls);
             Assert.AreEqual(20, options.MaxMessageBatchSize);
             Assert.AreEqual(10, options.MinMessageBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxWaitTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxBatchWaitTime);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
             Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);

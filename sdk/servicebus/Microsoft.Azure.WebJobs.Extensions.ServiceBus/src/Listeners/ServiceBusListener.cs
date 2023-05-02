@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         // Minimum batch size support
         private Task _backgroundCacheMonitoringTask;
-        private readonly SemaphoreSlim _cachedMessagesGuard = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _cachedMessagesGuard;
         private readonly bool _supportMinBatchSize;
         private CancellationTokenSource _backgroundCacheMonitoringCts;
         private ServiceBusMessageManager _cachedMessagesManager;
@@ -163,6 +163,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             if (_supportMinBatchSize)
             {
                 _cachedMessagesManager = new(options.MaxMessageBatchSize, options.MinMessageBatchSize);
+                _cachedMessagesGuard = new SemaphoreSlim(1, 1);
             }
         }
 
@@ -727,7 +728,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 _cycleDuration = ValueStopwatch.StartNew();
 
                 // Wait max wait time after starting this task before checking the number of messages.
-                while (_cycleDuration.GetElapsedTime() < _serviceBusOptions.MaxWaitTime && !backgroundCancellationToken.IsCancellationRequested)
+                while (_cycleDuration.GetElapsedTime() < _serviceBusOptions.MaxBatchWaitTime && !backgroundCancellationToken.IsCancellationRequested)
                 {
                     var remainingTime = GetRemainingTime(_cycleDuration.GetElapsedTime());
                     await Task.Delay(remainingTime, backgroundCancellationToken).ConfigureAwait(false);
@@ -777,17 +778,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private TimeSpan GetRemainingTime(TimeSpan elapsed)
         {
-            if ((_serviceBusOptions.MaxWaitTime == Timeout.InfiniteTimeSpan) || (_serviceBusOptions.MaxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+            if ((_serviceBusOptions.MaxBatchWaitTime == Timeout.InfiniteTimeSpan) || (_serviceBusOptions.MaxBatchWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
             {
-                return _serviceBusOptions.MaxWaitTime;
+                return _serviceBusOptions.MaxBatchWaitTime;
             }
 
-            if (elapsed >= _serviceBusOptions.MaxWaitTime)
+            if (elapsed >= _serviceBusOptions.MaxBatchWaitTime)
             {
                 return TimeSpan.Zero;
             }
 
-            return TimeSpan.FromMilliseconds(_serviceBusOptions.MaxWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
+            return TimeSpan.FromMilliseconds(_serviceBusOptions.MaxBatchWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
         }
 
         private void ThrowIfDisposed()
