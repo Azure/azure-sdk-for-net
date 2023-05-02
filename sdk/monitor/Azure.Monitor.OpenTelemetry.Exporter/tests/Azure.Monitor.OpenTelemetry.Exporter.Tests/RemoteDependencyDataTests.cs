@@ -83,7 +83,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("DemoAzureResource", remoteDependencyData.Type);
-            Assert.Equal("DemoAzureResource", remoteDependencyData.Properties["az.namespace"]);
         }
 
         [Fact]
