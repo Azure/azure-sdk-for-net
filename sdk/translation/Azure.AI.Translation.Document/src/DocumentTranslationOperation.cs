@@ -229,7 +229,12 @@ namespace Azure.AI.Translation.Document
             }
             else if (update.Value.Status == DocumentTranslationStatus.ValidationFailed)
             {
-                RequestFailedException requestFailedException = new RequestFailedException(rawResponse);
+                RequestFailedException requestFailedException = new RequestFailedException(
+                    rawResponse,
+                    null,
+                    update.Value.Error,
+                    CreateAdditionalInformation(update.Value.Error));
+
                 return OperationState<AsyncPageable<DocumentStatusResult>>.Failure(rawResponse, requestFailedException);
             }
 
@@ -469,6 +474,13 @@ namespace Azure.AI.Translation.Document
                 throw new InvalidOperationException("The operation has not done a request. Make sure to update the operation.");
 
             return value;
+        }
+
+        private static IDictionary<string, string> CreateAdditionalInformation(ResponseError error)
+        {
+            if (string.IsNullOrEmpty(error.ToString()))
+                return null;
+            return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
         }
     }
 }
