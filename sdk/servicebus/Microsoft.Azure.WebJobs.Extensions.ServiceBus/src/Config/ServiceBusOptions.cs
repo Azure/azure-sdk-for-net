@@ -147,8 +147,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public int MaxMessageBatchSize { get; set; } = 1000;
 
         /// <summary>
-        /// Gets or sets the minimum number of events desired for a batch. This setting applies only to functions that
-        /// receive multiple events. This value must be less than <see cref="MaxMessageBatchSize"/> and is used in
+        /// Gets or sets the minimum number of messages desired for a batch. This setting applies only to functions that
+        /// receive multiple messages. This value must be less than <see cref="MaxMessageBatchSize"/> and is used in
         /// conjunction with <see cref="MaxWaitTime"/>. If <see cref="MaxWaitTime"/> passes and less than <see cref="MinMessageBatchSize"/>
         /// has been received, the function will be invoked with a partial batch. Default 1.
         /// </summary>
