@@ -6,6 +6,8 @@
     <PackageTags>Azure EventGridV2</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <GenerateApiListing>false</GenerateApiListing>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -19,6 +21,9 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>
