@@ -142,7 +142,7 @@ namespace Azure.Storage.Shared
                 cancellationToken)
             .ConfigureAwait(false);
 
-        protected virtual async Task WriteInternal(
+        private async Task WriteInternal(
             byte[] buffer,
             int offset,
             int count,
