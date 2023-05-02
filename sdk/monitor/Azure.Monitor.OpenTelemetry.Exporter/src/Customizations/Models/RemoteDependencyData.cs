@@ -66,15 +66,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            if (activity.Kind == ActivityKind.Internal)
+            bool hasInternalAzureNameSpace = false;
+
+            if (activityTagsProcessor.HasAzureNameSpace)
+            {
+                if (activity.Kind == ActivityKind.Internal)
+                {
+                    Type = $"InProc | {activityTagsProcessor.MappedTags.GetAzNameSpace()}";
+                    hasInternalAzureNameSpace = true;
+                }
+                else
+                {
+                    // The Azure SDK sets az.namespace with its resource provider information.
+                    // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                    Type = activityTagsProcessor.MappedTags.GetAzNameSpace() ?? Type;
+                }
+            }
+
+            if (!hasInternalAzureNameSpace && activity.Kind == ActivityKind.Internal)
             {
                 Type = "InProc";
-            }
-            else
-            {
-                // The Azure SDK sets az.namespace with its resource provider information.
-                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
-                Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
             }
 
             Properties = new ChangeTrackingDictionary<string, string>();
