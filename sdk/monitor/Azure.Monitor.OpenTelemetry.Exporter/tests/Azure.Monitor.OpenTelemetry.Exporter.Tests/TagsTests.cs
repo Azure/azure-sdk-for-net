@@ -274,7 +274,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("1,2,3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "arrayKey"));
         }
 
-        private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null)
+        [Theory]
+        [InlineData(ActivityKind.Client)]
+        [InlineData(ActivityKind.Server)]
+        public void ActivityTagsProcessor_CategorizeTags_ExtractsAzureNamespace(ActivityKind activityKind)
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                [SemanticConventions.AttributeHttpScheme] = "https",
+                [SemanticConventions.AttributeHttpHost] = "localhost",
+                [SemanticConventions.AttributeHttpHostPort] = "8888",
+                ["somekey"] = "value",
+                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource"
+            };
+
+            using var activity = CreateTestActivity(tagObjects, activityKind);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.True(activityTagsProcessor.HasAzureNameSpace);
+            Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
+
+            Assert.Equal(activity.Kind == ActivityKind.Server ? 3 : 4, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(activity.Kind == ActivityKind.Server ? 2 : 1, activityTagsProcessor.UnMappedTags.Length);
+        }
+
+        private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)
         {
             var startTimestamp = DateTime.UtcNow;
             var endTimestamp = startTimestamp.AddSeconds(60);
@@ -297,7 +323,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activity = activitySource.StartActivity(
                 "Name",
-                ActivityKind.Server,
+                activityKind,
                 parentContext: new ActivityContext(traceId, parentSpanId, ActivityTraceFlags.Recorded),
                 attributes,
                 null,

@@ -117,5 +117,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
         }
+
+        [Fact]
+        public void RequestDataContainsAzureNamespace()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Server);
+            activity?.AddTag("az.namespace", "DemoAzureResource");
+
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.True(activityTagsProcessor.HasAzureNameSpace);
+            Assert.Equal("DemoAzureResource", requestData.Properties["az.namespace"]);
+        }
     }
 }

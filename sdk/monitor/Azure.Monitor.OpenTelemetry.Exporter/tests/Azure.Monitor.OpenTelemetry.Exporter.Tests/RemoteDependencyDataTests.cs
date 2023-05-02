@@ -70,11 +70,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("InProc", remoteDependencyDataType);
         }
 
-        [Fact]
-        public void DependencyTypeisSetToAzNamespaceValueForNonInternalSpan()
+        [Theory]
+        [InlineData(ActivityKind.Client)]
+        [InlineData(ActivityKind.Producer)]
+        [InlineData(ActivityKind.Internal)]
+        public void RemoteDependencyTypeReflectsAzureNamespace(ActivityKind activityKind)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity("Activity", ActivityKind.Client);
+            using var activity = activitySource.StartActivity("Activity", activityKind);
             activity?.AddTag("az.namespace", "DemoAzureResource");
 
             Assert.NotNull(activity);
@@ -82,7 +85,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal("DemoAzureResource", remoteDependencyData.Type);
+            Assert.True(activityTagsProcessor.HasAzureNameSpace);
+            Assert.Equal(activity.Kind == ActivityKind.Internal ? "InProc | DemoAzureResource" : "DemoAzureResource", remoteDependencyData.Type);
         }
 
         [Fact]
