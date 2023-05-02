@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
 
             IHost host = new HostBuilder().ConfigureServices(services => services.AddAzureClientsCore()).Build();
             AzureComponentFactory defaultAzureComponentFactory = host.Services.GetService<AzureComponentFactory>();
-            AzureComponentFactoryWrapper factoryWrapper = new AzureComponentFactoryWrapper(defaultAzureComponentFactory, ServiceBusTestEnvironment.Instance.Credential);
+            TestComponentFactory factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, ServiceBusTestEnvironment.Instance.Credential);
 
             string hostId = "test-host";
             var loggerProvider = new TestLoggerProvider();
