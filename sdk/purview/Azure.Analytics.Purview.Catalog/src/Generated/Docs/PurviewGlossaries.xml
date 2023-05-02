@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetGlossariesAsync(Int32,Int32,String,Boolean,RequestContext)">
+    <member name="GetGlossariesAsync(int?,int?,string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetGlossariesAsync and parse the result.
 <code><![CDATA[
@@ -120,7 +120,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetGlossaries(Int32,Int32,String,Boolean,RequestContext)">
+    <member name="GetGlossaries(int?,int?,string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetGlossaries and parse the result.
 <code><![CDATA[
@@ -2365,7 +2365,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryCategoryAsync(String,RequestContext)">
+    <member name="GetGlossaryCategoryAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategoryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2480,7 +2480,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryCategory(String,RequestContext)">
+    <member name="GetGlossaryCategory(string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategory with required parameters and parse the result.
 <code><![CDATA[
@@ -2595,7 +2595,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="UpdateGlossaryCategoryAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateGlossaryCategoryAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossaryCategoryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2847,7 +2847,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="UpdateGlossaryCategory(String,RequestContent,RequestContext)">
+    <member name="UpdateGlossaryCategory(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossaryCategory with required parameters and parse the result.
 <code><![CDATA[
@@ -3099,7 +3099,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="DeleteGlossaryCategoryAsync(String,RequestContext)">
+    <member name="DeleteGlossaryCategoryAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossaryCategoryAsync with required parameters.
 <code><![CDATA[
@@ -3112,7 +3112,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteGlossaryCategory(String,RequestContext)">
+    <member name="DeleteGlossaryCategory(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossaryCategory with required parameters.
 <code><![CDATA[
@@ -3125,7 +3125,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="PartialUpdateGlossaryCategoryAsync(String,RequestContent,RequestContext)">
+    <member name="PartialUpdateGlossaryCategoryAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossaryCategoryAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -3244,7 +3244,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateGlossaryCategory(String,RequestContent,RequestContext)">
+    <member name="PartialUpdateGlossaryCategory(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossaryCategory with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -3363,7 +3363,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="GetRelatedCategoriesAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetRelatedCategoriesAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedCategoriesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3409,7 +3409,7 @@ Schema for <c>AtlasRelatedCategoryHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetRelatedCategories(String,Int32,Int32,String,RequestContext)">
+    <member name="GetRelatedCategories(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedCategories with required parameters and parse the result.
 <code><![CDATA[
@@ -3455,7 +3455,7 @@ Schema for <c>AtlasRelatedCategoryHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetCategoryTermsAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetCategoryTermsAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetCategoryTermsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3507,7 +3507,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetCategoryTerms(String,Int32,Int32,String,RequestContext)">
+    <member name="GetCategoryTerms(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetCategoryTerms with required parameters and parse the result.
 <code><![CDATA[
@@ -3559,7 +3559,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="CreateGlossaryTermAsync(RequestContent,Boolean,RequestContext)">
+    <member name="CreateGlossaryTermAsync(RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call CreateGlossaryTermAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4223,7 +4223,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="CreateGlossaryTerm(RequestContent,Boolean,RequestContext)">
+    <member name="CreateGlossaryTerm(RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call CreateGlossaryTerm with required parameters and parse the result.
 <code><![CDATA[
@@ -4887,7 +4887,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetGlossaryTermAsync(String,Boolean,IEnumerable,RequestContext)">
+    <member name="GetGlossaryTermAsync(string,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5175,7 +5175,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetGlossaryTerm(String,Boolean,IEnumerable,RequestContext)">
+    <member name="GetGlossaryTerm(string,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTerm with required parameters and parse the result.
 <code><![CDATA[
@@ -5463,7 +5463,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="UpdateGlossaryTermAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="UpdateGlossaryTermAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossaryTermAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -6127,7 +6127,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="UpdateGlossaryTerm(String,RequestContent,Boolean,RequestContext)">
+    <member name="UpdateGlossaryTerm(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossaryTerm with required parameters and parse the result.
 <code><![CDATA[
@@ -6791,7 +6791,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="DeleteGlossaryTermAsync(String,RequestContext)">
+    <member name="DeleteGlossaryTermAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossaryTermAsync with required parameters.
 <code><![CDATA[
@@ -6804,7 +6804,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteGlossaryTerm(String,RequestContext)">
+    <member name="DeleteGlossaryTerm(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossaryTerm with required parameters.
 <code><![CDATA[
@@ -6817,7 +6817,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="PartialUpdateGlossaryTermAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="PartialUpdateGlossaryTermAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -7113,7 +7113,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="PartialUpdateGlossaryTerm(String,RequestContent,Boolean,RequestContext)">
+    <member name="PartialUpdateGlossaryTerm(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossaryTerm with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -7409,7 +7409,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="CreateGlossaryTermsAsync(RequestContent,Boolean,RequestContext)">
+    <member name="CreateGlossaryTermsAsync(RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call CreateGlossaryTermsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -8077,7 +8077,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="CreateGlossaryTerms(RequestContent,Boolean,RequestContext)">
+    <member name="CreateGlossaryTerms(RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call CreateGlossaryTerms with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -8745,7 +8745,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetEntitiesAssignedWithTermAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetEntitiesAssignedWithTermAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesAssignedWithTermAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -8805,7 +8805,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="GetEntitiesAssignedWithTerm(String,Int32,Int32,String,RequestContext)">
+    <member name="GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesAssignedWithTerm with required parameters and parse the result.
 <code><![CDATA[
@@ -8865,7 +8865,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="AssignTermToEntitiesAsync(String,RequestContent,RequestContext)">
+    <member name="AssignTermToEntitiesAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AssignTermToEntitiesAsync with required parameters and request content.
 <code><![CDATA[
@@ -8938,7 +8938,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="AssignTermToEntities(String,RequestContent,RequestContext)">
+    <member name="AssignTermToEntities(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AssignTermToEntities with required parameters and request content.
 <code><![CDATA[
@@ -9011,7 +9011,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="RemoveTermAssignmentFromEntitiesAsync(String,RequestContent,RequestContext)">
+    <member name="RemoveTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RemoveTermAssignmentFromEntitiesAsync with required parameters and request content.
 <code><![CDATA[
@@ -9084,7 +9084,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="RemoveTermAssignmentFromEntities(String,RequestContent,RequestContext)">
+    <member name="RemoveTermAssignmentFromEntities(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RemoveTermAssignmentFromEntities with required parameters and request content.
 <code><![CDATA[
@@ -9157,7 +9157,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTermAssignmentFromEntitiesAsync(String,RequestContent,RequestContext)">
+    <member name="DeleteTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with required parameters and request content.
 <code><![CDATA[
@@ -9230,7 +9230,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTermAssignmentFromEntities(String,RequestContent,RequestContext)">
+    <member name="DeleteTermAssignmentFromEntities(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteTermAssignmentFromEntities with required parameters and request content.
 <code><![CDATA[
@@ -9303,7 +9303,7 @@ Schema for <c>AtlasRelatedObjectId</c>:
 
 </remarks>
     </member>
-    <member name="GetRelatedTermsAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetRelatedTermsAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedTermsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -9355,7 +9355,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetRelatedTerms(String,Int32,Int32,String,RequestContext)">
+    <member name="GetRelatedTerms(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedTerms with required parameters and parse the result.
 <code><![CDATA[
@@ -9407,7 +9407,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryAsync(String,RequestContext)">
+    <member name="GetGlossaryAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -9515,7 +9515,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetGlossary(String,RequestContext)">
+    <member name="GetGlossary(string,RequestContext)">
 <example>
 This sample shows how to call GetGlossary with required parameters and parse the result.
 <code><![CDATA[
@@ -9623,7 +9623,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateGlossaryAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateGlossaryAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossaryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -10193,7 +10193,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateGlossary(String,RequestContent,RequestContext)">
+    <member name="UpdateGlossary(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateGlossary with required parameters and parse the result.
 <code><![CDATA[
@@ -10763,7 +10763,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteGlossaryAsync(String,RequestContext)">
+    <member name="DeleteGlossaryAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossaryAsync with required parameters.
 <code><![CDATA[
@@ -10776,7 +10776,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteGlossary(String,RequestContext)">
+    <member name="DeleteGlossary(string,RequestContext)">
 <example>
 This sample shows how to call DeleteGlossary with required parameters.
 <code><![CDATA[
@@ -10789,7 +10789,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetGlossaryCategoriesAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryCategoriesAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategoriesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -10915,7 +10915,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryCategories(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryCategories(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategories with required parameters and parse the result.
 <code><![CDATA[
@@ -11041,7 +11041,7 @@ Schema for <c>AtlasGlossaryCategory</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryCategoriesHeadersAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryCategoriesHeadersAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategoriesHeadersAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -11087,7 +11087,7 @@ Schema for <c>AtlasRelatedCategoryHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryCategoriesHeaders(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryCategoriesHeaders(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategoriesHeaders with required parameters and parse the result.
 <code><![CDATA[
@@ -11133,7 +11133,7 @@ Schema for <c>AtlasRelatedCategoryHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetDetailedGlossaryAsync(String,Boolean,RequestContext)">
+    <member name="GetDetailedGlossaryAsync(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetDetailedGlossaryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -11443,7 +11443,7 @@ Schema for <c>AtlasGlossaryExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetDetailedGlossary(String,Boolean,RequestContext)">
+    <member name="GetDetailedGlossary(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetDetailedGlossary with required parameters and parse the result.
 <code><![CDATA[
@@ -11753,7 +11753,7 @@ Schema for <c>AtlasGlossaryExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateGlossaryAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="PartialUpdateGlossaryAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossaryAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -11880,7 +11880,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="PartialUpdateGlossary(String,RequestContent,Boolean,RequestContext)">
+    <member name="PartialUpdateGlossary(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateGlossary with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -12007,7 +12007,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetGlossaryTermsAsync(String,Boolean,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryTermsAsync(string,bool?,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -12295,7 +12295,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetGlossaryTerms(String,Boolean,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryTerms(string,bool?,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTerms with required parameters and parse the result.
 <code><![CDATA[
@@ -12583,7 +12583,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetGlossaryTermHeadersAsync(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryTermHeadersAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermHeadersAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -12635,7 +12635,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetGlossaryTermHeaders(String,Int32,Int32,String,RequestContext)">
+    <member name="GetGlossaryTermHeaders(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermHeaders with required parameters and parse the result.
 <code><![CDATA[
@@ -12687,7 +12687,7 @@ Schema for <c>AtlasRelatedTermHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetImportCsvOperationStatusAsync(String,RequestContext)">
+    <member name="GetImportCsvOperationStatusAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetImportCsvOperationStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -12732,7 +12732,7 @@ Schema for <c>ImportCSVOperation</c>:
 
 </remarks>
     </member>
-    <member name="GetImportCsvOperationStatus(String,RequestContext)">
+    <member name="GetImportCsvOperationStatus(string,RequestContext)">
 <example>
 This sample shows how to call GetImportCsvOperationStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -12777,7 +12777,7 @@ Schema for <c>ImportCSVOperation</c>:
 
 </remarks>
     </member>
-    <member name="ExportGlossaryTermsAsCsvAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="ExportGlossaryTermsAsCsvAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ExportGlossaryTermsAsCsvAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -12811,7 +12811,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 </example>
     </member>
-    <member name="ExportGlossaryTermsAsCsv(String,RequestContent,Boolean,RequestContext)">
+    <member name="ExportGlossaryTermsAsCsv(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ExportGlossaryTermsAsCsv with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -12845,7 +12845,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetTermsByGlossaryNameAsync(String,Int32,Int32,Boolean,RequestContext)">
+    <member name="GetTermsByGlossaryNameAsync(string,int?,int?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetTermsByGlossaryNameAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -13133,7 +13133,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="GetTermsByGlossaryName(String,Int32,Int32,Boolean,RequestContext)">
+    <member name="GetTermsByGlossaryName(string,int?,int?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetTermsByGlossaryName with required parameters and parse the result.
 <code><![CDATA[
@@ -13421,7 +13421,7 @@ The key of the first layer map is term template name.
 
 </remarks>
     </member>
-    <member name="ImportGlossaryTermsViaCsvAsync(WaitUntil,String,RequestContent,Boolean,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ImportGlossaryTermsViaCsvAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -13483,7 +13483,7 @@ Schema for <c>ImportCSVOperation</c>:
 
 </remarks>
     </member>
-    <member name="ImportGlossaryTermsViaCsv(WaitUntil,String,RequestContent,Boolean,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ImportGlossaryTermsViaCsv with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -13545,7 +13545,7 @@ Schema for <c>ImportCSVOperation</c>:
 
 </remarks>
     </member>
-    <member name="ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,String,RequestContent,Boolean,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -13607,7 +13607,7 @@ Schema for <c>ImportCSVOperation</c>:
 
 </remarks>
     </member>
-    <member name="ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,String,RequestContent,Boolean,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with required parameters and request content, and how to parse the result.
 <code><![CDATA[

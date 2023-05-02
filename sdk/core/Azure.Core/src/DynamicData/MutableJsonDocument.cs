@@ -144,31 +144,33 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, ReadOnlyMemory<byte> utf8Json)
+        internal MutableJsonDocument(JsonDocument document) : this(document, GetBytesFromDocument(document))
         {
-            _original = utf8Json;
-            _originalDocument = jsonDocument;
         }
 
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <param name="type">The type of the value to convert. </param>
-        internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
+        internal MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json)
         {
-            Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
-            _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
-            _originalDocument = JsonDocument.Parse(_original);
+            _original = utf8Json;
+            _originalDocument = document;
+        }
+
+        private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
+        {
+            using MemoryStream stream = new();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                document.WriteTo(writer);
+            }
+
+            return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
         private class JsonConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document, options);
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new MutableJsonDocument(document);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)
