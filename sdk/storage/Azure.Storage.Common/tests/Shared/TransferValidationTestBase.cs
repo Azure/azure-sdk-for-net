@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -611,7 +611,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -620,6 +620,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [TestCaseSource(nameof(GetValidationAlgorithms))]
@@ -651,17 +652,18 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
+            tamperPolicy.TransformRequestBody = true;
             AssertWriteChecksumMismatch(async () =>
             {
-                tamperPolicy.TransformRequestBody = true;
                 foreach (var _ in Enumerable.Range(0, streamWrites))
                 {
                     await writeStream.WriteAsync(data, 0, data.Length);
                 }
             }, algorithm);
+            tamperPolicy.TransformRequestBody = false;
         }
 
         [Test]
@@ -689,7 +691,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -698,6 +700,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -731,7 +734,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -740,6 +743,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -781,7 +785,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -790,6 +794,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
         #endregion
 

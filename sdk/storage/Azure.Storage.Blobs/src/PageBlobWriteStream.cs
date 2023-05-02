@@ -64,7 +64,10 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Flush the buffer.
-                await AppendInternal(FinalizeAndReplaceBufferChecksum(), async, cancellationToken).ConfigureAwait(false);
+                using (FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions))
+                {
+                    await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
+                }
 
                 while (remaining > 0)
                 {
@@ -78,7 +81,10 @@ namespace Azure.Storage.Blobs
                     // Remaining bytes won't fit in buffer.
                     if (remaining > _bufferSize)
                     {
-                        await AppendInternal(FinalizeAndReplaceBufferChecksum(), async, cancellationToken).ConfigureAwait(false);
+                        using (FinalizeAndReplaceBufferChecksum(out UploadTransferValidationOptions validationOptions))
+                        {
+                            await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
+                        }
                         remaining -= (int)_bufferSize;
                         offset += (int)_bufferSize;
                     }
@@ -114,15 +120,8 @@ namespace Azure.Storage.Blobs
                 _conditions.IfMatch = response.Value.ETag;
 
                 _writeIndex += _buffer.Length;
-                _buffer.Clear();
             }
         }
-
-        protected override async Task FlushInternal(
-            UploadTransferValidationOptions validationOptions,
-            bool async,
-            CancellationToken cancellationToken)
-            => await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {
