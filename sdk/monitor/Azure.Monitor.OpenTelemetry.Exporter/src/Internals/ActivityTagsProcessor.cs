@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public OperationType activityType { get; private set; }
 
-        public bool HasAzureNameSpace { get; private set; } = false;
+        public bool HasAzureNamespace { get; private set; } = false;
 
         public ActivityTagsProcessor()
         {
@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Execution is expected to be fast as the enum is checked.
                 if (_currentActivityType == OperationType.Azure)
                 {
-                    HasAzureNameSpace = true;
+                    HasAzureNamespace = true;
 
                     // For Dependency telemetry, azure namespace set as type, so need to set in properties.
                     // Hence adding to MappedTags.

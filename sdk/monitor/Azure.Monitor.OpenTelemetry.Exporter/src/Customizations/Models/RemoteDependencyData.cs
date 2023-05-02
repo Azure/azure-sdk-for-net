@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            if (activityTagsProcessor.HasAzureNameSpace)
+            if (activityTagsProcessor.HasAzureNamespace)
             {
                 if (activity.Kind == ActivityKind.Internal)
                 {
