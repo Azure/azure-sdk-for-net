@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 		// This is internal for mocking purposes only.
 		internal Queue<ServiceBusReceivedMessage> CachedMessages { get; set; }
 
-		public bool HasCachedMessages
+		public bool HasCachedMessages => CachedMessages.Count > 0;
 		{
 			get
 			{
