@@ -226,7 +226,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
                 { nameof(MinMessageBatchSize), MinMessageBatchSize },
-                { nameof(MaxWaitTime), MaxWaitTime },
+                { nameof(MaxBatchWaitTime), MaxBatchWaitTime },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
                 { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };

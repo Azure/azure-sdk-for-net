@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
                 { $"{ExtensionPath}:MaxMessageBatchSize", "20" },
                 { $"{ExtensionPath}:MinMessageBatchSize", "10" },
-                { $"{ExtensionPath}:MaxWaitTime", "00:00:01" },
+                { $"{ExtensionPath}:MaxBatchWaitTime", "00:00:01" },
                 { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
             };
