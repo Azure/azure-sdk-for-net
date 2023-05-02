@@ -27,7 +27,7 @@ namespace Azure.Core
         public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
-            message.Request.Headers.SetValue(_name, _credential.Key);
+            message.Request.Headers.SetValue("Authorization",$"{_name} {_credential.Key}");
         }
     }
 }
