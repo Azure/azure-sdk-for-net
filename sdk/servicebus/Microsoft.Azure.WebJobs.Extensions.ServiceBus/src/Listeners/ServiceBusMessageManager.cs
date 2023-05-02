@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 		/// <param name="messages">An array of messages to either add to a batch or cache.</param>
 		/// <param name="allowPartialBatch">True if batches smaller than the minimum batch size can be returned.</param>
 		/// <returns></returns>
-		public ServiceBusReceivedMessage[] TryGetBatchofMessagesWithCached(ServiceBusReceivedMessage[] messages = null, bool allowPartialBatch = false)
+		public ServiceBusReceivedMessage[] GetBatchofMessagesWithCached(ServiceBusReceivedMessage[] messages = null, bool allowPartialBatch = false)
 		{
             ServiceBusReceivedMessage[] messagesToReturn;
 			var inputMessages = messages?.Length ?? 0;
