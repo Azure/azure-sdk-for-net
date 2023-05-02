@@ -153,6 +153,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <see cref="MinMessageBatchSize"/> has been received, the function will be invoked with a partial batch.
         /// Default 1.
         /// </summary>
+        /// <remarks>
+        /// The minimum size is not a strict guarantee, as a partial batch will be dispatched if a full batch cannot be
+        /// prepared before the <see cref="MaxBatchWaitTime"/> has elapsed.
+        /// </remarks>
         public int MinMessageBatchSize { get; set; } = 1;
 
         /// <summary>

@@ -19,8 +19,6 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
-using static System.Collections.Specialized.BitVector32;
-using System.Drawing;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
