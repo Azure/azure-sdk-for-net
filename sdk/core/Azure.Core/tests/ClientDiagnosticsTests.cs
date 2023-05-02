@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
-[assembly:AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
+[assembly: AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
 
 namespace Azure.Core.Tests
 {

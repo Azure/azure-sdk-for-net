@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ReceiveLink.TryGetOpenedObject(out link))
                         {
-                            link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            link = await ReceiveLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -356,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
-                            await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                            await Task.Delay(waitTime.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
                         }
@@ -568,17 +568,5 @@ namespace Azure.Messaging.EventHubs.Amqp
                 null => null,
                 _ => link.TerminalException
             };
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

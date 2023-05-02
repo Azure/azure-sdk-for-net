@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateEntityAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -261,7 +261,7 @@ Request Body:
 Schema for <c>AtlasEntityWithExtInfo</c>:
 <code>{
   entity: {
-    businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
+    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
     classifications: [
       {
         entityGuid: string, # Optional. The GUID of the entity.
@@ -275,8 +275,8 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
           }
         ], # Optional. An array of time boundaries indicating validity periods.
         source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }
@@ -304,15 +304,15 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
     updateTime: number, # Optional. The update time of the record.
     updatedBy: string, # Optional. The user who updated the record.
     version: number, # Optional. The version of the entity.
     source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. An instance of an entity - like hive_table, hive_database.
@@ -342,8 +342,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -368,7 +368,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -378,7 +378,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntity(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntity(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntity with required parameters and parse the result.
 <code><![CDATA[
@@ -638,7 +638,7 @@ Request Body:
 Schema for <c>AtlasEntityWithExtInfo</c>:
 <code>{
   entity: {
-    businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
+    businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
     classifications: [
       {
         entityGuid: string, # Optional. The GUID of the entity.
@@ -652,8 +652,8 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
           }
         ], # Optional. An array of time boundaries indicating validity periods.
         source: string, # Optional. indicate the source who create the classification detail
-        sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+        attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
         typeName: string, # Optional. The name of the type.
         lastModifiedTS: string, # Optional. ETag for concurrency control.
       }
@@ -681,15 +681,15 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-    relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+    relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
     updateTime: number, # Optional. The update time of the record.
     updatedBy: string, # Optional. The user who updated the record.
     version: number, # Optional. The version of the entity.
     source: string, # Optional. indicate the source who create the classification detail
-    sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+    sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-    attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+    attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
     typeName: string, # Optional. The name of the type.
     lastModifiedTS: string, # Optional. ETag for concurrency control.
   }, # Optional. An instance of an entity - like hive_table, hive_database.
@@ -719,8 +719,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -745,7 +745,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -755,7 +755,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulkAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulkAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulkAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1018,7 +1018,7 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
 <code>{
   entities: [
     {
-      businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
+      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
       classifications: [
         {
           entityGuid: string, # Optional. The GUID of the entity.
@@ -1032,8 +1032,8 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1061,15 +1061,15 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       updateTime: number, # Optional. The update time of the record.
       updatedBy: string, # Optional. The user who updated the record.
       version: number, # Optional. The version of the entity.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1100,8 +1100,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1126,7 +1126,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1136,7 +1136,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulk(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulk(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulk with required parameters and parse the result.
 <code><![CDATA[
@@ -1399,7 +1399,7 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
 <code>{
   entities: [
     {
-      businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
+      businessAttributes: Dictionary&lt;string, any&gt;, # Optional. Business Attributes
       classifications: [
         {
           entityGuid: string, # Optional. The GUID of the entity.
@@ -1413,8 +1413,8 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1442,15 +1442,15 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
-      relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+      relationshipAttributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of relationship.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
       updateTime: number, # Optional. The update time of the record.
       updatedBy: string, # Optional. The user who updated the record.
       version: number, # Optional. The version of the entity.
       source: string, # Optional. indicate the source who create the classification detail
-      sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+      sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1481,8 +1481,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1507,7 +1507,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1517,7 +1517,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollectionAsync(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1645,8 +1645,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1671,7 +1671,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }
@@ -1681,7 +1681,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollection(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollection(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollection with required parameters and parse the result.
 <code><![CDATA[
@@ -1809,8 +1809,8 @@ Schema for <c>EntityMutationResponse</c>:
             }
           ], # Optional. An array of time boundaries indicating validity periods.
           source: string, # Optional. indicate the source who create the classification detail
-          sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-          attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+          sourceDetails: Dictionary&lt;string, any&gt;, # Optional. more detail on source information
+          attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
           typeName: string, # Optional. The name of the type.
           lastModifiedTS: string, # Optional. ETag for concurrency control.
         }
@@ -1835,7 +1835,7 @@ Schema for <c>EntityMutationResponse</c>:
         }
       ], # Optional. An array of term assignment headers.
       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-      attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+      attributes: Dictionary&lt;string, any&gt;, # Optional. The attributes of the struct.
       typeName: string, # Optional. The name of the type.
       lastModifiedTS: string, # Optional. ETag for concurrency control.
     }

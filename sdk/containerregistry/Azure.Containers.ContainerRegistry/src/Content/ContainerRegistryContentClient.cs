@@ -1078,7 +1078,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
                 return blobResult.GetRawResponse();
             }
             catch (Exception e)
@@ -1104,7 +1104,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
                 return blobResult.GetRawResponse();
             }
             catch (Exception e)

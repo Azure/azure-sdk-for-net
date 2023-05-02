@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ConsumptionBalanceAdjustmentDetail. </summary>
+    /// <summary>
+    /// The ConsumptionBalanceAdjustmentDetail.
+    /// Serialized Name: BalancePropertiesAdjustmentDetailsItem
+    /// </summary>
     public partial class ConsumptionBalanceAdjustmentDetail
     {
         /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
-        /// <param name="name"> the name of new adjustment. </param>
-        /// <param name="value"> the value of new adjustment. </param>
+        /// <param name="name">
+        /// the name of new adjustment.
+        /// Serialized Name: BalancePropertiesAdjustmentDetailsItem.name
+        /// </param>
+        /// <param name="value">
+        /// the value of new adjustment.
+        /// Serialized Name: BalancePropertiesAdjustmentDetailsItem.value
+        /// </param>
         internal ConsumptionBalanceAdjustmentDetail(string name, decimal? value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> the name of new adjustment. </summary>
+        /// <summary>
+        /// the name of new adjustment.
+        /// Serialized Name: BalancePropertiesAdjustmentDetailsItem.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> the value of new adjustment. </summary>
+        /// <summary>
+        /// the value of new adjustment.
+        /// Serialized Name: BalancePropertiesAdjustmentDetailsItem.value
+        /// </summary>
         public decimal? Value { get; }
     }
 }

@@ -11,10 +11,11 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Recognize Dtmf Completed event.
     /// </summary>
-    internal class RecognizeDtmfCompleted : RecognizeCompleted
+    internal class RecognizeDtmfCompleted : RecognizeCompletedEventData
     {
-        /// <summary> Get the recognize Tone result. </summary>
-        public CollectTonesResult CollectTonesResult { get; }
+        /// <summary> The recognize dtmf result. </summary>
+        public DtmfResult DtmfResult { get; }
+
         /// <summary>
         /// The recognition type.
         /// </summary>
@@ -32,8 +33,8 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Choices. </param>
-        public RecognizeDtmfCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult)
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
+        public RecognizeDtmfCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -41,7 +42,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
-            CollectTonesResult = collectTonesResult;
+            DtmfResult = dtmfResult;
         }
     }
 }

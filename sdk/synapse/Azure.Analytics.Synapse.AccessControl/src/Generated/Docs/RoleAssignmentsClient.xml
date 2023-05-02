@@ -207,7 +207,7 @@ Schema for <c>CheckPrincipalAccessResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleAssignmentsAsync(String,String,String,String,RequestContext)">
+    <member name="GetRoleAssignmentsAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetRoleAssignmentsAsync and parse the result.
 <code><![CDATA[
@@ -259,7 +259,7 @@ Schema for <c>RoleAssignmentDetailsList</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleAssignments(String,String,String,String,RequestContext)">
+    <member name="GetRoleAssignments(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetRoleAssignments and parse the result.
 <code><![CDATA[
@@ -311,7 +311,7 @@ Schema for <c>RoleAssignmentDetailsList</c>:
 
 </remarks>
     </member>
-    <member name="CreateRoleAssignmentAsync(String,RequestContent,ContentType,RequestContext)">
+    <member name="CreateRoleAssignmentAsync(string,RequestContent,ContentType,RequestContext)">
 <example>
 This sample shows how to call CreateRoleAssignmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -381,7 +381,7 @@ Schema for <c>RoleAssignmentDetails</c>:
 
 </remarks>
     </member>
-    <member name="CreateRoleAssignment(String,RequestContent,ContentType,RequestContext)">
+    <member name="CreateRoleAssignment(string,RequestContent,ContentType,RequestContext)">
 <example>
 This sample shows how to call CreateRoleAssignment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -451,7 +451,7 @@ Schema for <c>RoleAssignmentDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleAssignmentByIdAsync(String,RequestContext)">
+    <member name="GetRoleAssignmentByIdAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetRoleAssignmentByIdAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -486,7 +486,7 @@ Schema for <c>RoleAssignmentDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetRoleAssignmentById(String,RequestContext)">
+    <member name="GetRoleAssignmentById(string,RequestContext)">
 <example>
 This sample shows how to call GetRoleAssignmentById with required parameters and parse the result.
 <code><![CDATA[
@@ -521,7 +521,7 @@ Schema for <c>RoleAssignmentDetails</c>:
 
 </remarks>
     </member>
-    <member name="DeleteRoleAssignmentByIdAsync(String,String,RequestContext)">
+    <member name="DeleteRoleAssignmentByIdAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteRoleAssignmentByIdAsync with required parameters.
 <code><![CDATA[
@@ -543,7 +543,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteRoleAssignmentById(String,String,RequestContext)">
+    <member name="DeleteRoleAssignmentById(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteRoleAssignmentById with required parameters.
 <code><![CDATA[

@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLanguagesAsync(String,String,String,ETag,RequestContext)">
+    <member name="GetLanguagesAsync(string,string,string,ETag?,RequestContext)">
 <example>
-This sample shows how to call GetLanguagesAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-Response response = await client.GetLanguagesAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLanguagesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetLanguagesAsync with required parameters and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -58,19 +48,9 @@ Schema for <c>GetLanguagesResult</c>:
 
 </remarks>
     </member>
-    <member name="GetLanguages(String,String,String,ETag,RequestContext)">
+    <member name="GetLanguages(string,string,string,ETag?,RequestContext)">
 <example>
-This sample shows how to call GetLanguages and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-Response response = client.GetLanguages();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLanguages with all parameters, and how to parse the result.
+This sample shows how to call GetLanguages with required parameters and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -115,7 +95,7 @@ Schema for <c>GetLanguagesResult</c>:
 
 </remarks>
     </member>
-    <member name="TranslateAsync(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)">
+    <member name="TranslateAsync(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
 <example>
 This sample shows how to call TranslateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -216,7 +196,7 @@ converted into Arab script.
 
 </remarks>
     </member>
-    <member name="Translate(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)">
+    <member name="Translate(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
 <example>
 This sample shows how to call Translate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -317,7 +297,7 @@ converted into Arab script.
 
 </remarks>
     </member>
-    <member name="TransliterateAsync(String,String,String,RequestContent,String,RequestContext)">
+    <member name="TransliterateAsync(string,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call TransliterateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -376,7 +356,7 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="Transliterate(String,String,String,RequestContent,String,RequestContext)">
+    <member name="Transliterate(string,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call Transliterate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -435,7 +415,7 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="FindSentenceBoundariesAsync(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundariesAsync(RequestContent,string,string,string,RequestContext)">
 <example>
 This sample shows how to call FindSentenceBoundariesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -499,7 +479,7 @@ The length of the array is the number of sentences, and the values are the lengt
 
 </remarks>
     </member>
-    <member name="FindSentenceBoundaries(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundaries(RequestContent,string,string,string,RequestContext)">
 <example>
 This sample shows how to call FindSentenceBoundaries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -563,7 +543,7 @@ The length of the array is the number of sentences, and the values are the lengt
 
 </remarks>
     </member>
-    <member name="LookupDictionaryEntriesAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntriesAsync(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryEntriesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -667,7 +647,7 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="LookupDictionaryEntries(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntries(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryEntries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -771,7 +751,7 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="LookupDictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamplesAsync(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryExamplesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -865,7 +845,7 @@ This value may be an empty string.
 
 </remarks>
     </member>
-    <member name="LookupDictionaryExamples(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamples(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call LookupDictionaryExamples with required parameters and request content, and how to parse the result.
 <code><![CDATA[

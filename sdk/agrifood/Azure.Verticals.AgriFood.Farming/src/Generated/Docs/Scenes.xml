@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DownloadAsync(String,RequestContext)">
+    <member name="DownloadAsync(string,RequestContext)">
 <example>
 This sample shows how to call DownloadAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -19,7 +19,7 @@ if (response.ContentStream != null)
 ]]></code>
 </example>
     </member>
-    <member name="Download(String,RequestContext)">
+    <member name="Download(string,RequestContext)">
 <example>
 This sample shows how to call Download with required parameters and parse the result.
 <code><![CDATA[
@@ -37,7 +37,7 @@ if (response.ContentStream != null)
 ]]></code>
 </example>
     </member>
-    <member name="GetSatelliteDataIngestionJobDetailsAsync(String,RequestContext)">
+    <member name="GetSatelliteDataIngestionJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -114,7 +114,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSatelliteDataIngestionJobDetails(String,RequestContext)">
+    <member name="GetSatelliteDataIngestionJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -191,7 +191,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="SearchFeaturesAsync(String,RequestContent,Int32,Int32,RequestContext)">
+    <member name="SearchFeaturesAsync(string,RequestContent,int?,int?,RequestContext)">
 <example>
 This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -293,10 +293,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: any, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -316,7 +316,7 @@ to get next set of features.
 
 </remarks>
     </member>
-    <member name="SearchFeatures(String,RequestContent,Int32,Int32,RequestContext)">
+    <member name="SearchFeatures(string,RequestContent,int?,int?,RequestContext)">
 <example>
 This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -418,10 +418,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: any, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -441,7 +441,7 @@ to get next set of features.
 
 </remarks>
     </member>
-    <member name="GetStacFeatureAsync(String,String,RequestContext)">
+    <member name="GetStacFeatureAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -481,10 +481,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: any, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
@@ -500,7 +500,7 @@ Its a GeoJSON geometry.
 
 </remarks>
     </member>
-    <member name="GetStacFeature(String,String,RequestContext)">
+    <member name="GetStacFeature(string,string,RequestContext)">
 <example>
 This sample shows how to call GetStacFeature with required parameters and parse the result.
 <code><![CDATA[
@@ -540,10 +540,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: any, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
@@ -559,7 +559,7 @@ Its a GeoJSON geometry.
 
 </remarks>
     </member>
-    <member name="GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)">
+    <member name="GetScenesAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
 <example>
 This sample shows how to call GetScenesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -629,7 +629,7 @@ Schema for <c>SceneListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="GetScenes(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)">
+    <member name="GetScenes(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
 <example>
 This sample shows how to call GetScenes with required parameters and parse the result.
 <code><![CDATA[
@@ -699,7 +699,7 @@ Schema for <c>SceneListResponseValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateSatelliteDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSatelliteDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -862,7 +862,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateSatelliteDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateSatelliteDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
-                writer.WritePropertyName("applicationGatewayIpConfigurations"u8);
+                writer.WritePropertyName("applicationGatewayIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayIPConfigurations)
                 {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Network
                             privateLinkServiceNetworkPolicies = new VirtualNetworkPrivateLinkServiceNetworkPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("applicationGatewayIpConfigurations"u8))
+                        if (property0.NameEquals("applicationGatewayIPConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

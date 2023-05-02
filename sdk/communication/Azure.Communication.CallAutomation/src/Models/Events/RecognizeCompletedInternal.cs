@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     /// The recognize completed event internal.
     /// </summary>
     [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    internal partial class RecognizeCompletedInternal : CallAutomationEventBase
+    internal partial class RecognizeCompletedInternal : CallAutomationEventData
     {
         /// <summary>
         /// Reason code.
