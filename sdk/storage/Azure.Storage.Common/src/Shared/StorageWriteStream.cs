@@ -61,6 +61,7 @@ namespace Azure.Storage.Shared
                     _accumulatedDisposables.Add(_bufferPool.RentDisposable(
                         transferValidation.PrecalculatedChecksum.Length,
                         out var buf));
+                    buf.Clear();
                     _userProvidedChecksum = new Memory<byte>(buf, 0, transferValidation.PrecalculatedChecksum.Length);
                     transferValidation.PrecalculatedChecksum.CopyTo(_userProvidedChecksum);
                 }
@@ -75,6 +76,7 @@ namespace Azure.Storage.Shared
                 _accumulatedDisposables.Add(_bufferPool.RentDisposable(
                        Constants.StorageCrc64SizeInBytes,
                        out var buf));
+                buf.Clear();
                 _composedCrc = new Memory<byte>(buf, 0, Constants.StorageCrc64SizeInBytes);
             }
 
@@ -230,6 +232,7 @@ namespace Azure.Storage.Shared
             {
                 using (_bufferPool.RentDisposable(_masterCrcChecksummer.HashLengthInBytes, out byte[] buf))
                 {
+                    buf.Clear();
                     var currentAccumulated = new Memory<byte>(buf, 0, _masterCrcChecksummer.HashLengthInBytes);
                     _masterCrcChecksummer.GetCurrentHash(currentAccumulated.Span);
                     if (!currentAccumulated.Span.SequenceEqual(_composedCrc.Span))
@@ -368,6 +371,7 @@ namespace Azure.Storage.Shared
             if (_bufferChecksumer != null)
             {
                 disposableResult = _bufferPool.RentDisposable(_bufferChecksumer.HashSizeInBytes, out byte[] buf);
+                buf.Clear();
                 checksum = new Memory<byte>(buf, 0, _bufferChecksumer.HashSizeInBytes);
                 _bufferChecksumer.GetFinalHash(checksum.Span);
 

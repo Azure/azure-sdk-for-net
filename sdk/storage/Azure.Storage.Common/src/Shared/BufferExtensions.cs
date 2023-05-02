@@ -29,5 +29,20 @@ namespace Azure.Storage
             array = pool.Rent(minimumLength);
             return new DisposableRentedArray<T>(pool, array);
         }
+
+        /// <summary>
+        /// Fluent API to clear the contents of an array to the default value at every index.
+        /// </summary>
+        /// <returns>
+        /// The cleared array.
+        /// </returns>
+        public static T[] Clear<T>(this T[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = default;
+            }
+            return array;
+        }
     }
 }
