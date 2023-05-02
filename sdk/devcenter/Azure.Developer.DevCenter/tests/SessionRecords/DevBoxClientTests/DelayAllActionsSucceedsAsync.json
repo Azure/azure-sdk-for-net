@@ -29,11 +29,14 @@
         "value": [
           {
             "name": "schedule-default",
-            "result": "Failed",
-            "error": {
-              "code": "DevBoxActionAlreadySkipped",
-              "message": "The action {0} has already been skipped",
-              "details": []
+            "result": "Succeeded",
+            "action": {
+                "name": "schedule-default",
+                "actionType": "Stop",
+                "suspendedUntil": "2023-05-02T16:01:53.3821556Z",
+                "next": {
+                    "scheduledTime": "2023-05-02T16:01:53.3821556Z"
+                }
             }
           }
         ]

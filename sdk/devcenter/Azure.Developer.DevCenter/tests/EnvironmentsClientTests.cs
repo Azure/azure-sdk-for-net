@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
+    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";

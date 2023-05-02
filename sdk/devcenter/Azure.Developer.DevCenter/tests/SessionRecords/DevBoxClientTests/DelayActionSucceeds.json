@@ -1,7 +1,7 @@
 {
     "Entries": [
         {
-            "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-fmzegocvsahko.eastus.devcenter.azure.com/projects/sdk-project-x2z4o4ohvwcbi/users/me/devboxes/MyDevBox/actions:delay?until=2023-05-02T16%3A01%3A53.3821556Z\u0026api-version=2023-01-01-preview",
+            "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-fmzegocvsahko.eastus.devcenter.azure.com/projects/sdk-project-x2z4o4ohvwcbi/users/me/devboxes/MyDevBox/actions/schedule-default:delay?until=2023-05-02T16%3A01%3A53.3821556Z\u0026api-version=2023-01-01-preview",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -15,7 +15,7 @@
             "StatusCode": 200,
             "ResponseHeaders": {
                 "Connection": "keep-alive",
-                "Content-Length": "247",
+                "Content-Length": "220",
                 "Content-Type": "application/json; charset=utf-8",
                 "Date": "Mon, 01 May 2023 16:01:55 GMT",
                 "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
@@ -26,20 +26,12 @@
                 "X-Rate-Limit-Reset": "2023-05-01T16:02:55.3796257Z"
             },
             "ResponseBody": {
-                "value": [
-                    {
-                        "name": "schedule-default",
-                        "result": "Succeeded",
-                        "action": {
-                            "name": "schedule-default",
-                            "actionType": "Stop",
-                            "suspendedUntil": "2023-05-02T16:01:53.3821556Z",
-                            "next": {
-                                "scheduledTime": "2023-05-02T16:01:53.3821556Z"
-                            }
-                        }
-                    }
-                ]
+                "name": "schedule-default",
+                "actionType": {},
+                "sourceId": "/projects/sdk-project-x2z4o4ohvwcbi/pools/sdk-pool-6ieikn5v2nfnu/schedules/default",
+                "next": {
+                    "scheduledTime": "2023-05-02T16:01:53.3821556Z"
+                }
             }
         }
     ],

@@ -340,7 +340,10 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task DelayActionSucceeds()
         {
-            DateTimeOffset delayUntil = DateTimeOffset.UtcNow.AddHours(4);
+            // Using fixed time to match sessions records
+            string time = "2023-05-02T16:01:53.3821556Z";
+            DateTimeOffset delayUntil = DateTimeOffset.Parse(time);
+
             Response delayActionResponse = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
                 DevBoxName,
@@ -348,13 +351,24 @@ namespace Azure.Developer.DevCenter.Tests
                 delayUntil);
 
             JsonElement delayActionData = JsonDocument.Parse(delayActionResponse.ContentStream).RootElement;
-            // TODO: add assert
+            if (!delayActionData.TryGetProperty("next", out var nextActionTimeJson))
+            {
+                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+            }
+
+            if (!nextActionTimeJson.TryGetProperty("scheduledTime", out var scheduledTimeJson))
+            {
+                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+            }
+
+            Assert.AreEqual(time, scheduledTimeJson.ToString());
         }
 
         [RecordedTest]
         public async Task DelayAllActionsSucceeds()
         {
-            DateTimeOffset delayUntil = DateTimeOffset.UtcNow.AddHours(4);
+            // Using fixed time to match sessions records
+            DateTimeOffset delayUntil = DateTimeOffset.Parse("2023-05-02T16:01:53.3821556Z");
             var numberOfReturnedActions = 0;
 
             await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, DevBoxName, delayUntil))
@@ -368,7 +382,7 @@ namespace Azure.Developer.DevCenter.Tests
                 }
 
                 string actionResultName = actionResultJson.ToString();
-                Assert.AreEqual("Failed", actionResultName);
+                Assert.AreEqual("Succeeded", actionResultName);
             }
 
             Assert.AreEqual(1, numberOfReturnedActions);
