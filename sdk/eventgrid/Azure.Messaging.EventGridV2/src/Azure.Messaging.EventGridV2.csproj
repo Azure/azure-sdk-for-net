@@ -8,6 +8,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <GenerateApiListing>false</GenerateApiListing>
+    <IsShippingClientLibrary>false</IsShippingClientLibrary>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
