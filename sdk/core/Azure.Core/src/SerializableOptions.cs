@@ -9,18 +9,18 @@ namespace Azure
     public class SerializableOptions
     {
         /// <summary>
-        /// TODO
+        /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.
         /// </summary>
-        public bool IgnoreReadOnlyProperties { get; set; } = false;
+        public bool IgnoreReadOnlyProperties { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Bool that determines if AdditionalProperties will be serialized. Default is false.
         /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; } = false;
+        public bool IgnoreAdditionalProperties { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Bool that determines if Json will be PrettyPrinted. Default is false.
         /// </summary>
-        public bool PrettyPrint { get; set; } = false;
+        public bool PrettyPrint { get; set; }
     }
 }
