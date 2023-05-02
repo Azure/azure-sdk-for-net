@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -290,6 +291,49 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", (string)jsonData.Foo);
             Assert.AreEqual(2, (int)jsonData.Bar);
+        }
+
+        [Test]
+        public void CanAddPOCOProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson(DynamicDataOptions.Default);
+
+            JsonDataTests.SampleModel model = new()
+            {
+                Message = "hi",
+                Number = 2,
+            };
+
+            value.Model = model;
+
+            Assert.IsTrue(value.Foo == 1);
+            Assert.IsTrue(value.foo == 1);
+            Assert.IsTrue(value.Model.Message == "hi");
+            Assert.IsTrue(value.model.message == "hi");
+            Assert.IsTrue(value.Model.Number == 2);
+            Assert.IsTrue(value.model.number == 2);
+
+            RequestContent content = RequestContent.Create(value);
+            Stream stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Flush();
+            stream.Position = 0;
+
+            BinaryData data = BinaryData.FromStream(stream);
+            dynamic roundTripValue = data.ToDynamicFromJson(DynamicDataOptions.Default);
+
+            Assert.IsTrue(roundTripValue.foo == value.Foo);
+            Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
+            Assert.IsTrue(roundTripValue.model.number ==  value.Model.Number);
+
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.Model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.Model);
         }
 
         [Test]
