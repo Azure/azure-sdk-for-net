@@ -89,6 +89,11 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial interface IJsonSerializable
+    {
+        bool TryDeserialize(System.IO.Stream stream, out long bytesConsumed, Azure.SerializableOptions? options = null);
+        bool TrySerialize(System.IO.Stream stream, out long bytesWritten, Azure.SerializableOptions? options = null);
+    }
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
@@ -261,6 +266,13 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator T (Azure.Response<T> response) { throw null; }
+    }
+    public partial class SerializableOptions
+    {
+        public SerializableOptions() { }
+        public bool HandleAdditionalProperties { get { throw null; } set { } }
+        public bool IncludeReadOnlyProperties { get { throw null; } set { } }
+        public bool PrettyPrint { get { throw null; } set { } }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {

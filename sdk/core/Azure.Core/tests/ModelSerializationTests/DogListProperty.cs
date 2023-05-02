@@ -8,21 +8,25 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
+    public class DogListProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
+        public List<string> FoodConsumed { get; set; } = new List<string> {"kibble", "egg", "peanut butter"};
 
-        public CatReadOnlyProperty(double weight, string latinName, string name, bool isHungry, bool hasWhiskers) : base(weight, "Felis catus", name, isHungry)
+        public DogListProperty(string name) : base(name)
         {
-            HasWhiskers = hasWhiskers;
+            Name = name;
         }
 
-        internal CatReadOnlyProperty(double weight, string latinName, string name, bool isHungry, bool hasWhiskers, Dictionary<string, BinaryData> rawData) : this(weight, latinName, name, isHungry, hasWhiskers)
+        internal DogListProperty(double weight, string latinName, string name, bool isHungry, List<string> foodConsumed, Dictionary<string, BinaryData> rawData) : base(weight, latinName, name, isHungry, rawData)
         {
             RawData = rawData;
+            FoodConsumed = foodConsumed;
         }
 
-        public bool HasWhiskers { get; set; } = true;
+        public DogListProperty()
+        {
+        }
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
@@ -39,8 +43,14 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteBooleanValue(IsHungry);
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("hasWhiskers"u8);
-            writer.WriteBooleanValue(HasWhiskers);
+
+            writer.WritePropertyName("foodConsumed"u8);
+            writer.WriteStartArray();
+            foreach (var item in FoodConsumed)
+            {
+                writer.WriteStringValue($"{item}");
+            }
+            writer.WriteEndArray();
 
             if (options.HandleAdditionalProperties)
             {
@@ -58,15 +68,15 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, SerializableOptions options)
+        internal static DogListProperty DeserializeDogListProperty(JsonElement element, SerializableOptions options)
         {
             double weight = default;
             string name = "";
             string latinName = "";
             bool isHungry = default;
-            bool hasWhiskers = default;
-
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            List<string> foodConsumed = new List<string>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weight"u8))
@@ -84,24 +94,26 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     latinName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasWhiskers"u8))
-                {
-                    hasWhiskers = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("isHungry"u8))
                 {
                     isHungry = property.Value.GetBoolean();
                     continue;
                 }
-
+                if (property.NameEquals("foodConsumed"u8))
+                {
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        foodConsumed.Add(item.GetString());
+                    }
+                    continue;
+                }
                 if (options.HandleAdditionalProperties)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
+            return new DogListProperty(weight, latinName, name, isHungry, foodConsumed, rawData);
         }
         #endregion
 
@@ -112,11 +124,12 @@ namespace Azure.Core.Tests.ModelSerializationTests
             try
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
+                var model = DeserializeDogListProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
+                this.Name = model.Name;
                 this.Weight = model.Weight;
                 this.IsHungry = model.IsHungry;
-                this.HasWhiskers = model.HasWhiskers;
-                this.IsHungry = model.IsHungry;
+                this.FoodConsumed = model.FoodConsumed;
+                this.RawData = model.RawData;
                 bytesConsumed = stream.Length;
                 return true;
             }
