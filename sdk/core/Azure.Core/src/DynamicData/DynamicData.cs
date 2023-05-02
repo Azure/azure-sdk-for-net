@@ -293,13 +293,18 @@ namespace Azure
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
+#if NET6_0_OR_GREATER
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new DynamicData(new MutableJsonDocument(document).RootElement);
+#else
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
                 using MemoryStream stream = new();
                 using Utf8JsonWriter writer = new(stream);
                 document.WriteTo(writer);
                 writer.Flush();
                 ReadOnlyMemory<byte> buffer = new(stream.GetBuffer(), 0, (int)stream.Position);
-                return new DynamicData(new MutableJsonDocument(document,  buffer).RootElement);
+                return new DynamicData(new MutableJsonDocument(document, buffer).RootElement);
+#endif
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)
