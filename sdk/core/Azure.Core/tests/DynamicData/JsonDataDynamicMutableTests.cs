@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" });
+            json.a = new object[] { 1, 2, null, "string" };
 
             Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
         }
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new MutableJsonDocument(new GeoPoint(1, 2));
+            json.a = new GeoPoint(1, 2);
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
