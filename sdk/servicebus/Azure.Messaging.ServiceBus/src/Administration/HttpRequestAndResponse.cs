@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-        internal void ThrowIfRequestFailedAsync(Request request, Response response)
+        internal void ThrowIfRequestFailed(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
             {
@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            ThrowIfRequestFailedAsync(request, response);
+            ThrowIfRequestFailed(request, response);
             return response;
         }
 
