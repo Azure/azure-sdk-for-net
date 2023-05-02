@@ -66,14 +66,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            bool hasInternalAzureNameSpace = false;
-
             if (activityTagsProcessor.HasAzureNameSpace)
             {
                 if (activity.Kind == ActivityKind.Internal)
                 {
                     Type = $"InProc | {activityTagsProcessor.MappedTags.GetAzNameSpace()}";
-                    hasInternalAzureNameSpace = true;
                 }
                 else
                 {
@@ -82,8 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Type = activityTagsProcessor.MappedTags.GetAzNameSpace() ?? Type;
                 }
             }
-
-            if (!hasInternalAzureNameSpace && activity.Kind == ActivityKind.Internal)
+            else if (activity.Kind == ActivityKind.Internal)
             {
                 Type = "InProc";
             }

@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // If the current and previous activity types are the same or the previous activity type is unknown (initialized value),
                 // set activityType to _currentActivityType and add the tag to the MappedTags list.
-                // This ensures that we track semantics of the same type. For example, if HTTP and SQL sematic tags are mixed,
+                // This ensures that we track semantics of the same type. For example, if HTTP and SQL semantic tags are mixed,
                 // whichever comes first in the tags list wins, and mapping happens for that type.
                 if (_currentActivityType == previousActivityType || previousActivityType == OperationType.Unknown)
                 {
