@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 			_minBatchSize = minBatchSize;
 		}
 
-		public void ClearEventCache()
+		public void ClearMessageCache()
 		{
 			CachedMessages.Clear();
 		}
