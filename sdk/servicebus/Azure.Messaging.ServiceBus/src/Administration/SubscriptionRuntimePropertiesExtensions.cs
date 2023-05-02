@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: new RequestFailedException(response));
         }
 
-        private static void SubscriptionRuntimeProperties ParseFromEntryElement(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static SubscriptionRuntimeProperties ParseFromEntryElement(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var subscriptionRuntimeInfo = new SubscriptionRuntimeProperties(topicName, name);

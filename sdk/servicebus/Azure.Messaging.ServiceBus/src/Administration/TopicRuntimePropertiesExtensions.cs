@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class TopicRuntimePropertiesExtensions
     {
-        public static async Task<TopicRuntimeProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<TopicRuntimeProperties> ParseResponseAsync(Response response)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(xDoc, response);
                     }
                 }
             }
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: new RequestFailedException(response));
         }
 
-        public static async Task<TopicRuntimeProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        public static TopicRuntimeProperties ParseFromEntryElement(XElement xEntry, Response response)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var topicRuntimeInfo = new TopicRuntimeProperties(name);
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            topicList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
+                            topicList.Add(ParseFromEntryElement(entry, response));
                         }
 
                         return topicList;

@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal class NamespacePropertiesExtensions
     {
-        public static async Task<NamespaceProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<NamespaceProperties> ParseResponseAsync(Response response)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(xDoc, response);
                     }
                 }
             }
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: new RequestFailedException(response));
         }
 
-        private static async Task<NamespaceProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static NamespaceProperties ParseFromEntryElement(XElement xEntry, Response response)
         {
             var nsInfo = new NamespaceProperties();
 

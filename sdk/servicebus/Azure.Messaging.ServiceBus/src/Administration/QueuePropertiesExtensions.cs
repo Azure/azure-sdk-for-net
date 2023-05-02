@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(xDoc, response);
                     }
                 }
             }
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: new RequestFailedException(response));
         }
 
-        private static async Task<QueueProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static QueueProperties ParseFromEntryElement(XElement xEntry, Response response)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return properties;
         }
 
-        public static async Task<List<QueueProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<QueueProperties>> ParsePagedResponseAsync(Response response)
         {
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            queueList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
+                            queueList.Add(ParseFromEntryElement(entry, response));
                         }
 
                         return queueList;
