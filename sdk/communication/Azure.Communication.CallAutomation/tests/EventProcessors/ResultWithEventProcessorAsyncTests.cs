@@ -140,7 +140,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -167,7 +167,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
