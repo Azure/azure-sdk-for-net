@@ -496,7 +496,7 @@ namespace Azure.AI.Translation.Document
             {
                 error = _error;
                 data = _additionalInfo;
-                return false;
+                return true;
             }
         }
     }
