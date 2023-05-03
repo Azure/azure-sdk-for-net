@@ -154,11 +154,14 @@ namespace Azure.Core.Json
             _originalDocument = document;
         }
 
-        internal MutableJsonDocument(object? value) : this(value, DefaultJsonSerializerOptions)
+        private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
+        {
             using MemoryStream stream = new();
             using (Utf8JsonWriter writer = new(stream))
             {
                 document.WriteTo(writer);
+            }
+
             return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
@@ -167,7 +170,7 @@ namespace Azure.Core.Json
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document, options);
+                return new MutableJsonDocument(document);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)
