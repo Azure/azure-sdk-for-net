@@ -9,7 +9,6 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
