@@ -319,6 +319,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
+            // NOTE: There is a chance this event can be triggered after the transfer has
+            // completed if more job parts complete before the next instance of this event is handled.
+
             StorageTransferStatus status = _dataTransfer._state.GetTransferStatus();
             if ((args.StorageTransferStatus == StorageTransferStatus.Paused ||
                  args.StorageTransferStatus == StorageTransferStatus.Completed ||
@@ -342,24 +345,6 @@ namespace Azure.Storage.DataMovement
             else if (args.StorageTransferStatus > status)
             {
                 await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
-            }
-
-            // Progress tracking
-            if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-            {
-                _progressTracker.IncrementInProgressFiles();
-            }
-            else if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-            {
-                _progressTracker.IncrementCompletedFiles();
-            }
-            else if (args.StorageTransferStatus == StorageTransferStatus.CompletedWithSkippedTransfers)
-            {
-                _progressTracker.IncrementSkippedFiles();
-            }
-            else if (args.StorageTransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
-            {
-                _progressTracker.IncrementFailedFiles();
             }
         }
 
