@@ -198,9 +198,10 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
-                    await CopyToAsync(
+                    await CopyToInternal(
                         initialResponse,
                         destination,
+                        async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
 
@@ -276,9 +277,10 @@ namespace Azure.Storage.Blobs
                     // Even though the BlobDownloadInfo is returned immediately,
                     // CopyToAsync causes ConsumeQueuedTask to wait until the
                     // download is complete
-                    await CopyToAsync(
+                    await CopyToInternal(
                         response,
                         destination,
+                        async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -359,7 +361,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Copy the first segment to the destination stream
-                CopyTo(initialResponse, destination, cancellationToken);
+                CopyToInternal(initialResponse, destination, async: false, cancellationToken).EnsureCompleted();
 
                 // If the first segment was the entire blob, we're finished now
                 long initialLength = initialResponse.Value.Details.ContentLength;
@@ -390,7 +392,7 @@ namespace Azure.Storage.Blobs
                         _innerOperationName,
                         async: false,
                         cancellationToken).EnsureCompleted();
-                    CopyTo(result.Value, destination, cancellationToken);
+                    CopyToInternal(result, destination, async: false, cancellationToken).EnsureCompleted();
                 }
 
                 FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
@@ -422,9 +424,10 @@ namespace Azure.Storage.Blobs
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        private async Task CopyToAsync(
+        private async Task CopyToInternal(
             Response<BlobDownloadStreamingResult> response,
             Stream destination,
+            bool async,
             CancellationToken cancellationToken)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -434,9 +437,9 @@ namespace Azure.Storage.Blobs
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
                 : rawSource;
 
-            await source.CopyToAsync(
+            await source.CopyToInternal(
                 destination,
-                Constants.DefaultDownloadCopyBufferSize,
+                async,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -449,19 +452,6 @@ namespace Azure.Storage.Blobs
                     throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
             }
-        }
-
-        private static void CopyTo(
-            BlobDownloadStreamingResult result,
-            Stream destination,
-            CancellationToken cancellationToken)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            using Stream source = result.Content;
-
-            source.CopyTo(
-                destination,
-                Constants.DefaultDownloadCopyBufferSize);
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)
