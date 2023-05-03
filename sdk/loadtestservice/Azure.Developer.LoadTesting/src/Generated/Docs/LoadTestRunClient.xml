@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateTestRunAsync(String,RequestContent,String,RequestContext)">
+    <member name="CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -312,7 +312,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateTestRun(String,RequestContent,String,RequestContext)">
+    <member name="CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTestRun with required parameters and parse the result.
 <code><![CDATA[
@@ -623,7 +623,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunAsync(String,RequestContext)">
+    <member name="GetTestRunAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -807,7 +807,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRun(String,RequestContext)">
+    <member name="GetTestRun(string,RequestContext)">
 <example>
 This sample shows how to call GetTestRun with required parameters and parse the result.
 <code><![CDATA[
@@ -991,7 +991,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTestRunAsync(String,RequestContext)">
+    <member name="DeleteTestRunAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteTestRunAsync with required parameters.
 <code><![CDATA[
@@ -1004,7 +1004,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteTestRun(String,RequestContext)">
+    <member name="DeleteTestRun(string,RequestContext)">
 <example>
 This sample shows how to call DeleteTestRun with required parameters.
 <code><![CDATA[
@@ -1017,7 +1017,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRunFileAsync(String,String,RequestContext)">
+    <member name="GetTestRunFileAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTestRunFileAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1054,7 +1054,7 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunFile(String,String,RequestContext)">
+    <member name="GetTestRunFile(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTestRunFile with required parameters and parse the result.
 <code><![CDATA[
@@ -1091,7 +1091,7 @@ Schema for <c>FileInfo</c>:
 
 </remarks>
     </member>
-    <member name="StopTestRunAsync(String,RequestContext)">
+    <member name="StopTestRunAsync(string,RequestContext)">
 <example>
 This sample shows how to call StopTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1275,7 +1275,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="StopTestRun(String,RequestContext)">
+    <member name="StopTestRun(string,RequestContext)">
 <example>
 This sample shows how to call StopTestRun with required parameters and parse the result.
 <code><![CDATA[
@@ -1459,7 +1459,7 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricNamespacesAsync(String,RequestContext)">
+    <member name="GetMetricNamespacesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetMetricNamespacesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1492,7 +1492,7 @@ Schema for <c>MetricNamespaceCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricNamespaces(String,RequestContext)">
+    <member name="GetMetricNamespaces(string,RequestContext)">
 <example>
 This sample shows how to call GetMetricNamespaces with required parameters and parse the result.
 <code><![CDATA[
@@ -1525,7 +1525,7 @@ Schema for <c>MetricNamespaceCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricDefinitionsAsync(String,String,RequestContext)">
+    <member name="GetMetricDefinitionsAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDefinitionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1580,7 +1580,7 @@ Schema for <c>MetricDefinitionCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricDefinitions(String,String,RequestContext)">
+    <member name="GetMetricDefinitions(string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDefinitions with required parameters and parse the result.
 <code><![CDATA[
@@ -1635,7 +1635,7 @@ Schema for <c>MetricDefinitionCollection</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAppComponentsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1702,7 +1702,7 @@ Schema for <c>TestRunAppComponents</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAppComponents(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAppComponents(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1769,7 +1769,7 @@ Schema for <c>TestRunAppComponents</c>:
 
 </remarks>
     </member>
-    <member name="GetAppComponentsAsync(String,RequestContext)">
+    <member name="GetAppComponentsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetAppComponentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1812,7 +1812,7 @@ Schema for <c>TestRunAppComponents</c>:
 
 </remarks>
     </member>
-    <member name="GetAppComponents(String,RequestContext)">
+    <member name="GetAppComponents(string,RequestContext)">
 <example>
 This sample shows how to call GetAppComponents with required parameters and parse the result.
 <code><![CDATA[
@@ -1855,7 +1855,7 @@ Schema for <c>TestRunAppComponents</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateServerMetricsConfigAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateServerMetricsConfigAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1939,7 +1939,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateServerMetricsConfig(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateServerMetricsConfig(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
@@ -2023,7 +2023,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfigAsync(String,RequestContext)">
+    <member name="GetServerMetricsConfigAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2067,7 +2067,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfig(String,RequestContext)">
+    <member name="GetServerMetricsConfig(string,RequestContext)">
 <example>
 This sample shows how to call GetServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
@@ -2111,7 +2111,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunsAsync(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetTestRunsAsync and parse the result.
 <code><![CDATA[
@@ -2308,7 +2308,7 @@ Schema for <c>TestRunsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRuns(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetTestRuns and parse the result.
 <code><![CDATA[
@@ -2505,7 +2505,7 @@ Schema for <c>TestRunsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)">
+    <member name="GetMetricsAsync(string,string,string,string,RequestContent,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2585,7 +2585,7 @@ Schema for <c>MetricsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)">
+    <member name="GetMetrics(string,string,string,string,RequestContent,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetrics with required parameters and parse the result.
 <code><![CDATA[
@@ -2665,7 +2665,7 @@ Schema for <c>MetricsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricDimensionValuesAsync(String,String,String,String,String,String,RequestContext)">
+    <member name="GetMetricDimensionValuesAsync(string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2693,7 +2693,7 @@ await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricDimensionValues(String,String,String,String,String,String,RequestContext)">
+    <member name="GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
 <code><![CDATA[

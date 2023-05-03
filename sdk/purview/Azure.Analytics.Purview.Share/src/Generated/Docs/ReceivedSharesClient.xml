@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetReceivedShareAsync(String,RequestContext)">
+    <member name="GetReceivedShareAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -57,7 +57,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetReceivedShare(String,RequestContext)">
+    <member name="GetReceivedShare(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShare with required parameters and parse the result.
 <code><![CDATA[
@@ -113,7 +113,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateAsync(String,RequestContent,RequestContext)">
+    <member name="CreateAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -239,7 +239,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="Create(String,RequestContent,RequestContext)">
+    <member name="Create(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call Create with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -365,7 +365,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetReceivedSharesAsync(String,String,String,RequestContext)">
+    <member name="GetReceivedSharesAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedSharesAsync and parse the result.
 <code><![CDATA[
@@ -412,7 +412,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetReceivedShares(String,String,String,RequestContext)">
+    <member name="GetReceivedShares(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShares and parse the result.
 <code><![CDATA[
@@ -459,7 +459,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -475,7 +475,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 Delete a received share
 </remarks>
     </member>
-    <member name="Delete(WaitUntil,String,RequestContext)">
+    <member name="Delete(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
