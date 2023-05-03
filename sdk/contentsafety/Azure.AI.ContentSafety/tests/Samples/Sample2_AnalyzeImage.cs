@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
@@ -29,8 +31,15 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
             byte[] b = File.ReadAllBytes(datapath);
+            //BinaryData binaryData = BinaryData.FromObjectAsJson(TestData.TestImageContent);
+            //BinaryData binaryData = BinaryData.FromString("\""+TestData.TestImageContent+"\"");
             BinaryData binaryData = BinaryData.FromBytes(b);
             ImageData image = new ImageData() { Content = binaryData };
+
+            //FileStream stream = new FileStream(datapath, FileMode.Open);
+            //byte[] buffer = new byte[stream.Length];
+            //stream.Read(buffer, 0, (int)stream.Length);
+            //MemoryStream memoryStream = new MemoryStream(buffer);
 
             #endregion
 

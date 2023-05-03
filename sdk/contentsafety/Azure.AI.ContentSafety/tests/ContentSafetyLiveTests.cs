@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -42,10 +43,16 @@ namespace Azure.AI.ContentSafety.Tests
             var client = CreateContentSafetyClient();
 
             var request = new AnalyzeTextOptions(TestData.TestText);
+            request.Categories.Add(TextCategory.Hate);
+            request.Categories.Add(TextCategory.SelfHarm);
             var response = await client.AnalyzeTextAsync(request);
 
             Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value.HateResult);
             Assert.Greater(response.Value.HateResult.Severity, 0);
+            Assert.IsNotNull(response.Value.SelfHarmResult);
+            Assert.IsNull(response.Value.SexualResult);
+            Assert.IsNull(response.Value.ViolenceResult);
         }
 
         [RecordedTest]
@@ -55,8 +62,12 @@ namespace Azure.AI.ContentSafety.Tests
 
             var image = new ImageData()
             {
-                Content = new BinaryData(Convert.FromBase64String(TestData.TextImageContent))
+                Content = new BinaryData(Convert.FromBase64String(TestData.TestImageContent))
             };
+            //var image = new ImageData()
+            //{
+            //    Content = new BinaryData(TestData.TestImageContent)
+            //};
             var request = new AnalyzeImageOptions(image);
             var response = await client.AnalyzeImageAsync(request);
 
