@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, RecordedTestMode.Record)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -582,14 +582,15 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenWrite Tests
-        [TestCaseSource(nameof(GetValidationAlgorithms))]
-        public virtual async Task OpenWriteSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
+        [Test]
+        public virtual async Task OpenWriteSuccessfulHashComputation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
+            [Values(Constants.KB)] int streamBufferSize,
+            [Values(Constants.KB - 11)] int dataSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
-            const int dataSize = Constants.KB - 11; // odd number to get some variance
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
