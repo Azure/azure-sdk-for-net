@@ -152,8 +152,6 @@ namespace Azure.Storage.Shared
             ValidateWriteParameters(buffer, offset, count);
             int remaining = count;
 
-            _masterCrcChecksummer?.Append(new Span<byte>(buffer, offset, count));
-
             // New bytes will fit in the buffer.
             if (count <= _bufferSize - _buffer.Position)
             {
@@ -282,6 +280,7 @@ namespace Azure.Storage.Shared
             CancellationToken cancellationToken)
         {
             _bufferChecksumer?.AppendHash(new Span<byte>(buffer, offset, count));
+            _masterCrcChecksummer?.Append(new Span<byte>(buffer, offset, count));
             if (async)
             {
                 await _buffer.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
