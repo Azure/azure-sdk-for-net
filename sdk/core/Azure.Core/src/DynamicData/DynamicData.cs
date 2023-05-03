@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -33,11 +33,11 @@ namespace Azure
         private DynamicDataOptions _options;
         private JsonSerializerOptions _serializerOptions;
 
-        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions? options = default)
         {
             _element = element;
-            _options = options;
-            _serializerOptions = options.NameMapping == DynamicDataNameMapping.None ?
+            _options = options ?? new DynamicDataOptions();
+            _serializerOptions = _options.NameMapping == DynamicDataNameMapping.None ?
                 new JsonSerializerOptions() :
                 new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         }
