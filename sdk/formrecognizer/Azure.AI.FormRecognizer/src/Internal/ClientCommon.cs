@@ -68,13 +68,13 @@ namespace Azure.AI.FormRecognizer
             }
 
             var responseError = new ResponseError(errorCode, errorMessage);
-            return new RequestFailedException(response, null, responseError, errorInfo);
+            return new RequestFailedException(response, null, new FormRecognizerRequestFailedDetailsParser(responseError, errorInfo));
         }
 
         public static RequestFailedException CreateExceptionForFailedOperation(Response response, ResponseError error)
         {
             var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
-            return new RequestFailedException(response, null, error, additionalInfo);
+            return new RequestFailedException(response, null, new FormRecognizerRequestFailedDetailsParser(error, additionalInfo));
         }
 
         public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
@@ -102,6 +102,25 @@ namespace Azure.AI.FormRecognizer
             }
 
             return points;
+        }
+
+        private class FormRecognizerRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly ResponseError _error;
+            private readonly IDictionary<string, string> _additionalInfo;
+
+            public FormRecognizerRequestFailedDetailsParser(ResponseError error, IDictionary<string, string> additionalInfo)
+            {
+                _error = error;
+                _additionalInfo = additionalInfo;
+            }
+
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = _error;
+                data = _additionalInfo;
+                return true;
+            }
         }
     }
 }

@@ -232,8 +232,7 @@ namespace Azure.AI.Translation.Document
                 RequestFailedException requestFailedException = new RequestFailedException(
                     rawResponse,
                     null,
-                    update.Value.Error,
-                    CreateAdditionalInformation(update.Value.Error));
+                    new DocumentTranslationOperationRequestFailedDetailsParser(update.Value.Error, CreateAdditionalInformation(update.Value.Error)));
 
                 return OperationState<AsyncPageable<DocumentStatusResult>>.Failure(rawResponse, requestFailedException);
             }
@@ -481,6 +480,24 @@ namespace Azure.AI.Translation.Document
             if (string.IsNullOrEmpty(error.ToString()))
                 return null;
             return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
+        }
+
+        private class DocumentTranslationOperationRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly ResponseError _error;
+            private readonly IDictionary<string, string> _additionalInfo;
+
+            public DocumentTranslationOperationRequestFailedDetailsParser(ResponseError error, IDictionary<string, string> additionalInfo)
+            {
+                _error = error;
+                _additionalInfo = additionalInfo;
+            }
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = _error;
+                data = _additionalInfo;
+                return false;
+            }
         }
     }
 }

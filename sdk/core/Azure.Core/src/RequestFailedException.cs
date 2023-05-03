@@ -120,10 +120,9 @@ namespace Azure
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
-        /// <param name="error">The error information to use when constructing the exception message. If null, this will be parsed from the Response body.</param>
-        /// <param name="additionalInfo">Additional information to include in the exception message. This will also be stored in the <see cref="Exception.Data"/> property.</param>
-        public RequestFailedException(Response response, Exception? innerException, ResponseError? error, IDictionary<string, string>? additionalInfo = null)
-            : this(response.Status, GetRequestFailedExceptionContent(response, error, additionalInfo), innerException)
+        /// <param name="detailsParser">The parser to use to parse the response content.</param>
+        public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
+            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
         {
             _response = response;
         }
@@ -152,19 +151,16 @@ namespace Azure
         /// </summary>
         public Response? GetRawResponse() => _response;
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, ResponseError? error, IDictionary<string, string>? additionalInfo)
+        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
             BufferResponseIfNeeded(response);
+            parser ??= response.RequestFailedDetailsParser;
 
-            // only attempt to parse the error and additional info if not already provided.
-            if (error == null && additionalInfo == null)
+            bool parseSuccess = parser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) : parser.TryParse(response, out error, out additionalInfo);
+            if (!parseSuccess)
             {
-                bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out error, out additionalInfo) : response.RequestFailedDetailsParser.TryParse(response, out error, out additionalInfo);
-                if (!parseSuccess)
-                {
-                    error = null;
-                    additionalInfo = null;
-                }
+                error = null;
+                additionalInfo = null;
             }
             StringBuilder messageBuilder = new();
 
