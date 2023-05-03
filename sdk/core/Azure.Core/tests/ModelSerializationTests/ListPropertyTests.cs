@@ -73,25 +73,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var model2 = new DogListProperty();
             model2.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), out bytesConsumed, options: options);
-
-            if (includeReadonly)
-                Assert.That(model.LatinName, Is.EqualTo(model2.LatinName));
-            Assert.That(model.Name, Is.EqualTo(model2.Name));
-            Assert.That(model.Weight, Is.EqualTo(model2.Weight));
-            Assert.That(roundTrip.Length, Is.EqualTo(bytesConsumed));
-            Assert.That(model.FoodConsumed, Is.EqualTo(model2.FoodConsumed));
-            if (handleUnknown)
-            {
-                var additionalProperties1 = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
-                var additionalProperties2 = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model2) as Dictionary<string, BinaryData>;
-
-                Assert.AreEqual(1, additionalProperties1.Count);
-                Assert.IsTrue(additionalProperties1.ContainsKey("numberOfLegs"));
-                Assert.IsTrue(additionalProperties1["numberOfLegs"].ToString() == "4");
-                Assert.AreEqual(1, additionalProperties2.Count);
-                Assert.IsTrue(additionalProperties2.ContainsKey("numberOfLegs"));
-                Assert.IsTrue(additionalProperties2["numberOfLegs"].ToString() == "4");
-            }
+            VerifyModels.CheckDogs(model, model2, options);
         }
 
         [Test]

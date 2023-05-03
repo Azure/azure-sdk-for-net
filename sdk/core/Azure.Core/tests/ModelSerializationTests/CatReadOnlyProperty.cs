@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             RawData = rawData;
         }
 
-        public bool HasWhiskers { get; set; } = true;
+        public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
