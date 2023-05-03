@@ -1,10 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the ContentSafety client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation ContentSafety for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure ContentSafety</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateAPIListing>true</GenerateAPIListing>
+    <NoWarn>$(NoWarn);AZC0002</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

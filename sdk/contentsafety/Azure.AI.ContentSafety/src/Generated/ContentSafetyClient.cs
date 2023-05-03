@@ -256,13 +256,12 @@ namespace Azure.AI.ContentSafety
         /// <summary> Get Text Blocklist By blocklistName. </summary>
         /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetTextBlocklistAsync(string blocklistName, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetTextBlocklistAsync(string blocklistName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
 
@@ -283,13 +282,12 @@ namespace Azure.AI.ContentSafety
         /// <summary> Get Text Blocklist By blocklistName. </summary>
         /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklist(String,RequestContext)']/*" />
-        public virtual Response GetTextBlocklist(string blocklistName, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual Response GetTextBlocklist(string blocklistName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
 
@@ -633,13 +631,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
         /// <param name="blockItemId"> Block Item Id. It will be uuid. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> or <paramref name="blockItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> or <paramref name="blockItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistItemAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetTextBlocklistItemAsync(string blocklistName, string blockItemId, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetTextBlocklistItemAsync(string blocklistName, string blockItemId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
             Argument.AssertNotNullOrEmpty(blockItemId, nameof(blockItemId));
@@ -662,13 +659,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
         /// <param name="blockItemId"> Block Item Id. It will be uuid. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> or <paramref name="blockItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> or <paramref name="blockItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistItem(String,String,RequestContext)']/*" />
-        public virtual Response GetTextBlocklistItem(string blocklistName, string blockItemId, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual Response GetTextBlocklistItem(string blocklistName, string blockItemId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
             Argument.AssertNotNullOrEmpty(blockItemId, nameof(blockItemId));
@@ -711,11 +707,10 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Get All Text Blocklists. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTextBlocklistsAsync(RequestContext context, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BinaryData> GetTextBlocklistsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
@@ -724,11 +719,10 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Get All Text Blocklists. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklists(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTextBlocklists(RequestContext context, CancellationToken cancellationToken = default)
+        public virtual Pageable<BinaryData> GetTextBlocklists(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
@@ -779,13 +773,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistItemsAsync(String,Int32,Int32,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string blocklistName, int? maxCount, int? skip, int? maxpagesize, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string blocklistName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
 
@@ -800,13 +793,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='GetTextBlocklistItems(String,Int32,Int32,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTextBlocklistItems(string blocklistName, int? maxCount, int? skip, int? maxpagesize, RequestContext context, CancellationToken cancellationToken = default)
+        public virtual Pageable<BinaryData> GetTextBlocklistItems(string blocklistName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
 
