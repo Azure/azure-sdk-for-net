@@ -52,6 +52,11 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
+            if (_element.ValueKind == JsonValueKind.Array && name == "Length")
+            {
+                return _element.GetArrayLength();
+            }
+
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
                 return new DynamicData(element, _options);

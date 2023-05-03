@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
 
@@ -89,6 +90,20 @@ namespace Azure.Core.Json
 
             value = new MutableJsonElement(_root, element, path, _highWaterMark);
             return true;
+        }
+
+        public int GetArrayLength()
+        {
+            EnsureValid();
+
+            EnsureArray();
+
+            // Check for changes
+
+            // Check for changes to descendants
+
+            // return the value
+            return _element.GetArrayLength();
         }
 
         internal MutableJsonElement GetIndexElement(int index)
