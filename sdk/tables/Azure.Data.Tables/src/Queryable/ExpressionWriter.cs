@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Azure.Data.Tables.Models;
+using System.Runtime.Serialization;
 
 namespace Azure.Data.Tables.Queryable
 {
@@ -90,7 +92,7 @@ namespace Azure.Data.Tables.Queryable
             }
             else
             {
-                _builder.Append(TranslateMemberName(m.Member.Name));
+                _builder.Append(TranslateMemberName(m.Member));
             }
 
             return m;
@@ -199,9 +201,18 @@ namespace Azure.Data.Tables.Queryable
             return _builder.ToString();
         }
 
-        protected virtual string TranslateMemberName(string memberName)
+        protected virtual string TranslateMemberName(MemberInfo memberName)
         {
-            return memberName;
+            PropertyInfo partitionKeyProperty = memberName.DeclaringType
+                .GetProperties()
+                .FirstOrDefault(p => p.Name == memberName.Name && Attribute.IsDefined(p, typeof(DataMemberAttribute)));
+
+            if (partitionKeyProperty != null)
+            {
+                return partitionKeyProperty.GetCustomAttribute<DataMemberAttribute>().Name;
+            }
+
+            return memberName.Name;
         }
 
         protected virtual string TranslateOperator(ExpressionType type)
