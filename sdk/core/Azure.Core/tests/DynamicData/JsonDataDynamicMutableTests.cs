@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core.GeoJson;
 using Azure.Core.Json;
 using NUnit.Framework;
