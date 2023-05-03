@@ -4,7 +4,7 @@ Some Azure SDK APIs return values that hold raw JSON, for example [protocol meth
 
 ## Accessing Response Content
 
-### Get `dynamic` from response
+### Get `dynamic` from `Response`
 
 Dynamic content is obtained from the `Response` return value.
 
