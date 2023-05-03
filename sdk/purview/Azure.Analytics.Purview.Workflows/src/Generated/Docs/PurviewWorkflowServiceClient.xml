@@ -1439,7 +1439,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -1507,7 +1507,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1575,7 +1575,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasksAsync and parse the result.
 <code><![CDATA[
@@ -1667,7 +1667,7 @@ Schema for <c>TasksListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasks and parse the result.
 <code><![CDATA[
