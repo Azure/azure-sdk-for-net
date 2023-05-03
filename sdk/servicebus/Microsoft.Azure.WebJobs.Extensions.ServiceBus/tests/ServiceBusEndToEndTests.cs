@@ -202,6 +202,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestBatch_MinBatchSize_WithPartialBatch()
+        {
+            await TestMultiple_MinBatch_PartialBatch<TestBatchMinBatchSize_PartialBatch>(
+                configurationDelegate: SetUpMinimumBatchSize);
+        }
+
+        [Test]
         public async Task TestBatch_AutoCompleteMessagesDisabledOnTrigger()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesDisabledOnTrigger>();
@@ -832,6 +839,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        private async Task TestMultiple_MinBatch_PartialBatch<T>(Action<IHostBuilder> configurationDelegate = default)
+        {
+            // pre-populate queue before starting listener to allow batch receive to get multiple messages
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}");
+
+            var host = BuildHost<T>(configurationDelegate);
+            using (host)
+            {
+                bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
         private async Task TestMultipleDrainMode<T>(bool sendToQueue)
         {
             var host = BuildHost<T>(BuildDrainHost<T>());
@@ -942,10 +965,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"PrefetchCount\": 0,",
                 "  \"AutoCompleteMessages\": true,",
                 "  \"MaxAutoLockRenewalDuration\": \"00:05:00\",",
+                "  \"MaxBatchWaitTime\":\"00:00:30\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
                 "  \"MaxMessageBatchSize\": 1000,",
-                "  \"MaxWaitTime\":\"00:00:30\",",
                 "  \"MinMessageBatchSize\":1,",
                 "  \"SessionIdleTimeout\": \"\"",
                 "  \"ClientRetryOptions\": {",
@@ -1462,6 +1485,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                ServiceBusReceivedMessage[] array)
             {
                 Assert.AreEqual(array.Length, MinBatchSize);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatchMinBatchSize_PartialBatch
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, 3);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }

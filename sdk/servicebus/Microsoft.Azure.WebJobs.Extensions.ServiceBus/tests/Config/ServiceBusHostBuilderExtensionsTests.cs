@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 },
                 new Dictionary<string, string>
                 {
-                    { $"{extensionPath}:MaxWaitTime", "00:05:00" },
+                    { $"{extensionPath}:MaxBatchWaitTime", "00:05:00" },
                 }),
                 Throws.InvalidOperationException);
         }
