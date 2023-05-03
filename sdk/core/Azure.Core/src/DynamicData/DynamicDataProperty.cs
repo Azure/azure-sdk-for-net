@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// Represents a single property on a dynamic JSON object.

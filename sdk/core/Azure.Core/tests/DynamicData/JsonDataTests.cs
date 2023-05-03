@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests

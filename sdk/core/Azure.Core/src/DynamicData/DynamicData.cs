@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -32,10 +32,10 @@ namespace Azure
         private MutableJsonElement _element;
         private DynamicDataOptions _options;
 
-        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions? options = default)
         {
             _element = element;
-            _options = options;
+            _options = options ?? new DynamicDataOptions();
         }
 
         internal void WriteTo(Stream stream)
