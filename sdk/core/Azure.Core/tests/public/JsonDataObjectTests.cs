@@ -104,11 +104,24 @@ namespace Azure.Core.Tests.Public
             var expectedValues = new[] { 1, 2 };
 
             int i = 0;
-            foreach (var pair in data)
+            foreach (dynamic property in data)
             {
-                Assert.AreEqual(expectedNames[i], pair.Name);
-                Assert.AreEqual(expectedValues[i], (int)pair.Value);
+                Assert.AreEqual(expectedNames[i], property.Name);
+                Assert.AreEqual(expectedValues[i], (int)property.Value);
                 i++;
+            }
+
+            Assert.AreEqual(2, i);
+        }
+
+        [Test]
+        public void UnsupportedPropertyAccessThrow()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
+
+            foreach (dynamic property in data)
+            {
+                Assert.Throws<ArgumentException>(() => { var value = property.InvalidName; });
             }
         }
 
