@@ -11,12 +11,12 @@ namespace Azure.Core.Tests.ModelSerializationTests
     {
         public static void CheckAnimals(Animal x, Animal y, SerializableOptions options)
         {
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
 
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
             {
                 var additionalPropertiesX = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
@@ -38,13 +38,13 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public static void CheckCats(CatReadOnlyProperty x, CatReadOnlyProperty y, SerializableOptions options)
         {
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
             Assert.That(x.HasWhiskers, Is.EqualTo(y.HasWhiskers));
 
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
             {
                 var additionalPropertiesX = typeof(CatReadOnlyProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(CatReadOnlyProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
@@ -66,13 +66,13 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public static void CheckDogs(DogListProperty x, DogListProperty y, SerializableOptions options)
         {
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
             Assert.That(x.FoodConsumed, Is.EqualTo(y.FoodConsumed));
 
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
             {
                 var additionalPropertiesX = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
