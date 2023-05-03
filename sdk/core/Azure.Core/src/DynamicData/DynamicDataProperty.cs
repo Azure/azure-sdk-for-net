@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System;
 using System.Dynamic;
 using System.Linq.Expressions;
-using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -50,9 +48,6 @@ namespace Azure.Core.Dynamic
             {
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
                 MemberExpression property = Expression.Property(this_, binder.Name);
-
-                //Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
-                //MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(property, restrictions);
