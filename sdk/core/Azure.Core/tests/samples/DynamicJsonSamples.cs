@@ -101,12 +101,7 @@ namespace Azure.Core.Samples
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
             foreach (dynamic property in widget.details)
             {
-                PrintWidget(property.Name, property.Value);
-            }
-
-            void PrintWidget(string name, string value)
-            {
-                Console.WriteLine($"Widget has property {name}='{value}'.");
+                Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
             }
             #endregion
 
