@@ -817,14 +817,6 @@ namespace Azure.Core.Dynamic
         PascalCaseGetters = 1,
         PascalCaseGettersCamelCaseSetters = 2,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DynamicDataProperty
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public string Name { get { throw null; } }
-        public Azure.Core.Dynamic.DynamicData Value { get { throw null; } }
-    }
 }
 namespace Azure.Core.Extensions
 {
