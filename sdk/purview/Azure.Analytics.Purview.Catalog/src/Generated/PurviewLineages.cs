@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <summary> [Protocol Method] Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <summary> [Protocol Method] Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <summary> [Protocol Method] Return immediate next page lineage info about entity with pagination. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <summary> [Protocol Method] Return immediate next page lineage info about entity with pagination. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(string,string,bool?,int?,int?,RequestContext)']/*" />
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// Returns lineage info about entity.
+        /// [Protocol Method] Returns lineage info about entity.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// Returns lineage info about entity.
+        /// [Protocol Method] Returns lineage info about entity.
         /// 
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
         /// 
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));

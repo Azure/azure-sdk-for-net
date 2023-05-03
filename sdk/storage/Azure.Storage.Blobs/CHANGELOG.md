@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2023-01-03.
+- Content length limit for AppendBlobClient.Append(), .AppendAsync(), .AppendBlockFromUri(), and .AppendBlockFromUriAsync() raised from 4 MiB to 100 MiB.
 
 ## 12.16.0 (2023-04-11)
 - Includes all features from 12.16.0-beta.1.

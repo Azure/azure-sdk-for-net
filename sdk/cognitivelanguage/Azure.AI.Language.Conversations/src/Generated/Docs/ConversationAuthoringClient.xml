@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateProjectAsync(String,RequestContent,RequestContext)">
+    <member name="CreateProjectAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -101,7 +101,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="CreateProject(String,RequestContent,RequestContext)">
+    <member name="CreateProject(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -201,7 +201,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectAsync(String,RequestContext)">
+    <member name="GetProjectAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -252,7 +252,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetProject(String,RequestContext)">
+    <member name="GetProject(string,RequestContext)">
 <example>
 This sample shows how to call GetProject with required parameters and parse the result.
 <code><![CDATA[
@@ -303,7 +303,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentAsync(String,String,RequestContext)">
+    <member name="GetDeploymentAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -350,7 +350,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="GetDeployment(String,String,RequestContext)">
+    <member name="GetDeployment(string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeployment with required parameters and parse the result.
 <code><![CDATA[
@@ -397,7 +397,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentDeleteFromResourcesStatusAsync(String,String,String,RequestContext)">
+    <member name="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -471,7 +471,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentDeleteFromResourcesStatus(String,String,String,RequestContext)">
+    <member name="GetDeploymentDeleteFromResourcesStatus(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -545,7 +545,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentJobStatusAsync(String,String,String,RequestContext)">
+    <member name="GetDeploymentJobStatusAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -619,7 +619,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentJobStatus(String,String,String,RequestContext)">
+    <member name="GetDeploymentJobStatus(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -693,7 +693,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetSwapDeploymentsJobStatusAsync(String,String,RequestContext)">
+    <member name="GetSwapDeploymentsJobStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSwapDeploymentsJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -767,7 +767,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetSwapDeploymentsJobStatus(String,String,RequestContext)">
+    <member name="GetSwapDeploymentsJobStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSwapDeploymentsJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -841,7 +841,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetExportProjectJobStatusAsync(String,String,RequestContext)">
+    <member name="GetExportProjectJobStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetExportProjectJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -917,7 +917,7 @@ Schema for <c>ExportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetExportProjectJobStatus(String,String,RequestContext)">
+    <member name="GetExportProjectJobStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetExportProjectJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -993,7 +993,7 @@ Schema for <c>ExportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetImportProjectJobStatusAsync(String,String,RequestContext)">
+    <member name="GetImportProjectJobStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetImportProjectJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1067,7 +1067,7 @@ Schema for <c>ImportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetImportProjectJobStatus(String,String,RequestContext)">
+    <member name="GetImportProjectJobStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetImportProjectJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -1141,7 +1141,7 @@ Schema for <c>ImportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainedModelAsync(String,String,RequestContext)">
+    <member name="GetTrainedModelAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTrainedModelAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1182,7 +1182,7 @@ Schema for <c>ProjectTrainedModel</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainedModel(String,String,RequestContext)">
+    <member name="GetTrainedModel(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTrainedModel with required parameters and parse the result.
 <code><![CDATA[
@@ -1223,7 +1223,7 @@ Schema for <c>ProjectTrainedModel</c>:
 
 </remarks>
     </member>
-    <member name="DeleteTrainedModelAsync(String,String,RequestContext)">
+    <member name="DeleteTrainedModelAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteTrainedModelAsync with required parameters.
 <code><![CDATA[
@@ -1236,7 +1236,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteTrainedModel(String,String,RequestContext)">
+    <member name="DeleteTrainedModel(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteTrainedModel with required parameters.
 <code><![CDATA[
@@ -1249,7 +1249,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetModelEvaluationSummaryAsync(String,String,RequestContext)">
+    <member name="GetModelEvaluationSummaryAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetModelEvaluationSummaryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1334,7 +1334,7 @@ Schema for <c>EvaluationSummary</c>:
 
 </remarks>
     </member>
-    <member name="GetModelEvaluationSummary(String,String,RequestContext)">
+    <member name="GetModelEvaluationSummary(string,string,RequestContext)">
 <example>
 This sample shows how to call GetModelEvaluationSummary with required parameters and parse the result.
 <code><![CDATA[
@@ -1419,7 +1419,7 @@ Schema for <c>EvaluationSummary</c>:
 
 </remarks>
     </member>
-    <member name="GetLoadSnapshotStatusAsync(String,String,String,RequestContext)">
+    <member name="GetLoadSnapshotStatusAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetLoadSnapshotStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1493,7 +1493,7 @@ Schema for <c>LoadSnapshotJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetLoadSnapshotStatus(String,String,String,RequestContext)">
+    <member name="GetLoadSnapshotStatus(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetLoadSnapshotStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -1567,7 +1567,7 @@ Schema for <c>LoadSnapshotJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetAssignDeploymentResourcesStatusAsync(String,String,RequestContext)">
+    <member name="GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1641,7 +1641,7 @@ Schema for <c>DeploymentResourcesJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetAssignDeploymentResourcesStatus(String,String,RequestContext)">
+    <member name="GetAssignDeploymentResourcesStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssignDeploymentResourcesStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -1715,7 +1715,7 @@ Schema for <c>DeploymentResourcesJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetUnassignDeploymentResourcesStatusAsync(String,String,RequestContext)">
+    <member name="GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1789,7 +1789,7 @@ Schema for <c>DeploymentResourcesJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetUnassignDeploymentResourcesStatus(String,String,RequestContext)">
+    <member name="GetUnassignDeploymentResourcesStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -1863,7 +1863,7 @@ Schema for <c>DeploymentResourcesJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainingJobStatusAsync(String,String,RequestContext)">
+    <member name="GetTrainingJobStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1962,7 +1962,7 @@ Schema for <c>TrainingJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainingJobStatus(String,String,RequestContext)">
+    <member name="GetTrainingJobStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -2061,7 +2061,7 @@ Schema for <c>TrainingJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectDeletionJobStatusAsync(String,RequestContext)">
+    <member name="GetProjectDeletionJobStatusAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectDeletionJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2135,7 +2135,7 @@ Schema for <c>ProjectDeletionJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectDeletionJobStatus(String,RequestContext)">
+    <member name="GetProjectDeletionJobStatus(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectDeletionJobStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -2313,7 +2313,7 @@ Schema for <c>ConversationalAnalysisAuthoringProjectsMetadataValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsAsync(String,RequestContext)">
+    <member name="GetDeploymentsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2361,7 +2361,7 @@ Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeployments(String,RequestContext)">
+    <member name="GetDeployments(string,RequestContext)">
 <example>
 This sample shows how to call GetDeployments with required parameters and parse the result.
 <code><![CDATA[
@@ -2409,7 +2409,7 @@ Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainedModelsAsync(String,RequestContext)">
+    <member name="GetTrainedModelsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainedModelsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2451,7 +2451,7 @@ Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainedModels(String,RequestContext)">
+    <member name="GetTrainedModels(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainedModels with required parameters and parse the result.
 <code><![CDATA[
@@ -2493,7 +2493,7 @@ Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetModelEvaluationResultsAsync(String,String,String,RequestContext)">
+    <member name="GetModelEvaluationResultsAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetModelEvaluationResultsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2568,7 +2568,7 @@ Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetModelEvaluationResults(String,String,String,RequestContext)">
+    <member name="GetModelEvaluationResults(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetModelEvaluationResults with required parameters and parse the result.
 <code><![CDATA[
@@ -2643,7 +2643,7 @@ Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentResourcesAsync(String,Int32,Int32,Int32,RequestContext)">
+    <member name="GetDeploymentResourcesAsync(string,int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentResourcesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2688,7 +2688,7 @@ Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c
 
 </remarks>
     </member>
-    <member name="GetDeploymentResources(String,Int32,Int32,Int32,RequestContext)">
+    <member name="GetDeploymentResources(string,int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentResources with required parameters and parse the result.
 <code><![CDATA[
@@ -2733,7 +2733,7 @@ Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c
 
 </remarks>
     </member>
-    <member name="GetTrainingJobsAsync(String,RequestContext)">
+    <member name="GetTrainingJobsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingJobsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2833,7 +2833,7 @@ Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainingJobs(String,RequestContext)">
+    <member name="GetTrainingJobs(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingJobs with required parameters and parse the result.
 <code><![CDATA[
@@ -2933,7 +2933,7 @@ Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAssignedResourceDeploymentsAsync(Int32,Int32,Int32,RequestContext)">
+    <member name="GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetAssignedResourceDeploymentsAsync and parse the result.
 <code><![CDATA[
@@ -2988,7 +2988,7 @@ Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadata
 
 </remarks>
     </member>
-    <member name="GetAssignedResourceDeployments(Int32,Int32,Int32,RequestContext)">
+    <member name="GetAssignedResourceDeployments(int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetAssignedResourceDeployments and parse the result.
 <code><![CDATA[
@@ -3043,7 +3043,7 @@ Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadata
 
 </remarks>
     </member>
-    <member name="GetSupportedLanguagesAsync(String,RequestContext)">
+    <member name="GetSupportedLanguagesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSupportedLanguagesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3075,7 +3075,7 @@ Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSupportedLanguages(String,RequestContext)">
+    <member name="GetSupportedLanguages(string,RequestContext)">
 <example>
 This sample shows how to call GetSupportedLanguages with required parameters and parse the result.
 <code><![CDATA[
@@ -3107,7 +3107,7 @@ Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSupportedPrebuiltEntitiesAsync(String,Boolean,RequestContext)">
+    <member name="GetSupportedPrebuiltEntitiesAsync(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the result.
 <code><![CDATA[
@@ -3155,7 +3155,7 @@ Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
 
 </remarks>
     </member>
-    <member name="GetSupportedPrebuiltEntities(String,Boolean,RequestContext)">
+    <member name="GetSupportedPrebuiltEntities(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
 <code><![CDATA[
@@ -3203,7 +3203,7 @@ Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainingConfigVersionsAsync(String,RequestContext)">
+    <member name="GetTrainingConfigVersionsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingConfigVersionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3235,7 +3235,7 @@ Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTrainingConfigVersions(String,RequestContext)">
+    <member name="GetTrainingConfigVersions(string,RequestContext)">
 <example>
 This sample shows how to call GetTrainingConfigVersions with required parameters and parse the result.
 <code><![CDATA[
@@ -3267,7 +3267,7 @@ Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteProjectAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3342,7 +3342,7 @@ Schema for <c>ProjectDeletionJobState</c>:
 
 </remarks>
     </member>
-    <member name="DeleteProject(WaitUntil,String,RequestContext)">
+    <member name="DeleteProject(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteProject with required parameters and parse the result.
 <code><![CDATA[
@@ -3417,7 +3417,7 @@ Schema for <c>ProjectDeletionJobState</c>:
 
 </remarks>
     </member>
-    <member name="ExportProjectAsync(WaitUntil,String,String,String,String,String,RequestContext)">
+    <member name="ExportProjectAsync(WaitUntil,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call ExportProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3506,7 +3506,7 @@ Schema for <c>ExportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="ExportProject(WaitUntil,String,String,String,String,String,RequestContext)">
+    <member name="ExportProject(WaitUntil,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call ExportProject with required parameters and parse the result.
 <code><![CDATA[
@@ -3595,7 +3595,7 @@ Schema for <c>ExportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="ImportProjectAsync(WaitUntil,String,RequestContent,String,RequestContext)">
+    <member name="ImportProjectAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ImportProjectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -3795,7 +3795,7 @@ Schema for <c>ImportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="ImportProject(WaitUntil,String,RequestContent,String,RequestContext)">
+    <member name="ImportProject(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ImportProject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -3995,7 +3995,7 @@ Schema for <c>ImportProjectJobState</c>:
 
 </remarks>
     </member>
-    <member name="TrainAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="TrainAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call TrainAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -4145,7 +4145,7 @@ Schema for <c>TrainingJobState</c>:
 
 </remarks>
     </member>
-    <member name="Train(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="Train(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call Train with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -4295,7 +4295,7 @@ Schema for <c>TrainingJobState</c>:
 
 </remarks>
     </member>
-    <member name="SwapDeploymentsAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="SwapDeploymentsAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SwapDeploymentsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -4384,7 +4384,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="SwapDeployments(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="SwapDeployments(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SwapDeployments with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -4473,7 +4473,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="DeployProjectAsync(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="DeployProjectAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeployProjectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -4559,7 +4559,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="DeployProject(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="DeployProject(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeployProject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -4645,7 +4645,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeploymentAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteDeploymentAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4720,7 +4720,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeployment(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteDeployment(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDeployment with required parameters and parse the result.
 <code><![CDATA[
@@ -4795,7 +4795,7 @@ Schema for <c>DeploymentJobState</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with required parameters.
 <code><![CDATA[
@@ -4843,7 +4843,7 @@ Schema for <c>DeleteDeploymentOptions</c>:
 
 </remarks>
     </member>
-    <member name="DeleteDeploymentFromResources(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteDeploymentFromResources with required parameters.
 <code><![CDATA[
@@ -4891,7 +4891,7 @@ Schema for <c>DeleteDeploymentOptions</c>:
 
 </remarks>
     </member>
-    <member name="LoadSnapshotAsync(WaitUntil,String,String,RequestContext)">
+    <member name="LoadSnapshotAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call LoadSnapshotAsync with required parameters.
 <code><![CDATA[
@@ -4905,7 +4905,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="LoadSnapshot(WaitUntil,String,String,RequestContext)">
+    <member name="LoadSnapshot(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call LoadSnapshot with required parameters.
 <code><![CDATA[
@@ -4919,7 +4919,7 @@ Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
-    <member name="AssignDeploymentResourcesAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AssignDeploymentResourcesAsync with required parameters and request content.
 <code><![CDATA[
@@ -4963,7 +4963,7 @@ Schema for <c>AssignDeploymentResourcesOptions</c>:
 
 </remarks>
     </member>
-    <member name="AssignDeploymentResources(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="AssignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AssignDeploymentResources with required parameters and request content.
 <code><![CDATA[
@@ -5007,7 +5007,7 @@ Schema for <c>AssignDeploymentResourcesOptions</c>:
 
 </remarks>
     </member>
-    <member name="UnassignDeploymentResourcesAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UnassignDeploymentResourcesAsync with required parameters and request content.
 <code><![CDATA[
@@ -5041,7 +5041,7 @@ Schema for <c>UnassignDeploymentResourcesOptions</c>:
 
 </remarks>
     </member>
-    <member name="UnassignDeploymentResources(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UnassignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UnassignDeploymentResources with required parameters and request content.
 <code><![CDATA[
@@ -5075,7 +5075,7 @@ Schema for <c>UnassignDeploymentResourcesOptions</c>:
 
 </remarks>
     </member>
-    <member name="CancelTrainingJobAsync(WaitUntil,String,String,RequestContext)">
+    <member name="CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call CancelTrainingJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5175,7 +5175,7 @@ Schema for <c>TrainingJobState</c>:
 
 </remarks>
     </member>
-    <member name="CancelTrainingJob(WaitUntil,String,String,RequestContext)">
+    <member name="CancelTrainingJob(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call CancelTrainingJob with required parameters and parse the result.
 <code><![CDATA[
