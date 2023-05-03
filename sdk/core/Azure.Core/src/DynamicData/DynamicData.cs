@@ -31,11 +31,15 @@ namespace Azure.Core.Dynamic
 
         private MutableJsonElement _element;
         private DynamicDataOptions _options;
+        private JsonSerializerOptions _serializerOptions;
 
-        internal DynamicData(MutableJsonElement element, DynamicDataOptions? options = default)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
         {
             _element = element;
             _options = options ?? new DynamicDataOptions();
+            _serializerOptions = options.NameMapping == DynamicDataNameMapping.None ?
+                new JsonSerializerOptions() :
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         }
 
         internal void WriteTo(Stream stream)
@@ -170,10 +174,10 @@ namespace Azure.Core.Dynamic
             try
             {
 #if NET6_0_OR_GREATER
-                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions);
+                return JsonSerializer.Deserialize<T>(element, _serializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
-                return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
+                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions);
 #endif
             }
             catch (JsonException e)
