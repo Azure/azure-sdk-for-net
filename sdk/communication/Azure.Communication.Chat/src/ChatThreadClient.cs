@@ -428,7 +428,7 @@ namespace Azure.Communication.Chat
                 Response<AddChatParticipantsResult> addChatParticipantsResult = await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
                 if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                    throw new RequestFailedException(addChatParticipantsResult.GetRawResponse());
                 }
                 return addChatParticipantsResult.GetRawResponse();
             }
@@ -452,7 +452,7 @@ namespace Azure.Communication.Chat
                 Response<AddChatParticipantsResult> addChatParticipantsResult = _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
                 if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                    throw new RequestFailedException(addChatParticipantsResult.GetRawResponse());
                 }
                 return addChatParticipantsResult.GetRawResponse();
             }
