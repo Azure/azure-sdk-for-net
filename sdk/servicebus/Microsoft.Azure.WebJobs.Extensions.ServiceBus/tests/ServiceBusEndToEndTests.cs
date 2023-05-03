@@ -851,6 +851,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+
                 await host.StopAsync();
             }
         }

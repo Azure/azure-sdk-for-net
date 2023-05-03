@@ -243,6 +243,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     // Wait for the batch loop to complete.
                     await _batchLoop.ConfigureAwait(false);
 
+                    // Wait for the background loop to complete.
+                    if (_backgroundCacheMonitoringCts != null)
+                    {
+                        await _backgroundCacheMonitoringTask.ConfigureAwait(false);
+                    }
+
                     CancelExistingMonitoringTasks();
 
                     // Try to dispatch any already received messages.
@@ -750,7 +756,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             _monitoringCycleReceiveActions,
                             _client.Value);
 
-                    await TriggerWithMessagesInternal(triggerMessages, input, _monitoringCycleReceiver, _monitoringCycleReceiveActions, _monitoringCycleMessageActions, backgroundCancellationToken).ConfigureAwait(false);
+        await TriggerWithMessagesInternal(triggerMessages, input, _monitoringCycleReceiver, _monitoringCycleReceiveActions, _monitoringCycleMessageActions, backgroundCancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
