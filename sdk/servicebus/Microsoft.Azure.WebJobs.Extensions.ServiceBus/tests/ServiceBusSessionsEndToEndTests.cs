@@ -409,6 +409,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple_MinBatch<TestBatchMinBatchSize>();
         }
 
+        [Test]
         public async Task TestBatch_MinBatchSize_WithPartialBatch()
         {
             await TestMultiple_MinBatch_PartialBatch<TestBatchMinBatchSize_PartialBatch>();

@@ -224,6 +224,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
                 }
 
+                // This will also cancel the background monitoring task through the linked cancellation token source.
                 _cancellationTokenSource.Cancel();
 
                 // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
@@ -243,13 +244,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     // Wait for the batch loop to complete.
                     await _batchLoop.ConfigureAwait(false);
 
-                    // Wait for the background loop to complete.
+                    // Wait for the background loop to complete, since the cancellation token was canceled above, this will allow
+                    // any already started function invocations to finish.
                     if (_backgroundCacheMonitoringCts != null)
                     {
                         await _backgroundCacheMonitoringTask.ConfigureAwait(false);
                     }
-
-                    CancelExistingMonitoringTasks();
 
                     // Try to dispatch any already received messages.
                     await DispatchRemainingMessages(_monitoringCycleReceiver, _monitoringCycleMessageActions, _monitoringCycleReceiveActions, cancellationToken).ConfigureAwait(false);
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 if (((ServiceBusSessionMessageActions)messageActions).ShouldReleaseSession)
                 {
-                    // Dispatch any remaining messages for this session before closing
+                    // Dispatch any remaining messages for this session before releasing
                     if (_supportMinBatchSize)
                     {
                         await DispatchRemainingMessages(receiver, messageActions, receiveActions, cancellationToken).ConfigureAwait(false);
