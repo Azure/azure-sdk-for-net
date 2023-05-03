@@ -41,7 +41,8 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            if (Mode != RecordedTestMode.Playback)
+            var mode = TestEnvironment.Mode ?? Mode;
+            if (mode != RecordedTestMode.Playback)
             {
                 var testName = TestContext.CurrentContext.Test.FullName;
 

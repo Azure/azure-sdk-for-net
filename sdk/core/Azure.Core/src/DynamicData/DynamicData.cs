@@ -293,7 +293,7 @@ namespace Azure
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
                 return new DynamicData(new MutableJsonDocument(document).RootElement);
             }
 

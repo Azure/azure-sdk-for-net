@@ -755,7 +755,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetByGuidsAsync(IEnumerable,Boolean,Boolean,IEnumerable,RequestContext)">
+    <member name="GetByGuidsAsync(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetByGuidsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -936,7 +936,7 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetByGuids(IEnumerable,Boolean,Boolean,IEnumerable,RequestContext)">
+    <member name="GetByGuids(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetByGuids with required parameters and parse the result.
 <code><![CDATA[
@@ -1879,7 +1879,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByGuidsAsync(IEnumerable,RequestContext)">
+    <member name="DeleteByGuidsAsync(IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call DeleteByGuidsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2016,7 +2016,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByGuids(IEnumerable,RequestContext)">
+    <member name="DeleteByGuids(IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call DeleteByGuids with required parameters and parse the result.
 <code><![CDATA[
@@ -2313,7 +2313,7 @@ Schema for <c>ClassificationAssociateRequest</c>:
 
 </remarks>
     </member>
-    <member name="GetByGuidAsync(String,Boolean,Boolean,RequestContext)">
+    <member name="GetByGuidAsync(string,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2492,7 +2492,7 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetByGuid(String,Boolean,Boolean,RequestContext)">
+    <member name="GetByGuid(string,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -2671,7 +2671,7 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateEntityAttributeByGuidAsync(String,String,RequestContent,RequestContext)">
+    <member name="PartialUpdateEntityAttributeByGuidAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuidAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2810,7 +2810,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateEntityAttributeByGuid(String,String,RequestContent,RequestContext)">
+    <member name="PartialUpdateEntityAttributeByGuid(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuid with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2949,7 +2949,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByGuidAsync(String,RequestContext)">
+    <member name="DeleteByGuidAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteByGuidAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3086,7 +3086,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByGuid(String,RequestContext)">
+    <member name="DeleteByGuid(string,RequestContext)">
 <example>
 This sample shows how to call DeleteByGuid with required parameters and parse the result.
 <code><![CDATA[
@@ -3223,7 +3223,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetClassificationAsync(String,String,RequestContext)">
+    <member name="GetClassificationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetClassificationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3274,7 +3274,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="GetClassification(String,String,RequestContext)">
+    <member name="GetClassification(string,string,RequestContext)">
 <example>
 This sample shows how to call GetClassification with required parameters and parse the result.
 <code><![CDATA[
@@ -3325,7 +3325,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="DeleteClassificationAsync(String,String,RequestContext)">
+    <member name="DeleteClassificationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationAsync with required parameters.
 <code><![CDATA[
@@ -3338,7 +3338,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteClassification(String,String,RequestContext)">
+    <member name="DeleteClassification(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassification with required parameters.
 <code><![CDATA[
@@ -3351,7 +3351,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetClassificationsAsync(String,RequestContext)">
+    <member name="GetClassificationsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetClassificationsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3388,7 +3388,7 @@ Schema for <c>AtlasClassifications</c>:
 
 </remarks>
     </member>
-    <member name="GetClassifications(String,RequestContext)">
+    <member name="GetClassifications(string,RequestContext)">
 <example>
 This sample shows how to call GetClassifications with required parameters and parse the result.
 <code><![CDATA[
@@ -3425,7 +3425,7 @@ Schema for <c>AtlasClassifications</c>:
 
 </remarks>
     </member>
-    <member name="AddClassificationsAsync(String,RequestContent,RequestContext)">
+    <member name="AddClassificationsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsAsync with required parameters and request content.
 <code><![CDATA[
@@ -3488,7 +3488,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="AddClassifications(String,RequestContent,RequestContext)">
+    <member name="AddClassifications(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddClassifications with required parameters and request content.
 <code><![CDATA[
@@ -3551,7 +3551,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="UpdateClassificationsAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateClassificationsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsAsync with required parameters and request content.
 <code><![CDATA[
@@ -3614,7 +3614,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="UpdateClassifications(String,RequestContent,RequestContext)">
+    <member name="UpdateClassifications(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateClassifications with required parameters and request content.
 <code><![CDATA[
@@ -3677,7 +3677,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="GetByUniqueAttributesAsync(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -3856,7 +3856,7 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetByUniqueAttributes(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetByUniqueAttributes(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -4035,7 +4035,7 @@ Schema for <c>AtlasEntityWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateEntityByUniqueAttributesAsync(String,RequestContent,String,RequestContext)">
+    <member name="PartialUpdateEntityByUniqueAttributesAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4412,7 +4412,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="PartialUpdateEntityByUniqueAttributes(String,RequestContent,String,RequestContext)">
+    <member name="PartialUpdateEntityByUniqueAttributes(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -4789,7 +4789,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByUniqueAttributeAsync(String,String,RequestContext)">
+    <member name="DeleteByUniqueAttributeAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteByUniqueAttributeAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -4937,7 +4937,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteByUniqueAttribute(String,String,RequestContext)">
+    <member name="DeleteByUniqueAttribute(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteByUniqueAttribute with required parameters and parse the result.
 <code><![CDATA[
@@ -5085,7 +5085,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteClassificationByUniqueAttributeAsync(String,String,String,RequestContext)">
+    <member name="DeleteClassificationByUniqueAttributeAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationByUniqueAttributeAsync with required parameters.
 <code><![CDATA[
@@ -5107,7 +5107,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteClassificationByUniqueAttribute(String,String,String,RequestContext)">
+    <member name="DeleteClassificationByUniqueAttribute(string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteClassificationByUniqueAttribute with required parameters.
 <code><![CDATA[
@@ -5129,7 +5129,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddClassificationsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="AddClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -5205,7 +5205,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="AddClassificationsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="AddClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddClassificationsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -5281,7 +5281,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="UpdateClassificationsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="UpdateClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -5357,7 +5357,7 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="UpdateClassificationsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="UpdateClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call UpdateClassificationsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -5637,7 +5637,7 @@ Schema for <c>AtlasEntityHeaders</c>:
 
 </remarks>
     </member>
-    <member name="GetEntitiesByUniqueAttributesAsync(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetEntitiesByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesByUniqueAttributesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -5818,7 +5818,7 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetEntitiesByUniqueAttributes(String,Boolean,Boolean,String,RequestContext)">
+    <member name="GetEntitiesByUniqueAttributes(string,bool?,bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesByUniqueAttributes with required parameters and parse the result.
 <code><![CDATA[
@@ -5999,7 +5999,7 @@ Schema for <c>AtlasEntitiesWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetHeaderAsync(String,RequestContext)">
+    <member name="GetHeaderAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetHeaderAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -6098,7 +6098,7 @@ Schema for <c>AtlasEntityHeader</c>:
 
 </remarks>
     </member>
-    <member name="GetHeader(String,RequestContext)">
+    <member name="GetHeader(string,RequestContext)">
 <example>
 This sample shows how to call GetHeader with required parameters and parse the result.
 <code><![CDATA[
@@ -6197,7 +6197,7 @@ Schema for <c>AtlasEntityHeader</c>:
 
 </remarks>
     </member>
-    <member name="DeleteBusinessMetadataAsync(String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAsync with required parameters and request content.
 <code><![CDATA[
@@ -6214,7 +6214,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadata(String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadata(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadata with required parameters and request content.
 <code><![CDATA[
@@ -6231,7 +6231,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAsync(String,RequestContent,Boolean,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync with required parameters and request content.
 <code><![CDATA[
@@ -6261,7 +6261,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadata(String,RequestContent,Boolean,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadata with required parameters and request content.
 <code><![CDATA[
@@ -6291,7 +6291,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadataAttributesAsync(String,String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAttributesAsync with required parameters and request content.
 <code><![CDATA[
@@ -6308,7 +6308,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteBusinessMetadataAttributes(String,String,RequestContent,RequestContext)">
+    <member name="DeleteBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteBusinessMetadataAttributes with required parameters and request content.
 <code><![CDATA[
@@ -6325,7 +6325,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAttributesAsync(String,String,RequestContent,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync with required parameters and request content.
 <code><![CDATA[
@@ -6342,7 +6342,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddOrUpdateBusinessMetadataAttributes(String,String,RequestContent,RequestContext)">
+    <member name="AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes with required parameters and request content.
 <code><![CDATA[
@@ -6485,7 +6485,7 @@ Schema for <c>BulkImportResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteLabelsAsync(String,RequestContent,RequestContext)">
+    <member name="DeleteLabelsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsAsync with required parameters and request content.
 <code><![CDATA[
@@ -6502,7 +6502,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabels(String,RequestContent,RequestContext)">
+    <member name="DeleteLabels(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeleteLabels with required parameters and request content.
 <code><![CDATA[
@@ -6519,7 +6519,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsAsync(String,RequestContent,RequestContext)">
+    <member name="SetLabelsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SetLabelsAsync with required parameters and request content.
 <code><![CDATA[
@@ -6536,7 +6536,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabels(String,RequestContent,RequestContext)">
+    <member name="SetLabels(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call SetLabels with required parameters and request content.
 <code><![CDATA[
@@ -6553,7 +6553,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelAsync(String,RequestContent,RequestContext)">
+    <member name="AddLabelAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddLabelAsync with required parameters and request content.
 <code><![CDATA[
@@ -6570,7 +6570,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabel(String,RequestContent,RequestContext)">
+    <member name="AddLabel(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddLabel with required parameters and request content.
 <code><![CDATA[
@@ -6587,7 +6587,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="DeleteLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6617,7 +6617,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="DeleteLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call DeleteLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -6647,7 +6647,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call SetLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6677,7 +6677,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SetLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call SetLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[
@@ -6707,7 +6707,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelsByUniqueAttributeAsync(String,RequestContent,String,RequestContext)">
+    <member name="AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddLabelsByUniqueAttributeAsync with required parameters and request content.
 <code><![CDATA[
@@ -6737,7 +6737,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="AddLabelsByUniqueAttribute(String,RequestContent,String,RequestContext)">
+    <member name="AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call AddLabelsByUniqueAttribute with required parameters and request content.
 <code><![CDATA[

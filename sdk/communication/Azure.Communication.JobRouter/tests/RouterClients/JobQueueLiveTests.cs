@@ -34,8 +34,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = queueName,
                     Labels = queueLabels
                 });
-            AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
+
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
+            AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
         }
 
         [Test]
@@ -54,6 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = queueName,
                     Labels = queueLabels
                 });
+            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
 
             var updatedLabels =
@@ -64,8 +66,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 await routerClient.UpdateQueueAsync(new UpdateQueueOptions(queueId) { Labels = updatedLabels, });
 
             AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, updatedLabels);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
         }
 
         #endregion Queue Tests

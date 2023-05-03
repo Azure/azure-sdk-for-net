@@ -276,6 +276,12 @@
       ]
     },
     {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -300,6 +306,12 @@
     },
     {
       "filename": "**/sdk/datadog/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
         "liftr"
       ]
