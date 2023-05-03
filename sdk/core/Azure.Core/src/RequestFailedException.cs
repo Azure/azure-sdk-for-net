@@ -100,7 +100,7 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
             : this(response, null)
@@ -108,7 +108,7 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         public RequestFailedException(Response response, Exception? innerException)
@@ -117,7 +117,7 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         /// <param name="detailsParser">The parser to use to parse the response content.</param>
