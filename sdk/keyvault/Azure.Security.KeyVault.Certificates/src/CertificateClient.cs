@@ -1665,7 +1665,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw _pipeline.Diagnostics.CreateRequestFailedException(response);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1696,7 +1696,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)

@@ -182,9 +182,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == DocumentOperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.Error);
 
                 return OperationState<DocumentClassifierDetails>.Failure(rawResponse, requestFailedException);
             }

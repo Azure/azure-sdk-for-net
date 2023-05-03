@@ -261,7 +261,7 @@ namespace Azure.Core
 
                 if (!state.HasSucceeded && state.OperationFailedException == null)
                 {
-                    state = OperationState<T>.Failure(state.RawResponse, await CreateException(async, state.RawResponse).ConfigureAwait(false));
+                    state = OperationState<T>.Failure(state.RawResponse, new RequestFailedException(state.RawResponse));
                 }
 
                 asyncLock.SetValue(state);

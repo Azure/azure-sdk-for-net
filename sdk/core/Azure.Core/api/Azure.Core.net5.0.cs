@@ -270,8 +270,12 @@ namespace Azure
     {
         public RequestFailedException(Azure.Response response) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
         protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public RequestFailedException(string message) { }
@@ -279,6 +283,7 @@ namespace Azure
         public string? ErrorCode { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public Azure.Response? GetRawResponse() { throw null; }
     }
     public abstract partial class Response : System.IDisposable
     {
