@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
 
@@ -98,11 +97,11 @@ namespace Azure.Core.Json
 
             EnsureArray();
 
-            // Check for changes
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.AsJsonElement().GetArrayLength();
+            }
 
-            // Check for changes to descendants
-
-            // return the value
             return _element.GetArrayLength();
         }
 
