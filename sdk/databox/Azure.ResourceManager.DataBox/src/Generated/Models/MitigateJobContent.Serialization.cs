@@ -15,8 +15,22 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("customerResolutionCode"u8);
-            writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
+            if (Optional.IsDefined(CustomerResolutionCode))
+            {
+                writer.WritePropertyName("customerResolutionCode"u8);
+                writer.WriteStringValue(CustomerResolutionCode.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(SerialNumberCustomerResolutionMap))
+            {
+                writer.WritePropertyName("serialNumberCustomerResolutionMap"u8);
+                writer.WriteStartObject();
+                foreach (var item in SerialNumberCustomerResolutionMap)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value.ToSerialString());
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
     }

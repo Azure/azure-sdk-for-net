@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: DataBox
 namespace: Azure.ResourceManager.DataBox
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databox/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8e20af0463637085b47a018ec9c8372a2242bdac/specification/databox/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
