@@ -21,32 +21,32 @@ namespace Azure.Core.Tests.ModelSerializationTests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool includeReadonly, bool handleUnknown)
+        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadOnly, bool ignoreUnknown)
         {
             Stream stream = new MemoryStream();
             string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (includeReadonly)
+            if (!ignoreReadOnly)
             {
                 expectedSerialized.Append("\"latinName\":\"Canis lupus familiaris\",");
             }
             expectedSerialized.Append("\"name\":\"Doggo\",");
             expectedSerialized.Append("\"isHungry\":false,");
             expectedSerialized.Append("\"weight\":5.5");
-            if (handleUnknown)
+            if (!ignoreUnknown)
             {
                 expectedSerialized.Append(",\"numberOfLegs\":4");
             }
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = includeReadonly, IgnoreAdditionalProperties = handleUnknown };
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
             var model = new Animal();
             model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
 
-            if (includeReadonly)
+            if (!ignoreReadOnly)
             {
                 Assert.That(model.LatinName, Is.EqualTo("Canis lupus familiaris"));
             }
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Assert.IsFalse(model.IsHungry);
             Assert.That(model.Weight, Is.EqualTo(5.5));
 
-            if (handleUnknown)
+            if (!ignoreUnknown)
             {
                 var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
                 Assert.AreEqual(1, additionalProperties.Count);

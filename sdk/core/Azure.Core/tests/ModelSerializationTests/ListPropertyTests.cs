@@ -21,14 +21,14 @@ namespace Azure.Core.Tests.ModelSerializationTests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool includeReadonly, bool handleUnknown)
+        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadOnly, bool ignoreUnknown)
         {
             Stream stream = new MemoryStream();
             string serviceResponse =
                 "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"], \"numberOfLegs\":4}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (includeReadonly)
+            if (!ignoreReadOnly)
             {
                 expectedSerialized.Append("\"latinName\":\"Animalia\",");
             }
@@ -36,19 +36,19 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expectedSerialized.Append("\"isHungry\":false,");
             expectedSerialized.Append("\"weight\":1.1,");
             expectedSerialized.Append("\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]");
-            if (handleUnknown)
+            if (!ignoreUnknown)
             {
                 expectedSerialized.Append(",\"numberOfLegs\":4");
             }
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = includeReadonly, IgnoreAdditionalProperties = handleUnknown };
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
             var model = new DogListProperty();
             model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
 
-            if (includeReadonly)
+            if (!ignoreReadOnly)
             {
                 Assert.That(model.LatinName, Is.EqualTo("Animalia"));
             }
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Assert.That(model.Weight, Is.EqualTo(1.1));
             Assert.That(model.FoodConsumed, Is.EqualTo(new List<string> { "kibble", "egg", "peanut butter" }));
 
-            if (handleUnknown)
+            if (!ignoreUnknown)
             {
                 var additionalProperties = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
                 Assert.AreEqual(1, additionalProperties.Count);
