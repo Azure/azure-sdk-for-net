@@ -4,23 +4,23 @@
 namespace Azure
 {
     /// <summary>
-    /// TODO
+    /// Provides the client options for serializing models.
     /// </summary>
     public class SerializableOptions
     {
         /// <summary>
-        /// TODO
+        /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.
         /// </summary>
-        public bool IncludeReadOnlyProperties { get; set; } = true;
+        public bool IgnoreReadOnlyProperties { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Bool that determines if AdditionalProperties will be serialized. Default is false.
         /// </summary>
-        public bool HandleAdditionalProperties { get; set; } = true;
+        public bool IgnoreAdditionalProperties { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Bool that determines if Json will be PrettyPrinted. Default is false.
         /// </summary>
-        public bool PrettyPrint { get; set; } = false;
+        public bool PrettyPrint { get; set; }
     }
 }

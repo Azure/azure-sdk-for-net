@@ -14,7 +14,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 {
     public class ListPropertyTests
     {
-        private readonly SerializableOptions _wireOptions = new SerializableOptions { IncludeReadOnlyProperties = false };
+        private readonly SerializableOptions _wireOptions = new SerializableOptions { IgnoreReadOnlyProperties = false };
         private readonly SerializableOptions _objectOptions = new SerializableOptions();
 
         [TestCase(true, true)]
@@ -43,7 +43,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            SerializableOptions options = new SerializableOptions() { IncludeReadOnlyProperties = includeReadonly, HandleAdditionalProperties = handleUnknown };
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = includeReadonly, IgnoreAdditionalProperties = handleUnknown };
 
             var model = new DogListProperty();
             model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
@@ -106,7 +106,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var expectedJson = """
                 {
-                  "latinName": "Animalia",
                   "name": "Doggo",
                   "isHungry": false,
                   "weight": 1.1,

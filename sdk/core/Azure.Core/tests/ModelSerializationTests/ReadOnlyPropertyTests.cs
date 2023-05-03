@@ -14,7 +14,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 {
     public class ReadOnlyPropertyTests
     {
-        private readonly SerializableOptions _wireOptions = new SerializableOptions { IncludeReadOnlyProperties = false };
+        private readonly SerializableOptions _wireOptions = new SerializableOptions { IgnoreReadOnlyProperties = false };
         private readonly SerializableOptions _objectOptions = new SerializableOptions();
 
         [TestCase(true, true)]
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            SerializableOptions options = new SerializableOptions() { IncludeReadOnlyProperties = includeReadonly, HandleAdditionalProperties = handleUnknown };
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = includeReadonly, IgnoreAdditionalProperties = handleUnknown };
 
             var model = new Animal();
             model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
@@ -102,7 +102,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var expectedJson = """
                 {
-                  "latinName": "Felis catus",
                   "name": "Catto",
                   "isHungry": true,
                   "weight": 3.2,
