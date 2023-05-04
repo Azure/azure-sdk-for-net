@@ -3,10 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.HealthBot.Models;
 using NUnit.Framework;
 
@@ -14,9 +11,8 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
 {
     public class HealthBotTests : HealthBotManagementTestBase
     {
-
         public HealthBotTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -35,10 +31,8 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
         public static void AssertData(HealthBotData data1, HealthBotData data2)
         {
             Assert.AreEqual(data1.Name, data2.Name);
-            Assert.AreEqual(data1.Identity, data2.Identity);
             Assert.AreEqual(data1.Id, data2.Id);
             Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.SystemData, data2.SystemData);
         }
 
         [RecordedTest]

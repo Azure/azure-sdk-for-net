@@ -1,0 +1,2096 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b8d0c28295cdc44e883209ff78d758c4-b34afb17d546ea40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c86377963abad59fbbfb1f0586767781",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:39:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1447120a-0990-42b1-99ad-e71aa507fc42",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "1447120a-0990-42b1-99ad-e71aa507fc42",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T023950Z:1447120a-0990-42b1-99ad-e71aa507fc42"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-8902?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-e8db1fb9c617414a8905fd352c8ac119-33db254f2c47584d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4f64ddc5127546ae81d8516b4e7ceef9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:39:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5ac55f6a-e574-484d-a705-e27405b7b41e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "5ac55f6a-e574-484d-a705-e27405b7b41e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T023952Z:5ac55f6a-e574-484d-a705-e27405b7b41e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902",
+        "name": "testRG-8902",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "51",
+        "Content-Type": "application/json",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-2269e6170ff76241-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3172d7cac5e23c6aedee8bd05e102342",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "F0"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+        "Cache-Control": "no-cache",
+        "Content-Length": "581",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:39:57 GMT",
+        "ETag": "\u002217034226-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-context": "appId=cid-v1:39ac773f-9efe-42dd-90ba-3ebab16f6587",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0\u002BxpTZAAAAABbEZPfX1AWS4zh0tso1PluTU5aMjIxMDYwNjEyMDI3ADI2YjRjNmEwLTdlYzYtNDRlNC1iOTRiLWFhM2JlMjBmNjliOQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-client-request-id": "3172d7cac5e23c6aedee8bd05e102342",
+        "x-ms-correlation-request-id": "c7885078-8ba2-476f-b67e-d7b1ae95f0f6",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "47eb7776-1872-4c6a-84da-c0538c70602b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T023958Z:c7885078-8ba2-476f-b67e-d7b1ae95f0f6",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:39:55.6826306Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-fb84091b64ac3447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c9b6a835ac538a810ad6c157f607f25a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:39:58 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c9b6a835ac538a810ad6c157f607f25a",
+        "x-ms-correlation-request-id": "272e52aa-6907-4fdd-b2d6-5c215c4cf31e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11967",
+        "x-ms-request-id": "d66b90cf-6dad-4502-b751-07dcf195015f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T023958Z:272e52aa-6907-4fdd-b2d6-5c215c4cf31e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-da94a3e0b7de2d47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "36403a2b1f3f1569563acf945bfdbebc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:39:59 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "36403a2b1f3f1569563acf945bfdbebc",
+        "x-ms-correlation-request-id": "8c3596b6-3173-4c76-98d2-0a9a21d59836",
+        "x-ms-ratelimit-remaining-tenant-reads": "11966",
+        "x-ms-request-id": "7b1007a2-c4f1-418f-a294-62c3d34f1db1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024000Z:8c3596b6-3173-4c76-98d2-0a9a21d59836"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-1777d0739026a94d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b59b3ae2595901ef406b168ef329425a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:00 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b59b3ae2595901ef406b168ef329425a",
+        "x-ms-correlation-request-id": "d4481114-80bb-4e42-bd13-745b113a4b77",
+        "x-ms-ratelimit-remaining-tenant-reads": "11965",
+        "x-ms-request-id": "c3cdd09f-1dc1-4ee5-9bf5-18371084c4ab",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024001Z:d4481114-80bb-4e42-bd13-745b113a4b77"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-2829a883eeab3b49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "44410e5bd5f015113fa17318dced2e0d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:01 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "44410e5bd5f015113fa17318dced2e0d",
+        "x-ms-correlation-request-id": "17ee21eb-4e36-48cd-acca-ced1ae3b2bbd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11964",
+        "x-ms-request-id": "94f464ef-b9a8-4e54-90ac-08d088f9ab9b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024002Z:17ee21eb-4e36-48cd-acca-ced1ae3b2bbd"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-32ea389c73d54c48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bc7504173d6bd1014a3ff5d409da222c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:04 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bc7504173d6bd1014a3ff5d409da222c",
+        "x-ms-correlation-request-id": "ac1ce696-3681-4b36-bf1f-eaf9da9cad91",
+        "x-ms-ratelimit-remaining-tenant-reads": "11963",
+        "x-ms-request-id": "3ff195be-6a99-4247-8e31-7f3e2372c184",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024004Z:ac1ce696-3681-4b36-bf1f-eaf9da9cad91"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-f60c3ceb6505fa47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4d3874f77abb0ccc288575b8e6d62453",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:08 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4d3874f77abb0ccc288575b8e6d62453",
+        "x-ms-correlation-request-id": "7aa07f4e-8a4d-4fde-b44b-de52482183b6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11962",
+        "x-ms-request-id": "823aa330-ff2f-44c5-8cda-0abb0f92e44b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024009Z:7aa07f4e-8a4d-4fde-b44b-de52482183b6"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-f9ec1056a9f86144-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ee76083c86b41eef0d6ff9b1e03c0c65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:17 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ee76083c86b41eef0d6ff9b1e03c0c65",
+        "x-ms-correlation-request-id": "5cc68820-822e-498d-9470-84b0851e625c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11961",
+        "x-ms-request-id": "a373b2b9-c6da-4b76-8e99-5bf35d8bb50c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024017Z:5cc68820-822e-498d-9470-84b0851e625c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-9b6ea265155b2b41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6821467ee1b59d51386893e6c848eb74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:40:33 GMT",
+        "ETag": "\u0022e7020b69-0000-0100-0000-64531afd0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6821467ee1b59d51386893e6c848eb74",
+        "x-ms-correlation-request-id": "1cd7406c-5a61-4d74-b274-b942426a7d88",
+        "x-ms-ratelimit-remaining-tenant-reads": "11960",
+        "x-ms-request-id": "c88257b9-d681-452c-ba78-128081341c53",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024033Z:1cd7406c-5a61-4d74-b274-b942426a7d88"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Working",
+        "startTime": "2023-05-04T02:39:56.2359866Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Connection": "close",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-4c01a68cfb43024c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0098a21a33637077851a404b801a2ceb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Connection": "close",
+        "Content-Length": "560",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:06 GMT",
+        "ETag": "\u0022e702576c-0000-0100-0000-64531b230000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0098a21a33637077851a404b801a2ceb",
+        "x-ms-correlation-request-id": "18ce3456-c973-4ec3-82ed-38419b7f00ff",
+        "x-ms-ratelimit-remaining-tenant-reads": "11959",
+        "x-ms-request-id": "a155ab7f-4fb6-4020-8841-c9b723c1449b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024106Z:18ce3456-c973-4ec3-82ed-38419b7f00ff"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "47eb7776-1872-4c6a-84da-c0538c70602b*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T02:39:56.2359866Z",
+        "endTime": "2023-05-04T02:40:35.7677772Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1a04cd028fa0c4bb5c61fadc45f923b-0e5f8b5c85f14240-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9f390f78bcb45b9db6d9b64cf20855c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "680",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:07 GMT",
+        "ETag": "\u00221703d92c-0000-0100-0000-64531b230000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9f390f78bcb45b9db6d9b64cf20855c4",
+        "x-ms-correlation-request-id": "6ddb122b-443b-43ee-936a-2a98529f03a7",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e9e868d2-3e9a-412d-b60c-79c0e00e0bfe",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024107Z:6ddb122b-443b-43ee-936a-2a98529f03a7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:39:55.6826306Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-3353-digb6sh"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0fb2b11cb2108d4e9143aaa698c5085d-d3f8b8f4ffd2974d-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3e9784840ba44b02cfb0e39aa1051d1e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "680",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:08 GMT",
+        "ETag": "\u00221703d92c-0000-0100-0000-64531b230000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3e9784840ba44b02cfb0e39aa1051d1e",
+        "x-ms-correlation-request-id": "5e7af63b-1dff-4b29-bb75-97625c7b018d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "e7f31053-72be-44ef-9d9f-cd74ef728d2d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024108Z:5e7af63b-1dff-4b29-bb75-97625c7b018d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:39:55.6826306Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-3353-digb6sh"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "51",
+        "Content-Type": "application/json",
+        "traceparent": "00-1acfa80b90247f4fa22092f49a90a85e-3b61d47b228a4c48-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b86da83b4b0f5dbf043c498a7d2b7e7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "F0"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+        "Cache-Control": "no-cache",
+        "Content-Length": "581",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:10 GMT",
+        "ETag": "\u00221703a332-0000-0100-0000-64531b460000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-context": "appId=cid-v1:39ac773f-9efe-42dd-90ba-3ebab16f6587",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0RRtTZAAAAABTnZA76YxIR5FC0sRZtmDPTU5aMjIxMDYwNjE0MDUzADI2YjRjNmEwLTdlYzYtNDRlNC1iOTRiLWFhM2JlMjBmNjliOQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-client-request-id": "b86da83b4b0f5dbf043c498a7d2b7e7c",
+        "x-ms-correlation-request-id": "b5850892-43cc-4f4d-b5ff-054f09352362",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "a905e5bd-396b-42cb-b2e6-0850f59683fa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024110Z:b5850892-43cc-4f4d-b5ff-054f09352362",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:09.0040863Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1acfa80b90247f4fa22092f49a90a85e-72969559de226a44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4a1098bc9c9a38b5c5393a67c178cea3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "500",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:10 GMT",
+        "ETag": "\u0022e702306f-0000-0100-0000-64531b450000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4a1098bc9c9a38b5c5393a67c178cea3",
+        "x-ms-correlation-request-id": "d563ee0f-adaa-41c5-b17d-c1443cd7da86",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "1312d568-9198-44c0-9af3-1e68e363c867",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024110Z:d563ee0f-adaa-41c5-b17d-c1443cd7da86"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Accepted",
+        "startTime": "2023-05-04T02:41:09.5242402Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1acfa80b90247f4fa22092f49a90a85e-be59b6e93ee8e94b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "25d66632213e4d9a6101ab207bbb8401",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "500",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:11 GMT",
+        "ETag": "\u0022e702306f-0000-0100-0000-64531b450000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "25d66632213e4d9a6101ab207bbb8401",
+        "x-ms-correlation-request-id": "0fd0ae6f-2c8f-4d74-91dc-17e8e4a9cddd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "a141c3f5-0d0d-486b-bfd9-85b36b6283c7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024112Z:0fd0ae6f-2c8f-4d74-91dc-17e8e4a9cddd"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Accepted",
+        "startTime": "2023-05-04T02:41:09.5242402Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1acfa80b90247f4fa22092f49a90a85e-1e6206a44f744d4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e4ce9982331a27e2c58f3649b4dfaa94",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "560",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:12 GMT",
+        "ETag": "\u0022e702656f-0000-0100-0000-64531b480000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e4ce9982331a27e2c58f3649b4dfaa94",
+        "x-ms-correlation-request-id": "88c703fa-331f-4f89-b0a9-adf5dae63926",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "19a62706-4c72-483f-a80e-54e162195845",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024113Z:88c703fa-331f-4f89-b0a9-adf5dae63926"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "a905e5bd-396b-42cb-b2e6-0850f59683fa*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T02:41:09.5242402Z",
+        "endTime": "2023-05-04T02:41:12.1956923Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1acfa80b90247f4fa22092f49a90a85e-1bb68dfa556b4045-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "73d12c1f942c9b72fdc3e999f094bc0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "582",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:13 GMT",
+        "ETag": "\u00221703dd32-0000-0100-0000-64531b480000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "73d12c1f942c9b72fdc3e999f094bc0a",
+        "x-ms-correlation-request-id": "a88afac4-4615-4d0e-a547-75dd059d73a1",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "72b9cd71-eb16-4eb1-bd0d-846093ff4266",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024114Z:a88afac4-4615-4d0e-a547-75dd059d73a1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:09.0040863Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361?api-version=2021-08-24",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "51",
+        "Content-Type": "application/json",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-95e7ca428b02bd4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "28e538b4e9aaff8983ae5fafea519981",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "F0"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+        "Cache-Control": "no-cache",
+        "Content-Length": "581",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:19 GMT",
+        "ETag": "\u00221703b433-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-context": "appId=cid-v1:39ac773f-9efe-42dd-90ba-3ebab16f6587",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0TRtTZAAAAADzEK1\u002BC0JmQ4qOij8c3AkhTU5aMjIxMDYwNjE0MDUzADI2YjRjNmEwLTdlYzYtNDRlNC1iOTRiLWFhM2JlMjBmNjliOQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-client-request-id": "28e538b4e9aaff8983ae5fafea519981",
+        "x-ms-correlation-request-id": "e47dac07-a0a0-49e5-80e1-29fc39dad29b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "672ca6cd-98ad-4177-8573-753b6c15e3db",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024120Z:e47dac07-a0a0-49e5-80e1-29fc39dad29b",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "name": "healthbot-9361",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:41:16.9579705Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:16.9579705Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-060518e4dde3c740-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "7b952cd282fa36eaa3d2ef7e34c3b0ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:19 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7b952cd282fa36eaa3d2ef7e34c3b0ac",
+        "x-ms-correlation-request-id": "18b3095c-7c97-4e4c-b6c6-b182dbd37065",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "6ed57ccf-745f-4a95-b810-631010379535",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024120Z:18b3095c-7c97-4e4c-b6c6-b182dbd37065"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-69239904338def42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d943672a6e93a32064f701770232b53a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:20 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d943672a6e93a32064f701770232b53a",
+        "x-ms-correlation-request-id": "7760ee1e-6748-4c42-8bf9-e60c3523d74f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "3d4cffc4-dad6-4ebd-a269-f95421927173",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024121Z:7760ee1e-6748-4c42-8bf9-e60c3523d74f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-251c34a0097fff4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bedc2e771dbcd3862ccaab172255b863",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:22 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bedc2e771dbcd3862ccaab172255b863",
+        "x-ms-correlation-request-id": "c67420c8-8d6f-4a2b-a8f3-6c548c53ae4c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "cb0bb3e9-e206-4db5-8bae-d72a435d9cf5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024122Z:c67420c8-8d6f-4a2b-a8f3-6c548c53ae4c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-8ef952ce5a743447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e22c3a825d06649d0bf1170380733370",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:23 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e22c3a825d06649d0bf1170380733370",
+        "x-ms-correlation-request-id": "b7f720ab-a640-4de9-899f-f9d8c256da15",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "1237aff8-63d6-4a7d-b3f4-c4a133328ebf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024124Z:b7f720ab-a640-4de9-899f-f9d8c256da15"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-9583830e7f28c94c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0607b51df2e60cf0e06fadc8c209800e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:26 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0607b51df2e60cf0e06fadc8c209800e",
+        "x-ms-correlation-request-id": "c68caace-1967-4c75-82f2-15f92ffe1ecc",
+        "x-ms-ratelimit-remaining-tenant-reads": "11992",
+        "x-ms-request-id": "108d876b-e8db-41ea-8473-5119b2499a72",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024126Z:c68caace-1967-4c75-82f2-15f92ffe1ecc"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-50a05c9761b02145-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c7f49e3ed2061a339178b2ca068353b9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:30 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c7f49e3ed2061a339178b2ca068353b9",
+        "x-ms-correlation-request-id": "277bd7d7-de4d-4bc5-a8b5-932406e4c93f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11991",
+        "x-ms-request-id": "b611114e-5992-4884-9ca7-b8e7d9f43589",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024130Z:277bd7d7-de4d-4bc5-a8b5-932406e4c93f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-26ada7525768264f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6cf93a97b24e8f7c4a1f0197afd4a102",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:38 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6cf93a97b24e8f7c4a1f0197afd4a102",
+        "x-ms-correlation-request-id": "febd3869-1342-421a-96aa-93529ae6f4c1",
+        "x-ms-ratelimit-remaining-tenant-reads": "11990",
+        "x-ms-request-id": "db343573-2493-459b-81e9-ae160d1f99ae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024139Z:febd3869-1342-421a-96aa-93529ae6f4c1"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-bc7aa1d6f9ac7b41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e2c408706c7e4a6a81ed756d4025055d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:41:54 GMT",
+        "ETag": "\u0022e7020470-0000-0100-0000-64531b4e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e2c408706c7e4a6a81ed756d4025055d",
+        "x-ms-correlation-request-id": "7a7b332b-2dc8-4199-87ab-7c30955c42ac",
+        "x-ms-ratelimit-remaining-tenant-reads": "11989",
+        "x-ms-request-id": "9325db48-064e-4332-8db0-c439976805c5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024155Z:7a7b332b-2dc8-4199-87ab-7c30955c42ac"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Working",
+        "startTime": "2023-05-04T02:41:17.6532188Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-caf5c82f0ed28a4d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8731f31b140f8bc021657ce6d19c6abc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "560",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:27 GMT",
+        "ETag": "\u0022e702c673-0000-0100-0000-64531b7a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8731f31b140f8bc021657ce6d19c6abc",
+        "x-ms-correlation-request-id": "c05cde91-3fa1-401d-98e1-ae884616ba19",
+        "x-ms-ratelimit-remaining-tenant-reads": "11988",
+        "x-ms-request-id": "58040cd7-dd14-473d-94d6-a817d89ee7a8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024227Z:c05cde91-3fa1-401d-98e1-ae884616ba19"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "name": "672ca6cd-98ad-4177-8573-753b6c15e3db*BC61743B5FF80B102A4A7E93493FF3857FE07C59EADA96FC115C91FC0750C47C",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T02:41:17.6532188Z",
+        "endTime": "2023-05-04T02:42:02.1677374Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6025cbd18985f841b2637518f3c28a75-239f922c6236774e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "fe59afd671be2b3bd0afeb603d0f4f25",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "680",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:28 GMT",
+        "ETag": "\u002217032f3a-0000-0100-0000-64531b7a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fe59afd671be2b3bd0afeb603d0f4f25",
+        "x-ms-correlation-request-id": "ad3d3219-48b1-4638-b626-6f27513ed963",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "baad2881-ed5f-45bd-8958-81d0afc75867",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024228Z:ad3d3219-48b1-4638-b626-6f27513ed963"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+        "name": "healthbot-9361",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:41:16.9579705Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:16.9579705Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-9361-n5gmxix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773?api-version=2021-08-24",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "51",
+        "Content-Type": "application/json",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-64b4c7eca4bbcd47-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bc7ba31a1aa25cf24738c019ef8478e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "F0"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:34 GMT",
+        "ETag": "\u002217032b3f-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-context": "appId=cid-v1:39ac773f-9efe-42dd-90ba-3ebab16f6587",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0lxtTZAAAAACQeJrjM7bES5UOec/wVZO/TU5aMjIxMDYwNjE0MDMzADI2YjRjNmEwLTdlYzYtNDRlNC1iOTRiLWFhM2JlMjBmNjliOQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-client-request-id": "bc7ba31a1aa25cf24738c019ef8478e4",
+        "x-ms-correlation-request-id": "1fb99afb-0149-4242-b022-b163fca8f09c",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "8bf9279d-33cc-4950-9951-f0127a7944d5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024234Z:1fb99afb-0149-4242-b022-b163fca8f09c",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "name": "healthbot-773",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:42:31.4598281Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:42:31.4598281Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-fb1b17d195269545-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2dcc5715ae21bc1abcfcb685b0223b4b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:34 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2dcc5715ae21bc1abcfcb685b0223b4b",
+        "x-ms-correlation-request-id": "01cf46b7-d328-49da-9959-df5c5bc0b40b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11987",
+        "x-ms-request-id": "daecfcb5-1192-4016-a3aa-85e86c17013c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024235Z:01cf46b7-d328-49da-9959-df5c5bc0b40b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-aa24039a3a188d40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "85de0636be78125805d0039b639233e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:35 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "85de0636be78125805d0039b639233e8",
+        "x-ms-correlation-request-id": "83df33da-f645-4004-bfa0-27d77cc958e3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11986",
+        "x-ms-request-id": "e34858ff-e78a-4f60-882a-247374c22920",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024236Z:83df33da-f645-4004-bfa0-27d77cc958e3"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-d525e9023c36fa4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9703aeea4ab8d4c29edad3cf5018fa96",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:37 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9703aeea4ab8d4c29edad3cf5018fa96",
+        "x-ms-correlation-request-id": "0f7cc5d2-873f-4aac-aad3-0c63b33985b2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11985",
+        "x-ms-request-id": "6a05de26-bf69-484a-a368-4f454158a9ae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024238Z:0f7cc5d2-873f-4aac-aad3-0c63b33985b2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-25fa5e577480254a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "22296bcbc981579afeb92851aa7e592a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:38 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "22296bcbc981579afeb92851aa7e592a",
+        "x-ms-correlation-request-id": "ef759850-d9e3-42dc-8df5-0a1377782b8a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11984",
+        "x-ms-request-id": "cdf289ca-8446-4463-af79-68dd86e5edc7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024239Z:ef759850-d9e3-42dc-8df5-0a1377782b8a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-aeaf7a77191ac048-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "029bcec8a31eeb934409e79dea88c1ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:40 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "029bcec8a31eeb934409e79dea88c1ed",
+        "x-ms-correlation-request-id": "a806895c-5eba-4e17-bb51-bc67afd8e3a6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11983",
+        "x-ms-request-id": "c59e6ced-fe67-4ce8-9196-3dfd18e003cb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024241Z:a806895c-5eba-4e17-bb51-bc67afd8e3a6"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-afe70eaa36de0141-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f8d06dd61168216713ac98ff2271291f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:46 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f8d06dd61168216713ac98ff2271291f",
+        "x-ms-correlation-request-id": "5a98d358-4b35-45c4-a02e-1ba1bdf4750a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11982",
+        "x-ms-request-id": "4eee0aa9-6caf-4d62-a1ca-b93182bc8668",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024246Z:5a98d358-4b35-45c4-a02e-1ba1bdf4750a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-0ca94ea54c3ef742-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8207a981f77c2777d73ddd78e1fc6c76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:42:54 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8207a981f77c2777d73ddd78e1fc6c76",
+        "x-ms-correlation-request-id": "6a6b365e-6fdc-45ef-bdd2-7e2342f32017",
+        "x-ms-ratelimit-remaining-tenant-reads": "11981",
+        "x-ms-request-id": "515f0ad2-cca0-44f4-bc40-e76c57c53ac1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024254Z:6a6b365e-6fdc-45ef-bdd2-7e2342f32017"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-12992a4fe55a4a44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3d7b3bf761adb6c16679ee720b94c9d3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "498",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:10 GMT",
+        "ETag": "\u0022e7025077-0000-0100-0000-64531b990000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3d7b3bf761adb6c16679ee720b94c9d3",
+        "x-ms-correlation-request-id": "ee8f5b12-e555-4e22-a4e1-9e25345eaf49",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "4ce30faa-1c9d-44a0-bc31-93126a1bcfaf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024311Z:ee8f5b12-e555-4e22-a4e1-9e25345eaf49"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Working",
+        "startTime": "2023-05-04T02:42:32.3042005Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-efeca68f3502364c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "411cc7df3f81de70f5a9202b34ef3f17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "559",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:43 GMT",
+        "ETag": "\u0022e702467b-0000-0100-0000-64531bc20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "411cc7df3f81de70f5a9202b34ef3f17",
+        "x-ms-correlation-request-id": "08108634-3487-4062-9c3b-07e9621fd06e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "1d6854a2-47c4-4828-a260-bff5346109f5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024343Z:08108634-3487-4062-9c3b-07e9621fd06e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "name": "8bf9279d-33cc-4950-9951-f0127a7944d5*65072BDB4C5CC2A869E61A1FBB044A1A81D65E740BE7286EDF0D3F3205053940",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T02:42:32.3042005Z",
+        "endTime": "2023-05-04T02:43:14.9560016Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0b892260a4dcf841a0f1107500798dc0-d694157cf145074f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e707223fecf51f71e8501b0209051b43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "677",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:43 GMT",
+        "ETag": "\u002217032e45-0000-0100-0000-64531bc20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e707223fecf51f71e8501b0209051b43",
+        "x-ms-correlation-request-id": "db9f1e59-6258-4c55-a85c-13cf0b90be5f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "9cb6414e-9e0d-4506-9fca-d3c3dfbc400d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024344Z:db9f1e59-6258-4c55-a85c-13cf0b90be5f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+        "name": "healthbot-773",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:42:31.4598281Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:42:31.4598281Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-773-az8k38l"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1a980a742ae0b8f4ca9d480440968277",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1953",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "13bd6ef7-c78d-451e-9197-e32689d55a61",
+        "x-ms-original-request-ids": [
+          "5cda6843-0731-4b4a-9d58-3f49bec161cb",
+          "ae74990e-36e8-4be5-aa55-f060ddbe8500",
+          "e6405ee3-6bad-454f-8d91-2a590eb0674f",
+          "235a32b9-9501-45e8-b369-94f0a41557f6",
+          "795445eb-f4fd-4717-9aa9-3874e9a34c86",
+          "8f4a7e9c-8604-4e36-b8cd-e1ff4bb43689",
+          "ff0b9f56-2a20-4222-9525-9ebf67ff642e",
+          "149be743-f612-4e55-bd9e-0da84b7ce61e",
+          "01e065a4-5770-4480-ba9d-e3d0135e47cc",
+          "2438ed66-0ad3-4425-b9d9-e34b826e8fb2",
+          "7f0965e8-53e9-4484-bf05-80e2d05a2608"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "13bd6ef7-c78d-451e-9197-e32689d55a61",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024344Z:13bd6ef7-c78d-451e-9197-e32689d55a61"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+            "name": "healthbot-3353",
+            "type": "microsoft.healthbot/healthbots",
+            "sku": {
+              "name": "F0"
+            },
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-05-04T02:39:55.6826306Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-04T02:41:09.0040863Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-9361",
+            "name": "healthbot-9361",
+            "type": "microsoft.healthbot/healthbots",
+            "sku": {
+              "name": "F0"
+            },
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-05-04T02:41:16.9579705Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-04T02:41:16.9579705Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-9361-n5gmxix"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-773",
+            "name": "healthbot-773",
+            "type": "microsoft.healthbot/healthbots",
+            "sku": {
+              "name": "F0"
+            },
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-05-04T02:42:31.4598281Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-04T02:42:31.4598281Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "botManagementPortalLink": "https://eastus.healthbot.microsoft.com/account/healthbot-773-az8k38l"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b935cb2298541c4a84dd179c34fac3f0-57398ccbdaffdf49-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e832d73ae28cf3dd55fc5930236dd4f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "582",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:45 GMT",
+        "ETag": "\u00221703dd32-0000-0100-0000-64531b480000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e832d73ae28cf3dd55fc5930236dd4f0",
+        "x-ms-correlation-request-id": "919ae4b0-0632-4a7e-98db-d3c06f97c959",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "c2a345a4-41fe-4d58-b9e1-742a834e1da4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024345Z:919ae4b0-0632-4a7e-98db-d3c06f97c959"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:09.0040863Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-33531?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b5a53bf827abac4e8d712d555854814f-c5fef3d418a2114c-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "29b6dd8d255615372d4f1c58a36ddf51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "229",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a6862938-be1d-4d71-ad8b-3bcdae3c278c",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "a6862938-be1d-4d71-ad8b-3bcdae3c278c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024345Z:a6862938-be1d-4d71-ad8b-3bcdae3c278c"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.HealthBot/healthBots/healthbot-33531\u0027 under resource group \u0027testRG-8902\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6e1c63c897f9b34aaea83cc96bd6f221-95636069690db94f-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "32c8a3cd33d292b62da5c4e3d1c4955d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "582",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:45 GMT",
+        "ETag": "\u00221703dd32-0000-0100-0000-64531b480000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "32c8a3cd33d292b62da5c4e3d1c4955d",
+        "x-ms-correlation-request-id": "4ebfeec6-a568-490e-9dbf-d40d2ec5356c",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "324d6031-c91c-46a6-8bde-708b24939b7e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024346Z:4ebfeec6-a568-490e-9dbf-d40d2ec5356c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "name": "healthbot-3353",
+        "type": "microsoft.healthbot/healthbots",
+        "sku": {
+          "name": "F0"
+        },
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T02:39:55.6826306Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T02:41:09.0040863Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353?api-version=2021-08-24",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-87bf235270c3244090d01b5f427eba88-158b5e36070ce344-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthBot/1.1.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "637657c859df14219f1dbb3dc5844fe8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:48 GMT",
+        "ETag": "\u002217035c4a-0000-0100-0000-64531be40000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+        "Pragma": "no-cache",
+        "request-context": "appId=cid-v1:39ac773f-9efe-42dd-90ba-3ebab16f6587",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "04xtTZAAAAACcxF4b1VCfR71jU9ertgRRTU5aMjIxMDYwNjEyMDMxADI2YjRjNmEwLTdlYzYtNDRlNC1iOTRiLWFhM2JlMjBmNjliOQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-client-request-id": "637657c859df14219f1dbb3dc5844fe8",
+        "x-ms-correlation-request-id": "18abb376-ed2b-4416-a4c2-a596b8f4c4e7",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "24c5bd2e-8f05-4a00-bb61-252066b04b69",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024348Z:18abb376-ed2b-4416-a4c2-a596b8f4c4e7",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-87bf235270c3244090d01b5f427eba88-877843da50eda341-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4b90bfba7bf6747282b392b47779cca8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "500",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:48 GMT",
+        "ETag": "\u0022e702a17e-0000-0100-0000-64531be30000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4b90bfba7bf6747282b392b47779cca8",
+        "x-ms-correlation-request-id": "82354336-87a5-46af-851b-0a4fd660d7c8",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "e062dfa2-8dc4-4fe3-b6d6-b6fbfe50e749",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024348Z:82354336-87a5-46af-851b-0a4fd660d7c8"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Deleting",
+        "startTime": "2023-05-04T02:43:47.8481548Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA?api-version=2021-08-24",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-87bf235270c3244090d01b5f427eba88-cee91a7c7eeaf24a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c9c5dc55156126b8391c3dba5d6fb34c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "560",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 02:43:49 GMT",
+        "ETag": "\u0022e702c57e-0000-0100-0000-64531be40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c9c5dc55156126b8391c3dba5d6fb34c",
+        "x-ms-correlation-request-id": "4de2ed20-595a-4e3d-ab9a-5394c92c6f0a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "e37a709f-38b9-46cd-a2c5-577b495c3cfc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T024350Z:4de2ed20-595a-4e3d-ab9a-5394c92c6f0a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.HealthBot/locations/EASTUS/operationStatuses/24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "name": "24c5bd2e-8f05-4a00-bb61-252066b04b69*08D981AC6EA7678227E20705FE24999FE3FD7F42DECB0FADC8B40C68BE0326CA",
+        "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-8902/providers/Microsoft.HealthBot/healthBots/healthbot-3353",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T02:43:47.8481548Z",
+        "endTime": "2023-05-04T02:43:48.8692752Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1409061260",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
