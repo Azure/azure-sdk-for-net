@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text.Json;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     public partial class DynamicData
     {
