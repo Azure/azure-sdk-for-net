@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
                 ClusterLoginUri = new Uri("jjqhgevy"),
                 PrivateIPs =
 {
-"kslguxrwbwkrj"
+IPAddress.Parse("kslguxrwbwkrj")
 },
                 AvailabilityZone = "maseyqhlnhoiwbabcqabtedbjpip",
                 Tags =

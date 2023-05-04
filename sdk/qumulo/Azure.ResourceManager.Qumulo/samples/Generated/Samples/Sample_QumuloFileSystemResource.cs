@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
                         MarketplaceSubscriptionId = "ujrcqvxfnhxxheoth",
                     },
                     UserDetailsEmail = "aa",
-                    DelegatedSubnetId = "vjfirtaljehawmflyfianw",
+                    DelegatedSubnetId = new ResourceIdentifier("vjfirtaljehawmflyfianw"),
                     ClusterLoginUri = new Uri("adabmuthwrbjshzfbo"),
                     PrivateIPs =
 {

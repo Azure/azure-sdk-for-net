@@ -15,6 +15,9 @@ generate-model-factory: false
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 directive:
   - from: Qumulo.Storage.json
     where: $.definitions
@@ -77,5 +80,7 @@ rename-mapping:
     JobRunData.SourceResourceId: -|arm-id
     QumuloAgentData.LocalIPAddress: -|ip-address
     AzureStorageBlobContainerQumuloEndpointProperties.StorageAccountResourceId: -|arm-id
+    FileSystemResourceUpdateProperties.delegatedSubnetId: -|arm-id
+    FileSystemResource.properties.privateIPs: -|ip-address
 
 ```

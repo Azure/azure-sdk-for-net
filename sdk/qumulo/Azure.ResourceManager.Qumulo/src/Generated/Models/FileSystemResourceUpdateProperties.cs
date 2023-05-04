@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
-        public string DelegatedSubnetId { get; set; }
+        public ResourceIdentifier DelegatedSubnetId { get; set; }
         /// <summary> File system Id of the resource. </summary>
         public Uri ClusterLoginUri { get; set; }
         /// <summary> Private IPs of the resource. </summary>
