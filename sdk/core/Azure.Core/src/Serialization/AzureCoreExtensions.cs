@@ -65,23 +65,7 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            return new DynamicData(MutableJsonDocument.Parse(utf8Json).RootElement, new DynamicDataOptions());
-        }
-
-        /// <summary>
-        /// Return the content of the BinaryData as a dynamic type.
-        /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataNameMapping nameMapping)
-        {
-            return new DynamicData(MutableJsonDocument.Parse(utf8Json).RootElement, new DynamicDataOptions() { NameMapping = nameMapping });
-        }
-
-        /// <summary>
-        /// Return the content of the BinaryData as a dynamic type.
-        /// </summary>
-		public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
-        {
-            return new DynamicData(MutableJsonDocument.Parse(utf8Json).RootElement, options);
+            return new DynamicData(MutableJsonDocument.Parse(utf8Json).RootElement);
         }
 
         private static object? GetObject(in this JsonElement element)

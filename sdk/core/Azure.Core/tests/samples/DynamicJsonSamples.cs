@@ -19,6 +19,8 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
             #endregion
+
+            Assert.IsTrue(widget.Name == "Widget");
         }
 
         [Test]
@@ -29,7 +31,7 @@ namespace Azure.Core.Samples
             #region Snippet:AzureCoreGetDynamicJsonProperty
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
-            string name = widget.name;
+            string name = widget.Name;
             #endregion
 
             Assert.IsTrue(name == "Widget");
@@ -43,11 +45,11 @@ namespace Azure.Core.Samples
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
-            widget.name = "New Name";
+            widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
 
-            Assert.IsTrue(widget.name == "New Name");
+            Assert.IsTrue(widget.Name == "New Name");
         }
 
         [Test]
@@ -59,11 +61,11 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson();
 #if !SNIPPET
-            widget.values = new int[] { 1, 2, 3 };
+            widget.Values = new int[] { 1, 2, 3 };
 #endif
 
             // JSON is `{ "values" : [1, 2, 3] }`
-            int value = widget.values[0];
+            int value = widget.Values[0];
             #endregion
 
             Assert.IsTrue(value == 1);
@@ -81,13 +83,13 @@ namespace Azure.Core.Samples
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
             // Check whether optional property is present
-            if (widget.details != null)
+            if (widget.Details != null)
             {
-                string color = widget.details.color;
+                string color = widget.Details.Color;
             }
             #endregion
 
-            Assert.IsTrue(widget.details.color == "blue");
+            Assert.IsTrue(widget.Details.Color == "blue");
         }
 
         [Test]
@@ -100,7 +102,7 @@ namespace Azure.Core.Samples
             dynamic widget = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
-            foreach (dynamic property in widget.details)
+            foreach (dynamic property in widget.Details)
             {
                 Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
             }
@@ -116,7 +118,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
+            dynamic content = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -187,27 +189,10 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
+            dynamic widget = response.Content.ToDynamicFromJson();
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
-        }
-
-        [Test]
-        public void UseDynamicDataDefaults()
-        {
-            WidgetsClient client = GetMockClient();
-
-            #region Snippet:AzureCoreUseDynamicDataDefaults
-            Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
-            string id = widget.Id;
-            widget.Name = "New Name";
-            client.SetWidget(RequestContent.Create(widget));
-            #endregion
-
-            Assert.IsTrue(id == "123");
-            Assert.IsTrue(widget.Name == "New Name");
         }
 
         private WidgetsClient GetMockClient()

@@ -20,8 +20,10 @@ JSON members are read using dynamic property access.
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
-string name = widget.name;
+string name = widget.Name;
 ```
+
+When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
 
 ### Set a JSON property
 
@@ -30,7 +32,7 @@ JSON members can be set on the dynamic object.
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
-widget.name = "New Name";
+widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
 
@@ -43,7 +45,7 @@ Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "values" : [1, 2, 3] }`
-int value = widget.values[0];
+int value = widget.Values[0];
 ```
 
 ### Check whether an optional property is present
@@ -57,9 +59,9 @@ dynamic widget = response.Content.ToDynamicFromJson();
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
 // Check whether optional property is present
-if (widget.details != null)
+if (widget.Details != null)
 {
-    string color = widget.details.color;
+    string color = widget.Details.Color;
 }
 ```
 
@@ -72,7 +74,7 @@ Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
-foreach (dynamic property in widget.details)
+foreach (dynamic property in widget.Details)
 {
     Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
 }
@@ -90,27 +92,13 @@ dynamic widget = response.Content.ToDynamicFromJson();
 string id = widget["$id"];
 ```
 
-### Working with Azure values
-
-When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
-
-```C# Snippet:AzureCoreUseDynamicDataDefaults
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
-string id = widget.Id;
-widget.Name = "New Name";
-client.SetWidget(RequestContent.Create(widget));
-```
-
-If no parameter is passed to `ToDynamicFromJson()`, properties names must exactly match the member names in the JSON content.  Passing `DynamicDataOptions.Default` will enable properties to be accessed using PascalCase property names, and will write any added properties with camelCase names.
-
 ### Cast to a POCO type
 
 Dynamic JSON objects can be cast to CLR types using the cast operator.
 
 ```C# Snippet:AzureCoreCastDynamicJsonToPOCO
 Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
+dynamic content = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;
@@ -123,8 +111,6 @@ public class Widget
     public string Name { get; set; }
 }
 ```
-
-Passing `DynamicDataOptions.Default` will deserialize the type from JSON with case-insensitive property names.
 
 ## Setting RequestContent
 
@@ -157,7 +143,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
+dynamic widget = response.Content.ToDynamicFromJson();
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```

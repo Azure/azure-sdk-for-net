@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
+                """).ToDynamicFromJson();
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
