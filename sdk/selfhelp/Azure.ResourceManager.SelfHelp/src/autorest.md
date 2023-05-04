@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/605407bc0c1a133018285f550d01175469cb3c3a/specification/help/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/help/resource-manager/readme.md
 tag: package-2023-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -65,10 +65,4 @@ rename-mapping:
   Insight.importanceLevel: InsightImportanceLevel
   Error.code: ErrorCode
 
-directive:
-  - from: help.json
-    where: $.parameters
-    transform: >
-      $.ScopeParameter['x-ms-parameter-location'] = "method";
-      $.DiagnosticsResourceNameParameter['x-ms-parameter-location'] = "method";
 ```

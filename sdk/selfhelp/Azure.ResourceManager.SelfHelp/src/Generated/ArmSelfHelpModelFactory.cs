@@ -17,6 +17,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
+        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <param name="nameAvailable">
+        /// Returns true or false depending on the availability of the name
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Reason for why value is not available. This field is returned if nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, string reason = null, string message = null)
+        {
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+        }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticResourceData. </summary>
         /// <param name="id"> The id. </param>
@@ -124,6 +142,35 @@ namespace Azure.ResourceManager.SelfHelp.Models
             details ??= new List<SelfHelpError>();
 
             return new SelfHelpError(errorCode, errorType, message, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SolutionMetadataResource. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="solutionId">
+        /// Solution Id.
+        /// Serialized Name: SolutionMetadataResource.properties.solutionId
+        /// </param>
+        /// <param name="solutionType">
+        /// Solution Type.
+        /// Serialized Name: SolutionMetadataResource.properties.solutionType
+        /// </param>
+        /// <param name="description">
+        /// A detailed description of solution.
+        /// Serialized Name: SolutionMetadataResource.properties.description
+        /// </param>
+        /// <param name="requiredParameterSets">
+        /// Required parameters for invoking this particular solution.
+        /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
+        /// </param>
+        /// <returns> A new <see cref="Models.SolutionMetadataResource"/> instance for mocking. </returns>
+        public static SolutionMetadataResource SolutionMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string description = null, IEnumerable<IList<string>> requiredParameterSets = null)
+        {
+            requiredParameterSets ??= new List<IList<string>>();
+
+            return new SolutionMetadataResource(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Response for whether the requested resource name is available or not.
     /// Serialized Name: CheckNameAvailabilityResponse
     /// </summary>
-    internal partial class CheckNameAvailabilityResponse
+    public partial class CheckNameAvailabilityResponse
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
         internal CheckNameAvailabilityResponse()
