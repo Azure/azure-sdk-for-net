@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 SecureValue = "secretValue1"
                             }
                         },
-			SecurityContext = new SecurityContextDefinition()
-			{
-			    Privileged = false
-			}
+			            SecurityContext = new ContainerSecurityContextDefinition()
+			            {
+			                IsPrivileged = false
+			            }
                     }
                 };
 
@@ -175,8 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 {
                     IPAddress = new ContainerGroupIPAddress(
                             ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
-                            addressType: ContainerGroupIPAddressType.Public
-            ),
+                            addressType: ContainerGroupIPAddressType.Public),
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
@@ -194,10 +193,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                     SecureValue = "secretValue1"
                                 }
                             },
-			    SecurityContext = new SecurityContextDefinition()
-			    {
-			        Privileged = false
-			    }
+			                SecurityContext = new ContainerSecurityContextDefinition()
+			                {
+			                    IsPrivileged = false
+			                }
                         }
                     },
                     Sku = ContainerGroupSku.Confidential
@@ -279,8 +278,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
                 Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
-		Assert.AreEqual(expected.Containers[0].SecurityContext?.Privileged, actual.Containers[0].SecurityContext?.Privileged);
-		Assert.AreEqual(expected.InitContainers[0].SecurityContext?.Privileged, actual.InitContainers[0].SecurityContext?.Privileged);
+		Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
+		Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
             }
         }
     }
