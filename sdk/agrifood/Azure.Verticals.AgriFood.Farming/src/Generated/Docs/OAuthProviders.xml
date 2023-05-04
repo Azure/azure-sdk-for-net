@@ -6,9 +6,9 @@
 This sample shows how to call GetOAuthProviderAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
+Response response = await client.GetOAuthProviderAsync("<oauthProviderId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -63,9 +63,9 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetOAuthProvider with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.GetOAuthProvider("<oauthProviderId>");
+Response response = client.GetOAuthProvider("<oauthProviderId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -120,7 +120,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -132,7 +132,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {
     appId = "<appId>",
@@ -146,7 +146,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -228,7 +228,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -240,7 +240,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {
     appId = "<appId>",
@@ -254,7 +254,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -336,9 +336,9 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<oauthProviderId>");
+Response response = await client.DeleteAsync("<oauthProviderId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -348,9 +348,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.Delete("<oauthProviderId>");
+Response response = client.Delete("<oauthProviderId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -360,9 +360,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
@@ -419,9 +419,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
@@ -478,22 +478,22 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetOAuthProvidersAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-await foreach (var data in client.GetOAuthProvidersAsync())
+await foreach (var item in client.GetOAuthProvidersAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetOAuthProvidersAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-await foreach (var data in client.GetOAuthProvidersAsync(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetOAuthProvidersAsync(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("appId").ToString());
     Console.WriteLine(result.GetProperty("appSecret").ToString());
     Console.WriteLine(result.GetProperty("apiKey").ToString());
@@ -547,22 +547,22 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetOAuthProviders and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-foreach (var data in client.GetOAuthProviders())
+foreach (var item in client.GetOAuthProviders())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetOAuthProviders with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-foreach (var data in client.GetOAuthProviders(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetOAuthProviders(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("appId").ToString());
     Console.WriteLine(result.GetProperty("appSecret").ToString());
     Console.WriteLine(result.GetProperty("apiKey").ToString());
@@ -616,12 +616,12 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -676,12 +676,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());

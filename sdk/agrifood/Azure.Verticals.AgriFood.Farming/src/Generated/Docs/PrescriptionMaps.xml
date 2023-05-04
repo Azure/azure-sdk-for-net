@@ -6,9 +6,9 @@
 This sample shows how to call GetPrescriptionMapAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>");
+Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -66,9 +66,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptionMap with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>");
+Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -126,7 +126,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -138,7 +138,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
 var data = new {
     type = "<type>",
@@ -154,7 +154,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionMapId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionMapId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -239,7 +239,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -251,7 +251,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
 var data = new {
     type = "<type>",
@@ -267,7 +267,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<prescriptionMapId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<prescriptionMapId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -352,9 +352,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>");
+Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -364,9 +364,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<prescriptionMapId>");
+Response response = client.Delete("<partyId>", "<prescriptionMapId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -376,9 +376,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -425,9 +425,9 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -474,22 +474,22 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetPrescriptionMapsByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPrescriptionMapsByPartyIdAsync("<partyId>"))
+await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetPrescriptionMapsByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
@@ -546,22 +546,22 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptionMapsByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-foreach (var data in client.GetPrescriptionMapsByPartyId("<partyId>"))
+foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetPrescriptionMapsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-foreach (var data in client.GetPrescriptionMapsByPartyId("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
@@ -618,22 +618,22 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptionMapsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPrescriptionMapsAsync())
+await foreach (var item in client.GetPrescriptionMapsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetPrescriptionMapsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPrescriptionMapsAsync(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetPrescriptionMapsAsync(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
@@ -690,22 +690,22 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptionMaps and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-foreach (var data in client.GetPrescriptionMaps())
+foreach (var item in client.GetPrescriptionMaps())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetPrescriptionMaps with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-foreach (var data in client.GetPrescriptionMaps(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetPrescriptionMaps(new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
@@ -762,12 +762,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -812,12 +812,12 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
