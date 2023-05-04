@@ -20,8 +20,6 @@ Polishing since last public beta release:
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded API version to `2022-10-01`.
