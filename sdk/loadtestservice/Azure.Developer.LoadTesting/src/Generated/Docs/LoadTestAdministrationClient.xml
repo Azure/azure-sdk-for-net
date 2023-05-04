@@ -67,7 +67,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -308,7 +308,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -491,7 +491,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteTestAsync("<testId>");
+Response response = await client.DeleteTestAsync("<testId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -504,7 +504,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteTest("<testId>");
+Response response = client.DeleteTest("<testId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -517,7 +517,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.GetTestAsync("<testId>");
+Response response = await client.GetTestAsync("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -648,7 +648,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.GetTest("<testId>");
+Response response = client.GetTest("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -772,39 +772,6 @@ Schema for <c>Test</c>:
 </remarks>
     </member>
     <member name="UploadTestFileAsync(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-var data = File.OpenRead("<filePath>");
-
-Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-var data = File.OpenRead("<filePath>");
-
-Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("fileName").ToString());
-Console.WriteLine(result.GetProperty("fileType").ToString());
-Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-Console.WriteLine(result.GetProperty("validationStatus").ToString());
-Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -824,39 +791,6 @@ Schema for <c>FileInfo</c>:
 </remarks>
     </member>
     <member name="UploadTestFile(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-var data = File.OpenRead("<filePath>");
-
-Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-var data = File.OpenRead("<filePath>");
-
-Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("url").ToString());
-Console.WriteLine(result.GetProperty("fileName").ToString());
-Console.WriteLine(result.GetProperty("fileType").ToString());
-Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-Console.WriteLine(result.GetProperty("validationStatus").ToString());
-Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -883,7 +817,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
+Response response = await client.GetTestFileAsync("<testId>", "<fileName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -920,7 +854,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.GetTestFile("<testId>", "<fileName>");
+Response response = client.GetTestFile("<testId>", "<fileName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -957,7 +891,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -970,7 +904,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteTestFile("<testId>", "<fileName>");
+Response response = client.DeleteTestFile("<testId>", "<fileName>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -994,7 +928,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -1061,7 +995,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateAppComponents("<testId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateAppComponents("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -1117,7 +1051,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.GetAppComponentsAsync("<testId>");
+Response response = await client.GetAppComponentsAsync("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -1160,7 +1094,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.GetAppComponents("<testId>");
+Response response = client.GetAppComponents("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -1230,7 +1164,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -1314,7 +1248,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -1371,7 +1305,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.GetServerMetricsConfigAsync("<testId>");
+Response response = await client.GetServerMetricsConfigAsync("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -1415,7 +1349,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.GetServerMetricsConfig("<testId>");
+Response response = client.GetServerMetricsConfig("<testId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -1459,9 +1393,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-await foreach (var data in client.GetTestsAsync())
+await foreach (var item in client.GetTestsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1471,9 +1405,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-await foreach (var data in client.GetTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+await foreach (var item in client.GetTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
@@ -1603,9 +1537,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-foreach (var data in client.GetTests())
+foreach (var item in client.GetTests())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1615,9 +1549,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-foreach (var data in client.GetTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+foreach (var item in client.GetTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
@@ -1747,9 +1681,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-await foreach (var data in client.GetTestFilesAsync("<testId>"))
+await foreach (var item in client.GetTestFilesAsync("<testId>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
     Console.WriteLine(result.GetProperty("fileName").ToString());
     Console.WriteLine(result.GetProperty("fileType").ToString());
@@ -1785,9 +1719,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-foreach (var data in client.GetTestFiles("<testId>"))
+foreach (var item in client.GetTestFiles("<testId>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
     Console.WriteLine(result.GetProperty("fileName").ToString());
     Console.WriteLine(result.GetProperty("fileType").ToString());
