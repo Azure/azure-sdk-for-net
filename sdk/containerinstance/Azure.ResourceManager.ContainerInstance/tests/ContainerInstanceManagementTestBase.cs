@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
-                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                    //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
                         new InitContainerDefinitionContent($"{containerGroupName}init")
                         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 cpu: 1.0))
                     )
                     {
-                Ports =
+                	Ports =
                         {
                             new ContainerPort(80)
                         },
@@ -161,18 +161,21 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 SecureValue = "secretValue1"
                             }
                         },
+			            SecurityContext = new ContainerSecurityContextDefinition()
+			            {
+			                IsPrivileged = false
+			            }
                     }
                 };
 
                 var confContainerGroup = new ContainerGroupData(
-                    location: "eastus2euap",
+                    location: "westus",
                     containers: containers,
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
                     IPAddress = new ContainerGroupIPAddress(
                             ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
-                            addressType: ContainerGroupIPAddressType.Public
-            ),
+                            addressType: ContainerGroupIPAddressType.Public),
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
@@ -190,6 +193,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                     SecureValue = "secretValue1"
                                 }
                             },
+			                SecurityContext = new ContainerSecurityContextDefinition()
+			                {
+			                    IsPrivileged = false
+			                }
                         }
                     },
                     Sku = ContainerGroupSku.Confidential
@@ -209,7 +216,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     DnsNameLabel = containerGroupName
                 },
                 RestartPolicy = ContainerGroupRestartPolicy.Never,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Diagnostics = new ContainerGroupDiagnostics(
                         logAnalytics: new ContainerGroupLogAnalytics(
                             workspaceId: "workspaceid",
@@ -271,6 +278,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
                 Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
+		Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
+		Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
             }
         }
     }

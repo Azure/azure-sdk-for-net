@@ -745,7 +745,7 @@ Schema for <c>AtlasRelationship</c>:
 
 </remarks>
     </member>
-    <member name="GetPurviewRelationshipAsync(String,Boolean,RequestContext)">
+    <member name="GetPurviewRelationshipAsync(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetPurviewRelationshipAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -853,7 +853,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetPurviewRelationship(String,Boolean,RequestContext)">
+    <member name="GetPurviewRelationship(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetPurviewRelationship with required parameters and parse the result.
 <code><![CDATA[
@@ -961,7 +961,7 @@ Schema for <c>AtlasRelationshipWithExtInfo</c>:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,RequestContext)">
+    <member name="DeleteAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -974,7 +974,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,RequestContext)">
+    <member name="Delete(string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[

@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs.Batch
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Batch
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Storage.Blobs.Batch
             return message;
         }
 
-        /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <summary> [Protocol Method] The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
@@ -168,7 +168,7 @@ namespace Azure.Storage.Blobs.Batch
             }
         }
 
-        /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <summary> [Protocol Method] The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>

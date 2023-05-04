@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> An pricesheet resource. </summary>
+    /// <summary>
+    /// An pricesheet resource.
+    /// Serialized Name: PriceSheetResult
+    /// </summary>
     public partial class PriceSheetResult : ResourceData
     {
         /// <summary> Initializes a new instance of PriceSheetResult. </summary>
@@ -27,11 +30,26 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricesheets"> Price sheet. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        /// <param name="download"> Pricesheet download details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="pricesheets">
+        /// Price sheet
+        /// Serialized Name: PriceSheetResult.properties.pricesheets
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: PriceSheetResult.properties.nextLink
+        /// </param>
+        /// <param name="download">
+        /// Pricesheet download details.
+        /// Serialized Name: PriceSheetResult.properties.download
+        /// </param>
+        /// <param name="etag">
+        /// The etag for the resource.
+        /// Serialized Name: Resource.etag
+        /// </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: Resource.tags
+        /// </param>
         internal PriceSheetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<PriceSheetProperties> pricesheets, string nextLink, ConsumptionMeterDetails download, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Pricesheets = pricesheets;
@@ -41,15 +59,30 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary> Price sheet. </summary>
+        /// <summary>
+        /// Price sheet
+        /// Serialized Name: PriceSheetResult.properties.pricesheets
+        /// </summary>
         public IReadOnlyList<PriceSheetProperties> Pricesheets { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: PriceSheetResult.properties.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Pricesheet download details. </summary>
+        /// <summary>
+        /// Pricesheet download details.
+        /// Serialized Name: PriceSheetResult.properties.download
+        /// </summary>
         public ConsumptionMeterDetails Download { get; }
-        /// <summary> The etag for the resource. </summary>
+        /// <summary>
+        /// The etag for the resource.
+        /// Serialized Name: Resource.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: Resource.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

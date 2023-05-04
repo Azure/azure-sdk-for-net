@@ -17,7 +17,7 @@ namespace Azure.Identity
 
         private CredentialPipeline(TokenCredentialOptions options)
         {
-            HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
+            HttpPipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options) { RequestFailedDetailsParser = new ManagedIdentityRequestFailedDetailsParser() });
             Diagnostics = new ClientDiagnostics(options);
         }
 

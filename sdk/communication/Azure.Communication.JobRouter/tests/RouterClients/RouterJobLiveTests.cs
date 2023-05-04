@@ -88,6 +88,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                 });
+
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
 
             // wait for job1 to be in queued state
@@ -107,6 +110,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1
                 });
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId2))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId2)));
             var createJob2 = createJob2Response.Value;
 
             var job2Result = await Poll(async () => await routerClient.GetJobAsync(createJob2.Id),
@@ -133,11 +138,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
             Assert.IsTrue(allJobs.Contains(createJob2.Id));
-
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(createJob1.Id))));
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(createJob2.Id))));
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob2.Id)));
         }
 
         [Test]

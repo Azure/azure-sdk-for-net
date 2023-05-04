@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetEmbeddingsAsync(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -83,7 +83,7 @@ vector-based relatedness of the provided input.
 
 </remarks>
     </member>
-    <member name="GetEmbeddings(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -165,7 +165,7 @@ vector-based relatedness of the provided input.
 
 </remarks>
     </member>
-    <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
+    <member name="GetCompletionsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetCompletionsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -331,7 +331,7 @@ Token limits and other settings may limit the number of choices generated.
 
 </remarks>
     </member>
-    <member name="GetCompletions(String,RequestContent,RequestContext)">
+    <member name="GetCompletions(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetCompletions with required parameters and request content, and how to parse the result.
 <code><![CDATA[

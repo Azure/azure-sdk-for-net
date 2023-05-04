@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestBodyCheck"> Whether to allow WAF to check request Body. </param>
         /// <param name="maxRequestBodySizeInKb"> Maximum request body size in Kb for WAF. </param>
         /// <param name="fileUploadLimitInMb"> Maximum file upload size in Mb for WAF. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb)
+        /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
+        /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody)
         {
             State = state;
             Mode = mode;
             RequestBodyCheck = requestBodyCheck;
             MaxRequestBodySizeInKb = maxRequestBodySizeInKb;
             FileUploadLimitInMb = fileUploadLimitInMb;
+            CustomBlockResponseStatusCode = customBlockResponseStatusCode;
+            CustomBlockResponseBody = customBlockResponseBody;
         }
 
         /// <summary> The state of the policy. </summary>
@@ -40,5 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         public int? MaxRequestBodySizeInKb { get; set; }
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
         public int? FileUploadLimitInMb { get; set; }
+        /// <summary> If the action type is block, customer can override the response status code. </summary>
+        public int? CustomBlockResponseStatusCode { get; set; }
+        /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
+        public string CustomBlockResponseBody { get; set; }
     }
 }

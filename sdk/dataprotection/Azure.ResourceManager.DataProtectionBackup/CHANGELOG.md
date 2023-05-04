@@ -6,12 +6,16 @@
 
 ### Breaking Changes
 
-- Add property `ResourceUriString` to class `DataSourceInfo`, replace the `ResourceUri`.
-- Add property `ResourceUriString` to class `DataSourceSetInfo`, replace the `ResourceUri`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.2 (2023-04-26)
+
+### Breaking Changes
+
+- Add property `ResourceUriString` to class `DataSourceInfo`, replace the `ResourceUri`.
+- Add property `ResourceUriString` to class `DataSourceSetInfo`, replace the `ResourceUri`.
 
 ## 1.1.1 (2023-02-17)
 

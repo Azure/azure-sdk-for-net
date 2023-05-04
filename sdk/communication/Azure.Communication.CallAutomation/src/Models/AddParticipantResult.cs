@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="AddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
+        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceededEventData"/> event or <see cref="AddParticipantFailedEventData"/> event.</returns>
         public AddParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -55,8 +55,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(AddParticipantSucceeded)
-                || filter.GetType() == typeof(AddParticipantFailed)),
+                && (filter.GetType() == typeof(AddParticipantSucceededEventData)
+                || filter.GetType() == typeof(AddParticipantFailedEventData)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="AddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
+        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceededEventData"/> event or <see cref="AddParticipantFailedEventData"/> event.</returns>
         public async Task<AddParticipantEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -77,23 +77,23 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(AddParticipantSucceeded)
-                || filter.GetType() == typeof(AddParticipantFailed)),
+                && (filter.GetType() == typeof(AddParticipantSucceededEventData)
+                || filter.GetType() == typeof(AddParticipantFailedEventData)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static AddParticipantEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        private static AddParticipantEventResult SetReturnedEvent(CallAutomationEventData returnedEvent)
         {
             AddParticipantEventResult result = default;
             switch (returnedEvent)
             {
-                case AddParticipantSucceeded:
-                    result = new AddParticipantEventResult(true, (AddParticipantSucceeded)returnedEvent, null, ((AddParticipantSucceeded)returnedEvent).Participant);
+                case AddParticipantSucceededEventData:
+                    result = new AddParticipantEventResult(true, (AddParticipantSucceededEventData)returnedEvent, null, ((AddParticipantSucceededEventData)returnedEvent).Participant);
                     break;
-                case AddParticipantFailed:
-                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent,((AddParticipantFailed)returnedEvent).Participant);
+                case AddParticipantFailedEventData:
+                    result = new AddParticipantEventResult(false, null, (AddParticipantFailedEventData)returnedEvent,((AddParticipantFailedEventData)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

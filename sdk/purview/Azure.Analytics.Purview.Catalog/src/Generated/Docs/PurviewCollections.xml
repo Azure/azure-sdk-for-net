@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateEntityAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -378,7 +378,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntity(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntity(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntity with required parameters and parse the result.
 <code><![CDATA[
@@ -755,7 +755,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulkAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulkAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulkAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1136,7 +1136,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulk(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulk(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulk with required parameters and parse the result.
 <code><![CDATA[
@@ -1517,7 +1517,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollectionAsync(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1681,7 +1681,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollection(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollection(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollection with required parameters and parse the result.
 <code><![CDATA[

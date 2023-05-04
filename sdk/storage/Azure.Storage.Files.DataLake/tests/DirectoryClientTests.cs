@@ -4321,6 +4321,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetPropertiesAsync_OwnerGroupPermissions()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Act
+            Response<PathProperties> response = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Owner);
+            Assert.IsNotNull(response.Value.Group);
+            Assert.IsNotNull(response.Value.Permissions);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             var constants = TestConstants.Create(this);

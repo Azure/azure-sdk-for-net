@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetCascadeDeleteJobDetailsAsync(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -50,7 +50,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetCascadeDeleteJobDetails(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -99,7 +99,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateAsync(String,String,String,String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -226,7 +226,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,String,String,String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
@@ -353,7 +353,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetInsightAsync(String,String,String,String,String,RequestContext)">
+    <member name="GetInsightAsync(string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetInsightAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -420,7 +420,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetInsight(String,String,String,String,String,RequestContext)">
+    <member name="GetInsight(string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetInsight with required parameters and parse the result.
 <code><![CDATA[
@@ -487,7 +487,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,String,String,String,String,RequestContext)">
+    <member name="DeleteAsync(string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
@@ -499,7 +499,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,String,String,String,String,RequestContext)">
+    <member name="Delete(string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
@@ -511,7 +511,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetInsightsByPartyIdModelIdAndResourceAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetInsightsByPartyIdModelIdAndResourceAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResourceAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -590,7 +590,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetInsightsByPartyIdModelIdAndResource(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetInsightsByPartyIdModelIdAndResource(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResource with required parameters and parse the result.
 <code><![CDATA[
@@ -669,7 +669,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,String,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -719,7 +719,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="CreateCascadeDeleteJob(WaitUntil,String,String,String,String,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJob(WaitUntil,string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
