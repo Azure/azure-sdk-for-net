@@ -115,82 +115,146 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Converts the value to a <see cref="bool"/> or null.
+        /// Converts the value to a <see cref="byte"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator bool?(DynamicData value)
+        public static implicit operator byte(DynamicData value)
         {
             try
             {
-                return value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetBoolean();
+                return value._element.GetByte();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(bool?), value._element), e);
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(byte), value._element), e);
             }
         }
 
         /// <summary>
-        /// Converts the value to a <see cref="int"/> or null.
+        /// Converts the value to a <see cref="DateTime"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator int?(DynamicData value)
+        public static implicit operator DateTime(DynamicData value)
         {
             try
             {
-                return value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt32();
+                return value._element.GetDateTime();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(int?), value._element), e);
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(DateTime), value._element), e);
             }
         }
 
         /// <summary>
-        /// Converts the value to a <see cref="long"/> or null.
+        /// Converts the value to a <see cref="decimal"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator long?(DynamicData value)
+        public static implicit operator decimal(DynamicData value)
         {
             try
             {
-                return value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt64();
+                return value._element.GetDecimal();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(long?), value._element), e);
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(decimal), value._element), e);
             }
         }
 
         /// <summary>
-        /// Converts the value to a <see cref="float"/> or null.
+        /// Converts the value to a <see cref="Guid"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator float?(DynamicData value)
+        public static implicit operator Guid(DynamicData value)
         {
             try
             {
-                return value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetSingle();
+                return value._element.GetGuid();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(float?), value._element), e);
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(Guid), value._element), e);
             }
         }
 
         /// <summary>
-        /// Converts the value to a <see cref="double"/> or null.
+        /// Converts the value to a <see cref="short"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator double?(DynamicData value)
+        public static implicit operator short(DynamicData value)
         {
             try
             {
-                return value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetDouble();
+                return value._element.GetInt16();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double?), value._element), e);
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(short), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="sbyte"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator sbyte(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetSByte();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(sbyte), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="ushort"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator ushort(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetUInt16();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(ushort), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="uint"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator uint(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetUInt32();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(uint), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="ulong"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator ulong(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetUInt64();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(ulong), value._element), e);
             }
         }
 

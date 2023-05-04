@@ -367,6 +367,178 @@ namespace Azure.Core.Json
             return _element.GetBoolean();
         }
 
+        public byte GetByte()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    byte b => b,
+                    JsonElement element => element.GetByte(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(byte))),
+                };
+            }
+
+            return _element.GetByte();
+        }
+
+        public DateTime GetDateTime()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    DateTime d => d,
+                    DateTimeOffset o => o.DateTime,
+                    string s => DateTime.Parse(s),
+                    JsonElement element => element.GetDateTime(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(DateTime))),
+                };
+            }
+
+            return _element.GetDateTime();
+        }
+
+        public DateTimeOffset GetDateTimeOffset()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    DateTime d => d,
+                    DateTimeOffset o => o,
+                    string s => DateTimeOffset.Parse(s),
+                    JsonElement element => element.GetDateTimeOffset(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(DateTimeOffset))),
+                };
+            }
+
+            return _element.GetDateTimeOffset();
+        }
+        public decimal GetDecimal()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    decimal d => d,
+                    JsonElement element => element.GetDecimal(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(decimal))),
+                };
+            }
+
+            return _element.GetDecimal();
+        }
+
+        public Guid GetGuid()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    Guid g => g,
+                    JsonElement element => element.GetGuid(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(Guid))),
+                };
+            }
+
+            return _element.GetGuid();
+        }
+
+        public short GetInt16()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    short s => s,
+                    JsonElement element => element.GetInt16(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(short))),
+                };
+            }
+
+            return _element.GetInt16();
+        }
+
+        public sbyte GetSByte()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    sbyte s => s,
+                    JsonElement element => element.GetSByte(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(sbyte))),
+                };
+            }
+
+            return _element.GetSByte();
+        }
+
+        public ushort GetUInt16()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    ushort u => u,
+                    JsonElement element => element.GetUInt16(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(ushort))),
+                };
+            }
+
+            return _element.GetUInt16();
+        }
+        public uint GetUInt32()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    uint u => u,
+                    JsonElement element => element.GetUInt32(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(uint))),
+                };
+            }
+
+            return _element.GetUInt32();
+        }
+
+        public ulong GetUInt64()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.Value switch
+                {
+                    ulong u => u,
+                    JsonElement element => element.GetUInt64(),
+                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(ulong))),
+                };
+            }
+
+            return _element.GetUInt64();
+        }
+
         /// <summary>
         /// Gets an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
         /// </summary>
