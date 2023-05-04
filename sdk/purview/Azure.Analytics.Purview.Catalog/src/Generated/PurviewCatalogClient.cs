@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
         {
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
         public virtual Response Search(RequestContent content, RequestContext context = null)
         {
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SuggestAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Suggest(RequestContent,RequestContext)']/*" />
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='BrowseAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
         {
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Browse(RequestContent,RequestContext)']/*" />
         public virtual Response Browse(RequestContent content, RequestContext context = null)
         {
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoCompleteAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoComplete(RequestContent,RequestContext)']/*" />
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {

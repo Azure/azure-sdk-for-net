@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeConversationAsync(RequestContent content, RequestContext context = null)
         {
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversation(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeConversation(RequestContent content, RequestContext context = null)
         {
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatusAsync(Guid,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
@@ -112,7 +112,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)']/*" />
         public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> StartAnalyzeConversationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversation(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual Operation<BinaryData> StartAnalyzeConversation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {

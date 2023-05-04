@@ -58,7 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context = null)
         {
@@ -88,7 +88,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context = null)
         {
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensorAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorAsync(string sensorPartnerId, string sensorId, RequestContext context = null)
         {
@@ -145,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensor(string,string,RequestContext)']/*" />
         public virtual Response GetSensor(string sensorPartnerId, string sensorId, RequestContext context = null)
         {
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetConnectionStringAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetConnectionStringAsync(string sensorPartnerId, string sensorId, RequestContext context = null)
         {
@@ -257,7 +257,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetConnectionString(string,string,RequestContext)']/*" />
         public virtual Response GetConnectionString(string sensorPartnerId, string sensorId, RequestContext context = null)
         {
@@ -286,7 +286,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='RenewConnectionStringAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RenewConnectionStringAsync(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context = null)
         {
@@ -316,7 +316,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='RenewConnectionString(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response RenewConnectionString(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context = null)
         {

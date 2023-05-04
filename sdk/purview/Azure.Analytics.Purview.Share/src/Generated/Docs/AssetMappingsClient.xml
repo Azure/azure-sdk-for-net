@@ -17,55 +17,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Get an asset mapping for a received share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="GetAssetMapping(string,string,RequestContext)">
 <example>
@@ -83,55 +34,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Get an asset mapping for a received share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="GetAssetMappingsAsync(string,string,string,string,RequestContext)">
 <example>
@@ -162,23 +64,6 @@ await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>", "
 }
 ]]></code>
 </example>
-<remarks>
-List asset mappings for a received share
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>AssetMappingListValue</c>:
-<code>{
-  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAssetMappings(string,string,string,string,RequestContext)">
 <example>
@@ -209,23 +94,6 @@ foreach (var data in client.GetAssetMappings("<receivedShareName>", "<skipToken>
 }
 ]]></code>
 </example>
-<remarks>
-List asset mappings for a received share
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>AssetMappingListValue</c>:
-<code>{
-  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
@@ -277,98 +145,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Create an asset mapping on a received share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="Create(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
@@ -420,98 +196,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Create an asset mapping on a received share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the adls gen2 storage account asset mapping.
-  kind: AdlsGen2Account, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-<code>{
-  properties: {
-    assetId: Guid, # Required. The id of the sender asset.
-    assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-    containerName: string, # Required. Name of the container to received the shared paths.
-    folder: string, # Required. Folder under which the shared paths will be reflected.
-    location: string, # Optional. Location of the receiver storage account.
-    mountPath: string, # Optional. Optional mount path for the shared paths.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-    storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-  }, # Required. Properties of the blob storage account asset mapping.
-  kind: BlobAccount, # Required. Types of asset mapping.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="DeleteAsync(WaitUntil,string,string,RequestContext)">
 <example>
@@ -525,9 +209,6 @@ var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareNam
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Delete an asset mapping for a received share
-</remarks>
     </member>
     <member name="Delete(WaitUntil,string,string,RequestContext)">
 <example>
@@ -541,9 +222,6 @@ var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<asse
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Delete an asset mapping for a received share
-</remarks>
     </member>
   </members>
 </doc>

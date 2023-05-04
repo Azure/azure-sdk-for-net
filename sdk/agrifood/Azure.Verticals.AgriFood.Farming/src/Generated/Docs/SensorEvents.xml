@@ -32,30 +32,6 @@ Console.WriteLine(result.GetProperty("skipToken").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorEventListResponse</c>:
-<code>{
-  value: [
-    {
-      sensorId: string, # Optional. Id of the sensor.
-      sensorPartnerId: string, # Optional. Id of the sensor partner.
-      partyId: string, # Optional. Id of the associated party.
-      boundaryId: string, # Optional. Id of the associated boundary.
-      eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
-      ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
-      measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
-    }
-  ], # Required. List of requested objects.
-  skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-  nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
 <example>
@@ -88,30 +64,6 @@ Console.WriteLine(result.GetProperty("skipToken").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorEventListResponse</c>:
-<code>{
-  value: [
-    {
-      sensorId: string, # Optional. Id of the sensor.
-      sensorPartnerId: string, # Optional. Id of the sensor partner.
-      partyId: string, # Optional. Id of the associated party.
-      boundaryId: string, # Optional. Id of the associated boundary.
-      eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
-      ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
-      measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
-    }
-  ], # Required. List of requested objects.
-  skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-  nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
         public virtual Response GetSentShareInvitation(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="sentShareInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="sentShareInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {

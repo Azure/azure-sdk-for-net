@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShareAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedShareAsync(string receivedShareId, RequestContext context = null)
         {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShare(string,RequestContext)']/*" />
         public virtual Response GetReceivedShare(string receivedShareId, RequestContext context = null)
         {
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> ActivateTenantEmailRegistrationAsync(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(RequestContent,string,RequestContext)']/*" />
         public virtual Response ActivateTenantEmailRegistration(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistrationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> RegisterTenantEmailRegistrationAsync(string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistration(string,RequestContext)']/*" />
         public virtual Response RegisterTenantEmailRegistration(string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -284,7 +284,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShareAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrReplaceReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShare(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrReplaceReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShareAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
@@ -368,7 +368,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShare(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
