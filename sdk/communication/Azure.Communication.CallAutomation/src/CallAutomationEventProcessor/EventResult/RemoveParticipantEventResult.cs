@@ -9,28 +9,28 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantSucceeded"/> event will be returned when the participant was removed from the call successfully.
+        /// <see cref="RemoveParticipantSucceededEventData"/> event will be returned when the participant was removed from the call successfully.
         /// </summary>
-        public RemoveParticipantSucceeded SuccessEvent { get; }
+        public RemoveParticipantSucceededEventData SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantFailed"/> event will be returned when the participant could not be removed from the call.
+        /// <see cref="RemoveParticipantFailedEventData"/> event will be returned when the participant could not be removed from the call.
         /// </summary>
-        public RemoveParticipantFailed FailureEvent { get; }
+        public RemoveParticipantFailedEventData FailureResult { get; }
 
         /// <summary>
         /// <see cref="CommunicationIdentifier"/> Participant that was removed from the call.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
-        internal RemoveParticipantEventResult(bool isSuccessEvent, RemoveParticipantSucceeded successEvent, RemoveParticipantFailed failureEvent, CommunicationIdentifier participant)
+        internal RemoveParticipantEventResult(bool isSuccess, RemoveParticipantSucceededEventData successResult, RemoveParticipantFailedEventData failureResult, CommunicationIdentifier participant)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
             Participant = participant;
         }
     }

@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Stop'
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot "../SemVer.ps1")
 
 $limitRangeSpec = @"
 apiVersion: v1
@@ -17,6 +18,8 @@ spec:
       memory: 100Mi
     type: Container
 "@
+
+$MIN_HELM_VERSION = "3.11.0"
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
@@ -376,6 +379,14 @@ function CheckDependencies()
         }
     }
 
+    # helm version example: v3.11.2+g912ebc1
+    $helmVersionString = (helm version --short).substring(1) -replace '\+.*',''
+    $helmVersion = [AzureEngSemanticVersion]::new($helmVersionString)
+    $minHelmVersion = [AzureEngSemanticVersion]::new($MIN_HELM_VERSION)
+    if ($helmVersion.CompareTo($minHelmVersion) -lt 0) {
+        throw "Please update helm to version >= $MIN_HELM_VERSION (current version: $helmVersionString)`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
+    }
+
     if ($shouldError) {
         exit 1
     }
@@ -383,11 +394,11 @@ function CheckDependencies()
 }
 
 function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues) {
+
     $podOutput = RunOrExitOnFailure kubectl get pods -n $pkg.namespace -o json
     $pods = $podOutput | ConvertFrom-Json
 
     # Get all jobs within this helm release
-    
     $helmStatusOutput = RunOrExitOnFailure helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
     # -----Example output-----
     # NAME: <Release Name>

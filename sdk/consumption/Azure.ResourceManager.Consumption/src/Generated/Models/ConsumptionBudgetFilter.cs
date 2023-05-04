@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> May be used to filter budgets by resource group, resource, or meter. </summary>
+    /// <summary>
+    /// May be used to filter budgets by resource group, resource, or meter.
+    /// Serialized Name: BudgetFilter
+    /// </summary>
     public partial class ConsumptionBudgetFilter
     {
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
-        /// <param name="and"> The logical &quot;AND&quot; expression. Must have at least 2 items. </param>
-        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
-        /// <param name="tags"> Has comparison expression for a tag. </param>
+        /// <param name="and">
+        /// The logical &quot;AND&quot; expression. Must have at least 2 items.
+        /// Serialized Name: BudgetFilter.and
+        /// </param>
+        /// <param name="dimensions">
+        /// Has comparison expression for a dimension
+        /// Serialized Name: BudgetFilter.dimensions
+        /// </param>
+        /// <param name="tags">
+        /// Has comparison expression for a tag
+        /// Serialized Name: BudgetFilter.tags
+        /// </param>
         internal ConsumptionBudgetFilter(IList<BudgetFilterProperties> and, BudgetComparisonExpression dimensions, BudgetComparisonExpression tags)
         {
             And = and;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary> The logical &quot;AND&quot; expression. Must have at least 2 items. </summary>
+        /// <summary>
+        /// The logical &quot;AND&quot; expression. Must have at least 2 items.
+        /// Serialized Name: BudgetFilter.and
+        /// </summary>
         public IList<BudgetFilterProperties> And { get; }
-        /// <summary> Has comparison expression for a dimension. </summary>
+        /// <summary>
+        /// Has comparison expression for a dimension
+        /// Serialized Name: BudgetFilter.dimensions
+        /// </summary>
         public BudgetComparisonExpression Dimensions { get; set; }
-        /// <summary> Has comparison expression for a tag. </summary>
+        /// <summary>
+        /// Has comparison expression for a tag
+        /// Serialized Name: BudgetFilter.tags
+        /// </summary>
         public BudgetComparisonExpression Tags { get; set; }
     }
 }

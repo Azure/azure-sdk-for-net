@@ -1,8 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
-    <!-- Remove this line when Azure.Core is released for net6.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs.Batch client library</AssemblyTitle>
@@ -25,6 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <!--Temp until Azure.Core 1.32.0 ships-->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--End Temp-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />

@@ -48,7 +48,7 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 ```C# Snippet:CreateTransferManagerWithOptions
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
+TransferOptions options = new TransferOptions()
 {
     MaximumTransferChunkSize = 4 * Constants.MB,
     CreateMode = StorageResourceCreateMode.Overwrite,
@@ -113,7 +113,7 @@ bool pauseResult = await dataTransfer.TryPauseAsync();
 Resume a transfer
 ```C# Snippet:TransferManagerResume_Async
 // Resume from checkpoint id
-SingleTransferOptions optionsWithResumeTransferId = new SingleTransferOptions()
+TransferOptions optionsWithResumeTransferId = new TransferOptions()
 {
     ResumeFromCheckpointId = dataTransfer.Id
 };

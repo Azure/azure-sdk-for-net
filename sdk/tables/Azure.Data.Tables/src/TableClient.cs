@@ -1355,7 +1355,7 @@ namespace Azure.Data.Tables
                 return message.Response.Status switch
                 {
                     404 or 204 => message.Response,
-                    _ => throw _diagnostics.CreateRequestFailedException(message.Response),
+                    _ => throw new RequestFailedException(message.Response),
                 };
             }
             catch (Exception ex)

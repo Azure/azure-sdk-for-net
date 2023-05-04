@@ -25,6 +25,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             Data = new ChangeTrackingList<PatientDocument>();
         }
 
+        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
+        /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
+        /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
+        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data)
+        {
+            Id = id;
+            Info = info;
+            Data = data;
+        }
+
         /// <summary> A given identifier for the patient. Has to be unique across all patients in a single request. </summary>
         public string Id { get; }
         /// <summary> Patient structured information, including demographics and known structured clinical information. </summary>

@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// This prevents a test from being torn down terribly when doing
     /// an Assert.Failure in the middle of an event.
     ///
-    /// Alos if there's multiple failures then we will catch all of them.
+    /// Also if there's multiple failures then we will catch all of them.
     /// (Which would mainly occur during <see cref="ErrorHandlingOptions.ContinueOnFailure"/>
     /// </summary>
     internal class FailureTransferHolder
@@ -26,30 +26,16 @@ namespace Azure.Storage.DataMovement.Tests
             FailedEvents = new List<TransferFailedEventArgs>();
         }
 
-        public FailureTransferHolder(ContainerTransferOptions options)
+        public FailureTransferHolder(TransferOptions options)
             : this()
         {
             options.TransferFailed += AppendFailedArg;
         }
 
-        public FailureTransferHolder(SingleTransferOptions options)
+        public FailureTransferHolder(List<TransferOptions> optionsList)
             : this()
         {
-            options.TransferFailed += AppendFailedArg;
-        }
-
-        public FailureTransferHolder(List<SingleTransferOptions> optionsList)
-            : this()
-        {
-            foreach (SingleTransferOptions options in optionsList)
-            {
-                options.TransferFailed += AppendFailedArg;
-            }
-        }
-        public FailureTransferHolder(List<ContainerTransferOptions> optionsList)
-            : this()
-        {
-            foreach (ContainerTransferOptions options in optionsList)
+            foreach (TransferOptions options in optionsList)
             {
                 options.TransferFailed += AppendFailedArg;
             }
