@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +14,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -359,6 +358,47 @@ namespace Azure.Storage.DataMovement.Tests
                 files,
                 destinationPrefix: dirName,
                 waitTimeInSec: 10);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task DirectoryUpload_Root()
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            string file1 = await CreateRandomFileAsync(source.DirectoryPath, size:10);
+
+            string dir1 = CreateRandomDirectory(source.DirectoryPath);
+            string file2 = await CreateRandomFileAsync(dir1, size: 10);
+            string file3 = await CreateRandomFileAsync(dir1, size: 10);
+            string file4 = await CreateRandomFileAsync(dir1, size: 10);
+
+            string dir2 = CreateRandomDirectory(source.DirectoryPath);
+            string file5 = await CreateRandomFileAsync(dir2, size: 10);
+
+            string[] files = {file1, file2, file3, file4, file5};
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.IsTrue(files
+                .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
+                .OrderBy(f => f)
+                .SequenceEqual(destinationFiles.OrderBy(f => f)));
         }
         #endregion
 

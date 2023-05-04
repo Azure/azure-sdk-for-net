@@ -3,18 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Blobs;
-using NUnit.Framework;
-using System.IO;
 using Azure.Storage.Blobs.Models;
-using Microsoft.Extensions.Options;
-using Microsoft.CodeAnalysis;
+using Azure.Storage.DataMovement.Blobs;
+using Azure.Storage.DataMovement.Models;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -28,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="sourceContainer">The source container which will contains the source blobs</param>
@@ -326,6 +324,40 @@ namespace Azure.Storage.DataMovement.Tests
                 fullPath,
                 blobNames,
                 destinationFolder).ConfigureAwait(false);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task DownloadDirectoryAsync_Root()
+        {
+            // Arrange
+            string[] files = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
+            BinaryData data = BinaryData.FromString("Hello World");
+
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
+
+            foreach (string file in files)
+            {
+                await source.Container.UploadBlobAsync(file, data);
+            }
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource =
+                new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource =
+                new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
+
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            IEnumerable<string> destinationFiles = ListFilesInDirectory(destination.DirectoryPath)
+                .Select(f => f.Substring(destination.DirectoryPath.Length + 1).Replace("\\", "/"));
+
+            Assert.IsTrue(destinationFiles.OrderBy(f => f).SequenceEqual(files.OrderBy(f => f)));
         }
         #endregion DirectoryDownloadTests
 
