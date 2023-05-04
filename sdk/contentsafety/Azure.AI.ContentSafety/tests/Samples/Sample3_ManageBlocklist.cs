@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:CreateNewBlocklist
 
-            var blocklistName = "TestBlocklistNoDescription";
+            var blocklistName = "TestBlocklist";
             var blocklistDescription = "Test blocklist management";
 
             client.CreateOrUpdateTextBlocklist(blocklistName, blocklistDescription);
@@ -104,7 +104,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:AnalyzeTextWithBlocklist
             Thread.Sleep(30000);
-            var request = new AnalyzeTextOptions("I want to k*ll you");
+            var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you");
             request.BlocklistNames.Add(blocklistName);
             request.BreakByBlocklists = true;
             Response<AnalyzeTextResult> response;

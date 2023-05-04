@@ -5,30 +5,33 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
-        "Content-Length": "27",
+        "Content-Length": "60",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-582971bebab5b64981e459e5685bb387-3903494c74a5b946-00",
-        "User-Agent": "azsdk-net-AI.ContentSafety/1.0.0-alpha.20230426.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "9c4a21bc04e9c624ba7880e1364fbcfd",
+        "traceparent": "00-1d8c2311edf7c3c1084f8064859420de-aaaa4552cb438553-00",
+        "User-Agent": "azsdk-net-AI.ContentSafety/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f8f1e28b1c1a53b02d8a4d97e33d119e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "text": "You are an idiot"
+        "text": "You are an idiot",
+        "categories": [
+          "Hate",
+          "SelfHarm"
+        ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2022-12-30-preview,2023-04-30-preview",
-        "apim-request-id": "f2ab51d1-f37b-421f-b9f8-7257cfd875ed",
+        "apim-request-id": "36528636-49cf-4846-8980-07dac386ca8d",
         "apim-subscription-id": "973fda3f71b6448db2933f4e72c9d160",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Apr 2023 12:04:43 GMT",
+        "Date": "Thu, 04 May 2023 13:03:07 GMT",
         "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "71",
+        "x-envoy-upstream-service-time": "61",
         "x-ms-region": "Central US EUAP"
       },
       "ResponseBody": {
@@ -40,14 +43,6 @@
         "selfHarmResult": {
           "category": "SelfHarm",
           "severity": 0
-        },
-        "sexualResult": {
-          "category": "Sexual",
-          "severity": 0
-        },
-        "violenceResult": {
-          "category": "Violence",
-          "severity": 0
         }
       }
     }
@@ -55,6 +50,6 @@
   "Variables": {
     "CONTENT_SAFETY_ENDPOINT": "https://content-safety-canary-test.cognitiveservices.azure.com/",
     "CONTENT_SAFETY_KEY": "Sanitized",
-    "RandomSeed": "1798158377"
+    "RandomSeed": "352827987"
   }
 }
