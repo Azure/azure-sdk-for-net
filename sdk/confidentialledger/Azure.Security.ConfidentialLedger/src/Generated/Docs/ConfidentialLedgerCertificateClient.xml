@@ -5,11 +5,10 @@
 <example>
 This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+Response response = await client.GetLedgerIdentityAsync("<ledgerId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());
@@ -34,11 +33,10 @@ Schema for <c>LedgerIdentityInformation</c>:
 <example>
 This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-Response response = client.GetLedgerIdentity("<ledgerId>");
+Response response = client.GetLedgerIdentity("<ledgerId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());
