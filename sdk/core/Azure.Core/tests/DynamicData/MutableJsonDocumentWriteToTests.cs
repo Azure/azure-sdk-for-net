@@ -48,6 +48,8 @@ namespace Azure.Core.Tests
             BinaryData data = new(json.ToArray());
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
+
+            // Make a change to force it to go through our custom WriteTo() op.
             mdoc.RootElement.GetProperty("foo").Set("hi");
 
             MutableJsonDocumentTests.ValidateWriteTo(data, mdoc);

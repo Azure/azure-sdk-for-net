@@ -274,13 +274,13 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanCastToTypesYouDontOwn()
         {
-            var now = DateTimeOffset.Now;
+            DateTimeOffset now = DateTimeOffset.Now;
 
             // "O" is the only format supported by default JsonSerializer:
             // https://learn.microsoft.com/dotnet/standard/datetime/system-text-json-support
-            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamicFromJson().value;
+            dynamic nowJson = new BinaryData($"{{ \"value\": \"{now.ToString("O", CultureInfo.InvariantCulture)}\" }}").ToDynamicFromJson();
 
-            var cast = (DateTimeOffset)nowJson;
+            var cast = (DateTimeOffset)nowJson.value;
 
             Assert.AreEqual(now, cast);
         }

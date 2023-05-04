@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
@@ -870,6 +872,47 @@ namespace Azure.Core.Tests
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (int)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.True.ToString()));
+        }
+
+        [TestCaseSource(nameof(DateTimeValues))]
+        public void CanSerializeAndDeserializeDateTime<T>(T value)
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson();
+
+            // Round trip through existing property
+            json.foo = value;
+
+            Assert.AreEqual(value, (T)json.foo);
+
+            // Round trip through added property
+            json.bar = value;
+
+            Assert.AreEqual(value, (T)json.bar);
+
+            // Round trip through WriteTo()
+            using Stream stream = new MemoryStream();
+            ((DynamicData)json).WriteTo(stream);
+            stream.Position = 0;
+            dynamic roundTripJson = BinaryData.FromStream(stream).ToDynamicFromJson();
+
+            Assert.AreEqual(value, (T)roundTripJson.foo);
+            Assert.AreEqual(value, (T)roundTripJson.bar);
+        }
+
+        public static IEnumerable<object> DateTimeValues()
+        {
+            yield return DateTimeOffset.Parse("2023-03-23T16:34:34+00:00");
+            yield return DateTimeOffset.Parse("1985-04-12T23:20:50.52Z");
+            yield return DateTimeOffset.Parse("1996-12-19T16:39:57-08:00");
+            yield return DateTimeOffset.Parse("1990-12-31T23:59:00Z");
+            yield return DateTimeOffset.Parse("1990-12-31T15:59:00-08:00");
+            yield return DateTimeOffset.Parse("1937-01-01T12:00:27.87+00:20");
+            yield return DateTime.Parse("2023-03-23T16:34:34+00:00");
+            yield return DateTime.Parse("1985-04-12T23:20:50.52Z");
+            yield return DateTime.Parse("1996-12-19T16:39:57-08:00");
+            yield return DateTime.Parse("1990-12-31T23:59:00Z");
+            yield return DateTime.Parse("1990-12-31T15:59:00-08:00");
+            yield return DateTime.Parse("1937-01-01T12:00:27.87+00:20");
         }
 
         #region Helpers
