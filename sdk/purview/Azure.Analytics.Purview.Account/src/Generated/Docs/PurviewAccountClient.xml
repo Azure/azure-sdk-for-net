@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = await client.GetAccountPropertiesAsync();
+Response response = await client.GetAccountPropertiesAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -136,7 +136,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = client.GetAccountProperties();
+Response response = client.GetAccountProperties(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -280,7 +280,7 @@ var data = new {
     friendlyName = "<friendlyName>",
 };
 
-Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -432,7 +432,7 @@ var data = new {
     friendlyName = "<friendlyName>",
 };
 
-Response response = client.UpdateAccountProperties(RequestContent.Create(data));
+Response response = client.UpdateAccountProperties(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -567,7 +567,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = await client.GetAccessKeysAsync();
+Response response = await client.GetAccessKeysAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -596,7 +596,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = client.GetAccessKeys();
+Response response = client.GetAccessKeys(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -642,7 +642,7 @@ var data = new {
     keyType = "PrimaryAtlasKafkaKey",
 };
 
-Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -696,7 +696,7 @@ var data = new {
     keyType = "PrimaryAtlasKafkaKey",
 };
 
-Response response = client.RegenerateAccessKey(RequestContent.Create(data));
+Response response = client.RegenerateAccessKey(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -733,9 +733,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetCollectionsAsync())
+await foreach (var item in client.GetCollectionsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -745,9 +745,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
+await foreach (var item in client.GetCollectionsAsync("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
@@ -799,9 +799,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetCollections())
+foreach (var item in client.GetCollections())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -811,9 +811,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetCollections("<skipToken>"))
+foreach (var item in client.GetCollections("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
@@ -865,9 +865,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetResourceSetRulesAsync())
+await foreach (var item in client.GetResourceSetRulesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -877,9 +877,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
+await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1078,9 +1078,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetResourceSetRules())
+foreach (var item in client.GetResourceSetRules())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1090,9 +1090,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetResourceSetRules("<skipToken>"))
+foreach (var item in client.GetResourceSetRules("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
