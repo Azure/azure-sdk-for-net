@@ -113,7 +113,7 @@ trigger:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
-    - sdk/newrelic/Azure.ResourceManager.Newrelic
+    - sdk/newrelic/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
@@ -283,7 +283,7 @@ pr:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
-    - sdk/newrelic/Azure.ResourceManager.Newrelic
+    - sdk/newrelic/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
