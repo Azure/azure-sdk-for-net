@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
@@ -27,7 +28,9 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
 {
-    internal class ScaleHostEndToEndTests : WebJobsEventHubTestBase
+    [NonParallelizable]
+    [LiveOnly(true)]
+    public class ScaleHostEndToEndTests : WebJobsEventHubTestBase
     {
         private const string Function1Name = "Function1";
         private const string Function2Name = "Function2";
