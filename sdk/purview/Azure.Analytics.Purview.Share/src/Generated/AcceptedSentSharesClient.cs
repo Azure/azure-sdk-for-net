@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShareAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, RequestContext context = null)
         {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShare(string,string,RequestContext)']/*" />
         public virtual Response GetAcceptedSentShare(string sentShareName, string acceptedSentShareName, RequestContext context = null)
         {
@@ -156,13 +156,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='ReinstateAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ReinstateAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -188,13 +188,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Reinstate(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> Reinstate(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='RevokeAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Revoke(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -280,13 +280,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpirationAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> UpdateExpirationAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -312,13 +312,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpiration(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> UpdateExpiration(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {

@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowAsync(Guid workflowId, RequestContext context = null)
         {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflow(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflow(Guid workflowId, RequestContext context = null)
         {
@@ -107,11 +107,11 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Create or replace a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflowAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceWorkflowAsync(Guid workflowId, RequestContent content, RequestContext context = null)
         {
@@ -133,11 +133,11 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Create or replace a workflow. </summary>
         /// <param name="workflowId"> The workflow id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflow(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrReplaceWorkflow(Guid workflowId, RequestContent content, RequestContext context = null)
         {
@@ -202,11 +202,11 @@ namespace Azure.Analytics.Purview.Workflows
         }
 
         /// <summary> [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequestsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SubmitUserRequestsAsync(RequestContent content, RequestContext context = null)
         {
@@ -227,11 +227,11 @@ namespace Azure.Analytics.Purview.Workflows
         }
 
         /// <summary> [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequests(RequestContent,RequestContext)']/*" />
         public virtual Response SubmitUserRequests(RequestContent content, RequestContext context = null)
         {
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowRunAsync(Guid workflowRunId, RequestContext context = null)
         {
@@ -277,7 +277,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRun(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflowRun(Guid workflowRunId, RequestContext context = null)
         {
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Cancel a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Cancel a workflow run. </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -351,7 +351,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTaskAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowTaskAsync(Guid taskId, RequestContext context = null)
         {
@@ -373,7 +373,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTask(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflowTask(Guid taskId, RequestContext context = null)
         {
@@ -393,7 +393,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Approve an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Approve an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -445,7 +445,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Reject an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -471,7 +471,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Reject an approval task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -497,7 +497,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Reassign a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -523,7 +523,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Reassign a workflow task. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -549,7 +549,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Update the status of a workflow task request. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -575,7 +575,7 @@ namespace Azure.Analytics.Purview.Workflows
 
         /// <summary> [Protocol Method] Update the status of a workflow task request. </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>

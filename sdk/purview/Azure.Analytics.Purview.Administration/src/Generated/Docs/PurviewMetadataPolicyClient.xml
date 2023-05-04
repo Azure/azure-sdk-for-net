@@ -103,76 +103,6 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("collection").Get
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-Response Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateMetadataPolicy(string,RequestContent,RequestContext)">
 <example>
@@ -276,76 +206,6 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("collection").Get
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-Response Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetadataPolicyAsync(string,RequestContext)">
 <example>
@@ -382,43 +242,6 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("collection").Get
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetadataPolicy(string,RequestContext)">
 <example>
@@ -455,43 +278,6 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("collection").Get
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetadataPolicy</c>:
-<code>{
-  name: string, # Optional. The name of policy
-  id: string, # Optional. The id of policy
-  version: number, # Optional. The version of policy
-  properties: {
-    description: string, # Optional. The description of policy
-    decisionRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The DecisionRules of policy
-    attributeRules: [
-      {
-        kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        id: string, # Optional. The id for rule
-        name: string, # Optional. The name for rule
-        dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-      }
-    ], # Optional. The AttributeRules of policy
-    collection: {
-      type: string, # Optional. The type of reference
-      referenceName: string, # Optional. The name of reference
-    }, # Optional. The collection reference for a policy
-    parentCollectionName: string, # Optional. The parent collection of the policy
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetadataPoliciesAsync(RequestContext)">
 <example>

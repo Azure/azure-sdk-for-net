@@ -30,9 +30,6 @@ Response response = await client.UploadAsync("<ruleId>", "<streamName>", Request
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
     <member name="Upload(string,string,RequestContent,string,RequestContext)">
 <example>
@@ -63,9 +60,6 @@ Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Cre
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
   </members>
 </doc>
