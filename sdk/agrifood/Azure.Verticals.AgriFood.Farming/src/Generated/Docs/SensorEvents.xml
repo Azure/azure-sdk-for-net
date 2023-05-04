@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSensorEventsAsync(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)">
+    <member name="GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSensorEventsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -57,7 +57,7 @@ Schema for <c>SensorEventListResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetSensorEvents(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)">
+    <member name="GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSensorEvents with required parameters and parse the result.
 <code><![CDATA[

@@ -639,6 +639,10 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
             }
+            else
+            {
+                File.Create(localSourceFile).Close();
+            }
             return blobClient;
         }
 
@@ -692,6 +696,10 @@ namespace Azure.Storage.DataMovement.Tests
                     await blobClient.UploadPagesAsync(partStream, offset);
                     offset += blockSize;
                 }
+            }
+            else
+            {
+                File.Create(localSourceFile).Close();
             }
             return blobClient;
         }

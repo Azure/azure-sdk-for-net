@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
-            DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string folderName = "foo";
@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetChildStorageResourceAsync()
         {
-            DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";
@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetParentStorageResourceAsync()
         {
-            DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "baz/bar";
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetParentStorageResourceAsync_Root()
         {
-            DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";
