@@ -112,17 +112,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             }
         }
 
-        private void IgnoreManagedIdentityDependencyVersions()
-        {
-            // Ignore the api-version of KeyVault operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
-            {
-                GroupForReplace = "group"
-            });
-        }
-
         public void IgnoreTestInLiveMode()
         {
             if (Mode == RecordedTestMode.Live)

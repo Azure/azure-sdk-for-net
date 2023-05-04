@@ -146,6 +146,17 @@ namespace Azure.ResourceManager.TestFramework
             });
         }
 
+        protected void IgnoreManagedIdentityDependencyVersions()
+        {
+            // Ignore the api-version of ManagedIdentity operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         private ArmClient GetCleanupClient()
         {
             if (Mode != RecordedTestMode.Playback)
