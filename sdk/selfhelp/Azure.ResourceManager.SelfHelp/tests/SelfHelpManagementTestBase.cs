@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     public class SelfHelpManagementTestBase : ManagementRecordedTestBase<SelfHelpManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
-        protected string groupName;
-        public const string DefaultResourceGroupNamePrefix = "DiagnosticsRp-Synthetics-Public-Global";
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        public AzureLocation DefaultLocation => AzureLocation.EastUS;
+        public const string DefaultResourceGroupNamePrefix = "DiagnosticsRp-Synthetics-Public-Global";
+        public const string SubId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
 
         protected SelfHelpManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -32,34 +32,17 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            // DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            SubscriptionCollection subscriptions = Client.GetSubscriptions();
+            DefaultSubscription = await subscriptions.GetAsync(SubId);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix = DefaultResourceGroupNamePrefix)
         {
-            var resourceGroupName = Recording.GenerateAssetName("testRG-");
-            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
-                {
-                    Tags =
-                    {
-                        { "test", "env" }
-                    }
-                });
-            if (Mode == RecordedTestMode.Playback)
-            {
-                groupName = resourceGroupName;
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    groupName = rgOp.Value.Data.Name;
-                }
-            }
-            return rgOp.Value;
+            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
         }
     }
 }

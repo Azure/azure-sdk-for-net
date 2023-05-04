@@ -10,26 +10,25 @@ using System;
 using Azure.ResourceManager.SelfHelp.Models;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.SelfHelp.Tests.TestCase
+namespace Azure.ResourceManager.SelfHelp.Tests.Scenario
 {
-    public class DiagnosticTests : SelfHelpManagementTestBase
+    public class DiagnosticsTests : SelfHelpManagementTestBase
     {
-        public DiagnosticTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DiagnosticsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CreateAndGetDiagnosticsTest()
         {
             var subId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
-            //var resourceGroupName = "DiagnosticsRp-Gateway-Public-Dev-Global";
-            var resourceGroup = await CreateResourceGroupAsync();
-            var resourceName = "DiagRpGwPubDev";
-            var insightsResourceName = "testResource" + DateTime.Now.ToString("hh-mm-ss");
-            ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{groupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
+            var resourceGroupName = "DiagnosticsRp-Gateway-Public-Dev-Global";
+            var resourceName = "DiagRpGwPubDev2";
+            var insightsResourceName = Recording.GenerateAssetName("testResource");
+            ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
             SelfHelpDiagnosticResourceData resourceData = CreateDiagnosticResourceData(scope);
 
-            var createDiagnosticData = await Client.GetSelfHelpDiagnosticResources(scope).CreateOrUpdateAsync(WaitUntil.Completed, insightsResourceName, resourceData);
+            var createDiagnosticData = await Client.GetSelfHelpDiagnosticResources(scope).CreateOrUpdateAsync(WaitUntil.Started, insightsResourceName, resourceData);
             Assert.NotNull(createDiagnosticData);
 
             var readDiagnosticData = await Client.GetSelfHelpDiagnosticResourceAsync(scope, insightsResourceName);
