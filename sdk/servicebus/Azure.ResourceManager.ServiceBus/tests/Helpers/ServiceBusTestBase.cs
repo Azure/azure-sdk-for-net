@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 
         protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            IgnoreKeyVaultDependencyVersions();
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
