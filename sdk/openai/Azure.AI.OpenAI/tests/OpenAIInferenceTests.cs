@@ -368,6 +368,22 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
+        [RecordedTest]
+        public void JsonTypeSerialization()
+        {
+            var originalMessage = new ChatMessage(ChatRole.User, "How do I make a great taco?");
+
+            string clearTextSerializedMessage = System.Text.Json.JsonSerializer.Serialize(originalMessage);
+            ChatMessage messageFromClearText = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(clearTextSerializedMessage);
+            Assert.That(messageFromClearText.Role, Is.EqualTo(originalMessage.Role));
+            Assert.That(messageFromClearText.Content, Is.EqualTo(originalMessage.Content));
+
+            byte[] utf8SerializedMessage = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(originalMessage);
+            ChatMessage messageFromUtf8Bytes = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(utf8SerializedMessage);
+            Assert.That(messageFromUtf8Bytes.Role, Is.EqualTo(originalMessage.Role));
+            Assert.That(messageFromUtf8Bytes.Content, Is.EqualTo(originalMessage.Content));
+        }
+
         // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
         private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(
             IAsyncEnumerable<T> asyncValues)
