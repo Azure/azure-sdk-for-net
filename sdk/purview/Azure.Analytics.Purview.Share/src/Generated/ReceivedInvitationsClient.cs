@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedInvitationAsync(string receivedInvitationName, RequestContext context = null)
         {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitation(string,RequestContext)']/*" />
         public virtual Response GetReceivedInvitation(string receivedInvitationName, RequestContext context = null)
         {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='RejectAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> RejectAsync(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='Reject(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response Reject(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {

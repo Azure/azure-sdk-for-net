@@ -17,37 +17,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Get an accepted sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetAcceptedSentShare(string,string,RequestContext)">
 <example>
@@ -65,37 +34,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Get an accepted sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetAcceptedSentSharesAsync(string,string,RequestContext)">
 <example>
@@ -126,23 +64,6 @@ await foreach (var data in client.GetAcceptedSentSharesAsync("<sentShareName>", 
 }
 ]]></code>
 </example>
-<remarks>
-Get list of accepted sent shares
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>AcceptedSentShareListValue</c>:
-<code>{
-  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAcceptedSentShares(string,string,RequestContext)">
 <example>
@@ -173,23 +94,6 @@ foreach (var data in client.GetAcceptedSentShares("<sentShareName>", "<skipToken
 }
 ]]></code>
 </example>
-<remarks>
-Get list of accepted sent shares
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>AcceptedSentShareListValue</c>:
-<code>{
-  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="ReinstateAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
@@ -232,62 +136,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Reinstate a revoked accepted sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="Reinstate(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
@@ -330,62 +178,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Reinstate a revoked accepted sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="RevokeAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -416,37 +208,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Revoke an accepted sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="Revoke(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -477,37 +238,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Revoke an accepted sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="UpdateExpirationAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
@@ -550,62 +280,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Update the expiration date of an accepted sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="UpdateExpiration(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
@@ -648,62 +322,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Update the expiration date of an accepted sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
-<code>{
-  properties: {
-    createdAt: string (ISO 8601 Format), # Optional. created at
-    expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
-    receivedShareStatus: &quot;Active&quot; | &quot;Reinstating&quot; | &quot;Revoked&quot; | &quot;Revoking&quot; | &quot;RevokeFailed&quot; | &quot;ReinstateFailed&quot; | &quot;SourceDeleted&quot;, # Optional. received share status
-    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation and created the received share
-    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation and created the received share
-    receiverTargetObjectId: string, # Optional. Receiver&apos;s target object id
-    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation and created the received share
-    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
-    senderName: string, # Optional. Name of the sender who created the sent share invitation
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
-    sharedAt: string (ISO 8601 Format), # Optional. Shared at
-  }, # Required. Properties of in place accepted sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
     </member>
   </members>
 </doc>

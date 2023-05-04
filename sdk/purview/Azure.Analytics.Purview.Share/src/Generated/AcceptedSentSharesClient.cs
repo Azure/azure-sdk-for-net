@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShareAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, RequestContext context = null)
         {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShare(string,string,RequestContext)']/*" />
         public virtual Response GetAcceptedSentShare(string sentShareName, string acceptedSentShareName, RequestContext context = null)
         {
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='ReinstateAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ReinstateAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Reinstate(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> Reinstate(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='RevokeAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Revoke(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -286,7 +286,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpirationAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> UpdateExpirationAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpiration(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> UpdateExpiration(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {

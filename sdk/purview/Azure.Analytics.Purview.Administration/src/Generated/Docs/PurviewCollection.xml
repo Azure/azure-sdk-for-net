@@ -26,33 +26,6 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy")
 Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCollection(RequestContext)">
 <example>
@@ -79,33 +52,6 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy")
 Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateCollectionAsync(RequestContent,RequestContext)">
 <example>
@@ -153,56 +99,6 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy")
 Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateCollection(RequestContent,RequestContext)">
 <example>
@@ -250,56 +146,6 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy")
 Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Collection</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteCollectionAsync(RequestContext)">
 <example>
@@ -342,19 +188,6 @@ Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
 Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CollectionPathResponse</c>:
-<code>{
-  parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
-  parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCollectionPath(RequestContext)">
 <example>
@@ -371,19 +204,6 @@ Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
 Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CollectionPathResponse</c>:
-<code>{
-  parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
-  parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetChildCollectionNamesAsync(string,RequestContext)">
 <example>
@@ -413,19 +233,6 @@ await foreach (var data in client.GetChildCollectionNamesAsync("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CollectionNameResponseListValue</c>:
-<code>{
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetChildCollectionNames(string,RequestContext)">
 <example>
@@ -455,19 +262,6 @@ foreach (var data in client.GetChildCollectionNames("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CollectionNameResponseListValue</c>:
-<code>{
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
