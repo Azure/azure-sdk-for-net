@@ -1,17 +1,11 @@
 # Release History
 
-## 1.32.0-beta.1 (Unreleased)
+## 1.32.0 (2023-05-09)
 
 ### Features Added
 
 - Added the `GetRawResponse` method to `RequestFailedException`.
 - Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.31.0 (2023-04-10)
 
