@@ -11,6 +11,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
 using System.Security.Cryptography;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             IgnoreKeyVaultDependencyVersions();
+            IgnoreManagedIdentityDependencyVersions();
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
@@ -108,6 +110,17 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
                 Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
                 Assert.AreEqual(ServiceBusSkuTier.Standard, sBNamespace.Data.Sku.Tier);
             }
+        }
+
+        private void IgnoreManagedIdentityDependencyVersions()
+        {
+            // Ignore the api-version of KeyVault operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
 
         public void IgnoreTestInLiveMode()
