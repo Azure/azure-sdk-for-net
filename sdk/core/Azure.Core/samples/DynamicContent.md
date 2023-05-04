@@ -36,14 +36,17 @@ client.SetWidget(RequestContent.Create(widget));
 
 ### Access an array value
 
-JSON array values are accessed using array indexers.
+JSON array values are accessed using array indexers.  The `Length` property returns the number of elements in a JSON array.
 
 ```C# Snippet:AzureCoreGetDynamicJsonArrayValue
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "values" : [1, 2, 3] }`
-int value = widget.values[0];
+if (widget.values.Length > 0)
+{
+    int value = widget.values[0];
+}
 ```
 
 ### Check whether an optional property is present
