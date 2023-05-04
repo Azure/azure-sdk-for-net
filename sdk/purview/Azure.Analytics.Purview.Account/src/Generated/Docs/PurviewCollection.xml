@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = await client.GetCollectionAsync();
+Response response = await client.GetCollectionAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -62,7 +62,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = client.GetCollection();
+Response response = client.GetCollection(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -136,7 +136,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data));
+Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -233,7 +233,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateCollection(RequestContent.Create(data));
+Response response = client.CreateOrUpdateCollection(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -309,7 +309,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = await client.DeleteCollectionAsync();
+Response response = await client.DeleteCollectionAsync(new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -322,7 +322,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = client.DeleteCollection();
+Response response = client.DeleteCollection(new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -335,7 +335,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = await client.GetCollectionPathAsync();
+Response response = await client.GetCollectionPathAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
@@ -364,7 +364,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = client.GetCollectionPath();
+Response response = client.GetCollectionPath(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
@@ -393,9 +393,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-await foreach (var data in client.GetChildCollectionNamesAsync())
+await foreach (var item in client.GetChildCollectionNamesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -405,9 +405,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-await foreach (var data in client.GetChildCollectionNamesAsync("<skipToken>"))
+await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }
@@ -435,9 +435,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-foreach (var data in client.GetChildCollectionNames())
+foreach (var item in client.GetChildCollectionNames())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -447,9 +447,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-foreach (var data in client.GetChildCollectionNames("<skipToken>"))
+foreach (var item in client.GetChildCollectionNames("<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }

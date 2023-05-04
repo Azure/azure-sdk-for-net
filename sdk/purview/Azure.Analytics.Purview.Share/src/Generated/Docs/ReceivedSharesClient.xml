@@ -8,7 +8,7 @@ This sample shows how to call GetReceivedShareAsync with required parameters and
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetReceivedShareAsync("<receivedShareName>");
+Response response = await client.GetReceivedShareAsync("<receivedShareName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -64,7 +64,7 @@ This sample shows how to call GetReceivedShare with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetReceivedShare("<receivedShareName>");
+Response response = client.GetReceivedShare("<receivedShareName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -157,7 +157,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data));
+Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -283,7 +283,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-Response response = client.Create("<receivedShareName>", RequestContent.Create(data));
+Response response = client.Create("<receivedShareName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -372,9 +372,9 @@ This sample shows how to call GetReceivedSharesAsync and parse the result.
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetReceivedSharesAsync())
+await foreach (var item in client.GetReceivedSharesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -384,9 +384,9 @@ This sample shows how to call GetReceivedSharesAsync with all parameters, and ho
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -419,9 +419,9 @@ This sample shows how to call GetReceivedShares and parse the result.
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetReceivedShares())
+foreach (var item in client.GetReceivedShares())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -431,9 +431,9 @@ This sample shows how to call GetReceivedShares with all parameters, and how to 
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetReceivedShares("<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetReceivedShares("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -466,9 +466,9 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>");
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -482,9 +482,9 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>");
+var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>

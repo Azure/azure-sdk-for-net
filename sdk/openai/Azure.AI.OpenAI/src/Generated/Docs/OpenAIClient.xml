@@ -36,7 +36,7 @@ var data = new {
     input = new {},
 };
 
-Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -124,7 +124,7 @@ var data = new {
     input = new {},
 };
 
-Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -226,7 +226,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -388,7 +388,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());

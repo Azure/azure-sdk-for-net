@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = await client.GetResourceSetRuleAsync();
+Response response = await client.GetResourceSetRuleAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -209,7 +209,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = client.GetResourceSetRule();
+Response response = client.GetResourceSetRule(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -488,35 +488,9 @@ var data = new {
                 description = "<description>",
                 disabled = true,
                 disableRecursiveReplacerApplication = true,
-                doNotReplaceRegex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
                 lastUpdatedTimestamp = 1234L,
                 modifiedBy = "<modifiedBy>",
                 name = "<name>",
-                regex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
                 replaceWith = "<replaceWith>",
             }
         },
@@ -549,7 +523,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -925,35 +899,9 @@ var data = new {
                 description = "<description>",
                 disabled = true,
                 disableRecursiveReplacerApplication = true,
-                doNotReplaceRegex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
                 lastUpdatedTimestamp = 1234L,
                 modifiedBy = "<modifiedBy>",
                 name = "<name>",
-                regex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
                 replaceWith = "<replaceWith>",
             }
         },
@@ -986,7 +934,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -1283,7 +1231,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = await client.DeleteResourceSetRuleAsync();
+Response response = await client.DeleteResourceSetRuleAsync(new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1296,7 +1244,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-Response response = client.DeleteResourceSetRule();
+Response response = client.DeleteResourceSetRule(new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>

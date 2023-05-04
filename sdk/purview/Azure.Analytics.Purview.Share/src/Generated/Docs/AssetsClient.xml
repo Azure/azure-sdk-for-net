@@ -8,7 +8,7 @@ This sample shows how to call GetAssetAsync with required parameters and parse t
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetAssetAsync("<sentShareName>", "<assetName>");
+Response response = await client.GetAssetAsync("<sentShareName>", "<assetName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -80,7 +80,7 @@ This sample shows how to call GetAsset with required parameters and parse the re
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetAsset("<sentShareName>", "<assetName>");
+Response response = client.GetAsset("<sentShareName>", "<assetName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -152,9 +152,9 @@ This sample shows how to call GetAssetsAsync with required parameters and parse 
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAssetsAsync("<sentShareName>"))
+await foreach (var item in client.GetAssetsAsync("<sentShareName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -164,9 +164,9 @@ This sample shows how to call GetAssetsAsync with all parameters, and how to par
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAssetsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAssetsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -199,9 +199,9 @@ This sample shows how to call GetAssets with required parameters and parse the r
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAssets("<sentShareName>"))
+foreach (var item in client.GetAssets("<sentShareName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -211,9 +211,9 @@ This sample shows how to call GetAssets with all parameters, and how to parse th
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAssets("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAssets("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -261,10 +261,10 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
+var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -398,10 +398,10 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = client.Create(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
+var operation = client.Create(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -520,9 +520,9 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>");
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -536,9 +536,9 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<sentShareName>", "<assetName>");
+var operation = client.Delete(WaitUntil.Completed, "<sentShareName>", "<assetName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
