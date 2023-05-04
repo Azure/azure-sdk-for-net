@@ -2,6 +2,12 @@
 
 ## 1.1.0 (2023-05-04)
 
+### Other Changes
+
+- Stable release of 1.1.0-beta.4
+
+## 1.1.0-beta.4 (2023-05-01)
+
 This release adds Container Security Context property for Containers with Confidential ContainerGroupSku
 
 ### Features Added
