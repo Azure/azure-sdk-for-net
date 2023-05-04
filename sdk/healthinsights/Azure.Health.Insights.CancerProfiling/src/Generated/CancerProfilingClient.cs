@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// Creates an Onco Phenotype job with the given request body.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>
@@ -117,7 +117,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferCancerProfileAsync(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
@@ -142,7 +142,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// Creates an Onco Phenotype job with the given request body.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>
@@ -159,7 +159,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
         public virtual Operation<BinaryData> InferCancerProfile(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
