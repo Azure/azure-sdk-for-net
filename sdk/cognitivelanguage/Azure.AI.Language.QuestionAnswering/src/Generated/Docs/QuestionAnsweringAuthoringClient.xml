@@ -22,29 +22,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetProjectDetails(string,RequestContext)">
 <example>
@@ -67,29 +44,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateProjectAsync(string,RequestContent,RequestContext)">
 <example>
@@ -136,42 +90,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-
-Request Body:
-
-Schema for <c>CreateProjectOptions</c>:
-<code>{
-  description: string, # Optional. Description of the project.
-  language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateProject(string,RequestContent,RequestContext)">
 <example>
@@ -218,42 +136,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-
-Request Body:
-
-Schema for <c>CreateProjectOptions</c>:
-<code>{
-  description: string, # Optional. Description of the project.
-  language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeleteStatusAsync(string,RequestContext)">
 <example>
@@ -273,25 +155,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetDeleteStatus(string,RequestContext)">
 <example>
@@ -311,25 +174,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetExportStatusAsync(string,string,RequestContext)">
 <example>
@@ -349,24 +193,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-
-Response Body:
-
-Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetExportStatus(string,string,RequestContext)">
 <example>
@@ -386,24 +212,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-
-Response Body:
-
-Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetImportStatusAsync(string,string,RequestContext)">
 <example>
@@ -423,25 +231,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetImportStatus(string,string,RequestContext)">
 <example>
@@ -461,25 +250,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetDeployStatusAsync(string,string,string,RequestContext)">
 <example>
@@ -499,25 +269,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetDeployStatus(string,string,string,RequestContext)">
 <example>
@@ -537,25 +288,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="UpdateSynonymsAsync(string,RequestContent,RequestContext)">
 <example>
@@ -591,25 +323,6 @@ Response response = await client.UpdateSynonymsAsync("<projectName>", RequestCon
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-
-Request Body:
-
-Schema for <c>SynonymAssets</c>:
-<code>{
-  value: [
-    {
-      alterations: [string], # Required. Collection of word alterations.
-    }
-  ], # Optional. Collection of synonyms.
-  nextLink: string, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateSynonyms(string,RequestContent,RequestContext)">
 <example>
@@ -645,25 +358,6 @@ Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-
-Request Body:
-
-Schema for <c>SynonymAssets</c>:
-<code>{
-  value: [
-    {
-      alterations: [string], # Required. Collection of word alterations.
-    }
-  ], # Optional. Collection of synonyms.
-  nextLink: string, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdateSourcesStatusAsync(string,string,RequestContext)">
 <example>
@@ -683,25 +377,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetUpdateSourcesStatus(string,string,RequestContext)">
 <example>
@@ -721,25 +396,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetUpdateQnasStatusAsync(string,string,RequestContext)">
 <example>
@@ -759,25 +415,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="GetUpdateQnasStatus(string,string,RequestContext)">
 <example>
@@ -797,25 +434,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="AddFeedbackAsync(string,RequestContent,RequestContext)">
 <example>
@@ -850,26 +468,6 @@ Response response = await client.AddFeedbackAsync("<projectName>", RequestConten
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-
-Request Body:
-
-Schema for <c>ActiveLearningFeedback</c>:
-<code>{
-  records: [
-    {
-      userId: string, # Optional. Unique identifier of the user.
-      userQuestion: string, # Optional. User suggested question for the QnA.
-      qnaId: number, # Optional. Unique ID of the QnA.
-    }
-  ], # Optional. A list of Feedback Records for Active Learning.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AddFeedback(string,RequestContent,RequestContext)">
 <example>
@@ -904,26 +502,6 @@ Response response = client.AddFeedback("<projectName>", RequestContent.Create(da
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-
-Request Body:
-
-Schema for <c>ActiveLearningFeedback</c>:
-<code>{
-  records: [
-    {
-      userId: string, # Optional. Unique identifier of the user.
-      userQuestion: string, # Optional. User suggested question for the QnA.
-      qnaId: number, # Optional. Unique ID of the QnA.
-    }
-  ], # Optional. A list of Feedback Records for Active Learning.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetProjectsAsync(RequestContext)">
 <example>
@@ -947,29 +525,6 @@ await foreach (var data in client.GetProjectsAsync())
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-
-Response Body:
-
-Schema for <c>ProjectsMetadataValue</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetProjects(RequestContext)">
 <example>
@@ -993,29 +548,6 @@ foreach (var data in client.GetProjects())
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-
-Response Body:
-
-Schema for <c>ProjectsMetadataValue</c>:
-<code>{
-  projectName: string, # Optional. Name of the project.
-  description: string, # Optional. Description of the project.
-  language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-  multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-  settings: {
-    defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-  }, # Optional. Configurable settings of the Project.
-  createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentsAsync(string,RequestContext)">
 <example>
@@ -1033,21 +565,6 @@ await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-
-Response Body:
-
-Schema for <c>ProjectDeploymentsList</c>:
-<code>{
-  deploymentName: string, # Optional. Name of the deployment.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeployments(string,RequestContext)">
 <example>
@@ -1065,21 +582,6 @@ foreach (var data in client.GetDeployments("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-
-Response Body:
-
-Schema for <c>ProjectDeploymentsList</c>:
-<code>{
-  deploymentName: string, # Optional. Name of the deployment.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSynonymsAsync(string,RequestContext)">
 <example>
@@ -1096,20 +598,6 @@ await foreach (var data in client.GetSynonymsAsync("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-
-Response Body:
-
-Schema for <c>SynonymAsset</c>:
-<code>{
-  alterations: [string], # Required. Collection of word alterations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSynonyms(string,RequestContext)">
 <example>
@@ -1126,20 +614,6 @@ foreach (var data in client.GetSynonyms("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-
-Response Body:
-
-Schema for <c>SynonymAsset</c>:
-<code>{
-  alterations: [string], # Required. Collection of word alterations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSourcesAsync(string,RequestContext)">
 <example>
@@ -1160,24 +634,6 @@ await foreach (var data in client.GetSourcesAsync("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-
-Response Body:
-
-Schema for <c>QnaSourcesMetadata</c>:
-<code>{
-  displayName: string, # Optional. Friendly name of the Source.
-  source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: Uri, # Required. URI location for the file or url.
-  sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-  contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSources(string,RequestContext)">
 <example>
@@ -1198,24 +654,6 @@ foreach (var data in client.GetSources("<projectName>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-
-Response Body:
-
-Schema for <c>QnaSourcesMetadata</c>:
-<code>{
-  displayName: string, # Optional. Friendly name of the Source.
-  source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: Uri, # Required. URI location for the file or url.
-  sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-  contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetQnasAsync(string,string,RequestContext)">
 <example>
@@ -1265,55 +703,6 @@ await foreach (var data in client.GetQnasAsync("<projectName>", "<source>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-
-Response Body:
-
-Schema for <c>QnaAsset</c>:
-<code>{
-  id: number, # Optional. Unique ID for the QnA.
-  answer: string, # Optional. Answer text.
-  source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-  questions: [string], # Optional. List of questions associated with the answer.
-  metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-  dialog: {
-    isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-    prompts: [
-      {
-        displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        qna: {
-          id: number, # Optional. Unique ID for the QnA.
-          answer: string, # Optional. Answer text.
-          source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-          questions: [string], # Optional. List of questions associated with the answer.
-          metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-          dialog: QnaDialog, # Optional. Context of a QnA.
-          activeLearningSuggestions: [
-            {
-              clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-              suggestedQuestions: [
-                {
-                  question: string, # Optional. Question suggested by the Active Learning feature.
-                  userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                  autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                }
-              ], # Optional. List of all suggested questions for the QnA.
-            }
-          ], # Optional. List of Active Learning suggestions for the QnA.
-        }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-      }
-    ], # Optional. List of prompts associated with the answer.
-  }, # Optional. Context of a QnA.
-  activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetQnas(string,string,RequestContext)">
 <example>
@@ -1363,55 +752,6 @@ foreach (var data in client.GetQnas("<projectName>", "<source>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-
-Response Body:
-
-Schema for <c>QnaAsset</c>:
-<code>{
-  id: number, # Optional. Unique ID for the QnA.
-  answer: string, # Optional. Answer text.
-  source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-  questions: [string], # Optional. List of questions associated with the answer.
-  metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-  dialog: {
-    isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-    prompts: [
-      {
-        displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        qna: {
-          id: number, # Optional. Unique ID for the QnA.
-          answer: string, # Optional. Answer text.
-          source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-          questions: [string], # Optional. List of questions associated with the answer.
-          metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-          dialog: QnaDialog, # Optional. Context of a QnA.
-          activeLearningSuggestions: [
-            {
-              clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-              suggestedQuestions: [
-                {
-                  question: string, # Optional. Question suggested by the Active Learning feature.
-                  userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                  autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                }
-              ], # Optional. List of all suggested questions for the QnA.
-            }
-          ], # Optional. List of Active Learning suggestions for the QnA.
-        }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-      }
-    ], # Optional. List of prompts associated with the answer.
-  }, # Optional. Context of a QnA.
-  activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
 <example>
@@ -1475,24 +815,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-
-Response Body:
-
-Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="Export(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -1528,24 +850,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-
-Response Body:
-
-Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)">
 <example>
@@ -1662,88 +966,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-
-Request Body:
-
-Schema for <c>ImportJobOptions</c>:
-<code>{
-  metadata: {
-    description: string, # Optional. Description of the project.
-    language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-    multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-    settings: {
-      defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-    }, # Optional. Configurable settings of the Project.
-  }, # Optional. Parameters needed to create the project.
-  assets: {
-    synonyms: [
-      {
-        alterations: [string], # Required. Collection of word alterations.
-      }
-    ], # Optional. Collection of synonyms.
-    qnas: [
-      {
-        id: number, # Optional. Unique ID for the QnA.
-        answer: string, # Optional. Answer text.
-        source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        questions: [string], # Optional. List of questions associated with the answer.
-        metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        dialog: {
-          isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-          prompts: [
-            {
-              displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-              qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-              qna: {
-                id: number, # Optional. Unique ID for the QnA.
-                answer: string, # Optional. Answer text.
-                source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-                questions: [string], # Optional. List of questions associated with the answer.
-                metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-                dialog: QnaDialog, # Optional. Context of a QnA.
-                activeLearningSuggestions: [
-                  {
-                    clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-                    suggestedQuestions: [
-                      {
-                        question: string, # Optional. Question suggested by the Active Learning feature.
-                        userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                        autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                      }
-                    ], # Optional. List of all suggested questions for the QnA.
-                  }
-                ], # Optional. List of Active Learning suggestions for the QnA.
-              }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-              displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-            }
-          ], # Optional. List of prompts associated with the answer.
-        }, # Optional. Context of a QnA.
-        activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-      }
-    ], # Optional. List of QnA records to import.
-  }, # Optional. All assets for this project.
-  fileUri: string, # Optional. Import data File URI.
-}
-</code>
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="Import(WaitUntil,string,RequestContent,string,string,RequestContext)">
 <example>
@@ -1860,88 +1082,6 @@ Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-
-Request Body:
-
-Schema for <c>ImportJobOptions</c>:
-<code>{
-  metadata: {
-    description: string, # Optional. Description of the project.
-    language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-    multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-    settings: {
-      defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-    }, # Optional. Configurable settings of the Project.
-  }, # Optional. Parameters needed to create the project.
-  assets: {
-    synonyms: [
-      {
-        alterations: [string], # Required. Collection of word alterations.
-      }
-    ], # Optional. Collection of synonyms.
-    qnas: [
-      {
-        id: number, # Optional. Unique ID for the QnA.
-        answer: string, # Optional. Answer text.
-        source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        questions: [string], # Optional. List of questions associated with the answer.
-        metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        dialog: {
-          isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-          prompts: [
-            {
-              displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-              qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-              qna: {
-                id: number, # Optional. Unique ID for the QnA.
-                answer: string, # Optional. Answer text.
-                source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-                questions: [string], # Optional. List of questions associated with the answer.
-                metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-                dialog: QnaDialog, # Optional. Context of a QnA.
-                activeLearningSuggestions: [
-                  {
-                    clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-                    suggestedQuestions: [
-                      {
-                        question: string, # Optional. Question suggested by the Active Learning feature.
-                        userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                        autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                      }
-                    ], # Optional. List of all suggested questions for the QnA.
-                  }
-                ], # Optional. List of Active Learning suggestions for the QnA.
-              }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-              displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-            }
-          ], # Optional. List of prompts associated with the answer.
-        }, # Optional. Context of a QnA.
-        activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-      }
-    ], # Optional. List of QnA records to import.
-  }, # Optional. All assets for this project.
-  fileUri: string, # Optional. Import data File URI.
-}
-</code>
-
-Response Body:
-
-<details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required.
-  expirationDateTime: string (ISO 8601 Format), # Optional.
-  jobId: string, # Required.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-}
-</code>
-</details>
-
-</remarks>
     </member>
     <member name="DeployProjectAsync(WaitUntil,string,string,RequestContext)">
 <example>
@@ -1959,21 +1099,6 @@ Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Optional. Name of the deployment.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeployProject(WaitUntil,string,string,RequestContext)">
 <example>
@@ -1991,21 +1116,6 @@ Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Optional. Name of the deployment.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateSourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -2041,39 +1151,6 @@ await foreach (var data in operation.Value)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-
-Request Body:
-
-Schema for <c>UpdateSourceRecord</c>:
-<code>{
-  op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-  value: {
-    displayName: string, # Optional. Friendly name of the Source.
-    source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-    sourceUri: Uri, # Required. URI location for the file or url.
-    sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-    contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-  }, # Required. Update source record.
-}
-</code>
-
-Response Body:
-
-Schema for <c>QnaSourcesMetadata</c>:
-<code>{
-  displayName: string, # Optional. Friendly name of the Source.
-  source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: Uri, # Required. URI location for the file or url.
-  sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-  contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateSources(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -2109,39 +1186,6 @@ foreach (var data in operation.Value)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-
-Request Body:
-
-Schema for <c>UpdateSourceRecord</c>:
-<code>{
-  op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-  value: {
-    displayName: string, # Optional. Friendly name of the Source.
-    source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-    sourceUri: Uri, # Required. URI location for the file or url.
-    sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-    contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-  }, # Required. Update source record.
-}
-</code>
-
-Response Body:
-
-Schema for <c>QnaSourcesMetadata</c>:
-<code>{
-  displayName: string, # Optional. Friendly name of the Source.
-  source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-  sourceUri: Uri, # Required. URI location for the file or url.
-  sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-  contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateQnasAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -2220,93 +1264,6 @@ await foreach (var data in operation.Value)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-
-Request Body:
-
-Schema for <c>UpdateQnaRecord</c>:
-<code>{
-  op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-  value: {
-    id: number, # Optional. Unique ID for the QnA.
-    answer: string, # Optional. Answer text.
-    source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-    questions: [string], # Optional. List of questions associated with the answer.
-    metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-    dialog: {
-      isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-      prompts: [
-        {
-          displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-          qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-          qna: QnaRecord, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-          displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        }
-      ], # Optional. List of prompts associated with the answer.
-    }, # Optional. Context of a QnA.
-    activeLearningSuggestions: [
-      {
-        clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        suggestedQuestions: [
-          {
-            question: string, # Optional. Question suggested by the Active Learning feature.
-            userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-            autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-          }
-        ], # Optional. List of all suggested questions for the QnA.
-      }
-    ], # Optional. List of Active Learning suggestions for the QnA.
-  }, # Required. QnA record.
-}
-</code>
-
-Response Body:
-
-Schema for <c>QnaAsset</c>:
-<code>{
-  id: number, # Optional. Unique ID for the QnA.
-  answer: string, # Optional. Answer text.
-  source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-  questions: [string], # Optional. List of questions associated with the answer.
-  metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-  dialog: {
-    isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-    prompts: [
-      {
-        displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        qna: {
-          id: number, # Optional. Unique ID for the QnA.
-          answer: string, # Optional. Answer text.
-          source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-          questions: [string], # Optional. List of questions associated with the answer.
-          metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-          dialog: QnaDialog, # Optional. Context of a QnA.
-          activeLearningSuggestions: [
-            {
-              clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-              suggestedQuestions: [
-                {
-                  question: string, # Optional. Question suggested by the Active Learning feature.
-                  userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                  autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                }
-              ], # Optional. List of all suggested questions for the QnA.
-            }
-          ], # Optional. List of Active Learning suggestions for the QnA.
-        }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-      }
-    ], # Optional. List of prompts associated with the answer.
-  }, # Optional. Context of a QnA.
-  activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateQnas(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -2385,93 +1342,6 @@ foreach (var data in operation.Value)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-
-Request Body:
-
-Schema for <c>UpdateQnaRecord</c>:
-<code>{
-  op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-  value: {
-    id: number, # Optional. Unique ID for the QnA.
-    answer: string, # Optional. Answer text.
-    source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-    questions: [string], # Optional. List of questions associated with the answer.
-    metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-    dialog: {
-      isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-      prompts: [
-        {
-          displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-          qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-          qna: QnaRecord, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-          displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        }
-      ], # Optional. List of prompts associated with the answer.
-    }, # Optional. Context of a QnA.
-    activeLearningSuggestions: [
-      {
-        clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        suggestedQuestions: [
-          {
-            question: string, # Optional. Question suggested by the Active Learning feature.
-            userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-            autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-          }
-        ], # Optional. List of all suggested questions for the QnA.
-      }
-    ], # Optional. List of Active Learning suggestions for the QnA.
-  }, # Required. QnA record.
-}
-</code>
-
-Response Body:
-
-Schema for <c>QnaAsset</c>:
-<code>{
-  id: number, # Optional. Unique ID for the QnA.
-  answer: string, # Optional. Answer text.
-  source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-  questions: [string], # Optional. List of questions associated with the answer.
-  metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-  dialog: {
-    isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-    prompts: [
-      {
-        displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        qna: {
-          id: number, # Optional. Unique ID for the QnA.
-          answer: string, # Optional. Answer text.
-          source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-          questions: [string], # Optional. List of questions associated with the answer.
-          metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-          dialog: QnaDialog, # Optional. Context of a QnA.
-          activeLearningSuggestions: [
-            {
-              clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-              suggestedQuestions: [
-                {
-                  question: string, # Optional. Question suggested by the Active Learning feature.
-                  userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-                  autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-                }
-              ], # Optional. List of all suggested questions for the QnA.
-            }
-          ], # Optional. List of Active Learning suggestions for the QnA.
-        }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-      }
-    ], # Optional. List of prompts associated with the answer.
-  }, # Optional. Context of a QnA.
-  activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
