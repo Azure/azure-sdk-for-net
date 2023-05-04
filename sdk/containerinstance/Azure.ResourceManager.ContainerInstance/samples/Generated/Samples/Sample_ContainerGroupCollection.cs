@@ -288,10 +288,10 @@ new ContainerPort(8000)
 EnvironmentVariables =
 {
 },
-SecurityContext = new SecurityContextDefinition()
+SecurityContext = new ContainerSecurityContextDefinition()
 {
-Privileged = false,
-Capabilities = new SecurityContextCapabilitiesDefinition()
+IsPrivileged = false,
+Capabilities = new ContainerSecurityContextCapabilitiesDefinition()
 {
 Add =
 {
