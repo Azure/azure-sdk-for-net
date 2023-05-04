@@ -145,6 +145,7 @@ trigger:
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
+    - sdk/selfhelp/Azure.ResourceManager.SelfHelp
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
@@ -315,6 +316,7 @@ pr:
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
+    - sdk/selfhelp/Azure.ResourceManager.SelfHelp
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
