@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = await _tagRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NewrelicArmOperation<TagRuleResource>(new TagRuleOperationSource(Client), _tagRuleClientDiagnostics, Pipeline, _tagRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation<TagRuleResource>(new TagRuleOperationSource(Client), _tagRuleClientDiagnostics, Pipeline, _tagRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = _tagRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new NewrelicArmOperation<TagRuleResource>(new TagRuleOperationSource(Client), _tagRuleClientDiagnostics, Pipeline, _tagRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation<TagRuleResource>(new TagRuleOperationSource(Client), _tagRuleClientDiagnostics, Pipeline, _tagRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

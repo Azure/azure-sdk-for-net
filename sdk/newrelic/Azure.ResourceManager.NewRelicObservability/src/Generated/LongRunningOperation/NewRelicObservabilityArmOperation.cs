@@ -16,25 +16,25 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NewRelicObservability
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class NewrelicArmOperation : ArmOperation
+    internal class NewRelicObservabilityArmOperation : ArmOperation
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of NewrelicArmOperation for mocking. </summary>
-        protected NewrelicArmOperation()
+        /// <summary> Initializes a new instance of NewRelicObservabilityArmOperation for mocking. </summary>
+        protected NewRelicObservabilityArmOperation()
         {
         }
 
-        internal NewrelicArmOperation(Response response)
+        internal NewRelicObservabilityArmOperation(Response response)
         {
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal NewrelicArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal NewRelicObservabilityArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "NewrelicArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "NewRelicObservabilityArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

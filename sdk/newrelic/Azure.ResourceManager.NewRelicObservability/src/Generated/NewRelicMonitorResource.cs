@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = await _newRelicMonitorResourceMonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail, cancellationToken).ConfigureAwait(false);
-                var operation = new NewrelicArmOperation(_newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation(_newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = _newRelicMonitorResourceMonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail, cancellationToken);
-                var operation = new NewrelicArmOperation(_newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation(_newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userEmail).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

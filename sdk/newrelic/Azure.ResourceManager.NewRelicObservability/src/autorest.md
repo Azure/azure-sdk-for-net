@@ -16,8 +16,6 @@ generate-model-factory: false
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -48,19 +46,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-prepend-rp-prefix:
-  - ProvisionState
-  - OperationStatus
-  - ProvisioningState
-  - UserDetails
-  - FileSystemResource
-  - FileSystemResourceListResult
-  - FileSystemsRestOperations
 rename-mapping:
     Agent: NewrelicAgent
     Endpoint: NewrelicEndpoint
     JobDefinitionData: NewrelicJobDefinitionData
     JobRun: NewrelicJobRun
+    ProvisioningState: NewrelicProvisioningState
     Project: NewrelicProject
     StorageMover: NewrelicStorageMover
     AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties

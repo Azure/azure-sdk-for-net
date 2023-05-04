@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.NewRelicObservability. </summary>
-    public static partial class NewrelicExtensions
+    public static partial class NewRelicObservabilityExtensions
     {
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {

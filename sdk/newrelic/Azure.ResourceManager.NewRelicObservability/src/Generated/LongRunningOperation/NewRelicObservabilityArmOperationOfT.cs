@@ -16,25 +16,25 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NewRelicObservability
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class NewrelicArmOperation<T> : ArmOperation<T>
+    internal class NewRelicObservabilityArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of NewrelicArmOperation for mocking. </summary>
-        protected NewrelicArmOperation()
+        /// <summary> Initializes a new instance of NewRelicObservabilityArmOperation for mocking. </summary>
+        protected NewRelicObservabilityArmOperation()
         {
         }
 
-        internal NewrelicArmOperation(Response<T> response)
+        internal NewRelicObservabilityArmOperation(Response<T> response)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal NewrelicArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal NewRelicObservabilityArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "NewrelicArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "NewRelicObservabilityArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
