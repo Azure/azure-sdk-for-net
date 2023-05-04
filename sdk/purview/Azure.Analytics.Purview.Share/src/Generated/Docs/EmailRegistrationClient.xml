@@ -26,7 +26,7 @@ var data = new {
     },
 };
 
-Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -105,7 +105,7 @@ var data = new {
     },
 };
 
-Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -176,7 +176,7 @@ This sample shows how to call RegisterAsync with all parameters, and how to pars
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.RegisterAsync("<repeatabilityRequestId>");
+Response response = await client.RegisterAsync("<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -230,7 +230,7 @@ This sample shows how to call Register with all parameters, and how to parse the
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.Register("<repeatabilityRequestId>");
+Response response = client.Register("<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());

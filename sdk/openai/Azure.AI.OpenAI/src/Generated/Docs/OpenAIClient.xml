@@ -5,9 +5,7 @@
 <example>
 This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     input = new {},
@@ -25,9 +23,7 @@ Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToStri
 ]]></code>
 This sample shows how to call GetEmbeddingsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     user = "<user>",
@@ -36,7 +32,7 @@ var data = new {
     input = new {},
 };
 
-Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -93,9 +89,7 @@ Schema for <c>Embeddings</c>:
 <example>
 This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     input = new {},
@@ -113,9 +107,7 @@ Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToStri
 ]]></code>
 This sample shows how to call GetEmbeddings with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     user = "<user>",
@@ -124,7 +116,7 @@ var data = new {
     input = new {},
 };
 
-Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -181,9 +173,7 @@ Schema for <c>Embeddings</c>:
 <example>
 This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {};
 
@@ -197,9 +187,7 @@ Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToStri
 ]]></code>
 This sample shows how to call GetCompletionsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     prompt = new[] {
@@ -226,7 +214,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -343,9 +331,7 @@ Schema for <c>Completions</c>:
 <example>
 This sample shows how to call GetCompletions with required parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {};
 
@@ -359,9 +345,7 @@ Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToStri
 ]]></code>
 This sample shows how to call GetCompletions with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new OpenAIClient(endpoint, credential);
+var client = new OpenAIClient("<openAIApiKey>");
 
 var data = new {
     prompt = new[] {
@@ -388,7 +372,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
