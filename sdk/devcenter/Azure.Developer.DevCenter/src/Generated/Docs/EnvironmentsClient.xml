@@ -39,28 +39,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentByUser(string,string,RequestContext)">
 <example>
@@ -100,28 +78,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateEnvironmentAsync(string,RequestContent,string,RequestContext)">
 <example>
@@ -184,47 +140,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>Environment</summary>Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-</details>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateEnvironment(string,RequestContent,string,RequestContext)">
 <example>
@@ -287,47 +202,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>Environment</summary>Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-</details>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemAsync(string,RequestContext)">
 <example>
@@ -345,20 +219,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItem</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItem(string,RequestContext)">
 <example>
@@ -376,20 +236,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItem</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersionAsync(string,string,RequestContext)">
 <example>
@@ -438,52 +284,6 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItemVersion</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersion(string,string,RequestContext)">
 <example>
@@ -532,52 +332,6 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItemVersion</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsAsync(int?,RequestContext)">
 <example>
@@ -619,28 +373,6 @@ await foreach (var data in client.GetEnvironmentsAsync(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironments(int?,RequestContext)">
 <example>
@@ -682,28 +414,6 @@ foreach (var data in client.GetEnvironments(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsByUserAsync(string,int?,RequestContext)">
 <example>
@@ -745,28 +455,6 @@ await foreach (var data in client.GetEnvironmentsByUserAsync(<me>, 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsByUser(string,int?,RequestContext)">
 <example>
@@ -808,28 +496,6 @@ foreach (var data in client.GetEnvironmentsByUser(<me>, 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemsAsync(int?,RequestContext)">
 <example>
@@ -860,20 +526,6 @@ await foreach (var data in client.GetCatalogItemsAsync(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemListResultValue</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItems(int?,RequestContext)">
 <example>
@@ -904,20 +556,6 @@ foreach (var data in client.GetCatalogItems(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemListResultValue</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersionsAsync(string,int?,RequestContext)">
 <example>
@@ -979,52 +617,6 @@ await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>",
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemVersionListResultValue</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersions(string,int?,RequestContext)">
 <example>
@@ -1086,52 +678,6 @@ foreach (var data in client.GetCatalogItemVersions("<catalogItemId>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemVersionListResultValue</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentTypesAsync(int?,RequestContext)">
 <example>
@@ -1162,20 +708,6 @@ await foreach (var data in client.GetEnvironmentTypesAsync(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Optional. Name of the environment type
-  deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentTypes(int?,RequestContext)">
 <example>
@@ -1206,20 +738,6 @@ foreach (var data in client.GetEnvironmentTypes(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Optional. Name of the environment type
-  deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1284,46 +802,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEnvironment(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1388,46 +866,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteEnvironmentAsync(WaitUntil,string,string,RequestContext)">
 <example>
@@ -1509,19 +947,6 @@ var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeployEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1555,19 +980,6 @@ var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmen
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="CustomEnvironmentActionAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1601,19 +1013,6 @@ var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="CustomEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1647,19 +1046,6 @@ var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmen
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

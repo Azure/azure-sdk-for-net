@@ -74,7 +74,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdateAsync(string,string,string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -105,7 +105,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdate(string,string,string,ETag?,RequestContext)']/*" />
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -137,7 +137,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFileAsync(string,string,string,string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -170,7 +170,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFile(string,string,string,string,ETag?,RequestContext)']/*" />
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -200,7 +200,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -227,7 +227,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatus(string,ETag?,RequestContext)']/*" />
         public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
@@ -507,7 +507,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> [Protocol Method] Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -533,7 +533,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> [Protocol Method] Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>

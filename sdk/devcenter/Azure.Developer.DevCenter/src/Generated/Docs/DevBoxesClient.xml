@@ -28,39 +28,6 @@ Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDat
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Pool</c>:
-<code>{
-  name: string, # Optional. Pool name
-  location: string, # Optional. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetPool(string,RequestContext)">
 <example>
@@ -89,39 +56,6 @@ Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDat
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Pool</c>:
-<code>{
-  name: string, # Optional. Pool name
-  location: string, # Optional. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetScheduleByPoolAsync(string,string,RequestContext)">
 <example>
@@ -141,22 +75,6 @@ Console.WriteLine(result.GetProperty("time").ToString());
 Console.WriteLine(result.GetProperty("timeZone").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Schedule</c>:
-<code>{
-  name: string, # Optional. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Optional. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Optional. The frequency of this scheduled task.
-  time: string, # Optional. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Optional. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetScheduleByPool(string,string,RequestContext)">
 <example>
@@ -176,22 +94,6 @@ Console.WriteLine(result.GetProperty("time").ToString());
 Console.WriteLine(result.GetProperty("timeZone").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Schedule</c>:
-<code>{
-  name: string, # Optional. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Optional. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Optional. The frequency of this scheduled task.
-  time: string, # Optional. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Optional. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevBoxByUserAsync(string,string,RequestContext)">
 <example>
@@ -241,51 +143,6 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevBoxByUser(string,string,RequestContext)">
 <example>
@@ -335,51 +192,6 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRemoteConnectionAsync(string,string,RequestContext)">
 <example>
@@ -407,19 +219,6 @@ Console.WriteLine(result.GetProperty("webUrl").ToString());
 Console.WriteLine(result.GetProperty("rdpConnectionUrl").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RemoteConnection</c>:
-<code>{
-  webUrl: string, # Optional. URL to open a browser based RDP session
-  rdpConnectionUrl: string, # Optional. Link to open a Remote Desktop session
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRemoteConnection(string,string,RequestContext)">
 <example>
@@ -447,19 +246,6 @@ Console.WriteLine(result.GetProperty("webUrl").ToString());
 Console.WriteLine(result.GetProperty("rdpConnectionUrl").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RemoteConnection</c>:
-<code>{
-  webUrl: string, # Optional. URL to open a browser based RDP session
-  rdpConnectionUrl: string, # Optional. Link to open a Remote Desktop session
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpcomingActionAsync(string,string,string,RequestContext)">
 <example>
@@ -491,23 +277,6 @@ Console.WriteLine(result.GetProperty("originalScheduledTime").ToString());
 Console.WriteLine(result.GetProperty("sourceId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpcomingAction</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpcomingAction(string,string,string,RequestContext)">
 <example>
@@ -539,23 +308,6 @@ Console.WriteLine(result.GetProperty("originalScheduledTime").ToString());
 Console.WriteLine(result.GetProperty("sourceId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpcomingAction</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="SkipUpcomingActionAsync(string,string,string,RequestContext)">
 <example>
@@ -631,23 +383,6 @@ Console.WriteLine(result.GetProperty("originalScheduledTime").ToString());
 Console.WriteLine(result.GetProperty("sourceId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpcomingAction</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="DelayUpcomingAction(string,string,DateTimeOffset,string,RequestContext)">
 <example>
@@ -679,23 +414,6 @@ Console.WriteLine(result.GetProperty("originalScheduledTime").ToString());
 Console.WriteLine(result.GetProperty("sourceId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpcomingAction</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetPoolsAsync(int?,string,RequestContext)">
 <example>
@@ -737,39 +455,6 @@ await foreach (var data in client.GetPoolsAsync(1234, "<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PoolListResultValue</c>:
-<code>{
-  name: string, # Optional. Pool name
-  location: string, # Optional. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetPools(int?,string,RequestContext)">
 <example>
@@ -811,39 +496,6 @@ foreach (var data in client.GetPools(1234, "<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PoolListResultValue</c>:
-<code>{
-  name: string, # Optional. Pool name
-  location: string, # Optional. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSchedulesByPoolAsync(string,int?,string,RequestContext)">
 <example>
@@ -876,22 +528,6 @@ await foreach (var data in client.GetSchedulesByPoolAsync("<poolName>", 1234, "<
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ScheduleListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Optional. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Optional. The frequency of this scheduled task.
-  time: string, # Optional. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Optional. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSchedulesByPool(string,int?,string,RequestContext)">
 <example>
@@ -924,22 +560,6 @@ foreach (var data in client.GetSchedulesByPool("<poolName>", 1234, "<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ScheduleListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Optional. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Optional. The frequency of this scheduled task.
-  time: string, # Optional. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Optional. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevBoxesByUserAsync(string,string,int?,RequestContext)">
 <example>
@@ -991,51 +611,6 @@ await foreach (var data in client.GetDevBoxesByUserAsync(<me>, "<filter>", 1234)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevBoxesByUser(string,string,int?,RequestContext)">
 <example>
@@ -1087,51 +662,6 @@ foreach (var data in client.GetDevBoxesByUser(<me>, "<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpcomingActionsAsync(string,string,RequestContext)">
 <example>
@@ -1165,23 +695,6 @@ await foreach (var data in client.GetUpcomingActionsAsync("<devBoxName>", <me>))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpcomingActionsListResultValue</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpcomingActions(string,string,RequestContext)">
 <example>
@@ -1215,23 +728,6 @@ foreach (var data in client.GetUpcomingActions("<devBoxName>", <me>))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpcomingActionsListResultValue</c>:
-<code>{
-  id: string, # Optional. Uniquely identifies the action.
-  actionType: &quot;Stop&quot;, # Optional. The action that will be taken.
-  reason: &quot;Schedule&quot;, # Optional. The reason for this action.
-  scheduledTime: string (ISO 8601 Format), # Optional. The target time the action will be triggered (UTC).
-  originalScheduledTime: string (ISO 8601 Format), # Optional. The original scheduled time for the action (UTC).
-  sourceId: string, # Optional. The id of the resource which triggered this action
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateDevBoxAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1292,92 +788,6 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateDevBox(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1438,92 +848,6 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  errorDetails: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteDevBoxAsync(WaitUntil,string,string,RequestContext)">
 <example>

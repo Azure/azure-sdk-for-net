@@ -74,7 +74,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUserAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnvironmentByUserAsync(string environmentName, string userId = "me", RequestContext context = null)
         {
@@ -102,7 +102,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUser(string,string,RequestContext)']/*" />
         public virtual Response GetEnvironmentByUser(string environmentName, string userId = "me", RequestContext context = null)
         {
@@ -125,13 +125,13 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> [Protocol Method] Partially updates an environment. </summary>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironmentAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> UpdateEnvironmentAsync(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
@@ -155,13 +155,13 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> [Protocol Method] Partially updates an environment. </summary>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='UpdateEnvironment(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response UpdateEnvironment(string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
@@ -189,7 +189,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemAsync(string catalogItemId, RequestContext context = null)
         {
@@ -215,7 +215,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItem(string,RequestContext)']/*" />
         public virtual Response GetCatalogItem(string catalogItemId, RequestContext context = null)
         {
@@ -242,7 +242,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogItemVersionAsync(string catalogItemId, string version, RequestContext context = null)
         {
@@ -270,7 +270,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogItemId"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersion(string,string,RequestContext)']/*" />
         public virtual Response GetCatalogItemVersion(string catalogItemId, string version, RequestContext context = null)
         {
@@ -444,13 +444,13 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Creates or updates an environment. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
@@ -475,13 +475,13 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Creates or updates an environment. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string environmentName, RequestContent content, string userId = "me", RequestContext context = null)
         {
@@ -564,7 +564,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Executes a deploy action. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
@@ -595,7 +595,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Executes a deploy action. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
@@ -626,7 +626,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Executes a custom action. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
@@ -657,7 +657,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> [Protocol Method] Executes a custom action. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>

@@ -24,35 +24,6 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("descri
 Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClass</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClass(string,RequestContext)">
 <example>
@@ -77,35 +48,6 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("descri
 Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClass</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateDeviceClassAsync(string,RequestContent,RequestContext)">
 <example>
@@ -134,43 +76,6 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("descri
 Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>PatchBody</c>:
-<code>{
-  friendlyName: string, # Required. The device class friendly name. Friendly name can be 1-100 characters, alphanumeric, dot, and dash.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeviceClass</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateDeviceClass(string,RequestContent,RequestContext)">
 <example>
@@ -199,43 +104,6 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("descri
 Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>PatchBody</c>:
-<code>{
-  friendlyName: string, # Required. The device class friendly name. Friendly name can be 1-100 characters, alphanumeric, dot, and dash.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeviceClass</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteDeviceClassAsync(string,RequestContext)">
 <example>
@@ -305,48 +173,6 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
 Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Device</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevice(string,RequestContext)">
 <example>
@@ -390,48 +216,6 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
 Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Device</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceModuleAsync(string,string,RequestContext)">
 <example>
@@ -475,48 +259,6 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
 Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Device</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceModule(string,string,RequestContext)">
 <example>
@@ -560,48 +302,6 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
 Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Device</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdateComplianceAsync(RequestContext)">
 <example>
@@ -620,21 +320,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdateCompliance(RequestContext)">
 <example>
@@ -653,21 +338,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetGroupAsync(string,RequestContext)">
 <example>
@@ -690,25 +360,6 @@ Console.WriteLine(result.GetProperty("subgroupsWithOnLatestUpdateCount").ToStrin
 Console.WriteLine(result.GetProperty("deployments")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Group</c>:
-<code>{
-  groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
-  groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
-  createdDateTime: string, # Required. Date and time when the update was created.
-  deviceCount: number, # Optional. The number of devices in the group.
-  subgroupsWithNewUpdatesAvailableCount: number, # Optional. The count of subgroups with new updates available.
-  subgroupsWithUpdatesInProgressCount: number, # Optional. The count of subgroups with updates in progress.
-  subgroupsWithOnLatestUpdateCount: number, # Optional. The count of subgroups with devices on the latest update.
-  deployments: [string], # Optional. The active deployment Ids for the group
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetGroup(string,RequestContext)">
 <example>
@@ -731,25 +382,6 @@ Console.WriteLine(result.GetProperty("subgroupsWithOnLatestUpdateCount").ToStrin
 Console.WriteLine(result.GetProperty("deployments")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Group</c>:
-<code>{
-  groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
-  groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
-  createdDateTime: string, # Required. Date and time when the update was created.
-  deviceCount: number, # Optional. The number of devices in the group.
-  subgroupsWithNewUpdatesAvailableCount: number, # Optional. The count of subgroups with new updates available.
-  subgroupsWithUpdatesInProgressCount: number, # Optional. The count of subgroups with updates in progress.
-  subgroupsWithOnLatestUpdateCount: number, # Optional. The count of subgroups with devices on the latest update.
-  deployments: [string], # Optional. The active deployment Ids for the group
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteGroupAsync(string,RequestContext)">
 <example>
@@ -794,21 +426,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdateComplianceForGroup(string,RequestContext)">
 <example>
@@ -827,21 +444,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentAsync(string,string,RequestContext)">
 <example>
@@ -875,40 +477,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeployment(string,string,RequestContext)">
 <example>
@@ -942,40 +510,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateDeploymentAsync(string,string,RequestContent,RequestContext)">
 <example>
@@ -1070,70 +604,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateDeployment(string,string,RequestContent,RequestContext)">
 <example>
@@ -1228,70 +698,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteDeploymentAsync(string,string,RequestContext)">
 <example>
@@ -1356,45 +762,6 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCo
 Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCanceledCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeploymentStatus</c>:
-<code>{
-  groupId: string, # Required. The group identity
-  deploymentState: &quot;Active&quot; | &quot;ActiveWithSubgroupFailures&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the deployment.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-  subgroupStatus: [
-    {
-      groupId: string, # Required. The group identity
-      deviceClassId: string, # Required. The device class subgroup identity
-      deploymentState: &quot;Active&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the subgroup deployment.
-      error: Error, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-      totalDevices: number, # Optional. The total number of devices in the deployment.
-      devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
-      devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
-      devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
-      devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
-    }
-  ], # Required. The collection of device class subgroup status objects
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentStatus(string,string,RequestContext)">
 <example>
@@ -1433,45 +800,6 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCo
 Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCanceledCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeploymentStatus</c>:
-<code>{
-  groupId: string, # Required. The group identity
-  deploymentState: &quot;Active&quot; | &quot;ActiveWithSubgroupFailures&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the deployment.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-  subgroupStatus: [
-    {
-      groupId: string, # Required. The group identity
-      deviceClassId: string, # Required. The device class subgroup identity
-      deploymentState: &quot;Active&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the subgroup deployment.
-      error: Error, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-      totalDevices: number, # Optional. The total number of devices in the deployment.
-      devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
-      devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
-      devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
-      devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
-    }
-  ], # Required. The collection of device class subgroup status objects
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
@@ -1491,22 +819,6 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroup</c>:
-<code>{
-  deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  groupId: string, # Required. Group identity.
-  createdDateTime: string, # Required. Date and time when the device class subgroup was created.
-  deviceCount: number, # Optional. The number of devices in the device class subgroup.
-  deploymentId: string, # Optional. The active deployment Id for the device class subgroup.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroup(string,string,RequestContext)">
 <example>
@@ -1526,22 +838,6 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroup</c>:
-<code>{
-  deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  groupId: string, # Required. Group identity.
-  createdDateTime: string, # Required. Date and time when the device class subgroup was created.
-  deviceCount: number, # Optional. The number of devices in the device class subgroup.
-  deploymentId: string, # Optional. The active deployment Id for the device class subgroup.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
@@ -1586,21 +882,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupUpdateCompliance(string,string,RequestContext)">
 <example>
@@ -1619,21 +900,6 @@ Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString(
 Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateCompliance</c>:
-<code>{
-  totalDeviceCount: number, # Required. Total number of devices.
-  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
-  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
-  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetBestUpdatesForDeviceClassSubgroupAsync(string,string,RequestContext)">
 <example>
@@ -1656,29 +922,6 @@ Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToStr
 Console.WriteLine(result.GetProperty("deviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupUpdatableDevices</c>:
-<code>{
-  groupId: string, # Required. The group Id
-  deviceClassId: string, # Required. The device class subgroup&apos;s device class Id
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information.
-  deviceCount: number, # Required. Total number of devices for which the update is applicable.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetBestUpdatesForDeviceClassSubgroup(string,string,RequestContext)">
 <example>
@@ -1701,29 +944,6 @@ Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToStr
 Console.WriteLine(result.GetProperty("deviceCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupUpdatableDevices</c>:
-<code>{
-  groupId: string, # Required. The group Id
-  deviceClassId: string, # Required. The device class subgroup&apos;s device class Id
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information.
-  deviceCount: number, # Required. Total number of devices for which the update is applicable.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentForDeviceClassSubgroupAsync(string,string,string,RequestContext)">
 <example>
@@ -1757,40 +977,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentForDeviceClassSubgroup(string,string,string,RequestContext)">
 <example>
@@ -1824,40 +1010,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteDeploymentForDeviceClassSubgroupAsync(string,string,string,RequestContext)">
 <example>
@@ -1917,40 +1069,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="StopDeployment(string,string,string,RequestContext)">
 <example>
@@ -1984,40 +1102,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RetryDeploymentAsync(string,string,string,RequestContext)">
 <example>
@@ -2051,40 +1135,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RetryDeployment(string,string,string,RequestContext)">
 <example>
@@ -2118,40 +1168,6 @@ Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").Ge
 Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Deployment</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupDeploymentStatusAsync(string,string,string,RequestContext)">
 <example>
@@ -2181,38 +1197,6 @@ Console.WriteLine(result.GetProperty("devicesCompletedSucceededCount").ToString(
 Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupDeploymentStatus</c>:
-<code>{
-  groupId: string, # Required. The group identity
-  deviceClassId: string, # Required. The device class subgroup identity
-  deploymentState: &quot;Active&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the subgroup deployment.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-  totalDevices: number, # Optional. The total number of devices in the deployment.
-  devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
-  devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
-  devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
-  devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupDeploymentStatus(string,string,string,RequestContext)">
 <example>
@@ -2242,38 +1226,6 @@ Console.WriteLine(result.GetProperty("devicesCompletedSucceededCount").ToString(
 Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupDeploymentStatus</c>:
-<code>{
-  groupId: string, # Required. The group identity
-  deviceClassId: string, # Required. The device class subgroup identity
-  deploymentState: &quot;Active&quot; | &quot;Failed&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the subgroup deployment.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. The error details of the Failed state.  This is not present if the deployment state is not Failed.
-  totalDevices: number, # Optional. The total number of devices in the deployment.
-  devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
-  devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
-  devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
-  devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatusAsync(string,ETag?,RequestContext)">
 <example>
@@ -2315,36 +1267,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceOperation</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatus(string,ETag?,RequestContext)">
 <example>
@@ -2386,36 +1308,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceOperation</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="StartLogCollectionAsync(string,RequestContent,RequestContext)">
 <example>
@@ -2467,46 +1359,6 @@ Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-Response Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="StartLogCollection(string,RequestContent,RequestContext)">
 <example>
@@ -2558,46 +1410,6 @@ Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-Response Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollectionAsync(string,RequestContext)">
 <example>
@@ -2619,28 +1431,6 @@ Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollection(string,RequestContext)">
 <example>
@@ -2662,28 +1452,6 @@ Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LogCollection</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollectionDetailedStatusAsync(string,RequestContext)">
 <example>
@@ -2709,32 +1477,6 @@ Console.WriteLine(result.GetProperty("deviceStatus")[0].GetProperty("logLocation
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LogCollectionOperationDetailedStatus</c>:
-<code>{
-  operationId: string, # Optional. The device diagnostics operation id.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-  deviceStatus: [
-    {
-      deviceId: string, # Required. Device id
-      moduleId: string, # Optional. Module id.
-      status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Log upload status
-      resultCode: string, # Optional. Log upload result code
-      extendedResultCode: string, # Optional. Log upload extended result code
-      logLocation: string, # Optional. Log upload location
-    }
-  ], # Optional. Status of the devices in the operation
-  description: string, # Optional. Device diagnostics operation description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollectionDetailedStatus(string,RequestContext)">
 <example>
@@ -2760,32 +1502,6 @@ Console.WriteLine(result.GetProperty("deviceStatus")[0].GetProperty("logLocation
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>LogCollectionOperationDetailedStatus</c>:
-<code>{
-  operationId: string, # Optional. The device diagnostics operation id.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-  deviceStatus: [
-    {
-      deviceId: string, # Required. Device id
-      moduleId: string, # Optional. Module id.
-      status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Log upload status
-      resultCode: string, # Optional. Log upload result code
-      extendedResultCode: string, # Optional. Log upload extended result code
-      logLocation: string, # Optional. Log upload location
-    }
-  ], # Optional. Status of the devices in the operation
-  description: string, # Optional. Device diagnostics operation description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassesAsync(string,RequestContext)">
 <example>
@@ -2824,35 +1540,6 @@ await foreach (var data in client.GetDeviceClassesAsync("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassesListValue</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClasses(string,RequestContext)">
 <example>
@@ -2891,35 +1578,6 @@ foreach (var data in client.GetDeviceClasses("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassesListValue</c>:
-<code>{
-  deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-  deviceClassProperties: {
-    contractModel: {
-      id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-      name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-    }, # Optional. The Device Update agent contract model.
-    compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-  }, # Required. The device class properties that are used to calculate the device class Id
-  bestCompatibleUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. Update that is the highest version compatible with this device class.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetInstallableUpdatesForDeviceClassesAsync(string,RequestContext)">
 <example>
@@ -2940,24 +1598,6 @@ await foreach (var data in client.GetInstallableUpdatesForDeviceClassesAsync("<d
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateInfoListValue</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identifier.
-  description: string, # Optional. Update description.
-  friendlyName: string, # Optional. Friendly update name.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetInstallableUpdatesForDeviceClasses(string,RequestContext)">
 <example>
@@ -2978,24 +1618,6 @@ foreach (var data in client.GetInstallableUpdatesForDeviceClasses("<deviceClassI
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateInfoListValue</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identifier.
-  description: string, # Optional. Update description.
-  friendlyName: string, # Optional. Friendly update name.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevicesAsync(string,RequestContext)">
 <example>
@@ -3054,48 +1676,6 @@ await foreach (var data in client.GetDevicesAsync("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevicesListValue</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDevices(string,RequestContext)">
 <example>
@@ -3154,48 +1734,6 @@ foreach (var data in client.GetDevices("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevicesListValue</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  deviceClassId: string, # Required. Device class identity.
-  groupId: string, # Optional. Device group identity.
-  lastAttemptedUpdate: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update that device last attempted to install.
-  deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
-  installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
-  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
-  lastInstallResult: {
-    resultCode: number, # Required. Install result code.
-    extendedResultCode: number, # Required. Install extended result code
-    resultDetails: string, # Optional. A string containing further details about the install result
-    stepResults: [
-      {
-        update: UpdateInfo, # Optional. The update that this step installs if it is of reference type.
-        description: string, # Optional. Step description.
-        resultCode: number, # Required. Install result code.
-        extendedResultCode: number, # Required. Install extended result code
-        resultDetails: string, # Optional. A string containing further details about the install result
-      }
-    ], # Optional. Array of step results
-  }, # Optional. Last install result.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetGroupsAsync(string,RequestContext)">
 <example>
@@ -3233,25 +1771,6 @@ await foreach (var data in client.GetGroupsAsync("<orderBy>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>GroupsListValue</c>:
-<code>{
-  groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
-  groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
-  createdDateTime: string, # Required. Date and time when the update was created.
-  deviceCount: number, # Optional. The number of devices in the group.
-  subgroupsWithNewUpdatesAvailableCount: number, # Optional. The count of subgroups with new updates available.
-  subgroupsWithUpdatesInProgressCount: number, # Optional. The count of subgroups with updates in progress.
-  subgroupsWithOnLatestUpdateCount: number, # Optional. The count of subgroups with devices on the latest update.
-  deployments: [string], # Optional. The active deployment Ids for the group
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetGroups(string,RequestContext)">
 <example>
@@ -3289,25 +1808,6 @@ foreach (var data in client.GetGroups("<orderBy>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>GroupsListValue</c>:
-<code>{
-  groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
-  groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
-  createdDateTime: string, # Required. Date and time when the update was created.
-  deviceCount: number, # Optional. The number of devices in the group.
-  subgroupsWithNewUpdatesAvailableCount: number, # Optional. The count of subgroups with new updates available.
-  subgroupsWithUpdatesInProgressCount: number, # Optional. The count of subgroups with updates in progress.
-  subgroupsWithOnLatestUpdateCount: number, # Optional. The count of subgroups with devices on the latest update.
-  deployments: [string], # Optional. The active deployment Ids for the group
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetBestUpdatesForGroupsAsync(string,RequestContext)">
 <example>
@@ -3331,29 +1831,6 @@ await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupUpdatableDevicesListValue</c>:
-<code>{
-  groupId: string, # Required. The group Id
-  deviceClassId: string, # Required. The device class subgroup&apos;s device class Id
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information.
-  deviceCount: number, # Required. Total number of devices for which the update is applicable.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetBestUpdatesForGroups(string,RequestContext)">
 <example>
@@ -3377,29 +1854,6 @@ foreach (var data in client.GetBestUpdatesForGroups("<groupId>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupUpdatableDevicesListValue</c>:
-<code>{
-  groupId: string, # Required. The group Id
-  deviceClassId: string, # Required. The device class subgroup&apos;s device class Id
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information.
-  deviceCount: number, # Required. Total number of devices for which the update is applicable.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentsForGroupsAsync(string,string,RequestContext)">
 <example>
@@ -3451,40 +1905,6 @@ await foreach (var data in client.GetDeploymentsForGroupsAsync("<groupId>", "<or
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentsListValue</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentsForGroups(string,string,RequestContext)">
 <example>
@@ -3536,40 +1956,6 @@ foreach (var data in client.GetDeploymentsForGroups("<groupId>", "<orderBy>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentsListValue</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupsForGroupsAsync(string,string,RequestContext)">
 <example>
@@ -3604,22 +1990,6 @@ await foreach (var data in client.GetDeviceClassSubgroupsForGroupsAsync("<groupI
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupsListValue</c>:
-<code>{
-  deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  groupId: string, # Required. Group identity.
-  createdDateTime: string, # Required. Date and time when the device class subgroup was created.
-  deviceCount: number, # Optional. The number of devices in the device class subgroup.
-  deploymentId: string, # Optional. The active deployment Id for the device class subgroup.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceClassSubgroupsForGroups(string,string,RequestContext)">
 <example>
@@ -3654,22 +2024,6 @@ foreach (var data in client.GetDeviceClassSubgroupsForGroups("<groupId>", "<filt
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceClassSubgroupsListValue</c>:
-<code>{
-  deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
-  groupId: string, # Required. Group identity.
-  createdDateTime: string, # Required. Date and time when the device class subgroup was created.
-  deviceCount: number, # Optional. The number of devices in the device class subgroup.
-  deploymentId: string, # Optional. The active deployment Id for the device class subgroup.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentsForDeviceClassSubgroupsAsync(string,string,string,RequestContext)">
 <example>
@@ -3721,40 +2075,6 @@ await foreach (var data in client.GetDeploymentsForDeviceClassSubgroupsAsync("<g
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentsListValue</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeploymentsForDeviceClassSubgroups(string,string,string,RequestContext)">
 <example>
@@ -3806,40 +2126,6 @@ foreach (var data in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentsListValue</c>:
-<code>{
-  deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
-  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Required. Update information for the update in the deployment.
-  groupId: string, # Required. The group identity for the devices the deployment is intended to update.
-  deviceClassSubgroups: [string], # Optional. The device class subgroups the deployment is compatible with and subgroup deployments have been created for. This is not provided by the caller during CreateOrUpdateDeployment but is automatically determined by Device Update
-  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
-  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
-  rollbackPolicy: {
-    update: UpdateInfo, # Required. Update to rollback to.
-    failure: {
-      devicesFailedPercentage: number, # Required. Percentage of devices that failed.
-      devicesFailedCount: number, # Required. Number of devices that failed.
-    }, # Required. Failure conditions to initiate rollback policy.
-  }, # Optional. The rollback policy for the deployment.
-  isCloudInitiatedRollback: boolean, # Optional. Boolean flag indicating whether the deployment is a rollback deployment.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string,string,string,string,RequestContext)">
 <example>
@@ -3875,22 +2161,6 @@ await foreach (var data in client.GetDeviceStatesForDeviceClassSubgroupDeploymen
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentDeviceStatesListValue</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  retryCount: number, # Required. The number of times this deployment has been retried on this device.
-  movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
-  deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Required. Deployment device state.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceStatesForDeviceClassSubgroupDeployments(string,string,string,string,RequestContext)">
 <example>
@@ -3926,22 +2196,6 @@ foreach (var data in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<g
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeploymentDeviceStatesListValue</c>:
-<code>{
-  deviceId: string, # Required. Device identity.
-  moduleId: string, # Optional. Device module identity.
-  retryCount: number, # Required. The number of times this deployment has been retried on this device.
-  movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
-  deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Required. Deployment device state.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatusesAsync(string,int?,RequestContext)">
 <example>
@@ -3985,36 +2239,6 @@ await foreach (var data in client.GetOperationStatusesAsync("<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceOperationsListValue</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatuses(string,int?,RequestContext)">
 <example>
@@ -4058,36 +2282,6 @@ foreach (var data in client.GetOperationStatuses("<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceOperationsListValue</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollectionsAsync(RequestContext)">
 <example>
@@ -4110,28 +2304,6 @@ await foreach (var data in client.GetLogCollectionsAsync())
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>LogCollectionListValue</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLogCollections(RequestContext)">
 <example>
@@ -4154,28 +2326,6 @@ foreach (var data in client.GetLogCollections())
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>LogCollectionListValue</c>:
-<code>{
-  operationId: string, # Optional. The log collection id.
-  deviceList: [
-    {
-      deviceId: string, # Required. Device Id
-      moduleId: string, # Optional. Module Id
-    }
-  ], # Required. Array of Device Update agent ids
-  description: string, # Optional. Description of the diagnostics operation.
-  createdDateTime: string, # Optional. The timestamp when the operation was created.
-  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetHealthOfDevicesAsync(string,RequestContext)">
 <example>
@@ -4197,27 +2347,6 @@ await foreach (var data in client.GetHealthOfDevicesAsync("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceHealthListValue</c>:
-<code>{
-  deviceId: string, # Required. Device id
-  moduleId: string, # Optional. Module id
-  state: &quot;healthy&quot; | &quot;unhealthy&quot;, # Required. Aggregate device health state
-  digitalTwinModelId: string, # Optional. Digital twin model Id
-  healthChecks: [
-    {
-      name: string, # Optional. Health check name
-      result: &quot;success&quot; | &quot;userError&quot;, # Optional. Health check result
-    }
-  ], # Required. Array of health checks and their results
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetHealthOfDevices(string,RequestContext)">
 <example>
@@ -4239,27 +2368,6 @@ foreach (var data in client.GetHealthOfDevices("<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceHealthListValue</c>:
-<code>{
-  deviceId: string, # Required. Device id
-  moduleId: string, # Optional. Module id
-  state: &quot;healthy&quot; | &quot;unhealthy&quot;, # Required. Aggregate device health state
-  digitalTwinModelId: string, # Optional. Digital twin model Id
-  healthChecks: [
-    {
-      name: string, # Optional. Health check name
-      result: &quot;success&quot; | &quot;userError&quot;, # Optional. Health check result
-    }
-  ], # Required. Array of health checks and their results
-}
-</code>
-
-</remarks>
     </member>
     <member name="ImportDevicesAsync(WaitUntil,RequestContent,RequestContext)">
 <example>
