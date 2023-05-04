@@ -50,11 +50,11 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> [Protocol Method] Returns a list of WeatherData. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetWeatherDataAsync(RequestContent content, RequestContext context = null)
         {
@@ -75,11 +75,11 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> [Protocol Method] Returns a list of WeatherData. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(RequestContent,RequestContext)']/*" />
         public virtual Response GetWeatherData(RequestContent content, RequestContext context = null)
         {

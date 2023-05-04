@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedInvitationAsync(string receivedInvitationName, RequestContext context = null)
         {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='GetReceivedInvitation(string,RequestContext)']/*" />
         public virtual Response GetReceivedInvitation(string receivedInvitationName, RequestContext context = null)
         {
@@ -114,13 +114,13 @@ namespace Azure.Analytics.Purview.Share
 
         /// <summary> [Protocol Method] Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='RejectAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> RejectAsync(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
@@ -143,13 +143,13 @@ namespace Azure.Analytics.Purview.Share
 
         /// <summary> [Protocol Method] Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedInvitationsClient.xml" path="doc/members/member[@name='Reject(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response Reject(string receivedInvitationName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
