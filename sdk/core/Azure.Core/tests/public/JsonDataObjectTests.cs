@@ -133,5 +133,22 @@ namespace Azure.Core.Tests.Public
 
             Assert.Throws<RuntimeBinderException>(() => data.Get("first"));
         }
+
+        [Test]
+        public void CannotGetArrayLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
+
+            Assert.IsNull(data.Length);
+        }
+
+        [Test]
+        public void CanGetPropertyCalledLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "Foo": 1, "Length": 2 }""");
+            int length = data.Length;
+
+            Assert.AreEqual(2, length);
+        }
     }
 }

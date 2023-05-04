@@ -9,7 +9,6 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
@@ -47,6 +46,11 @@ namespace Azure.Core.Dynamic
         private object? GetProperty(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            if (_element.ValueKind == JsonValueKind.Array && name == "Length")
+            {
+                return _element.GetArrayLength();
+            }
 
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {

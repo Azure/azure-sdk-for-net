@@ -65,10 +65,14 @@ namespace Azure.Core.Samples
 #endif
 
             // JSON is `{ "values" : [1, 2, 3] }`
-            int value = widget.Values[0];
+            if (widget.values.Length > 0)
+            {
+                int value = widget.values[0];
+            }
             #endregion
 
-            Assert.IsTrue(value == 1);
+            Assert.IsTrue(widget.values.Length > 0);
+            Assert.IsTrue(widget.values[0] == 1);
         }
 
         [Test]
