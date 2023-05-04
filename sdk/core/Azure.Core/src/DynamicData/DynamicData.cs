@@ -57,7 +57,7 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            if (PascalCaseGetters() && char.IsUpper(name[0]))
+            if (PascalCaseDynamic() && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
@@ -68,16 +68,16 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private bool PascalCaseGetters()
+        private bool PascalCaseDynamic()
         {
             return
-                _options.NameMapping == DynamicDataNameMapping.PascalCaseGetters ||
-                _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseDynamic ||
+                _options.NameMapping == DynamicDataNameMapping.PascalCaseDynamicCamelCaseData;
         }
 
-        private bool CamelCaseSetters()
+        private bool CamelCaseData()
         {
-            return _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
+            return _options.NameMapping == DynamicDataNameMapping.PascalCaseDynamicCamelCaseData;
         }
 
         private static string GetAsCamelCase(string value)
@@ -145,7 +145,7 @@ namespace Azure.Core.Dynamic
             }
 
             // It's a new property, so set according to the mapping.
-            name = CamelCaseSetters() ? GetAsCamelCase(name) : name;
+            name = CamelCaseData() ? GetAsCamelCase(name) : name;
             _element = _element.SetProperty(name, value);
 
             // Binding machinery expects the call site signature to return an object

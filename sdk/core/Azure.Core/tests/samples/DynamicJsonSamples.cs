@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -115,7 +116,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic content = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -186,7 +187,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -199,7 +200,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreUseDynamicDataDefaults
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
             string id = widget.Id;
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));

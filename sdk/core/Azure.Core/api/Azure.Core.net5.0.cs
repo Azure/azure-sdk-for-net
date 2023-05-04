@@ -48,8 +48,8 @@ namespace Azure
     }
     public partial class DynamicDataOptions
     {
-        public static readonly Azure.DynamicDataOptions Default;
         public DynamicDataOptions() { }
+        public DynamicDataOptions(Azure.Core.Dynamic.DynamicDataDefaults defaults) { }
         public Azure.Core.Dynamic.DynamicDataNameMapping NameMapping { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
@@ -811,11 +811,16 @@ namespace Azure.Core.Dynamic
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum DynamicDataDefaults
+    {
+        General = 0,
+        Azure = 1,
+    }
     public enum DynamicDataNameMapping
     {
         None = 0,
-        PascalCaseGetters = 1,
-        PascalCaseGettersCamelCaseSetters = 2,
+        PascalCaseDynamic = 1,
+        PascalCaseDynamicCamelCaseData = 2,
     }
 }
 namespace Azure.Core.Extensions

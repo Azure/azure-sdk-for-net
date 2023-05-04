@@ -4,7 +4,7 @@
 namespace Azure.Core.Dynamic
 {
     /// <summary>
-    /// Options for getting and setting DynamicData properties.
+    /// Options for mapping DynamicData property names to names of members in the wrapped data buffer.
     /// </summary>
     public enum DynamicDataNameMapping
     {
@@ -14,16 +14,16 @@ namespace Azure.Core.Dynamic
         None = 0,
 
         /// <summary>
-        /// A "PascalCase" DynamicData property can be used to read and set "camelCase" properties that exist in the data buffer.
-        /// New properties are written to the data buffer with the same casing as the DynamicData property.
+        /// A "PascalCase" DynamicData property can be used to get and set "camelCase" members in the data buffer.
+        /// New value member names are written to the data buffer with the same casing as the DynamicData property.
         /// </summary>
-        PascalCaseGetters = 1,
+        PascalCaseDynamic = 1,
 
         /// <summary>
         /// Default settings for Azure services.
-        /// A "PascalCase" DynamicData property can be used to read and set "camelCase" properties that exist in the data buffer.
-        /// New properties are written to the data buffer using "camelCase" property names.
+        /// A "PascalCase" DynamicData property can be used to get and set "camelCase" members in the data buffer.
+        /// New value member names are written to the data buffer using "camelCase" property names.
         /// </summary>
-        PascalCaseGettersCamelCaseSetters = 2
+        PascalCaseDynamicCamelCaseData = 2
     }
 }

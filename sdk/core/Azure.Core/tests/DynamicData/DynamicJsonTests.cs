@@ -412,7 +412,7 @@ namespace Azure.Core.Tests
         {
             string json = """{ "foo" : 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             Assert.AreEqual(1, (int)dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
@@ -436,7 +436,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseDynamic
             };
 
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
@@ -450,7 +450,7 @@ namespace Azure.Core.Tests
         {
             string json = """{ "foo" : 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             Assert.AreEqual(1, (int)dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
@@ -474,7 +474,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseDynamic
             };
 
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
@@ -488,7 +488,7 @@ namespace Azure.Core.Tests
         {
             string json = """{ "Foo" : 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             Assert.AreEqual(null, dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
@@ -528,7 +528,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseDynamic
             };
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
 
@@ -563,7 +563,7 @@ namespace Azure.Core.Tests
         {
             string json = """{ "foo": 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             // Existing property access
             dynamicJson.foo = 2;
@@ -628,7 +628,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
+                NameMapping = DynamicDataNameMapping.PascalCaseDynamic
             };
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
 
@@ -665,7 +665,7 @@ namespace Azure.Core.Tests
         {
             string json = """{ "Foo": 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
             // Existing property access does not add a camelCase property.
             dynamicJson.Foo = 2;
@@ -707,7 +707,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
         }
@@ -756,7 +756,7 @@ namespace Azure.Core.Tests
                         }
                     ]
                 }
-                """, DynamicDataNameMapping.PascalCaseGetters);
+                """, DynamicDataNameMapping.PascalCaseDynamic);
 
             IEnumerable ary = (IEnumerable)jsonData.Array;
             IEnumerator e = ary.GetEnumerator();
@@ -820,7 +820,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """, DynamicDataNameMapping.PascalCaseGetters);
+                """, DynamicDataNameMapping.PascalCaseDynamic);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -849,7 +849,7 @@ namespace Azure.Core.Tests
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseDynamicCamelCaseData);
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (bool)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.Number.ToString()));
@@ -864,7 +864,7 @@ namespace Azure.Core.Tests
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseDynamicCamelCaseData);
 
             json.Foo = true;
 

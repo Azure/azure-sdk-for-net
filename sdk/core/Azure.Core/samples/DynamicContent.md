@@ -96,7 +96,7 @@ When working with JSON from Azure services, you can learn what properties are av
 
 ```C# Snippet:AzureCoreUseDynamicDataDefaults
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 string id = widget.Id;
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
@@ -110,7 +110,7 @@ Dynamic JSON objects can be cast to CLR types using the cast operator.
 
 ```C# Snippet:AzureCoreCastDynamicJsonToPOCO
 Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+dynamic content = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;
@@ -157,7 +157,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+dynamic widget = response.Content.ToDynamicFromJson(new DynamicDataOptions(DynamicDataDefaults.Azure));
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
