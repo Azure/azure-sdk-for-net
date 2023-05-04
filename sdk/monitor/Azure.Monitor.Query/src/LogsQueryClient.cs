@@ -433,12 +433,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -483,12 +483,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -719,14 +719,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
@@ -780,14 +773,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
