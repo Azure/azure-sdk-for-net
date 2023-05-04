@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected string groupName;
+        public const string DefaultResourceGroupNamePrefix = "DiagnosticsRp-Synthetics-Public-Global";
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected SelfHelpManagementTestBase(bool isAsync, RecordedTestMode mode)
