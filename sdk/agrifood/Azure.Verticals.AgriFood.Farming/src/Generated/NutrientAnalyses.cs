@@ -57,7 +57,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysisAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetNutrientAnalysisAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysis(string,string,RequestContext)']/*" />
         public virtual Response GetNutrientAnalysis(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
@@ -109,12 +109,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
@@ -139,12 +139,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
