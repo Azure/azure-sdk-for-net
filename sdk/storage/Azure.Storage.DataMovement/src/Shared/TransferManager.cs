@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -257,6 +258,32 @@ namespace Azure.Storage.DataMovement
             else
             {
                 throw Errors.InvalidTransferId(nameof(TryPauseTransferAsync), transferId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current transfers stored in the <see cref="TransferManager"/>.
+        /// </summary>
+        /// <param name="filterByStatus">
+        /// If specified, the returned list of transfers will have only have the transfers
+        /// of which match the status specified.
+        ///
+        /// If not specified or specified to <see cref="StorageTransferStatus.None"/>,
+        /// all transfers will be returned regardless of status.
+        /// </param>
+        /// <returns></returns>
+        public virtual List<DataTransfer> GetTransfers(
+            StorageTransferStatus filterByStatus = StorageTransferStatus.None)
+        {
+            if (filterByStatus == StorageTransferStatus.None)
+            {
+                return _dataTransfers.Select(d => d.Value).ToList();
+            }
+            else
+            {
+                return _dataTransfers.
+                    Select(d => d.Value).
+                    Where(x => x.TransferStatus == filterByStatus).ToList();
             }
         }
 

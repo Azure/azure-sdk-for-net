@@ -3,6 +3,7 @@
 ## 12.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added support for `TransferManager.GetTransfers`, to retrieve the list of transfers in the `TransferManager`.
 
 ### Breaking Changes
 
