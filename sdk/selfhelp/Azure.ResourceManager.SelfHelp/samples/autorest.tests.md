@@ -10,4 +10,7 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
+  skipped-operations:
+  - Diagnostics_CheckNameAvailability
+  - DiscoverySolution_List
 ```

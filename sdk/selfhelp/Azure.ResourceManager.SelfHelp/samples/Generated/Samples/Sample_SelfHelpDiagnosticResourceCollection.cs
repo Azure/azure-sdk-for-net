@@ -15,7 +15,7 @@ using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
-    public partial class Sample_DiagnosticResourceCollection
+    public partial class Sample_SelfHelpDiagnosticResourceCollection
     {
         // Creates a Diagnostic for a KeyVault resource
         [NUnit.Framework.Test]
@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this DiagnosticResource
+            // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            DiagnosticResourceCollection collection = client.GetDiagnosticResources(scopeId);
+            SelfHelpDiagnosticResourceCollection collection = client.GetSelfHelpDiagnosticResources(scopeId);
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";
-            DiagnosticResourceData data = new DiagnosticResourceData();
-            ArmOperation<DiagnosticResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diagnosticsResourceName, data);
-            DiagnosticResource result = lro.Value;
+            SelfHelpDiagnosticResourceData data = new SelfHelpDiagnosticResourceData();
+            ArmOperation<SelfHelpDiagnosticResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diagnosticsResourceName, data);
+            SelfHelpDiagnosticResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DiagnosticResourceData resourceData = result.Data;
+            SelfHelpDiagnosticResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this DiagnosticResource
+            // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            DiagnosticResourceCollection collection = client.GetDiagnosticResources(scopeId);
+            SelfHelpDiagnosticResourceCollection collection = client.GetSelfHelpDiagnosticResources(scopeId);
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";
-            DiagnosticResource result = await collection.GetAsync(diagnosticsResourceName);
+            SelfHelpDiagnosticResource result = await collection.GetAsync(diagnosticsResourceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DiagnosticResourceData resourceData = result.Data;
+            SelfHelpDiagnosticResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this DiagnosticResource
+            // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            DiagnosticResourceCollection collection = client.GetDiagnosticResources(scopeId);
+            SelfHelpDiagnosticResourceCollection collection = client.GetSelfHelpDiagnosticResources(scopeId);
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";

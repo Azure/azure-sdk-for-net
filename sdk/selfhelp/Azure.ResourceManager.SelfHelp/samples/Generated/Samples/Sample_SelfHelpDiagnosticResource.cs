@@ -15,7 +15,7 @@ using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
-    public partial class Sample_DiagnosticResource
+    public partial class Sample_SelfHelpDiagnosticResource
     {
         // Creates a Diagnostic for a KeyVault resource
         [NUnit.Framework.Test]
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DiagnosticResource created on azure
-            // for more information of creating DiagnosticResource, please refer to the document of DiagnosticResource
+            // this example assumes you already have this SelfHelpDiagnosticResource created on azure
+            // for more information of creating SelfHelpDiagnosticResource, please refer to the document of SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             string diagnosticsResourceName = "VMNotWorkingInsight";
-            ResourceIdentifier diagnosticResourceId = DiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
-            DiagnosticResource diagnosticResource = client.GetDiagnosticResource(diagnosticResourceId);
+            ResourceIdentifier selfHelpDiagnosticResourceId = SelfHelpDiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
+            SelfHelpDiagnosticResource selfHelpDiagnosticResource = client.GetSelfHelpDiagnosticResource(selfHelpDiagnosticResourceId);
 
             // invoke the operation
-            DiagnosticResourceData data = new DiagnosticResourceData();
-            ArmOperation<DiagnosticResource> lro = await diagnosticResource.UpdateAsync(WaitUntil.Completed, data);
-            DiagnosticResource result = lro.Value;
+            SelfHelpDiagnosticResourceData data = new SelfHelpDiagnosticResourceData();
+            ArmOperation<SelfHelpDiagnosticResource> lro = await selfHelpDiagnosticResource.UpdateAsync(WaitUntil.Completed, data);
+            SelfHelpDiagnosticResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DiagnosticResourceData resourceData = result.Data;
+            SelfHelpDiagnosticResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DiagnosticResource created on azure
-            // for more information of creating DiagnosticResource, please refer to the document of DiagnosticResource
+            // this example assumes you already have this SelfHelpDiagnosticResource created on azure
+            // for more information of creating SelfHelpDiagnosticResource, please refer to the document of SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             string diagnosticsResourceName = "VMNotWorkingInsight";
-            ResourceIdentifier diagnosticResourceId = DiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
-            DiagnosticResource diagnosticResource = client.GetDiagnosticResource(diagnosticResourceId);
+            ResourceIdentifier selfHelpDiagnosticResourceId = SelfHelpDiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
+            SelfHelpDiagnosticResource selfHelpDiagnosticResource = client.GetSelfHelpDiagnosticResource(selfHelpDiagnosticResourceId);
 
             // invoke the operation
-            DiagnosticResource result = await diagnosticResource.GetAsync();
+            SelfHelpDiagnosticResource result = await selfHelpDiagnosticResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DiagnosticResourceData resourceData = result.Data;
+            SelfHelpDiagnosticResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
