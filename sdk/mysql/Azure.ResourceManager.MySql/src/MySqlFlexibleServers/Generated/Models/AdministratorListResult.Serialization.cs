@@ -12,33 +12,39 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerConfigurations
+    internal partial class AdministratorListResult
     {
-        internal static MySqlFlexibleServerConfigurations DeserializeMySqlFlexibleServerConfigurations(JsonElement element)
+        internal static AdministratorListResult DeserializeAdministratorListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> values = default;
+            Optional<IReadOnlyList<AzureADAdministratorData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"u8))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServerConfigurationData> array = new List<MySqlFlexibleServerConfigurationData>();
+                    List<AzureADAdministratorData> array = new List<AzureADAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(item));
+                        array.Add(AzureADAdministratorData.DeserializeAzureADAdministratorData(item));
                     }
-                    values = array;
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new MySqlFlexibleServerConfigurations(Optional.ToList(values));
+            return new AdministratorListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

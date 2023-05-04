@@ -20,12 +20,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="delegatedSubnetsUsage"> A list of delegated subnet usage. </param>
-        internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult(IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage)
+        internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult(AzureLocation? location, string subscriptionId, IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage)
         {
+            Location = location;
+            SubscriptionId = subscriptionId;
             DelegatedSubnetsUsage = delegatedSubnetsUsage;
         }
 
+        /// <summary> The location name. </summary>
+        public AzureLocation? Location { get; }
+        /// <summary> The subscription id. </summary>
+        public string SubscriptionId { get; }
         /// <summary> A list of delegated subnet usage. </summary>
         public IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
     }

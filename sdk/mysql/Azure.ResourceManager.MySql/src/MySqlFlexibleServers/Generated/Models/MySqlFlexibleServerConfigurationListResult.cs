@@ -12,7 +12,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> A list of server configurations. </summary>
-    internal partial class MySqlFlexibleServerConfigurationListResult
+    public partial class MySqlFlexibleServerConfigurationListResult
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationListResult. </summary>
         internal MySqlFlexibleServerConfigurationListResult()

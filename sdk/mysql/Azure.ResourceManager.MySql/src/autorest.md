@@ -12,12 +12,12 @@ library-name: MySql
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2021-05-01
+  - tag: package-flexibleserver-2022-09-30-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
 namespace: Azure.ResourceManager.MySql
-require: https://github.com/Azure/azure-rest-api-specs/blob/9d85adf7eb1bf9877be1e7a7991b7f1e2252a0e2/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 modelerfour:
   flatten-payloads: false
@@ -179,9 +179,9 @@ directive:
 
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
+``` yaml $(tag) == 'package-flexibleserver-2022-09-30-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/9d85adf7eb1bf9877be1e7a7991b7f1e2252a0e2/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 modelerfour:
   flatten-payloads: false
