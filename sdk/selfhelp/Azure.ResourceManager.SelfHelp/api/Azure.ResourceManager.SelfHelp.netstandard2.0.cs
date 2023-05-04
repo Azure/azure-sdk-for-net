@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SelfHelp
     }
     public static partial class SelfHelpExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.SelfHelp.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityDiagnostic(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SelfHelp.Models.CheckNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.CheckNameAvailabilityResponse>> CheckNameAvailabilityDiagnosticAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SelfHelp.Models.CheckNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataResource> GetDiscoverySolutions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataResource> GetDiscoverySolutionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource> GetSelfHelpDiagnosticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -43,10 +47,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public static partial class ArmSelfHelpModelFactory
     {
+        public static Azure.ResourceManager.SelfHelp.Models.CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.DiagnosticInsight DiagnosticInsight(string insightId = null, string insightTitle = null, string insightResults = null, Azure.ResourceManager.SelfHelp.Models.ImportanceLevel? insightImportanceLevel = default(Azure.ResourceManager.SelfHelp.Models.ImportanceLevel?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnostic SelfHelpDiagnostic(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.DiagnosticStatus? status = default(Azure.ResourceManager.SelfHelp.Models.DiagnosticStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.DiagnosticInsight> insights = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpError error = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResourceData SelfHelpDiagnosticResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> globalParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.DiagnosticInvocation> insights = null, string acceptedTime = null, Azure.ResourceManager.SelfHelp.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnostic> diagnostics = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpError SelfHelpError(string errorCode = null, string errorType = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpError> details = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataResource SolutionMetadataResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, string solutionType = null, string description = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredParameterSets = null) { throw null; }
+    }
+    public partial class CheckNameAvailabilityContent
+    {
+        public CheckNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+    }
+    public partial class CheckNameAvailabilityResponse
+    {
+        internal CheckNameAvailabilityResponse() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public string Reason { get { throw null; } }
     }
     public partial class DiagnosticInsight
     {
@@ -137,5 +156,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorType { get { throw null; } }
         public string Message { get { throw null; } }
+    }
+    public partial class SolutionMetadataResource : Azure.ResourceManager.Models.ResourceData
+    {
+        public SolutionMetadataResource() { }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RequiredParameterSets { get { throw null; } }
+        public string SolutionId { get { throw null; } set { } }
+        public string SolutionType { get { throw null; } set { } }
     }
 }
