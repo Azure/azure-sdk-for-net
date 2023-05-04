@@ -3,6 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Qumulo.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\QumuloFileSystemResourceTests\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

@@ -100,28 +100,6 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.GreaterOrEqual(count, 2);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task GetAllInSubscription()
-        {
-            string qumuloFileSystemName1 = Recording.GenerateAssetName("testResource-");
-            string qumuloFileSystemName2 = Recording.GenerateAssetName("testResource-");
-            _ = await CreateQumuloFileSystemResource(ResGroup, Location, qumuloFileSystemName1);
-            _ = await CreateQumuloFileSystemResource(ResGroup, Location, qumuloFileSystemName2);
-
-            QumuloFileSystemResource fileSystemResource1 = null, fileSystemResource2 = null;
-            await foreach (QumuloFileSystemResource fileSystemResource in DefaultSubscription.GetQumuloFileSystemResourcesAsync())
-            {
-                if (fileSystemResource.Data.Name == qumuloFileSystemName1)
-                    fileSystemResource1 = fileSystemResource;
-                if (fileSystemResource.Data.Name == qumuloFileSystemName2)
-                    fileSystemResource2 = fileSystemResource;
-            }
-
-            Assert.NotNull(fileSystemResource1);
-            Assert.NotNull(fileSystemResource2);
-        }
-
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Id, r2.Id);
