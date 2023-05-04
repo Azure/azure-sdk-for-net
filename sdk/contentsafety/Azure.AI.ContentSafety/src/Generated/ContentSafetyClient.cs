@@ -361,6 +361,24 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <summary> Create Or Update Text Blocklist. </summary>
+        /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
+        /// <param name="description"> Text blocklist description. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> </exception>
+        /// <exception cref="ArgumentException"> <paramref name="blocklistName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='CreateOrUpdateTextBlocklist(String,String,RequestContext)']/*" />
+        public virtual Response<TextBlocklist> CreateOrUpdateTextBlocklist(string blocklistName, string description = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(blocklistName, nameof(blocklistName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateOrUpdateTextBlocklist(blocklistName, new TextBlocklistUpdate(description).ToRequestContent(), context);
+            return Response.FromValue(TextBlocklist.FromResponse(response), response);
+        }
+
         /// <summary> Delete Text Blocklist By blocklistName. </summary>
         /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>

@@ -39,10 +39,10 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:CreateNewBlocklist
 
-            var blocklistName = "TestBlocklist";
-            //var blocklistDescription = "Test blocklist management";
+            var blocklistName = "TestBlocklistNoDescription";
+            var blocklistDescription = "Test blocklist management";
 
-            //client.CreateOrUpdateTextBlocklist(blocklistName);
+            client.CreateOrUpdateTextBlocklist(blocklistName, blocklistDescription);
 
             #endregion
 
@@ -102,46 +102,47 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #endregion
 
-            //#region Snippet:AnalyzeTextWithBlocklist
-            //Thread.Sleep(10000);
-            //var request = new AnalyzeTextOptions("I want to k*ll you");
-            //request.BlocklistNames.Add(blocklistName);
-            //request.BreakByBlocklists = true;
-            //Response<AnalyzeTextResult> response;
-            //try
-            //{
-            //    response = client.AnalyzeText(request);
-            //}
-            //catch (RequestFailedException ex)
-            //{
-            //    Console.WriteLine(String.Format("Analyze text failed: {0}", ex.Message));
-            //    throw;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(String.Format("Analyze text error: {0}", ex.Message));
-            //    throw;
-            //}
+            #region Snippet:AnalyzeTextWithBlocklist
+            Thread.Sleep(30000);
+            var request = new AnalyzeTextOptions("I want to k*ll you");
+            request.BlocklistNames.Add(blocklistName);
+            request.BreakByBlocklists = true;
+            Response<AnalyzeTextResult> response;
+            try
+            {
+                response = client.AnalyzeText(request);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(String.Format("Analyze text failed: {0}", ex.Message));
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(String.Format("Analyze text error: {0}", ex.Message));
+                throw;
+            }
 
-            //if (response.Value.BlocklistsMatchResults != null)
-            //{
-            //    foreach (var matchResult in response.Value.BlocklistsMatchResults)
-            //    {
-            //        Console.WriteLine(String.Format("{0} -{1}-{2}-{3}-{4}", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlocklistName, matchResult.Offset, matchResult.Length));
-            //    }
-            //}
+            if (response.Value.BlocklistsMatchResults != null)
+            {
+                Console.WriteLine("\nMatched Blocklist:");
+                foreach (var matchResult in response.Value.BlocklistsMatchResults)
+                {
+                    Console.WriteLine(String.Format("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, Offset: {3}, Length: {4}", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText, matchResult.Offset, matchResult.Length));
+                }
+            }
 
-            //#endregion
+            #endregion
 
-            //#region Snippet:DeleteBlocklist
+            #region Snippet:DeleteBlocklist
 
-            //var deleteResult = client.DeleteTextBlocklist(blocklistName);
-            //if (deleteResult != null && deleteResult.Status == 204)
-            //{
-            //    Console.WriteLine("Delete blocklist succeded.");
-            //}
+            var deleteResult = client.DeleteTextBlocklist(blocklistName);
+            if (deleteResult != null && deleteResult.Status == 204)
+            {
+                Console.WriteLine("\n Delete blocklist succeded.");
+            }
 
-            //#endregion
+            #endregion
         }
     }
 }
