@@ -53,12 +53,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Create a device entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="deviceId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
@@ -83,12 +83,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Create a device entity. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="deviceId"> Id of the device resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="deviceId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string deviceId, RequestContent content, RequestContext context = null)
         {
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDeviceAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeviceAsync(string sensorPartnerId, string deviceId, RequestContext context = null)
         {
@@ -145,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Devices.xml" path="doc/members/member[@name='GetDevice(string,string,RequestContext)']/*" />
         public virtual Response GetDevice(string sensorPartnerId, string deviceId, RequestContext context = null)
         {

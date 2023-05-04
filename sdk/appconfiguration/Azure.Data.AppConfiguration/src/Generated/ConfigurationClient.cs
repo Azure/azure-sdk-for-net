@@ -133,7 +133,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> [Protocol Method] Creates a key-value. </summary>
         /// <param name="key"> The key of the key-value to create. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -141,7 +141,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSettingAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -163,7 +163,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> [Protocol Method] Creates a key-value. </summary>
         /// <param name="key"> The key of the key-value to create. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
@@ -171,7 +171,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSetting(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -297,13 +297,13 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> [Protocol Method] Updates the state of a key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatusAsync(string,RequestContent,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -326,13 +326,13 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> [Protocol Method] Updates the state of a key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatus(string,RequestContent,MatchConditions,RequestContext)']/*" />
         internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -465,7 +465,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -493,7 +493,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response CreateReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -521,7 +521,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -549,7 +549,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response DeleteReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
@@ -626,7 +626,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context = null)
         {
@@ -651,7 +651,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(string,RequestContext)']/*" />
         internal virtual Response GetOperationDetails(string snapshot, RequestContext context = null)
         {
@@ -806,13 +806,13 @@ namespace Azure.Data.AppConfiguration
         /// <summary> [Protocol Method] Creates a key-value snapshot. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshotAsync(WaitUntil,string,RequestContent,ContentType,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {
@@ -836,13 +836,13 @@ namespace Azure.Data.AppConfiguration
         /// <summary> [Protocol Method] Creates a key-value snapshot. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshot(WaitUntil,string,RequestContent,ContentType,RequestContext)']/*" />
         internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {

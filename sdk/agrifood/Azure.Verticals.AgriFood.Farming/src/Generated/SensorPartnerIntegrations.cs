@@ -53,12 +53,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Create or update an integration with a sensor partner. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be created. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="integrationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
@@ -83,12 +83,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> [Protocol Method] Create or update an integration with a sensor partner. </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="integrationId"> Id of the integration to be created. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="integrationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorPartnerIntegrationAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
@@ -145,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegration(string,string,RequestContext)']/*" />
         public virtual Response GetSensorPartnerIntegration(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
@@ -230,7 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="integrationId"/> or <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsentAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> CheckConsentAsync(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
         {
@@ -260,7 +260,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="integrationId"/> or <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsent(string,string,string,RequestContext)']/*" />
         public virtual Response CheckConsent(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
         {
@@ -289,7 +289,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLinkAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GenerateConsentLinkAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
@@ -317,7 +317,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="integrationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLink(string,string,RequestContext)']/*" />
         public virtual Response GenerateConsentLink(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
