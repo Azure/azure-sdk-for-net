@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SelfHelp
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(cancellationToken);
+                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.SelfHelp
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateAsync(data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.SelfHelp
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Create(data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

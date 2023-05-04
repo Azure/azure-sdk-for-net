@@ -20,31 +20,24 @@ namespace Azure.ResourceManager.SelfHelp
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
-        private readonly string _scope;
-        private readonly string _diagnosticsResourceName;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DiagnosticsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="scope"/>, <paramref name="diagnosticsResourceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public DiagnosticsRestOperations(HttpPipeline pipeline, string applicationId, string scope, string diagnosticsResourceName, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DiagnosticsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _scope = scope ?? throw new ArgumentNullException(nameof(scope));
-            _diagnosticsResourceName = diagnosticsResourceName ?? throw new ArgumentNullException(nameof(diagnosticsResourceName));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string scope, CheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(_scope, false);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Help/checkNameAvailability", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -69,11 +62,15 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic check. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCheckNameAvailabilityRequest(content);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using var message = CreateCheckNameAvailabilityRequest(scope, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -90,11 +87,15 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic check. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCheckNameAvailabilityRequest(content);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using var message = CreateCheckNameAvailabilityRequest(scope, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SelfHelpDiagnosticResourceData data)
+        internal HttpMessage CreateCreateRequest(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -118,9 +119,9 @@ namespace Azure.ResourceManager.SelfHelp
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(_scope, false);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Help/diagnostics/", false);
-            uri.AppendPath(_diagnosticsResourceName, true);
+            uri.AppendPath(diagnosticsResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -133,14 +134,19 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async Task<Response> CreateAsync(SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(data);
+            using var message = CreateCreateRequest(scope, diagnosticsResourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -152,14 +158,19 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public Response Create(SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(data);
+            using var message = CreateCreateRequest(scope, diagnosticsResourceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -170,7 +181,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal HttpMessage CreateGetRequest()
+        internal HttpMessage CreateGetRequest(string scope, string diagnosticsResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,9 +189,9 @@ namespace Azure.ResourceManager.SelfHelp
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(_scope, false);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Help/diagnostics/", false);
-            uri.AppendPath(_diagnosticsResourceName, true);
+            uri.AppendPath(diagnosticsResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -189,10 +200,17 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SelfHelpDiagnosticResourceData>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SelfHelpDiagnosticResourceData>> GetAsync(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            using var message = CreateGetRequest(scope, diagnosticsResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -211,10 +229,17 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic. </summary>
+        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SelfHelpDiagnosticResourceData> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SelfHelpDiagnosticResourceData> Get(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            using var message = CreateGetRequest(scope, diagnosticsResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

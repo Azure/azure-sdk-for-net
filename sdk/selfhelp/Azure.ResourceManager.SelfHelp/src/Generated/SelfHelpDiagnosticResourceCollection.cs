@@ -54,19 +54,22 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateAsync(data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateAsync(Id, diagnosticsResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,19 +95,22 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Create(data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Create(Id, diagnosticsResourceName, data, cancellationToken);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticResourceOperationSource(Client), _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticResourceDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,14 +135,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SelfHelpDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual async Task<Response<SelfHelpDiagnosticResource>> GetAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -161,14 +172,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SelfHelpDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual Response<SelfHelpDiagnosticResource> Get(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(cancellationToken);
+                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -193,14 +209,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticResourceDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,14 +244,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual Response<bool> Exists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
             using var scope = _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(cancellationToken: cancellationToken);
+                var response = _selfHelpDiagnosticResourceDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

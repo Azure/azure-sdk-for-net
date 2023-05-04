@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -74,11 +75,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticResourceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticResourceAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetSelfHelpDiagnosticResources(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await client.GetSelfHelpDiagnosticResources(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -96,11 +100,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetSelfHelpDiagnosticResources(scope).Get(cancellationToken);
+            return client.GetSelfHelpDiagnosticResources(scope).Get(diagnosticsResourceName, cancellationToken);
         }
     }
 }
