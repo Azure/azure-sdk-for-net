@@ -261,6 +261,69 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="sourceCredential"></param>
+        /// <param name="destinationCredential"></param>
+        /// <param name="transferOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<DataTransfer> ResumeTransferAsync(
+            string transferId,
+            object sourceCredential,
+            object destinationCredential,
+            TransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            // stub
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="sourceCredential"></param>
+        /// <param name="destinationCredential"></param>
+        /// <param name="transferOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<DataTransfer> ResumeTransferAsync(
+            string transferId,
+            StorageTransferCredentials sourceCredential,
+            StorageTransferCredentials destinationCredential,
+            TransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            // stub
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="transferOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<DataTransfer> ResumeTransferAsync(
+            string transferId,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
+            TransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            // stub
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Attempts to pause all the ongoing transfers.
         /// </summary>
         /// <returns></returns>

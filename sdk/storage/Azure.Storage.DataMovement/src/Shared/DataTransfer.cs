@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -94,6 +95,38 @@ namespace Azure.Storage.DataMovement
         public Task<bool> TryPauseAsync(CancellationToken cancellationToken = default)
         {
             return _state.TryPauseAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="sourceCredential"></param>
+        /// <param name="destinationCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task ResumeAsync(
+            object sourceCredential,
+            object destinationCredential,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="sourceCredential"></param>
+        /// <param name="destinationCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task ResumeAsync(
+            StorageTransferCredentials sourceCredential,
+            StorageTransferCredentials destinationCredential,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -729,6 +729,74 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         /// Test to show pause and resume tests
         /// </summary>
         [Test]
+        public async Task ResumeAsync_Manager()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
+
+                // Download the public blob at https://aka.ms/bloburl
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                await sourceBlob.DownloadToAsync(downloadPath);
+
+                // Create transfer manager
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                // Create source and destination resource
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
+
+                // Create simple transfer single blob download job
+                #region Snippet:TransferManagerTryPause_Async
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource);
+
+                // Pause from the Transfer Manager using the DataTransfer object
+                bool pauseResult = await transferManager.TryPauseTransferAsync(dataTransfer);
+                #endregion Snippet:TransferManagerTryPause_Async
+
+                #region Snippet:TransferManagerResume_Async
+                // Resume from checkpoint id
+                DataTransfer dataTransferResumed = await transferManager.ResumeTransferAsync(
+                    transferId: dataTransfer.Id,
+                    sourceCredential: new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey"),
+                    destinationCredential: new DefaultAzureCredential());
+
+                DataTransfer dataTransferResumed2 = await transferManager.ResumeTransferAsync(
+                    transferId: dataTransfer.Id,
+                    sourceCredential: new StorageTransferCredentials(
+                        new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey")),
+                    destinationCredential: new StorageTransferCredentials(new DefaultAzureCredential()));
+
+                await dataTransfer.ResumeAsync(
+                    sourceCredential: new StorageTransferCredentials(
+                        new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey")),
+                    destinationCredential: new StorageTransferCredentials(new DefaultAzureCredential()));
+
+                #endregion Snippet:TransferManagerResume_Async
+
+                // Wait for download to finish
+                await dataTransferResumed.AwaitCompletion();
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Test to show pause and resume tests
+        /// </summary>
+        [Test]
         public async Task PauseAndResumeAsync_ManagerId()
         {
             string connectionString = ConnectionString;
@@ -753,6 +821,64 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create source and destination resource
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
+
+                // Create simple transfer single blob download job
+                #region Snippet:TransferManagerTryPauseId_Async
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource);
+                string transferId = dataTransfer.Id;
+
+                // Pause from the Transfer Manager using the Transfer Id
+                bool pauseResult = await transferManager.TryPauseTransferAsync(transferId);
+                #endregion Snippet:TransferManagerTryPauseId_Async
+
+                // Resume from checkpoint id
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
+                {
+                    ResumeFromCheckpointId = dataTransfer.Id
+                };
+
+                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource,
+                    transferOptions: optionsWithResumeTransferId);
+
+                // Wait for download to finish
+                await resumedTransfer.AwaitCompletion();
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Test to show pause and resume tests
+        /// </summary>
+        [Test]
+        public async Task PauseAndResumeAsync_ManagerId()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                Uri sourceUri = new Uri("https://sourceAccount.blob.core.windows.net/container/blob");
+                Uri destinationUri = new Uri("https://destinationAccount.blob.core.windows.net/container/blob");
+
+                BlockBlobClient sourceBlob = new BlockBlobClient(sourceUri);
+                BlockBlobClient destinationBlob = new BlockBlobClient(destinationUri);
+
+                // Create transfer manager
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                // Create source and destination resource
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Create simple transfer single blob download job
                 #region Snippet:TransferManagerTryPauseId_Async
