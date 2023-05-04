@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The capabilities to add or drop from a container. </summary>
-    public partial class SecurityContextCapabilitiesDefinition
+    public partial class ContainerSecurityContextCapabilitiesDefinition
     {
-        /// <summary> Initializes a new instance of SecurityContextCapabilitiesDefinition. </summary>
-        public SecurityContextCapabilitiesDefinition()
+        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
+        public ContainerSecurityContextCapabilitiesDefinition()
         {
             Add = new ChangeTrackingList<string>();
             Drop = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityContextCapabilitiesDefinition. </summary>
+        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
-        internal SecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop)
+        internal ContainerSecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop)
         {
             Add = @add;
             Drop = drop;

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
             Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Optional<SecurityContextDefinition> securityContext = default;
+            Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = SecurityContextDefinition.DeserializeSecurityContextDefinition(property0.Value);
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
                             continue;
                         }
                     }

@@ -100,4 +100,7 @@ rename-mapping:
   GpuSku: ContainerGpuSku
   LogAnalytics: ContainerGroupLogAnalytics
   LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
+  SecurityContextDefinition: ContainerSecurityContextDefinition
+  SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
+  SecurityContextDefinition.privileged: IsPrivileged
 ```

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
         /// <param name="securityContext"> The container security properties. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, SecurityContextDefinition securityContext)
+        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext)
         {
             Name = name;
             Image = image;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The readiness probe. </summary>
         public ContainerProbe ReadinessProbe { get; set; }
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext { get; set; }
     }
 }

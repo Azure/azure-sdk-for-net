@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class SecurityContextDefinition : IUtf8JsonSerializable
+    public partial class ContainerSecurityContextDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Privileged))
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
-                writer.WriteBooleanValue(Privileged.Value);
+                writer.WriteBooleanValue(IsPrivileged.Value);
             }
             if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityContextDefinition DeserializeSecurityContextDefinition(JsonElement element)
+        internal static ContainerSecurityContextDefinition DeserializeContainerSecurityContextDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             Optional<bool> privileged = default;
             Optional<bool> allowPrivilegeEscalation = default;
-            Optional<SecurityContextCapabilitiesDefinition> capabilities = default;
+            Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
             Optional<int> runAsGroup = default;
             Optional<int> runAsUser = default;
             Optional<string> seccompProfile = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = SecurityContextCapabilitiesDefinition.DeserializeSecurityContextCapabilitiesDefinition(property.Value);
+                    capabilities = ContainerSecurityContextCapabilitiesDefinition.DeserializeContainerSecurityContextCapabilitiesDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runAsGroup"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new SecurityContextDefinition(Optional.ToNullable(privileged), Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Optional.ToNullable(runAsGroup), Optional.ToNullable(runAsUser), seccompProfile.Value);
+            return new ContainerSecurityContextDefinition(Optional.ToNullable(privileged), Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Optional.ToNullable(runAsGroup), Optional.ToNullable(runAsUser), seccompProfile.Value);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class SecurityContextCapabilitiesDefinition : IUtf8JsonSerializable
+    public partial class ContainerSecurityContextCapabilitiesDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityContextCapabilitiesDefinition DeserializeSecurityContextCapabilitiesDefinition(JsonElement element)
+        internal static ContainerSecurityContextCapabilitiesDefinition DeserializeContainerSecurityContextCapabilitiesDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new SecurityContextCapabilitiesDefinition(Optional.ToList(@add), Optional.ToList(drop));
+            return new ContainerSecurityContextCapabilitiesDefinition(Optional.ToList(@add), Optional.ToList(drop));
         }
     }
 }
