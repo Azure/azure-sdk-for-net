@@ -11,7 +11,6 @@ using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
 using System.Security.Cryptography;
-using Azure.Core.TestFramework.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
