@@ -133,7 +133,7 @@ try
     {
         if (result.IsAnomaly[i])
         {
-            Console.WriteLine("An anomaly was detected at index: {0}.", i);
+            Console.WriteLine($"An anomaly was detected at index: {i}.");
             hasAnomaly = true;
         }
     }
@@ -144,12 +144,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+    Console.WriteLine($"Entire detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -175,12 +175,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+    Console.WriteLine($"Last detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
