@@ -14,6 +14,7 @@ using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Azure.WebJobs.Host.EndToEndTests;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Azure;
@@ -26,7 +27,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
 {
-    internal class ScaleHostEndToEndTests
+    internal class ScaleHostEndToEndTests : WebJobsEventHubTestBase
     {
         private const string Function1Name = "Function1";
         private const string Function2Name = "Function2";
@@ -34,18 +35,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         private const string EventHubConnection1 = "EventHubConnection1";
         private const string EventHubConnection2 = "EventHubConnection2";
 
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        protected EventHubScope _eventHubScope;
-
         /// <summary>
         ///   Performs the tasks needed to initialize each test.  This
         ///   method runs once for the each test prior to running it.
         /// </summary>
         ///
         [SetUp]
-        public async Task BaseSetUp()
+        public new async Task BaseSetUp()
         {
             _eventHubScope = await EventHubScope.CreateAsync(2, new List<string>() { "ConsumerGroup" });
+        }
+
+        public ScaleHostEndToEndTests() : base()
+        {
         }
 
         [Test]
