@@ -87,7 +87,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Groups that the connection will join when it connects. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImplAsync(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
         internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
@@ -112,7 +112,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Groups that the connection will join when it connects. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImpl(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
         internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
@@ -131,7 +131,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> [Protocol Method] Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
@@ -159,7 +159,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> [Protocol Method] Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
@@ -294,7 +294,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
@@ -323,7 +323,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
@@ -512,7 +512,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
@@ -543,7 +543,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
@@ -968,7 +968,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -998,7 +998,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> [Protocol Method] Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>

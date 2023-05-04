@@ -61,12 +61,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> [Protocol Method] Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccessAsync(RequestContent,ContentType,RequestContext)']/*" />
         public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, ContentType contentType, RequestContext context = null)
         {
@@ -87,12 +87,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> [Protocol Method] Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccess(RequestContent,ContentType,RequestContext)']/*" />
         public virtual Response CheckPrincipalAccess(RequestContent content, ContentType contentType, RequestContext context = null)
         {
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentsAsync(string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
         {
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignments(string,string,string,string,RequestContext)']/*" />
         public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
         {
@@ -164,13 +164,13 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> [Protocol Method] Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignmentAsync(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
@@ -193,13 +193,13 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> [Protocol Method] Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignment(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
@@ -226,7 +226,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
         {
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentById(string,RequestContext)']/*" />
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
         {
