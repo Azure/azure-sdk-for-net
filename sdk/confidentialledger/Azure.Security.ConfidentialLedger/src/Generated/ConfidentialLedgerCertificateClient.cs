@@ -41,7 +41,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentityAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
         {
@@ -67,7 +67,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentity(string,RequestContext)']/*" />
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
         {
