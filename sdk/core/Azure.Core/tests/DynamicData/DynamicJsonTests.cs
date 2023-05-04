@@ -899,22 +899,36 @@ namespace Azure.Core.Tests
             Assert.AreEqual(value, (T)roundTripJson.bar);
         }
 
-        public static IEnumerable<string> DateTimeStrings()
+        [TestCaseSource(nameof(DateTimeStrings))]
+        public void CanSerializeDateTimeOffsetString(string value, string expected)
         {
-            yield return "2023-03-23T16:34:34+00:00";
-            yield return "1985-04-12T23:20:50.52Z";
-            yield return "1996-12-19T16:39:57-08:00";
-            yield return "1990-12-31T23:59:00Z";
-            yield return "1990-12-31T15:59:00-08:00";
-            yield return "1937-01-01T12:00:27.87+00:20";
+            string json = $"{{\"foo\":\"\"}}";
+
+            dynamic data = BinaryData.FromString(json).ToDynamicFromJson(DynamicDataOptions.Default);
+
+            data.Foo = DateTimeOffset.Parse(value);
+            data.Bar = DateTimeOffset.Parse(value);
+
+            Assert.AreEqual(expected, (string)data.Foo);
+            Assert.AreEqual(expected, (string)data.Bar);
+        }
+
+        public static IEnumerable<string[]> DateTimeStrings()
+        {
+            yield return new string[] { "2023-03-23T16:34:34+00:00", "2023-03-23T16:34:34+00:00" };
+            yield return new string[] { "1985-04-12T23:20:50.52Z",   "1985-04-12T23:20:50.52+00:00" };
+            yield return new string[] { "1996-12-19T16:39:57-08:00", "1996-12-19T16:39:57-08:00" };
+            yield return new string[] { "1990-12-31T23:59:00Z",      "1990-12-31T23:59:00+00:00" };
+            yield return new string[] { "1990-12-31T15:59:00-08:00", "1990-12-31T15:59:00-08:00" };
+            yield return new string[] { "1937-01-01T12:00:27.87+00:20", "1937-01-01T12:00:27.87+00:20" };
         }
 
         public static IEnumerable<object> DateTimeValues()
         {
-            foreach (string value in DateTimeStrings())
+            foreach (string[] value in DateTimeStrings())
             {
-                yield return DateTimeOffset.Parse(value);
-                yield return DateTime.Parse(value);
+                yield return DateTimeOffset.Parse(value[0]);
+                yield return DateTime.Parse(value[0]);
             }
         }
 
