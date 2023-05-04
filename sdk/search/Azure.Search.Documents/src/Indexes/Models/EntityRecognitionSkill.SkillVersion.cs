@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 _value = value ?? throw new ArgumentNullException(nameof(value));
             }
 
-            /// <summary> Version 1 of the <see cref="EntityRecognitionSkill"/>. </summary>
+            /// <summary> Version 1 of the <see cref="EntityRecognitionSkill"/> is deprecated. Use the V3 version instead. </summary>
             public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="EntityRecognitionSkill"/>. </summary>

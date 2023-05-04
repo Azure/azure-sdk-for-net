@@ -307,8 +307,8 @@ namespace Azure.Search.Documents
         /// <param name="destination">The destination options.</param>
         private static void Copy(SearchOptions source, SearchOptions destination)
         {
-            Debug.Assert(source != null);
-            Debug.Assert(destination != null);
+            System.Diagnostics.Debug.Assert(source != null);
+            System.Diagnostics.Debug.Assert(destination != null);
 
             destination.Facets = source.Facets;
             destination.Filter = source.Filter;

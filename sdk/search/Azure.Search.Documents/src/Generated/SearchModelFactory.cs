@@ -42,6 +42,47 @@ namespace Azure.Search.Documents.Models
             return new CaptionResult(text, highlights, additionalProperties);
         }
 
+        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
+        /// <param name="semantic"> Contains debugging information specific to semantic search queries. </param>
+        /// <returns> A new <see cref="Models.DocumentDebugInfo"/> instance for mocking. </returns>
+        public static DocumentDebugInfo DocumentDebugInfo(SemanticDebugInfo semantic = null)
+        {
+            return new DocumentDebugInfo(semantic);
+        }
+
+        /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
+        /// <param name="titleField"> The title field that was sent to the semantic enrichment process, as well as how it was used. </param>
+        /// <param name="contentFields"> The content fields that were sent to the semantic enrichment process, as well as how they were used. </param>
+        /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>
+        /// <param name="rerankerInput"> The raw concatenated strings that were sent to the semantic enrichment process. </param>
+        /// <returns> A new <see cref="Models.SemanticDebugInfo"/> instance for mocking. </returns>
+        public static SemanticDebugInfo SemanticDebugInfo(QueryResultDocumentSemanticField titleField = null, IEnumerable<QueryResultDocumentSemanticField> contentFields = null, IEnumerable<QueryResultDocumentSemanticField> keywordFields = null, QueryResultDocumentRerankerInput rerankerInput = null)
+        {
+            contentFields ??= new List<QueryResultDocumentSemanticField>();
+            keywordFields ??= new List<QueryResultDocumentSemanticField>();
+
+            return new SemanticDebugInfo(titleField, contentFields?.ToList(), keywordFields?.ToList(), rerankerInput);
+        }
+
+        /// <summary> Initializes a new instance of QueryResultDocumentSemanticField. </summary>
+        /// <param name="name"> The name of the field that was sent to the semantic enrichment process. </param>
+        /// <param name="state"> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </param>
+        /// <returns> A new <see cref="Models.QueryResultDocumentSemanticField"/> instance for mocking. </returns>
+        public static QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, QueryResultDocumentSemanticFieldState? state = null)
+        {
+            return new QueryResultDocumentSemanticField(name, state);
+        }
+
+        /// <summary> Initializes a new instance of QueryResultDocumentRerankerInput. </summary>
+        /// <param name="title"> The raw string for the title field that was used for semantic enrichment. </param>
+        /// <param name="content"> The raw concatenated strings for the content fields that were used for semantic enrichment. </param>
+        /// <param name="keywords"> The raw concatenated strings for the keyword fields that were used for semantic enrichment. </param>
+        /// <returns> A new <see cref="Models.QueryResultDocumentRerankerInput"/> instance for mocking. </returns>
+        public static QueryResultDocumentRerankerInput QueryResultDocumentRerankerInput(string title = null, string content = null, string keywords = null)
+        {
+            return new QueryResultDocumentRerankerInput(title, content, keywords);
+        }
+
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
