@@ -497,7 +497,7 @@ Token limits and other settings may limit the number of choices generated.
 
 </remarks>
     </member>
-    <member name="GetChatCompletionsAsync(String,RequestContent,RequestContext)">
+    <member name="GetChatCompletionsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetChatCompletionsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -655,7 +655,7 @@ Token limits and other settings may limit the number of choices generated.
 
 </remarks>
     </member>
-    <member name="GetChatCompletions(String,RequestContent,RequestContext)">
+    <member name="GetChatCompletions(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call GetChatCompletions with required parameters and request content, and how to parse the result.
 <code><![CDATA[
