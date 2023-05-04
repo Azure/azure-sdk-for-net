@@ -899,20 +899,23 @@ namespace Azure.Core.Tests
             Assert.AreEqual(value, (T)roundTripJson.bar);
         }
 
+        public static IEnumerable<string> DateTimeStrings()
+        {
+            yield return "2023-03-23T16:34:34+00:00";
+            yield return "1985-04-12T23:20:50.52Z";
+            yield return "1996-12-19T16:39:57-08:00";
+            yield return "1990-12-31T23:59:00Z";
+            yield return "1990-12-31T15:59:00-08:00";
+            yield return "1937-01-01T12:00:27.87+00:20";
+        }
+
         public static IEnumerable<object> DateTimeValues()
         {
-            yield return DateTimeOffset.Parse("2023-03-23T16:34:34+00:00");
-            yield return DateTimeOffset.Parse("1985-04-12T23:20:50.52Z");
-            yield return DateTimeOffset.Parse("1996-12-19T16:39:57-08:00");
-            yield return DateTimeOffset.Parse("1990-12-31T23:59:00Z");
-            yield return DateTimeOffset.Parse("1990-12-31T15:59:00-08:00");
-            yield return DateTimeOffset.Parse("1937-01-01T12:00:27.87+00:20");
-            yield return DateTime.Parse("2023-03-23T16:34:34+00:00");
-            yield return DateTime.Parse("1985-04-12T23:20:50.52Z");
-            yield return DateTime.Parse("1996-12-19T16:39:57-08:00");
-            yield return DateTime.Parse("1990-12-31T23:59:00Z");
-            yield return DateTime.Parse("1990-12-31T15:59:00-08:00");
-            yield return DateTime.Parse("1937-01-01T12:00:27.87+00:20");
+            foreach (string value in DateTimeStrings())
+            {
+                yield return DateTimeOffset.Parse(value);
+                yield return DateTime.Parse(value);
+            }
         }
 
         #region Helpers
