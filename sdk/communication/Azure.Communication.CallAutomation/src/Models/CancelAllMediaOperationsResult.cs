@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="CancelAllMediaOperationsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceled"/> or <see cref="RecognizeCanceled"/> event.</returns>
+        /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceledEventData"/> or <see cref="RecognizeCanceledEventData"/> event.</returns>
         public CancelAllMediaOperationsEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -40,8 +40,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(PlayCanceled)
-                || filter.GetType() == typeof(RecognizeCanceled)),
+                && (filter.GetType() == typeof(PlayCanceledEventData)
+                || filter.GetType() == typeof(RecognizeCanceledEventData)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="CancelAllMediaOperationsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceled"/> or <see cref="RecognizeCanceled"/> event.</returns>
+        /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceledEventData"/> or <see cref="RecognizeCanceledEventData"/> event.</returns>
         public async Task<CancelAllMediaOperationsEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -62,23 +62,23 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(PlayCanceled)
-                || filter.GetType() == typeof(RecognizeCanceled)),
+                && (filter.GetType() == typeof(PlayCanceledEventData)
+                || filter.GetType() == typeof(RecognizeCanceledEventData)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static CancelAllMediaOperationsEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        private static CancelAllMediaOperationsEventResult SetReturnedEvent(CallAutomationEventData returnedEvent)
         {
             CancelAllMediaOperationsEventResult result = default;
             switch (returnedEvent)
             {
-                case PlayCanceled:
-                    result = new CancelAllMediaOperationsEventResult(true, (PlayCanceled)returnedEvent, null);
+                case PlayCanceledEventData:
+                    result = new CancelAllMediaOperationsEventResult(true, (PlayCanceledEventData)returnedEvent, null);
                     break;
-                case RecognizeCanceled:
-                    result = new CancelAllMediaOperationsEventResult(true, null, (RecognizeCanceled)returnedEvent);
+                case RecognizeCanceledEventData:
+                    result = new CancelAllMediaOperationsEventResult(true, null, (RecognizeCanceledEventData)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

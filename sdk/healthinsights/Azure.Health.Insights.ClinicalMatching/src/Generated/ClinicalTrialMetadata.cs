@@ -42,13 +42,13 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="facilities"> Research facilities where the clinical trial is conducted. </param>
         internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities)
         {
-            Phases = phases.ToList();
+            Phases = phases;
             StudyType = studyType;
             RecruitmentStatus = recruitmentStatus;
-            Conditions = conditions.ToList();
-            Sponsors = sponsors.ToList();
-            Contacts = contacts.ToList();
-            Facilities = facilities.ToList();
+            Conditions = conditions;
+            Sponsors = sponsors;
+            Contacts = contacts;
+            Facilities = facilities;
         }
 
         /// <summary>

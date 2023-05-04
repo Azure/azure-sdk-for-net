@@ -105,7 +105,24 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Detect anomalies for the entire series in batch. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomalies for the entire series in batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This operation generates a model with an entire series. Each point is detected
+        /// with the same model. With this method, points before and after a certain point
+        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
+        /// user an overall status of the time series.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -130,7 +147,24 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Detect anomalies for the entire series in batch. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomalies for the entire series in batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This operation generates a model with an entire series. Each point is detected
+        /// with the same model. With this method, points before and after a certain point
+        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
+        /// user an overall status of the time series.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateEntireSeries(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -189,7 +223,22 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(UnivariateLastDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Detect anomaly status of the latest point in time series. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomaly status of the latest point in time series.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This operation generates a model by using the points that you sent in to the API
+        /// and based on all data to determine whether the last point is anomalous.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateLastPointAsync(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -214,7 +263,22 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Detect anomaly status of the latest point in time series. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomaly status of the latest point in time series.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This operation generates a model by using the points that you sent in to the API
+        /// and based on all data to determine whether the last point is anomalous.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateLastPoint(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -267,7 +331,21 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(UnivariateChangePointDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Detect change point for the entire series. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect change point for the entire series
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Evaluate the change point score of every series point.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateChangePointAsync(UnivariateChangePointDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -292,7 +370,21 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Detect change point for the entire series. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect change point for the entire series
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Evaluate the change point score of every series point.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectUnivariateChangePoint(UnivariateChangePointDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -326,23 +418,13 @@ namespace Azure.AI.AnomalyDetector
         /// For asynchronous inference, get a multivariate anomaly detection result based on the
         /// resultId value that the BatchDetectAnomaly API returns.
         /// </remarks>
-        public virtual async Task<Response<MultivariateDetectionResult>> GetMultivariateBatchDetectionResultValueAsync(string resultId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MultivariateDetectionResult>> GetMultivariateBatchDetectionResultAsync(string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resultId, nameof(resultId));
 
-            using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateBatchDetectionResultValue");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetMultivariateBatchDetectionResultAsync(resultId, context).ConfigureAwait(false);
-                return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetMultivariateBatchDetectionResultAsync(resultId, context).ConfigureAwait(false);
+            return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
@@ -354,34 +436,39 @@ namespace Azure.AI.AnomalyDetector
         /// For asynchronous inference, get a multivariate anomaly detection result based on the
         /// resultId value that the BatchDetectAnomaly API returns.
         /// </remarks>
-        public virtual Response<MultivariateDetectionResult> GetMultivariateBatchDetectionResultValue(string resultId, CancellationToken cancellationToken = default)
+        public virtual Response<MultivariateDetectionResult> GetMultivariateBatchDetectionResult(string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resultId, nameof(resultId));
 
-            using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateBatchDetectionResultValue");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetMultivariateBatchDetectionResult(resultId, context);
-                return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetMultivariateBatchDetectionResult(resultId, context);
+            return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Get Multivariate Anomaly Detection Result. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Multivariate Anomaly Detection Result
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// For asynchronous inference, get a multivariate anomaly detection result based on the
+        /// resultId value that the BatchDetectAnomaly API returns.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateBatchDetectionResultAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResultAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetMultivariateBatchDetectionResultAsync(string resultId, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResultAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetMultivariateBatchDetectionResultAsync(string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(resultId, nameof(resultId));
 
@@ -399,15 +486,30 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Get Multivariate Anomaly Detection Result. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Multivariate Anomaly Detection Result
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// For asynchronous inference, get a multivariate anomaly detection result based on the
+        /// resultId value that the BatchDetectAnomaly API returns.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateBatchDetectionResult(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResult(String,RequestContext)']/*" />
-        public virtual Response GetMultivariateBatchDetectionResult(string resultId, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResult(string,RequestContext)']/*" />
+        public virtual Response GetMultivariateBatchDetectionResult(string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(resultId, nameof(resultId));
 
@@ -467,7 +569,26 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
         }
 
-        /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
+        /// <summary>
+        /// [Protocol Method] Train a Multivariate Anomaly Detection Model
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Create and train a multivariate anomaly detection model. The request must
+        /// include a source parameter to indicate an Azure Blob
+        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage folder that contains multiple CSV files, where each CSV file has
+        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+        /// time stamp column.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="TrainMultivariateModelAsync(ModelInfo,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -492,7 +613,26 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
+        /// <summary>
+        /// [Protocol Method] Train a Multivariate Anomaly Detection Model
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Create and train a multivariate anomaly detection model. The request must
+        /// include a source parameter to indicate an Azure Blob
+        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage folder that contains multiple CSV files, where each CSV file has
+        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+        /// time stamp column.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="TrainMultivariateModel(ModelInfo,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -517,14 +657,14 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Delete Multivariate Model. </summary>
+        /// <summary> [Protocol Method] Delete Multivariate Model. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DeleteMultivariateModelAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DeleteMultivariateModelAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteMultivariateModelAsync(string modelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -543,14 +683,14 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Delete Multivariate Model. </summary>
+        /// <summary> [Protocol Method] Delete Multivariate Model. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DeleteMultivariateModel(String,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DeleteMultivariateModel(string,RequestContext)']/*" />
         public virtual Response DeleteMultivariateModel(string modelId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -578,23 +718,13 @@ namespace Azure.AI.AnomalyDetector
         /// Get detailed information about the multivariate model, including the training status
         /// and variables used in the model.
         /// </remarks>
-        public virtual async Task<Response<AnomalyDetectionModel>> GetMultivariateModelValueAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionModel>> GetMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValue");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetMultivariateModelAsync(modelId, context).ConfigureAwait(false);
-                return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetMultivariateModelAsync(modelId, context).ConfigureAwait(false);
+            return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
         }
 
         /// <summary> Get Multivariate Model. </summary>
@@ -606,34 +736,39 @@ namespace Azure.AI.AnomalyDetector
         /// Get detailed information about the multivariate model, including the training status
         /// and variables used in the model.
         /// </remarks>
-        public virtual Response<AnomalyDetectionModel> GetMultivariateModelValue(string modelId, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionModel> GetMultivariateModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValue");
-            scope.Start();
-            try
-            {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetMultivariateModel(modelId, context);
-                return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetMultivariateModel(modelId, context);
+            return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
         }
 
-        /// <summary> Get Multivariate Model. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Multivariate Model
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Get detailed information about the multivariate model, including the training status
+        /// and variables used in the model.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateModelAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetMultivariateModelAsync(string modelId, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetMultivariateModelAsync(string modelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
@@ -651,15 +786,30 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Get Multivariate Model. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Multivariate Model
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Get detailed information about the multivariate model, including the training status
+        /// and variables used in the model.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateModel(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModel(String,RequestContext)']/*" />
-        public virtual Response GetMultivariateModel(string modelId, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModel(string,RequestContext)']/*" />
+        public virtual Response GetMultivariateModel(string modelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
@@ -725,7 +875,26 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Detect Multivariate Anomaly. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect Multivariate Anomaly
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The input schema should be the same with the training
+        /// request. The request will finish asynchronously and return a resultId value to
+        /// query the detection result. The request should be a source link to indicate an
+        /// externally accessible Azure Storage URI that either points to an Azure Blob
+        /// Storage folder or points to a CSV file in Azure Blob Storage.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectMultivariateBatchAnomalyAsync(string,MultivariateBatchDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -733,7 +902,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomalyAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomalyAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DetectMultivariateBatchAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -753,7 +922,26 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Detect Multivariate Anomaly. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect Multivariate Anomaly
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The input schema should be the same with the training
+        /// request. The request will finish asynchronously and return a resultId value to
+        /// query the detection result. The request should be a source link to indicate an
+        /// externally accessible Azure Storage URI that either points to an Azure Blob
+        /// Storage folder or points to a CSV file in Azure Blob Storage.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectMultivariateBatchAnomaly(string,MultivariateBatchDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -761,7 +949,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomaly(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomaly(string,RequestContent,RequestContext)']/*" />
         public virtual Response DetectMultivariateBatchAnomaly(string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -825,7 +1013,24 @@ namespace Azure.AI.AnomalyDetector
             return Response.FromValue(MultivariateLastDetectionResult.FromResponse(response), response);
         }
 
-        /// <summary> Detect anomalies in the last point of the request body. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomalies in the last point of the request body
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The inference data should be put into the request body in
+        /// JSON format. The request will finish synchronously and return the detection
+        /// immediately in the response body.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectMultivariateLastAnomalyAsync(string,MultivariateLastDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -833,7 +1038,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateLastAnomalyAsync(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateLastAnomalyAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DetectMultivariateLastAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -853,7 +1058,24 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        /// <summary> Detect anomalies in the last point of the request body. </summary>
+        /// <summary>
+        /// [Protocol Method] Detect anomalies in the last point of the request body
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
+        /// and inference data. The inference data should be put into the request body in
+        /// JSON format. The request will finish synchronously and return the detection
+        /// immediately in the response body.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectMultivariateLastAnomaly(string,MultivariateLastDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -861,7 +1083,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateLastAnomaly(String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectMultivariateLastAnomaly(string,RequestContent,RequestContext)']/*" />
         public virtual Response DetectMultivariateLastAnomaly(string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -886,7 +1108,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List models of a resource. </remarks>
-        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
@@ -899,7 +1121,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List models of a resource. </remarks>
-        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModels(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
@@ -907,28 +1129,56 @@ namespace Azure.AI.AnomalyDetector
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
-        /// <summary> List Multivariate Models. </summary>
+        /// <summary>
+        /// [Protocol Method] List Multivariate Models
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List models of a resource.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateModelsAsync(int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(Int32,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
-        /// <summary> List Multivariate Models. </summary>
+        /// <summary>
+        /// [Protocol Method] List Multivariate Models
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// List models of a resource.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMultivariateModels(int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModels(Int32,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMultivariateModels(int? skip = null, int? maxCount = null, RequestContext context = null)
+        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModels(int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetMultivariateModels(int? skip, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);

@@ -333,7 +333,7 @@ namespace Azure.Communication.CallAutomation
             {
                 SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
                 {
-                    EndSilenceTimeoutInMs = recognizeSpeechOptions.EndSilenceTimeoutInMs
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeoutInMs.TotalMilliseconds
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
@@ -346,6 +346,36 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+
+                return request;
+            }
+            else if (recognizeOptions is CallMediaRecognizeSpeechOrDtmfOptions recognizeSpeechOrDtmfOptions)
+            {
+                SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
+                {
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeoutInMs.TotalMilliseconds
+                };
+
+                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InterToneTimeout.TotalSeconds,
+                    MaxTonesToCollect = recognizeSpeechOrDtmfOptions.MaxTonesToCollect,
+                    StopTones = recognizeSpeechOrDtmfOptions.StopTones
+                };
+
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
+                {
+                    InterruptPrompt = recognizeSpeechOrDtmfOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InitialSilenceTimeout.TotalSeconds,
+                    SpeechOptions = speechConfigurations,
+                    DtmfOptions = dtmfConfigurations,
+                };
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
 

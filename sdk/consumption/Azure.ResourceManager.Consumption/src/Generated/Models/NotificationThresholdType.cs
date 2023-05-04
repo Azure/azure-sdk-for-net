@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The type of threshold. </summary>
+    /// <summary>
+    /// The type of threshold
+    /// Serialized Name: ThresholdType
+    /// </summary>
     public readonly partial struct NotificationThresholdType : IEquatable<NotificationThresholdType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string ActualValue = "Actual";
         private const string ForecastedValue = "Forecasted";
 
-        /// <summary> Actual costs budget alerts notify when the actual accrued cost exceeds the allocated budget . </summary>
+        /// <summary>
+        /// Actual costs budget alerts notify when the actual accrued cost exceeds the allocated budget .
+        /// Serialized Name: ThresholdType.Actual
+        /// </summary>
         public static NotificationThresholdType Actual { get; } = new NotificationThresholdType(ActualValue);
-        /// <summary> Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions. </summary>
+        /// <summary>
+        /// Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions.
+        /// Serialized Name: ThresholdType.Forecasted
+        /// </summary>
         public static NotificationThresholdType Forecasted { get; } = new NotificationThresholdType(ForecastedValue);
         /// <summary> Determines if two <see cref="NotificationThresholdType"/> values are the same. </summary>
         public static bool operator ==(NotificationThresholdType left, NotificationThresholdType right) => left.Equals(right);

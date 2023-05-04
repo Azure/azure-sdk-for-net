@@ -40,29 +40,19 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
             _privateEndPointName = SessionRecording.GenerateAssetName("PrivateEndPoint-");
 
-            if (Mode == RecordedTestMode.Record)
+            //create vnet
+            var vnetData = new VirtualNetworkData()
             {
-                using (SessionRecording.DisableRecording())
-                {
-                    //create vnet
-                    var vnetData = new VirtualNetworkData()
-                    {
-                        Location = DefaultLocation,
-                        Subnets =
-                    {
-                        new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                        new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
-                    },
-                    };
-                    vnetData.AddressPrefixes.Add("10.10.0.0/16");
-                    var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
-                    _vnetId = vnetLro.Value.Id;
-                }
-            }
-            else
+                Location = DefaultLocation,
+                Subnets =
             {
-                _vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, _vnetName);
-            }
+                new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
+                new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
+            },
+            };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
+            _vnetId = vnetLro.Value.Id;
 
             await StopSessionRecordingAsync();
         }
@@ -117,7 +107,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task Get()
         {
@@ -128,7 +117,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.AreEqual("Approved", PrivateEndpointConnection.Value.Data.ConnectionState.Status.ToString());
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -139,7 +127,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.AreEqual(1, list.Count);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CheckIfExist()
         {
@@ -149,7 +136,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.False(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"));
         }
 
-        [Test]
         [RecordedTest]
         public async Task Delete()
         {
