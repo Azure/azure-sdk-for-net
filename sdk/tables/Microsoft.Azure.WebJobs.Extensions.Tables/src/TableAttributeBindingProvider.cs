@@ -39,14 +39,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            // ParameterBindingData is bound by the next binding
-            if (parameter.ParameterType == typeof(ParameterBindingData))
-            {
-                return null;
-            }
-
-            // ParameterBindingData[] is bound by the next binding
-            if (parameter.ParameterType == typeof(ParameterBindingData[]))
+            // ParameterBindingData and ParameterBindingData[] are bound by the next binding
+            if (parameter.ParameterType == typeof(ParameterBindingData) || parameter.ParameterType == typeof(ParameterBindingData[]))
             {
                 return null;
             }
