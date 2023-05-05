@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences)
         {
             Id = id;
-            Inferences = inferences;
+            Inferences = inferences.ToList();
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

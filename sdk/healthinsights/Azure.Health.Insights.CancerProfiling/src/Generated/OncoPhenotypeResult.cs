@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 
@@ -36,7 +37,7 @@ namespace Azure.Health.Insights.CancerProfiling
             ExpirationDateTime = expirationDateTime;
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
-            Errors = errors;
+            Errors = errors.ToList();
             Results = results;
         }
 

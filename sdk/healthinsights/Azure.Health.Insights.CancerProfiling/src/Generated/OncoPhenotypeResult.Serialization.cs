@@ -59,6 +59,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResponseError> array = new List<ResponseError>();
@@ -73,6 +74,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = OncoPhenotypeResults.DeserializeOncoPhenotypeResults(property.Value);

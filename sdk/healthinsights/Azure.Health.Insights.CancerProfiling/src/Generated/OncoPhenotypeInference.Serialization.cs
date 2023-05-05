@@ -57,6 +57,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InferenceEvidence> array = new List<InferenceEvidence>();

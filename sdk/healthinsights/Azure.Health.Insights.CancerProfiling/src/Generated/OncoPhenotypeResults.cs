@@ -33,7 +33,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         internal OncoPhenotypeResults(IReadOnlyList<OncoPhenotypePatientResult> patients, string modelVersion)
         {
-            Patients = patients;
+            Patients = patients.ToList();
             ModelVersion = modelVersion;
         }
 

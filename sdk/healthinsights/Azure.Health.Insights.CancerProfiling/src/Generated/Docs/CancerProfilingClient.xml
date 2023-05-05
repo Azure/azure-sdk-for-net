@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -166,7 +166,7 @@ Schema for <c>OncoPhenotypeResult</c>:
 
 </remarks>
     </member>
-    <member name="InferCancerProfile(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
+    <member name="InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
