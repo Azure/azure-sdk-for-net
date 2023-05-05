@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.PerfStress
 {
-    internal static class PerfStressUtilities
+    internal static class PerfUtilities
     {
         private static readonly Lazy<Parser> _parser = new Lazy<Parser>(() => new Parser(settings =>
         {
