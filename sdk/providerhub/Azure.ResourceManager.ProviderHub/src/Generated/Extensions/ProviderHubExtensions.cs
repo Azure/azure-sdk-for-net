@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -18,19 +19,19 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class to add extension methods to Azure.ResourceManager.ProviderHub. </summary>
     public static partial class ProviderHubExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ProviderHubSubscriptionResourceExtension GetProviderHubSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ProviderHubSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ProviderHubSubscriptionResourceExtension GetProviderHubSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ProviderHubSubscriptionResourceExtension(client, scope);
             });
         }
         #region CustomRolloutResource
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
         public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProviderRegistrations();
+            return GetProviderHubSubscriptionResourceExtension(subscriptionResource).GetProviderRegistrations();
         }
 
         /// <summary>

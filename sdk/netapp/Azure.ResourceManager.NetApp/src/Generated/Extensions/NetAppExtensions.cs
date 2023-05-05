@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetApp.Mock;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetApp. </summary>
     public static partial class NetAppExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NetAppAccountResourceExtension GetNetAppAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NetAppAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetAppAccountResourceExtension GetNetAppAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NetAppAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NetAppResourceGroupResourceExtension GetNetAppResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NetAppResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetAppResourceGroupResourceExtension GetNetAppResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NetAppResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static NetAppSubscriptionResourceExtension GetNetAppSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NetAppSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NetAppSubscriptionResourceExtension GetNetAppSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NetAppSubscriptionResourceExtension(client, scope);
             });
         }
         #region NetAppAccountResource
@@ -264,7 +281,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppAccountResources and their operations over a NetAppAccountResource. </returns>
         public static NetAppAccountCollection GetNetAppAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetAppAccounts();
+            return GetNetAppResourceGroupResourceExtension(resourceGroupResource).GetNetAppAccounts();
         }
 
         /// <summary>
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -362,7 +379,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +404,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -412,7 +429,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -437,7 +454,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -462,7 +479,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -483,7 +500,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionResourceExtension(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -504,7 +521,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
         }
 
         /// <summary>
@@ -526,7 +543,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -548,7 +565,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
         }
 
         /// <summary>
@@ -574,7 +591,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionResourceExtension(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -600,7 +617,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
+            return GetNetAppSubscriptionResourceExtension(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
         }
 
         /// <summary>
@@ -621,7 +638,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetAppAccountResource> GetNetAppAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppAccountsAsync(cancellationToken);
+            return GetNetAppAccountResourceExtension(subscriptionResource).GetNetAppAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -642,7 +659,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetAppAccountResource> GetNetAppAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetAppAccounts(cancellationToken);
+            return GetNetAppAccountResourceExtension(subscriptionResource).GetNetAppAccounts(cancellationToken);
         }
     }
 }

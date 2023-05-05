@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Nginx.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class to add extension methods to Azure.ResourceManager.Nginx. </summary>
     public static partial class NginxExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NginxDeploymentResourceExtension GetNginxDeploymentResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NginxDeploymentResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NginxDeploymentResourceExtension GetNginxDeploymentResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NginxDeploymentResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NginxResourceGroupResourceExtension GetNginxResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NginxResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NginxResourceGroupResourceExtension GetNginxResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NginxResourceGroupResourceExtension(client, scope);
             });
         }
         #region NginxCertificateResource
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
         public static NginxDeploymentCollection GetNginxDeployments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNginxDeployments();
+            return GetNginxResourceGroupResourceExtension(resourceGroupResource).GetNginxDeployments();
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
+            return GetNginxDeploymentResourceExtension(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NginxDeploymentResource> GetNginxDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNginxDeployments(cancellationToken);
+            return GetNginxDeploymentResourceExtension(subscriptionResource).GetNginxDeployments(cancellationToken);
         }
     }
 }

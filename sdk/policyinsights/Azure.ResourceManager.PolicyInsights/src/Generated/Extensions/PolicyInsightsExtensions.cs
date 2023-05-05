@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.PolicyInsights.Mock;
 using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,83 +21,83 @@ namespace Azure.ResourceManager.PolicyInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.PolicyInsights. </summary>
     public static partial class PolicyInsightsExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static PolicyInsightsArmResourceExtension GetPolicyInsightsArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new PolicyInsightsArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PolicyInsightsArmResourceExtension GetPolicyInsightsArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new PolicyInsightsArmResourceExtension(client, scope);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
+        private static PolicyInsightsManagementGroupResourceExtension GetPolicyInsightsManagementGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ManagementGroupResourceExtensionClient(client, resource.Id);
+                return new PolicyInsightsManagementGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PolicyInsightsManagementGroupResourceExtension GetPolicyInsightsManagementGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ManagementGroupResourceExtensionClient(client, scope);
+                return new PolicyInsightsManagementGroupResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PolicyInsightsResourceGroupResourceExtension GetPolicyInsightsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PolicyInsightsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PolicyInsightsResourceGroupResourceExtension GetPolicyInsightsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new PolicyInsightsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PolicyInsightsSubscriptionResourceExtension GetPolicyInsightsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PolicyInsightsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PolicyInsightsSubscriptionResourceExtension GetPolicyInsightsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new PolicyInsightsSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static PolicyInsightsTenantResourceExtension GetPolicyInsightsTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new PolicyInsightsTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static PolicyInsightsTenantResourceExtension GetPolicyInsightsTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new PolicyInsightsTenantResourceExtension(client, scope);
             });
         }
         #region PolicyRemediationResource
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyRemediationResources and their operations over a PolicyRemediationResource. </returns>
         public static PolicyRemediationCollection GetPolicyRemediations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyRemediations();
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyRemediations();
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyAttestationResources and their operations over a PolicyAttestationResource. </returns>
         public static PolicyAttestationCollection GetPolicyAttestations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyAttestations();
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyAttestations();
         }
 
         /// <summary>
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +364,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +387,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -432,7 +433,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +456,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsArmResourceExtension(client, scope).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -478,7 +479,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -501,7 +502,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -524,7 +525,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -547,7 +548,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ManagementGroupResource managementGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -570,7 +571,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -593,7 +594,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ManagementGroupResource managementGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -616,7 +617,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -639,7 +640,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -663,7 +664,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetManagementGroupResourceExtensionClient(managementGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -687,7 +688,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).CheckPolicyRestrictions(content, cancellationToken);
+            return GetPolicyInsightsManagementGroupResourceExtension(managementGroupResource).CheckPolicyRestrictions(content, cancellationToken);
         }
 
         /// <summary>
@@ -710,7 +711,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -733,7 +734,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -756,7 +757,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -779,7 +780,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ResourceGroupResource resourceGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -802,7 +803,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -825,7 +826,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ResourceGroupResource resourceGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -848,7 +849,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -871,7 +872,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -892,7 +893,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -913,7 +914,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static ArmOperation TriggerPolicyStateEvaluation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
 
         /// <summary>
@@ -937,7 +938,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -961,7 +962,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPolicyRestrictions(content, cancellationToken);
+            return GetPolicyInsightsResourceGroupResourceExtension(resourceGroupResource).CheckPolicyRestrictions(content, cancellationToken);
         }
 
         /// <summary>
@@ -984,7 +985,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1007,7 +1008,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1030,7 +1031,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1053,7 +1054,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this SubscriptionResource subscriptionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1076,7 +1077,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1099,7 +1100,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this SubscriptionResource subscriptionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1122,7 +1123,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1145,7 +1146,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -1166,7 +1167,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1187,7 +1188,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static ArmOperation TriggerPolicyStateEvaluation(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
 
         /// <summary>
@@ -1211,7 +1212,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1235,7 +1236,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPolicyRestrictions(content, cancellationToken);
+            return GetPolicyInsightsSubscriptionResourceExtension(subscriptionResource).CheckPolicyRestrictions(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of PolicyMetadataResources in the TenantResource. </summary>
@@ -1243,7 +1244,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyMetadataResources and their operations over a PolicyMetadataResource. </returns>
         public static PolicyMetadataCollection GetAllPolicyMetadata(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAllPolicyMetadata();
+            return GetPolicyInsightsTenantResourceExtension(tenantResource).GetAllPolicyMetadata();
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Mock;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,67 +20,211 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to Azure.ResourceManager.Monitor. </summary>
     public static partial class MonitorExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ActionGroupResourceExtension GetActionGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ActionGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ActionGroupResourceExtension GetActionGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ActionGroupResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ActivityLogAlertResourceExtension GetActivityLogAlertResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ActivityLogAlertResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ActivityLogAlertResourceExtension GetActivityLogAlertResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ActivityLogAlertResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AlertRuleResourceExtension GetAlertRuleResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AlertRuleResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AlertRuleResourceExtension GetAlertRuleResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AlertRuleResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AutoscaleSettingResourceExtension GetAutoscaleSettingResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AutoscaleSettingResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutoscaleSettingResourceExtension GetAutoscaleSettingResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AutoscaleSettingResourceExtension(client, scope);
+            });
+        }
+
+        private static DataCollectionEndpointResourceExtension GetDataCollectionEndpointResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataCollectionEndpointResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataCollectionEndpointResourceExtension GetDataCollectionEndpointResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataCollectionEndpointResourceExtension(client, scope);
+            });
+        }
+
+        private static DataCollectionRuleResourceExtension GetDataCollectionRuleResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataCollectionRuleResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataCollectionRuleResourceExtension GetDataCollectionRuleResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataCollectionRuleResourceExtension(client, scope);
+            });
+        }
+
+        private static MetricAlertResourceExtension GetMetricAlertResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MetricAlertResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MetricAlertResourceExtension GetMetricAlertResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MetricAlertResourceExtension(client, scope);
+            });
+        }
+
+        private static MonitorArmResourceExtension GetMonitorArmResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MonitorArmResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MonitorArmResourceExtension GetMonitorArmResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MonitorArmResourceExtension(client, scope);
+            });
+        }
+
+        private static MonitorPrivateLinkScopeResourceExtension GetMonitorPrivateLinkScopeResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MonitorPrivateLinkScopeResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MonitorPrivateLinkScopeResourceExtension GetMonitorPrivateLinkScopeResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MonitorPrivateLinkScopeResourceExtension(client, scope);
+            });
+        }
+
+        private static MonitorResourceGroupResourceExtension GetMonitorResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MonitorResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MonitorResourceGroupResourceExtension GetMonitorResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MonitorResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static MonitorSubscriptionResourceExtension GetMonitorSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MonitorSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MonitorSubscriptionResourceExtension GetMonitorSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MonitorSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static MonitorTenantResourceExtension GetMonitorTenantResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new MonitorTenantResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static MonitorTenantResourceExtension GetMonitorTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MonitorTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static ScheduledQueryRuleResourceExtension GetScheduledQueryRuleResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ScheduledQueryRuleResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ScheduledQueryRuleResourceExtension GetScheduledQueryRuleResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ScheduledQueryRuleResourceExtension(client, scope);
             });
         }
         #region AutoscaleSettingResource
@@ -411,7 +556,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
         public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiagnosticSettings();
+            return GetMonitorArmResourceExtension(client, scope).GetDiagnosticSettings();
         }
 
         /// <summary>
@@ -470,7 +615,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DiagnosticSettingsCategoryResources and their operations over a DiagnosticSettingsCategoryResource. </returns>
         public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiagnosticSettingsCategories();
+            return GetMonitorArmResourceExtension(client, scope).GetDiagnosticSettingsCategories();
         }
 
         /// <summary>
@@ -529,7 +674,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetVmInsightsOnboardingStatus();
+            return GetMonitorArmResourceExtension(client, scope).GetVmInsightsOnboardingStatus();
         }
 
         /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmResource. </summary>
@@ -538,7 +683,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionRuleAssociationResources and their operations over a DataCollectionRuleAssociationResource. </returns>
         public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDataCollectionRuleAssociations();
+            return GetMonitorArmResourceExtension(client, scope).GetDataCollectionRuleAssociations();
         }
 
         /// <summary>
@@ -610,7 +755,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitionsAsync(metricnamespace, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricDefinitionsAsync(metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -632,7 +777,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitions(metricnamespace, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricDefinitions(metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -656,7 +801,7 @@ namespace Azure.ResourceManager.Monitor
         {
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricsAsync(options, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -680,7 +825,7 @@ namespace Azure.ResourceManager.Monitor
         {
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetrics(options, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetrics(options, cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +849,7 @@ namespace Azure.ResourceManager.Monitor
         {
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselinesAsync(options, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricBaselinesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -728,7 +873,7 @@ namespace Azure.ResourceManager.Monitor
         {
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselines(options, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricBaselines(options, cancellationToken);
         }
 
         /// <summary>
@@ -750,7 +895,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespacesAsync(startTime, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricNamespacesAsync(startTime, cancellationToken);
         }
 
         /// <summary>
@@ -772,7 +917,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespaces(startTime, cancellationToken);
+            return GetMonitorArmResourceExtension(client, scope).GetMonitorMetricNamespaces(startTime, cancellationToken);
         }
 
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
@@ -780,7 +925,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
         public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoscaleSettings();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetAutoscaleSettings();
         }
 
         /// <summary>
@@ -836,7 +981,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
         public static AlertRuleCollection GetAlertRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertRules();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetAlertRules();
         }
 
         /// <summary>
@@ -892,7 +1037,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ActionGroupResources and their operations over a ActionGroupResource. </returns>
         public static ActionGroupCollection GetActionGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetActionGroups();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetActionGroups();
         }
 
         /// <summary>
@@ -948,7 +1093,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of MetricAlertResources and their operations over a MetricAlertResource. </returns>
         public static MetricAlertCollection GetMetricAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMetricAlerts();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetMetricAlerts();
         }
 
         /// <summary>
@@ -1004,7 +1149,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
         public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScheduledQueryRules();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
@@ -1060,7 +1205,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
         public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitorPrivateLinkScopes();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetMonitorPrivateLinkScopes();
         }
 
         /// <summary>
@@ -1116,7 +1261,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ActivityLogAlertResources and their operations over a ActivityLogAlertResource. </returns>
         public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetActivityLogAlerts();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetActivityLogAlerts();
         }
 
         /// <summary>
@@ -1172,7 +1317,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionEndpointResources and their operations over a DataCollectionEndpointResource. </returns>
         public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataCollectionEndpoints();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetDataCollectionEndpoints();
         }
 
         /// <summary>
@@ -1228,7 +1373,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionRuleResources and their operations over a DataCollectionRuleResource. </returns>
         public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataCollectionRules();
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetDataCollectionRules();
         }
 
         /// <summary>
@@ -1301,7 +1446,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1326,7 +1471,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of LogProfileResources in the SubscriptionResource. </summary>
@@ -1334,7 +1479,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
         public static LogProfileCollection GetLogProfiles(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogProfiles();
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetLogProfiles();
         }
 
         /// <summary>
@@ -1403,7 +1548,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
+            return GetAutoscaleSettingResourceExtension(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1424,7 +1569,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoscaleSettings(cancellationToken);
+            return GetAutoscaleSettingResourceExtension(subscriptionResource).GetAutoscaleSettings(cancellationToken);
         }
 
         /// <summary>
@@ -1445,7 +1590,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertRulesAsync(cancellationToken);
+            return GetAlertRuleResourceExtension(subscriptionResource).GetAlertRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1466,7 +1611,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertRuleResource> GetAlertRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertRules(cancellationToken);
+            return GetAlertRuleResourceExtension(subscriptionResource).GetAlertRules(cancellationToken);
         }
 
         /// <summary>
@@ -1487,7 +1632,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActionGroupResource> GetActionGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActionGroupsAsync(cancellationToken);
+            return GetActionGroupResourceExtension(subscriptionResource).GetActionGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1508,7 +1653,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActionGroupResource> GetActionGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActionGroups(cancellationToken);
+            return GetActionGroupResourceExtension(subscriptionResource).GetActionGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1534,7 +1679,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1560,7 +1705,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1585,7 +1730,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1610,7 +1755,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
         }
 
         /// <summary>
@@ -1635,7 +1780,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1660,7 +1805,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
         }
 
         /// <summary>
@@ -1681,7 +1826,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
+            return GetMetricAlertResourceExtension(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1702,7 +1847,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MetricAlertResource> GetMetricAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMetricAlerts(cancellationToken);
+            return GetMetricAlertResourceExtension(subscriptionResource).GetMetricAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1723,7 +1868,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
+            return GetScheduledQueryRuleResourceExtension(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1744,7 +1889,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScheduledQueryRules(cancellationToken);
+            return GetScheduledQueryRuleResourceExtension(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
@@ -1765,7 +1910,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
+            return GetMonitorPrivateLinkScopeResourceExtension(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1786,7 +1931,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
+            return GetMonitorPrivateLinkScopeResourceExtension(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -1807,7 +1952,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
+            return GetActivityLogAlertResourceExtension(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1828,7 +1973,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActivityLogAlertResource> GetActivityLogAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogAlerts(cancellationToken);
+            return GetActivityLogAlertResourceExtension(subscriptionResource).GetActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1849,7 +1994,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
+            return GetDataCollectionEndpointResourceExtension(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1870,7 +2015,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
+            return GetDataCollectionEndpointResourceExtension(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
         }
 
         /// <summary>
@@ -1891,7 +2036,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
+            return GetDataCollectionRuleResourceExtension(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1912,7 +2057,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionRules(cancellationToken);
+            return GetDataCollectionRuleResourceExtension(subscriptionResource).GetDataCollectionRules(cancellationToken);
         }
 
         /// <summary>
@@ -1933,7 +2078,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEventCategoriesAsync(cancellationToken);
+            return GetMonitorTenantResourceExtension(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1954,7 +2099,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEventCategories(cancellationToken);
+            return GetMonitorTenantResourceExtension(tenantResource).GetEventCategories(cancellationToken);
         }
 
         /// <summary>
@@ -1977,7 +2122,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
+            return GetMonitorTenantResourceExtension(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -2000,7 +2145,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
+            return GetMonitorTenantResourceExtension(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
         }
     }
 }

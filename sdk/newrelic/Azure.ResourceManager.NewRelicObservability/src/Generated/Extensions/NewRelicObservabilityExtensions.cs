@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NewRelicObservability.Mock;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// <summary> A class to add extension methods to Azure.ResourceManager.NewRelicObservability. </summary>
     public static partial class NewRelicObservabilityExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NewRelicMonitorResourceExtension GetNewRelicMonitorResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NewRelicMonitorResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NewRelicMonitorResourceExtension GetNewRelicMonitorResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NewRelicMonitorResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NewRelicObservabilityResourceGroupResourceExtension GetNewRelicObservabilityResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NewRelicObservabilityResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NewRelicObservabilityResourceGroupResourceExtension GetNewRelicObservabilityResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NewRelicObservabilityResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static NewRelicObservabilitySubscriptionResourceExtension GetNewRelicObservabilitySubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new NewRelicObservabilitySubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static NewRelicObservabilitySubscriptionResourceExtension GetNewRelicObservabilitySubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new NewRelicObservabilitySubscriptionResourceExtension(client, scope);
             });
         }
         #region NewRelicMonitorResource
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An object representing collection of NewRelicMonitorResources and their operations over a NewRelicMonitorResource. </returns>
         public static NewRelicMonitorResourceCollection GetNewRelicMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNewRelicMonitorResources();
+            return GetNewRelicObservabilityResourceGroupResourceExtension(resourceGroupResource).GetNewRelicMonitorResources();
         }
 
         /// <summary>
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(userEmail, location, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetAccountsAsync(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(userEmail, location, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetAccounts(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +231,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An async collection of <see cref="NewRelicMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NewRelicMonitorResource> GetNewRelicMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewRelicMonitorResourcesAsync(cancellationToken);
+            return GetNewRelicMonitorResourceExtension(subscriptionResource).GetNewRelicMonitorResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> A collection of <see cref="NewRelicMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NewRelicMonitorResource> GetNewRelicMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewRelicMonitorResources(cancellationToken);
+            return GetNewRelicMonitorResourceExtension(subscriptionResource).GetNewRelicMonitorResources(cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +278,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrganizationsAsync(userEmail, location, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetOrganizationsAsync(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +304,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrganizations(userEmail, location, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetOrganizations(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +327,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An async collection of <see cref="PlanDataResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PlanDataResource> GetPlansAsync(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPlansAsync(accountId, organizationId, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetPlansAsync(accountId, organizationId, cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +350,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> A collection of <see cref="PlanDataResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PlanDataResource> GetPlans(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPlans(accountId, organizationId, cancellationToken);
+            return GetNewRelicObservabilitySubscriptionResourceExtension(subscriptionResource).GetPlans(accountId, organizationId, cancellationToken);
         }
     }
 }
