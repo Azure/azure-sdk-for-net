@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// names.</param>
         /// <param name="containerRegistries">Additional private registries
         /// from which containers can be pulled.</param>
-        public ContainerConfiguration(ContainerType type, IList<string> containerImageNames = default(IList<string>), IList<ContainerRegistry> containerRegistries = default(IList<ContainerRegistry>))
+        public ContainerConfiguration(string type, IList<string> containerImageNames = default(IList<string>), IList<ContainerRegistry> containerRegistries = default(IList<ContainerRegistry>))
         {
             Type = type;
             ContainerImageNames = containerImageNames;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'dockerCompatible', 'criCompatible'
         /// </remarks>
         [JsonProperty(PropertyName = "type")]
-        public ContainerType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of container Image names.

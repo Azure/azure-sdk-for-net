@@ -10,58 +10,20 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ContainerType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ContainerType
+    public static class ContainerType
     {
         /// <summary>
         /// A Docker compatible container technology will be used to launch the
         /// containers.
         /// </summary>
-        [EnumMember(Value = "dockerCompatible")]
-        DockerCompatible,
+        public const string DockerCompatible = "dockerCompatible";
         /// <summary>
         /// A CRI based technology will be used to launch the containers.
         /// </summary>
-        [EnumMember(Value = "criCompatible")]
-        CriCompatible
-    }
-    internal static class ContainerTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ContainerType? value)
-        {
-            return value == null ? null : ((ContainerType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ContainerType value)
-        {
-            switch( value )
-            {
-                case ContainerType.DockerCompatible:
-                    return "dockerCompatible";
-                case ContainerType.CriCompatible:
-                    return "criCompatible";
-            }
-            return null;
-        }
-
-        internal static ContainerType? ParseContainerType(this string value)
-        {
-            switch( value )
-            {
-                case "dockerCompatible":
-                    return ContainerType.DockerCompatible;
-                case "criCompatible":
-                    return ContainerType.CriCompatible;
-            }
-            return null;
-        }
+        public const string CriCompatible = "criCompatible";
     }
 }
