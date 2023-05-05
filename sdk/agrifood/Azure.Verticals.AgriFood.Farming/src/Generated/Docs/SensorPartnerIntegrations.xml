@@ -48,58 +48,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(string,string,RequestContent,RequestContext)">
 <example>
@@ -148,58 +96,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorPartnerIntegrationAsync(string,string,RequestContext)">
 <example>
@@ -226,34 +122,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorPartnerIntegration(string,string,RequestContext)">
 <example>
@@ -280,34 +148,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModel</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteAsync(string,string,RequestContext)">
 <example>
@@ -348,20 +188,6 @@ Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
 Console.WriteLine(result.GetProperty("integrationId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
-<code>{
-  consented: boolean, # Optional. Flag to determine the status of partner integration consent.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  integrationId: string, # Optional. Id of the integration.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CheckConsent(string,string,string,RequestContext)">
 <example>
@@ -378,20 +204,6 @@ Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
 Console.WriteLine(result.GetProperty("integrationId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationCheckConsentResponse</c>:
-<code>{
-  consented: boolean, # Optional. Flag to determine the status of partner integration consent.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  integrationId: string, # Optional. Id of the integration.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GenerateConsentLinkAsync(string,string,RequestContext)">
 <example>
@@ -407,19 +219,6 @@ Console.WriteLine(result.GetProperty("consentLink").ToString());
 Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
-<code>{
-  consentLink: string, # Optional. Consent link.
-  consentExpiryDateTime: string (ISO 8601 Format), # Optional. Consent expiry date time, sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GenerateConsentLink(string,string,RequestContext)">
 <example>
@@ -435,19 +234,6 @@ Console.WriteLine(result.GetProperty("consentLink").ToString());
 Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationGenerateConsentLinkResponse</c>:
-<code>{
-  consentLink: string, # Optional. Consent link.
-  consentExpiryDateTime: string (ISO 8601 Format), # Optional. Consent expiry date time, sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorPartnerIntegrationsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -486,34 +272,6 @@ await foreach (var item in client.GetSensorPartnerIntegrationsAsync("<sensorPart
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModelListResponseValue</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorPartnerIntegrations(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -552,34 +310,6 @@ foreach (var item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", ne
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SensorPartnerIntegrationModelListResponseValue</c>:
-<code>{
-  integrationId: string, # Optional. Id of the integration.
-  partyId: string, # Optional. Id of the party.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
