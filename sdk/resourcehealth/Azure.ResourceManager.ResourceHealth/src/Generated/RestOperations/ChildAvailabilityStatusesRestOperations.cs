@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<ResourceHealthAvailabilityStatusData>> GetByResourceAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthAvailabilityStatus>> GetByResourceAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -78,13 +78,11 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        ResourceHealthAvailabilityStatusData value = default;
+                        ResourceHealthAvailabilityStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(document.RootElement);
+                        value = ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ResourceHealthAvailabilityStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<ResourceHealthAvailabilityStatusData> GetByResource(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthAvailabilityStatus> GetByResource(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -106,13 +104,11 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        ResourceHealthAvailabilityStatusData value = default;
+                        ResourceHealthAvailabilityStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(document.RootElement);
+                        value = ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ResourceHealthAvailabilityStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -149,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<AvailabilityStatusListResult>> ListAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthAvailabilityStatusListResult>> ListAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -159,9 +155,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusListResult value = default;
+                        ResourceHealthAvailabilityStatusListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailabilityStatusListResult.DeserializeAvailabilityStatusListResult(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -175,7 +171,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<AvailabilityStatusListResult> List(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthAvailabilityStatusListResult> List(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -185,9 +181,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusListResult value = default;
+                        ResourceHealthAvailabilityStatusListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailabilityStatusListResult.DeserializeAvailabilityStatusListResult(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +212,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<AvailabilityStatusListResult>> ListNextPageAsync(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceHealthAvailabilityStatusListResult>> ListNextPageAsync(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -227,9 +223,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusListResult value = default;
+                        ResourceHealthAvailabilityStatusListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailabilityStatusListResult.DeserializeAvailabilityStatusListResult(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,7 +240,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public Response<AvailabilityStatusListResult> ListNextPage(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceHealthAvailabilityStatusListResult> ListNextPage(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -255,9 +251,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        AvailabilityStatusListResult value = default;
+                        ResourceHealthAvailabilityStatusListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailabilityStatusListResult.DeserializeAvailabilityStatusListResult(document.RootElement);
+                        value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

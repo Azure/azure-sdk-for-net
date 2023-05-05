@@ -22,24 +22,25 @@ modelerfour:
 rename-mapping:
   Link.type: LinkType
   EmergingIssuesGetResult: ServiceEmergingIssue
-  AvailabilityStatusPropertiesRecentlyResolved: AvailabilityStateRecentlyResolved
-  EventPropertiesArticle: EventArticle
-  EventPropertiesRecommendedActions: EventRecommendedActions
-  EventPropertiesRecommendedActionsItem: EventRecommendedActionsItem
+  AvailabilityStatusPropertiesRecentlyResolved: ResourceHealthAvailabilityStateRecentlyResolved
+  EventPropertiesArticle: ResourceHealthEventArticle
+  EventPropertiesRecommendedActions: ResourceHealthEventRecommendedActions
+  EventPropertiesRecommendedActionsItem: ResourceHealthEventRecommendedActionsItem
+  EventPropertiesAdditionalInformation: ResourceHealthEventAdditionalInformation
   Events: ResourceHealthEventListResult
-  LevelValues: EventInsightLevelValues
-  Faq: EventFaq
-  Impact: EventImpact
+  LevelValues: ResourceHealthEventInsightLevelValues
+  Faq: ResourceHealthEventFaq
+  Impact: ResourceHealthEventImpact
   IssueNameParameter: IssueNameContent
-  Link: EventLink
-  LinkDisplayText: EventLinkDisplayText
-  LinkTypeValues: EventLinkTypeValues
+  Link: ResourceHealthEventLink
+  LinkDisplayText: ResourceHealthEventLinkDisplayText
+  LinkTypeValues: ResourceHealthEventLinkTypeValues
   Scenario: MetadataEntityScenario
-  SeverityValues: EventSeverityLevel
-  StageValues: EventStageValues
+  SeverityValues: ResourceHealthEventSeverityLevel
+  StageValues: ResourceHealthEventStageValues
   StatusActiveEvent: EmergingIssueActiveEventType
   StatusBanner: EmergingIssueBannerType
-  Update: EventUpdate
+  Update: ResourceHealthEventUpdate
   Event.properties.isHIR: IsHirEvent
   Event.properties.platformInitiated: IsPlatformInitiated
   StatusActiveEvent.published: IsPublished
@@ -50,14 +51,22 @@ rename-mapping:
   EventImpactedResource.properties.targetResourceId: -|arm-id
   EmergingIssuesGetResult.properties.refreshTimestamp: RefreshedOn
   Update.updateDateTime: UpdatedOn
+  Event.properties.enableMicrosoftSupport: IsMicrosoftSupportEnabled
+  Event.properties.enableChatWithUs: IsChatWithUsEnabled
+  EventLevelValues: ResourceHealthEventLevelValue
 
 prepend-rp-prefix:
   - AvailabilityStatus
   - AvailabilityStatusProperties
+  - AvailabilityStateValues
+  - AvailabilityStatusListResult
   - Event
   - MetadataEntity
   - EventImpactedResource
   - KeyValueItem
+  - EventSourceValues
+  - EventStatusValues
+  - EventTypeValues
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -92,14 +101,20 @@ rename-rules:
 
 override-operation-name:
   Events_ListBySingleResource: GetHealthEventsOfSingleResource
-  ChildResources_List: GetHealthStatusOfChildResources
+  ChildResources_List: GetAvailabilityStatusOfChildResources
+  ChildAvailabilityStatuses_GetByResource: GetAvailabilityStatusOfChildResource
+  ChildAvailabilityStatuses_List: GetHistoricalAvailabilityStatusesOfChildResource
+  AvailabilityStatuses_GetByResource: GetAvailabilityStatus
+  AvailabilityStatuses_ListBySubscriptionId: GetAvailabilityStatusesBySubscription
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: ResourceHealthEventImpactedResource
   /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}: ResourceHealthEvent
   /providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: TenantResourceHealthEventImpactedResource
   /providers/Microsoft.ResourceHealth/events/{eventTrackingId}: TenantResourceHealthEvent
-  /{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current: ResourceHealthAvailabilityStatus
-  /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current: ResourceHealthChildAvailabilityStatus
+
+request-path-is-non-resource:
+  - /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current
+  - /{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current
 
 ```

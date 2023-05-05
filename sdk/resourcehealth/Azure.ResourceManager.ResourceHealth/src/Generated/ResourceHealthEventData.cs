@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
         internal ResourceHealthEventData()
         {
-            Links = new ChangeTrackingList<EventLink>();
-            Impact = new ChangeTrackingList<EventImpact>();
-            Faqs = new ChangeTrackingList<EventFaq>();
+            Links = new ChangeTrackingList<ResourceHealthEventLink>();
+            Impact = new ChangeTrackingList<ResourceHealthEventImpact>();
+            Faqs = new ChangeTrackingList<ResourceHealthEventFaq>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="recommendedActions"> Recommended actions of event. </param>
         /// <param name="faqs"> Frequently asked questions for the service health event. </param>
         /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
-        /// <param name="enableMicrosoftSupport"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
         /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. </param>
         /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
-        /// <param name="enableChatWithUs"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
         /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
         /// <param name="hirStage"> Stage for HIR Document. </param>
         /// <param name="additionalInformation"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
-        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventTypeValue? eventType, EventSourceValue? eventSource, EventStatusValue? status, string title, string summary, string header, EventInsightLevelValue? level, EventLevelValue? eventLevel, string externalIncidentId, string reason, EventArticle article, IReadOnlyList<EventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<EventImpact> impact, EventRecommendedActions recommendedActions, IReadOnlyList<EventFaq> faqs, bool? isHirEvent, bool? enableMicrosoftSupport, string description, bool? isPlatformInitiated, bool? enableChatWithUs, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, EventPropertiesAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
+        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
         {
             EventType = eventType;
             EventSource = eventSource;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ResourceHealth
             RecommendedActions = recommendedActions;
             Faqs = faqs;
             IsHirEvent = isHirEvent;
-            EnableMicrosoftSupport = enableMicrosoftSupport;
+            IsMicrosoftSupportEnabled = isMicrosoftSupportEnabled;
             Description = description;
             IsPlatformInitiated = isPlatformInitiated;
-            EnableChatWithUs = enableChatWithUs;
+            IsChatWithUsEnabled = isChatWithUsEnabled;
             Priority = priority;
             LastUpdateOn = lastUpdateOn;
             HirStage = hirStage;
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> Type of event. </summary>
-        public EventTypeValue? EventType { get; }
+        public ResourceHealthEventTypeValue? EventType { get; }
         /// <summary> Source of event. </summary>
-        public EventSourceValue? EventSource { get; }
+        public ResourceHealthEventSourceValue? EventSource { get; }
         /// <summary> Current status of event. </summary>
-        public EventStatusValue? Status { get; }
+        public ResourceHealthEventStatusValue? Status { get; }
         /// <summary> Title text of event. </summary>
         public string Title { get; }
         /// <summary> Summary text of event. </summary>
@@ -105,37 +105,37 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Header text of event. </summary>
         public string Header { get; }
         /// <summary> Level of insight. </summary>
-        public EventInsightLevelValue? Level { get; }
+        public ResourceHealthEventInsightLevelValue? Level { get; }
         /// <summary> Level of event. </summary>
-        public EventLevelValue? EventLevel { get; }
+        public ResourceHealthEventLevelValue? EventLevel { get; }
         /// <summary> The id of the Incident. </summary>
         public string ExternalIncidentId { get; }
         /// <summary> The reason for the Incident. </summary>
         public string Reason { get; }
         /// <summary> Article of event. </summary>
-        public EventArticle Article { get; }
+        public ResourceHealthEventArticle Article { get; }
         /// <summary> Useful links of event. </summary>
-        public IReadOnlyList<EventLink> Links { get; }
+        public IReadOnlyList<ResourceHealthEventLink> Links { get; }
         /// <summary> It provides the Timestamp for when the health impacting event started. </summary>
         public DateTimeOffset? ImpactStartOn { get; }
         /// <summary> It provides the Timestamp for when the health impacting event resolved. </summary>
         public DateTimeOffset? ImpactMitigationOn { get; }
         /// <summary> List services impacted by the service health event. </summary>
-        public IReadOnlyList<EventImpact> Impact { get; }
+        public IReadOnlyList<ResourceHealthEventImpact> Impact { get; }
         /// <summary> Recommended actions of event. </summary>
-        public EventRecommendedActions RecommendedActions { get; }
+        public ResourceHealthEventRecommendedActions RecommendedActions { get; }
         /// <summary> Frequently asked questions for the service health event. </summary>
-        public IReadOnlyList<EventFaq> Faqs { get; }
+        public IReadOnlyList<ResourceHealthEventFaq> Faqs { get; }
         /// <summary> It provides information if the event is High incident rate event or not. </summary>
         public bool? IsHirEvent { get; }
         /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
-        public bool? EnableMicrosoftSupport { get; }
+        public bool? IsMicrosoftSupportEnabled { get; }
         /// <summary> Contains the communication message for the event, that could include summary, root cause and other details. </summary>
         public string Description { get; }
         /// <summary> Is true if the event is platform initiated. </summary>
         public bool? IsPlatformInitiated { get; }
         /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
-        public bool? EnableChatWithUs { get; }
+        public bool? IsChatWithUsEnabled { get; }
         /// <summary> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </summary>
         public int? Priority { get; }
         /// <summary> It provides the Timestamp for when the health impacting event was last updated. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Stage for HIR Document. </summary>
         public string HirStage { get; }
         /// <summary> Additional information. </summary>
-        internal EventPropertiesAdditionalInformation AdditionalInformation { get; }
+        internal ResourceHealthEventAdditionalInformation AdditionalInformation { get; }
         /// <summary> Additional information Message. </summary>
         public string AdditionalInformationMessage
         {

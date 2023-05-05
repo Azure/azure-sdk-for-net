@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="isPublished"> The boolean value of this active event if published or not. </param>
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <param name="impacts"> The list of emerging issues impacts. </param>
-        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, EventSeverityLevel? severity, EventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts)
+        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, ResourceHealthEventSeverityLevel? severity, ResourceHealthEventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts)
         {
             Title = title;
             Description = description;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> The cloud type of this active event. </summary>
         public string Cloud { get; }
         /// <summary> The severity level of this active event. </summary>
-        public EventSeverityLevel? Severity { get; }
+        public ResourceHealthEventSeverityLevel? Severity { get; }
         /// <summary> The stage of this active event. </summary>
-        public EventStageValue? Stage { get; }
+        public ResourceHealthEventStageValue? Stage { get; }
         /// <summary> The boolean value of this active event if published or not. </summary>
         public bool? IsPublished { get; }
         /// <summary> The last time modified on this banner. </summary>

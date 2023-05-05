@@ -26,23 +26,23 @@ namespace Azure.ResourceManager.ResourceHealth
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EventTypeValue> eventType = default;
-            Optional<EventSourceValue> eventSource = default;
-            Optional<EventStatusValue> status = default;
+            Optional<ResourceHealthEventTypeValue> eventType = default;
+            Optional<ResourceHealthEventSourceValue> eventSource = default;
+            Optional<ResourceHealthEventStatusValue> status = default;
             Optional<string> title = default;
             Optional<string> summary = default;
             Optional<string> header = default;
-            Optional<EventInsightLevelValue> level = default;
-            Optional<EventLevelValue> eventLevel = default;
+            Optional<ResourceHealthEventInsightLevelValue> level = default;
+            Optional<ResourceHealthEventLevelValue> eventLevel = default;
             Optional<string> externalIncidentId = default;
             Optional<string> reason = default;
-            Optional<EventArticle> article = default;
-            Optional<IReadOnlyList<EventLink>> links = default;
+            Optional<ResourceHealthEventArticle> article = default;
+            Optional<IReadOnlyList<ResourceHealthEventLink>> links = default;
             Optional<DateTimeOffset> impactStartTime = default;
             Optional<DateTimeOffset> impactMitigationTime = default;
-            Optional<IReadOnlyList<EventImpact>> impact = default;
-            Optional<EventRecommendedActions> recommendedActions = default;
-            Optional<IReadOnlyList<EventFaq>> faqs = default;
+            Optional<IReadOnlyList<ResourceHealthEventImpact>> impact = default;
+            Optional<ResourceHealthEventRecommendedActions> recommendedActions = default;
+            Optional<IReadOnlyList<ResourceHealthEventFaq>> faqs = default;
             Optional<bool> isHIR = default;
             Optional<bool> enableMicrosoftSupport = default;
             Optional<string> description = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<int> priority = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> hirStage = default;
-            Optional<EventPropertiesAdditionalInformation> additionalInformation = default;
+            Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
             Optional<int> duration = default;
             Optional<string> impactType = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            eventType = new EventTypeValue(property0.Value.GetString());
+                            eventType = new ResourceHealthEventTypeValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventSource"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            eventSource = new EventSourceValue(property0.Value.GetString());
+                            eventSource = new ResourceHealthEventSourceValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            status = new EventStatusValue(property0.Value.GetString());
+                            status = new ResourceHealthEventStatusValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            level = new EventInsightLevelValue(property0.Value.GetString());
+                            level = new ResourceHealthEventInsightLevelValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventLevel"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            eventLevel = new EventLevelValue(property0.Value.GetString());
+                            eventLevel = new ResourceHealthEventLevelValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("externalIncidentId"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            article = EventArticle.DeserializeEventArticle(property0.Value);
+                            article = ResourceHealthEventArticle.DeserializeResourceHealthEventArticle(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            List<EventLink> array = new List<EventLink>();
+                            List<ResourceHealthEventLink> array = new List<ResourceHealthEventLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventLink.DeserializeEventLink(item));
+                                array.Add(ResourceHealthEventLink.DeserializeResourceHealthEventLink(item));
                             }
                             links = array;
                             continue;
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            List<EventImpact> array = new List<EventImpact>();
+                            List<ResourceHealthEventImpact> array = new List<ResourceHealthEventImpact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventImpact.DeserializeEventImpact(item));
+                                array.Add(ResourceHealthEventImpact.DeserializeResourceHealthEventImpact(item));
                             }
                             impact = array;
                             continue;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            recommendedActions = EventRecommendedActions.DeserializeEventRecommendedActions(property0.Value);
+                            recommendedActions = ResourceHealthEventRecommendedActions.DeserializeResourceHealthEventRecommendedActions(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("faqs"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            List<EventFaq> array = new List<EventFaq>();
+                            List<ResourceHealthEventFaq> array = new List<ResourceHealthEventFaq>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventFaq.DeserializeEventFaq(item));
+                                array.Add(ResourceHealthEventFaq.DeserializeResourceHealthEventFaq(item));
                             }
                             faqs = array;
                             continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            additionalInformation = EventPropertiesAdditionalInformation.DeserializeEventPropertiesAdditionalInformation(property0.Value);
+                            additionalInformation = ResourceHealthEventAdditionalInformation.DeserializeResourceHealthEventAdditionalInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("duration"u8))

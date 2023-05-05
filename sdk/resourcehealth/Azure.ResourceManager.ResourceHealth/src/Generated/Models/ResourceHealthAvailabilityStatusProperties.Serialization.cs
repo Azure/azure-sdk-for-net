@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<AvailabilityStateValue> availabilityState = default;
+            Optional<ResourceHealthAvailabilityStateValue> availabilityState = default;
             Optional<string> title = default;
             Optional<string> summary = default;
             Optional<string> detailedStatus = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<DateTimeOffset> occuredTime = default;
             Optional<ReasonChronicityType> reasonChronicity = default;
             Optional<DateTimeOffset> reportedTime = default;
-            Optional<AvailabilityStateRecentlyResolved> recentlyResolved = default;
+            Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
             Optional<IReadOnlyList<RecommendedAction>> recommendedActions = default;
             Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    availabilityState = new AvailabilityStateValue(property.Value.GetString());
+                    availabilityState = new ResourceHealthAvailabilityStateValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    recentlyResolved = AvailabilityStateRecentlyResolved.DeserializeAvailabilityStateRecentlyResolved(property.Value);
+                    recentlyResolved = ResourceHealthAvailabilityStateRecentlyResolved.DeserializeResourceHealthAvailabilityStateRecentlyResolved(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recommendedActions"u8))

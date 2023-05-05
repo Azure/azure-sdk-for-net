@@ -1,31 +1,5 @@
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class ResourceHealthAvailabilityStatusData : Azure.ResourceManager.Models.ResourceData
-    {
-        internal ResourceHealthAvailabilityStatusData() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties Properties { get { throw null; } }
-    }
-    public partial class ResourceHealthAvailabilityStatusResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ResourceHealthAvailabilityStatusResource() { }
-        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource> Get(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource>> GetAsync(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ResourceHealthChildAvailabilityStatusResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ResourceHealthChildAvailabilityStatusResource() { }
-        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthChildAvailabilityStatusResource> Get(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthChildAvailabilityStatusResource>> GetAsync(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ResourceHealthEventCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>, System.Collections.IEnumerable
     {
         protected ResourceHealthEventCollection() { }
@@ -43,31 +17,31 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         internal ResourceHealthEventData() { }
         public string AdditionalInformationMessage { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventArticle Article { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle Article { get { throw null; } }
         public string Description { get { throw null; } }
         public int? Duration { get { throw null; } }
-        public bool? EnableChatWithUs { get { throw null; } }
-        public bool? EnableMicrosoftSupport { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventLevelValue? EventLevel { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventSourceValue? EventSource { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventTypeValue? EventType { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue? EventLevel { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue? EventSource { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue? EventType { get { throw null; } }
         public string ExternalIncidentId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventFaq> Faqs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq> Faqs { get { throw null; } }
         public string Header { get { throw null; } }
         public string HirStage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventImpact> Impact { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact> Impact { get { throw null; } }
         public System.DateTimeOffset? ImpactMitigationOn { get { throw null; } }
         public System.DateTimeOffset? ImpactStartOn { get { throw null; } }
         public string ImpactType { get { throw null; } }
+        public bool? IsChatWithUsEnabled { get { throw null; } }
         public bool? IsHirEvent { get { throw null; } }
+        public bool? IsMicrosoftSupportEnabled { get { throw null; } }
         public bool? IsPlatformInitiated { get { throw null; } }
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue? Level { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventLink> Links { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue? Level { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink> Links { get { throw null; } }
         public int? Priority { get { throw null; } }
         public string Reason { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventRecommendedActions RecommendedActions { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventStatusValue? Status { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions RecommendedActions { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? Status { get { throw null; } }
         public string Summary { get { throw null; } }
         public string Title { get { throw null; } }
     }
@@ -121,14 +95,22 @@ namespace Azure.ResourceManager.ResourceHealth
     }
     public static partial class ResourceHealthExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusData> GetHealthStatusOfChildResourcesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource GetResourceHealthAvailabilityStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthAvailabilityStatusResource GetResourceHealthAvailabilityStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthChildAvailabilityStatusResource GetResourceHealthChildAvailabilityStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource> GetResourceHealthEvent(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>> GetResourceHealthEventAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -265,33 +247,6 @@ namespace Azure.ResourceManager.ResourceHealth
 }
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class AvailabilityStateRecentlyResolved
-    {
-        internal AvailabilityStateRecentlyResolved() { }
-        public System.DateTimeOffset? ResolvedOn { get { throw null; } }
-        public System.DateTimeOffset? UnavailableOccuredOn { get { throw null; } }
-        public string UnavailableSummary { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvailabilityStateValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AvailabilityStateValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue Available { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue Degraded { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue Unavailable { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class EmergingIssueActiveEventType
     {
         internal EmergingIssueActiveEventType() { }
@@ -300,8 +255,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact> Impacts { get { throw null; } }
         public bool? IsPublished { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel? Severity { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventStageValue? Stage { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel? Severity { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue? Stage { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Title { get { throw null; } }
         public string TrackingId { get { throw null; } }
@@ -321,212 +276,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ImpactedRegion> Regions { get { throw null; } }
     }
-    public partial class EventArticle
-    {
-        internal EventArticle() { }
-        public string ArticleContent { get { throw null; } }
-        public string ArticleId { get { throw null; } }
-        public System.BinaryData Parameters { get { throw null; } }
-    }
-    public partial class EventFaq
-    {
-        internal EventFaq() { }
-        public string Answer { get { throw null; } }
-        public string LocaleCode { get { throw null; } }
-        public string Question { get { throw null; } }
-    }
-    public partial class EventImpact
-    {
-        internal EventImpact() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ImpactedServiceRegion> ImpactedRegions { get { throw null; } }
-        public string ImpactedService { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventInsightLevelValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventInsightLevelValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue Critical { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.EventInsightLevelValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventLevelValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventLevelValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventLevelValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLevelValue Critical { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLevelValue Error { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLevelValue Informational { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLevelValue Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventLevelValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.EventLevelValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventLevelValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.EventLevelValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EventLink
-    {
-        internal EventLink() { }
-        public string BladeName { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventLinkDisplayText DisplayText { get { throw null; } }
-        public string ExtensionName { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue? LinkType { get { throw null; } }
-        public System.BinaryData Parameters { get { throw null; } }
-    }
-    public partial class EventLinkDisplayText
-    {
-        internal EventLinkDisplayText() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventLinkTypeValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventLinkTypeValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue Button { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue Hyperlink { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventLinkTypeValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EventRecommendedActions
-    {
-        internal EventRecommendedActions() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventRecommendedActionsItem> Actions { get { throw null; } }
-        public string LocaleCode { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class EventRecommendedActionsItem
-    {
-        internal EventRecommendedActionsItem() { }
-        public string ActionText { get { throw null; } }
-        public int? GroupId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventSeverityLevel : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventSeverityLevel(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel Error { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel Information { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.EventSeverityLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventSourceValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventSourceValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventSourceValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventSourceValue ResourceHealth { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventSourceValue ServiceHealth { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventSourceValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.EventSourceValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventSourceValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.EventSourceValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventStageValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventStageValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventStageValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventStageValue Active { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventStageValue Archived { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventStageValue Resolve { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventStageValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventStageValue left, Azure.ResourceManager.ResourceHealth.Models.EventStageValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventStageValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventStageValue left, Azure.ResourceManager.ResourceHealth.Models.EventStageValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventStatusValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventStatusValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventStatusValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventStatusValue Active { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventStatusValue Resolved { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventStatusValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.EventStatusValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventStatusValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.EventStatusValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventTypeValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.EventTypeValue>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EventTypeValue(string value) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue EmergingIssues { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue HealthAdvisory { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue PlannedMaintenance { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue Rca { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue SecurityAdvisory { get { throw null; } }
-        public static Azure.ResourceManager.ResourceHealth.Models.EventTypeValue ServiceIssue { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventTypeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventTypeValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventTypeValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventTypeValue right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EventUpdate
-    {
-        internal EventUpdate() { }
-        public string Summary { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-    }
     public partial class ImpactedRegion
     {
         internal ImpactedRegion() { }
@@ -540,8 +289,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Collections.Generic.IReadOnlyList<string> ImpactedSubscriptions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ImpactedTenants { get { throw null; } }
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.EventStatusValue? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EventUpdate> Updates { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate> Updates { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IssueNameContent : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.IssueNameContent>
@@ -610,11 +359,44 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string ActionUriComment { get { throw null; } }
         public string ActionUriText { get { throw null; } }
     }
+    public partial class ResourceHealthAvailabilityStateRecentlyResolved
+    {
+        internal ResourceHealthAvailabilityStateRecentlyResolved() { }
+        public System.DateTimeOffset? ResolvedOn { get { throw null; } }
+        public System.DateTimeOffset? UnavailableOccuredOn { get { throw null; } }
+        public string UnavailableSummary { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthAvailabilityStateValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthAvailabilityStateValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Available { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Degraded { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Unavailable { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceHealthAvailabilityStatus : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ResourceHealthAvailabilityStatus() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties Properties { get { throw null; } }
+    }
     public partial class ResourceHealthAvailabilityStatusProperties
     {
         internal ResourceHealthAvailabilityStatusProperties() { }
         public string ArticleId { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateValue? AvailabilityState { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue? AvailabilityState { get { throw null; } }
         public string Category { get { throw null; } }
         public string Context { get { throw null; } }
         public string DetailedStatus { get { throw null; } }
@@ -625,7 +407,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? OccuredOn { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType? ReasonChronicity { get { throw null; } }
         public string ReasonType { get { throw null; } }
-        public Azure.ResourceManager.ResourceHealth.Models.AvailabilityStateRecentlyResolved RecentlyResolved { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved RecentlyResolved { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.RecommendedAction> RecommendedActions { get { throw null; } }
         public System.DateTimeOffset? ReportedOn { get { throw null; } }
         public System.DateTimeOffset? ResolutionEta { get { throw null; } }
@@ -633,6 +415,212 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent> ServiceImpactingEvents { get { throw null; } }
         public string Summary { get { throw null; } }
         public string Title { get { throw null; } }
+    }
+    public partial class ResourceHealthEventArticle
+    {
+        internal ResourceHealthEventArticle() { }
+        public string ArticleContent { get { throw null; } }
+        public string ArticleId { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } }
+    }
+    public partial class ResourceHealthEventFaq
+    {
+        internal ResourceHealthEventFaq() { }
+        public string Answer { get { throw null; } }
+        public string LocaleCode { get { throw null; } }
+        public string Question { get { throw null; } }
+    }
+    public partial class ResourceHealthEventImpact
+    {
+        internal ResourceHealthEventImpact() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ImpactedServiceRegion> ImpactedRegions { get { throw null; } }
+        public string ImpactedService { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventInsightLevelValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventInsightLevelValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue Critical { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventLevelValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventLevelValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Critical { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Error { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Informational { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceHealthEventLink
+    {
+        internal ResourceHealthEventLink() { }
+        public string BladeName { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText DisplayText { get { throw null; } }
+        public string ExtensionName { get { throw null; } }
+        public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue? LinkType { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } }
+    }
+    public partial class ResourceHealthEventLinkDisplayText
+    {
+        internal ResourceHealthEventLinkDisplayText() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventLinkTypeValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventLinkTypeValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue Button { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue Hyperlink { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceHealthEventRecommendedActions
+    {
+        internal ResourceHealthEventRecommendedActions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem> Actions { get { throw null; } }
+        public string LocaleCode { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class ResourceHealthEventRecommendedActionsItem
+    {
+        internal ResourceHealthEventRecommendedActionsItem() { }
+        public string ActionText { get { throw null; } }
+        public int? GroupId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventSeverityLevel : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventSeverityLevel(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel Error { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel Information { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventSourceValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventSourceValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue ResourceHealth { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue ServiceHealth { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventStageValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventStageValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue Active { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue Archived { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue Resolve { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventStatusValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventStatusValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue Active { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue Resolved { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthEventTypeValue : System.IEquatable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthEventTypeValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue EmergingIssues { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue HealthAdvisory { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue PlannedMaintenance { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue Rca { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue SecurityAdvisory { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue ServiceIssue { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceHealthEventUpdate
+    {
+        internal ResourceHealthEventUpdate() { }
+        public string Summary { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ResourceHealthKeyValueItem
     {

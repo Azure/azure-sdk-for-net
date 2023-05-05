@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             Optional<string> impactedRegion = default;
-            Optional<EventStatusValue> status = default;
+            Optional<ResourceHealthEventStatusValue> status = default;
             Optional<IReadOnlyList<string>> impactedSubscriptions = default;
             Optional<IReadOnlyList<string>> impactedTenants = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<IReadOnlyList<EventUpdate>> updates = default;
+            Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedRegion"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = new EventStatusValue(property.Value.GetString());
+                    status = new ResourceHealthEventStatusValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("impactedSubscriptions"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    List<EventUpdate> array = new List<EventUpdate>();
+                    List<ResourceHealthEventUpdate> array = new List<ResourceHealthEventUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventUpdate.DeserializeEventUpdate(item));
+                        array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item));
                     }
                     updates = array;
                     continue;

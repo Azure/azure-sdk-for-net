@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        internal ResourceHealthAvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, AvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
+        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </summary>
-        public AvailabilityStateValue? AvailabilityState { get; }
+        public ResourceHealthAvailabilityStateValue? AvailabilityState { get; }
         /// <summary> Title description of the availability status. </summary>
         public string Title { get; }
         /// <summary> Summary description of the availability status. </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Timestamp for when the health was last checked. </summary>
         public DateTimeOffset? ReportedOn { get; }
         /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
-        public AvailabilityStateRecentlyResolved RecentlyResolved { get; }
+        public ResourceHealthAvailabilityStateRecentlyResolved RecentlyResolved { get; }
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         public IReadOnlyList<RecommendedAction> RecommendedActions { get; }
         /// <summary> Lists the service impacting events that may be affecting the health of the resource. </summary>

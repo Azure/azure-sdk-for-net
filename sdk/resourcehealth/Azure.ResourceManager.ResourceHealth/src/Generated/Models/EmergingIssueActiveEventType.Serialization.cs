@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<string> trackingId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> cloud = default;
-            Optional<EventSeverityLevel> severity = default;
-            Optional<EventStageValue> stage = default;
+            Optional<ResourceHealthEventSeverityLevel> severity = default;
+            Optional<ResourceHealthEventStageValue> stage = default;
             Optional<bool> published = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    severity = new EventSeverityLevel(property.Value.GetString());
+                    severity = new ResourceHealthEventSeverityLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    stage = new EventStageValue(property.Value.GetString());
+                    stage = new ResourceHealthEventStageValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("published"u8))
