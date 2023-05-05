@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -93,9 +94,9 @@ namespace Azure.Core.Tests
                 """;
 
             Assert.AreEqual(
-				MutableJsonDocumentTests.RemoveWhiteSpace(expected),
-				MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString())
-			);
+                MutableJsonDocumentTests.RemoveWhiteSpace(expected),
+                MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString())
+            );
         }
 
         [Test]
@@ -327,6 +328,42 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetByte());
         }
 
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanGetNumber<T, U>(string serializedX, T x, T y, T z, U invalid, Func<MutableJsonElement, (bool TryGet, T Value)> tryGet, Func<MutableJsonElement, T> get)
+        {
+            string json = $"{{\"foo\" : {serializedX}}}";
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
+            Assert.AreEqual(x, tryGet(mdoc.RootElement.GetProperty("foo")).Value);
+            Assert.AreEqual(x, get(mdoc.RootElement.GetProperty("foo")));
+
+            // Get from assigned existing value
+            mdoc.RootElement.GetProperty("foo").Set(y);
+
+            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
+            Assert.AreEqual(y, tryGet(mdoc.RootElement.GetProperty("foo")).Value);
+            Assert.AreEqual(y, get(mdoc.RootElement.GetProperty("foo")));
+
+            // Get from added value
+            mdoc.RootElement.SetProperty("bar", z);
+            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("bar")).TryGet);
+            Assert.AreEqual(z, tryGet(mdoc.RootElement.GetProperty("bar")).Value);
+            Assert.AreEqual(z, get(mdoc.RootElement.GetProperty("bar")));
+
+            // Doesn't work if number change is outside range
+            mdoc.RootElement.GetProperty("foo").Set(invalid);
+            Assert.IsFalse(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
+            Assert.Throws<FormatException>(() => get(mdoc.RootElement.GetProperty("foo")));
+
+            // Doesn't work for non-number change
+            mdoc.RootElement.GetProperty("foo").Set("string");
+            Assert.Throws<InvalidOperationException>(() => tryGet(mdoc.RootElement.GetProperty("foo")));
+            Assert.Throws<InvalidOperationException>(() => get(mdoc.RootElement.GetProperty("foo")));
+        }
+
         #region Helpers
 
         internal static void ValidateToString(string json, MutableJsonElement element)
@@ -334,6 +371,36 @@ namespace Azure.Core.Tests
             Assert.AreEqual(
                 MutableJsonDocumentTests.RemoveWhiteSpace(json),
                 MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()));
+        }
+
+        public static IEnumerable<object[]> NumberValues()
+        {
+            // Valid ranges:
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44, 256,
+                (MutableJsonElement e) => (e.TryGetByte(out byte b), b),
+                (MutableJsonElement e) => e.GetByte() };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44, 128,
+                (MutableJsonElement e) => (e.TryGetSByte(out sbyte b), b),
+                (MutableJsonElement e) => e.GetSByte() };
+            yield return new object[] { "42", (short)42, (short)43, (short)44, 32768,
+                (MutableJsonElement e) => (e.TryGetInt16(out short i), i),
+                (MutableJsonElement e) => e.GetInt16() };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44, 65536,
+                (MutableJsonElement e) => (e.TryGetUInt16(out ushort i), i),
+                (MutableJsonElement e) => e.GetUInt16() };
+            yield return new object[] { "42", 42, 43, 44, 2147483648,
+                (MutableJsonElement e) => (e.TryGetInt32(out int i), i),
+                (MutableJsonElement e) => e.GetInt32() };
+            yield return new object[] { "42", 42u, 43u, 44u, 4294967296,
+                (MutableJsonElement e) => (e.TryGetUInt32(out uint i), i),
+                (MutableJsonElement e) => e.GetUInt32() };
+            yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808,
+                (MutableJsonElement e) => (e.TryGetInt64(out long i), i),
+                (MutableJsonElement e) => e.GetInt64() };
+            yield return new object[] { "42", 42ul, 43ul, 44ul, -1,
+                (MutableJsonElement e) => (e.TryGetUInt64(out ulong i), i),
+                (MutableJsonElement e) => e.GetUInt64() };
         }
 
         #endregion

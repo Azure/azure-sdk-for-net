@@ -887,6 +887,61 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value"></param>
+        public void Set(sbyte value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(short value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(ushort value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(uint value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(ulong value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
         public void Set(object value)
         {
             EnsureValid();
@@ -913,6 +968,21 @@ namespace Azure.Core.Json
                     break;
                 case byte b:
                     Set(b);
+                    break;
+                case sbyte sb:
+                    Set(sb);
+                    break;
+                case short sh:
+                    Set(sh);
+                    break;
+                case ushort us:
+                    Set(us);
+                    break;
+                case uint u:
+                    Set(u);
+                    break;
+                case ulong ul:
+                    Set(ul);
                     break;
                 case MutableJsonElement e:
                     Set(e);

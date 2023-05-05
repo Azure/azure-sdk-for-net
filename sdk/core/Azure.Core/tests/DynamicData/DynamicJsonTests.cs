@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -749,6 +750,49 @@ namespace Azure.Core.Tests
             // Doesn't work for non-number change
             json.Foo = "string";
             Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+        }
+
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
+        {
+            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(x, (T)json.Foo);
+            Assert.IsTrue(x == json.Foo);
+
+            // Get from assigned existing value
+            json.Foo = y;
+            Assert.AreEqual(y, (T)json.Foo);
+            Assert.IsTrue(y == json.Foo);
+
+            // Get from added value
+            json.Bar = z;
+            Assert.AreEqual(z, (T)json.Bar);
+            Assert.IsTrue(z == json.Bar);
+
+            // Doesn't work if number change is outside T range
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            json.Foo = invalid;
+            Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+        }
+
+        public static IEnumerable<object[]> NumberValues()
+        {
+            // Valid ranges:
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44, 256 };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44, 128 };
+            yield return new object[] { "42", (short)42, (short)43, (short)44, 32768 };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44, 65536 };
+            yield return new object[] { "42", 42, 43, 44, 2147483648 };
+            yield return new object[] { "42", 42u, 43u, 44u, 4294967296 };
+            yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808 };
+            yield return new object[] { "42", 42ul, 43ul, 44ul, -1 };
         }
 
         #region Helpers
