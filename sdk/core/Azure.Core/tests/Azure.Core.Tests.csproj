@@ -9,17 +9,20 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <!--Azure.Core.Experimental reference can be removed when DynamicJson moves to Azure.Core.-->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="System.Linq.Async" />
-    <PackageReference Include="Polly" />  
+    <PackageReference Include="Polly" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
@@ -50,6 +53,7 @@
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\src\Shared\ApiVersionString.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\GuidUtilities.cs" LinkBase="Shared" />
+    <Compile Remove="public/**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

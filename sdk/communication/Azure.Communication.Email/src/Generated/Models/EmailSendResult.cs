@@ -37,7 +37,5 @@ namespace Azure.Communication.Email
         }
         /// <summary> Status of operation. </summary>
         public EmailSendStatus Status { get; }
-        /// <summary> Error details when status is a non-success terminal state. </summary>
-        public ErrorDetail Error { get; }
     }
 }

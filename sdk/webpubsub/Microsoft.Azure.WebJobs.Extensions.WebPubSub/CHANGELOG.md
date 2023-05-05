@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2023-03-21)
+
+### Bugs Fixed
+- Fix `Headers` field in `ConnectEventRequest` that was missed set.
 
 ## 1.4.0 (2023-02-01)
 

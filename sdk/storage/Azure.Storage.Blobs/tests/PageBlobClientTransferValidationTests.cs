@@ -84,5 +84,15 @@ namespace Azure.Storage.Blobs.Tests
         {
             return true;
         }
+
+        #region Test Overrides
+        // base test uses non-512 multiples to help with edge cases. Fix those values here.
+        [Test]
+        public override async Task OpenWriteSuccessfulHashComputation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
+            [Values(Constants.KB)] int streamBufferSize,
+            [Values(512)] int dataSize)
+            => await base.OpenWriteSuccessfulHashComputation(algorithm, streamBufferSize, dataSize);
+        #endregion
     }
 }

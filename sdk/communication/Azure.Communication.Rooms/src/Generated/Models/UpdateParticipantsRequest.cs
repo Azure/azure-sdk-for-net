@@ -5,27 +5,21 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    /// <summary> Participants to be updated in a room. </summary>
+    /// <summary> Participants to be updated in the room. </summary>
     internal partial class UpdateParticipantsRequest
     {
         /// <summary> Initializes a new instance of UpdateParticipantsRequest. </summary>
-        /// <param name="participants"> Participants to update in a room. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
-        public UpdateParticipantsRequest(IEnumerable<RoomParticipantInternal> participants)
+        public UpdateParticipantsRequest()
         {
-            Argument.AssertNotNull(participants, nameof(participants));
-
-            Participants = participants.ToList();
+            Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
         }
 
-        /// <summary> Participants to update in a room. </summary>
-        public IList<RoomParticipantInternal> Participants { get; }
+        /// <summary> Participants to be updated. </summary>
+        public IDictionary<string, ParticipantProperties> Participants { get; }
     }
 }

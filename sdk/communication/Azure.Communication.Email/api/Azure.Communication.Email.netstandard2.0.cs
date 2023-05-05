@@ -24,20 +24,19 @@ namespace Azure.Communication.Email
         public EmailClient(string connectionString, Azure.Communication.Email.EmailClientOptions options) { }
         public EmailClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
         public EmailClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Communication.Email.EmailSendResult> GetSendResult(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Email.EmailSendResult>> GetSendResultAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string from, string to, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string from, string to, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EmailClientOptions : Azure.Core.ClientOptions
     {
-        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2023_01_15_Preview) { }
+        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2023_03_31) { }
         public enum ServiceVersion
         {
             V2021_10_01_Preview = 1,
             V2023_01_15_Preview = 2,
+            V2023_03_31 = 3,
         }
     }
     public partial class EmailContent
@@ -50,7 +49,7 @@ namespace Azure.Communication.Email
     public partial class EmailMessage
     {
         public EmailMessage(string senderAddress, Azure.Communication.Email.EmailRecipients recipients, Azure.Communication.Email.EmailContent content) { }
-        public EmailMessage(string fromAddress, string toAddress, Azure.Communication.Email.EmailContent content) { }
+        public EmailMessage(string senderAddress, string recipientAddress, Azure.Communication.Email.EmailContent content) { }
         public System.Collections.Generic.IList<Azure.Communication.Email.EmailAttachment> Attachments { get { throw null; } }
         public Azure.Communication.Email.EmailContent Content { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
@@ -61,9 +60,7 @@ namespace Azure.Communication.Email
     }
     public static partial class EmailModelFactory
     {
-        public static Azure.Communication.Email.EmailSendResult EmailSendResult(string id = null, Azure.Communication.Email.EmailSendStatus status = default(Azure.Communication.Email.EmailSendStatus), Azure.Communication.Email.ErrorDetail error = null) { throw null; }
-        public static Azure.Communication.Email.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
-        public static Azure.Communication.Email.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
+        public static Azure.Communication.Email.EmailSendResult EmailSendResult(string id = null, Azure.Communication.Email.EmailSendStatus status = default(Azure.Communication.Email.EmailSendStatus)) { throw null; }
     }
     public partial class EmailRecipients
     {
@@ -84,13 +81,14 @@ namespace Azure.Communication.Email
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Communication.Email.EmailSendResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Communication.Email.EmailSendResult> WaitForCompletion(System.TimeSpan suggestedPollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Email.EmailSendResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Email.EmailSendResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Email.EmailSendResult>> WaitForCompletionAsync(System.TimeSpan suggestedPollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class EmailSendResult
     {
         internal EmailSendResult() { }
-        public Azure.Communication.Email.ErrorDetail Error { get { throw null; } }
         public Azure.Communication.Email.EmailSendStatus Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -113,21 +111,6 @@ namespace Azure.Communication.Email
         public static implicit operator Azure.Communication.Email.EmailSendStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Email.EmailSendStatus left, Azure.Communication.Email.EmailSendStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ErrorAdditionalInfo
-    {
-        internal ErrorAdditionalInfo() { }
-        public object Info { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
-    public partial class ErrorDetail
-    {
-        internal ErrorDetail() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Email.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Email.ErrorDetail> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

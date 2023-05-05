@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lmsInstance = null;
                         continue;
                     }
                     lmsInstance = new Uri(property.Value.GetString());
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ltiRosterEndpoint = null;
                         continue;
                     }
                     ltiRosterEndpoint = new Uri(property.Value.GetString());

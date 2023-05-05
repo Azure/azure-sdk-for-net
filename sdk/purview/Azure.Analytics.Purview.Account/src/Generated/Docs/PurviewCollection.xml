@@ -385,7 +385,7 @@ Schema for <c>CollectionPathResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetChildCollectionNamesAsync(String,RequestContext)">
+    <member name="GetChildCollectionNamesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetChildCollectionNamesAsync and parse the result.
 <code><![CDATA[
@@ -427,7 +427,7 @@ Schema for <c>CollectionNameResponseListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetChildCollectionNames(String,RequestContext)">
+    <member name="GetChildCollectionNames(string,RequestContext)">
 <example>
 This sample shows how to call GetChildCollectionNames and parse the result.
 <code><![CDATA[

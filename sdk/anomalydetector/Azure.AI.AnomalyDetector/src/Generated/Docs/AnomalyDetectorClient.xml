@@ -64,9 +64,9 @@ Console.WriteLine(result.GetProperty("severity")[0].ToString());
 ]]></code>
 </example>
 <remarks>
-This operation generates a model with an entire series, each point is detected
+This operation generates a model with an entire series. Each point is detected
 with the same model. With this method, points before and after a certain point
-are used to determine whether it is an anomaly. The entire detection can give
+are used to determine whether it&apos;s an anomaly. The entire detection can give the
 user an overall status of the time series.
 
 Below is the JSON schema for the request and response payloads.
@@ -77,29 +77,28 @@ Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the anomaly detection result. If the data is not sorted
-correctly or there is duplicated timestamp, the API will not work. In such
-case, an error message will be returned.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
-minutely, secondly, microsecond or none. If granularity is not present, it will
-be none by default. If granularity is none, the timestamp property in time
+correctly or there&apos;s a duplicated time stamp, the API won&apos;t work. In such
+a case, an error message is returned.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Argument that indicates time granularity. If granularity is not present, the value
+is none by default. If granularity is none, the time stamp property in the time
 series point can be absent.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  maxAnomalyRatio: number, # Optional. Optional argument, advanced model parameter, max anomaly ratio in a time series.
-  sensitivity: number, # Optional. Optional argument, advanced model parameter, between 0-99, the lower the value
-is, the larger the margin value will be which means less anomalies will be
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+is not present, the API determines the period automatically.
+  maxAnomalyRatio: number, # Optional. Argument that indicates an advanced model parameter. It&apos;s the maximum anomaly ratio in a time series.
+  sensitivity: number, # Optional. Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+is, the larger the margin value is, which means fewer anomalies will be
 accepted.
-  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Used to specify how to deal with missing values in the input series, it&apos;s used
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Specifies how to deal with missing values in the input series. It&apos;s used
 when granularity is not &quot;none&quot;.
-  imputeFixedValue: number, # Optional. Used to specify the value to fill, it&apos;s used when granularity is not &quot;none&quot;
+  imputeFixedValue: number, # Optional. Specifies the value to fill. It&apos;s used when granularity is not &quot;none&quot;
 and imputeMode is &quot;fixed&quot;.
 }
 </code>
@@ -108,34 +107,34 @@ Response Body:
 
 Schema for <c>UnivariateEntireDetectionResult</c>:
 <code>{
-  period: number, # Required. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Required. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
-  expectedValues: [number], # Required. ExpectedValues contain expected value for each input point. The index of the
+  expectedValues: [number], # Required. Expected value for each input point. The index of the
 array is consistent with the input series.
-  upperMargins: [number], # Required. UpperMargins contain upper margin of each input point. UpperMargin is used to
-calculate upperBoundary, which equals to expectedValue + (100 -
-marginScale)*upperMargin. Anomalies in response can be filtered by
-upperBoundary and lowerBoundary. By adjusting marginScale value, less
-significant anomalies can be filtered in client side. The index of the array is
+  upperMargins: [number], # Required. Upper margin of each input point. UpperMargin is used to
+calculate upperBoundary, which is equal to expectedValue + (100 -
+marginScale)*upperMargin. Anomalies in the response can be filtered by
+upperBoundary and lowerBoundary. Adjusting the marginScale value can help filter less
+significant anomalies on the client side. The index of the array is
 consistent with the input series.
-  lowerMargins: [number], # Required. LowerMargins contain lower margin of each input point. LowerMargin is used to
-calculate lowerBoundary, which equals to expectedValue - (100 -
+  lowerMargins: [number], # Required. Lower margin of each input point. LowerMargin is used to
+calculate lowerBoundary, which is equal to expectedValue - (100 -
 marginScale)*lowerMargin. Points between the boundary can be marked as normal
-ones in client side. The index of the array is consistent with the input
+ones on the client side. The index of the array is consistent with the input
 series.
-  isAnomaly: [boolean], # Required. IsAnomaly contains anomaly properties for each input point. True means an
-anomaly either negative or positive has been detected. The index of the array
+  isAnomaly: [boolean], # Required. Anomaly properties for each input point. True means an
+anomaly (either negative or positive) has been detected. The index of the array
 is consistent with the input series.
-  isNegativeAnomaly: [boolean], # Required. IsNegativeAnomaly contains anomaly status in negative direction for each input
+  isNegativeAnomaly: [boolean], # Required. Anomaly status in a negative direction for each input
 point. True means a negative anomaly has been detected. A negative anomaly
 means the point is detected as an anomaly and its real value is smaller than
 the expected one. The index of the array is consistent with the input series.
-  isPositiveAnomaly: [boolean], # Required. IsPositiveAnomaly contain anomaly status in positive direction for each input
+  isPositiveAnomaly: [boolean], # Required. Anomaly status in a positive direction for each input
 point. True means a positive anomaly has been detected. A positive anomaly
 means the point is detected as an anomaly and its real value is larger than the
 expected one. The index of the array is consistent with the input series.
-  severity: [number], # Optional. The severity score for each input point. The larger the value is, the more
-sever the anomaly is. For normal points, the &quot;severity&quot; is always 0.
+  severity: [number], # Optional. Severity score for each input point. The larger the value is, the more
+severe the anomaly is. For normal points, the severity is always 0.
 }
 </code>
 
@@ -204,9 +203,9 @@ Console.WriteLine(result.GetProperty("severity")[0].ToString());
 ]]></code>
 </example>
 <remarks>
-This operation generates a model with an entire series, each point is detected
+This operation generates a model with an entire series. Each point is detected
 with the same model. With this method, points before and after a certain point
-are used to determine whether it is an anomaly. The entire detection can give
+are used to determine whether it&apos;s an anomaly. The entire detection can give the
 user an overall status of the time series.
 
 Below is the JSON schema for the request and response payloads.
@@ -217,29 +216,28 @@ Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the anomaly detection result. If the data is not sorted
-correctly or there is duplicated timestamp, the API will not work. In such
-case, an error message will be returned.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
-minutely, secondly, microsecond or none. If granularity is not present, it will
-be none by default. If granularity is none, the timestamp property in time
+correctly or there&apos;s a duplicated time stamp, the API won&apos;t work. In such
+a case, an error message is returned.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Argument that indicates time granularity. If granularity is not present, the value
+is none by default. If granularity is none, the time stamp property in the time
 series point can be absent.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  maxAnomalyRatio: number, # Optional. Optional argument, advanced model parameter, max anomaly ratio in a time series.
-  sensitivity: number, # Optional. Optional argument, advanced model parameter, between 0-99, the lower the value
-is, the larger the margin value will be which means less anomalies will be
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+is not present, the API determines the period automatically.
+  maxAnomalyRatio: number, # Optional. Argument that indicates an advanced model parameter. It&apos;s the maximum anomaly ratio in a time series.
+  sensitivity: number, # Optional. Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+is, the larger the margin value is, which means fewer anomalies will be
 accepted.
-  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Used to specify how to deal with missing values in the input series, it&apos;s used
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Specifies how to deal with missing values in the input series. It&apos;s used
 when granularity is not &quot;none&quot;.
-  imputeFixedValue: number, # Optional. Used to specify the value to fill, it&apos;s used when granularity is not &quot;none&quot;
+  imputeFixedValue: number, # Optional. Specifies the value to fill. It&apos;s used when granularity is not &quot;none&quot;
 and imputeMode is &quot;fixed&quot;.
 }
 </code>
@@ -248,34 +246,34 @@ Response Body:
 
 Schema for <c>UnivariateEntireDetectionResult</c>:
 <code>{
-  period: number, # Required. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Required. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
-  expectedValues: [number], # Required. ExpectedValues contain expected value for each input point. The index of the
+  expectedValues: [number], # Required. Expected value for each input point. The index of the
 array is consistent with the input series.
-  upperMargins: [number], # Required. UpperMargins contain upper margin of each input point. UpperMargin is used to
-calculate upperBoundary, which equals to expectedValue + (100 -
-marginScale)*upperMargin. Anomalies in response can be filtered by
-upperBoundary and lowerBoundary. By adjusting marginScale value, less
-significant anomalies can be filtered in client side. The index of the array is
+  upperMargins: [number], # Required. Upper margin of each input point. UpperMargin is used to
+calculate upperBoundary, which is equal to expectedValue + (100 -
+marginScale)*upperMargin. Anomalies in the response can be filtered by
+upperBoundary and lowerBoundary. Adjusting the marginScale value can help filter less
+significant anomalies on the client side. The index of the array is
 consistent with the input series.
-  lowerMargins: [number], # Required. LowerMargins contain lower margin of each input point. LowerMargin is used to
-calculate lowerBoundary, which equals to expectedValue - (100 -
+  lowerMargins: [number], # Required. Lower margin of each input point. LowerMargin is used to
+calculate lowerBoundary, which is equal to expectedValue - (100 -
 marginScale)*lowerMargin. Points between the boundary can be marked as normal
-ones in client side. The index of the array is consistent with the input
+ones on the client side. The index of the array is consistent with the input
 series.
-  isAnomaly: [boolean], # Required. IsAnomaly contains anomaly properties for each input point. True means an
-anomaly either negative or positive has been detected. The index of the array
+  isAnomaly: [boolean], # Required. Anomaly properties for each input point. True means an
+anomaly (either negative or positive) has been detected. The index of the array
 is consistent with the input series.
-  isNegativeAnomaly: [boolean], # Required. IsNegativeAnomaly contains anomaly status in negative direction for each input
+  isNegativeAnomaly: [boolean], # Required. Anomaly status in a negative direction for each input
 point. True means a negative anomaly has been detected. A negative anomaly
 means the point is detected as an anomaly and its real value is smaller than
 the expected one. The index of the array is consistent with the input series.
-  isPositiveAnomaly: [boolean], # Required. IsPositiveAnomaly contain anomaly status in positive direction for each input
+  isPositiveAnomaly: [boolean], # Required. Anomaly status in a positive direction for each input
 point. True means a positive anomaly has been detected. A positive anomaly
 means the point is detected as an anomaly and its real value is larger than the
 expected one. The index of the array is consistent with the input series.
-  severity: [number], # Optional. The severity score for each input point. The larger the value is, the more
-sever the anomaly is. For normal points, the &quot;severity&quot; is always 0.
+  severity: [number], # Optional. Severity score for each input point. The larger the value is, the more
+severe the anomaly is. For normal points, the severity is always 0.
 }
 </code>
 
@@ -346,7 +344,7 @@ Console.WriteLine(result.GetProperty("severity").ToString());
 ]]></code>
 </example>
 <remarks>
-This operation generates a model using the points that you sent into the API,
+This operation generates a model by using the points that you sent in to the API
 and based on all data to determine whether the last point is anomalous.
 
 Below is the JSON schema for the request and response payloads.
@@ -357,29 +355,28 @@ Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the anomaly detection result. If the data is not sorted
-correctly or there is duplicated timestamp, the API will not work. In such
-case, an error message will be returned.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
-minutely, secondly, microsecond or none. If granularity is not present, it will
-be none by default. If granularity is none, the timestamp property in time
+correctly or there&apos;s a duplicated time stamp, the API won&apos;t work. In such
+a case, an error message is returned.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Argument that indicates time granularity. If granularity is not present, the value
+is none by default. If granularity is none, the time stamp property in the time
 series point can be absent.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  maxAnomalyRatio: number, # Optional. Optional argument, advanced model parameter, max anomaly ratio in a time series.
-  sensitivity: number, # Optional. Optional argument, advanced model parameter, between 0-99, the lower the value
-is, the larger the margin value will be which means less anomalies will be
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+is not present, the API determines the period automatically.
+  maxAnomalyRatio: number, # Optional. Argument that indicates an advanced model parameter. It&apos;s the maximum anomaly ratio in a time series.
+  sensitivity: number, # Optional. Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+is, the larger the margin value is, which means fewer anomalies will be
 accepted.
-  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Used to specify how to deal with missing values in the input series, it&apos;s used
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Specifies how to deal with missing values in the input series. It&apos;s used
 when granularity is not &quot;none&quot;.
-  imputeFixedValue: number, # Optional. Used to specify the value to fill, it&apos;s used when granularity is not &quot;none&quot;
+  imputeFixedValue: number, # Optional. Specifies the value to fill. It&apos;s used when granularity is not &quot;none&quot;
 and imputeMode is &quot;fixed&quot;.
 }
 </code>
@@ -388,26 +385,25 @@ Response Body:
 
 Schema for <c>UnivariateLastDetectionResult</c>:
 <code>{
-  period: number, # Required. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Required. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
   suggestedWindow: number, # Required. Suggested input series points needed for detecting the latest point.
   expectedValue: number, # Required. Expected value of the latest point.
   upperMargin: number, # Required. Upper margin of the latest point. UpperMargin is used to calculate
-upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin.
+upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
 If the value of latest point is between upperBoundary and lowerBoundary, it
-should be treated as normal value. By adjusting marginScale value, anomaly
-status of latest point can be changed.
+should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+status of the latest point to be changed.
   lowerMargin: number, # Required. Lower margin of the latest point. LowerMargin is used to calculate
-lowerBoundary, which equals to expectedValue - (100 - marginScale)*lowerMargin.
-
-  isAnomaly: boolean, # Required. Anomaly status of the latest point, true means the latest point is an anomaly
-either in negative direction or positive direction.
-  isNegativeAnomaly: boolean, # Required. Anomaly status in negative direction of the latest point. True means the latest
+lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+  isAnomaly: boolean, # Required. Anomaly status of the latest point. True means the latest point is an anomaly,
+either in the negative direction or in the positive direction.
+  isNegativeAnomaly: boolean, # Required. Anomaly status of the latest point in a negative direction. True means the latest
 point is an anomaly and its real value is smaller than the expected one.
-  isPositiveAnomaly: boolean, # Required. Anomaly status in positive direction of the latest point. True means the latest
+  isPositiveAnomaly: boolean, # Required. Anomaly status of the latest point in a positive direction. True means the latest
 point is an anomaly and its real value is larger than the expected one.
-  severity: number, # Optional. The severity score for the last input point. The larger the value is, the more
-sever the anomaly is. For normal points, the &quot;severity&quot; is always 0.
+  severity: number, # Optional. Severity score for the last input point. The larger the value is, the more
+severe the anomaly is. For normal points, the severity is always 0.
 }
 </code>
 
@@ -478,7 +474,7 @@ Console.WriteLine(result.GetProperty("severity").ToString());
 ]]></code>
 </example>
 <remarks>
-This operation generates a model using the points that you sent into the API,
+This operation generates a model by using the points that you sent in to the API
 and based on all data to determine whether the last point is anomalous.
 
 Below is the JSON schema for the request and response payloads.
@@ -489,29 +485,28 @@ Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the anomaly detection result. If the data is not sorted
-correctly or there is duplicated timestamp, the API will not work. In such
-case, an error message will be returned.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
-minutely, secondly, microsecond or none. If granularity is not present, it will
-be none by default. If granularity is none, the timestamp property in time
+correctly or there&apos;s a duplicated time stamp, the API won&apos;t work. In such
+a case, an error message is returned.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional. Argument that indicates time granularity. If granularity is not present, the value
+is none by default. If granularity is none, the time stamp property in the time
 series point can be absent.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  maxAnomalyRatio: number, # Optional. Optional argument, advanced model parameter, max anomaly ratio in a time series.
-  sensitivity: number, # Optional. Optional argument, advanced model parameter, between 0-99, the lower the value
-is, the larger the margin value will be which means less anomalies will be
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+is not present, the API determines the period automatically.
+  maxAnomalyRatio: number, # Optional. Argument that indicates an advanced model parameter. It&apos;s the maximum anomaly ratio in a time series.
+  sensitivity: number, # Optional. Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+is, the larger the margin value is, which means fewer anomalies will be
 accepted.
-  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Used to specify how to deal with missing values in the input series, it&apos;s used
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional. Specifies how to deal with missing values in the input series. It&apos;s used
 when granularity is not &quot;none&quot;.
-  imputeFixedValue: number, # Optional. Used to specify the value to fill, it&apos;s used when granularity is not &quot;none&quot;
+  imputeFixedValue: number, # Optional. Specifies the value to fill. It&apos;s used when granularity is not &quot;none&quot;
 and imputeMode is &quot;fixed&quot;.
 }
 </code>
@@ -520,26 +515,25 @@ Response Body:
 
 Schema for <c>UnivariateLastDetectionResult</c>:
 <code>{
-  period: number, # Required. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Required. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
   suggestedWindow: number, # Required. Suggested input series points needed for detecting the latest point.
   expectedValue: number, # Required. Expected value of the latest point.
   upperMargin: number, # Required. Upper margin of the latest point. UpperMargin is used to calculate
-upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin.
+upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
 If the value of latest point is between upperBoundary and lowerBoundary, it
-should be treated as normal value. By adjusting marginScale value, anomaly
-status of latest point can be changed.
+should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+status of the latest point to be changed.
   lowerMargin: number, # Required. Lower margin of the latest point. LowerMargin is used to calculate
-lowerBoundary, which equals to expectedValue - (100 - marginScale)*lowerMargin.
-
-  isAnomaly: boolean, # Required. Anomaly status of the latest point, true means the latest point is an anomaly
-either in negative direction or positive direction.
-  isNegativeAnomaly: boolean, # Required. Anomaly status in negative direction of the latest point. True means the latest
+lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+  isAnomaly: boolean, # Required. Anomaly status of the latest point. True means the latest point is an anomaly,
+either in the negative direction or in the positive direction.
+  isNegativeAnomaly: boolean, # Required. Anomaly status of the latest point in a negative direction. True means the latest
 point is an anomaly and its real value is smaller than the expected one.
-  isPositiveAnomaly: boolean, # Required. Anomaly status in positive direction of the latest point. True means the latest
+  isPositiveAnomaly: boolean, # Required. Anomaly status of the latest point in a positive direction. True means the latest
 point is an anomaly and its real value is larger than the expected one.
-  severity: number, # Optional. The severity score for the last input point. The larger the value is, the more
-sever the anomaly is. For normal points, the &quot;severity&quot; is always 0.
+  severity: number, # Optional. Severity score for the last input point. The larger the value is, the more
+severe the anomaly is. For normal points, the severity is always 0.
 }
 </code>
 
@@ -596,7 +590,7 @@ Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
 ]]></code>
 </example>
 <remarks>
-Evaluate change point score of every series point
+Evaluate the change point score of every series point.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -606,22 +600,21 @@ Schema for <c>UnivariateChangePointDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the change point detection result.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required. Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
-secondly. Granularity is used for verify whether input series is valid.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required. Granularity is used to verify whether the input series is valid.
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  stableTrendWindow: number, # Optional. Optional argument, advanced model parameter, a default stableTrendWindow will
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+not present, the API will determine the period automatically.
+  stableTrendWindow: number, # Optional. Argument that indicates an advanced model parameter. A default stableTrendWindow value will
 be used in detection.
-  threshold: number, # Optional. Optional argument, advanced model parameter, between 0.0-1.0, the lower the
-value is, the larger the trend error will be which means less change point will
+  threshold: number, # Optional. Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+value is, the larger the trend error is, which means less change point will
 be accepted.
 }
 </code>
@@ -630,12 +623,12 @@ Response Body:
 
 Schema for <c>UnivariateChangePointDetectionResult</c>:
 <code>{
-  period: number, # Optional. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Optional. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
-  isChangePoint: [boolean], # Optional. isChangePoint contains change point properties for each input point. True means
-an anomaly either negative or positive has been detected. The index of the
+  isChangePoint: [boolean], # Optional. Change point properties for each input point. True means
+an anomaly (either negative or positive) has been detected. The index of the
 array is consistent with the input series.
-  confidenceScores: [number], # Optional. the change point confidence of each point
+  confidenceScores: [number], # Optional. Change point confidence of each point.
 }
 </code>
 
@@ -692,7 +685,7 @@ Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
 ]]></code>
 </example>
 <remarks>
-Evaluate change point score of every series point
+Evaluate the change point score of every series point.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -702,22 +695,21 @@ Schema for <c>UnivariateChangePointDetectionOptions</c>:
 <code>{
   series: [
     {
-      timestamp: string (date &amp; time), # Optional. Optional argument, timestamp of a data point (ISO8601 format).
-      value: number, # Required. The measurement of that point, should be float.
+      timestamp: string (date &amp; time), # Optional. Argument that indicates the time stamp of a data point (ISO8601 format).
+      value: number, # Required. Measurement of that point.
     }
-  ], # Required. Time series data points. Points should be sorted by timestamp in ascending
+  ], # Required. Time series data points. Points should be sorted by time stamp in ascending
 order to match the change point detection result.
-  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required. Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
-secondly. Granularity is used for verify whether input series is valid.
-  customInterval: number, # Optional. Custom Interval is used to set non-standard time interval, for example, if the
-series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required. Granularity is used to verify whether the input series is valid.
+  customInterval: number, # Optional. A custom interval is used to set a nonstandard time interval. For example, if the
+series is 5 minutes, the request can be set as {&quot;granularity&quot;:&quot;minutely&quot;,
 &quot;customInterval&quot;:5}.
-  period: number, # Optional. Optional argument, periodic value of a time series. If the value is null or
-does not present, the API will determine the period automatically.
-  stableTrendWindow: number, # Optional. Optional argument, advanced model parameter, a default stableTrendWindow will
+  period: number, # Optional. Argument that indicates the periodic value of a time series. If the value is null or
+not present, the API will determine the period automatically.
+  stableTrendWindow: number, # Optional. Argument that indicates an advanced model parameter. A default stableTrendWindow value will
 be used in detection.
-  threshold: number, # Optional. Optional argument, advanced model parameter, between 0.0-1.0, the lower the
-value is, the larger the trend error will be which means less change point will
+  threshold: number, # Optional. Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+value is, the larger the trend error is, which means less change point will
 be accepted.
 }
 </code>
@@ -726,18 +718,18 @@ Response Body:
 
 Schema for <c>UnivariateChangePointDetectionResult</c>:
 <code>{
-  period: number, # Optional. Frequency extracted from the series, zero means no recurrent pattern has been
+  period: number, # Optional. Frequency extracted from the series. Zero means no recurrent pattern has been
 found.
-  isChangePoint: [boolean], # Optional. isChangePoint contains change point properties for each input point. True means
-an anomaly either negative or positive has been detected. The index of the
+  isChangePoint: [boolean], # Optional. Change point properties for each input point. True means
+an anomaly (either negative or positive) has been detected. The index of the
 array is consistent with the input series.
-  confidenceScores: [number], # Optional. the change point confidence of each point
+  confidenceScores: [number], # Optional. Change point confidence of each point.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResultAsync(String,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResultAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -773,8 +765,8 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-For asynchronous inference, get multivariate anomaly detection result based on
-resultId returned by the BatchDetectAnomaly api.
+For asynchronous inference, get a multivariate anomaly detection result based on the
+resultId value that the BatchDetectAnomaly API returns.
 
 Below is the JSON schema for the response payload.
 
@@ -782,46 +774,45 @@ Response Body:
 
 Schema for <c>MultivariateDetectionResult</c>:
 <code>{
-  resultId: string, # Required. Result identifier, which is used to fetch the results of an inference call.
+  resultId: string, # Required. Result identifier that&apos;s used to fetch the results of an inference call.
   summary: {
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error message when detection is failed.
-    variableStates: [VariableState], # Optional. Variable Status.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results.
+    errors: [ErrorResponse], # Optional. Error message when detection fails.
+    variableStates: [VariableState], # Optional. Variable status.
     setupInfo: {
-      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-      topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+      topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-      startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-      endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
-    }, # Required. Detection request for batch inference. This is an asynchronous inference which
+      startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+      endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
+    }, # Required. Detection request for batch inference. This is an asynchronous inference that
 will need another API to get detection results.
   }, # Required. Multivariate anomaly detection status.
   results: [
     {
-      timestamp: string (date &amp; time), # Required. The timestamp for this anomaly.
+      timestamp: string (date &amp; time), # Required. Time stamp for this anomaly.
       value: {
-        isAnomaly: boolean, # Required. True if an anomaly is detected at the current timestamp.
+        isAnomaly: boolean, # Required. True if an anomaly is detected at the current time stamp.
         severity: number, # Required. Indicates the significance of the anomaly. The higher the severity, the more
 significant the anomaly is.
-        score: number, # Required. Raw anomaly score of severity, will help indicate the degree of abnormality as
-well.
-        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous timestamp.
-      }, # Optional. The detailed value of this anomalous timestamp.
-      errors: [ErrorResponse], # Optional. Error message for the current timestamp.
+        score: number, # Required. Raw anomaly score of severity, to help indicate the degree of abnormality.
+        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous time stamp.
+      }, # Optional. Detailed value of this anomalous time stamp.
+      errors: [ErrorResponse], # Optional. Error message for the current time stamp.
     }
-  ], # Required. Detection result for each timestamp.
+  ], # Required. Detection result for each time stamp.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResult(String,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResult(string,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
 <code><![CDATA[
@@ -857,8 +848,8 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-For asynchronous inference, get multivariate anomaly detection result based on
-resultId returned by the BatchDetectAnomaly api.
+For asynchronous inference, get a multivariate anomaly detection result based on the
+resultId value that the BatchDetectAnomaly API returns.
 
 Below is the JSON schema for the response payload.
 
@@ -866,40 +857,39 @@ Response Body:
 
 Schema for <c>MultivariateDetectionResult</c>:
 <code>{
-  resultId: string, # Required. Result identifier, which is used to fetch the results of an inference call.
+  resultId: string, # Required. Result identifier that&apos;s used to fetch the results of an inference call.
   summary: {
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error message when detection is failed.
-    variableStates: [VariableState], # Optional. Variable Status.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results.
+    errors: [ErrorResponse], # Optional. Error message when detection fails.
+    variableStates: [VariableState], # Optional. Variable status.
     setupInfo: {
-      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-      topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+      topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-      startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-      endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
-    }, # Required. Detection request for batch inference. This is an asynchronous inference which
+      startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+      endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
+    }, # Required. Detection request for batch inference. This is an asynchronous inference that
 will need another API to get detection results.
   }, # Required. Multivariate anomaly detection status.
   results: [
     {
-      timestamp: string (date &amp; time), # Required. The timestamp for this anomaly.
+      timestamp: string (date &amp; time), # Required. Time stamp for this anomaly.
       value: {
-        isAnomaly: boolean, # Required. True if an anomaly is detected at the current timestamp.
+        isAnomaly: boolean, # Required. True if an anomaly is detected at the current time stamp.
         severity: number, # Required. Indicates the significance of the anomaly. The higher the severity, the more
 significant the anomaly is.
-        score: number, # Required. Raw anomaly score of severity, will help indicate the degree of abnormality as
-well.
-        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous timestamp.
-      }, # Optional. The detailed value of this anomalous timestamp.
-      errors: [ErrorResponse], # Optional. Error message for the current timestamp.
+        score: number, # Required. Raw anomaly score of severity, to help indicate the degree of abnormality.
+        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous time stamp.
+      }, # Optional. Detailed value of this anomalous time stamp.
+      errors: [ErrorResponse], # Optional. Error message for the current time stamp.
     }
-  ], # Required. Detection result for each timestamp.
+  ], # Required. Detection result for each time stamp.
 }
 </code>
 
@@ -944,32 +934,6 @@ var data = new {
         fillNAMethod = "Previous",
         paddingValue = 123.45f,
     },
-    status = "CREATED",
-    diagnosticsInfo = new {
-        modelState = new {
-            epochIds = new[] {
-                1234
-            },
-            trainLosses = new[] {
-                123.45f
-            },
-            validationLosses = new[] {
-                123.45f
-            },
-            latenciesInSeconds = new[] {
-                123.45f
-            },
-        },
-        variableStates = new[] {
-            new {
-                variable = "<variable>",
-                filledNARatio = 123.45f,
-                effectiveCount = 1234,
-                firstTimestamp = "2022-05-10T14:57:31.2311892-04:00",
-                lastTimestamp = "2022-05-10T14:57:31.2311892-04:00",
-            }
-        },
-    },
 };
 
 Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
@@ -1003,12 +967,11 @@ Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo")
 </example>
 <remarks>
 Create and train a multivariate anomaly detection model. The request must
-include a source parameter to indicate an externally accessible Azure blob
-storage URI.There are two types of data input: An URI pointed to an Azure blob
-storage folder which contains multiple CSV files, and each CSV file contains
-two columns, timestamp and variable. Another type of input is an URI pointed to
-a CSV file in Azure blob storage, which contains all the variables and a
-timestamp column.
+include a source parameter to indicate an Azure Blob
+Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+Storage folder that contains multiple CSV files, where each CSV file has
+two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+time stamp column.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1016,45 +979,44 @@ Request Body:
 
 Schema for <c>ModelInfo</c>:
 <code>{
-  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-  startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-  endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-  displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+  startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+  endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+  displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-  slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+  slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
   alignPolicy: {
-    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-    paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-  }, # Optional. An optional field, indicating the manner to align multiple variables.
-  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+    paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+  }, # Optional. Manner of aligning multiple variables.
+  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
   errors: [
     {
-      code: string, # Required. The error code.
-      message: string, # Required. The message explaining the error reported by the service.
+      code: string, # Required. Error code.
+      message: string, # Required. Message that explains the error that the service reported.
     }
-  ], # Optional. Error messages when failed to create a model.
+  ], # Optional. Error messages after failure to create a model.
   diagnosticsInfo: {
     modelState: {
-      epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+      epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
       trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
       validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-      latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+      latenciesInSeconds: [number], # Optional. Latency for each epoch.
     }, # Optional. Model status.
-    variableStates: [VariableState], # Optional. Variable Status.
-  }, # Optional. Diagnostics information to help inspect the states of model or variable.
+    variableStates: [VariableState], # Optional. Variable status.
+  }, # Optional. Diagnostics information to help inspect the states of a model or variable.
 }
 </code>
 
@@ -1066,46 +1028,45 @@ Schema for <c>AnomalyDetectionModel</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
     errors: [
       {
-        code: string, # Required. The error code.
-        message: string, # Required. The message explaining the error reported by the service.
+        code: string, # Required. Error code.
+        message: string, # Required. Message that explains the error that the service reported.
       }
-    ], # Optional. Error messages when failed to create a model.
+    ], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>
@@ -1151,32 +1112,6 @@ var data = new {
         fillNAMethod = "Previous",
         paddingValue = 123.45f,
     },
-    status = "CREATED",
-    diagnosticsInfo = new {
-        modelState = new {
-            epochIds = new[] {
-                1234
-            },
-            trainLosses = new[] {
-                123.45f
-            },
-            validationLosses = new[] {
-                123.45f
-            },
-            latenciesInSeconds = new[] {
-                123.45f
-            },
-        },
-        variableStates = new[] {
-            new {
-                variable = "<variable>",
-                filledNARatio = 123.45f,
-                effectiveCount = 1234,
-                firstTimestamp = "2022-05-10T14:57:31.2311892-04:00",
-                lastTimestamp = "2022-05-10T14:57:31.2311892-04:00",
-            }
-        },
-    },
 };
 
 Response response = client.TrainMultivariateModel(RequestContent.Create(data));
@@ -1210,12 +1145,11 @@ Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo")
 </example>
 <remarks>
 Create and train a multivariate anomaly detection model. The request must
-include a source parameter to indicate an externally accessible Azure blob
-storage URI.There are two types of data input: An URI pointed to an Azure blob
-storage folder which contains multiple CSV files, and each CSV file contains
-two columns, timestamp and variable. Another type of input is an URI pointed to
-a CSV file in Azure blob storage, which contains all the variables and a
-timestamp column.
+include a source parameter to indicate an Azure Blob
+Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+Storage folder that contains multiple CSV files, where each CSV file has
+two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
+time stamp column.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1223,45 +1157,44 @@ Request Body:
 
 Schema for <c>ModelInfo</c>:
 <code>{
-  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-  startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-  endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-  displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+  startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+  endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+  displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-  slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+  slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
   alignPolicy: {
-    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-    paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-  }, # Optional. An optional field, indicating the manner to align multiple variables.
-  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+    paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+  }, # Optional. Manner of aligning multiple variables.
+  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
   errors: [
     {
-      code: string, # Required. The error code.
-      message: string, # Required. The message explaining the error reported by the service.
+      code: string, # Required. Error code.
+      message: string, # Required. Message that explains the error that the service reported.
     }
-  ], # Optional. Error messages when failed to create a model.
+  ], # Optional. Error messages after failure to create a model.
   diagnosticsInfo: {
     modelState: {
-      epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+      epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
       trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
       validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-      latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+      latenciesInSeconds: [number], # Optional. Latency for each epoch.
     }, # Optional. Model status.
-    variableStates: [VariableState], # Optional. Variable Status.
-  }, # Optional. Diagnostics information to help inspect the states of model or variable.
+    variableStates: [VariableState], # Optional. Variable status.
+  }, # Optional. Diagnostics information to help inspect the states of a model or variable.
 }
 </code>
 
@@ -1273,53 +1206,52 @@ Schema for <c>AnomalyDetectionModel</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
     errors: [
       {
-        code: string, # Required. The error code.
-        message: string, # Required. The message explaining the error reported by the service.
+        code: string, # Required. Error code.
+        message: string, # Required. Message that explains the error that the service reported.
       }
-    ], # Optional. Error messages when failed to create a model.
+    ], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DeleteMultivariateModelAsync(String,RequestContext)">
+    <member name="DeleteMultivariateModelAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModelAsync with required parameters.
 <code><![CDATA[
@@ -1332,10 +1264,10 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
 <remarks>
-Delete an existing multivariate model according to the modelId
+Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="DeleteMultivariateModel(String,RequestContext)">
+    <member name="DeleteMultivariateModel(string,RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModel with required parameters.
 <code><![CDATA[
@@ -1348,10 +1280,10 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
 <remarks>
-Delete an existing multivariate model according to the modelId
+Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="GetMultivariateModelAsync(String,RequestContext)">
+    <member name="GetMultivariateModelAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModelAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1389,7 +1321,7 @@ Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo")
 ]]></code>
 </example>
 <remarks>
-Get detailed information of multivariate model, including the training status
+Get detailed information about the multivariate model, including the training status
 and variables used in the model.
 
 Below is the JSON schema for the response payload.
@@ -1402,53 +1334,52 @@ Schema for <c>AnomalyDetectionModel</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
     errors: [
       {
-        code: string, # Required. The error code.
-        message: string, # Required. The message explaining the error reported by the service.
+        code: string, # Required. Error code.
+        message: string, # Required. Message that explains the error that the service reported.
       }
-    ], # Optional. Error messages when failed to create a model.
+    ], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMultivariateModel(String,RequestContext)">
+    <member name="GetMultivariateModel(string,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModel with required parameters and parse the result.
 <code><![CDATA[
@@ -1486,7 +1417,7 @@ Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo")
 ]]></code>
 </example>
 <remarks>
-Get detailed information of multivariate model, including the training status
+Get detailed information about the multivariate model, including the training status
 and variables used in the model.
 
 Below is the JSON schema for the response payload.
@@ -1499,53 +1430,52 @@ Schema for <c>AnomalyDetectionModel</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
     errors: [
       {
-        code: string, # Required. The error code.
-        message: string, # Required. The message explaining the error reported by the service.
+        code: string, # Required. Error code.
+        message: string, # Required. Message that explains the error that the service reported.
       }
-    ], # Optional. Error messages when failed to create a model.
+    ], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomalyAsync(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomalyAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1588,12 +1518,12 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-Submit multivariate anomaly detection task with the modelId of trained model
-and inference data, the input schema should be the same with the training
-request. The request will complete asynchronously and return a resultId to
-query the detection result.The request should be a source link to indicate an
-externally accessible Azure storage Uri, either pointed to an Azure blob
-storage folder, or pointed to a CSV file in Azure blob storage.
+Submit a multivariate anomaly detection task with the modelId value of a trained model
+and inference data. The input schema should be the same with the training
+request. The request will finish asynchronously and return a resultId value to
+query the detection result. The request should be a source link to indicate an
+externally accessible Azure Storage URI that either points to an Azure Blob
+Storage folder or points to a CSV file in Azure Blob Storage.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1601,17 +1531,17 @@ Request Body:
 
 Schema for <c>MultivariateBatchDetectionOptions</c>:
 <code>{
-  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-  topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+  topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-  startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-  endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
+  startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+  endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
 }
 </code>
 
@@ -1619,46 +1549,45 @@ Response Body:
 
 Schema for <c>MultivariateDetectionResult</c>:
 <code>{
-  resultId: string, # Required. Result identifier, which is used to fetch the results of an inference call.
+  resultId: string, # Required. Result identifier that&apos;s used to fetch the results of an inference call.
   summary: {
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error message when detection is failed.
-    variableStates: [VariableState], # Optional. Variable Status.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results.
+    errors: [ErrorResponse], # Optional. Error message when detection fails.
+    variableStates: [VariableState], # Optional. Variable status.
     setupInfo: {
-      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-      topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+      topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-      startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-      endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
-    }, # Required. Detection request for batch inference. This is an asynchronous inference which
+      startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+      endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
+    }, # Required. Detection request for batch inference. This is an asynchronous inference that
 will need another API to get detection results.
   }, # Required. Multivariate anomaly detection status.
   results: [
     {
-      timestamp: string (date &amp; time), # Required. The timestamp for this anomaly.
+      timestamp: string (date &amp; time), # Required. Time stamp for this anomaly.
       value: {
-        isAnomaly: boolean, # Required. True if an anomaly is detected at the current timestamp.
+        isAnomaly: boolean, # Required. True if an anomaly is detected at the current time stamp.
         severity: number, # Required. Indicates the significance of the anomaly. The higher the severity, the more
 significant the anomaly is.
-        score: number, # Required. Raw anomaly score of severity, will help indicate the degree of abnormality as
-well.
-        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous timestamp.
-      }, # Optional. The detailed value of this anomalous timestamp.
-      errors: [ErrorResponse], # Optional. Error message for the current timestamp.
+        score: number, # Required. Raw anomaly score of severity, to help indicate the degree of abnormality.
+        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous time stamp.
+      }, # Optional. Detailed value of this anomalous time stamp.
+      errors: [ErrorResponse], # Optional. Error message for the current time stamp.
     }
-  ], # Required. Detection result for each timestamp.
+  ], # Required. Detection result for each time stamp.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomaly(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomaly(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1701,12 +1630,12 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-Submit multivariate anomaly detection task with the modelId of trained model
-and inference data, the input schema should be the same with the training
-request. The request will complete asynchronously and return a resultId to
-query the detection result.The request should be a source link to indicate an
-externally accessible Azure storage Uri, either pointed to an Azure blob
-storage folder, or pointed to a CSV file in Azure blob storage.
+Submit a multivariate anomaly detection task with the modelId value of a trained model
+and inference data. The input schema should be the same with the training
+request. The request will finish asynchronously and return a resultId value to
+query the detection result. The request should be a source link to indicate an
+externally accessible Azure Storage URI that either points to an Azure Blob
+Storage folder or points to a CSV file in Azure Blob Storage.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -1714,17 +1643,17 @@ Request Body:
 
 Schema for <c>MultivariateBatchDetectionOptions</c>:
 <code>{
-  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-  topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+  dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+  topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-  startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-  endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
+  startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+  endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
 }
 </code>
 
@@ -1732,48 +1661,72 @@ Response Body:
 
 Schema for <c>MultivariateDetectionResult</c>:
 <code>{
-  resultId: string, # Required. Result identifier, which is used to fetch the results of an inference call.
+  resultId: string, # Required. Result identifier that&apos;s used to fetch the results of an inference call.
   summary: {
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error message when detection is failed.
-    variableStates: [VariableState], # Optional. Variable Status.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required. Status of detection results.
+    errors: [ErrorResponse], # Optional. Error message when detection fails.
+    variableStates: [VariableState], # Optional. Variable status.
     setupInfo: {
-      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. The data schema should
-be exactly the same with those used in the training phase.
-      topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+      dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection. The data schema should
+be exactly the same as those used in the training phase.
+      topContributorCount: number, # Required. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
-      startTime: string (date &amp; time), # Required. A required field, indicating the start time of data for detection, which should
-be date-time of ISO 8601 format.
-      endTime: string (date &amp; time), # Required. A required field, indicating the end time of data for detection, which should
-be date-time of ISO 8601 format.
-    }, # Required. Detection request for batch inference. This is an asynchronous inference which
+      startTime: string (date &amp; time), # Required. Start date/time of data for detection, which should
+be in ISO 8601 format.
+      endTime: string (date &amp; time), # Required. End date/time of data for detection, which should
+be in ISO 8601 format.
+    }, # Required. Detection request for batch inference. This is an asynchronous inference that
 will need another API to get detection results.
   }, # Required. Multivariate anomaly detection status.
   results: [
     {
-      timestamp: string (date &amp; time), # Required. The timestamp for this anomaly.
+      timestamp: string (date &amp; time), # Required. Time stamp for this anomaly.
       value: {
-        isAnomaly: boolean, # Required. True if an anomaly is detected at the current timestamp.
+        isAnomaly: boolean, # Required. True if an anomaly is detected at the current time stamp.
         severity: number, # Required. Indicates the significance of the anomaly. The higher the severity, the more
 significant the anomaly is.
-        score: number, # Required. Raw anomaly score of severity, will help indicate the degree of abnormality as
-well.
-        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous timestamp.
-      }, # Optional. The detailed value of this anomalous timestamp.
-      errors: [ErrorResponse], # Optional. Error message for the current timestamp.
+        score: number, # Required. Raw anomaly score of severity, to help indicate the degree of abnormality.
+        interpretation: [AnomalyInterpretation], # Optional. Interpretation of this anomalous time stamp.
+      }, # Optional. Detailed value of this anomalous time stamp.
+      errors: [ErrorResponse], # Optional. Error message for the current time stamp.
     }
-  ], # Required. Detection result for each timestamp.
+  ], # Required. Detection result for each time stamp.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomalyAsync(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomalyAsync(string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectMultivariateLastAnomalyAsync with required parameters and request content and parse the result.
+This sample shows how to call DetectMultivariateLastAnomalyAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    variables = new[] {
+        new {
+            variable = "<variable>",
+            timestamps = new[] {
+                "<String>"
+            },
+            values = new[] {
+                123.45f
+            },
+        }
+    },
+};
+
+Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectMultivariateLastAnomalyAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1814,9 +1767,9 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-Submit multivariate anomaly detection task with the modelId of trained model
-and inference data, and the inference data should be put into request body in a
-JSON format. The request will complete synchronously and return the detection
+Submit a multivariate anomaly detection task with the modelId value of a trained model
+and inference data. The inference data should be put into the request body in
+JSON format. The request will finish synchronously and return the detection
 immediately in the response body.
 
 Below is the JSON schema for the request and response payloads.
@@ -1827,14 +1780,14 @@ Schema for <c>MultivariateLastDetectionOptions</c>:
 <code>{
   variables: [
     {
-      variable: string, # Required. Variable name of last detection request.
-      timestamps: [string], # Required. Timestamps of last detection request
+      variable: string, # Required. Variable name of the last detection request.
+      timestamps: [string], # Required. Time stamps of the last detection request.
       values: [number], # Required. Values of variables.
     }
-  ], # Required. This contains the inference data, including the name, timestamps(ISO 8601) and
+  ], # Required. Contains the inference data, including the name, time stamps (ISO 8601), and
 values of variables.
-  topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+  topContributorCount: number, # Optional. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
 }
 </code>
@@ -1847,20 +1800,45 @@ Schema for <c>MultivariateLastDetectionResult</c>:
     {
       variable: string, # Optional. Variable name in variable states.
       filledNARatio: number, # Optional. Proportion of missing values that need to be filled by fillNAMethod.
-      effectiveCount: number, # Optional. Number of effective data points before applying fillNAMethod.
-      firstTimestamp: string (date &amp; time), # Optional. First valid timestamp with value of input data.
-      lastTimestamp: string (date &amp; time), # Optional. Last valid timestamp with value of input data.
+      effectiveCount: number, # Optional. Number of effective data points before fillNAMethod is applied.
+      firstTimestamp: string (date &amp; time), # Optional. First valid time stamp with a value of input data.
+      lastTimestamp: string (date &amp; time), # Optional. Last valid time stamp with a value of input data.
     }
-  ], # Optional. Variable Status.
+  ], # Optional. Variable status.
   results: [AnomalyState], # Optional. Anomaly status and information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomaly(String,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomaly(string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectMultivariateLastAnomaly with required parameters and request content and parse the result.
+This sample shows how to call DetectMultivariateLastAnomaly with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    variables = new[] {
+        new {
+            variable = "<variable>",
+            timestamps = new[] {
+                "<String>"
+            },
+            values = new[] {
+                123.45f
+            },
+        }
+    },
+};
+
+Response response = client.DetectMultivariateLastAnomaly("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectMultivariateLastAnomaly with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1901,9 +1879,9 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
 <remarks>
-Submit multivariate anomaly detection task with the modelId of trained model
-and inference data, and the inference data should be put into request body in a
-JSON format. The request will complete synchronously and return the detection
+Submit a multivariate anomaly detection task with the modelId value of a trained model
+and inference data. The inference data should be put into the request body in
+JSON format. The request will finish synchronously and return the detection
 immediately in the response body.
 
 Below is the JSON schema for the request and response payloads.
@@ -1914,14 +1892,14 @@ Schema for <c>MultivariateLastDetectionOptions</c>:
 <code>{
   variables: [
     {
-      variable: string, # Required. Variable name of last detection request.
-      timestamps: [string], # Required. Timestamps of last detection request
+      variable: string, # Required. Variable name of the last detection request.
+      timestamps: [string], # Required. Time stamps of the last detection request.
       values: [number], # Required. Values of variables.
     }
-  ], # Required. This contains the inference data, including the name, timestamps(ISO 8601) and
+  ], # Required. Contains the inference data, including the name, time stamps (ISO 8601), and
 values of variables.
-  topContributorCount: number, # Required. An optional field, which is used to specify the number of top contributed
-variables for one anomalous timestamp in the response. The default number is
+  topContributorCount: number, # Optional. Number of top contributed
+variables for one anomalous time stamp in the response. The default is
 10.
 }
 </code>
@@ -1934,34 +1912,20 @@ Schema for <c>MultivariateLastDetectionResult</c>:
     {
       variable: string, # Optional. Variable name in variable states.
       filledNARatio: number, # Optional. Proportion of missing values that need to be filled by fillNAMethod.
-      effectiveCount: number, # Optional. Number of effective data points before applying fillNAMethod.
-      firstTimestamp: string (date &amp; time), # Optional. First valid timestamp with value of input data.
-      lastTimestamp: string (date &amp; time), # Optional. Last valid timestamp with value of input data.
+      effectiveCount: number, # Optional. Number of effective data points before fillNAMethod is applied.
+      firstTimestamp: string (date &amp; time), # Optional. First valid time stamp with a value of input data.
+      lastTimestamp: string (date &amp; time), # Optional. Last valid time stamp with a value of input data.
     }
-  ], # Optional. Variable Status.
+  ], # Optional. Variable status.
   results: [AnomalyState], # Optional. Anomaly status and information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
+    <member name="GetMultivariateModelsAsync(int?,int?,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModelsAsync and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-await foreach (var data in client.GetMultivariateModelsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModelsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModelsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2010,64 +1974,49 @@ Schema for <c>Array</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error messages when failed to create a model.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
+    errors: [ErrorResponse], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
+    <member name="GetMultivariateModels(int?,int?,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModels and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-foreach (var data in client.GetMultivariateModels())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModels with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModels with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2116,41 +2065,40 @@ Schema for <c>Array</c>:
   createdTime: string (date &amp; time), # Required. Date and time (UTC) when the model was created.
   lastUpdatedTime: string (date &amp; time), # Required. Date and time (UTC) when the model was last updated.
   modelInfo: {
-    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure storage Uri,
-either pointed to an Azure blob storage folder, or pointed to a CSV file in
-Azure blob storage based on you data schema selection. 
-    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of input data source: OneTable or MultiTable. The default
-DataSchema is OneTable.
-    startTime: string (date &amp; time), # Required. A required field, indicating the start time of training data, which should be
-date-time of ISO 8601 format.
-    endTime: string (date &amp; time), # Required. A required field, indicating the end time of training data, which should be
-date-time of ISO 8601 format.
-    displayName: string, # Optional. An optional field. The display name of the model whose maximum length is 24
+    dataSource: string, # Required. Source link to the input data to indicate an accessible Azure Storage URI.
+It either points to an Azure Blob Storage folder or points to a CSV file in
+Azure Blob Storage, based on your data schema selection.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional. Data schema of the input data source. The default
+is OneTable.
+    startTime: string (date &amp; time), # Required. Start date/time of training data, which should be
+in ISO 8601 format.
+    endTime: string (date &amp; time), # Required. End date/time of training data, which should be
+in ISO 8601 format.
+    displayName: string, # Optional. Display name of the model. Maximum length is 24
 characters.
-    slidingWindow: number, # Optional. An optional field, indicating how many previous timestamps will be used to
-detect whether the timestamp is anomaly or not. 
+    slidingWindow: number, # Optional. Number of previous time stamps that will be used to
+detect whether the time stamp is an anomaly or not.
     alignPolicy: {
-      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. An optional field, indicating how to align different variables to the same
-time-range. Either Inner or Outer. 
-      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. An optional field, indicating how missing values will be filled. One of
-Previous, Subsequent, Linear, Zero, Fixed.
-      paddingValue: number, # Optional. An optional field. Required when fillNAMethod is Fixed.
-    }, # Optional. An optional field, indicating the manner to align multiple variables.
-    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status. One of CREATED, RUNNING, READY, and FAILED.
-    errors: [ErrorResponse], # Optional. Error messages when failed to create a model.
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional. Field that indicates how to align different variables to the same
+time range.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional. Field that indicates how missing values will be filled.
+      paddingValue: number, # Optional. Field that&apos;s required when fillNAMethod is Fixed.
+    }, # Optional. Manner of aligning multiple variables.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional. Model status.
+    errors: [ErrorResponse], # Optional. Error messages after failure to create a model.
     diagnosticsInfo: {
       modelState: {
-        epochIds: [number], # Optional. This indicates the number of passes of the entire training dataset the
+        epochIds: [number], # Optional. Number of passes of the entire training dataset that the
 algorithm has completed.
         trainLosses: [number], # Optional. List of metrics used to assess how the model fits the training data for each
 epoch.
         validationLosses: [number], # Optional. List of metrics used to assess how the model fits the validation set for each
 epoch.
-        latenciesInSeconds: [number], # Optional. Latency for each epoch. 
+        latenciesInSeconds: [number], # Optional. Latency for each epoch.
       }, # Optional. Model status.
-      variableStates: [VariableState], # Optional. Variable Status.
-    }, # Optional. Diagnostics information to help inspect the states of model or variable.
-  }, # Optional. Training result of a model including its status, errors and diagnostics
+      variableStates: [VariableState], # Optional. Variable status.
+    }, # Optional. Diagnostics information to help inspect the states of a model or variable.
+  }, # Optional. Training result of a model, including its status, errors, and diagnostics
 information.
 }
 </code>

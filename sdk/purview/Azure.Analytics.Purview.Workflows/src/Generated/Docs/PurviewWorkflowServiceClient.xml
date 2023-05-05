@@ -34,7 +34,7 @@ Response Body:
 
 Schema for <c>Workflow</c>:
 <code>{
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
@@ -89,7 +89,7 @@ Response Body:
 
 Schema for <c>Workflow</c>:
 <code>{
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
@@ -197,7 +197,7 @@ Schema for <c>WorkflowCreateOrUpdateCommand</c>:
   name: string, # Required. The workflow name.
   isEnabled: boolean, # Required. Whether the workflow enabled or not.
   description: string, # Required. Description of a workflow.
-  actionDag: AnyObject, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
+  actionDag: any, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
 }
 </code>
 
@@ -205,7 +205,7 @@ Response Body:
 
 Schema for <c>Workflow</c>:
 <code>{
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
@@ -313,7 +313,7 @@ Schema for <c>WorkflowCreateOrUpdateCommand</c>:
   name: string, # Required. The workflow name.
   isEnabled: boolean, # Required. Whether the workflow enabled or not.
   description: string, # Required. Description of a workflow.
-  actionDag: AnyObject, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
+  actionDag: any, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
 }
 </code>
 
@@ -321,7 +321,7 @@ Response Body:
 
 Schema for <c>Workflow</c>:
 <code>{
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
@@ -433,7 +433,7 @@ Schema for <c>UserRequestPayload</c>:
   operations: [
     {
       type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: AnyObject, # Required. The payload of each operation which user want to submit.
+      payload: any, # Required. The payload of each operation which user want to submit.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
   comment: string, # Optional. The comment when submit a user request.
@@ -449,7 +449,7 @@ Schema for <c>UserRequestResponse</c>:
   operations: [
     {
       type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: AnyObject, # Required. The payload of each operation which user want to submit.
+      payload: any, # Required. The payload of each operation which user want to submit.
       workflowRunIds: [Guid], # Optional.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
@@ -524,7 +524,7 @@ Schema for <c>UserRequestPayload</c>:
   operations: [
     {
       type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: AnyObject, # Required. The payload of each operation which user want to submit.
+      payload: any, # Required. The payload of each operation which user want to submit.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
   comment: string, # Optional. The comment when submit a user request.
@@ -540,7 +540,7 @@ Schema for <c>UserRequestResponse</c>:
   operations: [
     {
       type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: AnyObject, # Required. The payload of each operation which user want to submit.
+      payload: any, # Required. The payload of each operation which user want to submit.
       workflowRunIds: [Guid], # Optional.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
@@ -594,16 +594,16 @@ Schema for <c>WorkflowRun</c>:
   runPayload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
-    payload: AnyObject, # Required. The payload of each operation which user want to submit.
+    payload: any, # Required. The payload of each operation which user want to submit.
   }, # Optional. The input of a workflow run. Align with operation in user request. 
   status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Optional. The status.
   endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
   cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
   cancelComment: string, # Optional. The comment when cancel a workflow run.
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
   detail: {
-    runInput: AnyObject, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
-    actions: AnyObject, # Required. Any object
+    runInput: any, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
+    actions: any, # Required. Any object
   }, # Required. It refers to the &quot;detail&quot; property of a workflow run object, which contains run context and runtime information of actions.
 }
 </code>
@@ -653,16 +653,16 @@ Schema for <c>WorkflowRun</c>:
   runPayload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
-    payload: AnyObject, # Required. The payload of each operation which user want to submit.
+    payload: any, # Required. The payload of each operation which user want to submit.
   }, # Optional. The input of a workflow run. Align with operation in user request. 
   status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Optional. The status.
   endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
   cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
   cancelComment: string, # Optional. The comment when cancel a workflow run.
-  actionDag: AnyObject, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
+  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
   detail: {
-    runInput: AnyObject, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
-    actions: AnyObject, # Required. Any object
+    runInput: any, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
+    actions: any, # Required. Any object
   }, # Required. It refers to the &quot;detail&quot; property of a workflow run object, which contains run context and runtime information of actions.
 }
 </code>
@@ -805,19 +805,19 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.
@@ -830,7 +830,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
     taskBody: string, # Required. The simple task body.
     assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
     status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [AnyObject], # Required.
+    changeHistory: [any], # Required.
   }, # Optional. Workflow simple task details.
   type: SimpleTask, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -843,19 +843,19 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.
@@ -922,19 +922,19 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.
@@ -947,7 +947,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
     taskBody: string, # Required. The simple task body.
     assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
     status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [AnyObject], # Required.
+    changeHistory: [any], # Required.
   }, # Optional. Workflow simple task details.
   type: SimpleTask, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -960,19 +960,19 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.
@@ -1439,7 +1439,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -1507,7 +1507,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1575,7 +1575,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasksAsync and parse the result.
 <code><![CDATA[
@@ -1646,19 +1646,19 @@ Schema for <c>TasksListValue</c>:
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.
@@ -1667,7 +1667,7 @@ Schema for <c>TasksListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasks and parse the result.
 <code><![CDATA[
@@ -1738,19 +1738,19 @@ Schema for <c>TasksListValue</c>:
   payload: {
     type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
+    payload: any, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
   reminderInfo: {
     lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
     nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
+    reminderSettings: any, # Required. The reminder settings.
   }, # Optional. Info of task reminder.
   expiryInfo: {
     lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
     nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
     expiryTime: string (ISO 8601 Format), # Required. The expiry time.
     expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
+      expireAfter: any, # Required. The time of expiry.
       notifyOnExpiration: [Guid], # Optional.
     }, # Required.
   }, # Optional. Info of task expiry.

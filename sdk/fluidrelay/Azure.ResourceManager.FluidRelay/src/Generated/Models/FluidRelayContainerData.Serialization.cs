@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.FluidRelay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             frsTenantId = property0.Value.GetGuid();
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             frsContainerId = property0.Value.GetGuid();
@@ -99,7 +96,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
@@ -109,7 +105,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -119,7 +114,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastAccessTime = property0.Value.GetDateTimeOffset("O");

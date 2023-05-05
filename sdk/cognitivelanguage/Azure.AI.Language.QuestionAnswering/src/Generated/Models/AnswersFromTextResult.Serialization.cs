@@ -26,7 +26,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TextAnswer> array = new List<TextAnswer>();

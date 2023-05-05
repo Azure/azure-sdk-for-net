@@ -1063,6 +1063,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageTypeState left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageTypeState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum BackupTargetDiskNetworkAccessOption
+    {
+        SameAsOnSourceDisks = 0,
+        EnablePrivateAccessForAllDisks = 1,
+        EnablePublicAccessForAllDisks = 2,
+    }
+    public partial class BackupTargetDiskNetworkAccessSettings
+    {
+        public BackupTargetDiskNetworkAccessSettings() { }
+        public Azure.Core.ResourceIdentifier TargetDiskAccessId { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupTargetDiskNetworkAccessOption? TargetDiskNetworkAccessOption { get { throw null; } set { } }
+    }
     public partial class BackupTieringPolicy
     {
         public BackupTieringPolicy() { }
@@ -1698,6 +1710,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IaasVmRecoveryPoint() { }
         public bool? IsInstantIlrSessionActive { get { throw null; } set { } }
         public bool? IsManagedVirtualMachine { get { throw null; } set { } }
+        public bool? IsPrivateAccessEnabledOnAnyDisk { get { throw null; } set { } }
         public bool? IsSourceVmEncrypted { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.KeyAndSecretDetails KeyAndSecret { get { throw null; } set { } }
         public bool? OriginalStorageAccountOption { get { throw null; } set { } }
@@ -1709,6 +1722,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointProperties RecoveryPointProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointTierInformationV2> RecoveryPointTierDetails { get { throw null; } }
         public string RecoveryPointType { get { throw null; } set { } }
+        public string SecurityType { get { throw null; } set { } }
         public string SourceVmStorageType { get { throw null; } set { } }
         public string VirtualMachineSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -1721,6 +1735,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? DoesCreateNewCloudService { get { throw null; } set { } }
         public bool? DoesRestoreWithManagedDisks { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.VmEncryptionDetails EncryptionDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IdentityBasedRestoreDetails IdentityBasedRestoreDetails { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupIdentityInfo IdentityInfo { get { throw null; } set { } }
         public bool? OriginalStorageAccountOption { get { throw null; } set { } }
@@ -1728,9 +1743,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.FileShareRecoveryType? RecoveryType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> RestoreDiskLunList { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SecuredVmOSDiskEncryptionSetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetDomainNameId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetVirtualMachineId { get { throw null; } set { } }
@@ -2162,6 +2179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public RecoveryPointProperties() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public bool? IsSoftDeleted { get { throw null; } set { } }
         public string RuleName { get { throw null; } set { } }
     }
     public partial class RecoveryPointRehydrationInfo

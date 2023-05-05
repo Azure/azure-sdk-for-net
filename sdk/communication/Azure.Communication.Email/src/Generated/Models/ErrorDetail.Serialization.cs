@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
@@ -45,7 +45,6 @@ namespace Azure.Communication.Email
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorDetail> array = new List<ErrorDetail>();
@@ -60,7 +59,6 @@ namespace Azure.Communication.Email
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();

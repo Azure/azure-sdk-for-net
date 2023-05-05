@@ -28,7 +28,7 @@ namespace Azure.Identity
         public string TokenFilePath { get; set; } = EnvironmentVariables.AzureFederatedTokenFile;
 
         /// <inheritdoc />
-        public bool DisableInstanceDiscovery { get; set; }
+        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
 
         /// <summary>
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.

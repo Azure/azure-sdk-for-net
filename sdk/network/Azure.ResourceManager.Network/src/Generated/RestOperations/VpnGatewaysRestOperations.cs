@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateResetRequest(string subscriptionId, string resourceGroupName, string gatewayName)
+        internal HttpMessage CreateResetRequest(string subscriptionId, string resourceGroupName, string gatewayName, string ipConfigurationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,6 +361,10 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendPath("/reset", false);
+            if (ipConfigurationId != null)
+            {
+                uri.AppendQuery("ipConfigurationId", ipConfigurationId, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -372,16 +376,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
+        /// <param name="ipConfigurationId"> VpnGateway ipConfigurationId to specify the gateway instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResetAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetAsync(string subscriptionId, string resourceGroupName, string gatewayName, string ipConfigurationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var message = CreateResetRequest(subscriptionId, resourceGroupName, gatewayName);
+            using var message = CreateResetRequest(subscriptionId, resourceGroupName, gatewayName, ipConfigurationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -397,16 +402,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
+        /// <param name="ipConfigurationId"> VpnGateway ipConfigurationId to specify the gateway instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Reset(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response Reset(string subscriptionId, string resourceGroupName, string gatewayName, string ipConfigurationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var message = CreateResetRequest(subscriptionId, resourceGroupName, gatewayName);
+            using var message = CreateResetRequest(subscriptionId, resourceGroupName, gatewayName, ipConfigurationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             _client = client;
             Id = transactionId;
-            _operationInternal = new(_client.ClientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
+            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>
@@ -63,10 +64,7 @@ namespace Azure.Security.ConfidentialLedger
 
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
-                var error = new ResponseError(null, exceptionMessage);
-                var ex = async
-                    ? await _client.ClientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, error).ConfigureAwait(false)
-                    : _client.ClientDiagnostics.CreateRequestFailedException(statusResponse, error);
+                var ex = new RequestFailedException(statusResponse, null, new PostLedgerEntryRequestFailedDetailsParser(exceptionMessage));
                 return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
@@ -88,5 +86,21 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <inheritdoc />
         public override bool HasCompleted => _operationInternal.HasCompleted;
+
+        private class PostLedgerEntryRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly string _message;
+
+            public PostLedgerEntryRequestFailedDetailsParser(string message)
+            {
+                _message = message;
+            }
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = new ResponseError(null, _message);
+                data = null;
+                return true;
+            }
+        }
     }
 }

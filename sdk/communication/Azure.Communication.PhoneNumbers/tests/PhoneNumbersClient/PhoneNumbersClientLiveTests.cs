@@ -149,6 +149,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = await client.GetPhoneNumberSearchResultAsync(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
         }
 
         [Test]
@@ -175,6 +185,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = client.GetPhoneNumberSearchResult(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
         }
 
         [Test]
@@ -264,9 +284,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetPurchasedPhoneNumbersNextPage()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
             var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
 
@@ -310,9 +327,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetTollFreeAreaCodes()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             string[] expectedAreaCodes = { "888", "877", "866", "855", "844", "800", "833", "88" };
             var client = CreateClient();
 
@@ -327,9 +341,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetGeographicAreaCodes()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
             var availableLocalities = client.GetAvailableLocalitiesAsync("US");
             await foreach (PhoneNumberLocality firstLocality in availableLocalities)
@@ -347,9 +358,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetCountries()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             List<string> countriesResponse = new List<string>();
             string[] expectedCountries = { "US", "CA" };
             var client = CreateClient();
@@ -370,9 +378,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetLocalities()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
 
             var localities = client.GetAvailableLocalitiesAsync("US");
@@ -386,9 +391,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetLocalitiesWithAdministrativeDivision()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
             var availableLocalities = client.GetAvailableLocalitiesAsync("US");
             await foreach (PhoneNumberLocality firstLocality in availableLocalities)
@@ -407,9 +409,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task GetOfferings()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
 
             var offerings = client.GetAvailableOfferingsAsync("US");

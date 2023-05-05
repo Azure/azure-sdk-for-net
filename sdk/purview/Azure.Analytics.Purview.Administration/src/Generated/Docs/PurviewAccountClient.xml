@@ -725,7 +725,7 @@ Schema for <c>AccessKeys</c>:
 
 </remarks>
     </member>
-    <member name="GetCollectionsAsync(String,RequestContext)">
+    <member name="GetCollectionsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
@@ -791,7 +791,7 @@ Schema for <c>CollectionListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetCollections(String,RequestContext)">
+    <member name="GetCollections(string,RequestContext)">
 <example>
 This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
@@ -857,7 +857,7 @@ Schema for <c>CollectionListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetResourceSetRulesAsync(String,RequestContext)">
+    <member name="GetResourceSetRulesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRulesAsync and parse the result.
 <code><![CDATA[
@@ -1070,7 +1070,7 @@ Schema for <c>ResourceSetRuleConfigListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetResourceSetRules(String,RequestContext)">
+    <member name="GetResourceSetRules(string,RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRules and parse the result.
 <code><![CDATA[

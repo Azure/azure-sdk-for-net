@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -246,11 +246,11 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxpagesize)
+        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -258,9 +258,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/classificationPolicies", false);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -269,11 +269,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
+            using var message = CreateListClassificationPoliciesRequest(maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -285,16 +285,16 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
+            using var message = CreateListClassificationPoliciesRequest(maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -306,7 +306,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -357,7 +357,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -389,7 +389,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -431,7 +431,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -495,7 +495,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -517,11 +517,11 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxpagesize)
+        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -529,9 +529,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/distributionPolicies", false);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -540,11 +540,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
+            using var message = CreateListDistributionPoliciesRequest(maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -556,16 +556,16 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
+            using var message = CreateListDistributionPoliciesRequest(maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -577,7 +577,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -628,7 +628,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -660,7 +660,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -702,7 +702,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -729,7 +729,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -766,7 +766,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -788,11 +788,11 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxpagesize)
+        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -800,9 +800,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/exceptionPolicies", false);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -811,11 +811,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
+            using var message = CreateListExceptionPoliciesRequest(maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -827,16 +827,16 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
+            using var message = CreateListExceptionPoliciesRequest(maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -848,7 +848,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -899,7 +899,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -931,7 +931,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -973,7 +973,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1000,7 +1000,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1037,7 +1037,7 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1059,11 +1059,11 @@ namespace Azure.Communication.JobRouter
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListQueuesRequest(int? maxpagesize)
+        internal HttpMessage CreateListQueuesRequest(int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1071,9 +1071,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/queues", false);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1082,11 +1082,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<QueueCollection>> ListQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueueCollection>> ListQueuesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListQueuesRequest(maxpagesize);
+            using var message = CreateListQueuesRequest(maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1098,16 +1098,16 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<QueueCollection> ListQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<QueueCollection> ListQueues(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListQueuesRequest(maxpagesize);
+            using var message = CreateListQueuesRequest(maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1119,23 +1119,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1147,23 +1147,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1175,23 +1175,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1203,23 +1203,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxPageSize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1231,23 +1231,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1259,23 +1259,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1287,23 +1287,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<QueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1315,23 +1315,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<QueueCollection> ListQueuesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<QueueCollection> ListQueuesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1343,7 +1343,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

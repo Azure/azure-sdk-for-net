@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f8cd7b39391c601cbca21affb6a770d6-3968ed3d996489a9-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "88eb77eaf1cc74535147aa06985464d5",
+        "traceparent": "00-02a3281602b18b790825489e00bcce2c-a259cbb9248aff3f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "9d349c2e0aac1302ff7040547653c559",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:57 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5a4bdee3-c82a-4a9b-9a3e-8150f1788848",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "5a4bdee3-c82a-4a9b-9a3e-8150f1788848",
-        "x-ms-routing-request-id": "WESTUS:20220516T230958Z:5a4bdee3-c82a-4a9b-9a3e-8150f1788848"
+        "x-ms-correlation-request-id": "21c1a3ea-a1c1-435d-997b-c153a14510bd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "21c1a3ea-a1c1-435d-997b-c153a14510bd",
+        "x-ms-routing-request-id": "WESTUS:20230310T063157Z:21c1a3ea-a1c1-435d-997b-c153a14510bd"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,203 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=AVS\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=AVS\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e7cd745b13377b93e203982c54f5de0d-2941250f35e75ca0-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "4504ef8ef5650311d82cc2146bb1fe53",
+        "traceparent": "00-27b1f26768bbdcceb4dc8f721cc50863-54324e182b0584f8-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "4e9dd7f0fff7e937db928e60f67af35f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "819",
+        "Content-Length": "1685",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:58 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "39b3b234-9875-4b48-a592-a8c352d55c6c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "4504ef8ef5650311d82cc2146bb1fe53",
-        "x-ms-routing-request-id": "WESTUS:20220516T230959Z:39b3b234-9875-4b48-a592-a8c352d55c6c",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "8f8a74df-39cb-4677-9948-8b09c6e99f62",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "4e9dd7f0fff7e937db928e60f67af35f",
+        "x-ms-routing-request-id": "WESTUS:20230310T063157Z:8f8a74df-39cb-4677-9948-8b09c6e99f62",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022AVS\u0022,\u0022name\u0022:\u0022av36\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:53599.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:112947.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022Region\u0022,\u0022value\u0022:\u0022US East\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure VMware Solution\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Specialized Compute Azure VMware Solution\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022AV36\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022dfa8a29b-50ad-56eb-b5f3-10f607e69c63\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Node Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022AV36\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "AVS",
+            "name": "av36",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 51859.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 109062.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Region",
+                "value": "US East"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Az Specialized Comp VMware Soln"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Specialized Compute Azure VMware Solution"
+              },
+              {
+                "name": "SkuName",
+                "value": "AV36"
+              },
+              {
+                "name": "MeterId",
+                "value": "dfa8a29b-50ad-56eb-b5f3-10f607e69c63"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Node Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "AV36"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AVS",
+            "name": "av36p",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 57028.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 120100.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Region",
+                "value": "US East"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Az Specialized Comp VMware Soln"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Specialized Compute Azure VMware Solution"
+              },
+              {
+                "name": "SkuName",
+                "value": "AV36P"
+              },
+              {
+                "name": "MeterId",
+                "value": "34873a93-f76b-5596-8bfa-b3db8d43f457"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Node Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "AV36P"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 2
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "2132182628",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1801611546",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

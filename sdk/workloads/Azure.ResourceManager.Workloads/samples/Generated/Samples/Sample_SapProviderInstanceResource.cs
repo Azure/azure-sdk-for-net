@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfADb2Provider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/Db2ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAMsSqlServerProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAOSProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAPrometheusHaClusterProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfASAPMonitorHanaProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfASAPMonitorNetWeaverProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateADb2Provider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/Db2ProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "password",
                     DBPasswordUri = new Uri(""),
                     SapSid = "SID",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateADb2ProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/Db2ProviderInstances_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "password",
                     DBPasswordUri = new Uri(""),
                     SapSid = "SID",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await sapProviderInstance.UpdateAsync(WaitUntil.Completed, data);
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAMsSqlServerProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/MsSqlServerProviderInstance_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SapSid = "sid",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAMsSqlServerProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/MsSqlServerProviderInstance_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SapSid = "sid",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await sapProviderInstance.UpdateAsync(WaitUntil.Completed, data);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAOSProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusOSProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                 ProviderSettings = new PrometheusOSProviderInstanceProperties()
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                     SapSid = "SID",
                 },
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAOSProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusOSProviderInstances_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                 ProviderSettings = new PrometheusOSProviderInstanceProperties()
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                     SapSid = "SID",
                 },
             };
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAPrometheusHaClusterProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     Hostname = "hostname",
                     Sid = "sid",
                     ClusterName = "clusterName",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                 },
             };
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAPrometheusHaClusterProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     Hostname = "hostname",
                     Sid = "sid",
                     ClusterName = "clusterName",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await sapProviderInstance.UpdateAsync(WaitUntil.Completed, data);
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateASAPMonitorHanaProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPasswordUri = new Uri(""),
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                     SslHostNameInCertificate = "xyz.domain.com",
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                     SapSid = "SID",
                 },
             };
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateASAPMonitorHanaProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SslHostNameInCertificate = "xyz.domain.com",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                     SapSid = "SID",
                 },
             };
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateASAPMonitorNetWeaverProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/NetWeaverProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     SapClientId = "111",
                     SapPortNumber = "1234",
                     SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
-                    SslPreference = SslPreference.ServerCertificate,
+                    SslPreference = SapSslPreference.ServerCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await sapProviderInstance.UpdateAsync(WaitUntil.Completed, data);
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateASAPMonitorNetWeaverProviderWithRootCertificate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Create_Root_Certificate.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/NetWeaverProviderInstances_Create_Root_Certificate.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                     SapPasswordUri = new Uri(""),
                     SapClientId = "111",
                     SapPortNumber = "1234",
-                    SslPreference = SslPreference.RootCertificate,
+                    SslPreference = SapSslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await sapProviderInstance.UpdateAsync(WaitUntil.Completed, data);
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeletesASAPMonitorProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Delete.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Delete.json
             // this example is just showing the usage of "ProviderInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

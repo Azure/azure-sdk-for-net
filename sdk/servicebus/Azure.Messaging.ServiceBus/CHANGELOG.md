@@ -1,5 +1,19 @@
 # Release History
 
+## 7.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+- The client-side idle timeout for connections can now be configured using `ServiceBusClientOptions`.  
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
+
+### Other Changes
+
 ## 7.13.1 (2023-03-13)
 
 ### Bugs Fixed

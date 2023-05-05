@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the prometheus node exporter. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal PrometheusOSProviderInstanceProperties(string providerType, Uri prometheusUri, SslPreference? sslPreference, Uri sslCertificateUri, string sapSid) : base(providerType)
+        internal PrometheusOSProviderInstanceProperties(string providerType, Uri prometheusUri, SapSslPreference? sslPreference, Uri sslCertificateUri, string sapSid) : base(providerType)
         {
             PrometheusUri = prometheusUri;
             SslPreference = sslPreference;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> URL of the Node Exporter endpoint. </summary>
         public Uri PrometheusUri { get; set; }
         /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
-        public SslPreference? SslPreference { get; set; }
+        public SapSslPreference? SslPreference { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the prometheus node exporter. </summary>
         public Uri SslCertificateUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>

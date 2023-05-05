@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.Advisor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             exclude = property0.Value.GetBoolean();
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.Advisor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lowCpuThreshold = new CpuThreshold(property0.Value.GetString());
@@ -116,7 +113,6 @@ namespace Azure.ResourceManager.Advisor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DigestConfig> array = new List<DigestConfig>();
