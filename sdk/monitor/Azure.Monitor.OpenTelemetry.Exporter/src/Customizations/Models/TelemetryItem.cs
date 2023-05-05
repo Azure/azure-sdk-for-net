@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 foreach (var attribute in _resource.CustomTags)
                 {
-                    properties.Add(attribute.Key, attribute.Value);
+                    properties[attribute.Key] = attribute.Value;
                 }
             }
         }
