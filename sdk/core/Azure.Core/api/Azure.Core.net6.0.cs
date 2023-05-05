@@ -18,8 +18,6 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataNameMapping nameMapping) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.DynamicDataOptions options) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,12 +43,6 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
-    }
-    public partial class DynamicDataOptions
-    {
-        public static readonly Azure.DynamicDataOptions Default;
-        public DynamicDataOptions() { }
-        public Azure.Core.Dynamic.DynamicDataNameMapping NameMapping { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
     public enum ErrorOptions
@@ -810,12 +802,6 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum DynamicDataNameMapping
-    {
-        None = 0,
-        PascalCaseGetters = 1,
-        PascalCaseGettersCamelCaseSetters = 2,
     }
 }
 namespace Azure.Core.Extensions
