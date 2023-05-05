@@ -15,7 +15,7 @@
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == '2'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp3.1, while all the dependent packages target NetStandard2.0.
     To support net462 so we must reference the dependent packages.-->
