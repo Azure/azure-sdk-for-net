@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Synapse.Mock;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -19,35 +20,67 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SynapseKustoPoolResourceExtension GetSynapseKustoPoolResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SynapseKustoPoolResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SynapseKustoPoolResourceExtension GetSynapseKustoPoolResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SynapseKustoPoolResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SynapsePrivateLinkHubResourceExtension GetSynapsePrivateLinkHubResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SynapsePrivateLinkHubResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SynapsePrivateLinkHubResourceExtension GetSynapsePrivateLinkHubResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SynapsePrivateLinkHubResourceExtension(client, scope);
+            });
+        }
+
+        private static SynapseResourceGroupResourceExtension GetSynapseResourceGroupResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SynapseResourceGroupResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SynapseResourceGroupResourceExtension GetSynapseResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SynapseResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static SynapseWorkspaceResourceExtension GetSynapseWorkspaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SynapseWorkspaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SynapseWorkspaceResourceExtension GetSynapseWorkspaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SynapseWorkspaceResourceExtension(client, scope);
             });
         }
         #region SynapseAadOnlyAuthenticationResource
@@ -1081,7 +1114,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
         public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapsePrivateLinkHubs();
+            return GetSynapseResourceGroupResourceExtension(resourceGroupResource).GetSynapsePrivateLinkHubs();
         }
 
         /// <summary>
@@ -1137,7 +1170,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
         public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapseWorkspaces();
+            return GetSynapseResourceGroupResourceExtension(resourceGroupResource).GetSynapseWorkspaces();
         }
 
         /// <summary>
@@ -1206,7 +1239,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
+            return GetSynapsePrivateLinkHubResourceExtension(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1227,7 +1260,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
+            return GetSynapsePrivateLinkHubResourceExtension(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
         }
 
         /// <summary>
@@ -1248,7 +1281,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
+            return GetSynapseWorkspaceResourceExtension(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1269,7 +1302,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
+            return GetSynapseWorkspaceResourceExtension(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -1290,7 +1323,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
+            return GetSynapseKustoPoolResourceExtension(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1311,7 +1344,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
+            return GetSynapseKustoPoolResourceExtension(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }
 
         /// <summary>
@@ -1336,7 +1369,7 @@ namespace Azure.ResourceManager.Synapse
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetSynapseKustoPoolResourceExtension(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1361,7 +1394,7 @@ namespace Azure.ResourceManager.Synapse
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
+            return GetSynapseKustoPoolResourceExtension(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }
     }
 }
