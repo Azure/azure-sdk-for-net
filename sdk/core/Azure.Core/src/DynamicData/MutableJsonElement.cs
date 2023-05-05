@@ -145,9 +145,20 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetDouble(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        try
+                        {
+                            value = (double)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
                 }
             }
 
@@ -172,7 +183,7 @@ namespace Azure.Core.Json
 
         private static string GetFormatExceptionText(string path, Type type)
         {
-            return $"Element at '{path}' cannot be formatted as type '{type.ToString()}.";
+            return $"Element at '{path}' cannot be formatted as type '{type}.";
         }
 
         /// <summary>
@@ -196,9 +207,20 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetInt32(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        try
+                        {
+                            value = (int)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
                 }
             }
 
@@ -242,9 +264,20 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetInt64(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        try
+                        {
+                            value = (long)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
                 }
             }
 
@@ -288,9 +321,20 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetSingle(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        try
+                        {
+                            value = (float)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
                 }
             }
 
@@ -324,19 +368,13 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                switch (change.Value)
+                return change.Value switch
                 {
-                    case string s:
-                        return s;
-                    case JsonElement element:
-                        return element.GetString();
-                    default:
-                        if (change.Value == null)
-                        {
-                            return null;
-                        }
-                        throw new InvalidOperationException($"Element at '{_path}' is not a string.");
-                }
+                    string s => s,
+                    JsonElement element => element.GetString(),
+                    null => null,
+                    _ => throw new InvalidOperationException($"Element at '{_path}' is not a string."),
+                };
             }
 
             return _element.GetString();
@@ -353,190 +391,445 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                switch (change.Value)
+                return change.Value switch
                 {
-                    case bool b:
-                        return b;
-                    case JsonElement element:
-                        return element.GetBoolean();
-                    default:
-                        throw new InvalidOperationException($"Element at '{_path}' is not a bool.");
-                }
+                    bool b => b,
+                    JsonElement element => element.GetBoolean(),
+                    _ => throw new InvalidOperationException($"Element at '{_path}' is not a bool."),
+                };
             }
 
             return _element.GetBoolean();
         }
 
-        public byte GetByte()
+        public bool TryGetByte(out byte value)
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    byte b => b,
-                    JsonElement element => element.GetByte(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(byte))),
-                };
+                    case byte b:
+                        value = b;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetByte(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (byte)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetByte();
+            return _element.TryGetByte(out value);
+        }
+
+        public byte GetByte()
+        {
+            if (!TryGetByte(out byte value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(byte)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetDateTime(out DateTime value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case DateTime d:
+                        value = d;
+                        return true;
+                    case DateTimeOffset o:
+                        value = ConvertFromDateTimeOffset(o);
+                        return true;
+                    case string s:
+                        if (DateTime.TryParse(s, out value))
+                        {
+                            return true;
+                        }
+                        return false;
+                    case JsonElement element:
+                        return element.TryGetDateTime(out value);
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            return _element.TryGetDateTime(out value);
+        }
+
+        private static DateTime ConvertFromDateTimeOffset(DateTimeOffset dateTime)
+        {
+            if (dateTime.Offset.Equals(TimeSpan.Zero))
+                return dateTime.UtcDateTime;
+            else if (dateTime.Offset.Equals(TimeZoneInfo.Local.GetUtcOffset(dateTime.DateTime)))
+                return DateTime.SpecifyKind(dateTime.DateTime, DateTimeKind.Local);
+            else
+                return dateTime.DateTime;
         }
 
         public DateTime GetDateTime()
         {
+            if (!TryGetDateTime(out DateTime value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(DateTime)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetDateTimeOffset(out DateTimeOffset value)
+        {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    DateTime d => d,
-                    DateTimeOffset o => o.DateTime,
-                    string s => DateTime.Parse(s),
-                    JsonElement element => element.GetDateTime(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(DateTime))),
-                };
+                    case DateTimeOffset o:
+                        value = o;
+                        return true;
+                    case DateTime d:
+                        value = d;
+                        return true;
+                    case string s:
+                        if (DateTimeOffset.TryParse(s, out value))
+                        {
+                            return true;
+                        }
+                        return false;
+                    case JsonElement element:
+                        return element.TryGetDateTimeOffset(out value);
+                    default:
+                        value = default;
+                        return false;
+                }
             }
 
-            return _element.GetDateTime();
+            return _element.TryGetDateTimeOffset(out value);
         }
 
         public DateTimeOffset GetDateTimeOffset()
         {
-            EnsureValid();
-
-            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            if (!TryGetDateTimeOffset(out DateTimeOffset value))
             {
-                return change.Value switch
-                {
-                    DateTime d => d,
-                    DateTimeOffset o => o,
-                    string s => DateTimeOffset.Parse(s),
-                    JsonElement element => element.GetDateTimeOffset(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(DateTimeOffset))),
-                };
+                throw new FormatException(GetFormatExceptionText(_path, typeof(DateTimeOffset)));
             }
 
-            return _element.GetDateTimeOffset();
+            return value;
         }
-        public decimal GetDecimal()
+        public bool TryGetDecimal(out decimal value)
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    decimal d => d,
-                    JsonElement element => element.GetDecimal(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(decimal))),
-                };
+                    case decimal d:
+                        value = d;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetDecimal(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (decimal)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetDecimal();
+            return _element.TryGetDecimal(out value);
+        }
+
+        public decimal GetDecimal()
+        {
+            if (!TryGetDecimal(out decimal value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(decimal)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetGuid(out Guid value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case Guid g:
+                        value = g;
+                        return true;
+                    case string s:
+                        if (Guid.TryParse(s, out value))
+                        {
+                            return true;
+                        }
+                        return false;
+                    case JsonElement element:
+                        return element.TryGetGuid(out value);
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            return _element.TryGetGuid(out value);
         }
 
         public Guid GetGuid()
         {
+            if (!TryGetGuid(out Guid value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(Guid)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetInt16(out short value)
+        {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    Guid g => g,
-                    JsonElement element => element.GetGuid(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(Guid))),
-                };
+                    case short s:
+                        value = s;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetInt16(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (short)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetGuid();
+            return _element.TryGetInt16(out value);
         }
 
         public short GetInt16()
         {
+            if (!TryGetInt16(out short value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(short)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetSByte(out sbyte value)
+        {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    short s => s,
-                    JsonElement element => element.GetInt16(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(short))),
-                };
+                    case sbyte b:
+                        value = b;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetSByte(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (sbyte)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetInt16();
+            return _element.TryGetSByte(out value);
         }
 
         public sbyte GetSByte()
         {
+            if (!TryGetSByte(out sbyte value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(sbyte)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetUInt16(out ushort value)
+        {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    sbyte s => s,
-                    JsonElement element => element.GetSByte(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(sbyte))),
-                };
+                    case ushort u:
+                        value = u;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt16(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (ushort)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetSByte();
+            return _element.TryGetUInt16(out value);
         }
 
         public ushort GetUInt16()
         {
-            EnsureValid();
-
-            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            if (!TryGetUInt16(out ushort value))
             {
-                return change.Value switch
-                {
-                    ushort u => u,
-                    JsonElement element => element.GetUInt16(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(ushort))),
-                };
+                throw new FormatException(GetFormatExceptionText(_path, typeof(ushort)));
             }
 
-            return _element.GetUInt16();
+            return value;
         }
-        public uint GetUInt32()
+
+        public bool TryGetUInt32(out uint value)
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    uint u => u,
-                    JsonElement element => element.GetUInt32(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(uint))),
-                };
+                    case uint d:
+                        value = d;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt32(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (uint)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
             }
 
-            return _element.GetUInt32();
+            return _element.TryGetUInt32(out value);
+        }
+
+        public uint GetUInt32()
+        {
+            if (!TryGetUInt32(out uint value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(uint)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetUInt64(out ulong value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case ulong u:
+                        value = u;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt64(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        try
+                        {
+                            value = (ulong)change.Value;
+                            return true;
+                        }
+                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+                        {
+                            value = default;
+                            return false;
+                        }
+                }
+            }
+
+            return _element.TryGetUInt64(out value);
         }
 
         public ulong GetUInt64()
         {
-            EnsureValid();
-
-            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            if (!TryGetUInt64(out ulong value))
             {
-                return change.Value switch
-                {
-                    ulong u => u,
-                    JsonElement element => element.GetUInt64(),
-                    _ => throw new FormatException(GetFormatExceptionText(_path, typeof(ulong))),
-                };
+                throw new FormatException(GetFormatExceptionText(_path, typeof(ulong)));
             }
 
-            return _element.GetUInt64();
+            return value;
         }
 
         /// <summary>
