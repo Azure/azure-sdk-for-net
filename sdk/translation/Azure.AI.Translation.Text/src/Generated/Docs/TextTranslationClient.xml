@@ -2,37 +2,6 @@
 <doc>
   <members>
     <member name="GetLanguagesAsync(string,string,string,ETag?,RequestContext)">
-<example>
-This sample shows how to call GetLanguagesAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-Response response = await client.GetLanguagesAsync("<clientTraceId>", "<scope>", "<acceptLanguage>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("code").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -49,37 +18,6 @@ Schema for <c>GetLanguagesResult</c>:
 </remarks>
     </member>
     <member name="GetLanguages(string,string,string,ETag?,RequestContext)">
-<example>
-This sample shows how to call GetLanguages with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-Response response = client.GetLanguages("<clientTraceId>", "<scope>", "<acceptLanguage>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("code").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -96,50 +34,6 @@ Schema for <c>GetLanguagesResult</c>:
 </remarks>
     </member>
     <member name="TranslateAsync(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
-<example>
-This sample shows how to call TranslateAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.TranslateAsync(new String[]{"<to>"}, RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-]]></code>
-This sample shows how to call TranslateAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.TranslateAsync(new String[]{"<to>"}, RequestContent.Create(data), "<clientTraceId>", "<from>", "<textType>", "<category>", "<profanityAction>", "<profanityMarker>", true, true, "<suggestedFrom>", "<fromScript>", "<toScript>", true);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("alignment").GetProperty("proj").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sourceText").GetProperty("text").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -197,50 +91,6 @@ converted into Arab script.
 </remarks>
     </member>
     <member name="Translate(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
-<example>
-This sample shows how to call Translate with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Translate(new String[]{"<to>"}, RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-]]></code>
-This sample shows how to call Translate with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Translate(new String[]{"<to>"}, RequestContent.Create(data), "<clientTraceId>", "<from>", "<textType>", "<category>", "<profanityAction>", "<profanityMarker>", true, true, "<suggestedFrom>", "<fromScript>", "<toScript>", true);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("alignment").GetProperty("proj").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sourceText").GetProperty("text").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -298,42 +148,6 @@ converted into Arab script.
 </remarks>
     </member>
     <member name="TransliterateAsync(string,string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call TransliterateAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.TransliterateAsync("<language>", "<fromScript>", "<toScript>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("script").ToString());
-]]></code>
-This sample shows how to call TransliterateAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.TransliterateAsync("<language>", "<fromScript>", "<toScript>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("script").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -357,42 +171,6 @@ Schema for <c>TransliteratedText</c>:
 </remarks>
     </member>
     <member name="Transliterate(string,string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call Transliterate with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Transliterate("<language>", "<fromScript>", "<toScript>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("script").ToString());
-]]></code>
-This sample shows how to call Transliterate with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Transliterate("<language>", "<fromScript>", "<toScript>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("script").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -416,42 +194,6 @@ Schema for <c>TransliteratedText</c>:
 </remarks>
     </member>
     <member name="FindSentenceBoundariesAsync(RequestContent,string,string,string,RequestContext)">
-<example>
-This sample shows how to call FindSentenceBoundariesAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.FindSentenceBoundariesAsync(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
-]]></code>
-This sample shows how to call FindSentenceBoundariesAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.FindSentenceBoundariesAsync(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -480,42 +222,6 @@ The length of the array is the number of sentences, and the values are the lengt
 </remarks>
     </member>
     <member name="FindSentenceBoundaries(RequestContent,string,string,string,RequestContext)">
-<example>
-This sample shows how to call FindSentenceBoundaries with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.FindSentenceBoundaries(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
-]]></code>
-This sample shows how to call FindSentenceBoundaries with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.FindSentenceBoundaries(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -544,60 +250,6 @@ The length of the array is the number of sentences, and the values are the lengt
 </remarks>
     </member>
     <member name="LookupDictionaryEntriesAsync(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call LookupDictionaryEntriesAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.LookupDictionaryEntriesAsync("<from>", "<to>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("displaySource").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("displayTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("posTag").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("confidence").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("prefixWord").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("normalizedText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("displayText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
-]]></code>
-This sample shows how to call LookupDictionaryEntriesAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.LookupDictionaryEntriesAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("displaySource").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("displayTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("posTag").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("confidence").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("prefixWord").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("normalizedText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("displayText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -648,60 +300,6 @@ However, it is not guaranteed to be in the first position, and often will not be
 </remarks>
     </member>
     <member name="LookupDictionaryEntries(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call LookupDictionaryEntries with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.LookupDictionaryEntries("<from>", "<to>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("displaySource").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("displayTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("posTag").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("confidence").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("prefixWord").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("normalizedText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("displayText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
-]]></code>
-This sample shows how to call LookupDictionaryEntries with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.LookupDictionaryEntries("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("displaySource").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("displayTarget").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("posTag").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("confidence").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("prefixWord").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("normalizedText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("displayText").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -752,56 +350,6 @@ However, it is not guaranteed to be in the first position, and often will not be
 </remarks>
     </member>
     <member name="LookupDictionaryExamplesAsync(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call LookupDictionaryExamplesAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        translation = "<translation>",
-        text = "<text>",
-    }
-};
-
-Response response = await client.LookupDictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourcePrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceSuffix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
-]]></code>
-This sample shows how to call LookupDictionaryExamplesAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        translation = "<translation>",
-        text = "<text>",
-    }
-};
-
-Response response = await client.LookupDictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourcePrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceSuffix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -846,56 +394,6 @@ This value may be an empty string.
 </remarks>
     </member>
     <member name="LookupDictionaryExamples(string,string,RequestContent,string,RequestContext)">
-<example>
-This sample shows how to call LookupDictionaryExamples with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        translation = "<translation>",
-        text = "<text>",
-    }
-};
-
-Response response = client.LookupDictionaryExamples("<from>", "<to>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourcePrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceSuffix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
-]]></code>
-This sample shows how to call LookupDictionaryExamples with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TextTranslationClient(endpoint);
-
-var data = new[] {
-    new {
-        translation = "<translation>",
-        text = "<text>",
-    }
-};
-
-Response response = client.LookupDictionaryExamples("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
-Console.WriteLine(result[0].GetProperty("normalizedTarget").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourcePrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("sourceSuffix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
-Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
-]]></code>
-</example>
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
