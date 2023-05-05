@@ -21,6 +21,8 @@ namespace Azure.Core.Json
         /// </summary>
         public bool ReplacesJsonElement { get; set; }
 
+        private JsonElement? _serializedValue;
+
         internal Utf8JsonReader GetReader()
         {
             if (!ReplacesJsonElement)
@@ -39,8 +41,13 @@ namespace Azure.Core.Json
                 return (JsonElement)Value;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
-            return JsonDocument.Parse(bytes).RootElement;
+            if (_serializedValue == null)
+            {
+                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
+                _serializedValue = JsonDocument.Parse(bytes).RootElement;
+            }
+
+            return _serializedValue.Value;
         }
 
         public override string ToString()

@@ -149,7 +149,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetDouble(out value);
                 }
             }
 
@@ -170,20 +171,6 @@ namespace Azure.Core.Json
             }
 
             return value;
-        }
-
-        private static bool TryCastNumber<T>(object source, out T value) where T : struct
-        {
-            try
-            {
-                value = (T)source;
-                return true;
-            }
-            catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-            {
-                value = default;
-                return false;
-            }
         }
 
         private static string GetFormatExceptionText(string path, Type type)
@@ -216,7 +203,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetInt32(out value);
                 }
             }
 
@@ -264,7 +252,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetInt64(out value);
                 }
             }
 
@@ -312,7 +301,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetSingle(out value);
                 }
             }
 
@@ -397,7 +387,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetByte(out value);
                 }
             }
 
@@ -425,34 +416,18 @@ namespace Azure.Core.Json
                     case DateTime d:
                         value = d;
                         return true;
-                    case DateTimeOffset o:
-                        value = ConvertFromDateTimeOffset(o);
-                        return true;
-                    case string s:
-                        if (DateTime.TryParse(s, out value))
-                        {
-                            return true;
-                        }
-                        return false;
                     case JsonElement element:
                         return element.TryGetDateTime(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetDateTime(out value);
                 }
             }
 
             return _element.TryGetDateTime(out value);
-        }
-
-        private static DateTime ConvertFromDateTimeOffset(DateTimeOffset dateTime)
-        {
-            if (dateTime.Offset.Equals(TimeSpan.Zero))
-                return dateTime.UtcDateTime;
-            else if (dateTime.Offset.Equals(TimeZoneInfo.Local.GetUtcOffset(dateTime.DateTime)))
-                return DateTime.SpecifyKind(dateTime.DateTime, DateTimeKind.Local);
-            else
-                return dateTime.DateTime;
         }
 
         public DateTime GetDateTime()
@@ -475,21 +450,15 @@ namespace Azure.Core.Json
                 {
                     case DateTimeOffset o:
                         value = o;
-                        return true;
-                    case DateTime d:
-                        value = d;
-                        return true;
-                    case string s:
-                        if (DateTimeOffset.TryParse(s, out value))
-                        {
-                            return true;
-                        }
-                        return false;
+                        return true;;
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetDateTimeOffset(out value);
                 }
             }
 
@@ -505,6 +474,7 @@ namespace Azure.Core.Json
 
             return value;
         }
+
         public bool TryGetDecimal(out decimal value)
         {
             EnsureValid();
@@ -522,7 +492,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetDecimal(out value);
                 }
             }
 
@@ -550,17 +521,14 @@ namespace Azure.Core.Json
                     case Guid g:
                         value = g;
                         return true;
-                    case string s:
-                        if (Guid.TryParse(s, out value))
-                        {
-                            return true;
-                        }
-                        return false;
                     case JsonElement element:
                         return element.TryGetGuid(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetGuid(out value);
                 }
             }
 
@@ -594,7 +562,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetInt16(out value);
                 }
             }
 
@@ -628,7 +597,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetSByte(out value);
                 }
             }
 
@@ -662,7 +632,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetUInt16(out value);
                 }
             }
 
@@ -696,7 +667,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetUInt32(out value);
                 }
             }
 
@@ -730,7 +702,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return TryCastNumber(change.Value, out value);
+                        JsonElement el = change.AsJsonElement();
+                        return el.TryGetUInt64(out value);
                 }
             }
 

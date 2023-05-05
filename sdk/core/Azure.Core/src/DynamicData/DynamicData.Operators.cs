@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
@@ -30,39 +29,7 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(bool), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="int"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator int(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetInt32();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(int), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="long"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator long(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetInt64();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(long), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(bool), value._element), e);
             }
         }
 
@@ -78,39 +45,7 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(string), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="float"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator float(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetSingle();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(float), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="double"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator double(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetDouble();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(string), value._element), e);
             }
         }
 
@@ -126,71 +61,11 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(byte), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte), value._element), e);
             }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="DateTime"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator DateTime(DynamicData value)
-        {
-            try
+            catch (FormatException formatException)
             {
-                return value._element.GetDateTime();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(DateTime), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="decimal"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator decimal(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetDecimal();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(decimal), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="Guid"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator Guid(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetGuid();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(Guid), value._element), e);
-            }
-        }
-
-        /// <summary>
-        /// Converts the value to a <see cref="short"/>.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        public static implicit operator short(DynamicData value)
-        {
-            try
-            {
-                return value._element.GetInt16();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(short), value._element), e);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte), value._element), formatException);
             }
         }
 
@@ -206,7 +81,31 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(sbyte), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(sbyte), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(sbyte), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="short"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator short(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetInt16();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(short), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(short), value._element), formatException);
             }
         }
 
@@ -222,7 +121,31 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(ushort), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ushort), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ushort), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="int"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator int(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetInt32();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(int), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(int), value._element), formatException);
             }
         }
 
@@ -238,7 +161,31 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(uint), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(uint), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(uint), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="long"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator long(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetInt64();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(long), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(long), value._element), formatException);
             }
         }
 
@@ -254,7 +201,119 @@ namespace Azure.Core.Dynamic
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(ulong), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ulong), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ulong), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="float"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator float(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetSingle();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(float), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(float), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="double"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator double(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetDouble();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(double), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(double), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="decimal"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator decimal(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetDecimal();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(decimal), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(decimal), value._element), formatException);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator DateTime(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetDateTime();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="DateTimeOffset"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator DateTimeOffset(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetDateTimeOffset();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value._element), e);
+            }
+        }
+
+        /// <summary>
+        /// Converts the value to a <see cref="Guid"/>.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator Guid(DynamicData value)
+        {
+            try
+            {
+                return value._element.GetGuid();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value._element), e);
             }
         }
 
@@ -298,9 +357,14 @@ namespace Azure.Core.Dynamic
         /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(DynamicData? left, object? right) => !(left == right);
 
-        private static string GetInvalidCastExceptionText(Type target, MutableJsonElement element)
+        private static string GetInvalidKindExceptionText(Type target, MutableJsonElement element)
         {
             return $"Unable to cast element to '{target}'.  Element has kind '{element.ValueKind}'.";
+        }
+
+        private static string GetInvalidFormatExceptionText(Type target, MutableJsonElement element)
+        {
+            return $"Unable to cast element to '{target}'.  Element has value '{element}'.";
         }
     }
 }
