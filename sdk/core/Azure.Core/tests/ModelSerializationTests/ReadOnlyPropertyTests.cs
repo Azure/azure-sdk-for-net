@@ -94,7 +94,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
                 """;
 
-            Assert.AreEqual(expectedJson, actualJson);
+            Assert.AreEqual(VerifyModels.NormalizeNewLines(expectedJson), VerifyModels.NormalizeNewLines(actualJson));
         }
     }
 }

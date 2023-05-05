@@ -91,5 +91,12 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
             }
         }
+
+        public static string NormalizeNewLines(string value)
+        {
+            return value
+                .Replace("\r\n", "\n")
+                .Replace("\n", Environment.NewLine);
+        }
     }
 }
