@@ -477,7 +477,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Depending on KeyVault which will block the pipeline to release new SDK, disable this case temporary")]
         public async Task NamespaceSystemAssignedEncryptionTests()
         {
             //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
