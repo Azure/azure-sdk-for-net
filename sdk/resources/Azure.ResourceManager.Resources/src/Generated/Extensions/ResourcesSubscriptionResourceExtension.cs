@@ -7,21 +7,22 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Mock
 {
-    /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
-    internal partial class ManagementGroupResourceExtensionClient : ArmResource
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    public partial class ResourcesSubscriptionResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceExtensionClient"/> class for mocking. </summary>
-        protected ManagementGroupResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ResourcesSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected ResourcesSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourcesSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourcesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ArmDeploymentResources in the ManagementGroupResource. </summary>
+        /// <summary> Gets a collection of ArmDeploymentResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public virtual ArmDeploymentCollection GetArmDeployments()
         {
