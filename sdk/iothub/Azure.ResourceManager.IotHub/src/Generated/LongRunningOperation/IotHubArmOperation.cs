@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.IotHub
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal IotHubArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal IotHubArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "IotHubArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
