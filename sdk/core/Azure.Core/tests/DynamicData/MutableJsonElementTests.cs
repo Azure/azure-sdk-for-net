@@ -354,9 +354,12 @@ namespace Azure.Core.Tests
             Assert.AreEqual(z, get(mdoc.RootElement.GetProperty("bar")));
 
             // Doesn't work if number change is outside range
-            mdoc.RootElement.GetProperty("foo").Set(invalid);
-            Assert.IsFalse(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
-            Assert.Throws<FormatException>(() => get(mdoc.RootElement.GetProperty("foo")));
+            if (invalid is bool testRange && testRange)
+            {
+                mdoc.RootElement.GetProperty("foo").Set(invalid);
+                Assert.IsFalse(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
+                Assert.Throws<FormatException>(() => get(mdoc.RootElement.GetProperty("foo")));
+            }
 
             // Doesn't work for non-number change
             mdoc.RootElement.GetProperty("foo").Set("string");
@@ -401,6 +404,15 @@ namespace Azure.Core.Tests
             yield return new object[] { "42", 42ul, 43ul, 44ul, -1,
                 (MutableJsonElement e) => (e.TryGetUInt64(out ulong i), i),
                 (MutableJsonElement e) => e.GetUInt64() };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false, /*don't do range check*/
+                (MutableJsonElement e) => (e.TryGetSingle(out float d), d),
+                (MutableJsonElement e) => e.GetSingle() };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false,  /*don't do range check*/
+                (MutableJsonElement e) => (e.TryGetDouble(out double d), d),
+                (MutableJsonElement e) => e.GetDouble() };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false,  /*don't do range check*/
+                (MutableJsonElement e) => (e.TryGetDecimal(out decimal d), d),
+                (MutableJsonElement e) => e.GetDecimal()  };
         }
 
         #endregion

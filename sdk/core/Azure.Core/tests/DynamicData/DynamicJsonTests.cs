@@ -793,6 +793,9 @@ namespace Azure.Core.Tests
             yield return new object[] { "42", 42u, 43u, 44u, 4294967296 };
             yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808 };
             yield return new object[] { "42", 42ul, 43ul, 44ul, -1 };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, float.MaxValue + 1 };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, double.MaxValue + 1 };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, true };
         }
 
         #region Helpers

@@ -942,29 +942,28 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value"></param>
+        public void Set(decimal value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
         public void Set(object value)
         {
             EnsureValid();
 
             switch (value)
             {
-                case int i:
-                    Set(i);
-                    break;
-                case double d:
-                    Set(d);
-                    break;
-                case string s:
-                    Set(s);
-                    break;
                 case bool b:
                     Set(b);
                     break;
-                case long l:
-                    Set(l);
-                    break;
-                case float f:
-                    Set(f);
+                case string s:
+                    Set(s);
                     break;
                 case byte b:
                     Set(b);
@@ -978,11 +977,26 @@ namespace Azure.Core.Json
                 case ushort us:
                     Set(us);
                     break;
+                case int i:
+                    Set(i);
+                    break;
                 case uint u:
                     Set(u);
                     break;
+                case long l:
+                    Set(l);
+                    break;
                 case ulong ul:
                     Set(ul);
+                    break;
+                case float f:
+                    Set(f);
+                    break;
+                case double d:
+                    Set(d);
+                    break;
+                case decimal d:
+                    Set(d);
                     break;
                 case MutableJsonElement e:
                     Set(e);
