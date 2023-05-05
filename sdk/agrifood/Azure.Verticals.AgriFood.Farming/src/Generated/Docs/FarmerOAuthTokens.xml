@@ -37,21 +37,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>OAuthConnectRequest</c>:
-<code>{
-  partyId: string, # Required. Id of the party.
-  oAuthProviderId: string, # Required. Id of the OAuthProvider.
-  userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
-  userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOAuthConnectionLink(RequestContent,RequestContext)">
 <example>
@@ -89,21 +74,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>OAuthConnectRequest</c>:
-<code>{
-  partyId: string, # Required. Id of the party.
-  oAuthProviderId: string, # Required. Id of the OAuthProvider.
-  userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
-  userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCascadeDeleteJobDetailsAsync(string,RequestContext)">
 <example>
@@ -129,30 +99,6 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCascadeDeleteJobDetails(string,RequestContext)">
 <example>
@@ -178,30 +124,6 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAuthenticatedFarmersDetailsAsync(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -234,23 +156,6 @@ await foreach (var item in client.GetAuthenticatedFarmersDetailsAsync(new String
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>OAuthTokenListResponseValue</c>:
-<code>{
-  partyId: string, # Required. Party ID for this OAuth config.
-  authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
-  isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAuthenticatedFarmersDetails(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -283,23 +188,6 @@ foreach (var item in client.GetAuthenticatedFarmersDetails(new String[]{"<authPr
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>OAuthTokenListResponseValue</c>:
-<code>{
-  partyId: string, # Required. Party ID for this OAuth config.
-  authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
-  isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -326,30 +214,6 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -376,30 +240,6 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
