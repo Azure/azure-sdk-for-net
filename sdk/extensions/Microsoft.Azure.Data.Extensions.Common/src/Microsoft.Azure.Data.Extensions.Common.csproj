@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is the Microsoft.Azure.Data.Extensions.Common client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Common for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.3-beta.20</Version>
+    <PackageTags>Azure Microsoft.Azure.Data.Extensions.Common</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <!-- Make sure that we don't pull in additional dependencies during build or package -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+ </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+
+</Project>
