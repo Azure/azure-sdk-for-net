@@ -65,7 +65,11 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource =
                 new BlobDirectoryStorageResourceContainer(container, sourceBlobPrefix);
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix);
+                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy
+                });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
@@ -161,7 +165,7 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec).ConfigureAwait(false);
         }
 
-        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        //[Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
         [TestCase(4 * Constants.MB, 20)]
