@@ -907,6 +907,17 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value"></param>
+        public void Set(byte value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
         public void Set(object value)
         {
             EnsureValid();
@@ -930,6 +941,9 @@ namespace Azure.Core.Json
                     break;
                 case float f:
                     Set(f);
+                    break;
+                case byte b:
+                    Set(b);
                     break;
                 case MutableJsonElement e:
                     Set(e);

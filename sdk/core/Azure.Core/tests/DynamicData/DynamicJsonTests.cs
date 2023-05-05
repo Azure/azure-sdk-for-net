@@ -719,6 +719,38 @@ namespace Azure.Core.Tests
             Assert.That(e.Message.Contains(JsonValueKind.True.ToString()));
         }
 
+        [Test]
+        public void CanCastToByte()
+        {
+            dynamic json = BinaryData.FromString("""
+                {
+                  "foo" : 42
+                }
+                """).ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual((byte)42, (byte)json.Foo);
+            Assert.IsTrue(((byte)42) == json.Foo);
+
+            // Get from assigned existing value
+            json.Foo = (byte)43;
+            Assert.AreEqual((byte)43, (byte)json.Foo);
+            Assert.IsTrue(((byte)43) == json.Foo);
+
+            // Get from added value
+            json.Bar = (byte)44;
+            Assert.AreEqual((byte)44, (byte)json.Bar);
+            Assert.IsTrue(((byte)44) == json.Bar);
+
+            // Doesn't work if number change is outside byte range
+            json.Foo = 256;
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -283,6 +284,47 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(5, value.GetInt32());
             Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
+        }
+
+        [Test]
+        public void CanGetByte()
+        {
+            string json = """
+                {
+                  "foo" : 42
+                }
+                """;
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetByte(out byte b));
+            Assert.AreEqual((byte)42, b);
+            Assert.AreEqual((byte)42, mdoc.RootElement.GetProperty("foo").GetByte());
+
+            // Get from assigned existing value
+            byte newValue = 43;
+            mdoc.RootElement.GetProperty("foo").Set(newValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetByte(out b));
+            Assert.AreEqual(newValue, b);
+            Assert.AreEqual(newValue, mdoc.RootElement.GetProperty("foo").GetByte());
+
+            // Get from added value
+            mdoc.RootElement.SetProperty("bar", (byte)44);
+            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetByte(out b));
+            Assert.AreEqual((byte)44, b);
+            Assert.AreEqual((byte)44, mdoc.RootElement.GetProperty("bar").GetByte());
+
+            // Doesn't work if number change is outside byte range
+            mdoc.RootElement.GetProperty("foo").Set(256);
+            Assert.IsFalse(mdoc.RootElement.GetProperty("foo").TryGetByte(out b));
+            Assert.Throws<FormatException>(() => mdoc.RootElement.GetProperty("foo").GetByte());
+
+            // Doesn't work for non-number change
+            mdoc.RootElement.GetProperty("foo").Set("string");
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").TryGetByte(out b));
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetByte());
         }
 
         #region Helpers
