@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-//#if FullNetFx
 namespace Microsoft.Rest.Azure.Authentication
 {
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -13,17 +12,13 @@ namespace Microsoft.Rest.Azure.Authentication
 
     public partial class UserTokenProvider
     {
-        #region Net 452
+        #region Net Framework
         // Interactive authentication is not implemented for CoreCLR.
-#if net452
-        /// <summary>
-        /// The id of the active directory common tenant.
-        /// </summary>
-        //public const string UserCommonTenantId = "common";
+#if NETFRAMEWORK
 
         #region InteractiveLogin
         /// <summary>
-        /// Log in to Azure active directory common tenant with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory common tenant with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
@@ -36,7 +31,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory common tenant using the given username, with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory common tenant using the given username, with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
@@ -51,7 +46,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory common tenant using the given username, with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory common tenant using the given username, with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
@@ -65,7 +60,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory common tenant with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory common tenant with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
@@ -79,7 +74,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -93,7 +88,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory using the given username with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory using the given username with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -109,7 +104,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory using the given username with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
+        /// Log in to Azure active directory using the given username with authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint.
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -124,7 +119,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a 
+        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a
         /// credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -139,7 +134,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a 
+        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a
         /// credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -155,7 +150,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a 
+        /// Log in to Azure active directory with both user account and authentication credentials provided by the user.  This call may display a
         /// credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -172,7 +167,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory using the given username with authentication provided by the user.  This call may display a credentials 
+        /// Log in to Azure active directory using the given username with authentication provided by the user.  This call may display a credentials
         /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -189,7 +184,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory using the given username with authentication provided by the user.  This call may display a credentials 
+        /// Log in to Azure active directory using the given username with authentication provided by the user.  This call may display a credentials
         /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -207,7 +202,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials
         /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -216,7 +211,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <param name="userId">The userid of the desired credentials</param>
         /// <param name="cache">The token cache to target during authentication.</param>
         /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the given credentials.</returns>
-        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings, 
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
             ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache)
         {
             TaskScheduler scheduler;
@@ -233,7 +228,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials
         /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -248,7 +243,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials
         /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
         /// </summary>
         /// <param name="domain">The domain to authenticate against.</param>
@@ -295,7 +290,7 @@ namespace Microsoft.Rest.Azure.Authentication
         #endregion end of InteractiveLogin
 
         /// <summary>
-        /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service 
+        /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service
         /// settings (authority, audience) for logging in to azure resource manager are used.
         /// </summary>
         /// <param name="clientId">The active directory client id for this application.</param>
@@ -309,7 +304,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Log in to azure active directory in non-interactive mode using organizational id credentials. Default service settings (authority, audience) 
+        /// Log in to azure active directory in non-interactive mode using organizational id credentials. Default service settings (authority, audience)
         /// for logging in to azure resource manager are used.
         /// </summary>
         /// <param name="clientId">The active directory client id for this application.</param>
@@ -338,7 +333,7 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             return await LoginSilentAsync(clientId, domain, username, password, serviceSettings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
-        
+
         /// <summary>
         /// Log in to azure active directory in non-interactive mode using organizational id credentials.
         /// </summary>
@@ -349,7 +344,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <param name="serviceSettings">The active directory service details, including authentication endpoints and the intended token audience.</param>
         /// <param name="cache">The token cache to target during authentication.</param>
         /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the given credentials.</returns>
-        public static async Task<ServiceClientCredentials> LoginSilentAsync(string clientId, string domain, string username, string password, 
+        public static async Task<ServiceClientCredentials> LoginSilentAsync(string clientId, string domain, string username, string password,
             ActiveDirectoryServiceSettings serviceSettings, TokenCache cache)
         {
             var credentials = new UserCredential(username, password);
@@ -360,7 +355,7 @@ namespace Microsoft.Rest.Azure.Authentication
                       clientId, credentials).ConfigureAwait(false);
                 return
                     new TokenCredentials(
-                        new UserTokenProvider(authenticationContext, clientId,serviceSettings.TokenAudience, 
+                        new UserTokenProvider(authenticationContext, clientId,serviceSettings.TokenAudience,
                                 new UserIdentifier(username, UserIdentifierType.RequiredDisplayableId)),
                         authResult.TenantId,
                         authResult.UserInfo == null ? null : authResult.UserInfo.DisplayableId);
@@ -375,7 +370,6 @@ namespace Microsoft.Rest.Azure.Authentication
             }
         }
 #endif
-        #endregion Net 452
+        #endregion Net Framework
     }
 }
-//#endif
