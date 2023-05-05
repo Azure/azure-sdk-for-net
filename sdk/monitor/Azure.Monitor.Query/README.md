@@ -99,6 +99,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Split a metric by dimension](#split-a-metric-by-dimension)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
 ### Logs query
@@ -501,6 +502,43 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
         // Prints a line that looks like the following:
         // 6/21/2022 12:29:00 AM +00:00 : 100
         Console.WriteLine($"{value.TimeStamp} : {value.Average}");
+    }
+}
+```
+
+#### Split a metric by dimension
+
+The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.monitor.query.metricsqueryoptions.filter?view=azure-dotnet#azure-monitor-query-metricsqueryoptions-filter) property can be used for [splitting a metric](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-charts#metric-splitting) by a dimension when its filter value is set to an asterisk. Consider the following example for an App Service resource named *TestWebApp*. The code queries the resource's `Http2xx` metric and splits it by the `Instance` dimension.
+
+```C# Snippet:QueryMetricsWithSplitting
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+var options = new MetricsQueryOptions
+{
+    Aggregations =
+    {
+        MetricAggregationType.Average,
+    },
+    Filter = "Instance eq '*'",
+    TimeRange = TimeSpan.FromDays(2),
+};
+Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+    resourceId,
+    new[] { "Http2xx" },
+    options);
+
+foreach (MetricResult metric in result.Value.Metrics)
+{
+    foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+    {
+        foreach (MetricValue value in element.Values)
+        {
+            // Prints a line that looks like the following:
+            // Thursday, May 4, 2023 9:42:00 PM, webwk000002, Http2xx, 1
+            Console.WriteLine(
+                $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
+        }
     }
 }
 ```

@@ -49,6 +49,48 @@ namespace Azure.Monitor.Query.Tests
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
+        public async Task QueryMetricsWithSplitting()
+        {
+            #region Snippet:QueryMetricsWithSplitting
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+#else
+            string resourceId = TestEnvironment.MetricsResource;
+#endif
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
+            var options = new MetricsQueryOptions
+            {
+                Aggregations =
+                {
+                    MetricAggregationType.Average,
+                },
+                Filter = "Instance eq '*'",
+                TimeRange = TimeSpan.FromDays(2),
+            };
+            Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+                resourceId,
+                new[] { "Http2xx" },
+                options);
+
+            foreach (MetricResult metric in result.Value.Metrics)
+            {
+                foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+                {
+                    foreach (MetricValue value in element.Values)
+                    {
+                        // Prints a line that looks like the following:
+                        // Thursday, May 4, 2023 9:42:00 PM, webwk000002, Http2xx, 1
+                        Console.WriteLine(
+                            $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
+                    }
+                }
+            }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
         public async Task QueryMetricsWithAggregations()
         {
             #region Snippet:QueryMetricsWithAggregations
