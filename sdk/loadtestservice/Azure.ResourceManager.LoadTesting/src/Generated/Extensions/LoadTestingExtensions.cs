@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.LoadTesting.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting
@@ -18,35 +19,51 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary> A class to add extension methods to Azure.ResourceManager.LoadTesting. </summary>
     public static partial class LoadTestingExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static LoadTestingResourceExtension GetLoadTestingResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new LoadTestingResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static LoadTestingResourceExtension GetLoadTestingResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new LoadTestingResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static LoadTestingResourceGroupResourceExtension GetLoadTestingResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new LoadTestingResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static LoadTestingResourceGroupResourceExtension GetLoadTestingResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new LoadTestingResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static LoadTestingSubscriptionResourceExtension GetLoadTestingSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new LoadTestingSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static LoadTestingSubscriptionResourceExtension GetLoadTestingSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LoadTestingSubscriptionResourceExtension(client, scope);
             });
         }
         #region LoadTestingQuotaResource
@@ -92,7 +109,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
         public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLoadTestingResources();
+            return GetLoadTestingResourceGroupResourceExtension(resourceGroupResource).GetLoadTestingResources();
         }
 
         /// <summary>
@@ -149,7 +166,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingQuotaResources and their operations over a LoadTestingQuotaResource. </returns>
         public static LoadTestingQuotaCollection GetAllLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllLoadTestingQuota(location);
+            return GetLoadTestingSubscriptionResourceExtension(subscriptionResource).GetAllLoadTestingQuota(location);
         }
 
         /// <summary>
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
+            return GetLoadTestingResourceExtension(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +258,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadTestingResources(cancellationToken);
+            return GetLoadTestingResourceExtension(subscriptionResource).GetLoadTestingResources(cancellationToken);
         }
     }
 }

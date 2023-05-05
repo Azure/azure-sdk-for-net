@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto.Mock;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Kusto
     /// <summary> A class to add extension methods to Azure.ResourceManager.Kusto. </summary>
     public static partial class KustoExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static KustoClusterResourceExtension GetKustoClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new KustoClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static KustoClusterResourceExtension GetKustoClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new KustoClusterResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static KustoResourceGroupResourceExtension GetKustoResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new KustoResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static KustoResourceGroupResourceExtension GetKustoResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new KustoResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static KustoSubscriptionResourceExtension GetKustoSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new KustoSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static KustoSubscriptionResourceExtension GetKustoSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new KustoSubscriptionResourceExtension(client, scope);
             });
         }
         #region KustoClusterResource
@@ -245,7 +262,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoClusterResources and their operations over a KustoClusterResource. </returns>
         public static KustoClusterCollection GetKustoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKustoClusters();
+            return GetKustoResourceGroupResourceExtension(resourceGroupResource).GetKustoClusters();
         }
 
         /// <summary>
@@ -314,7 +331,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoClusterResource> GetKustoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoClustersAsync(cancellationToken);
+            return GetKustoClusterResourceExtension(subscriptionResource).GetKustoClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +352,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoClusterResource> GetKustoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoClusters(cancellationToken);
+            return GetKustoClusterResourceExtension(subscriptionResource).GetKustoClusters(cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +373,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
+            return GetKustoClusterResourceExtension(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -377,7 +394,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetKustoEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
+            return GetKustoClusterResourceExtension(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +419,7 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetKustoClusterResourceExtension(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -427,7 +444,7 @@ namespace Azure.ResourceManager.Kusto
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
+            return GetKustoClusterResourceExtension(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -449,7 +466,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(location, cancellationToken);
+            return GetKustoSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +488,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(location, cancellationToken);
+            return GetKustoSubscriptionResourceExtension(subscriptionResource).GetSkus(location, cancellationToken);
         }
     }
 }
