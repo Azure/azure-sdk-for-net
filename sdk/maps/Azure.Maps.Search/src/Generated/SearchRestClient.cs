@@ -53,7 +53,10 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/polygon/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
+            if (geometryIds != null && Optional.IsCollectionDefined(geometryIds))
+            {
+                uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
+            }
             request.Uri = uri;
             if (_clientId != null)
             {
@@ -162,11 +165,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null)
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -194,7 +197,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -206,15 +209,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("maxFuzzyLevel", maxFuzzyLevel.Value, true);
             }
-            if (indexFilter != null)
+            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
-            if (brandFilter != null)
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null)
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -600,11 +603,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null)
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -632,15 +635,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null)
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null)
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -913,11 +916,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null)
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -929,15 +932,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null)
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null)
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1207,11 +1210,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null)
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1239,15 +1242,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null)
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null)
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1638,7 +1641,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (countryFilter != null)
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1666,7 +1669,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -1887,7 +1890,10 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("query", query, ",", true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -1912,7 +1918,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("returnRoadUse", includeRoadUse.Value, true);
             }
-            if (roadUse != null)
+            if (roadUse != null && Optional.IsCollectionDefined(roadUse))
             {
                 uri.AppendQueryDelimited("roadUse", roadUse, ",", true);
             }
@@ -2087,7 +2093,10 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/crossStreet/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("query", query, ",", true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
             if (top != null)
             {
                 uri.AppendQuery("limit", top.Value, true);
@@ -2274,7 +2283,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("postalCode", postalCode, true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -2508,15 +2517,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (extendedPostalCodesFor != null)
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (indexFilter != null)
+            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
@@ -2741,15 +2750,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("limit", top.Value, true);
             }
-            if (brandFilter != null)
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (categoryFilter != null)
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null)
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }

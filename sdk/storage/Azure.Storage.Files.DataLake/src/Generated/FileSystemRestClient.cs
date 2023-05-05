@@ -412,7 +412,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 uri.AppendQuery("maxResults", maxResults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

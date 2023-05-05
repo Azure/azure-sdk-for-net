@@ -11,7 +11,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-   <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" />
+    <!--Temp until Azure.Core 1.32.0 ships-->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--End Temp-->
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
