@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec).ConfigureAwait(false);
         }
 
-        //[Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
         [TestCase(4 * Constants.MB, 20)]
