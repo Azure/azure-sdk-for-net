@@ -430,7 +430,7 @@ var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] { "SuccessfulCalls", "TotalCalls" }
+    new[] { "Query Success Rate", "Query Count" }
 );
 
 foreach (MetricResult metric in results.Value.Metrics)
@@ -480,11 +480,12 @@ A `MetricsQueryOptions` object may be used to support more granular metrics quer
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
+string[] metricNames = new[] { "Availability" };
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(
     resourceId,
-    new[] { "Availability" },
+    metricNames,
     new MetricsQueryOptions
     {
         Aggregations =
@@ -513,6 +514,8 @@ The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.mo
 ```C# Snippet:QueryMetricsWithSplitting
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+string[] metricNames = new[] { "Http2xx" };
+string filter = "Instance eq '*'";
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 var options = new MetricsQueryOptions
 {
@@ -520,13 +523,13 @@ var options = new MetricsQueryOptions
     {
         MetricAggregationType.Average,
     },
-    // Use of asterisk in filter value enables splitting on Instance dimension.
-    Filter = "Instance eq '*'",
+    // Use of asterisk in filter value enables splitting on the dimension.
+    Filter = filter,
     TimeRange = TimeSpan.FromDays(2),
 };
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(
     resourceId,
-    new[] { "Http2xx" },
+    metricNames,
     options);
 
 foreach (MetricResult metric in result.Value.Metrics)
