@@ -149,16 +149,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (double)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -179,6 +170,20 @@ namespace Azure.Core.Json
             }
 
             return value;
+        }
+
+        private static bool TryCastNumber<T>(object source, out T value) where T : struct
+        {
+            try
+            {
+                value = (T)source;
+                return true;
+            }
+            catch (Exception e) when (e is InvalidCastException || e is OverflowException)
+            {
+                value = default;
+                return false;
+            }
         }
 
         private static string GetFormatExceptionText(string path, Type type)
@@ -211,16 +216,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (int)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -268,16 +264,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (long)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -325,16 +312,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (float)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -419,16 +397,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (byte)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -553,16 +522,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (decimal)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -634,16 +594,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (short)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -677,16 +628,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (sbyte)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -720,16 +662,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (ushort)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -763,16 +696,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (uint)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
@@ -806,16 +730,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (ulong)change.Value;
-                            return true;
-                        }
-                        catch (Exception e) when (e is InvalidCastException || e is OverflowException)
-                        {
-                            value = default;
-                            return false;
-                        }
+                        return TryCastNumber(change.Value, out value);
                 }
             }
 
