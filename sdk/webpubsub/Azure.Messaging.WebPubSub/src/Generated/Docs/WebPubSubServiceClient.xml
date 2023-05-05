@@ -38,32 +38,8 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="GenerateClientTokenImplAsync(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)">
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ClientTokenResponse</c>:
-<code>{
-  token: string, # Optional. The token value for the WebSocket client to connect to the service
-}
-</code>
-
-</remarks>
     </member>
     <member name="GenerateClientTokenImpl(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)">
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ClientTokenResponse</c>:
-<code>{
-  token: string, # Optional. The token value for the WebSocket client to connect to the service
-}
-</code>
-
-</remarks>
     </member>
     <member name="SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
 <example>
