@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-05-04)
+## 1.0.0 (2023-05-06)
 
 This package is the first stable release of the Azure Resource Health management library.
 
