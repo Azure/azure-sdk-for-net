@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Added service version and custom attributes specified on the resource object to the published telemetry.
+* Added inclusion of OpenTelemetry Resource service version and custom attributes to the published telemetry for logs, traces, and metrics.
   ([#35487](https://github.com/Azure/azure-sdk-for-net/issues/35487))
 
 ### Breaking Changes
