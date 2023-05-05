@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         internal Embeddings(IReadOnlyList<EmbeddingItem> data, string model, EmbeddingsUsage usage)
         {
-            Data = data;
+            Data = data.ToList();
             Model = model;
             Usage = usage;
         }

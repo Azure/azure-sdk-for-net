@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -36,7 +37,7 @@ namespace Azure.AI.OpenAI
             Id = id;
             Created = created;
             Model = model;
-            Choices = choices;
+            Choices = choices.ToList();
             Usage = usage;
         }
 

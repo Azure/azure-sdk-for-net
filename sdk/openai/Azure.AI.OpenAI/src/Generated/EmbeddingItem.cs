@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         internal EmbeddingItem(IReadOnlyList<float> embedding, int index)
         {
-            Embedding = embedding;
+            Embedding = embedding.ToList();
             Index = index;
         }
 
