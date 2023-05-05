@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.EventGrid
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal EventGridArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal EventGridArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "EventGridArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
