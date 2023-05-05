@@ -12,16 +12,16 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="PlayCompletedEventData"/> event will be returned once the play is completed successfully.
+        /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
-        public PlayCompletedEventData SuccessResult { get; }
+        public PlayCompleted SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="PlayFailedEventData"/> event will be returned once the play failed.
+        /// <see cref="PlayFailed"/> event will be returned once the play failed.
         /// </summary>
-        public PlayFailedEventData FailureResult { get; }
+        public PlayFailed FailureResult { get; }
 
-        internal PlayEventResult(bool isSuccess, PlayCompletedEventData successResult, PlayFailedEventData failureResult)
+        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
