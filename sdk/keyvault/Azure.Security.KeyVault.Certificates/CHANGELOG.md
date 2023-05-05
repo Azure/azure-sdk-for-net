@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+- When a Key Vault is moved to another tenant, client is reauthenticated.
+
 ### Other Changes
 
 ## 4.5.1 (2023-03-31)
