@@ -99,7 +99,7 @@ namespace Azure.AI.Translation.Text
             PosTag = posTag;
             Confidence = confidence;
             PrefixWord = prefixWord;
-            BackTranslations = backTranslations;
+            BackTranslations = backTranslations.ToList();
         }
 
         /// <summary>

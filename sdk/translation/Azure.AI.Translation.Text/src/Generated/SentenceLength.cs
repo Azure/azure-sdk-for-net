@@ -45,8 +45,8 @@ namespace Azure.AI.Translation.Text
         /// </param>
         internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen)
         {
-            SrcSentLen = srcSentLen;
-            TransSentLen = transSentLen;
+            SrcSentLen = srcSentLen.ToList();
+            TransSentLen = transSentLen.ToList();
         }
 
         /// <summary>

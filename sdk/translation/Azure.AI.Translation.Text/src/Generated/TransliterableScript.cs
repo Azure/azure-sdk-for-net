@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(nativeName, nameof(nativeName));
             Argument.AssertNotNull(dir, nameof(dir));
 
-            ToScripts = toScripts;
+            ToScripts = toScripts.ToList();
         }
 
         /// <summary> List of scripts available to convert text to. </summary>

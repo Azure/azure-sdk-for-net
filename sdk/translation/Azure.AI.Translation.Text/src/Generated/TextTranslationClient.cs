@@ -111,6 +111,164 @@ namespace Azure.AI.Translation.Text
             return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
         }
 
+        /// <summary> Translate Text. </summary>
+        /// <param name="to">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string. 
+        /// For example, use to=de&amp;to=it to translate to German and Italian.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="from">
+        /// Specifies the language of the input text. Find which languages are available to translate from by 
+        /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified, 
+        /// automatic language detection is applied to determine the source language.
+        /// 
+        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature. 
+        /// Note: the dynamic dictionary feature is case-sensitive.
+        /// </param>
+        /// <param name="textType">
+        /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed, 
+        /// complete element. Possible values are: plain (default) or html. Allowed values: &quot;Plain&quot; | &quot;Html&quot;
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
+        /// project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="profanityAction">
+        /// Specifies how profanities should be treated in translations.
+        /// Possible values are: NoAction (default), Marked or Deleted. Allowed values: &quot;NoAction&quot; | &quot;Marked&quot; | &quot;Deleted&quot;
+        /// </param>
+        /// <param name="profanityMarker">
+        /// Specifies how profanities should be marked in translations.
+        /// Possible values are: Asterisk (default) or Tag. . Allowed values: &quot;Asterisk&quot; | &quot;Tag&quot;
+        /// </param>
+        /// <param name="includeAlignment">
+        /// Specifies whether to include alignment projection from source text to translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="includeSentenceLength">
+        /// Specifies whether to include sentence boundaries for the input text and the translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="suggestedFrom">
+        /// Specifies a fallback language if the language of the input text can&apos;t be identified. 
+        /// Language autodetection is applied when the from parameter is omitted. If detection fails, 
+        /// the suggestedFrom language will be assumed.
+        /// </param>
+        /// <param name="fromScript"> Specifies the script of the input text. </param>
+        /// <param name="toScript"> Specifies the script of the translated text. </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist. 
+        /// Possible values are: true (default) or false.
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        public virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(object to, object requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TranslateAsync(to, RequestContent.Create(requestBody), clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context).ConfigureAwait(false);
+            IReadOnlyList<TranslatedTextItem> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="to">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string. 
+        /// For example, use to=de&amp;to=it to translate to German and Italian.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="from">
+        /// Specifies the language of the input text. Find which languages are available to translate from by 
+        /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified, 
+        /// automatic language detection is applied to determine the source language.
+        /// 
+        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature. 
+        /// Note: the dynamic dictionary feature is case-sensitive.
+        /// </param>
+        /// <param name="textType">
+        /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed, 
+        /// complete element. Possible values are: plain (default) or html. Allowed values: &quot;Plain&quot; | &quot;Html&quot;
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
+        /// project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="profanityAction">
+        /// Specifies how profanities should be treated in translations.
+        /// Possible values are: NoAction (default), Marked or Deleted. Allowed values: &quot;NoAction&quot; | &quot;Marked&quot; | &quot;Deleted&quot;
+        /// </param>
+        /// <param name="profanityMarker">
+        /// Specifies how profanities should be marked in translations.
+        /// Possible values are: Asterisk (default) or Tag. . Allowed values: &quot;Asterisk&quot; | &quot;Tag&quot;
+        /// </param>
+        /// <param name="includeAlignment">
+        /// Specifies whether to include alignment projection from source text to translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="includeSentenceLength">
+        /// Specifies whether to include sentence boundaries for the input text and the translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="suggestedFrom">
+        /// Specifies a fallback language if the language of the input text can&apos;t be identified. 
+        /// Language autodetection is applied when the from parameter is omitted. If detection fails, 
+        /// the suggestedFrom language will be assumed.
+        /// </param>
+        /// <param name="fromScript"> Specifies the script of the input text. </param>
+        /// <param name="toScript"> Specifies the script of the translated text. </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist. 
+        /// Possible values are: true (default) or false.
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(object to, object requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Translate(to, RequestContent.Create(requestBody), clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
+            IReadOnlyList<TranslatedTextItem> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
         internal HttpMessage CreateGetLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -149,12 +307,9 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (to != null && Optional.IsCollectionDefined(to))
+            foreach (var param in to)
             {
-                foreach (var param in to)
-                {
-                    uri.AppendQuery("to", param, true);
-                }
+                uri.AppendQuery("to", param, true);
             }
             if (@from != null)
             {

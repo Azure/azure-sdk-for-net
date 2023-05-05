@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Text
         internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
         {
             DetectedLanguage = detectedLanguage;
-            Translations = translations;
+            Translations = translations.ToList();
             SourceText = sourceText;
         }
 
