@@ -65,14 +65,14 @@ namespace Azure.Core.Samples
 #endif
 
             // JSON is `{ "values" : [1, 2, 3] }`
-            if (widget.values.Length > 0)
+            if (widget.Values.Length > 0)
             {
-                int value = widget.values[0];
+                int value = widget.Values[0];
             }
             #endregion
 
-            Assert.IsTrue(widget.values.Length > 0);
-            Assert.IsTrue(widget.values[0] == 1);
+            Assert.IsTrue(widget.Values.Length > 0);
+            Assert.IsTrue(widget.Values[0] == 1);
         }
 
         [Test]
@@ -157,6 +157,22 @@ namespace Azure.Core.Samples
             #endregion
 
             Assert.IsTrue(id == "123");
+        }
+
+        [Test]
+        public void SetPropertyWithoutCaseMapping()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
+
+            widget.Details["IPAddress"] = "127.0.0.1";
+            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
+            #endregion
+
+            Assert.IsTrue(widget.Details.IPAddress == "127.0.0.1");
         }
 
         [Test]
