@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier Identifier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType? OSState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } }
         public System.Uri PrivacyStatementUri { get { throw null; } }
@@ -2650,6 +2650,13 @@ namespace Azure.ResourceManager.Compute.Models
         public CloudServiceVaultSecretGroup() { }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate> VaultCertificates { get { throw null; } }
+    }
+    public partial class CommunityGalleryImageIdentifier
+    {
+        internal CommunityGalleryImageIdentifier() { }
+        public string Offer { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public string Sku { get { throw null; } }
     }
     public partial class CommunityGalleryInfo
     {
