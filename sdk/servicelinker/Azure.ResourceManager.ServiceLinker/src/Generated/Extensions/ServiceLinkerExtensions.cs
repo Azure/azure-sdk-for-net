@@ -11,25 +11,26 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceLinker.Mock;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceLinker. </summary>
     public static partial class ServiceLinkerExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ServiceLinkerArmResourceExtension GetServiceLinkerArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ServiceLinkerArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceLinkerArmResourceExtension GetServiceLinkerArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ServiceLinkerArmResourceExtension(client, scope);
             });
         }
         #region LinkerResource
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetLinkerResources();
+            return GetServiceLinkerArmResourceExtension(armResource).GetLinkerResources();
         }
 
         /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetLinkerResources();
+            return GetServiceLinkerArmResourceExtension(client, scope).GetLinkerResources();
         }
 
         /// <summary>

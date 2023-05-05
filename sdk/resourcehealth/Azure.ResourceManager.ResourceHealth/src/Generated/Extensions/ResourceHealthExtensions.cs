@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth.Mock;
 using Azure.ResourceManager.ResourceHealth.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceHealth. </summary>
     public static partial class ResourceHealthExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthArmResourceExtension GetResourceHealthArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthArmResourceExtension GetResourceHealthArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ResourceHealthArmResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthSubscriptionResourceExtension GetResourceHealthSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthSubscriptionResourceExtension GetResourceHealthSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ResourceHealthSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthTenantResourceExtension GetResourceHealthTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthTenantResourceExtension GetResourceHealthTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ResourceHealthTenantResourceExtension(client, scope);
             });
         }
         #region AvailabilityStatusResource
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
         public static AvailabilityStatusResource GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus();
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatus();
         }
 
         /// <summary>
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<EventData> GetEventsBySingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResourceAsync(filter, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetEventsBySingleResourceAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<EventData> GetEventsBySingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResource(filter, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetEventsBySingleResource(filter, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
         public static SubscriptionEventCollection GetSubscriptionEvents(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionEvents();
+            return GetResourceHealthSubscriptionResourceExtension(subscriptionResource).GetSubscriptionEvents();
         }
 
         /// <summary>
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
         public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetMetadataEntities();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetMetadataEntities();
         }
 
         /// <summary>
@@ -373,7 +374,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of TenantEventResources and their operations over a TenantEventResource. </returns>
         public static TenantEventCollection GetTenantEvents(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantEvents();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetTenantEvents();
         }
 
         /// <summary>
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
         public static EmergingIssuesGetResultCollection GetEmergingIssuesGetResults(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEmergingIssuesGetResults();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetEmergingIssuesGetResults();
         }
 
         /// <summary>

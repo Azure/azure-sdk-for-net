@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SelfHelp.Mock;
 using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
@@ -18,19 +19,35 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary> A class to add extension methods to Azure.ResourceManager.SelfHelp. </summary>
     public static partial class SelfHelpExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static SelfHelpArmResourceExtension GetSelfHelpArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new SelfHelpArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SelfHelpArmResourceExtension GetSelfHelpArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new SelfHelpArmResourceExtension(client, scope);
+            });
+        }
+
+        private static SelfHelpDiagnosticResourceExtension GetSelfHelpDiagnosticResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SelfHelpDiagnosticResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SelfHelpDiagnosticResourceExtension GetSelfHelpDiagnosticResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SelfHelpDiagnosticResourceExtension(client, scope);
             });
         }
         #region SelfHelpDiagnosticResource
@@ -58,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
         public static SelfHelpDiagnosticResourceCollection GetSelfHelpDiagnosticResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnosticResources();
+            return GetSelfHelpArmResourceExtension(client, scope).GetSelfHelpDiagnosticResources();
         }
 
         /// <summary>
@@ -130,7 +147,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityDiagnosticAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSelfHelpDiagnosticResourceExtension(client, scope).CheckNameAvailabilityDiagnosticAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityDiagnostic(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityDiagnostic(content, cancellationToken);
+            return GetSelfHelpDiagnosticResourceExtension(client, scope).CheckNameAvailabilityDiagnostic(content, cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +192,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<SolutionMetadataResource> GetDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+            return GetSelfHelpArmResourceExtension(client, scope).GetDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +215,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<SolutionMetadataResource> GetDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiscoverySolutions(filter, skiptoken, cancellationToken);
+            return GetSelfHelpArmResourceExtension(client, scope).GetDiscoverySolutions(filter, skiptoken, cancellationToken);
         }
     }
 }
