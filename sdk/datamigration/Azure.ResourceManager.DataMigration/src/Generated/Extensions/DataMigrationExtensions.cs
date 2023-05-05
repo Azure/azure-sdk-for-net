@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataMigration.Mock;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,67 @@ namespace Azure.ResourceManager.DataMigration
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataMigration. </summary>
     public static partial class DataMigrationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataMigrationResourceGroupResourceExtension GetDataMigrationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataMigrationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataMigrationResourceGroupResourceExtension GetDataMigrationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataMigrationResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataMigrationServiceResourceExtension GetDataMigrationServiceResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataMigrationServiceResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataMigrationServiceResourceExtension GetDataMigrationServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataMigrationServiceResourceExtension(client, scope);
+            });
+        }
+
+        private static DataMigrationSubscriptionResourceExtension GetDataMigrationSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new DataMigrationSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static DataMigrationSubscriptionResourceExtension GetDataMigrationSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataMigrationSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static SqlMigrationServiceResourceExtension GetSqlMigrationServiceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SqlMigrationServiceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static SqlMigrationServiceResourceExtension GetSqlMigrationServiceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SqlMigrationServiceResourceExtension(client, scope);
             });
         }
         #region DatabaseMigrationSqlDBResource
@@ -226,7 +259,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
         public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlDBs();
+            return GetDataMigrationResourceGroupResourceExtension(resourceGroupResource).GetDatabaseMigrationSqlDBs();
         }
 
         /// <summary>
@@ -288,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
         public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlMIs();
+            return GetDataMigrationResourceGroupResourceExtension(resourceGroupResource).GetDatabaseMigrationSqlMIs();
         }
 
         /// <summary>
@@ -350,7 +383,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DatabaseMigrationSqlVmResources and their operations over a DatabaseMigrationSqlVmResource. </returns>
         public static DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlVms();
+            return GetDataMigrationResourceGroupResourceExtension(resourceGroupResource).GetDatabaseMigrationSqlVms();
         }
 
         /// <summary>
@@ -412,7 +445,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of SqlMigrationServiceResources and their operations over a SqlMigrationServiceResource. </returns>
         public static SqlMigrationServiceCollection GetSqlMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlMigrationServices();
+            return GetDataMigrationResourceGroupResourceExtension(resourceGroupResource).GetSqlMigrationServices();
         }
 
         /// <summary>
@@ -468,7 +501,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DataMigrationServiceResources and their operations over a DataMigrationServiceResource. </returns>
         public static DataMigrationServiceCollection GetDataMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataMigrationServices();
+            return GetDataMigrationResourceGroupResourceExtension(resourceGroupResource).GetDataMigrationServices();
         }
 
         /// <summary>
@@ -537,7 +570,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
+            return GetSqlMigrationServiceResourceExtension(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -558,7 +591,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServices(cancellationToken);
+            return GetSqlMigrationServiceResourceExtension(subscriptionResource).GetSqlMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +612,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
+            return GetDataMigrationSubscriptionResourceExtension(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -600,7 +633,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkus(cancellationToken);
+            return GetDataMigrationSubscriptionResourceExtension(subscriptionResource).GetSkusResourceSkus(cancellationToken);
         }
 
         /// <summary>
@@ -621,7 +654,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
+            return GetDataMigrationServiceResourceExtension(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -642,7 +675,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataMigrationServiceResource> GetDataMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServices(cancellationToken);
+            return GetDataMigrationServiceResourceExtension(subscriptionResource).GetDataMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +700,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationServiceResourceExtension(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -692,7 +725,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
+            return GetDataMigrationServiceResourceExtension(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -714,7 +747,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Quota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetDataMigrationSubscriptionResourceExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -736,7 +769,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Quota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetDataMigrationSubscriptionResourceExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

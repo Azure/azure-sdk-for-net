@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -18,51 +19,83 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDB. </summary>
     public static partial class CosmosDBExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CassandraClusterResourceExtension GetCassandraClusterResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CassandraClusterResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CassandraClusterResourceExtension GetCassandraClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CassandraClusterResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CosmosDBAccountResourceExtension GetCosmosDBAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CosmosDBAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CosmosDBAccountResourceExtension GetCosmosDBAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new CosmosDBAccountResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static CosmosDBResourceGroupResourceExtension GetCosmosDBResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new CosmosDBResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CosmosDBResourceGroupResourceExtension GetCosmosDBResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new CosmosDBResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static CosmosDBSubscriptionResourceExtension GetCosmosDBSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new CosmosDBSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static CosmosDBSubscriptionResourceExtension GetCosmosDBSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new CosmosDBSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static RestorableCosmosDBAccountResourceExtension GetRestorableCosmosDBAccountResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new RestorableCosmosDBAccountResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static RestorableCosmosDBAccountResourceExtension GetRestorableCosmosDBAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RestorableCosmosDBAccountResourceExtension(client, scope);
             });
         }
         #region CosmosDBAccountResource
@@ -811,7 +844,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
         public static CosmosDBAccountCollection GetCosmosDBAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBAccounts();
+            return GetCosmosDBResourceGroupResourceExtension(resourceGroupResource).GetCosmosDBAccounts();
         }
 
         /// <summary>
@@ -867,7 +900,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
         public static CassandraClusterCollection GetCassandraClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCassandraClusters();
+            return GetCosmosDBResourceGroupResourceExtension(resourceGroupResource).GetCassandraClusters();
         }
 
         /// <summary>
@@ -923,7 +956,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public static CosmosDBLocationCollection GetCosmosDBLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBLocations();
+            return GetCosmosDBSubscriptionResourceExtension(subscriptionResource).GetCosmosDBLocations();
         }
 
         /// <summary>
@@ -988,7 +1021,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
+            return GetCosmosDBAccountResourceExtension(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1009,7 +1042,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
+            return GetCosmosDBAccountResourceExtension(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1030,7 +1063,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
+            return GetCassandraClusterResourceExtension(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1051,7 +1084,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CassandraClusterResource> GetCassandraClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClusters(cancellationToken);
+            return GetCassandraClusterResourceExtension(subscriptionResource).GetCassandraClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1072,7 +1105,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
+            return GetRestorableCosmosDBAccountResourceExtension(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1093,7 +1126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
+            return GetRestorableCosmosDBAccountResourceExtension(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1118,7 +1151,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBAccountResourceExtension(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1143,7 +1176,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
+            return GetCosmosDBAccountResourceExtension(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
         }
     }
 }
