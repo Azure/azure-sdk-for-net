@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cassandraAuditLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
+            if (Optional.IsDefined(ProvisionError))
+            {
+                writer.WritePropertyName("provisionError"u8);
+                writer.WriteObjectValue(ProvisionError);
+            }
             writer.WriteEndObject();
         }
 
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> hoursBetweenBackups = default;
             Optional<bool> deallocated = default;
             Optional<bool> cassandraAuditLoggingEnabled = default;
+            Optional<CassandraError> provisionError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -296,8 +302,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     cassandraAuditLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("provisionError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    continue;
+                }
             }
-            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled));
+            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), provisionError.Value);
         }
     }
 }

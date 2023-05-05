@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of ContinuousModeProperties. </summary>
-        /// <param name="tier"> Enum to indicate type of Continuos backup mode. </param>
+        /// <param name="tier"> Enum to indicate type of Continuous backup mode. </param>
         internal ContinuousModeProperties(ContinuousTier? tier)
         {
             Tier = tier;
         }
 
-        /// <summary> Enum to indicate type of Continuos backup mode. </summary>
+        /// <summary> Enum to indicate type of Continuous backup mode. </summary>
         public ContinuousTier? Tier { get; set; }
     }
 }

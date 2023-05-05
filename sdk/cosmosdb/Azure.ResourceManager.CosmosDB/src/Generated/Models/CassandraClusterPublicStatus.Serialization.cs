@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> eTag = default;
             Optional<CassandraReaperStatus> reaperStatus = default;
             Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
+            Optional<IReadOnlyList<CassandraError>> errors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,6 +59,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionErrors = array;
                     continue;
                 }
+                if (property.NameEquals("errors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CassandraError> array = new List<CassandraError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CassandraError.DeserializeCassandraError(item));
+                    }
+                    errors = array;
+                    continue;
+                }
                 if (property.NameEquals("dataCenters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -73,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(dataCenters));
+            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(errors), Optional.ToList(dataCenters));
         }
     }
 }

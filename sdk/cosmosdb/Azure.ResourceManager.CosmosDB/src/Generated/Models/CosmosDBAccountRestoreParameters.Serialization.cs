@@ -22,6 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreMode"u8);
                 writer.WriteStringValue(RestoreMode.Value.ToString());
             }
+            if (Optional.IsDefined(RestoreSource))
+            {
+                writer.WritePropertyName("restoreSource"u8);
+                writer.WriteStringValue(RestoreSource);
+            }
+            if (Optional.IsDefined(RestoreTimestampInUtc))
+            {
+                writer.WritePropertyName("restoreTimestampInUtc"u8);
+                writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
+            }
             if (Optional.IsCollectionDefined(DatabasesToRestore))
             {
                 writer.WritePropertyName("databasesToRestore"u8);
@@ -52,21 +62,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceBackupLocation))
-            {
-                writer.WritePropertyName("sourceBackupLocation"u8);
-                writer.WriteStringValue(SourceBackupLocation);
-            }
-            if (Optional.IsDefined(RestoreSource))
-            {
-                writer.WritePropertyName("restoreSource"u8);
-                writer.WriteStringValue(RestoreSource);
-            }
-            if (Optional.IsDefined(RestoreTimestampInUtc))
-            {
-                writer.WritePropertyName("restoreTimestampInUtc"u8);
-                writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
-            }
             writer.WriteEndObject();
         }
 
@@ -77,12 +72,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<CosmosDBAccountRestoreMode> restoreMode = default;
+            Optional<string> restoreSource = default;
+            Optional<DateTimeOffset> restoreTimestampInUtc = default;
             Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
             Optional<IList<GremlinDatabaseRestoreResourceInfo>> gremlinDatabasesToRestore = default;
             Optional<IList<string>> tablesToRestore = default;
-            Optional<string> sourceBackupLocation = default;
-            Optional<string> restoreSource = default;
-            Optional<DateTimeOffset> restoreTimestampInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreMode"u8))
@@ -92,6 +86,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     restoreMode = new CosmosDBAccountRestoreMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restoreSource"u8))
+                {
+                    restoreSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTimestampInUtc"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("databasesToRestore"u8))
@@ -136,27 +144,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tablesToRestore = array;
                     continue;
                 }
-                if (property.NameEquals("sourceBackupLocation"u8))
-                {
-                    sourceBackupLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("restoreSource"u8))
-                {
-                    restoreSource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("restoreTimestampInUtc"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
             }
-            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), Optional.ToNullable(restoreMode), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore), sourceBackupLocation.Value);
+            return new CosmosDBAccountRestoreParameters(Optional.ToNullable(restoreMode), restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore));
         }
     }
 }
