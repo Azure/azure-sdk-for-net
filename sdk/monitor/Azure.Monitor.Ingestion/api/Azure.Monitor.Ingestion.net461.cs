@@ -19,18 +19,18 @@ namespace Azure.Monitor.Ingestion
             V2023_01_01 = 1,
         }
     }
+    public partial class LogsUploadFailedEventArgs : Azure.SyncAsyncEventArgs
+    {
+        public LogsUploadFailedEventArgs(System.Collections.Generic.IEnumerable<object> failedLogs, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public System.Exception Exception { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<object> FailedLogs { get { throw null; } }
+    }
     public partial class LogsUploadOptions
     {
         public LogsUploadOptions() { }
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedEventArgs> UploadFailed { add { } remove { } }
-    }
-    public partial class UploadFailedEventArgs : Azure.SyncAsyncEventArgs
-    {
-        public UploadFailedEventArgs(System.Collections.Generic.IEnumerable<object> failedLogs, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
-        public System.Exception Exception { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<object> FailedLogs { get { throw null; } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.LogsUploadFailedEventArgs> UploadFailed { add { } remove { } }
     }
 }
 namespace Microsoft.Extensions.Azure

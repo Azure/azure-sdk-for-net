@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static FilteringTag DeserializeFilteringTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<TagAction> action = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new TagAction(property.Value.GetString());

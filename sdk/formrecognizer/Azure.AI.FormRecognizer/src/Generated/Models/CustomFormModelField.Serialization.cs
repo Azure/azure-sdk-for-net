@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string fieldName = default;
             float? accuracy = default;
             foreach (var property in element.EnumerateObject())

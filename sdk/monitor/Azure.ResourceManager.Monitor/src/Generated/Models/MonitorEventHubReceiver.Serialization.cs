@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorEventHubReceiver DeserializeMonitorEventHubReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string eventHubNameSpace = default;
             string eventHubName = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

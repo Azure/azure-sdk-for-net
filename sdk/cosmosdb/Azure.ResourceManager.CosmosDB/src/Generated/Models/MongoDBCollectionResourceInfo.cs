@@ -31,12 +31,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl)
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
         {
             CollectionName = collectionName;
             ShardKey = shardKey;
             Indexes = indexes;
             AnalyticalStorageTtl = analyticalStorageTtl;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
         }
 
         /// <summary> Name of the Cosmos DB MongoDB collection. </summary>
@@ -47,5 +51,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
         public int? AnalyticalStorageTtl { get; set; }
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+        /// <summary> Enum to indicate the mode of resource creation. </summary>
+        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ThrottlingMetric DeserializeThrottlingMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ThrottlingMetricType type = default;
             long limit = default;
             Optional<TimeSpan> interval = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetTimeSpan("P");

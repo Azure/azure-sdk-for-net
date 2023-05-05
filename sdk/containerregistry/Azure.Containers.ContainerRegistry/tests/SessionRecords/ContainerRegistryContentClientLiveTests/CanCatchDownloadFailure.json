@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://tfcc0190a5162cce1.azurecr.io/v2/ffdb28bb-74c2-0e4e-0706-4e0c31b43dda/blobs/BadDigest",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/octet-stream",
+        "Range": "bytes=0-4194303",
+        "traceparent": "00-0b6e69079f21ec4ca282ac83d8ef7fdd-61c29adf6bd3624b-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20230404.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "076292239350184b135cb1484570bc30",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "19",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Tue, 04 Apr 2023 18:02:42 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "13aecf2e-2639-4516-a200-cd367ac27353"
+      },
+      "ResponseBody": [
+        "404 page not found\n"
+      ]
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "CONTAINERREGISTRY_ENDPOINT": "https://tfcc0190a5162cce1.azurecr.io",
+    "RandomSeed": "1173932329"
+  }
+}

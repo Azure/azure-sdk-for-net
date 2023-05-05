@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxOrderType ToDataBoxOrderType(this string value)
         {
-            if (string.Equals(value, "DataBox", StringComparison.InvariantCultureIgnoreCase)) return DataBoxOrderType.DataBox;
-            if (string.Equals(value, "DataBoxDisk", StringComparison.InvariantCultureIgnoreCase)) return DataBoxOrderType.DataBoxDisk;
-            if (string.Equals(value, "DataBoxHeavy", StringComparison.InvariantCultureIgnoreCase)) return DataBoxOrderType.DataBoxHeavy;
-            if (string.Equals(value, "DataBoxCustomerDisk", StringComparison.InvariantCultureIgnoreCase)) return DataBoxOrderType.DataBoxCustomerDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox")) return DataBoxOrderType.DataBox;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk")) return DataBoxOrderType.DataBoxDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy")) return DataBoxOrderType.DataBoxHeavy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk")) return DataBoxOrderType.DataBoxCustomerDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxOrderType value.");
         }
     }

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrationValidationOptions DeserializeMigrationValidationOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableSchemaValidation = default;
             Optional<bool> enableDataIntegrityValidation = default;
             Optional<bool> enableQueryAnalysisValidation = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableSchemaValidation = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableDataIntegrityValidation = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableQueryAnalysisValidation = property.Value.GetBoolean();

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningManagedIdentity DeserializeMachineLearningManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid?> clientId = default;
             Optional<Guid?> objectId = default;
             Optional<ResourceIdentifier> resourceId = default;

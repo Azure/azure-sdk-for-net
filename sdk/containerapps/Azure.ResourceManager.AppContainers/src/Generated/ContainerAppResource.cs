@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource" /> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty()
         {
-            return new ContainerAppDetectorPropertyResource(Client, new ResourceIdentifier(Id.ToString() + "/detectorProperties/rootApi"));
+            return new ContainerAppDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
         /// <summary> Gets a collection of ContainerAppRevisionResources in the ContainerApp. </summary>

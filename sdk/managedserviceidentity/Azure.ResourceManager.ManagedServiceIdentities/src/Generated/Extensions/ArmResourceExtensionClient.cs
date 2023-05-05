@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentity()
         {
-            return new SystemAssignedIdentityResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.ManagedIdentity/identities/default"));
+            return new SystemAssignedIdentityResource(Client, Id.AppendProviderResource("Microsoft.ManagedIdentity", "identities", "default"));
         }
     }
 }

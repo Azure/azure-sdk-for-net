@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterLoadBalancerProfileManagedOutboundIPs DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<int> countIPv6 = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     countIPv6 = property.Value.GetInt32();

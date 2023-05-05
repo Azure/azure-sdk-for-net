@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ComputeVmInstanceViewStatus DeserializeComputeVmInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;

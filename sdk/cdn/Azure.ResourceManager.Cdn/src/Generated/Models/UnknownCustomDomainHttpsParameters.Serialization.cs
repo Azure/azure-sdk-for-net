@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CertificateSource certificateSource = "Unknown";
             SecureDeliveryProtocolType protocolType = default;
             Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the KubeEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the KubeEnvironment data model.
+    /// A Kubernetes cluster specialized for web workloads by Azure App Service
+    /// </summary>
     public partial class KubeEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>

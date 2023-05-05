@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTriggerProperties DeserializeContainerRegistryTriggerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
             Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
             Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerRegistryTimerTrigger> array = new List<ContainerRegistryTimerTrigger>();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerRegistrySourceTrigger> array = new List<ContainerRegistrySourceTrigger>();
@@ -85,7 +87,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value);

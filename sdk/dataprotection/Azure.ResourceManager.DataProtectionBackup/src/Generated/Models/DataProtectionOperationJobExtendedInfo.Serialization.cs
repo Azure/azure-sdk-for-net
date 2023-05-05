@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static DataProtectionOperationJobExtendedInfo DeserializeDataProtectionOperationJobExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> jobId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobId = property.Value.GetGuid();

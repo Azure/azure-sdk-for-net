@@ -28,16 +28,16 @@ namespace Azure.AI.FormRecognizer.Models
 
         public static FieldValueType ToFieldValueType(this string value)
         {
-            if (string.Equals(value, "string", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.String;
-            if (string.Equals(value, "date", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Date;
-            if (string.Equals(value, "time", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Time;
-            if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.PhoneNumber;
-            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Float;
-            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Int64;
-            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.List;
-            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Dictionary;
-            if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.SelectionMark;
-            if (string.Equals(value, "countryRegion", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.CountryRegion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "string")) return FieldValueType.String;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "date")) return FieldValueType.Date;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "time")) return FieldValueType.Time;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "phoneNumber")) return FieldValueType.PhoneNumber;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "number")) return FieldValueType.Float;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "integer")) return FieldValueType.Int64;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "array")) return FieldValueType.List;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "object")) return FieldValueType.Dictionary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "selectionMark")) return FieldValueType.SelectionMark;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "countryRegion")) return FieldValueType.CountryRegion;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
         }
     }

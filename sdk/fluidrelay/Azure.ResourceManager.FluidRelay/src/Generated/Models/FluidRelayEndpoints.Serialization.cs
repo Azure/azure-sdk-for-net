@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         internal static FluidRelayEndpoints DeserializeFluidRelayEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> ordererEndpoints = default;
             Optional<IReadOnlyList<string>> storageEndpoints = default;
             Optional<IReadOnlyList<string>> serviceEndpoints = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

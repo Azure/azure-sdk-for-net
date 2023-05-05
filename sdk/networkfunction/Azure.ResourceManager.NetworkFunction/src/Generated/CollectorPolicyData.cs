@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    /// <summary> A class representing the CollectorPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the CollectorPolicy data model.
+    /// Collector policy resource.
+    /// </summary>
     public partial class CollectorPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CollectorPolicyData. </summary>

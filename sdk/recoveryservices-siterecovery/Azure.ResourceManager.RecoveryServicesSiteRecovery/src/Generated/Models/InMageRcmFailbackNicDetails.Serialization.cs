@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmFailbackNicDetails DeserializeInMageRcmFailbackNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> macAddress = default;
             Optional<string> networkName = default;
             Optional<string> adapterType = default;

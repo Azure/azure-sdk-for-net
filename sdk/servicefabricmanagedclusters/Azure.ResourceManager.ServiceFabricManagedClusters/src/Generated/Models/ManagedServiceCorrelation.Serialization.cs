@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceCorrelation DeserializeManagedServiceCorrelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceCorrelationScheme scheme = default;
             string serviceName = default;
             foreach (var property in element.EnumerateObject())

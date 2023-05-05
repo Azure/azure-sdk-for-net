@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static EdgeNGramTokenFilterSide ToEdgeNGramTokenFilterSide(this string value)
         {
-            if (string.Equals(value, "front", StringComparison.InvariantCultureIgnoreCase)) return EdgeNGramTokenFilterSide.Front;
-            if (string.Equals(value, "back", StringComparison.InvariantCultureIgnoreCase)) return EdgeNGramTokenFilterSide.Back;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "front")) return EdgeNGramTokenFilterSide.Front;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "back")) return EdgeNGramTokenFilterSide.Back;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdgeNGramTokenFilterSide value.");
         }
     }

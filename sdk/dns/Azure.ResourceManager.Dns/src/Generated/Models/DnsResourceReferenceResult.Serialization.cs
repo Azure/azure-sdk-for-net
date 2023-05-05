@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal static DnsResourceReferenceResult DeserializeDnsResourceReferenceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DnsResourceReference>> dnsResourceReferences = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.Dns.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsResourceReference> array = new List<DnsResourceReference>();

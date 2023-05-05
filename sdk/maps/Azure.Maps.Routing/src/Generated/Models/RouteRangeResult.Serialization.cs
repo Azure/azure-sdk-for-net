@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<RouteRange> reachableRange = default;
             Optional<RouteReport> report = default;
@@ -28,7 +32,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reachableRange = RouteRange.DeserializeRouteRange(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     report = RouteReport.DeserializeRouteReport(property.Value);

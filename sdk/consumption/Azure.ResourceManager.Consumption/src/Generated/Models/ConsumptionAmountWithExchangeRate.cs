@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The amount with exchange rate. </summary>
+    /// <summary>
+    /// The amount with exchange rate.
+    /// Serialized Name: AmountWithExchangeRate
+    /// </summary>
     public partial class ConsumptionAmountWithExchangeRate : ConsumptionAmount
     {
         /// <summary> Initializes a new instance of ConsumptionAmountWithExchangeRate. </summary>
@@ -16,19 +19,37 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionAmountWithExchangeRate. </summary>
-        /// <param name="currency"> Amount currency. </param>
-        /// <param name="value"> Amount. </param>
-        /// <param name="exchangeRate"> The exchange rate. </param>
-        /// <param name="exchangeRateMonth"> The exchange rate month. </param>
+        /// <param name="currency">
+        /// Amount currency.
+        /// Serialized Name: Amount.currency
+        /// </param>
+        /// <param name="value">
+        /// Amount.
+        /// Serialized Name: Amount.value
+        /// </param>
+        /// <param name="exchangeRate">
+        /// The exchange rate.
+        /// Serialized Name: AmountWithExchangeRate.exchangeRate
+        /// </param>
+        /// <param name="exchangeRateMonth">
+        /// The exchange rate month.
+        /// Serialized Name: AmountWithExchangeRate.exchangeRateMonth
+        /// </param>
         internal ConsumptionAmountWithExchangeRate(string currency, decimal? value, decimal? exchangeRate, int? exchangeRateMonth) : base(currency, value)
         {
             ExchangeRate = exchangeRate;
             ExchangeRateMonth = exchangeRateMonth;
         }
 
-        /// <summary> The exchange rate. </summary>
+        /// <summary>
+        /// The exchange rate.
+        /// Serialized Name: AmountWithExchangeRate.exchangeRate
+        /// </summary>
         public decimal? ExchangeRate { get; }
-        /// <summary> The exchange rate month. </summary>
+        /// <summary>
+        /// The exchange rate month.
+        /// Serialized Name: AmountWithExchangeRate.exchangeRateMonth
+        /// </summary>
         public int? ExchangeRateMonth { get; }
     }
 }

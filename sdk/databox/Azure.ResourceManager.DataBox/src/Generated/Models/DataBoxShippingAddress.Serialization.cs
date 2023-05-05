@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxShippingAddress DeserializeDataBoxShippingAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string streetAddress1 = default;
             Optional<string> streetAddress2 = default;
             Optional<string> streetAddress3 = default;
@@ -122,7 +126,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     addressType = property.Value.GetString().ToDataBoxShippingAddressType();

@@ -26,7 +26,7 @@ This library allows you to send data from virtually any source to supported buil
 Install the Azure Monitor Ingestion client library for .NET with NuGet:
 
 ```dotnetcli
-dotnet add package Azure.Monitor.Ingestion --prerelease
+dotnet add package Azure.Monitor.Ingestion
 ```
 
 ### Authenticate the client
@@ -212,7 +212,7 @@ options.UploadFailed += Options_UploadFailed;
 // Upload our logs
 Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
 
-Task Options_UploadFailed(UploadFailedEventArgs e)
+Task Options_UploadFailed(LogsUploadFailedEventArgs e)
 {
     // Throw exception from EventHandler to stop Upload if there is a failure
     IReadOnlyList<object> failedLogs = e.FailedLogs;

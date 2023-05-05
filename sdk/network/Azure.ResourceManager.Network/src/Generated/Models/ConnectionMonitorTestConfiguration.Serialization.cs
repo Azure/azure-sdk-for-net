@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTestConfiguration DeserializeConnectionMonitorTestConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<int> testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     testFrequencySec = property.Value.GetInt32();
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preferredIPVersion = new TestEvalPreferredIPVersion(property.Value.GetString());
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
@@ -128,7 +127,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);

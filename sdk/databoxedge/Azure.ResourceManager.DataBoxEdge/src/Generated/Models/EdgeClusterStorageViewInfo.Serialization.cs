@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterStorageViewInfo DeserializeEdgeClusterStorageViewInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> clusterTotalStorageMb = default;
             Optional<double> clusterFreeStorageMb = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterTotalStorageMb = property.Value.GetDouble();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterFreeStorageMb = property.Value.GetDouble();

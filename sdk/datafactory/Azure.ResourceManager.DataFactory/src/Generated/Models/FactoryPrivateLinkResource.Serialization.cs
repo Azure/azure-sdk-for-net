@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPrivateLinkResource DeserializeFactoryPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryPrivateLinkResourceProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = FactoryPrivateLinkResourceProperties.DeserializeFactoryPrivateLinkResourceProperties(property.Value);
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -74,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

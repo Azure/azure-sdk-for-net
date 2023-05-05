@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabTargetCostStatus> status = default;
             Optional<int> target = default;
             Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DevTestLabTargetCostStatus(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = property.Value.GetInt32();
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
@@ -104,7 +105,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cycleStartDateTime = property.Value.GetDateTimeOffset("O");
@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cycleEndDateTime = property.Value.GetDateTimeOffset("O");
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cycleType = new DevTestLabReportingCycleType(property.Value.GetString());

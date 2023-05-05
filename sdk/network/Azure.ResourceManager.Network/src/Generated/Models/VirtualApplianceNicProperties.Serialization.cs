@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;

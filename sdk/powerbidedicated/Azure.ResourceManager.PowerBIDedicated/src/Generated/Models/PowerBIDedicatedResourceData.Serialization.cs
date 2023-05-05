@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static PowerBIDedicatedResourceData DeserializePowerBIDedicatedResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);

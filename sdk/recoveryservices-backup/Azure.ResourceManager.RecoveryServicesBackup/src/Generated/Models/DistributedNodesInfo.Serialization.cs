@@ -35,9 +35,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DistributedNodesInfo DeserializeDistributedNodesInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<string> status = default;
-            Optional<ErrorDetail> errorDetail = default;
+            Optional<BackupErrorDetail> errorDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -54,10 +58,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
             }

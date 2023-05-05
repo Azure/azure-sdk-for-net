@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterCertificateDescription DeserializeClusterCertificateDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData thumbprint = default;
             Optional<string> thumbprintSecondary = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509StoreName = new ClusterCertificateStoreName(property.Value.GetString());

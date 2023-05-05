@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseMaintenanceWindowOptionData DeserializeSynapseMaintenanceWindowOptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -98,7 +102,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -117,7 +120,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isEnabled = property0.Value.GetBoolean();
@@ -127,7 +129,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SynapseMaintenanceWindowTimeRange> array = new List<SynapseMaintenanceWindowTimeRange>();
@@ -142,7 +143,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minDurationInMinutes = property0.Value.GetInt32();
@@ -152,7 +152,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultDurationInMinutes = property0.Value.GetInt32();
@@ -162,7 +161,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minCycles = property0.Value.GetInt32();
@@ -172,7 +170,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeGranularityInMinutes = property0.Value.GetInt32();
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowMultipleMaintenanceWindowsPerCycle = property0.Value.GetBoolean();

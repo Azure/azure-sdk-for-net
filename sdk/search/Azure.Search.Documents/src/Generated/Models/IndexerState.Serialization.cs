@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static IndexerState DeserializeIndexerState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IndexingMode> mode = default;
             Optional<string> allDocsInitialChangeTrackingState = default;
             Optional<string> allDocsFinalChangeTrackingState = default;
@@ -28,7 +32,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new IndexingMode(property.Value.GetString());
@@ -58,7 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,7 +75,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

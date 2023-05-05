@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
             Optional<IReadOnlyList<string>> features = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, HDInsightVersionsCapability> dictionary = new Dictionary<string, HDInsightVersionsCapability>();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, RegionsCapability> dictionary = new Dictionary<string, RegionsCapability>();
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -70,7 +71,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quota = QuotaCapability.DeserializeQuotaCapability(property.Value);

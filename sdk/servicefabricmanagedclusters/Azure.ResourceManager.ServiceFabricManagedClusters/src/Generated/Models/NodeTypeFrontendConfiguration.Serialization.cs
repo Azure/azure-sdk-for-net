@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeFrontendConfiguration DeserializeNodeTypeFrontendConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
             Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
             Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddressType = new NodeTypeFrontendConfigurationIPAddressType(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerBackendAddressPoolId = new ResourceIdentifier(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerInboundNatPoolId = new ResourceIdentifier(property.Value.GetString());

@@ -22,6 +22,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesDefaultCategory DeserializeTimeSeriesDefaultCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string label = default;
             foreach (var property in element.EnumerateObject())
             {

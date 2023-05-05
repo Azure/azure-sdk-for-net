@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicExpressionErrorInfo DeserializeLogicExpressionErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string message = default;
             Optional<IReadOnlyList<LogicExpressionErrorInfo>> details = default;
             string code = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicExpressionErrorInfo> array = new List<LogicExpressionErrorInfo>();

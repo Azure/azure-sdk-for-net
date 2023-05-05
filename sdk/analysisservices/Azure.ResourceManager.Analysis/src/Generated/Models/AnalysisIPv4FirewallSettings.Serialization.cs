@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisIPv4FirewallSettings DeserializeAnalysisIPv4FirewallSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
             Optional<bool> enablePowerBIService = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enablePowerBIService = property.Value.GetBoolean();

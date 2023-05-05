@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportContactProfile DeserializeSupportContactProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string firstName = default;
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
@@ -85,7 +89,6 @@ namespace Azure.ResourceManager.Support.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

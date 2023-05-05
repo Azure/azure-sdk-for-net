@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineImageReference DeserializeLabVirtualMachineImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> offer = default;
             Optional<string> publisher = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());

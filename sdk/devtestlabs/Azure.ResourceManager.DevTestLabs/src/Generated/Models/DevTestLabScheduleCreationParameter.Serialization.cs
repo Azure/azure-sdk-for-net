@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabScheduleCreationParameter DeserializeDevTestLabScheduleCreationParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -102,7 +106,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -136,7 +138,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new DevTestLabEnableStatus(property0.Value.GetString());
@@ -151,7 +152,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
@@ -161,7 +161,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value);
@@ -171,7 +170,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value);
@@ -186,7 +184,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
@@ -196,7 +193,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetResourceId = new ResourceIdentifier(property0.Value.GetString());

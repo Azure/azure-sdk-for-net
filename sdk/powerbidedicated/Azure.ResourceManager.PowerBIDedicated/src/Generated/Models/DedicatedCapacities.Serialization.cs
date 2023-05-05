@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static DedicatedCapacities DeserializeDedicatedCapacities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DedicatedCapacityData> value = default;
             foreach (var property in element.EnumerateObject())
             {

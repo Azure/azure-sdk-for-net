@@ -10,6 +10,37 @@
 
 ### Other Changes
 
+## 1.0.2 (2023-04-27)
+
+### Bugs Fixed
+
+- Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
+- Fixed issue #35146. BadRequest when calling CreateOrUpdateFunctionSecretAsync
+
+### Other Changes in API
+
+Added property 'ResourceIdentifier RelayArmId' in type Azure.ResourceManager.AppService.HybridConnectionData
+Added property 'WebAppKeyInfoProperties Properties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Added type 'Azure.ResourceManager.AppService.Models.WebAppKeyInfoProperties'
+Obsoleted property 'Uri RelayArmUri' in type Azure.ResourceManager.AppService.HybridConnectionData
+Obsoleted property 'String Name' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Obsoleted property 'String Value' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+
+### Azure SDK Dependency Changes
+
+Upgraded Azure.Core from 1.28.0 to 1.31.0
+
+## 1.0.1 (2023-02-20)
+
+### Bugs Fixed
+
+- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData` and `AppCertificatePatch`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-29)
 
 This release is the first stable release of the AppService Management library.

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationExpanded DeserializeLocationExpanded(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> name = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToLocationType();
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);

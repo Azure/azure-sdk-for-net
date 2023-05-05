@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricApplicationTypeVersionData DeserializeServiceFabricApplicationTypeVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -106,7 +108,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -130,7 +131,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                appPackageUrl = null;
                                 continue;
                             }
                             appPackageUrl = new Uri(property0.Value.GetString());
@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

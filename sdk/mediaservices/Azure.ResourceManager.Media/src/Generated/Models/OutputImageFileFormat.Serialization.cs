@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static OutputImageFileFormat DeserializeOutputImageFileFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

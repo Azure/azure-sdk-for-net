@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
-    /// <summary> A class representing the DataBoxJob data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxJob data model.
+    /// Job Resource.
+    /// </summary>
     public partial class DataBoxJobData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataBoxJobData. </summary>

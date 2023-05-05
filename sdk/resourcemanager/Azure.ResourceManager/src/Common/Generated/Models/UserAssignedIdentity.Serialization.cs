@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Models
 
         internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<Guid> clientId = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     principalId = property.Value.GetGuid();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientId = property.Value.GetGuid();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the PrivateStoreCollectionInfo data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateStoreCollectionInfo data model.
+    /// The Collection data structure.
+    /// </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>

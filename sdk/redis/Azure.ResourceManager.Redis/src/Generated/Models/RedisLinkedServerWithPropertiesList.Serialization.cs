@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisLinkedServerWithPropertiesList DeserializeRedisLinkedServerWithPropertiesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RedisLinkedServerWithPropertyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RedisLinkedServerWithPropertyData> array = new List<RedisLinkedServerWithPropertyData>();

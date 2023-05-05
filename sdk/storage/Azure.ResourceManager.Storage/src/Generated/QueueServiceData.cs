@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the QueueService data model. </summary>
+    /// <summary>
+    /// A class representing the QueueService data model.
+    /// The properties of a storage account’s Queue service.
+    /// </summary>
     public partial class QueueServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of QueueServiceData. </summary>

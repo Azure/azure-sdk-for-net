@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         internal static PrivateDnsRecordListResult DeserializePrivateDnsRecordListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateDnsRecordData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateDnsRecordData> array = new List<PrivateDnsRecordData>();

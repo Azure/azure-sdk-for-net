@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RegressionTrainingSettings DeserializeRegressionTrainingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AutoMLVerticalRegressionModel>> allowedTrainingAlgorithms = default;
             Optional<IList<AutoMLVerticalRegressionModel>> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;
@@ -143,7 +147,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableDnnTraining = property.Value.GetBoolean();
@@ -153,7 +156,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableModelExplainability = property.Value.GetBoolean();
@@ -163,7 +165,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableOnnxCompatibleModels = property.Value.GetBoolean();
@@ -173,7 +174,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableStackEnsemble = property.Value.GetBoolean();
@@ -183,7 +183,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableVoteEnsemble = property.Value.GetBoolean();
@@ -193,7 +192,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ensembleModelDownloadTimeout = property.Value.GetTimeSpan("P");

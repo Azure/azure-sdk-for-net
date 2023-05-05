@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RoleInstanceListResult DeserializeRoleInstanceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CloudServiceRoleInstanceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

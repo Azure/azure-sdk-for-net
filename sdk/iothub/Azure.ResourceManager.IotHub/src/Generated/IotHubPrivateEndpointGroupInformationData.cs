@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the IotHubPrivateEndpointGroupInformation data model. </summary>
+    /// <summary>
+    /// A class representing the IotHubPrivateEndpointGroupInformation data model.
+    /// The group information for creating a private endpoint on an IotHub
+    /// </summary>
     public partial class IotHubPrivateEndpointGroupInformationData : ResourceData
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationData. </summary>

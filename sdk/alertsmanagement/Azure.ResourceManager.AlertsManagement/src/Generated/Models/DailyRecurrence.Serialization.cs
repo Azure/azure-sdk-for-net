@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static DailyRecurrence DeserializeDailyRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> endTime = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetTimeSpan("T");
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetTimeSpan("T");

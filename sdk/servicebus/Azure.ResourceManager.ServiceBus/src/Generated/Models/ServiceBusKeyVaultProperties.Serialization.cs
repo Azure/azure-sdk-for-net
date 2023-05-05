@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusKeyVaultProperties DeserializeServiceBusKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<Uri> keyVaultUri = default;
             Optional<string> keyVersion = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUri = null;
                         continue;
                     }
                     keyVaultUri = new Uri(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = UserAssignedIdentityProperties.DeserializeUserAssignedIdentityProperties(property.Value);

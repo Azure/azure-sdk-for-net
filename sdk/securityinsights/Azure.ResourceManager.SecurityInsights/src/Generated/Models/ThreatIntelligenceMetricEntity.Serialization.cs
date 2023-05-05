@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ThreatIntelligenceMetricEntity DeserializeThreatIntelligenceMetricEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricName = default;
             Optional<int> metricValue = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metricValue = property.Value.GetInt32();

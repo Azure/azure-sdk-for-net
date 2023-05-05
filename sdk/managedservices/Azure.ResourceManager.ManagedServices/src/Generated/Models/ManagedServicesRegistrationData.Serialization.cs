@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ManagedServices
 
         internal static ManagedServicesRegistrationData DeserializeManagedServicesRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServicesRegistrationProperties> properties = default;
             Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ManagedServicesRegistrationProperties.DeserializeManagedServicesRegistrationProperties(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
@@ -79,7 +81,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static JpgLayer DeserializeJpgLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> quality = default;
             Optional<string> width = default;
             Optional<string> height = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quality = property.Value.GetInt32();

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StoragePublicAccessType ToStoragePublicAccessType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return StoragePublicAccessType.None;
-            if (string.Equals(value, "Container", StringComparison.InvariantCultureIgnoreCase)) return StoragePublicAccessType.Container;
-            if (string.Equals(value, "Blob", StringComparison.InvariantCultureIgnoreCase)) return StoragePublicAccessType.Blob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return StoragePublicAccessType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Container")) return StoragePublicAccessType.Container;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blob")) return StoragePublicAccessType.Blob;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StoragePublicAccessType value.");
         }
     }

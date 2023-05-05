@@ -51,8 +51,8 @@ namespace Azure.Identity.Tests
             var options = new OnBehalfOfCredentialOptions
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                DisableAuthorityValidationAndInstanceDiscovery = config.DisableAuthorityValidationAndInstanceDiscovery
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(

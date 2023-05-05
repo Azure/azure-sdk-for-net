@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the AdaptiveNetworkHardening data model. </summary>
+    /// <summary>
+    /// A class representing the AdaptiveNetworkHardening data model.
+    /// The resource whose properties describes the Adaptive Network Hardening settings for some Azure resource
+    /// </summary>
     public partial class AdaptiveNetworkHardeningData : ResourceData
     {
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>

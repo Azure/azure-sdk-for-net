@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToTargetSqlMISyncTaskOutput DeserializeConnectToTargetSqlMISyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetServerVersion = default;
             Optional<string> targetServerBrandVersion = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReportableException> array = new List<ReportableException>();

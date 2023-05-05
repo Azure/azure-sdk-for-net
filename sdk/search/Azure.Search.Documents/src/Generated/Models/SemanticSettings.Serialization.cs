@@ -31,6 +31,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SemanticSettings DeserializeSemanticSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SemanticConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SemanticConfiguration> array = new List<SemanticConfiguration>();

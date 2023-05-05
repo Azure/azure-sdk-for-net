@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkConnectionQueryTableStatus DeserializeLinkConnectionQueryTableStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LinkTableStatus>> value = default;
             Optional<object> continuationToken = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +30,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LinkTableStatus> array = new List<LinkTableStatus>();
@@ -41,7 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     continuationToken = property.Value.GetObject();

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineChannel DeserializeDirectLineChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DirectLineChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DirectLineChannelProperties.DeserializeDirectLineChannelProperties(property.Value);
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());

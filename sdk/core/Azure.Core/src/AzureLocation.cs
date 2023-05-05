@@ -50,6 +50,16 @@ namespace Azure.Core
         public static AzureLocation WestUS { get; } = CreateStaticReference("westus", "West US");
 
         /// <summary>
+        /// Public cloud location for West US 2.
+        /// </summary>
+        public static AzureLocation WestUS2 { get; } = CreateStaticReference("westus2", "West US 2");
+
+        /// <summary>
+        /// Public cloud location for West US 3.
+        /// </summary>
+        public static AzureLocation WestUS3 { get; } = CreateStaticReference("westus3", "West US 3");
+
+        /// <summary>
         /// Public cloud location for North Central US.
         /// </summary>
         public static AzureLocation NorthCentralUS { get; } = CreateStaticReference("northcentralus", "North Central US");
@@ -135,11 +145,6 @@ namespace Azure.Core
         public static AzureLocation WestCentralUS { get; } = CreateStaticReference("westcentralus", "West Central US");
 
         /// <summary>
-        /// Public cloud location for West US 2.
-        /// </summary>
-        public static AzureLocation WestUS2 { get; } = CreateStaticReference("westus2", "West US 2");
-
-        /// <summary>
         /// Public cloud location for Korea Central.
         /// </summary>
         public static AzureLocation KoreaCentral { get; } = CreateStaticReference("koreacentral", "Korea Central");
@@ -188,6 +193,11 @@ namespace Azure.Core
         /// Public cloud location for South Africa West.
         /// </summary>
         public static AzureLocation SouthAfricaWest { get; } = CreateStaticReference("southafricawest", "South Africa West");
+
+        /// <summary>
+        /// Public cloud location for Sweden Central.
+        /// </summary>
+        public static AzureLocation SwedenCentral { get; } = CreateStaticReference("swedencentral", "Sweden Central");
 
         /// <summary>
         /// Public cloud location for Switzerland North.
@@ -253,6 +263,11 @@ namespace Azure.Core
         /// Public cloud location for China East 2.
         /// </summary>
         public static AzureLocation ChinaEast2 { get; } = CreateStaticReference("chinaeast2", "China East 2");
+
+        /// <summary>
+        /// Public cloud location for Qatar Central.
+        /// </summary>
+        public static AzureLocation QatarCentral { get; } = CreateStaticReference("qatarcentral", "Qatar Central");
 
         /// <summary>
         /// Public cloud location for US DoD Central.

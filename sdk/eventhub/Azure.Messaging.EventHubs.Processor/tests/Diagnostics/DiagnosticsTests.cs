@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
-            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));

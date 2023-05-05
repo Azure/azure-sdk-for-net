@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the StorageMover data model. </summary>
+    /// <summary>
+    /// A class representing the StorageMover data model.
+    /// The Storage Mover resource, which is a container for a group of Agents, Projects, and Endpoints.
+    /// </summary>
     public partial class StorageMoverData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageMoverData. </summary>

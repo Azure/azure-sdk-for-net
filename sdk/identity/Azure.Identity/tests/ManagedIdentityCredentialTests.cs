@@ -15,8 +15,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Diagnostics.Runtime.Interop;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests

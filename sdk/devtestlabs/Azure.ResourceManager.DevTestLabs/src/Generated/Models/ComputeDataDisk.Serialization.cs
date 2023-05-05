@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> diskUri = default;
             Optional<string> managedDiskId = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        diskUri = null;
                         continue;
                     }
                     diskUri = new Uri(property.Value.GetString());
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGiB = property.Value.GetInt32();

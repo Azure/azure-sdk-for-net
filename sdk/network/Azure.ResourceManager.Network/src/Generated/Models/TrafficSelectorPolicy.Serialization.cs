@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TrafficSelectorPolicy DeserializeTrafficSelectorPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> localAddressRanges = default;
             IList<string> remoteAddressRanges = default;
             foreach (var property in element.EnumerateObject())

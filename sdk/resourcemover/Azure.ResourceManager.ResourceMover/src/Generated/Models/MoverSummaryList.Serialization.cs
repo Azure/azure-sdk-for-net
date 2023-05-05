@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fieldName = default;
             Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MoverSummaryItemInfo> array = new List<MoverSummaryItemInfo>();

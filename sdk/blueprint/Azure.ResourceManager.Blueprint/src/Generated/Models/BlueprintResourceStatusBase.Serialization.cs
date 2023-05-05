@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static BlueprintResourceStatusBase DeserializeBlueprintResourceStatusBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeCreated = property.Value.GetDateTimeOffset("O");
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("O");

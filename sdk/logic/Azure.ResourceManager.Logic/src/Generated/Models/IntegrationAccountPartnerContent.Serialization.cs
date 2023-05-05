@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountPartnerContent DeserializeIntegrationAccountPartnerContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<B2BPartnerContent> b2b = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);

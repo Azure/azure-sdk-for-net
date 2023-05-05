@@ -8,9 +8,15 @@ parameters:
 - name: LinuxPool
   type: string
   default: 'azsdk-pool-mms-ubuntu-2204-perf'
+- name: LinuxVmImage
+  type: string
+  default: 'ubuntu-22.04'
 - name: WindowsPool
   type: string
   default: 'azsdk-pool-mms-win-2022-perf'
+- name: WindowsVmImage
+  type: string
+  default: 'windows-2022'
 - name: Language
   type: string
   default: ''
@@ -68,10 +74,12 @@ jobs:
       ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
         Linux:
           Pool: ${{ parameters.LinuxPool }}
+          OsVmImage: ${{ parameters.LinuxVmImage }}
           MatrixName: 'Linux'
       ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
         Windows:
           Pool: ${{ parameters.WindowsPool }}
+          OsVmImage: ${{ parameters.WindowsVmImage }}
           MatrixName: 'Windows'
   variables:
   - ${{ parameters.Variables }}
@@ -82,6 +90,7 @@ jobs:
       value: ''
   pool:
     name: $(Pool)
+    vmImage: $(OSVmImage)
   steps:
 
   - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -100,6 +109,10 @@ jobs:
         Commitish: ${{ parameters.ToolsRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
 
+  - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+    parameters:
+      AgentImage: $(OSVmImage)
+      
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml

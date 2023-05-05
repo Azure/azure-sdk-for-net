@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the VirtualNetworkLink data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetworkLink data model.
+    /// Describes a link to virtual network for a Private DNS zone.
+    /// </summary>
     public partial class VirtualNetworkLinkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>

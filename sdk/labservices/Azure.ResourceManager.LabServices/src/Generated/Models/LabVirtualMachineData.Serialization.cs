@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabVirtualMachineData DeserializeLabVirtualMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.LabServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -74,7 +77,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
@@ -84,7 +86,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToLabVirtualMachineState();
@@ -94,7 +95,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmType = property0.Value.GetString().ToLabVirtualMachineType();

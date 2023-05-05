@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\samples\PluginSample\PluginSample.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 

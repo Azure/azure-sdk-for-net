@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoScriptData DeserializeKustoScriptData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Kusto
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.Kusto
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                scriptUrl = null;
                                 continue;
                             }
                             scriptUrl = new Uri(property0.Value.GetString());
@@ -126,7 +128,6 @@ namespace Azure.ResourceManager.Kusto
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             continueOnErrors = property0.Value.GetBoolean();
@@ -136,7 +137,6 @@ namespace Azure.ResourceManager.Kusto
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());

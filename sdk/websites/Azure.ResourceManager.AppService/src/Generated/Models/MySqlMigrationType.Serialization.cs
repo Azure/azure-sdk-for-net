@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static MySqlMigrationType ToMySqlMigrationType(this string value)
         {
-            if (string.Equals(value, "LocalToRemote", StringComparison.InvariantCultureIgnoreCase)) return MySqlMigrationType.LocalToRemote;
-            if (string.Equals(value, "RemoteToLocal", StringComparison.InvariantCultureIgnoreCase)) return MySqlMigrationType.RemoteToLocal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalToRemote")) return MySqlMigrationType.LocalToRemote;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteToLocal")) return MySqlMigrationType.RemoteToLocal;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlMigrationType value.");
         }
     }

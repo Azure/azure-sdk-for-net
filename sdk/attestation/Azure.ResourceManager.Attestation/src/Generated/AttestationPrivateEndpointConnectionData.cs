@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    /// <summary> A class representing the AttestationPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the AttestationPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class AttestationPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionData. </summary>

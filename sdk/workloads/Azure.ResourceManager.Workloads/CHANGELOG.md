@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-04-28)
+
+This release is first stable release for the Workloads Management library.
+
+### Breaking Changes
+- ACSS: Removed SharedGalleryImageId and ExactVersion from ImageReference.
+- Prepended `Sap` to simple model names.
+- Optimized the name of some models
+- Upgrade dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.0-beta.3 (2023-03-06)
+
+### Features Added
+
+ACSS 
+  - Child Instances now have instance level Start stop operations.
+  - Added support for SAP Trans Fileshare configs
+  - Added SAP SID as property for HANA provider
+  - Added support for LB and storage details changes
+  - Added DiskConfiguration Optional Property
+  - Added vmDetails array to SapApplicationServerProperties
+  - Modify Output Structure to add disk customization
+  - Added resource name customization support
+
+AMS
+  - Added operation for SapLandscapeMonitor for Storing SPOG Config.
+  - Added sapSid property in os, hana providers
+  - Added support for secure communication
+
+
+### Breaking Changes
+
+  - Removed PhpWorkloads operations and related models.
+  - Removed WordPressInstance operations and related models.
+  - Removed GetSkus operation and related models.
 
 ## 1.0.0-beta.2 (2023-02-16)
 

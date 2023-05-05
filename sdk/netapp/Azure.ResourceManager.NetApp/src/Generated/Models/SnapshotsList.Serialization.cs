@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SnapshotsList DeserializeSnapshotsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppVolumeSnapshotData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetAppVolumeSnapshotData> array = new List<NetAppVolumeSnapshotData>();

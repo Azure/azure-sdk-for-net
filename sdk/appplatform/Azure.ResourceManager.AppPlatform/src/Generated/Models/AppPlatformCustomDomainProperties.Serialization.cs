@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomDomainProperties DeserializeAppPlatformCustomDomainProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> thumbprint = default;
             Optional<string> appName = default;
             Optional<string> certName = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformCustomDomainProvisioningState(property.Value.GetString());

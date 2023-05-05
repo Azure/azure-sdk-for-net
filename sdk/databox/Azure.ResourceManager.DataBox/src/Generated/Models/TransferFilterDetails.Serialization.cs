@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferFilterDetails DeserializeTransferFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountType dataAccountType = default;
             Optional<BlobFilterDetails> blobFilterDetails = default;
             Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blobFilterDetails = BlobFilterDetails.DeserializeBlobFilterDetails(property.Value);
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureFileFilterDetails = AzureFileFilterDetails.DeserializeAzureFileFilterDetails(property.Value);
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FilterFileDetails> array = new List<FilterFileDetails>();

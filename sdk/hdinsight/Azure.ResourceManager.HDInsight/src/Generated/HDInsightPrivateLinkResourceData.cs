@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    /// <summary> A class representing the HDInsightPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the HDInsightPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class HDInsightPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsCluster data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsCluster data model.
+    /// The top level Log Analytics cluster resource container.
+    /// </summary>
     public partial class OperationalInsightsClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>

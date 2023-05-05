@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSkuCost DeserializeAvailableLabServicesSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterId = default;
             Optional<float> quantity = default;
             Optional<string> extendedUnit = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetSingle();

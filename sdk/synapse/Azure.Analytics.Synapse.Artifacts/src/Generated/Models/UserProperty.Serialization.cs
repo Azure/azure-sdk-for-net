@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UserProperty DeserializeUserProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             object value = default;
             foreach (var property in element.EnumerateObject())

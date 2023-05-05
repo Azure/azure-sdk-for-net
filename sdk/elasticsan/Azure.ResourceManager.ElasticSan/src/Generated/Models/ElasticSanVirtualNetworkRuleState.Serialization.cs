@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         public static ElasticSanVirtualNetworkRuleState ToElasticSanVirtualNetworkRuleState(this string value)
         {
-            if (string.Equals(value, "provisioning", StringComparison.InvariantCultureIgnoreCase)) return ElasticSanVirtualNetworkRuleState.Provisioning;
-            if (string.Equals(value, "deprovisioning", StringComparison.InvariantCultureIgnoreCase)) return ElasticSanVirtualNetworkRuleState.Deprovisioning;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return ElasticSanVirtualNetworkRuleState.Succeeded;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return ElasticSanVirtualNetworkRuleState.Failed;
-            if (string.Equals(value, "networkSourceDeleted", StringComparison.InvariantCultureIgnoreCase)) return ElasticSanVirtualNetworkRuleState.NetworkSourceDeleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning")) return ElasticSanVirtualNetworkRuleState.Provisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deprovisioning")) return ElasticSanVirtualNetworkRuleState.Deprovisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return ElasticSanVirtualNetworkRuleState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return ElasticSanVirtualNetworkRuleState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "networkSourceDeleted")) return ElasticSanVirtualNetworkRuleState.NetworkSourceDeleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ElasticSanVirtualNetworkRuleState value.");
         }
     }

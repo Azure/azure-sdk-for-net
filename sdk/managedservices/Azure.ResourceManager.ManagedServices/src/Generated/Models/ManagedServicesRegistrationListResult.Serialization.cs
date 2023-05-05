@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static ManagedServicesRegistrationListResult DeserializeManagedServicesRegistrationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedServicesRegistrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesRegistrationData> array = new List<ManagedServicesRegistrationData>();

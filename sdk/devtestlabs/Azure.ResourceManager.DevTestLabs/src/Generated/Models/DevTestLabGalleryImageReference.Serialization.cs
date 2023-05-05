@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabGalleryImageReference DeserializeDevTestLabGalleryImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offer = default;
             Optional<string> publisher = default;
             Optional<string> sku = default;

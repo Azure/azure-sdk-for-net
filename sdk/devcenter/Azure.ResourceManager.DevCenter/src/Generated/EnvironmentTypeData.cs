@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the EnvironmentType data model. </summary>
+    /// <summary>
+    /// A class representing the EnvironmentType data model.
+    /// Represents an environment type.
+    /// </summary>
     public partial class EnvironmentTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of EnvironmentTypeData. </summary>

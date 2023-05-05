@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static Ambr DeserializeAmbr(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string uplink = default;
             string downlink = default;
             foreach (var property in element.EnumerateObject())

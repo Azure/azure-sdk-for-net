@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemHttpLogsConfig DeserializeFileSystemHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retentionInMb = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionInMb = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionInDays = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

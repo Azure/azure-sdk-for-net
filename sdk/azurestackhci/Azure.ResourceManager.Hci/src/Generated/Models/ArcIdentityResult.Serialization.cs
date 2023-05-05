@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> arcApplicationClientId = default;
             Optional<Guid> arcApplicationTenantId = default;
             Optional<Guid> arcServicePrincipalObjectId = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             arcApplicationClientId = property0.Value.GetGuid();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             arcApplicationTenantId = property0.Value.GetGuid();
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             arcServicePrincipalObjectId = property0.Value.GetGuid();
@@ -64,7 +65,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             arcApplicationObjectId = property0.Value.GetGuid();

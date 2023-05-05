@@ -104,8 +104,8 @@
                 ApplicationPackageReference apr = referenceToPool.ApplicationPackageReferences.First();
 
                 // Check to see if the pool had an application reference.
-                Assert.Equal(apr.ApplicationId, applicationId);
-                Assert.Equal(apr.Version, ApplicationIntegrationCommon.Version);
+                Assert.Equal(applicationId, apr.ApplicationId);
+                Assert.Equal(ApplicationIntegrationCommon.Version, apr.Version);
             }
             finally
             {

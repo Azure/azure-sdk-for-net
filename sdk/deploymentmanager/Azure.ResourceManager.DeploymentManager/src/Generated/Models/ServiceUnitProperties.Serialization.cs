@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static ServiceUnitProperties DeserializeServiceUnitProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string targetResourceGroup = default;
             DeploymentMode deploymentMode = default;
             Optional<ServiceUnitArtifacts> artifacts = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     artifacts = ServiceUnitArtifacts.DeserializeServiceUnitArtifacts(property.Value);

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceName = default;
             Optional<string> displayName = default;
             ResourceIdentifier id = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

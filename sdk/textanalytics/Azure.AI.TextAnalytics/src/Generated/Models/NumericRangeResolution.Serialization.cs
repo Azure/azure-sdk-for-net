@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static NumericRangeResolution DeserializeNumericRangeResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RangeKind rangeKind = default;
             double minimum = default;
             double maximum = default;

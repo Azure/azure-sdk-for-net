@@ -28,7 +28,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var options = new ServiceBusReceiverOptions()
             {
-                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
+                PrefetchCount = 5
             };
             var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
@@ -36,6 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);
             Assert.AreEqual(ServiceBusReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
+            Assert.AreEqual(5, receiver.PrefetchCount);
         }
 
         [Test]
@@ -416,6 +418,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             Assert.DoesNotThrowAsync(async () => await receiver.DeadLetterMessageAsync(message, properties, "header", "description"));
             await receiver.CloseAsync();
+        }
+
+        [Test]
+        public async Task UpdatedPrefetchCountReflectedInGetter()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            await using var receiver = client.CreateReceiver("fake");
+            receiver.PrefetchCount = 10;
+            Assert.AreEqual(10, receiver.PrefetchCount);
+        }
+
+        [Test]
+        public async Task UpdatePrefetchDoesNotThrowWhenClosed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            await using var receiver = client.CreateReceiver("fake");
+            await receiver.CloseAsync();
+
+            // the PrefetchCount property is internal so it is okay that we don't throw an ObjectDisposedException
+            Assert.DoesNotThrow(() => receiver.PrefetchCount = 10);
         }
     }
 }

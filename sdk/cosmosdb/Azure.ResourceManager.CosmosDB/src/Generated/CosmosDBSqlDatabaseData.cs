@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBSqlDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBSqlDatabase data model.
+    /// An Azure Cosmos DB SQL database.
+    /// </summary>
     public partial class CosmosDBSqlDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBSqlDatabaseData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CosmosDBSqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlDatabaseResourceInfo resource, CosmosDBSqlDatabasePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal CosmosDBSqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlDatabaseResourceInfo resource, CosmosDBSqlDatabasePropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
         public ExtendedCosmosDBSqlDatabaseResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
         public CosmosDBSqlDatabasePropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

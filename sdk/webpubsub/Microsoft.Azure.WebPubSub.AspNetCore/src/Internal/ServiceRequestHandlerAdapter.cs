@@ -169,11 +169,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         private THub Create<THub>() where THub : WebPubSubHub
         {
-            var hub = _provider.GetService<THub>();
-            if (hub == null)
-            {
-                hub = ActivatorUtilities.CreateInstance<THub>(_provider);
-            }
+            var hub = _provider.GetService<THub>() ?? ActivatorUtilities.CreateInstance<THub>(_provider);
 
             if (_hubRegistry.TryGetValue(nameof(hub), out _))
             {

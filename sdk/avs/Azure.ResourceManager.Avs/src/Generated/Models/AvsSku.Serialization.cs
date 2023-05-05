@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsSku DeserializeAvsSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             foreach (var property in element.EnumerateObject())
             {

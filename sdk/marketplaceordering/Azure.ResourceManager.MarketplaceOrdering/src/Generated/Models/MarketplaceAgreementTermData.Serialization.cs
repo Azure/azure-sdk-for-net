@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 
         internal static MarketplaceAgreementTermData DeserializeMarketplaceAgreementTermData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -104,7 +108,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -138,7 +141,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                licenseTextLink = null;
                                 continue;
                             }
                             licenseTextLink = new Uri(property0.Value.GetString());
@@ -148,7 +150,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privacyPolicyLink = null;
                                 continue;
                             }
                             privacyPolicyLink = new Uri(property0.Value.GetString());
@@ -158,7 +159,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                marketplaceTermsLink = null;
                                 continue;
                             }
                             marketplaceTermsLink = new Uri(property0.Value.GetString());
@@ -168,7 +168,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retrieveDatetime = property0.Value.GetDateTimeOffset("O");
@@ -183,7 +182,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accepted = property0.Value.GetBoolean();

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -200,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
 
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
@@ -261,7 +262,12 @@ namespace Azure.Messaging.ServiceBus
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
             IsSessionProcessor = isSessionEntity;
-            _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+           _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                FullyQualifiedNamespace,
+                EntityPath);
         }
 
         /// <summary>
@@ -648,7 +654,7 @@ namespace Azure.Messaging.ServiceBus
                                 _sessionProcessor,
                                 sessionId,
                                 _maxConcurrentAcceptSessionsSemaphore,
-                                _scopeFactory,
+                                _clientDiagnostics,
                                 KeepOpenOnReceiveTimeout));
                     }
                 }
@@ -657,7 +663,7 @@ namespace Azure.Messaging.ServiceBus
                     _receiverManagers.Add(
                         new ReceiverManager(
                             this,
-                            _scopeFactory,
+                            _clientDiagnostics,
                             false));
                 }
             }
@@ -676,7 +682,7 @@ namespace Azure.Messaging.ServiceBus
                                     _sessionProcessor,
                                     null,
                                     _maxConcurrentAcceptSessionsSemaphore,
-                                    _scopeFactory,
+                                    _clientDiagnostics,
                                     KeepOpenOnReceiveTimeout));
                         }
                     }

@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentimentConfidenceScorePerLabel DeserializeSentimentConfidenceScorePerLabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double positive = default;
             double neutral = default;
             double negative = default;

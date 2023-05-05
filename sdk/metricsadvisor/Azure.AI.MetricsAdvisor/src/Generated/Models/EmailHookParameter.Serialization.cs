@@ -28,6 +28,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static EmailHookParameter DeserializeEmailHookParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> toList = default;
             foreach (var property in element.EnumerateObject())
             {

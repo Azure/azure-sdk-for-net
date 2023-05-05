@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryEncryptionConfiguration DeserializeFactoryEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Uri vaultBaseUrl = default;
             Optional<string> keyVersion = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = CmkIdentityDefinition.DeserializeCmkIdentityDefinition(property.Value);

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Administration;
@@ -72,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Responsible for creating entity scopes.
         /// </summary>
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         private const int MaxRulesPerRequest = 100;
 
@@ -99,7 +100,12 @@ namespace Azure.Messaging.ServiceBus
                 subscriptionPath: SubscriptionPath,
                 retryPolicy: connection.RetryOptions.ToRetryPolicy(),
                 identifier: Identifier);
-            _scopeFactory = new EntityScopeFactory(subscriptionPath, _connection.FullyQualifiedNamespace);
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                FullyQualifiedNamespace,
+                SubscriptionPath);
         }
 
         /// <summary>
@@ -122,6 +128,42 @@ namespace Azure.Messaging.ServiceBus
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
+        ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         A rule with the same name exists under the subscription. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityAlreadyExists"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         Either the specified size of the entity is not supported or the maximum allowable quota has been reached.
+        ///         You must specify one of the supported size values, delete existing entities, or increase your quota size.
+        ///         The failure reason will be set to <see cref="ServiceBusFailureReason.QuotaExceeded"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public virtual async Task CreateRuleAsync(
@@ -146,6 +188,42 @@ namespace Azure.Messaging.ServiceBus
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         A rule with the same name exists under the subscription. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityAlreadyExists"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         Either the specified size of the entity is not supported or the maximum allowable quota has been reached.
+        ///         You must specify one of the supported size values, delete existing entities, or increase your quota size.
+        ///         The failure reason will be set to <see cref="ServiceBusFailureReason.QuotaExceeded"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public virtual async Task CreateRuleAsync(
             CreateRuleOptions options,
@@ -157,7 +235,7 @@ namespace Azure.Messaging.ServiceBus
             EntityNameFormatter.CheckValidRuleName(options.Name);
             ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CreateRuleActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();
@@ -175,7 +253,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
@@ -185,6 +262,35 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="ruleName">Name of the rule</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The specified entity could not be found. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityNotFound"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         public virtual async Task DeleteRuleAsync(
@@ -196,7 +302,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.DeleteRuleActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();
@@ -233,7 +339,7 @@ namespace Azure.Messaging.ServiceBus
             while (!cancellationToken.IsCancellationRequested)
             {
                 List<RuleProperties> ruleProperties;
-                using (DiagnosticScope scope = _scopeFactory.CreateScope(
+                using (DiagnosticScope scope = _clientDiagnostics.CreateScope(
                     DiagnosticProperty.GetRulesActivityName,
                     DiagnosticScope.ActivityKind.Client))
                 {

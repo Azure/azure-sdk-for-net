@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,18 +44,29 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
+            if (Optional.IsDefined(AdminState))
+            {
+                writer.WritePropertyName("adminState"u8);
+                writer.WriteStringValue(AdminState.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<WritableSubResource> subnet = default;
             Optional<string> ipAddress = default;
             Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
             Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
+            Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
+            Optional<LoadBalancerBackendAddressAdminState> adminState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,7 +87,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -85,7 +96,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -100,7 +110,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkInterfaceIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -110,17 +119,39 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("inboundNatRulesPortMapping"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NatRulePortMapping> array = new List<NatRulePortMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item));
+                            }
+                            inboundNatRulesPortMapping = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("adminState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            adminState = new LoadBalancerBackendAddressAdminState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration);
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState));
         }
     }
 }

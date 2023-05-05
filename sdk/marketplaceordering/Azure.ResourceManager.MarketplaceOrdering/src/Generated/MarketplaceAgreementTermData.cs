@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    /// <summary> A class representing the MarketplaceAgreementTerm data model. </summary>
+    /// <summary>
+    /// A class representing the MarketplaceAgreementTerm data model.
+    /// Terms properties for provided Publisher/Offer/Plan tuple
+    /// </summary>
     public partial class MarketplaceAgreementTermData : ResourceData
     {
         /// <summary> Initializes a new instance of MarketplaceAgreementTermData. </summary>

@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static RelationshipTypeMapping DeserializeRelationshipTypeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<RelationshipTypeFieldMapping> fieldMappings = default;
             foreach (var property in element.EnumerateObject())
             {

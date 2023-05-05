@@ -21,7 +21,7 @@ namespace Azure.AI.AnomalyDetector
                 if (AlignMode != null)
                 {
                     writer.WritePropertyName("alignMode"u8);
-                    writer.WriteStringValue(AlignMode.Value.ToSerialString());
+                    writer.WriteStringValue(AlignMode.Value.ToString());
                 }
                 else
                 {
@@ -57,6 +57,10 @@ namespace Azure.AI.AnomalyDetector
 
         internal static AlignPolicy DeserializeAlignPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AlignMode?> alignMode = default;
             Optional<FillNAMethod?> fillNAMethod = default;
             Optional<float?> paddingValue = default;
@@ -69,7 +73,7 @@ namespace Azure.AI.AnomalyDetector
                         alignMode = null;
                         continue;
                     }
-                    alignMode = property.Value.GetString().ToAlignMode();
+                    alignMode = new AlignMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fillNAMethod"u8))

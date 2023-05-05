@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ChangeProperties.DeserializeChangeProperties(property.Value);
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

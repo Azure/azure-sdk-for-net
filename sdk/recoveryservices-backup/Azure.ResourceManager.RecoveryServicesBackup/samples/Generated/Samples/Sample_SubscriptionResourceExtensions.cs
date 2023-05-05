@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupStatus_GetAzureVirtualMachineBackupStatus()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/GetBackupStatus.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/GetBackupStatus.json
             // this example is just showing the usage of "BackupStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string azureRegion = "southeastasia";
+            AzureLocation location = new AzureLocation("southeastasia");
             BackupStatusContent content = new BackupStatusContent()
             {
-                ResourceType = DataSourceType.Vm,
-                ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Compute/VirtualMachines/testVm",
+                ResourceType = BackupDataSourceType.Vm,
+                ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Compute/VirtualMachines/testVm"),
             };
-            BackupStatusResponse result = await subscriptionResource.GetBackupStatusAsync(azureRegion, content);
+            BackupStatusResult result = await subscriptionResource.GetBackupStatusAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateFeatureSupport_CheckAzureVmBackupFeatureSupport()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/BackupFeature_Validate.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/BackupFeature_Validate.json
             // this example is just showing the usage of "FeatureSupport_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string azureRegion = "southeastasia";
-            FeatureSupportContent content = new AzureVmResourceFeatureSupportRequest()
+            AzureLocation location = new AzureLocation("southeastasia");
+            FeatureSupportContent content = new VmResourceFeatureSupportContent()
             {
                 VmSize = "Basic_A0",
                 VmSku = "Premium",
             };
-            AzureVmResourceFeatureSupportResponse result = await subscriptionResource.ValidateFeatureSupportAsync(azureRegion, content);
+            VmResourceFeatureSupportResult result = await subscriptionResource.ValidateFeatureSupportAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

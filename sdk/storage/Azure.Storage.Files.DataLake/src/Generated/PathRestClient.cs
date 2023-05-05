@@ -10,6 +10,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
@@ -42,7 +43,7 @@ namespace Azure.Storage.Files.DataLake
             _xMsLeaseDuration = xMsLeaseDuration;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string owner, string group, string acl, string proposedLeaseId, long? leaseDuration, PathExpiryOptions? expiryOptions, string expiresOn)
+        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string owner, string group, string acl, string proposedLeaseId, long? leaseDuration, PathExpiryOptions? expiryOptions, string expiresOn, string encryptionContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,6 +184,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-expiry-time", expiresOn);
             }
+            if (encryptionContext != null)
+            {
+                request.Headers.Add("x-ms-encryption-context", encryptionContext);
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -221,11 +226,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: &quot;*&quot;. </remarks>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -233,7 +239,7 @@ namespace Azure.Storage.Files.DataLake
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -271,11 +277,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: &quot;*&quot;. </remarks>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -283,7 +290,7 @@ namespace Azure.Storage.Files.DataLake
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -453,7 +460,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -510,7 +517,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -588,7 +595,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -616,7 +623,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -706,7 +713,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -738,7 +745,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -808,7 +815,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -833,7 +840,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -903,7 +910,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -928,7 +935,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1008,7 +1015,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1034,7 +1041,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1096,7 +1103,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1123,7 +1130,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1259,7 +1266,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1297,7 +1304,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1401,7 +1408,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1437,7 +1444,7 @@ namespace Azure.Storage.Files.DataLake
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1479,7 +1486,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1498,7 +1505,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1538,7 +1545,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1556,7 +1563,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

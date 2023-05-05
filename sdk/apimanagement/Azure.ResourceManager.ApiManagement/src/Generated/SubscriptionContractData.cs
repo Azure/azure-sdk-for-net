@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the SubscriptionContract data model. </summary>
+    /// <summary>
+    /// A class representing the SubscriptionContract data model.
+    /// Subscription details.
+    /// </summary>
     public partial class SubscriptionContractData : ResourceData
     {
         /// <summary> Initializes a new instance of SubscriptionContractData. </summary>

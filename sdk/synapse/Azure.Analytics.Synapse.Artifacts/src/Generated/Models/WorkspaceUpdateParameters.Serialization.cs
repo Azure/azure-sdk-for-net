@@ -40,6 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WorkspaceUpdateParameters DeserializeWorkspaceUpdateParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<WorkspaceIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -63,7 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = WorkspaceIdentity.DeserializeWorkspaceIdentity(property.Value);

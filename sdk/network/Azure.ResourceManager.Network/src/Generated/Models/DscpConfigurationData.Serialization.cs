@@ -97,12 +97,26 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(QosDefinitionCollection))
+            {
+                writer.WritePropertyName("qosDefinitionCollection"u8);
+                writer.WriteStartArray();
+                foreach (var item in QosDefinitionCollection)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DscpConfigurationData DeserializeDscpConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -115,6 +129,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
+            Optional<IList<DscpQosDefinition>> qosDefinitionCollection = default;
             Optional<string> qosCollectionId = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> associatedNetworkInterfaces = default;
             Optional<Guid> resourceGuid = default;
@@ -125,7 +140,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -135,7 +149,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -150,7 +163,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -160,7 +172,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -170,7 +181,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -194,7 +204,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<int> array = new List<int>();
@@ -209,7 +218,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<QosIPRange> array = new List<QosIPRange>();
@@ -224,7 +232,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<QosIPRange> array = new List<QosIPRange>();
@@ -239,7 +246,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<QosPortRange> array = new List<QosPortRange>();
@@ -254,7 +260,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<QosPortRange> array = new List<QosPortRange>();
@@ -269,10 +274,23 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new ProtocolType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("qosDefinitionCollection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DscpQosDefinition> array = new List<DscpQosDefinition>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
+                            }
+                            qosDefinitionCollection = array;
                             continue;
                         }
                         if (property0.NameEquals("qosCollectionId"u8))
@@ -284,7 +302,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
@@ -299,7 +316,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceGuid = property0.Value.GetGuid();
@@ -309,7 +325,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -319,7 +334,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), Optional.ToList(qosDefinitionCollection), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

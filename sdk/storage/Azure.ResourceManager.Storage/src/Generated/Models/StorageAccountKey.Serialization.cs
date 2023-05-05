@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountKey DeserializeStorageAccountKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<string> value = default;
             Optional<StorageAccountKeyPermission> permissions = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     permissions = property.Value.GetString().ToStorageAccountKeyPermission();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     creationTime = property.Value.GetDateTimeOffset("O");

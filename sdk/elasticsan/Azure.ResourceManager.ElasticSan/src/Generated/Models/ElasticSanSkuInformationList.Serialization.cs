@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanSkuInformationList DeserializeElasticSanSkuInformationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ElasticSanSkuInformation>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ElasticSanSkuInformation> array = new List<ElasticSanSkuInformation>();

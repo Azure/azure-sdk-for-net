@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsStorageAccount DeserializeOperationalInsightsStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string key = default;
             foreach (var property in element.EnumerateObject())

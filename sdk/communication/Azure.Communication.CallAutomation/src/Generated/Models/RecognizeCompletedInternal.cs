@@ -14,9 +14,47 @@ namespace Azure.Communication.CallAutomation
         internal RecognizeCompletedInternal()
         {
         }
-        /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
+
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="recognitionType">
+        /// Determines the sub-type of the recognize operation.
+        /// In case of cancel operation the this field is not set and is returned empty
+        /// </param>
+        /// <param name="collectTonesResult">
+        /// Defines the result for RecognitionType = Dtmf
+        /// Would be replaced by DtmfResult after server sdk renewed
+        /// </param>
+        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </param>
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            RecognitionType = recognitionType;
+            CollectTonesResult = collectTonesResult;
+            DtmfResult = dtmfResult;
+            ChoiceResult = choiceResult;
+            SpeechResult = speechResult;
+        }
+        /// <summary>
+        /// Defines the result for RecognitionType = Dtmf
+        /// Would be replaced by DtmfResult after server sdk renewed
+        /// </summary>
         public CollectTonesResult CollectTonesResult { get; }
+        /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
+        public DtmfResult DtmfResult { get; }
         /// <summary> Defines the result for RecognitionType = Choices. </summary>
         public ChoiceResult ChoiceResult { get; }
+        /// <summary> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </summary>
+        public SpeechResult SpeechResult { get; }
     }
 }

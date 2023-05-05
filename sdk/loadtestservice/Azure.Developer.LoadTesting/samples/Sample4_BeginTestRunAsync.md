@@ -31,7 +31,7 @@ var data = new
 
 try
 {
-    TestRunOperation operation = await loadTestRunClient.BeginTestRunAsync(
+    TestRunResultOperation operation = await loadTestRunClient.BeginTestRunAsync(
             WaitUntil.Started, testRunId, RequestContent.Create(data)
        );
 

@@ -15,6 +15,10 @@ namespace Azure.Maps.Rendering
     {
         internal static MapTileSet DeserializeMapTileSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tilejson = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -76,7 +80,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -91,7 +94,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -106,7 +108,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -121,7 +122,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minzoom = property.Value.GetInt32();
@@ -131,7 +131,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxzoom = property.Value.GetInt32();
@@ -141,7 +140,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();
@@ -156,7 +154,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();

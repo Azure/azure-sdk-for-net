@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static NotificationRecipient DeserializeNotificationRecipient(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<string> emailAddress = default;
             Optional<string> displayName = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     principalId = property.Value.GetGuid();

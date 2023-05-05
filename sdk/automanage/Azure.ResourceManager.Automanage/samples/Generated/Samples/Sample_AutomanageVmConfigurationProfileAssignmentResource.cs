@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Automanage.Samples
             // invoke the operation
             AutomanageConfigurationProfileAssignmentData data = new AutomanageConfigurationProfileAssignmentData()
             {
-                Properties = new ConfigurationProfileAssignmentProperties()
+                Properties = new AutomanageConfigurationProfileAssignmentProperties()
                 {
-                    ConfigurationProfile = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction",
+                    ConfigurationProfile = new ResourceIdentifier("/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction"),
                 },
             };
             ArmOperation<AutomanageVmConfigurationProfileAssignmentResource> lro = await automanageVmConfigurationProfileAssignment.UpdateAsync(WaitUntil.Completed, data);

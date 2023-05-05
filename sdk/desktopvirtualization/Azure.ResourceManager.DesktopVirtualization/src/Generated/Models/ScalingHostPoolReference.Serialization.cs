@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> hostPoolArmPath = default;
             Optional<bool> scalingPlanEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostPoolArmPath = new ResourceIdentifier(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingPlanEnabled = property.Value.GetBoolean();

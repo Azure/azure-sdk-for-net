@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlServerAdministratorData DeserializePostgreSqlServerAdministratorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.PostgreSql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             administratorType = new PostgreSqlAdministratorType(property0.Value.GetString());
@@ -109,7 +111,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sid = property0.Value.GetGuid();
@@ -119,7 +120,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();

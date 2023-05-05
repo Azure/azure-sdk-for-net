@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WindowsVmGuestPatchAutomaticByPlatformSettings DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsVmGuestPatchAutomaticByPlatformRebootSetting> rebootSetting = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rebootSetting = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(property.Value.GetString());

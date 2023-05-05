@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static AvailableCognitiveServicesSku DeserializeAvailableCognitiveServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<string> tier = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesSkuRestrictions> array = new List<CognitiveServicesSkuRestrictions>();

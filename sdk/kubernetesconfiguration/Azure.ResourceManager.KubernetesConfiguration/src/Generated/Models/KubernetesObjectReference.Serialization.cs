@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static KubernetesObjectReference DeserializeKubernetesObjectReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @namespace = default;
             foreach (var property in element.EnumerateObject())

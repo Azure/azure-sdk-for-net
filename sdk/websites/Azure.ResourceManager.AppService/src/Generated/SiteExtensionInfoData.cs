@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteExtensionInfo data model. </summary>
+    /// <summary>
+    /// A class representing the SiteExtensionInfo data model.
+    /// Site Extension Information.
+    /// </summary>
     public partial class SiteExtensionInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>

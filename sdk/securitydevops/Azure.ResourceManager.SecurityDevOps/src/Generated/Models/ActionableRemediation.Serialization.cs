@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static ActionableRemediation DeserializeActionableRemediation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ActionableRemediationState> state = default;
             Optional<IList<string>> severityLevels = default;
             Optional<IList<ActionableRemediationRuleCategory>> categories = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new ActionableRemediationState(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActionableRemediationRuleCategory> array = new List<ActionableRemediationRuleCategory>();
@@ -101,7 +102,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);

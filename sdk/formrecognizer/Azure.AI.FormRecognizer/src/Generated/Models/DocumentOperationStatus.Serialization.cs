@@ -23,11 +23,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         public static DocumentOperationStatus ToDocumentOperationStatus(this string value)
         {
-            if (string.Equals(value, "notStarted", StringComparison.InvariantCultureIgnoreCase)) return DocumentOperationStatus.NotStarted;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return DocumentOperationStatus.Running;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return DocumentOperationStatus.Failed;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return DocumentOperationStatus.Succeeded;
-            if (string.Equals(value, "canceled", StringComparison.InvariantCultureIgnoreCase)) return DocumentOperationStatus.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notStarted")) return DocumentOperationStatus.NotStarted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return DocumentOperationStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return DocumentOperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return DocumentOperationStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canceled")) return DocumentOperationStatus.Canceled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentOperationStatus value.");
         }
     }

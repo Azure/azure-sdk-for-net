@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_SshPublicKeyCollection
     {
-        // SshPublicKeys_ListByResourceGroup_MaximumSet_Gen
+        // SshPublicKey_ListByResourceGroup_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SshPublicKeysListByResourceGroupMaximumSetGen()
+        public async Task GetAll_SshPublicKeyListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/sshPublicKeyExamples/SshPublicKeys_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/sshPublicKeyExamples/SshPublicKey_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "SshPublicKeys_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // SshPublicKeys_ListByResourceGroup_MinimumSet_Gen
+        // SshPublicKey_ListByResourceGroup_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SshPublicKeysListByResourceGroupMinimumSetGen()
+        public async Task GetAll_SshPublicKeyListByResourceGroupMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/sshPublicKeyExamples/SshPublicKeys_ListByResourceGroup_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/sshPublicKeyExamples/SshPublicKey_ListByResourceGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "SshPublicKeys_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

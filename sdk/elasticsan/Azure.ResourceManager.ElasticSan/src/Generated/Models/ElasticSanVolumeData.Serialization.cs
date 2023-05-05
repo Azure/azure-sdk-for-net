@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.ElasticSan
 
         internal static ElasticSanVolumeData DeserializeElasticSanVolumeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -112,7 +114,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             volumeId = property0.Value.GetGuid();
@@ -122,7 +123,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
@@ -132,7 +132,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sizeGiB = property0.Value.GetInt64();
@@ -142,7 +141,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);

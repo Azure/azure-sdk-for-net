@@ -31,25 +31,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
-                if (logRecord.Exception != null)
+                try
                 {
-                    telemetryItem.Data = new MonitorBase
+                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
+                    if (logRecord.Exception != null)
                     {
-                        BaseType = "ExceptionData",
-                        BaseData = new TelemetryExceptionData(Version, logRecord),
-                    };
-                }
-                else
-                {
-                    telemetryItem.Data = new MonitorBase
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "ExceptionData",
+                            BaseData = new TelemetryExceptionData(Version, logRecord),
+                        };
+                    }
+                    else
                     {
-                        BaseType = "MessageData",
-                        BaseData = new MessageData(Version, logRecord),
-                    };
-                }
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "MessageData",
+                            BaseData = new MessageData(Version, logRecord),
+                        };
+                    }
 
-                telemetryItems.Add(telemetryItem);
+                    telemetryItems.Add(telemetryItem);
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertLogRecord", ex);
+                }
             }
 
             return telemetryItems;
@@ -57,17 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
         {
-            string? message = logRecord.FormattedMessage;
-
-            // Both logRecord.State and logRecord.StateValues will not be set at the same time for LogRecord.
-            // Either logRecord.State != null or logRecord.StateValues will be called.
-            if (logRecord.State != null)
-            {
-                if (logRecord.State is IReadOnlyCollection<KeyValuePair<string, object?>> stateDictionary)
-                {
-                    ExtractProperties(ref message, properties, stateDictionary);
-                }
-            }
+            string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
             if (logRecord.StateValues != null)
             {
@@ -107,16 +104,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (scopeItem.Key == "{OriginalFormat}")
                     {
-                        properties.Add($"OriginalFormatScope_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}", Convert.ToString(scope.Scope?.ToString(), CultureInfo.InvariantCulture));
+                        properties.Add($"OriginalFormatScope_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}",
+                                        Convert.ToString(scope.Scope, CultureInfo.InvariantCulture) ?? "null");
                     }
                     else if (!properties.TryGetValue(scopeItem.Key, out _))
                     {
-                        properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                        properties.Add(scopeItem.Key,
+                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture) ?? "null");
                     }
                     else
                     {
                         properties.Add($"{scopeItem.Key}_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}_{s_depthCache.GetOrAdd(valueDepth, s_convertDepthToStringRef)}",
-                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture) ?? "null");
                         valueDepth++;
                     }
                 }
@@ -141,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (exceptionStackFrame != null)
             {
-                MethodBase methodBase = exceptionStackFrame.GetMethod();
+                MethodBase? methodBase = exceptionStackFrame.GetMethod();
 
                 if (methodBase != null)
                 {
@@ -201,12 +200,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
                         else
                         {
-                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                         }
                     }
                     else
                     {
-                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                     }
                 }
             }

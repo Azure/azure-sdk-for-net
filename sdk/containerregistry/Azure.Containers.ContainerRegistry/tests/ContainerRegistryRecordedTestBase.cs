@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -34,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
         }
 
-        public ContainerRegistryBlobClient CreateBlobClient(string repository, int? chunkSize = default)
+        public ContainerRegistryContentClient CreateBlobClient(string repository, int? chunkSize = default)
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri authorityHost = GetAuthorityHost(endpoint);
@@ -45,15 +44,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Audience = audience
             });
 
-            if (chunkSize.HasValue)
-            {
-                options.MaxChunkSize = chunkSize.Value;
-            }
-
-            return InstrumentClient(new ContainerRegistryBlobClient(
+            return InstrumentClient(new ContainerRegistryContentClient(
                     new Uri(endpoint),
-                    TestEnvironment.Credential,
                     repository,
+                    TestEnvironment.Credential,
                     options));
         }
 
@@ -177,14 +171,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
         }
 
-        private ContainerRegistryBlobClient GetUploadClient(Uri endpoint, string repository)
+        private ContainerRegistryContentClient GetUploadClient(Uri endpoint, string repository)
         {
             Uri authorityHost = GetAuthorityHost(endpoint.ToString());
 
             // We won't record the set-up calls, so don't instrument this client.
-            return new ContainerRegistryBlobClient(endpoint,
-                TestEnvironment.Credential,
+            return new ContainerRegistryContentClient(endpoint,
                 repository,
+                TestEnvironment.Credential,
                 new ContainerRegistryClientOptions()
                 {
                     Audience = GetAudience(authorityHost)

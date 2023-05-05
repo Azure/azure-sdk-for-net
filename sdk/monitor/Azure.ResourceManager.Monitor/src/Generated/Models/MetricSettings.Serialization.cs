@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricSettings DeserializeMetricSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> timeGrain = default;
             Optional<string> category = default;
             bool enabled = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeGrain = property.Value.GetTimeSpan("P");
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);

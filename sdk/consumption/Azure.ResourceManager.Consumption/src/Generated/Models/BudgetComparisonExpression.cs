@@ -12,13 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The comparison expression to be used in the budgets. </summary>
+    /// <summary>
+    /// The comparison expression to be used in the budgets.
+    /// Serialized Name: BudgetComparisonExpression
+    /// </summary>
     public partial class BudgetComparisonExpression
     {
         /// <summary> Initializes a new instance of BudgetComparisonExpression. </summary>
-        /// <param name="name"> The name of the column to use in comparison. </param>
-        /// <param name="operator"> The operator to use for comparison. </param>
-        /// <param name="values"> Array of values to use for comparison. </param>
+        /// <param name="name">
+        /// The name of the column to use in comparison.
+        /// Serialized Name: BudgetComparisonExpression.name
+        /// </param>
+        /// <param name="operator">
+        /// The operator to use for comparison.
+        /// Serialized Name: BudgetComparisonExpression.operator
+        /// </param>
+        /// <param name="values">
+        /// Array of values to use for comparison
+        /// Serialized Name: BudgetComparisonExpression.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public BudgetComparisonExpression(string name, BudgetOperatorType @operator, IEnumerable<string> values)
         {
@@ -31,9 +43,18 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of BudgetComparisonExpression. </summary>
-        /// <param name="name"> The name of the column to use in comparison. </param>
-        /// <param name="operator"> The operator to use for comparison. </param>
-        /// <param name="values"> Array of values to use for comparison. </param>
+        /// <param name="name">
+        /// The name of the column to use in comparison.
+        /// Serialized Name: BudgetComparisonExpression.name
+        /// </param>
+        /// <param name="operator">
+        /// The operator to use for comparison.
+        /// Serialized Name: BudgetComparisonExpression.operator
+        /// </param>
+        /// <param name="values">
+        /// Array of values to use for comparison
+        /// Serialized Name: BudgetComparisonExpression.values
+        /// </param>
         internal BudgetComparisonExpression(string name, BudgetOperatorType @operator, IList<string> values)
         {
             Name = name;
@@ -41,11 +62,20 @@ namespace Azure.ResourceManager.Consumption.Models
             Values = values;
         }
 
-        /// <summary> The name of the column to use in comparison. </summary>
+        /// <summary>
+        /// The name of the column to use in comparison.
+        /// Serialized Name: BudgetComparisonExpression.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The operator to use for comparison. </summary>
+        /// <summary>
+        /// The operator to use for comparison.
+        /// Serialized Name: BudgetComparisonExpression.operator
+        /// </summary>
         public BudgetOperatorType Operator { get; set; }
-        /// <summary> Array of values to use for comparison. </summary>
+        /// <summary>
+        /// Array of values to use for comparison
+        /// Serialized Name: BudgetComparisonExpression.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

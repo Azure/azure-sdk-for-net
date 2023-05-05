@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PipelineVariableSpecification DeserializePipelineVariableSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PipelineVariableType type = default;
             Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the ScalingPlan data model. </summary>
+    /// <summary>
+    /// A class representing the ScalingPlan data model.
+    /// Represents a scaling plan definition.
+    /// </summary>
     public partial class ScalingPlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>

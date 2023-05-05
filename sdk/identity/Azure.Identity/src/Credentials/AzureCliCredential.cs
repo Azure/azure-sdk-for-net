@@ -28,7 +28,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        internal TimeSpan CliProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
@@ -73,8 +73,8 @@ namespace Azure.Identity
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             TenantId = options?.TenantId;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
-            CliProcessTimeout = options?.CliProcessTimeout ?? TimeSpan.FromSeconds(13);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), CliProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
 
             string output;
             try

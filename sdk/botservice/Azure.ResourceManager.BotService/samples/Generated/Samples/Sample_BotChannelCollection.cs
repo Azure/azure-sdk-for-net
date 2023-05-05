@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAlexaChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutAlexaChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutAlexaChannel.json
             // this example is just showing the usage of "Channels_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.AlexaChannel;
+            BotChannelName channelName = BotChannelName.AlexaChannel;
             BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new AlexaChannel()
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutChannel.json
             // this example is just showing the usage of "Channels_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.EmailChannel;
+            BotChannelName channelName = BotChannelName.EmailChannel;
             BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new EmailChannel()
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateDirectLineSpeechChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutDirectLineSpeechChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutDirectLineSpeechChannel.json
             // this example is just showing the usage of "Channels_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.DirectLineSpeechChannel;
+            BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
             BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new DirectLineSpeechChannel()
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateEmailChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutEmailChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutEmailChannel.json
             // this example is just showing the usage of "Channels_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.EmailChannel;
+            BotChannelName channelName = BotChannelName.EmailChannel;
             BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new EmailChannel()
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateLineChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutLineChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutLineChannel.json
             // this example is just showing the usage of "Channels_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.LineChannel;
+            BotChannelName channelName = BotChannelName.LineChannel;
             BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new LineChannel()
@@ -257,7 +257,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAlexaChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetAlexaChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetAlexaChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -277,7 +277,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.AlexaChannel;
+            BotChannelName channelName = BotChannelName.AlexaChannel;
             BotChannelResource result = await collection.GetAsync(channelName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -292,7 +292,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAlexaChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetAlexaChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetAlexaChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +312,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.AlexaChannel;
+            BotChannelName channelName = BotChannelName.AlexaChannel;
             bool result = await collection.ExistsAsync(channelName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -323,7 +323,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -343,7 +343,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.EmailChannel;
+            BotChannelName channelName = BotChannelName.EmailChannel;
             BotChannelResource result = await collection.GetAsync(channelName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -358,7 +358,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.EmailChannel;
+            BotChannelName channelName = BotChannelName.EmailChannel;
             bool result = await collection.ExistsAsync(channelName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -389,7 +389,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDirectLineSpeechChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetDirectLineSpeechChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetDirectLineSpeechChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -409,7 +409,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.DirectLineSpeechChannel;
+            BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
             BotChannelResource result = await collection.GetAsync(channelName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -424,7 +424,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDirectLineSpeechChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetDirectLineSpeechChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetDirectLineSpeechChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -444,7 +444,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.DirectLineSpeechChannel;
+            BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
             bool result = await collection.ExistsAsync(channelName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -455,7 +455,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetLineChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetLineChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetLineChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -475,7 +475,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.LineChannel;
+            BotChannelName channelName = BotChannelName.LineChannel;
             BotChannelResource result = await collection.GetAsync(channelName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -490,7 +490,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetLineChannel()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetLineChannel.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetLineChannel.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -510,7 +510,7 @@ ChannelAccessToken = "channelAccessToken",
             BotChannelCollection collection = bot.GetBotChannels();
 
             // invoke the operation
-            ChannelName channelName = ChannelName.LineChannel;
+            BotChannelName channelName = BotChannelName.LineChannel;
             bool result = await collection.ExistsAsync(channelName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -521,7 +521,7 @@ ChannelAccessToken = "channelAccessToken",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListChannelsByResourceGroup()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListChannelsByBotService.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListChannelsByBotService.json
             // this example is just showing the usage of "Channels_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

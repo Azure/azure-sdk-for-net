@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealActions DeserializeAutoHealActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoHealActionType> actionType = default;
             Optional<AutoHealCustomAction> customAction = default;
             Optional<string> minProcessExecutionTime = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionType = property.Value.GetString().ToAutoHealActionType();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);

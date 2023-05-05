@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static ManagedHsmCreateMode ToManagedHsmCreateMode(this string value)
         {
-            if (string.Equals(value, "default", StringComparison.InvariantCultureIgnoreCase)) return ManagedHsmCreateMode.Default;
-            if (string.Equals(value, "recover", StringComparison.InvariantCultureIgnoreCase)) return ManagedHsmCreateMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return ManagedHsmCreateMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover")) return ManagedHsmCreateMode.Recover;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmCreateMode value.");
         }
     }

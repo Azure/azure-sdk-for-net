@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TokenSentimentValue sentiment = default;
             TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;

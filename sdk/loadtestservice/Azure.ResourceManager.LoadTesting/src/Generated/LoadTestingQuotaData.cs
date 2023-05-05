@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    /// <summary> A class representing the LoadTestingQuota data model. </summary>
+    /// <summary>
+    /// A class representing the LoadTestingQuota data model.
+    /// Quota bucket details object.
+    /// </summary>
     public partial class LoadTestingQuotaData : ResourceData
     {
         /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>

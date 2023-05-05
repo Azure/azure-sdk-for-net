@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static ScheduleData DeserializeScheduleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -81,7 +85,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -100,7 +103,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new ScheduledType(property0.Value.GetString());
@@ -110,7 +112,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             frequency = new ScheduledFrequency(property0.Value.GetString());
@@ -130,7 +131,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new EnableStatus(property0.Value.GetString());

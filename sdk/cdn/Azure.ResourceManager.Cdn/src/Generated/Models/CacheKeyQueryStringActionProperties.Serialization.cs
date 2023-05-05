@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheKeyQueryStringActionProperties DeserializeCacheKeyQueryStringActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
             Optional<string> queryParameters = default;

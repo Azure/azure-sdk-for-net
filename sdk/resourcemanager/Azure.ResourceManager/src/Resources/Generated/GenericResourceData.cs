@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the GenericResource data model. </summary>
+    /// <summary>
+    /// A class representing the GenericResource data model.
+    /// Resource information.
+    /// </summary>
     public partial class GenericResourceData : TrackedResourceExtendedData
     {
         /// <summary> Initializes a new instance of GenericResourceData. </summary>

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterValidationErrorInfo DeserializeHDInsightClusterValidationErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> errorResource = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

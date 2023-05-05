@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary> A class representing the ContainerGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerGroup data model.
+    /// A container group.
+    /// </summary>
     public partial class ContainerGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerGroupData. </summary>

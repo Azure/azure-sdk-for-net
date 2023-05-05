@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlDBMigrationStatusDetails DeserializeSqlDBMigrationStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationState = default;
             Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
             Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();

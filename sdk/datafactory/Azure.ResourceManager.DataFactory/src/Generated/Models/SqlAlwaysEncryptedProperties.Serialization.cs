@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlAlwaysEncryptedProperties DeserializeSqlAlwaysEncryptedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipalId = BinaryData.FromString(property.Value.GetRawText());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);

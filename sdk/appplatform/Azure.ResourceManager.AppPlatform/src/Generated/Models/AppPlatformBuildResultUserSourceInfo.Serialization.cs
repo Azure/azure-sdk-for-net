@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildResultUserSourceInfo DeserializeAppPlatformBuildResultUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> buildResultId = default;
             string type = default;
             Optional<string> version = default;

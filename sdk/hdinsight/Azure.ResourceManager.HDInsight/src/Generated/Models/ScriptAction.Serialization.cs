@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Uri uri = default;
             string parameters = default;

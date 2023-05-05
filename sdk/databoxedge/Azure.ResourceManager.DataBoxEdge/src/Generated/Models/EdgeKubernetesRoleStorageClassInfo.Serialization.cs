@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeKubernetesRoleStorageClassInfo DeserializeEdgeKubernetesRoleStorageClassInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<PosixComplianceStatus> posixCompliant = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     posixCompliant = new PosixComplianceStatus(property.Value.GetString());

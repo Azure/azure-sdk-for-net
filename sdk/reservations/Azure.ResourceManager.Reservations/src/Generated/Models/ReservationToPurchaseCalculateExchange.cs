@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationToPurchaseCalculateExchange. </summary>
-        /// <param name="properties"></param>
-        /// <param name="billingCurrencyTotal"></param>
+        /// <param name="properties"> The request for reservation purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         internal ReservationToPurchaseCalculateExchange(ReservationPurchaseContent properties, PurchasePrice billingCurrencyTotal)
         {
             Properties = properties;
             BillingCurrencyTotal = billingCurrencyTotal;
         }
 
-        /// <summary> Gets the properties. </summary>
+        /// <summary> The request for reservation purchase. </summary>
         public ReservationPurchaseContent Properties { get; }
-        /// <summary> Gets the billing currency total. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotal { get; }
     }
 }

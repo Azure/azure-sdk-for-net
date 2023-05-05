@@ -11,17 +11,16 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractKeyPhrases()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-
-            #region Snippet:ExtractKeyPhrases
-            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
-                                little sister thinks it is funny, I am worried it has the cold that I got last week.
-                                We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
-                                will be covered by the cat's insurance.
-                                It might be good to not let it sleep in my room for a while.";
+            #region Snippet:Sample3_ExtractKeyPhrases
+            string document =
+                "My cat might need to see a veterinarian. It has been sneezing more than normal, and although my"
+                + " little sister thinks it is funny, I am worried it has the cold that I got last week. We are going"
+                + " to call tomorrow and try to schedule an appointment for this week. Hopefully it will be covered by"
+                + " the cat's insurance. It might be good to not let it sleep in my room for a while.";
 
             try
             {

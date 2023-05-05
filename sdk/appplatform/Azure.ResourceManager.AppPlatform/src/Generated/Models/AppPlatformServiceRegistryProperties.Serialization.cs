@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceRegistryProperties DeserializeAppPlatformServiceRegistryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
             Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformServiceRegistryProvisioningState(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformServiceRegistryInstance> array = new List<AppPlatformServiceRegistryInstance>();

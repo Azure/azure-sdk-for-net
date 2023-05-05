@@ -6,9 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b9cc06a588c2224d95effe885734444b-591d32f3013ffb4d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "746a84a57dfa846c849f461af86b012c",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0-alpha.20230427.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4918b7e4d0d739f06be5b15cc0c0a77a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:47:50 GMT",
+        "Date": "Thu, 27 Apr 2023 10:16:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "022f7d77-0906-43c5-a4aa-f0eedc4fed9d",
+        "x-ms-correlation-request-id": "fb30b139-780b-480d-9a3e-ffc09bf1603b",
         "x-ms-ratelimit-remaining-tenant-reads": "11997",
-        "x-ms-request-id": "022f7d77-0906-43c5-a4aa-f0eedc4fed9d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034751Z:022f7d77-0906-43c5-a4aa-f0eedc4fed9d"
+        "x-ms-request-id": "fb30b139-780b-480d-9a3e-ffc09bf1603b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230427T101601Z:fb30b139-780b-480d-9a3e-ffc09bf1603b"
       },
       "ResponseBody": {
         "value": [
@@ -38,32 +37,31 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policyDefinitions?api-version=2020-09-01\u0026$filter=category%20eq%20\u0027Compute\u0027",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policyDefinitions?api-version=2021-06-01\u0026$filter=category%20eq%20\u0027Compute\u0027",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1d305ad3e9f30e4eb4a4808b22f3780d-216db550ad36464a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "8d08076fdc3e6934b4ffb2981793e149",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0-alpha.20230427.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9aa969e0809c508a0361a49248a0691f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "58530",
+        "Content-Length": "58982",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:47:50 GMT",
+        "Date": "Thu, 27 Apr 2023 10:16:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f9e9a76c-6356-45df-9c5d-005135cc5187",
+        "x-ms-correlation-request-id": "70d3661d-ca24-49dd-9605-e0587ec59aab",
         "x-ms-ratelimit-remaining-tenant-reads": "11996",
-        "x-ms-request-id": "f9e9a76c-6356-45df-9c5d-005135cc5187",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034751Z:f9e9a76c-6356-45df-9c5d-005135cc5187"
+        "x-ms-request-id": "70d3661d-ca24-49dd-9605-e0587ec59aab",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230427T101601Z:70d3661d-ca24-49dd-9605-e0587ec59aab"
       },
       "ResponseBody": {
         "value": [
@@ -960,13 +958,14 @@
           },
           {
             "properties": {
-              "displayName": "Resource logs in Virtual Machine Scale Sets should be enabled",
+              "displayName": "[Deprecated]: Resource logs in Virtual Machine Scale Sets should be enabled",
               "policyType": "BuiltIn",
               "mode": "Indexed",
-              "description": "It is recommended to enable Logs so that activity trail can be recreated when investigations are required in the event of an incident or a compromise.",
+              "description": "This policy definition is no longer the recommended way to achieve its intent. Instead of continuing to use this policy, we recommend you assign this replacement policy with policy ID a3a6ea0c-e018-4933-9ef0-5aaa1501449b. Learn more about policy definition deprecation at aka.ms/policydefdeprecation",
               "metadata": {
-                "version": "2.1.0",
-                "category": "Compute"
+                "version": "2.1.0-deprecated",
+                "category": "Compute",
+                "deprecated": true
               },
               "parameters": {
                 "effect": {
@@ -1085,7 +1084,7 @@
               "mode": "Indexed",
               "description": "Disabling public network access improves security by ensuring that a managed disk isn\u0027t exposed on the public internet. Creating private endpoints can limit exposure of managed disks. Learn more at: https://aka.ms/disksprivatelinksdoc.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "category": "Compute"
               },
               "parameters": {
@@ -1115,6 +1114,10 @@
                         "DenyAll",
                         "AllowPrivate"
                       ]
+                    },
+                    {
+                      "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                      "notEquals": "Disabled"
                     }
                   ]
                 },
@@ -1134,7 +1137,7 @@
               "mode": "Indexed",
               "description": "Disable public network access for your managed disk resource so that it\u0027s not accessible over the public internet. This can reduce data leakage risks. Learn more at: https://aka.ms/disksprivatelinksdoc.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "category": "Compute"
               },
               "parameters": {
@@ -1184,6 +1187,10 @@
                         "AllowPrivate",
                         "DenyAll"
                       ]
+                    },
+                    {
+                      "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                      "notEquals": "Disabled"
                     }
                   ]
                 },
@@ -1204,6 +1211,11 @@
                         "operation": "addOrReplace",
                         "field": "Microsoft.Compute/disks/networkAccessPolicy",
                         "value": "AllowPrivate"
+                      },
+                      {
+                        "operation": "addOrReplace",
+                        "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                        "value": "Disabled"
                       }
                     ]
                   }
@@ -2485,8 +2497,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1347828861",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1488320733",
+    "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningUriFileJobInput DeserializeMachineLearningUriFileJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningInputDeliveryMode> mode = default;
             Uri uri = default;
             Optional<string> description = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new MachineLearningInputDeliveryMode(property.Value.GetString());

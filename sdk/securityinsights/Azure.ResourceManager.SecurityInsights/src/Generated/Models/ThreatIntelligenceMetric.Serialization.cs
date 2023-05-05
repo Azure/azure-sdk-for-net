@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastUpdatedTimeUtc = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();

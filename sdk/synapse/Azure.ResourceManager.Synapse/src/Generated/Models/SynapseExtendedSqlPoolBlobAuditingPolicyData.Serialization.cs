@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseExtendedSqlPoolBlobAuditingPolicyData DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -117,7 +121,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -141,7 +144,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToSynapseBlobAuditingPolicyState();
@@ -161,7 +163,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retentionDays = property0.Value.GetInt32();
@@ -171,7 +172,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -186,7 +186,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountSubscriptionId = property0.Value.GetGuid();
@@ -196,7 +195,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isStorageSecondaryKeyInUse = property0.Value.GetBoolean();
@@ -206,7 +204,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAzureMonitorTargetEnabled = property0.Value.GetBoolean();
@@ -216,7 +213,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             queueDelayMs = property0.Value.GetInt32();

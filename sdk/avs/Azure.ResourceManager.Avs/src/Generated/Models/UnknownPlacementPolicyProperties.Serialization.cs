@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownPlacementPolicyProperties DeserializeUnknownPlacementPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PlacementPolicyType type = "Unknown";
             Optional<PlacementPolicyState> state = default;
             Optional<string> displayName = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new PlacementPolicyState(property.Value.GetString());
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());

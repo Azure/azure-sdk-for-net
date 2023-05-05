@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static IngressConfig DeserializeIngressConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> readTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readTimeoutInSeconds = property.Value.GetInt32();

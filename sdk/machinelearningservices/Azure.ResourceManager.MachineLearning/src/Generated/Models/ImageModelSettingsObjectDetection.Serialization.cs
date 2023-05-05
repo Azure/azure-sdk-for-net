@@ -532,6 +532,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> boxDetectionsPerImage = default;
             Optional<float?> boxScoreThreshold = default;
             Optional<int?> imageSize = default;
@@ -633,7 +637,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelSize = new MachineLearningModelSize(property.Value.GetString());
@@ -703,7 +706,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationMetricType = new ValidationMetricType(property.Value.GetString());
@@ -883,7 +885,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     learningRateScheduler = new LearningRateScheduler(property.Value.GetString());
@@ -943,7 +944,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimizer = new StochasticOptimizer(property.Value.GetString());

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> A class representing the BillingSubscriptionAlias data model. </summary>
+    /// <summary>
+    /// A class representing the BillingSubscriptionAlias data model.
+    /// A billing subscription alias.
+    /// </summary>
     public partial class BillingSubscriptionAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingSubscriptionAliasData. </summary>

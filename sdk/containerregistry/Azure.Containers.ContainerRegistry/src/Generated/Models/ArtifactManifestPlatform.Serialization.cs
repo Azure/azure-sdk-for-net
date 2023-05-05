@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string digest = default;
             Optional<ArtifactArchitecture> architecture = default;
             Optional<ArtifactOperatingSystem> os = default;
@@ -28,7 +32,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     architecture = new ArtifactArchitecture(property.Value.GetString());
@@ -38,7 +41,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     os = new ArtifactOperatingSystem(property.Value.GetString());

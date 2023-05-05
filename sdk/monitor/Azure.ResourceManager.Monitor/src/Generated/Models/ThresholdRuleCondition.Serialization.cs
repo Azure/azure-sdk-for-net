@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowSize = property.Value.GetTimeSpan("P");
@@ -74,7 +77,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeAggregation = property.Value.GetString().ToThresholdRuleConditionTimeAggregationType();
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);

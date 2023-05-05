@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArtifactStorageType> artifactsStorageType = default;
             Optional<string> artifactStorageClassName = default;
             Optional<string> artifactStorageMountPath = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     artifactsStorageType = property.Value.GetString().ToArtifactStorageType();
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value);

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkMappingProperties DeserializeNetworkMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> state = default;
             Optional<string> primaryNetworkFriendlyName = default;
             Optional<string> primaryNetworkId = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value);

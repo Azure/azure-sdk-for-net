@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseDatabasePrincipalAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseDatabasePrincipalAssignment data model.
+    /// Class representing a database principal assignment.
+    /// </summary>
     public partial class SynapseDatabasePrincipalAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseDatabasePrincipalAssignmentData. </summary>

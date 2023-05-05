@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityCloudConnector data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityCloudConnector data model.
+    /// The connector setting
+    /// </summary>
     public partial class SecurityCloudConnectorData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityCloudConnectorData. </summary>
