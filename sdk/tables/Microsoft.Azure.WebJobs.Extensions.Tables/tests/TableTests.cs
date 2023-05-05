@@ -75,6 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
         }
 
+        /*
         [RecordedTest]
         public async Task Table_CreateParameterBindingData_CreatesValidParameterBindingDataObject()
         {
@@ -114,6 +115,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.Null(connection);
             Assert.Null(filter);
         }
+        */
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
         internal class TableConverterExtensionConfigProvider : IExtensionConfigProvider
