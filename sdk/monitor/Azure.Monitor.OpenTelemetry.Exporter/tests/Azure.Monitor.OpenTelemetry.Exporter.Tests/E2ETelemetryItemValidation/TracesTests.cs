@@ -318,7 +318,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     { "string", "Hello, World!" },
                     { "intArray", "1,2,3" } },
                 expectedSpanId: spanId,
-                expectedTraceId: traceId);
+                expectedTraceId: traceId,
+                false);
         }
     }
 }
