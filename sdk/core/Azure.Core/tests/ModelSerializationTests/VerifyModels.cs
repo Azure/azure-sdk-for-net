@@ -11,6 +11,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
     {
         public static void CheckAnimals(Animal x, Animal y, SerializableOptions options)
         {
+            VerifyProperties(x, y, options);
+        }
+
+        private static void VerifyProperties(Animal x, Animal y, SerializableOptions options)
+        {
             if (!options.IgnoreReadOnlyProperties)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
@@ -38,58 +43,14 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public static void CheckCats(CatReadOnlyProperty x, CatReadOnlyProperty y, SerializableOptions options)
         {
-            if (!options.IgnoreReadOnlyProperties)
-                Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
-            Assert.That(x.Name, Is.EqualTo(y.Name));
-            Assert.That(x.Weight, Is.EqualTo(y.Weight));
+            VerifyProperties(x, y, options);
             Assert.That(x.HasWhiskers, Is.EqualTo(y.HasWhiskers));
-
-            if (!options.IgnoreReadOnlyProperties)
-            {
-                var additionalPropertiesX = typeof(CatReadOnlyProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
-                var additionalPropertiesY = typeof(CatReadOnlyProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
-
-                Assert.AreEqual(additionalPropertiesX.Count, additionalPropertiesY.Count);
-
-                foreach (var additionalProperty in additionalPropertiesX)
-                {
-                    Assert.IsTrue(additionalPropertiesY.ContainsKey(additionalProperty.Key));
-                    Assert.AreEqual(additionalProperty.Value.ToString(), additionalPropertiesY[additionalProperty.Key].ToString());
-                }
-                foreach (var additionalProperty in additionalPropertiesY)
-                {
-                    Assert.IsTrue(additionalPropertiesX.ContainsKey(additionalProperty.Key));
-                    Assert.AreEqual(additionalProperty.Value.ToString(), additionalPropertiesX[additionalProperty.Key].ToString());
-                }
-            }
         }
 
         public static void CheckDogs(DogListProperty x, DogListProperty y, SerializableOptions options)
         {
-            if (!options.IgnoreReadOnlyProperties)
-                Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
-            Assert.That(x.Name, Is.EqualTo(y.Name));
-            Assert.That(x.Weight, Is.EqualTo(y.Weight));
+            VerifyProperties(x, y, options);
             Assert.That(x.FoodConsumed, Is.EqualTo(y.FoodConsumed));
-
-            if (!options.IgnoreReadOnlyProperties)
-            {
-                var additionalPropertiesX = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
-                var additionalPropertiesY = typeof(DogListProperty).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
-
-                Assert.AreEqual(additionalPropertiesX.Count, additionalPropertiesY.Count);
-
-                foreach (var additionalProperty in additionalPropertiesX)
-                {
-                    Assert.IsTrue(additionalPropertiesY.ContainsKey(additionalProperty.Key));
-                    Assert.AreEqual(additionalProperty.Value.ToString(), additionalPropertiesY[additionalProperty.Key].ToString());
-                }
-                foreach (var additionalProperty in additionalPropertiesY)
-                {
-                    Assert.IsTrue(additionalPropertiesX.ContainsKey(additionalProperty.Key));
-                    Assert.AreEqual(additionalProperty.Value.ToString(), additionalPropertiesX[additionalProperty.Key].ToString());
-                }
-            }
         }
 
         public static string NormalizeNewLines(string value)
