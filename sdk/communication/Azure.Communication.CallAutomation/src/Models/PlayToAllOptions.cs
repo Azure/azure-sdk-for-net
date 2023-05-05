@@ -2,24 +2,18 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Options to be used in the Play operation.
+    /// Options to be used in the PlayToAll operation.
     /// </summary>
-    public class PlayOptions
+    public class PlayToAllOptions
     {
         /// <summary>
         /// A PlaySource object representing the source to play.
         /// </summary>
         public PlaySource PlaySource { get; }
-
-        /// <summary>
-        /// A list of target identifiers to play the file to.
-        /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> PlayTo { get; }
 
         /// <summary>
         /// The option to play the provided audio source in loop when set to true.
@@ -32,12 +26,11 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Creates a new PlayOptions object.
+        /// Creates a new PlayToAllOptions object.
         /// </summary>
-        public PlayOptions(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
+        public PlayToAllOptions(PlaySource playSource)
         {
             PlaySource = playSource;
-            PlayTo = playTo.ToList();
         }
     }
 }
