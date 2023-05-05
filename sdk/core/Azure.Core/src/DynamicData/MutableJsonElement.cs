@@ -91,6 +91,20 @@ namespace Azure.Core.Json
             return true;
         }
 
+        public int GetArrayLength()
+        {
+            EnsureValid();
+
+            EnsureArray();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.AsJsonElement().GetArrayLength();
+            }
+
+            return _element.GetArrayLength();
+        }
+
         internal MutableJsonElement GetIndexElement(int index)
         {
             EnsureValid();

@@ -93,7 +93,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.Graph.Rbac
                 case 204:
                     return message.Response;
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.Graph.Rbac
                 case 204:
                     return message.Response;
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -379,7 +379,7 @@ namespace Azure.Graph.Rbac
                 case 204:
                     return message.Response;
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.Graph.Rbac
                 case 204:
                     return message.Response;
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -455,7 +455,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -487,7 +487,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -531,7 +531,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -558,7 +558,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -598,7 +598,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -625,7 +625,7 @@ namespace Azure.Graph.Rbac
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }
