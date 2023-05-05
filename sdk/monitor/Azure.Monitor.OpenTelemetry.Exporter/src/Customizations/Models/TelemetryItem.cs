@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -95,12 +97,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
+        public void SetResourceCustomAttributes(AzureMonitorResource? _resource, IDictionary<string, string> properties)
+        {
+            if (_resource != null)
+            {
+                foreach (var attribute in _resource.CustomTags)
+                {
+                    properties.Add(attribute.Key, attribute.Value);
+                }
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetResourceSdkVersionAndIkey(AzureMonitorResource? resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
             Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName;
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance;
+            Tags[ContextTagKeys.AiCloudRoleVer.ToString()] = resource?.RoleVersion;
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.RoleVersion;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 

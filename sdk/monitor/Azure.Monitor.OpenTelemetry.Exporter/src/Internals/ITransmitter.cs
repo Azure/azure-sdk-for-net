@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal interface ITransmitter : IDisposable
     {
         /// <summary>
-        /// Sent telemetry and return the number of items Accepted.
+        /// Send telemetry and return the number of items Accepted.
         /// </summary>
         ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken);
         string InstrumentationKey { get; }

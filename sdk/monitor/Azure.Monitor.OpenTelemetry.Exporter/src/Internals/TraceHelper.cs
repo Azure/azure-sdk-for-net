@@ -45,6 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RequestData",
                                 BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
                             };
+                            telemetryItem.SetResourceCustomAttributes(resource, ((RequestData)telemetryItem.Data.BaseData).Properties);
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
@@ -52,6 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RemoteDependencyData",
                                 BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
+                            telemetryItem.SetResourceCustomAttributes(resource, ((RemoteDependencyData)telemetryItem.Data.BaseData).Properties);
                             break;
                     }
 

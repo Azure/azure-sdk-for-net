@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void NullResource()
         {
             Resource? resource = null;
-            var azMonResource = resource!.UpdateRoleNameAndInstance();
+            var azMonResource = resource!.UpdateAttributes();
 
             Assert.Null(azMonResource);
         }
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void DefaultResource()
         {
             var resource = CreateTestResource();
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.StartsWith("unknown_service", azMonResource?.RoleName);
             Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ServiceNameFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service");
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.Equal("my-service", azMonResource?.RoleName);
             Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ServiceInstanceFromResource()
         {
             var resource = CreateTestResource(serviceInstance: "my-instance");
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.StartsWith("unknown_service", azMonResource?.RoleName);
             Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ServiceNamespaceFromResource()
         {
             var resource = CreateTestResource(serviceNamespace: "my-namespace");
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.StartsWith("[my-namespace]/unknown_service", azMonResource?.RoleName);
             Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ServiceNameAndInstanceFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.Equal("my-service", azMonResource?.RoleName);
             Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ServiceNameAndInstanceAndNamespaceFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
-            var azMonResource = resource.UpdateRoleNameAndInstance();
+            var azMonResource = resource.UpdateAttributes();
 
             Assert.Equal("[my-namespace]/my-service", azMonResource?.RoleName);
             Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-            _ = resource.UpdateRoleNameAndInstance();
+            _ = resource.UpdateAttributes();
 
             Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
 
@@ -106,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var sdkVersion = SdkVersionUtils.s_sdkVersion;
 
             var resource = ResourceBuilder.CreateDefault().Build();
-            _ = resource.UpdateRoleNameAndInstance();
+            _ = resource.UpdateAttributes();
 
             Assert.NotNull(SdkVersionUtils.s_sdkVersion);
             Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
@@ -127,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-            _ = resource.UpdateRoleNameAndInstance();
+            _ = resource.UpdateAttributes();
 
             Assert.NotNull(SdkVersionUtils.s_sdkVersion);
             Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);

@@ -1,5 +1,18 @@
 # Release History
 
+## 1.0.0-beta.12 (Unreleased)
+
+### Features Added
+
+* Added service version and custom attributes specified on the resource object to the published telemetry.
+  ([#35487](https://github.com/Azure/azure-sdk-for-net/issues/35487))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.11 (Unreleased)
 
 ### Features Added

@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
         };
 
-        internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().UpdateAttributes();
 
         internal StandardMetricsExtractionProcessor()
         {

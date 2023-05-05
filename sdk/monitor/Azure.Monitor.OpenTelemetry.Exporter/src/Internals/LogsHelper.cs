@@ -41,6 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             BaseType = "ExceptionData",
                             BaseData = new TelemetryExceptionData(Version, logRecord),
                         };
+                        telemetryItem.SetResourceCustomAttributes(resource, ((TelemetryExceptionData)telemetryItem.Data.BaseData).Properties);
                     }
                     else
                     {
@@ -49,6 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             BaseType = "MessageData",
                             BaseData = new MessageData(Version, logRecord),
                         };
+                        telemetryItem.SetResourceCustomAttributes(resource, ((MessageData)telemetryItem.Data.BaseData).Properties);
                     }
 
                     telemetryItems.Add(telemetryItem);
