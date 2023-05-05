@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Core.GeoJson;
@@ -38,6 +39,12 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
+                    new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    {
+                        IsSearchable = true,
+                        Dimensions = 1536,
+                        VectorSearchConfiguration = "my-vector-config"
+                    },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -71,6 +78,13 @@ namespace Azure.Search.Documents.Tests
                             new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                         },
                     },
+                },
+                VectorSearch = new()
+                {
+                    AlgorithmConfigurations =
+                    {
+                        new VectorSearchAlgorithmConfiguration( "my-vector-config", "hnsw")
+                    }
                 },
                 Suggesters =
                 {
@@ -108,6 +122,7 @@ namespace Azure.Search.Documents.Tests
                         "à débordement, un spa et un concierge très utile. L'emplacement est parfait – en plein " +
                         "centre, à proximité de toutes les attractions touristiques. Nous recommandons fortement " +
                         "cet hôtel.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
                     HotelName = "Fancy Stay",
                     Category = "Luxury",
                     Tags = new[] { "pool", "view", "wifi", "concierge" },
@@ -123,6 +138,7 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "2",
                     Description = "Cheapest hotel in town. Infact, a motel.",
                     DescriptionFr = "Hôtel le moins cher en ville. Infact, un motel.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
                     HotelName = "Roach Motel",
                     Category = "Budget",
                     Tags = new[] { "motel", "budget" },
@@ -318,6 +334,9 @@ namespace Azure.Search.Documents.Tests
         [JsonPropertyName("descriptionFr")]
         public string DescriptionFr { get; set; }
 
+        [JsonPropertyName("descriptionVector")]
+        public IList<float> DescriptionVector { get; set; }
+
         [JsonPropertyName("category")]
         public string Category { get; set; }
 
@@ -357,6 +376,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
+            DescriptionVector == other.DescriptionVector &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&
@@ -375,7 +395,7 @@ namespace Azure.Search.Documents.Tests
             string FormatRoom(HotelRoom room) => $"{{ {room} }}";
             return
                 $"ID: {HotelId}; Name: {HotelName}; Description: {Description}; " +
-                $"Description (French): {DescriptionFr}; Category: {Category}; " +
+                $"Description (French): {DescriptionFr}; Description (Vector): {DescriptionVector};  Category: {Category}; " +
                 $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
                 $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
                 $"GeoLocation: [{GeoLocation?.Coordinates.Longitude ?? 0}, {GeoLocation?.Coordinates.Latitude ?? 0}]; " +
@@ -390,6 +410,7 @@ namespace Azure.Search.Documents.Tests
                 ["hotelName"] = HotelName,
                 ["description"] = Description,
                 ["descriptionFr"] = DescriptionFr,
+                ["descriptionVector"] = DescriptionVector,
                 ["category"] = Category,
                 ["tags"] = Tags ?? new object[0],   // OData always gives [] instead of null for collections.
                 ["parkingIncluded"] = ParkingIncluded,
