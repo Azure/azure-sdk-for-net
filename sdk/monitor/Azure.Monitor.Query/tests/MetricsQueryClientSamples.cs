@@ -65,6 +65,7 @@ namespace Azure.Monitor.Query.Tests
                 {
                     MetricAggregationType.Average,
                 },
+                // Use of asterisk in filter value enables splitting on Instance dimension.
                 Filter = "Instance eq '*'",
                 TimeRange = TimeSpan.FromDays(2),
             };

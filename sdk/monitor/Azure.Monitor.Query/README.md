@@ -520,6 +520,7 @@ var options = new MetricsQueryOptions
     {
         MetricAggregationType.Average,
     },
+    // Use of asterisk in filter value enables splitting on Instance dimension.
     Filter = "Instance eq '*'",
     TimeRange = TimeSpan.FromDays(2),
 };
@@ -542,6 +543,8 @@ foreach (MetricResult metric in result.Value.Metrics)
     }
 }
 ```
+
+For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
 #### Register the client with dependency injection
 
