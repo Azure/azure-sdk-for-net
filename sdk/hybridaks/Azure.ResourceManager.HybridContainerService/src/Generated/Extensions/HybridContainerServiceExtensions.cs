@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridContainerService.Mock;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,83 @@ namespace Azure.ResourceManager.HybridContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridContainerService. </summary>
     public static partial class HybridContainerServiceExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static HybridContainerServiceArmResourceExtension GetHybridContainerServiceArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new HybridContainerServiceArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridContainerServiceArmResourceExtension GetHybridContainerServiceArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new HybridContainerServiceArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HybridContainerServiceResourceGroupResourceExtension GetHybridContainerServiceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HybridContainerServiceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridContainerServiceResourceGroupResourceExtension GetHybridContainerServiceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new HybridContainerServiceResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HybridContainerServiceVirtualNetworkResourceExtension GetHybridContainerServiceVirtualNetworkResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HybridContainerServiceVirtualNetworkResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static HybridContainerServiceVirtualNetworkResourceExtension GetHybridContainerServiceVirtualNetworkResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new HybridContainerServiceVirtualNetworkResourceExtension(client, scope);
+            });
+        }
+
+        private static ProvisionedClusterResourceExtension GetProvisionedClusterResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ProvisionedClusterResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ProvisionedClusterResourceExtension GetProvisionedClusterResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ProvisionedClusterResourceExtension(client, scope);
+            });
+        }
+
+        private static StorageSpaceResourceExtension GetStorageSpaceResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new StorageSpaceResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static StorageSpaceResourceExtension GetStorageSpaceResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new StorageSpaceResourceExtension(client, scope);
             });
         }
         #region ProvisionedClusterResource
@@ -198,7 +231,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetOrchestratorsHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetHybridContainerServiceArmResourceExtension(client, scope).GetOrchestratorsHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +252,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetOrchestratorsHybridContainerService(cancellationToken);
+            return GetHybridContainerServiceArmResourceExtension(client, scope).GetOrchestratorsHybridContainerService(cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +273,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetVmSkusHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetHybridContainerServiceArmResourceExtension(client, scope).GetVmSkusHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -261,7 +294,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<VmSkuListResult> GetVmSkusHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetVmSkusHybridContainerService(cancellationToken);
+            return GetHybridContainerServiceArmResourceExtension(client, scope).GetVmSkusHybridContainerService(cancellationToken);
         }
 
         /// <summary> Gets a collection of ProvisionedClusterResources in the ResourceGroupResource. </summary>
@@ -269,7 +302,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of ProvisionedClusterResources and their operations over a ProvisionedClusterResource. </returns>
         public static ProvisionedClusterCollection GetProvisionedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProvisionedClusters();
+            return GetHybridContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetProvisionedClusters();
         }
 
         /// <summary>
@@ -325,7 +358,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of StorageSpaceResources and their operations over a StorageSpaceResource. </returns>
         public static StorageSpaceCollection GetStorageSpaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageSpaces();
+            return GetHybridContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetStorageSpaces();
         }
 
         /// <summary>
@@ -381,7 +414,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
         public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
+            return GetHybridContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
         }
 
         /// <summary>
@@ -450,7 +483,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProvisionedClusterResource> GetProvisionedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProvisionedClustersAsync(cancellationToken);
+            return GetProvisionedClusterResourceExtension(subscriptionResource).GetProvisionedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +504,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProvisionedClusterResource> GetProvisionedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProvisionedClusters(cancellationToken);
+            return GetProvisionedClusterResourceExtension(subscriptionResource).GetProvisionedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -492,7 +525,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSpaceResource> GetStorageSpacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSpacesAsync(cancellationToken);
+            return GetStorageSpaceResourceExtension(subscriptionResource).GetStorageSpacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -513,7 +546,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSpaceResource> GetStorageSpaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSpaces(cancellationToken);
+            return GetStorageSpaceResourceExtension(subscriptionResource).GetStorageSpaces(cancellationToken);
         }
 
         /// <summary>
@@ -534,7 +567,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
+            return GetHybridContainerServiceVirtualNetworkResourceExtension(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -555,7 +588,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
+            return GetHybridContainerServiceVirtualNetworkResourceExtension(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
         }
     }
 }
