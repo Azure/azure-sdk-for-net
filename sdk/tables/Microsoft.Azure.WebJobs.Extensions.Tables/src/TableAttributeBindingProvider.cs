@@ -39,6 +39,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
+            // ParameterBindingData is bound by the next binding
+            if (parameter.ParameterType == typeof(ParameterBindingData))
+            {
+                return null;
+            }
+
+            // ParameterBindingData[] is bound by the next binding
+            if (parameter.ParameterType == typeof(ParameterBindingData[]))
+            {
+                return null;
+            }
+
             string tableName = Resolve(tableAttribute.TableName);
             var account = _accountProvider.Get(tableAttribute.Connection, _nameResolver);
             bool bindsToEntireTable = tableAttribute.RowKey == null;
