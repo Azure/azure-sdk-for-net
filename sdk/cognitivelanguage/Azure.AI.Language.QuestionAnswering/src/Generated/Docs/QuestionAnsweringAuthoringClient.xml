@@ -9,7 +9,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetProjectDetailsAsync("<projectName>");
+Response response = await client.GetProjectDetailsAsync("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -54,7 +54,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetProjectDetails("<projectName>");
+Response response = client.GetProjectDetails("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -123,7 +123,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -205,7 +205,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+Response response = client.CreateProject("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -263,7 +263,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeleteStatusAsync("<jobId>");
+Response response = await client.GetDeleteStatusAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -301,7 +301,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeleteStatus("<jobId>");
+Response response = client.GetDeleteStatus("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -339,7 +339,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -376,7 +376,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetExportStatus("<projectName>", "<jobId>");
+Response response = client.GetExportStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -413,7 +413,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -451,7 +451,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetImportStatus("<projectName>", "<jobId>");
+Response response = client.GetImportStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -489,7 +489,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -527,7 +527,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -587,7 +587,7 @@ var data = new {
     nextLink = "<nextLink>",
 };
 
-Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -641,7 +641,7 @@ var data = new {
     nextLink = "<nextLink>",
 };
 
-Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
+Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -673,7 +673,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -711,7 +711,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
+Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -749,7 +749,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -787,7 +787,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
+Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -846,7 +846,7 @@ var data = new {
     },
 };
 
-Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -900,7 +900,7 @@ var data = new {
     },
 };
 
-Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
+Response response = client.AddFeedback("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -933,9 +933,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetProjectsAsync())
+await foreach (var item in client.GetProjectsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
@@ -979,9 +979,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetProjects())
+foreach (var item in client.GetProjects(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
@@ -1025,9 +1025,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
+await foreach (var item in client.GetDeploymentsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
@@ -1057,9 +1057,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetDeployments("<projectName>"))
+foreach (var item in client.GetDeployments("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
@@ -1089,9 +1089,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSynonymsAsync("<projectName>"))
+await foreach (var item in client.GetSynonymsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
@@ -1119,9 +1119,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSynonyms("<projectName>"))
+foreach (var item in client.GetSynonyms("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
@@ -1149,9 +1149,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSourcesAsync("<projectName>"))
+await foreach (var item in client.GetSourcesAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1187,9 +1187,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSources("<projectName>"))
+foreach (var item in client.GetSources("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1225,9 +1225,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetQnasAsync("<projectName>"))
+await foreach (var item in client.GetQnasAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1237,9 +1237,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetQnasAsync("<projectName>", "<source>"))
+await foreach (var item in client.GetQnasAsync("<projectName>", "<source>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -1323,9 +1323,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetQnas("<projectName>"))
+foreach (var item in client.GetQnas("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1335,9 +1335,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetQnas("<projectName>", "<source>"))
+foreach (var item in client.GetQnas("<projectName>", "<source>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -1421,9 +1421,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1435,9 +1435,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1451,8 +1451,8 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1464,10 +1464,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1504,8 +1504,8 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.Export(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1517,10 +1517,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1559,8 +1559,8 @@ var data = new {};
 
 var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1636,13 +1636,6 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
-                        suggestedQuestions = new[] {
-                            new {
-                                question = "<question>",
-                                userSuggestedCount = 1234,
-                                autoSuggestedCount = 1234,
-                            }
-                        },
                     }
                 },
             }
@@ -1651,10 +1644,10 @@ var data = new {
     fileUri = "<fileUri>",
 };
 
-var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1757,8 +1750,8 @@ var data = new {};
 
 var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1834,13 +1827,6 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
-                        suggestedQuestions = new[] {
-                            new {
-                                question = "<question>",
-                                userSuggestedCount = 1234,
-                                autoSuggestedCount = 1234,
-                            }
-                        },
                     }
                 },
             }
@@ -1849,10 +1835,10 @@ var data = new {
     fileUri = "<fileUri>",
 };
 
-var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1951,10 +1937,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
@@ -1983,10 +1969,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
@@ -2028,11 +2014,11 @@ var data = new[] {
     }
 };
 
-var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-await foreach (var data in operation.Value)
+await foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2096,11 +2082,11 @@ var data = new[] {
     }
 };
 
-var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-foreach (var data in operation.Value)
+foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2190,11 +2176,11 @@ var data = new[] {
     }
 };
 
-var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-await foreach (var data in operation.Value)
+await foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -2355,11 +2341,11 @@ var data = new[] {
     }
 };
 
-var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-foreach (var data in operation.Value)
+foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());

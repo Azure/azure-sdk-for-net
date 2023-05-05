@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36058")]
         public async Task HronizationSettingApiTests()
         {
             //1.CreateorUpdate

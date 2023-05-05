@@ -42,7 +42,7 @@ var data = new {
     language = "<language>",
 };
 
-Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -142,7 +142,7 @@ var data = new {
     language = "<language>",
 };
 
-Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+Response response = client.CreateProject("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -209,7 +209,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetProjectAsync("<projectName>");
+Response response = await client.GetProjectAsync("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -260,7 +260,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetProject("<projectName>");
+Response response = client.GetProject("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -311,7 +311,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -358,7 +358,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeployment("<projectName>", "<deploymentName>");
+Response response = client.GetDeployment("<projectName>", "<deploymentName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -405,7 +405,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -479,7 +479,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -553,7 +553,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -627,7 +627,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -701,7 +701,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -775,7 +775,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>");
+Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -849,7 +849,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
@@ -925,7 +925,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
+Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
@@ -1001,7 +1001,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1075,7 +1075,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>");
+Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1149,7 +1149,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -1190,7 +1190,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -1231,7 +1231,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1244,7 +1244,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1257,7 +1257,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
@@ -1342,7 +1342,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
+Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
@@ -1427,7 +1427,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1501,7 +1501,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1575,7 +1575,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1649,7 +1649,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1723,7 +1723,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1797,7 +1797,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1871,7 +1871,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
@@ -1970,7 +1970,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
+Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
@@ -2069,7 +2069,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
+Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -2143,7 +2143,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetProjectDeletionJobStatus("<jobId>");
+Response response = client.GetProjectDeletionJobStatus("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -2217,9 +2217,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetProjectsAsync())
+await foreach (var item in client.GetProjectsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2269,9 +2269,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetProjects())
+foreach (var item in client.GetProjects(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2321,9 +2321,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
+await foreach (var item in client.GetDeploymentsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2369,9 +2369,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetDeployments("<projectName>"))
+foreach (var item in client.GetDeployments("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2417,9 +2417,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetTrainedModelsAsync("<projectName>"))
+await foreach (var item in client.GetTrainedModelsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("label").ToString());
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2459,9 +2459,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetTrainedModels("<projectName>"))
+foreach (var item in client.GetTrainedModels("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("label").ToString());
     Console.WriteLine(result.GetProperty("modelId").ToString());
     Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -2501,9 +2501,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
+await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
     Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
@@ -2522,9 +2522,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
+await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
     Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
@@ -2576,9 +2576,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
+foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
     Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
@@ -2597,9 +2597,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
+foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
     Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
@@ -2651,9 +2651,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetDeploymentResourcesAsync("<projectName>"))
+await foreach (var item in client.GetDeploymentResourcesAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
     Console.WriteLine(result.GetProperty("region").ToString());
 }
@@ -2664,9 +2664,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234))
+await foreach (var item in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
     Console.WriteLine(result.GetProperty("region").ToString());
 }
@@ -2696,9 +2696,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetDeploymentResources("<projectName>"))
+foreach (var item in client.GetDeploymentResources("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
     Console.WriteLine(result.GetProperty("region").ToString());
 }
@@ -2709,9 +2709,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234))
+foreach (var item in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("azureResourceId").ToString());
     Console.WriteLine(result.GetProperty("region").ToString());
 }
@@ -2741,9 +2741,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetTrainingJobsAsync("<projectName>"))
+await foreach (var item in client.GetTrainingJobsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
@@ -2841,9 +2841,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetTrainingJobs("<projectName>"))
+foreach (var item in client.GetTrainingJobs("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
@@ -2941,9 +2941,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetAssignedResourceDeploymentsAsync())
+await foreach (var item in client.GetAssignedResourceDeploymentsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
@@ -2956,9 +2956,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234))
+await foreach (var item in client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
@@ -2996,9 +2996,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetAssignedResourceDeployments())
+foreach (var item in client.GetAssignedResourceDeployments())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
@@ -3011,9 +3011,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetAssignedResourceDeployments(1234, 1234, 1234))
+foreach (var item in client.GetAssignedResourceDeployments(1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
@@ -3051,9 +3051,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSupportedLanguagesAsync("<projectKind>"))
+await foreach (var item in client.GetSupportedLanguagesAsync("<projectKind>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("languageName").ToString());
     Console.WriteLine(result.GetProperty("languageCode").ToString());
 }
@@ -3083,9 +3083,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSupportedLanguages("<projectKind>"))
+foreach (var item in client.GetSupportedLanguages("<projectKind>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("languageName").ToString());
     Console.WriteLine(result.GetProperty("languageCode").ToString());
 }
@@ -3115,9 +3115,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync())
+await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("category").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("examples").ToString());
@@ -3129,9 +3129,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync("<language>", true))
+await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync("<language>", true, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("category").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("examples").ToString());
@@ -3163,9 +3163,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSupportedPrebuiltEntities())
+foreach (var item in client.GetSupportedPrebuiltEntities())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("category").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("examples").ToString());
@@ -3177,9 +3177,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSupportedPrebuiltEntities("<language>", true))
+foreach (var item in client.GetSupportedPrebuiltEntities("<language>", true, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("category").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("examples").ToString());
@@ -3211,9 +3211,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetTrainingConfigVersionsAsync("<projectKind>"))
+await foreach (var item in client.GetTrainingConfigVersionsAsync("<projectKind>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
     Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
 }
@@ -3243,9 +3243,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetTrainingConfigVersions("<projectKind>"))
+foreach (var item in client.GetTrainingConfigVersions("<projectKind>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
     Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
 }
@@ -3275,10 +3275,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3350,10 +3350,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3427,8 +3427,8 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ExportProjectAsync with all parameters, and how to parse the result.
@@ -3437,10 +3437,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
+var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3516,8 +3516,8 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ExportProject with all parameters, and how to parse the result.
@@ -3526,10 +3526,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
+var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3615,8 +3615,8 @@ var data = new {
 
 var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3705,10 +3705,10 @@ var data = new {
     },
 };
 
-var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
+var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3815,8 +3815,8 @@ var data = new {
 
 var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3905,10 +3905,10 @@ var data = new {
     },
 };
 
-var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
+var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4010,8 +4010,8 @@ var data = new {
 
 var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
@@ -4038,10 +4038,10 @@ var data = new {
     },
 };
 
-var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
@@ -4160,8 +4160,8 @@ var data = new {
 
 var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
@@ -4188,10 +4188,10 @@ var data = new {
     },
 };
 
-var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
@@ -4308,10 +4308,10 @@ var data = new {
     secondDeploymentName = "<secondDeploymentName>",
 };
 
-var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4397,10 +4397,10 @@ var data = new {
     secondDeploymentName = "<secondDeploymentName>",
 };
 
-var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4487,8 +4487,8 @@ var data = new {
 
 var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -4509,10 +4509,10 @@ var data = new {
     },
 };
 
-var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -4573,8 +4573,8 @@ var data = new {
 
 var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -4595,10 +4595,10 @@ var data = new {
     },
 };
 
-var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
@@ -4653,10 +4653,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4728,10 +4728,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4807,7 +4807,7 @@ var data = new {};
 
 var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters and request content.
 <code><![CDATA[
@@ -4821,9 +4821,9 @@ var data = new {
     },
 };
 
-var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -4855,7 +4855,7 @@ var data = new {};
 
 var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters and request content.
 <code><![CDATA[
@@ -4869,9 +4869,9 @@ var data = new {
     },
 };
 
-var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -4899,9 +4899,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -4913,9 +4913,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -4937,9 +4937,9 @@ var data = new {
     },
 };
 
-var operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -4981,9 +4981,9 @@ var data = new {
     },
 };
 
-var operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -5021,9 +5021,9 @@ var data = new {
     },
 };
 
-var operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -5055,9 +5055,9 @@ var data = new {
     },
 };
 
-var operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -5083,10 +5083,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
@@ -5183,10 +5183,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
