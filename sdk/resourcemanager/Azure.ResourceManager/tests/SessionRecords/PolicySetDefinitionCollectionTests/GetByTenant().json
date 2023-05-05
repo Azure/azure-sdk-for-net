@@ -38,7 +38,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad?api-version=2020-09-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policySetDefinitions/75714362-cae7-409e-9b99-a8e5075b7fad?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

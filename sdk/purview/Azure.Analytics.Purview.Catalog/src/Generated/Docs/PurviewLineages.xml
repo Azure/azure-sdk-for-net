@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLineageGraphAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageGraphAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -103,7 +103,7 @@ Schema for <c>AtlasLineageInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetLineageGraph(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageGraph with required parameters and parse the result.
 <code><![CDATA[
@@ -205,7 +205,7 @@ Schema for <c>AtlasLineageInfo</c>:
 
 </remarks>
     </member>
-    <member name="NextPageLineageAsync(String,String,Boolean,Int32,Int32,RequestContext)">
+    <member name="NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call NextPageLineageAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -307,7 +307,7 @@ Schema for <c>AtlasLineageInfo</c>:
 
 </remarks>
     </member>
-    <member name="NextPageLineage(String,String,Boolean,Int32,Int32,RequestContext)">
+    <member name="NextPageLineage(string,string,bool?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call NextPageLineage with required parameters and parse the result.
 <code><![CDATA[
@@ -409,7 +409,7 @@ Schema for <c>AtlasLineageInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetLineageByUniqueAttributeAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageByUniqueAttributeAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -511,7 +511,7 @@ Schema for <c>AtlasLineageInfo</c>:
 
 </remarks>
     </member>
-    <member name="GetLineageByUniqueAttribute(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageByUniqueAttribute with required parameters and parse the result.
 <code><![CDATA[

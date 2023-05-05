@@ -122,7 +122,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(callInvite).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -132,7 +132,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -142,7 +142,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.TransferCallToParticipant(callInvite);
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -152,7 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -162,7 +162,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202);
 
-            var options = new TransferToParticipantOptions(callInvite) {
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier) {
                 OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
             };
             ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));

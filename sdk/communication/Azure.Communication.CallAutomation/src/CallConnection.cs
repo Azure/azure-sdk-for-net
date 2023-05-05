@@ -189,13 +189,33 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="targetParticipant"> The target to transfer the call to.</param>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
-        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite targetParticipant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(targetParticipant);
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
 
             return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -239,13 +259,33 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="targetParticipant"> The target to transfer the call to.</param>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
-        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite targetParticipant, CancellationToken cancellationToken = default)
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
-            TransferToParticipantOptions options = new TransferToParticipantOptions(targetParticipant);
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
 
             return TransferCallToParticipant(options, cancellationToken);
         }
@@ -290,11 +330,11 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
+            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
 
             request.CustomContext = new CustomContextInternal(
-                options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-                options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+                options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
+                options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
 
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
