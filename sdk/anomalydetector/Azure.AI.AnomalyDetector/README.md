@@ -133,7 +133,7 @@ try
     {
         if (result.IsAnomaly[i])
         {
-            Console.WriteLine("An anomaly was detected at index: {0}.", i);
+            Console.WriteLine($"An anomaly was detected at index: {i}.");
             hasAnomaly = true;
         }
     }
@@ -144,12 +144,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+    Console.WriteLine($"Entire detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -175,12 +175,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+    Console.WriteLine($"Last detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -257,7 +257,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [anomalydetector_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src
 [anomalydetector_docs]: https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/
-[anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/anomalydetector.html
+[anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/cognitiveservices.html
 [anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
 [anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/AnomalyDetectorClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity

@@ -37,8 +37,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Location of the target Azure resource where the model should be copied to. </summary>
         public string TargetResourceRegion { get; }
 
-         /// <summary> Identifier of the target model. </summary>
-         public string TargetModelId { get; }
+        /// <summary> Identifier of the target model. </summary>
+        public string TargetModelId { get; }
 
         /// <summary> URI of the copied model in the target account. </summary>
         public Uri TargetModelLocation { get; }

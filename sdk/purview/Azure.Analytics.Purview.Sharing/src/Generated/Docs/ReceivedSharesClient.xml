@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetReceivedShareAsync(String,RequestContext)">
+    <member name="GetReceivedShareAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetReceivedShareAsync("<receivedShareId>");
+Response response = await client.GetReceivedShareAsync("<receivedShareId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -58,14 +58,14 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetReceivedShare(String,RequestContext)">
+    <member name="GetReceivedShare(string,RequestContext)">
 <example>
 This sample shows how to call GetReceivedShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetReceivedShare("<receivedShareId>");
+Response response = client.GetReceivedShare("<receivedShareId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -115,7 +115,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,String,RequestContext)">
+    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ActivateTenantEmailRegistrationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -140,7 +140,7 @@ var data = new {
     },
 };
 
-Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -194,7 +194,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="ActivateTenantEmailRegistration(RequestContent,String,RequestContext)">
+    <member name="ActivateTenantEmailRegistration(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call ActivateTenantEmailRegistration with required parameters and parse the result.
 <code><![CDATA[
@@ -219,7 +219,7 @@ var data = new {
     },
 };
 
-Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -273,7 +273,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="RegisterTenantEmailRegistrationAsync(String,RequestContext)">
+    <member name="RegisterTenantEmailRegistrationAsync(string,RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistrationAsync and parse the result.
 <code><![CDATA[
@@ -290,7 +290,7 @@ This sample shows how to call RegisterTenantEmailRegistrationAsync with all para
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>");
+Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -327,7 +327,7 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="RegisterTenantEmailRegistration(String,RequestContext)">
+    <member name="RegisterTenantEmailRegistration(string,RequestContext)">
 <example>
 This sample shows how to call RegisterTenantEmailRegistration and parse the result.
 <code><![CDATA[
@@ -344,7 +344,7 @@ This sample shows how to call RegisterTenantEmailRegistration with all parameter
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>");
+Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -381,16 +381,16 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedSharesAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllAttachedReceivedSharesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
+await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -400,9 +400,9 @@ This sample shows how to call GetAllAttachedReceivedSharesAsync with all paramet
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -426,16 +426,16 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllAttachedReceivedShares(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedShares(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllAttachedReceivedShares with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>"))
+foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -445,9 +445,9 @@ This sample shows how to call GetAllAttachedReceivedShares with all parameters, 
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -471,16 +471,16 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedSharesAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllDetachedReceivedSharesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllDetachedReceivedSharesAsync())
+await foreach (var item in client.GetAllDetachedReceivedSharesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -490,9 +490,9 @@ This sample shows how to call GetAllDetachedReceivedSharesAsync with all paramet
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllDetachedReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -516,16 +516,16 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllDetachedReceivedShares(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedShares(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllDetachedReceivedShares and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllDetachedReceivedShares())
+foreach (var item in client.GetAllDetachedReceivedShares())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -535,9 +535,9 @@ This sample shows how to call GetAllDetachedReceivedShares with all parameters, 
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllDetachedReceivedShares("<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAllDetachedReceivedShares("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -561,7 +561,7 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceReceivedShareAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -575,8 +575,8 @@ var data = new {
 
 var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -606,10 +606,10 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -692,7 +692,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceReceivedShare(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShare(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceReceivedShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -706,8 +706,8 @@ var data = new {
 
 var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -737,10 +737,10 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -823,17 +823,17 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteReceivedShareAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShareAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
@@ -867,17 +867,17 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReceivedShare(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShare(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteReceivedShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
+var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());

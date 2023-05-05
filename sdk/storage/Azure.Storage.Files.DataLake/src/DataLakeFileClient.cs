@@ -5219,7 +5219,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
-                        encryptionContext: default,
+                        encryptionContext: args.EncryptionContext,
                         conditions: args.Conditions,
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),

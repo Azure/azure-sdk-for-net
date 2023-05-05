@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetConstitutionAsync();
+Response response = await client.GetConstitutionAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("digest").ToString());
@@ -40,7 +40,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetConstitution();
+Response response = client.GetConstitution(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("digest").ToString());
@@ -71,7 +71,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetEnclaveQuotesAsync();
+Response response = await client.GetEnclaveQuotesAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("currentNodeId").ToString());
@@ -105,7 +105,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetEnclaveQuotes();
+Response response = client.GetEnclaveQuotes(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("currentNodeId").ToString());
@@ -131,7 +131,7 @@ Schema for <c>ConfidentialLedgerEnclaves</c>:
 
 </remarks>
     </member>
-    <member name="CreateLedgerEntryAsync(RequestContent,String,RequestContext)">
+    <member name="CreateLedgerEntryAsync(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateLedgerEntryAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -158,7 +158,7 @@ var data = new {
     contents = "<contents>",
 };
 
-Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>");
+Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -189,7 +189,7 @@ Schema for <c>LedgerWriteResult</c>:
 
 </remarks>
     </member>
-    <member name="CreateLedgerEntry(RequestContent,String,RequestContext)">
+    <member name="CreateLedgerEntry(RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateLedgerEntry with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -216,7 +216,7 @@ var data = new {
     contents = "<contents>",
 };
 
-Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>");
+Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -247,7 +247,7 @@ Schema for <c>LedgerWriteResult</c>:
 
 </remarks>
     </member>
-    <member name="GetLedgerEntryAsync(String,String,RequestContext)">
+    <member name="GetLedgerEntryAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerEntryAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -266,7 +266,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>");
+Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -295,7 +295,7 @@ Schema for <c>LedgerQueryResult</c>:
 
 </remarks>
     </member>
-    <member name="GetLedgerEntry(String,String,RequestContext)">
+    <member name="GetLedgerEntry(string,string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerEntry with required parameters and parse the result.
 <code><![CDATA[
@@ -314,7 +314,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>");
+Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -343,7 +343,7 @@ Schema for <c>LedgerQueryResult</c>:
 
 </remarks>
     </member>
-    <member name="GetReceiptAsync(String,RequestContext)">
+    <member name="GetReceiptAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetReceiptAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -351,7 +351,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetReceiptAsync("<transactionId>");
+Response response = await client.GetReceiptAsync("<transactionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
@@ -402,7 +402,7 @@ Schema for <c>TransactionReceipt</c>:
 
 </remarks>
     </member>
-    <member name="GetReceipt(String,RequestContext)">
+    <member name="GetReceipt(string,RequestContext)">
 <example>
 This sample shows how to call GetReceipt with required parameters and parse the result.
 <code><![CDATA[
@@ -410,7 +410,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetReceipt("<transactionId>");
+Response response = client.GetReceipt("<transactionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
@@ -461,7 +461,7 @@ Schema for <c>TransactionReceipt</c>:
 
 </remarks>
     </member>
-    <member name="GetTransactionStatusAsync(String,RequestContext)">
+    <member name="GetTransactionStatusAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTransactionStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -469,7 +469,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetTransactionStatusAsync("<transactionId>");
+Response response = await client.GetTransactionStatusAsync("<transactionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -490,7 +490,7 @@ Schema for <c>TransactionStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetTransactionStatus(String,RequestContext)">
+    <member name="GetTransactionStatus(string,RequestContext)">
 <example>
 This sample shows how to call GetTransactionStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -498,7 +498,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetTransactionStatus("<transactionId>");
+Response response = client.GetTransactionStatus("<transactionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -519,7 +519,7 @@ Schema for <c>TransactionStatus</c>:
 
 </remarks>
     </member>
-    <member name="GetCurrentLedgerEntryAsync(String,RequestContext)">
+    <member name="GetCurrentLedgerEntryAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
 <code><![CDATA[
@@ -538,7 +538,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>");
+Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
@@ -563,7 +563,7 @@ Schema for <c>LedgerEntry</c>:
 
 </remarks>
     </member>
-    <member name="GetCurrentLedgerEntry(String,RequestContext)">
+    <member name="GetCurrentLedgerEntry(string,RequestContext)">
 <example>
 This sample shows how to call GetCurrentLedgerEntry and parse the result.
 <code><![CDATA[
@@ -582,7 +582,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetCurrentLedgerEntry("<collectionId>");
+Response response = client.GetCurrentLedgerEntry("<collectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
@@ -607,7 +607,7 @@ Schema for <c>LedgerEntry</c>:
 
 </remarks>
     </member>
-    <member name="DeleteUserAsync(String,RequestContext)">
+    <member name="DeleteUserAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteUserAsync with required parameters.
 <code><![CDATA[
@@ -615,12 +615,12 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.DeleteUserAsync("<userId>");
+Response response = await client.DeleteUserAsync("<userId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteUser(String,RequestContext)">
+    <member name="DeleteUser(string,RequestContext)">
 <example>
 This sample shows how to call DeleteUser with required parameters.
 <code><![CDATA[
@@ -628,12 +628,12 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.DeleteUser("<userId>");
+Response response = client.DeleteUser("<userId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetUserAsync(String,RequestContext)">
+    <member name="GetUserAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetUserAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -641,7 +641,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetUserAsync("<userId>");
+Response response = await client.GetUserAsync("<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -662,7 +662,7 @@ Schema for <c>LedgerUser</c>:
 
 </remarks>
     </member>
-    <member name="GetUser(String,RequestContext)">
+    <member name="GetUser(string,RequestContext)">
 <example>
 This sample shows how to call GetUser with required parameters and parse the result.
 <code><![CDATA[
@@ -670,7 +670,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetUser("<userId>");
+Response response = client.GetUser("<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -691,7 +691,7 @@ Schema for <c>LedgerUser</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateUserAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateUserAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateUserAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -703,7 +703,7 @@ var data = new {
     assignedRole = "Administrator",
 };
 
-Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -735,7 +735,7 @@ Schema for <c>LedgerUser</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateUser(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateUser(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateUser with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -747,7 +747,7 @@ var data = new {
     assignedRole = "Administrator",
 };
 
-Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -787,9 +787,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-await foreach (var data in client.GetConsortiumMembersAsync())
+await foreach (var item in client.GetConsortiumMembersAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("certificate").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
 }
@@ -819,9 +819,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-foreach (var data in client.GetConsortiumMembers())
+foreach (var item in client.GetConsortiumMembers(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("certificate").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
 }
@@ -851,9 +851,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-await foreach (var data in client.GetCollectionsAsync())
+await foreach (var item in client.GetCollectionsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code>
@@ -881,9 +881,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-foreach (var data in client.GetCollections())
+foreach (var item in client.GetCollections(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code>
@@ -903,7 +903,7 @@ Schema for <c>PagedCollections</c>:
 
 </remarks>
     </member>
-    <member name="GetLedgerEntriesAsync(String,String,String,RequestContext)">
+    <member name="GetLedgerEntriesAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerEntriesAsync and parse the result.
 <code><![CDATA[
@@ -911,9 +911,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-await foreach (var data in client.GetLedgerEntriesAsync())
+await foreach (var item in client.GetLedgerEntriesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
 }
 ]]></code>
@@ -923,9 +923,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-await foreach (var data in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
+await foreach (var item in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
     Console.WriteLine(result.GetProperty("collectionId").ToString());
     Console.WriteLine(result.GetProperty("transactionId").ToString());
@@ -949,7 +949,7 @@ Schema for <c>LedgerEntries</c>:
 
 </remarks>
     </member>
-    <member name="GetLedgerEntries(String,String,String,RequestContext)">
+    <member name="GetLedgerEntries(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetLedgerEntries and parse the result.
 <code><![CDATA[
@@ -957,9 +957,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-foreach (var data in client.GetLedgerEntries())
+foreach (var item in client.GetLedgerEntries())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
 }
 ]]></code>
@@ -969,9 +969,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-foreach (var data in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
+foreach (var item in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
     Console.WriteLine(result.GetProperty("collectionId").ToString());
     Console.WriteLine(result.GetProperty("transactionId").ToString());

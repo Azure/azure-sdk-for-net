@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSecretAsync(String,RequestContext)">
+    <member name="GetSecretAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSecretAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new TemplateClient("<vaultBaseUrl>", credential);
 
-Response response = await client.GetSecretAsync("<secretName>");
+Response response = await client.GetSecretAsync("<secretName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value").ToString());
@@ -39,14 +39,14 @@ Schema for <c>SecretBundle</c>:
 
 </remarks>
     </member>
-    <member name="GetSecret(String,RequestContext)">
+    <member name="GetSecret(string,RequestContext)">
 <example>
 This sample shows how to call GetSecret with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new TemplateClient("<vaultBaseUrl>", credential);
 
-Response response = client.GetSecret("<secretName>");
+Response response = client.GetSecret("<secretName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value").ToString());

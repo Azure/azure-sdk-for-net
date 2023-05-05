@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -23,7 +24,7 @@ namespace Azure.Core.Tests
         private static HttpMessageSanitizer Sanitizer = new TestClientOption().Sanitizer;
 
         [Test]
-        public async Task FormatsResponse()
+        public void FormatsResponse()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -38,8 +39,15 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
@@ -60,6 +68,13 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
@@ -79,10 +94,17 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
+            Assert.AreEqual("Value", value);
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsNull(rawResponse.ContentStream);
         }
 
         [Test]
-        public async Task HeadersAreSanitized()
+        public void HeadersAreSanitized()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -96,7 +118,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Custom-Header-2", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -120,7 +142,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task FormatsResponseContentForTextContentTypes()
+        public void FormatsResponseContentForTextContentTypes()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -139,12 +161,21 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("Content-Type", out var value));
+            Assert.AreEqual("text/json", value);
+            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
+            Assert.AreEqual("123", requestId);
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
         }
 
         [Test]
-        public async Task DoesntFormatsResponseContentForNonTextContentTypes()
+        public void DoesntFormatsResponseContentForNonTextContentTypes()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -158,12 +189,17 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
+            Response rawResponse = exception.GetRawResponse();
+
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
         }
 
         [Test]
-        public async Task IncludesErrorCodeInMessageIfAvailable()
+        public void IncludesErrorCodeInMessageIfAvailable()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -177,13 +213,15 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.SetContent("{ \"error\": { \"code\":\"CUSTOM CODE\" }}");
+            response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError("CUSTOM CODE", null));
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
         [Test]
-        public async Task IncludesAdditionalInformationIfAvailable()
+        public void IncludesAdditionalInformationIfAvailable()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -200,12 +238,11 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.SetContent("{ \"a\": \"a-value\", \"b\": \"b-value\" }");
+            response.Sanitizer = Sanitizer;
+            response.RequestFailedDetailsParser = new CustomParser();
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, additionalInfo: new Dictionary<string, string>()
-            {
-                {"a", "a-value"},
-                {"b", "b-value"},
-            });
+            RequestFailedException exception = new RequestFailedException(response);
 
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("a-value", exception.Data["a"]);
@@ -213,7 +250,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task IncludesInnerException()
+        public void IncludesInnerException()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -229,7 +266,7 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             var innerException = new Exception();
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, innerException: innerException);
+            RequestFailedException exception = new RequestFailedException(response, innerException: innerException);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual(innerException, exception.InnerException);
         }
@@ -251,7 +288,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ParsesJsonErrors()
+        public void ParsesJsonErrors()
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -269,7 +306,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
         }
@@ -320,6 +357,11 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Response rawResponse = exception.GetRawResponse();
+
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
         }
 
         [Test]
@@ -345,10 +387,15 @@ namespace Azure.Core.Tests
             RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual("StatusCode", exception.ErrorCode);
+
+            Response rawResponse = exception.GetRawResponse();
+            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
         }
 
         [Test]
-        public async Task IgnoresInvalidJsonErrors()
+        public void IgnoresInvalidJsonErrors()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -365,12 +412,12 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
         [Test]
-        public async Task IgnoresNonStandardJson()
+        public void IgnoresNonStandardJson()
         {
             var formattedResponse =
                 "Service request failed." + s_nl +
@@ -387,7 +434,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            RequestFailedException exception = new RequestFailedException(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -418,7 +465,7 @@ namespace Azure.Core.Tests
                 false => new UnSeekableStream(_stream)
             };
         }
-        private class UnSeekableStream : MemoryStream
+        private class UnSeekableStream : Stream
         {
             private readonly MemoryStream _stream;
             public UnSeekableStream(MemoryStream stream)
@@ -454,10 +501,6 @@ namespace Azure.Core.Tests
             {
                 _stream.Close();
             }
-            public override bool TryGetBuffer(out ArraySegment<byte> buffer)
-            {
-                return _stream.TryGetBuffer(out buffer);
-            }
 
             public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
             {
@@ -479,6 +522,11 @@ namespace Azure.Core.Tests
             public override void EndWrite(IAsyncResult asyncResult)
             {
                 _stream.EndWrite(asyncResult);
+            }
+
+            public override void Flush()
+            {
+                _stream.Flush();
             }
 
             public override bool Equals(object obj)
@@ -511,6 +559,16 @@ namespace Azure.Core.Tests
                 return _stream.ReadByte();
             }
 
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return _stream.Seek(offset, origin);
+            }
+
+            public override void SetLength(long value)
+            {
+                _stream.SetLength(value);
+            }
+
             public override string ToString()
             {
                 return _stream.ToString();
@@ -529,6 +587,16 @@ namespace Azure.Core.Tests
             public override void WriteByte(byte value)
             {
                 _stream.WriteByte(value);
+            }
+        }
+
+        private class CustomParser : RequestFailedDetailsParser
+        {
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                RequestFailedException.TryExtractErrorContent(response, out error, out data);
+                data = response.Content.ToObjectFromJson<IDictionary<string, string>>();
+                return true;
             }
         }
     }

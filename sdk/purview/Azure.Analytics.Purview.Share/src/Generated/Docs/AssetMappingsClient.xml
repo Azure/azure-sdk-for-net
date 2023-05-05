@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetAssetMappingAsync(String,String,RequestContext)">
+    <member name="GetAssetMappingAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssetMappingAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
+Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -67,14 +67,14 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetAssetMapping(String,String,RequestContext)">
+    <member name="GetAssetMapping(string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssetMapping with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
+Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -133,16 +133,16 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetAssetMappingsAsync(String,String,String,String,RequestContext)">
+    <member name="GetAssetMappingsAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssetMappingsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>"))
+await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -152,9 +152,9 @@ This sample shows how to call GetAssetMappingsAsync with all parameters, and how
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -180,16 +180,16 @@ Schema for <c>AssetMappingListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAssetMappings(String,String,String,String,RequestContext)">
+    <member name="GetAssetMappings(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssetMappings with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAssetMappings("<receivedShareName>"))
+foreach (var item in client.GetAssetMappings("<receivedShareName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -199,9 +199,9 @@ This sample shows how to call GetAssetMappings with all parameters, and how to p
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -227,7 +227,7 @@ Schema for <c>AssetMappingListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateAsync(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="CreateAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -246,8 +246,8 @@ var data = new {
 
 var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -267,10 +267,10 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -370,7 +370,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="Create(WaitUntil,String,String,RequestContent,RequestContext)">
+    <member name="Create(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call Create with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -389,8 +389,8 @@ var data = new {
 
 var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -410,10 +410,10 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -513,32 +513,32 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="DeleteAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
 Delete an asset mapping for a received share
 </remarks>
     </member>
-    <member name="Delete(WaitUntil,String,String,RequestContext)">
+    <member name="Delete(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>

@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified nutrient analysis resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Gets a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -58,7 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysisAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysisAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetNutrientAnalysisAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -78,7 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified nutrient analysis resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Gets a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -86,7 +86,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysis(String,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysis(string,string,RequestContext)']/*" />
         public virtual Response GetNutrientAnalysis(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -106,7 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a nutrient analysis resource. </summary>
+        /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -115,7 +115,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -136,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a nutrient analysis resource. </summary>
+        /// <summary> [Protocol Method] Creates or updates a nutrient analysis resource. </summary>
         /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -145,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -166,7 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified nutrient analysis resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Deletes a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -174,7 +174,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -194,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified nutrient analysis resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Deletes a specified nutrient analysis resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -202,7 +202,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -222,7 +222,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources across all parties. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -248,7 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNutrientAnalysesAsync(string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNutrientAnalysesRequest(parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -256,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalyses", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources across all parties. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -282,7 +282,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalyses(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalyses(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNutrientAnalyses(string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNutrientAnalysesRequest(parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -290,7 +290,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalyses", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources under a particular party. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
@@ -319,7 +319,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyIdAsync(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyIdAsync(string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNutrientAnalysesByPartyIdAsync(string partyId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -329,7 +329,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "NutrientAnalyses.GetNutrientAnalysesByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources under a particular party. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of nutrient analysis resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
@@ -358,7 +358,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyId(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyId(string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNutrientAnalysesByPartyId(string partyId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -380,42 +380,42 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("parentType", parentType, true);
             }
-            if (parentIds != null)
+            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
             {
                 foreach (var param in parentIds)
                 {
                     uri.AppendQuery("parentIds", param, true);
                 }
             }
-            if (classifications != null)
+            if (classifications != null && Optional.IsCollectionDefined(classifications))
             {
                 foreach (var param in classifications)
                 {
                     uri.AppendQuery("classifications", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -466,42 +466,42 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("parentType", parentType, true);
             }
-            if (parentIds != null)
+            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
             {
                 foreach (var param in parentIds)
                 {
                     uri.AppendQuery("parentIds", param, true);
                 }
             }
-            if (classifications != null)
+            if (classifications != null && Optional.IsCollectionDefined(classifications))
             {
                 foreach (var param in classifications)
                 {
                     uri.AppendQuery("classifications", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

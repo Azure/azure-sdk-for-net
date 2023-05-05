@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAcceptedEventData"/> event or <see cref="CallTransferFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event.</returns>
         public TransferCallToParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -37,8 +37,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(CallTransferAcceptedEventData)
-                || filter.GetType() == typeof(CallTransferFailedEventData)),
+                && (filter.GetType() == typeof(CallTransferAccepted)
+                || filter.GetType() == typeof(CallTransferFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAcceptedEventData"/> event or <see cref="CallTransferFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event.</returns>
         public async Task<TransferCallToParticipantEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -59,23 +59,23 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(CallTransferAcceptedEventData)
-                || filter.GetType() == typeof(CallTransferFailedEventData)),
+                && (filter.GetType() == typeof(CallTransferAccepted)
+                || filter.GetType() == typeof(CallTransferFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static TransferCallToParticipantEventResult SetReturnedEvent(CallAutomationEventData returnedEvent)
+        private static TransferCallToParticipantEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
             TransferCallToParticipantEventResult result = default;
             switch (returnedEvent)
             {
-                case CallTransferAcceptedEventData:
-                    result = new TransferCallToParticipantEventResult(true, (CallTransferAcceptedEventData)returnedEvent, null);
+                case CallTransferAccepted:
+                    result = new TransferCallToParticipantEventResult(true, (CallTransferAccepted)returnedEvent, null);
                     break;
-                case CallTransferFailedEventData:
-                    result = new TransferCallToParticipantEventResult(false, null, (CallTransferFailedEventData)returnedEvent);
+                case CallTransferFailed:
+                    result = new TransferCallToParticipantEventResult(false, null, (CallTransferFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

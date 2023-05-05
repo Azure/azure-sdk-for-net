@@ -1,116 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CheckKeysAsync(String,String,String,RequestContext)">
-<example>
-This sample shows how to call CheckKeysAsync.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeysAsync();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeysAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeysAsync("<name>", "<after>", "<acceptDatetime>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeysAsync(string,string,string,RequestContext)">
     </member>
-    <member name="CheckKeys(String,String,String,RequestContext)">
-<example>
-This sample shows how to call CheckKeys.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeys();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeys with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeys("<name>", "<after>", "<acceptDatetime>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeys(string,string,string,RequestContext)">
     </member>
-    <member name="CheckKeyValuesAsync(String,String,String,String,IEnumerable,String,RequestContext)">
-<example>
-This sample shows how to call CheckKeyValuesAsync.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeyValuesAsync();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeyValuesAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeyValuesAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeyValuesAsync(string,string,string,string,IEnumerable{string},string,RequestContext)">
     </member>
-    <member name="CheckKeyValues(String,String,String,String,IEnumerable,String,RequestContext)">
-<example>
-This sample shows how to call CheckKeyValues.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeyValues();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeyValues with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeyValues("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeyValues(string,string,string,string,IEnumerable{string},string,RequestContext)">
     </member>
-    <member name="GetConfigurationSettingAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call GetConfigurationSettingAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.GetConfigurationSettingAsync("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetConfigurationSettingAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.GetConfigurationSettingAsync("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="GetConfigurationSettingAsync(string,string,string,IEnumerable{string},MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -131,36 +30,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSetting(String,String,String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call GetConfigurationSetting with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.GetConfigurationSetting("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetConfigurationSetting with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.GetConfigurationSetting("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="GetConfigurationSetting(string,string,string,IEnumerable{string},MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -181,51 +51,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="SetConfigurationSettingAsync(String,RequestContent,ContentType,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call SetConfigurationSettingAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {};
-
-Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call SetConfigurationSettingAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    key = "<key>",
-    label = "<label>",
-    content_type = "<content_type>",
-    value = "<value>",
-    last_modified = "2022-05-10T18:57:31.2311892Z",
-    tags = new {
-        key = "<String>",
-    },
-    locked = true,
-    etag = "<etag>",
-};
-
-Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="SetConfigurationSettingAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -261,51 +87,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="SetConfigurationSetting(String,RequestContent,ContentType,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call SetConfigurationSetting with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {};
-
-Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call SetConfigurationSetting with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    key = "<key>",
-    label = "<label>",
-    content_type = "<content_type>",
-    value = "<value>",
-    last_modified = "2022-05-10T18:57:31.2311892Z",
-    tags = new {
-        key = "<String>",
-    },
-    locked = true,
-    etag = "<etag>",
-};
-
-Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="SetConfigurationSetting(string,RequestContent,ContentType,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -341,36 +123,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteConfigurationSettingAsync(String,String,ETag,RequestContext)">
-<example>
-This sample shows how to call DeleteConfigurationSettingAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.DeleteConfigurationSettingAsync("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteConfigurationSettingAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.DeleteConfigurationSettingAsync("<key>", "<label>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="DeleteConfigurationSettingAsync(string,string,ETag?,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -391,36 +144,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteConfigurationSetting(String,String,ETag,RequestContext)">
-<example>
-This sample shows how to call DeleteConfigurationSetting with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.DeleteConfigurationSetting("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteConfigurationSetting with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.DeleteConfigurationSetting("<key>", "<label>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="DeleteConfigurationSetting(string,string,ETag?,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -441,120 +165,15 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CheckKeyValueAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CheckKeyValueAsync with required parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeyValueAsync("<key>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeyValueAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckKeyValueAsync("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeyValueAsync(string,string,string,IEnumerable{string},MatchConditions,RequestContext)">
     </member>
-    <member name="CheckKeyValue(String,String,String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CheckKeyValue with required parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeyValue("<key>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckKeyValue with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckKeyValue("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckKeyValue(string,string,string,IEnumerable{string},MatchConditions,RequestContext)">
     </member>
-    <member name="CheckSnapshotsAsync(String,RequestContext)">
-<example>
-This sample shows how to call CheckSnapshotsAsync.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckSnapshotsAsync();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckSnapshotsAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckSnapshotsAsync("<after>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckSnapshotsAsync(string,RequestContext)">
     </member>
-    <member name="CheckSnapshots(String,RequestContext)">
-<example>
-This sample shows how to call CheckSnapshots.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckSnapshots();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckSnapshots with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckSnapshots("<after>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckSnapshots(string,RequestContext)">
     </member>
-    <member name="GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call GetSnapshotAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.GetSnapshotAsync("<name>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call GetSnapshotAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.GetSnapshotAsync("<name>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="GetSnapshotAsync(string,IEnumerable{string},MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -583,40 +202,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call GetSnapshot with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.GetSnapshot("<name>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call GetSnapshot with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.GetSnapshot("<name>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="GetSnapshot(string,IEnumerable{string},MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -645,46 +231,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshotStatusAsync(String,RequestContent,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call UpdateSnapshotStatusAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {};
-
-Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call UpdateSnapshotStatusAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    status = "provisioning",
-};
-
-Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="UpdateSnapshotStatusAsync(string,RequestContent,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -721,46 +268,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshotStatus(String,RequestContent,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call UpdateSnapshotStatus with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {};
-
-Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call UpdateSnapshotStatus with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    status = "provisioning",
-};
-
-Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="UpdateSnapshotStatus(string,RequestContent,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -797,116 +305,15 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="CheckSnapshotAsync(String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CheckSnapshotAsync with required parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckSnapshotAsync("<name>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckSnapshotAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckSnapshotAsync("<name>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckSnapshotAsync(string,MatchConditions,RequestContext)">
     </member>
-    <member name="CheckSnapshot(String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CheckSnapshot with required parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckSnapshot("<name>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckSnapshot with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckSnapshot("<name>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckSnapshot(string,MatchConditions,RequestContext)">
     </member>
-    <member name="CheckLabelsAsync(String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call CheckLabelsAsync.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckLabelsAsync();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckLabelsAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckLabelsAsync("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckLabelsAsync(string,string,string,IEnumerable{string},RequestContext)">
     </member>
-    <member name="CheckLabels(String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call CheckLabels.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckLabels();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckLabels with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckLabels("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckLabels(string,string,string,IEnumerable{string},RequestContext)">
     </member>
-    <member name="CreateReadOnlyLockAsync(String,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CreateReadOnlyLockAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CreateReadOnlyLockAsync("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call CreateReadOnlyLockAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CreateReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="CreateReadOnlyLockAsync(string,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -927,36 +334,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateReadOnlyLock(String,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call CreateReadOnlyLock with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CreateReadOnlyLock("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call CreateReadOnlyLock with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CreateReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="CreateReadOnlyLock(string,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -977,36 +355,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReadOnlyLockAsync(String,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call DeleteReadOnlyLockAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.DeleteReadOnlyLockAsync("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteReadOnlyLockAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.DeleteReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="DeleteReadOnlyLockAsync(string,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -1027,36 +376,7 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="DeleteReadOnlyLock(String,String,MatchConditions,RequestContext)">
-<example>
-This sample shows how to call DeleteReadOnlyLock with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.DeleteReadOnlyLock("<key>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DeleteReadOnlyLock with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.DeleteReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("content_type").ToString());
-Console.WriteLine(result.GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("last_modified").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("locked").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="DeleteReadOnlyLock(string,string,MatchConditions,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -1077,63 +397,11 @@ Schema for <c>KeyValue</c>:
 
 </remarks>
     </member>
-    <member name="CheckRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call CheckRevisionsAsync.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckRevisionsAsync();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckRevisionsAsync with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.CheckRevisionsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckRevisionsAsync(string,string,string,string,IEnumerable{string},RequestContext)">
     </member>
-    <member name="CheckRevisions(String,String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call CheckRevisions.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckRevisions();
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckRevisions with all parameters.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.CheckRevisions("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-Console.WriteLine(response.Status);
-]]></code>
-</example>
+    <member name="CheckRevisions(string,string,string,string,IEnumerable{string},RequestContext)">
     </member>
-    <member name="GetOperationDetailsAsync(String,RequestContext)">
-<example>
-This sample shows how to call GetOperationDetailsAsync with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = await client.GetOperationDetailsAsync("<snapshot>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-]]></code>
-</example>
+    <member name="GetOperationDetailsAsync(string,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -1157,23 +425,7 @@ Schema for <c>OperationDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetOperationDetails(String,RequestContext)">
-<example>
-This sample shows how to call GetOperationDetails with required parameters and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-Response response = client.GetOperationDetails("<snapshot>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-]]></code>
-</example>
+    <member name="GetOperationDetails(string,RequestContext)">
 <remarks>
 Below is the JSON schema for the response payload.
 
@@ -1197,31 +449,7 @@ Schema for <c>OperationDetails</c>:
 
 </remarks>
     </member>
-    <member name="GetKeysAsync(String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetKeysAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetKeysAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetKeysAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetKeysAsync("<name>", "<after>", "<acceptDatetime>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-}
-]]></code>
-</example>
+    <member name="GetKeysAsync(string,string,string,RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1235,31 +463,7 @@ Schema for <c>KeyListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetKeys(String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetKeys and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetKeys())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetKeys with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetKeys("<name>", "<after>", "<acceptDatetime>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-}
-]]></code>
-</example>
+    <member name="GetKeys(string,string,string,RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1273,38 +477,7 @@ Schema for <c>KeyListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,String,RequestContext)">
-<example>
-This sample shows how to call GetConfigurationSettingsAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetConfigurationSettingsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetConfigurationSettingsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetConfigurationSettingsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("content_type").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("last_modified").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("locked").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetConfigurationSettingsAsync(string,string,string,string,IEnumerable{string},string,RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1325,38 +498,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetConfigurationSettings(String,String,String,String,IEnumerable,String,RequestContext)">
-<example>
-This sample shows how to call GetConfigurationSettings and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetConfigurationSettings())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetConfigurationSettings with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetConfigurationSettings("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}, "<snapshot>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("content_type").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("last_modified").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("locked").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetConfigurationSettings(string,string,string,string,IEnumerable{string},string,RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1377,42 +519,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshotsAsync(String,String,IEnumerable,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetSnapshotsAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetSnapshotsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-}
-]]></code>
-This sample shows how to call GetSnapshotsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetSnapshotsAsync("<name>", "<after>", new String[]{"<select>"}, new String[]{"<status>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("composition_type").ToString());
-    Console.WriteLine(result.GetProperty("created").ToString());
-    Console.WriteLine(result.GetProperty("expires").ToString());
-    Console.WriteLine(result.GetProperty("retention_period").ToString());
-    Console.WriteLine(result.GetProperty("size").ToString());
-    Console.WriteLine(result.GetProperty("items_count").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetSnapshotsAsync(string,string,IEnumerable{string},IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1441,42 +548,7 @@ Schema for <c>SnapshotListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshots(String,String,IEnumerable,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetSnapshots and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetSnapshots())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-}
-]]></code>
-This sample shows how to call GetSnapshots with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetSnapshots("<name>", "<after>", new String[]{"<select>"}, new String[]{"<status>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("composition_type").ToString());
-    Console.WriteLine(result.GetProperty("created").ToString());
-    Console.WriteLine(result.GetProperty("expires").ToString());
-    Console.WriteLine(result.GetProperty("retention_period").ToString());
-    Console.WriteLine(result.GetProperty("size").ToString());
-    Console.WriteLine(result.GetProperty("items_count").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetSnapshots(string,string,IEnumerable{string},IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1505,31 +577,7 @@ Schema for <c>SnapshotListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetLabelsAsync(String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetLabelsAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetLabelsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetLabelsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetLabelsAsync("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-}
-]]></code>
-</example>
+    <member name="GetLabelsAsync(string,string,string,IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1543,31 +591,7 @@ Schema for <c>LabelListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetLabels(String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetLabels and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetLabels())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetLabels with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetLabels("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-}
-]]></code>
-</example>
+    <member name="GetLabels(string,string,string,IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1581,38 +605,7 @@ Schema for <c>LabelListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetRevisionsAsync and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetRevisionsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetRevisionsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-await foreach (var data in client.GetRevisionsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("content_type").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("last_modified").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("locked").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetRevisionsAsync(string,string,string,string,IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1633,38 +626,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetRevisions(String,String,String,String,IEnumerable,RequestContext)">
-<example>
-This sample shows how to call GetRevisions and parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetRevisions())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetRevisions with all parameters, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-foreach (var data in client.GetRevisions("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("key").ToString());
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("content_type").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("last_modified").ToString());
-    Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("locked").ToString());
-    Console.WriteLine(result.GetProperty("etag").ToString());
-}
-]]></code>
-</example>
+    <member name="GetRevisions(string,string,string,string,IEnumerable{string},RequestContext)">
 <remarks>
 Below is the JSON schema for one item in the pageable response.
 
@@ -1685,64 +647,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="CreateSnapshotAsync(WaitUntil,String,RequestContent,ContentType,RequestContext)">
-<example>
-This sample shows how to call CreateSnapshotAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    filters = new[] {
-        new {
-            key = "<key>",
-        }
-    },
-};
-
-var operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call CreateSnapshotAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    filters = new[] {
-        new {
-            key = "<key>",
-            label = "<label>",
-        }
-    },
-    composition_type = "all",
-    retention_period = 1234L,
-    tags = new {
-        key = "<String>",
-    },
-};
-
-var operation = await client.CreateSnapshotAsync(WaitUntil.Completed, "<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="CreateSnapshotAsync(WaitUntil,string,RequestContent,ContentType,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 
@@ -1794,64 +699,7 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="CreateSnapshot(WaitUntil,String,RequestContent,ContentType,RequestContext)">
-<example>
-This sample shows how to call CreateSnapshot with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    filters = new[] {
-        new {
-            key = "<key>",
-        }
-    },
-};
-
-var operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-]]></code>
-This sample shows how to call CreateSnapshot with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfigurationClient(endpoint);
-
-var data = new {
-    filters = new[] {
-        new {
-            key = "<key>",
-            label = "<label>",
-        }
-    },
-    composition_type = "all",
-    retention_period = 1234L,
-    tags = new {
-        key = "<String>",
-    },
-};
-
-var operation = client.CreateSnapshot(WaitUntil.Completed, "<name>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
-Console.WriteLine(result.GetProperty("filters")[0].GetProperty("label").ToString());
-Console.WriteLine(result.GetProperty("composition_type").ToString());
-Console.WriteLine(result.GetProperty("created").ToString());
-Console.WriteLine(result.GetProperty("expires").ToString());
-Console.WriteLine(result.GetProperty("retention_period").ToString());
-Console.WriteLine(result.GetProperty("size").ToString());
-Console.WriteLine(result.GetProperty("items_count").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("etag").ToString());
-]]></code>
-</example>
+    <member name="CreateSnapshot(WaitUntil,string,RequestContent,ContentType,RequestContext)">
 <remarks>
 Below is the JSON schema for the request and response payloads.
 

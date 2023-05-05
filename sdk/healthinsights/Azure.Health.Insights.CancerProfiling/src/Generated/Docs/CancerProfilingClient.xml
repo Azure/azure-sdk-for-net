@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -19,8 +19,8 @@ var data = new {
 
 var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -74,10 +74,10 @@ var data = new {
     },
 };
 
-var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -166,7 +166,7 @@ Schema for <c>OncoPhenotypeResult</c>:
 
 </remarks>
     </member>
-    <member name="InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+    <member name="InferCancerProfile(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
 <example>
 This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -184,8 +184,8 @@ var data = new {
 
 var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -239,10 +239,10 @@ var data = new {
     },
 };
 
-var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());

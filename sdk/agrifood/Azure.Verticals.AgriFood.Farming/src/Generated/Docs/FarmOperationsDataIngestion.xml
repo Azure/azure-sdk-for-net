@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetJobDetailsAsync(String,RequestContext)">
+    <member name="GetJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-Response response = await client.GetJobDetailsAsync("<jobId>");
+Response response = await client.GetJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -68,14 +68,14 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetJobDetails(String,RequestContext)">
+    <member name="GetJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-Response response = client.GetJobDetails("<jobId>");
+Response response = client.GetJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -135,12 +135,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJobAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -150,8 +150,8 @@ var data = new {
 
 var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -159,7 +159,7 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 This sample shows how to call CreateJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -176,10 +176,10 @@ var data = new {
     },
 };
 
-var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
@@ -268,12 +268,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateJob(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -283,8 +283,8 @@ var data = new {
 
 var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -292,7 +292,7 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 This sample shows how to call CreateJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -309,10 +309,10 @@ var data = new {
     },
 };
 
-var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());

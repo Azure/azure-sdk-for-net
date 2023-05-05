@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateEntityAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -107,29 +107,6 @@ var data = new {
             businessAttributes = new {
                 key = new {},
             },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
             createTime = 123.45f,
             createdBy = "<createdBy>",
             customAttributes = new {
@@ -140,20 +117,6 @@ var data = new {
             isIncomplete = true,
             labels = new[] {
                 "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
             },
             provenanceType = 123.45f,
             proxy = true,
@@ -185,7 +148,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -378,7 +341,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntity(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntity(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntity with required parameters and parse the result.
 <code><![CDATA[
@@ -484,29 +447,6 @@ var data = new {
             businessAttributes = new {
                 key = new {},
             },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
             createTime = 123.45f,
             createdBy = "<createdBy>",
             customAttributes = new {
@@ -517,20 +457,6 @@ var data = new {
             isIncomplete = true,
             labels = new[] {
                 "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
             },
             provenanceType = 123.45f,
             proxy = true,
@@ -562,7 +488,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -755,7 +681,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulkAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulkAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulkAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -863,29 +789,6 @@ var data = new {
             businessAttributes = new {
                 key = new {},
             },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
             createTime = 123.45f,
             createdBy = "<createdBy>",
             customAttributes = new {
@@ -896,20 +799,6 @@ var data = new {
             isIncomplete = true,
             labels = new[] {
                 "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
             },
             provenanceType = 123.45f,
             proxy = true,
@@ -941,7 +830,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1136,7 +1025,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateEntityInBulk(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateEntityInBulk(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEntityInBulk with required parameters and parse the result.
 <code><![CDATA[
@@ -1244,29 +1133,6 @@ var data = new {
             businessAttributes = new {
                 key = new {},
             },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
             createTime = 123.45f,
             createdBy = "<createdBy>",
             customAttributes = new {
@@ -1277,20 +1143,6 @@ var data = new {
             isIncomplete = true,
             labels = new[] {
                 "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
             },
             provenanceType = 123.45f,
             proxy = true,
@@ -1322,7 +1174,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1517,7 +1369,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollectionAsync(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1544,7 +1396,7 @@ var data = new {
     },
 };
 
-Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
+Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1681,7 +1533,7 @@ Schema for <c>EntityMutationResponse</c>:
 
 </remarks>
     </member>
-    <member name="MoveEntitiesToCollection(String,RequestContent,RequestContext)">
+    <member name="MoveEntitiesToCollection(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call MoveEntitiesToCollection with required parameters and parse the result.
 <code><![CDATA[
@@ -1708,7 +1560,7 @@ var data = new {
     },
 };
 
-Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
+Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());

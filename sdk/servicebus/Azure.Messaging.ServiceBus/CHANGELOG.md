@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- The client-side idle timeout for connections can now be configured using `ServiceBusClientOptions`.  
+
 ### Breaking Changes
 
 ### Bugs Fixed

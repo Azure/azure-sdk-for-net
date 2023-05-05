@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetDataDeleteJobDetailsAsync(String,RequestContext)">
+    <member name="GetDataDeleteJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDataDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -72,14 +72,14 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetDataDeleteJobDetails(String,RequestContext)">
+    <member name="GetDataDeleteJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetDataDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = client.GetDataDeleteJobDetails("<jobId>");
+Response response = client.GetDataDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -143,14 +143,14 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetDataIngestionJobDetailsAsync(String,RequestContext)">
+    <member name="GetDataIngestionJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
+Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -214,14 +214,14 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetDataIngestionJobDetails(String,RequestContext)">
+    <member name="GetDataIngestionJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = client.GetDataIngestionJobDetails("<jobId>");
+Response response = client.GetDataIngestionJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -285,16 +285,16 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetWeathersAsync(String,String,String,String,String,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetWeathersAsync(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetWeathersAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-await foreach (var data in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+await foreach (var item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -309,11 +309,11 @@ await foreach (var data in client.GetWeathersAsync("<partyId>", "<boundaryId>", 
 This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-await foreach (var data in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -412,16 +412,16 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 
 </remarks>
     </member>
-    <member name="GetWeathers(String,String,String,String,String,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetWeathers(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetWeathers with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-foreach (var data in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+foreach (var item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -436,11 +436,11 @@ foreach (var data in client.GetWeathers("<partyId>", "<boundaryId>", "<extension
 This sample shows how to call GetWeathers with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-foreach (var data in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -539,12 +539,12 @@ Note: A maximum of 25 key value pairs can be provided for a resource and only st
 
 </remarks>
     </member>
-    <member name="CreateDataDeleteJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateDataDeleteJobAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateDataDeleteJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     extensionId = "<extensionId>",
@@ -554,8 +554,8 @@ var data = new {
 
 var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -563,7 +563,7 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     extensionId = "<extensionId>",
@@ -580,10 +580,10 @@ var data = new {
     },
 };
 
-var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -678,12 +678,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateDataDeleteJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateDataDeleteJob(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateDataDeleteJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     extensionId = "<extensionId>",
@@ -693,8 +693,8 @@ var data = new {
 
 var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -702,7 +702,7 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 This sample shows how to call CreateDataDeleteJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     extensionId = "<extensionId>",
@@ -719,10 +719,10 @@ var data = new {
     },
 };
 
-var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -817,12 +817,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     boundaryId = "<boundaryId>",
@@ -836,8 +836,8 @@ var data = new {
 
 var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -847,7 +847,7 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").
 This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     boundaryId = "<boundaryId>",
@@ -866,10 +866,10 @@ var data = new {
     },
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -964,12 +964,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     boundaryId = "<boundaryId>",
@@ -983,8 +983,8 @@ var data = new {
 
 var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -994,7 +994,7 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").
 This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
 var data = new {
     boundaryId = "<boundaryId>",
@@ -1013,10 +1013,10 @@ var data = new {
     },
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("extensionId").ToString());

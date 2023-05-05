@@ -50,7 +50,7 @@ RoomsClient client = new RoomsClient(connectionString);
 ### Create a room
 To create a room, call the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
 The `validFrom`, `validUntil`, and `participants` arguments are all optional. If `validFrom` and `validUntil` are not provided, then the default for `validFrom` is current date time and the default for `validUntil` is `validFrom + 180 days`.
-When defining `InvitedRoomParticipant`, if role is not specified, then it will be `Attendee` by default.
+When defining `RoomParticipant`, if role is not specified, then it will be `Attendee` by default.
 The returned value is `Response<CommunicationRoom>` which contains created room details as well as the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -129,7 +129,7 @@ Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(c
 
 ### Get participants in a room
 To get all the participants from a room, call the `GetParticipants` or `GetParticipantsAsync` function from RoomsClient.
-The returned value is `AsyncPageable<RoomParticipant>` or `Pageable<RoomParticipant>` which contains the paginated list of participants.
+The returned value is `Pageable<RoomParticipant>` or `AsyncPageable<RoomParticipant>` which contains the paginated list of participants.
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants
 AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
 await foreach (RoomParticipant participant in allParticipants)

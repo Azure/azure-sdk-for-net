@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetProjectDetailsAsync(String,RequestContext)">
+    <member name="GetProjectDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -9,7 +9,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetProjectDetailsAsync("<projectName>");
+Response response = await client.GetProjectDetailsAsync("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -46,7 +46,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectDetails(String,RequestContext)">
+    <member name="GetProjectDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectDetails with required parameters and parse the result.
 <code><![CDATA[
@@ -54,7 +54,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetProjectDetails("<projectName>");
+Response response = client.GetProjectDetails("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -91,7 +91,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="CreateProjectAsync(String,RequestContent,RequestContext)">
+    <member name="CreateProjectAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -123,7 +123,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -173,7 +173,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="CreateProject(String,RequestContent,RequestContext)">
+    <member name="CreateProject(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -205,7 +205,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+Response response = client.CreateProject("<projectName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -255,7 +255,7 @@ Schema for <c>ProjectMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetDeleteStatusAsync(String,RequestContext)">
+    <member name="GetDeleteStatusAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -263,7 +263,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeleteStatusAsync("<jobId>");
+Response response = await client.GetDeleteStatusAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -293,7 +293,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeleteStatus(String,RequestContext)">
+    <member name="GetDeleteStatus(string,RequestContext)">
 <example>
 This sample shows how to call GetDeleteStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -301,7 +301,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeleteStatus("<jobId>");
+Response response = client.GetDeleteStatus("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -331,7 +331,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetExportStatusAsync(String,String,RequestContext)">
+    <member name="GetExportStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -339,7 +339,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -368,7 +368,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetExportStatus(String,String,RequestContext)">
+    <member name="GetExportStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetExportStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -376,7 +376,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetExportStatus("<projectName>", "<jobId>");
+Response response = client.GetExportStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -405,7 +405,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetImportStatusAsync(String,String,RequestContext)">
+    <member name="GetImportStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -413,7 +413,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -443,7 +443,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetImportStatus(String,String,RequestContext)">
+    <member name="GetImportStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetImportStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -451,7 +451,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetImportStatus("<projectName>", "<jobId>");
+Response response = client.GetImportStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -481,7 +481,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeployStatusAsync(String,String,String,RequestContext)">
+    <member name="GetDeployStatusAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -489,7 +489,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -519,7 +519,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetDeployStatus(String,String,String,RequestContext)">
+    <member name="GetDeployStatus(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDeployStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -527,7 +527,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -557,7 +557,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="UpdateSynonymsAsync(String,RequestContent,RequestContext)">
+    <member name="UpdateSynonymsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateSynonymsAsync with required parameters.
 <code><![CDATA[
@@ -587,7 +587,7 @@ var data = new {
     nextLink = "<nextLink>",
 };
 
-Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -611,7 +611,7 @@ Schema for <c>SynonymAssets</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSynonyms(String,RequestContent,RequestContext)">
+    <member name="UpdateSynonyms(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateSynonyms with required parameters.
 <code><![CDATA[
@@ -641,7 +641,7 @@ var data = new {
     nextLink = "<nextLink>",
 };
 
-Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
+Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -665,7 +665,7 @@ Schema for <c>SynonymAssets</c>:
 
 </remarks>
     </member>
-    <member name="GetUpdateSourcesStatusAsync(String,String,RequestContext)">
+    <member name="GetUpdateSourcesStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -673,7 +673,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -703,7 +703,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateSourcesStatus(String,String,RequestContext)">
+    <member name="GetUpdateSourcesStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -711,7 +711,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
+Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -741,7 +741,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateQnasStatusAsync(String,String,RequestContext)">
+    <member name="GetUpdateQnasStatusAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -749,7 +749,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
+Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -779,7 +779,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetUpdateQnasStatus(String,String,RequestContext)">
+    <member name="GetUpdateQnasStatus(string,string,RequestContext)">
 <example>
 This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
 <code><![CDATA[
@@ -787,7 +787,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
+Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -817,7 +817,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="AddFeedbackAsync(String,RequestContent,RequestContext)">
+    <member name="AddFeedbackAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddFeedbackAsync with required parameters.
 <code><![CDATA[
@@ -846,7 +846,7 @@ var data = new {
     },
 };
 
-Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
+Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -871,7 +871,7 @@ Schema for <c>ActiveLearningFeedback</c>:
 
 </remarks>
     </member>
-    <member name="AddFeedback(String,RequestContent,RequestContext)">
+    <member name="AddFeedback(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddFeedback with required parameters.
 <code><![CDATA[
@@ -900,7 +900,7 @@ var data = new {
     },
 };
 
-Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
+Response response = client.AddFeedback("<projectName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -933,9 +933,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetProjectsAsync())
+await foreach (var item in client.GetProjectsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
@@ -979,9 +979,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetProjects())
+foreach (var item in client.GetProjects(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("language").ToString());
@@ -1017,7 +1017,7 @@ Schema for <c>ProjectsMetadataValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDeploymentsAsync(String,RequestContext)">
+    <member name="GetDeploymentsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1025,9 +1025,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
+await foreach (var item in client.GetDeploymentsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
@@ -1049,7 +1049,7 @@ Schema for <c>ProjectDeploymentsList</c>:
 
 </remarks>
     </member>
-    <member name="GetDeployments(String,RequestContext)">
+    <member name="GetDeployments(string,RequestContext)">
 <example>
 This sample shows how to call GetDeployments with required parameters and parse the result.
 <code><![CDATA[
@@ -1057,9 +1057,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetDeployments("<projectName>"))
+foreach (var item in client.GetDeployments("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
@@ -1081,7 +1081,7 @@ Schema for <c>ProjectDeploymentsList</c>:
 
 </remarks>
     </member>
-    <member name="GetSynonymsAsync(String,RequestContext)">
+    <member name="GetSynonymsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1089,9 +1089,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSynonymsAsync("<projectName>"))
+await foreach (var item in client.GetSynonymsAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
@@ -1111,7 +1111,7 @@ Schema for <c>SynonymAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetSynonyms(String,RequestContext)">
+    <member name="GetSynonyms(string,RequestContext)">
 <example>
 This sample shows how to call GetSynonyms with required parameters and parse the result.
 <code><![CDATA[
@@ -1119,9 +1119,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSynonyms("<projectName>"))
+foreach (var item in client.GetSynonyms("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
@@ -1141,7 +1141,7 @@ Schema for <c>SynonymAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetSourcesAsync(String,RequestContext)">
+    <member name="GetSourcesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSourcesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1149,9 +1149,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetSourcesAsync("<projectName>"))
+await foreach (var item in client.GetSourcesAsync("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1179,7 +1179,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetSources(String,RequestContext)">
+    <member name="GetSources(string,RequestContext)">
 <example>
 This sample shows how to call GetSources with required parameters and parse the result.
 <code><![CDATA[
@@ -1187,9 +1187,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetSources("<projectName>"))
+foreach (var item in client.GetSources("<projectName>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1217,7 +1217,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="GetQnasAsync(String,String,RequestContext)">
+    <member name="GetQnasAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetQnasAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1225,9 +1225,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetQnasAsync("<projectName>"))
+await foreach (var item in client.GetQnasAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1237,9 +1237,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var data in client.GetQnasAsync("<projectName>", "<source>"))
+await foreach (var item in client.GetQnasAsync("<projectName>", "<source>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -1315,7 +1315,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="GetQnas(String,String,RequestContext)">
+    <member name="GetQnas(string,string,RequestContext)">
 <example>
 This sample shows how to call GetQnas with required parameters and parse the result.
 <code><![CDATA[
@@ -1323,9 +1323,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetQnas("<projectName>"))
+foreach (var item in client.GetQnas("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1335,9 +1335,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var data in client.GetQnas("<projectName>", "<source>"))
+foreach (var item in client.GetQnas("<projectName>", "<source>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -1413,7 +1413,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="DeleteProjectAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteProjectAsync with required parameters.
 <code><![CDATA[
@@ -1421,13 +1421,13 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeleteProject(WaitUntil,String,RequestContext)">
+    <member name="DeleteProject(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteProject with required parameters.
 <code><![CDATA[
@@ -1435,13 +1435,13 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="ExportAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="ExportAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call ExportAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1451,8 +1451,8 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1464,10 +1464,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1494,7 +1494,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="Export(WaitUntil,String,String,String,RequestContext)">
+    <member name="Export(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call Export with required parameters and parse the result.
 <code><![CDATA[
@@ -1504,8 +1504,8 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.Export(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1517,10 +1517,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1547,7 +1547,7 @@ Schema for <c>ExportJobState</c>:
 
 </remarks>
     </member>
-    <member name="ImportAsync(WaitUntil,String,RequestContent,String,String,RequestContext)">
+    <member name="ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)">
 <example>
 This sample shows how to call ImportAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1559,8 +1559,8 @@ var data = new {};
 
 var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1636,13 +1636,6 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
-                        suggestedQuestions = new[] {
-                            new {
-                                question = "<question>",
-                                userSuggestedCount = 1234,
-                                autoSuggestedCount = 1234,
-                            }
-                        },
                     }
                 },
             }
@@ -1651,10 +1644,10 @@ var data = new {
     fileUri = "<fileUri>",
 };
 
-var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1745,7 +1738,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="Import(WaitUntil,String,RequestContent,String,String,RequestContext)">
+    <member name="Import(WaitUntil,string,RequestContent,string,string,RequestContext)">
 <example>
 This sample shows how to call Import with required parameters and parse the result.
 <code><![CDATA[
@@ -1757,8 +1750,8 @@ var data = new {};
 
 var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1834,13 +1827,6 @@ var data = new {
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
-                        suggestedQuestions = new[] {
-                            new {
-                                question = "<question>",
-                                userSuggestedCount = 1234,
-                                autoSuggestedCount = 1234,
-                            }
-                        },
                     }
                 },
             }
@@ -1849,10 +1835,10 @@ var data = new {
     fileUri = "<fileUri>",
 };
 
-var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1943,7 +1929,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeployProjectAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeployProjectAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeployProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1951,10 +1937,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
@@ -1975,7 +1961,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="DeployProject(WaitUntil,String,String,RequestContext)">
+    <member name="DeployProject(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeployProject with required parameters and parse the result.
 <code><![CDATA[
@@ -1983,10 +1969,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 ]]></code>
@@ -2007,7 +1993,7 @@ Schema for <c>ProjectDeployment</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSourcesAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateSourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2028,11 +2014,11 @@ var data = new[] {
     }
 };
 
-var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-await foreach (var data in operation.Value)
+await foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2075,7 +2061,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSources(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateSources(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateSources with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2096,11 +2082,11 @@ var data = new[] {
     }
 };
 
-var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-foreach (var data in operation.Value)
+foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2143,7 +2129,7 @@ Schema for <c>QnaSourcesMetadata</c>:
 
 </remarks>
     </member>
-    <member name="UpdateQnasAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateQnasAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2190,11 +2176,11 @@ var data = new[] {
     }
 };
 
-var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-await foreach (var data in operation.Value)
+await foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
@@ -2308,7 +2294,7 @@ Schema for <c>QnaAsset</c>:
 
 </remarks>
     </member>
-    <member name="UpdateQnas(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="UpdateQnas(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -2355,11 +2341,11 @@ var data = new[] {
     }
 };
 
-var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
 
-foreach (var data in operation.Value)
+foreach (var item in operation.Value)
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());

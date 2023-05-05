@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = await client.GetWorkflowAsync(Guid.NewGuid());
+Response response = await client.GetWorkflowAsync(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -64,7 +64,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = client.GetWorkflow(Guid.NewGuid());
+Response response = client.GetWorkflow(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -161,7 +161,7 @@ var data = new {
     actionDag = new {},
 };
 
-Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -277,7 +277,7 @@ var data = new {
     actionDag = new {},
 };
 
-Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -351,7 +351,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = await client.DeleteWorkflowAsync(Guid.NewGuid());
+Response response = await client.DeleteWorkflowAsync(Guid.NewGuid(), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -364,7 +364,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = client.DeleteWorkflow(Guid.NewGuid());
+Response response = client.DeleteWorkflow(Guid.NewGuid(), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -411,7 +411,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data));
+Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -502,7 +502,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.SubmitUserRequests(RequestContent.Create(data));
+Response response = client.SubmitUserRequests(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -559,7 +559,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = await client.GetWorkflowRunAsync(Guid.NewGuid());
+Response response = await client.GetWorkflowRunAsync(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -618,7 +618,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = client.GetWorkflowRun(Guid.NewGuid());
+Response response = client.GetWorkflowRun(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -692,7 +692,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -732,7 +732,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -757,7 +757,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = await client.GetWorkflowTaskAsync(Guid.NewGuid());
+Response response = await client.GetWorkflowTaskAsync(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -874,7 +874,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = client.GetWorkflowTask(Guid.NewGuid());
+Response response = client.GetWorkflowTask(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1006,7 +1006,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1046,7 +1046,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1086,7 +1086,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1126,7 +1126,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1171,7 +1171,7 @@ var data = new {
     },
 };
 
-Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1221,7 +1221,7 @@ var data = new {
     },
 };
 
-Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1269,7 +1269,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1313,7 +1313,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1339,9 +1339,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowsAsync())
+await foreach (var item in client.GetWorkflowsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
@@ -1393,9 +1393,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflows())
+foreach (var item in client.GetWorkflows(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
@@ -1439,7 +1439,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -1447,9 +1447,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowRunsAsync())
+await foreach (var item in client.GetWorkflowRunsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowId").ToString());
     Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1465,9 +1465,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234))
+await foreach (var item in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowId").ToString());
     Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1507,7 +1507,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1515,9 +1515,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflowRuns())
+foreach (var item in client.GetWorkflowRuns())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowId").ToString());
     Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1533,9 +1533,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234))
+foreach (var item in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowId").ToString());
     Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1575,7 +1575,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasksAsync and parse the result.
 <code><![CDATA[
@@ -1583,9 +1583,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowTasksAsync())
+await foreach (var item in client.GetWorkflowTasksAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowRunId").ToString());
@@ -1603,9 +1603,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowTasksAsync("<viewMode>", new String[]{"<workflowIds>"}, "<timeWindow>", 1234, "<orderby>", new String[]{"<taskTypes>"}, new String[]{"<taskStatuses>"}, "<workflowNameKeyword>"))
+await foreach (var item in client.GetWorkflowTasksAsync("<viewMode>", new String[]{"<workflowIds>"}, "<timeWindow>", 1234, "<orderby>", new String[]{"<taskTypes>"}, new String[]{"<taskStatuses>"}, "<workflowNameKeyword>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("title").ToString());
@@ -1667,7 +1667,7 @@ Schema for <c>TasksListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)">
+    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowTasks and parse the result.
 <code><![CDATA[
@@ -1675,9 +1675,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflowTasks())
+foreach (var item in client.GetWorkflowTasks())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("workflowRunId").ToString());
@@ -1695,9 +1695,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflowTasks("<viewMode>", new String[]{"<workflowIds>"}, "<timeWindow>", 1234, "<orderby>", new String[]{"<taskTypes>"}, new String[]{"<taskStatuses>"}, "<workflowNameKeyword>"))
+foreach (var item in client.GetWorkflowTasks("<viewMode>", new String[]{"<workflowIds>"}, "<timeWindow>", 1234, "<orderby>", new String[]{"<taskTypes>"}, new String[]{"<taskStatuses>"}, "<workflowNameKeyword>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("title").ToString());

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSensorEventsAsync(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)">
+    <member name="GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSensorEventsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
 
 Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>");
 
@@ -16,9 +16,9 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetSensorEventsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
+Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
@@ -57,12 +57,12 @@ Schema for <c>SensorEventListResponse</c>:
 
 </remarks>
     </member>
-    <member name="GetSensorEvents(String,String,DateTimeOffset,DateTimeOffset,Boolean,RequestContext)">
+    <member name="GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetSensorEvents with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
 
 Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>");
 
@@ -72,9 +72,9 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetSensorEvents with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
 
-Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
+Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());

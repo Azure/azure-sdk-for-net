@@ -12,16 +12,16 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="PlayCanceledEventData"/> event will be returned when the play is successfully cancelled.
+        /// <see cref="PlayCanceled"/> event will be returned when the play is successfully cancelled.
         /// </summary>
-        public PlayCanceledEventData PlayCanceledSucessEvent { get; }
+        public PlayCanceled PlayCanceledSucessEvent { get; }
 
         /// <summary>
-        /// <see cref="RecognizeCanceledEventData"/> event will be returned when the Recognize is successfully cancelled.
+        /// <see cref="RecognizeCanceled"/> event will be returned when the Recognize is successfully cancelled.
         /// </summary>
-        public RecognizeCanceledEventData RecognizeCanceledSucessEvent { get; }
+        public RecognizeCanceled RecognizeCanceledSucessEvent { get; }
 
-        internal CancelAllMediaOperationsEventResult(bool isSuccess, PlayCanceledEventData playCanceledSucessEvent, RecognizeCanceledEventData recognizeCanceledSucessEvent)
+        internal CancelAllMediaOperationsEventResult(bool isSuccess, PlayCanceled playCanceledSucessEvent, RecognizeCanceled recognizeCanceledSucessEvent)
         {
             IsSuccess = isSuccess;
             PlayCanceledSucessEvent = playCanceledSucessEvent;

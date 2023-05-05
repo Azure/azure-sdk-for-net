@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSentShareAsync(String,RequestContext)">
+    <member name="GetSentShareAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetSentShareAsync("<sentShareId>");
+Response response = await client.GetSentShareAsync("<sentShareId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -51,14 +51,14 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentShare(String,RequestContext)">
+    <member name="GetSentShare(string,RequestContext)">
 <example>
 This sample shows how to call GetSentShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetSentShare("<sentShareId>");
+Response response = client.GetSentShare("<sentShareId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -101,14 +101,14 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetSentShareInvitationAsync(String,String,RequestContext)">
+    <member name="GetSentShareInvitationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -166,14 +166,14 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetSentShareInvitation(String,String,RequestContext)">
+    <member name="GetSentShareInvitation(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>");
+Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -231,7 +231,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateSentShareInvitationAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitationAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateSentShareInvitationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -267,7 +267,7 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -368,7 +368,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateSentShareInvitation(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitation(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateSentShareInvitation with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -404,7 +404,7 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -505,7 +505,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserSentShareInvitationAsync(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitationAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -523,7 +523,7 @@ This sample shows how to call NotifyUserSentShareInvitationAsync with all parame
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -581,7 +581,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserSentShareInvitation(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitation(string,string,string,RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
@@ -599,7 +599,7 @@ This sample shows how to call NotifyUserSentShareInvitation with all parameters,
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -657,16 +657,16 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="GetAllSentSharesAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllSentSharesAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllSentSharesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllSentSharesAsync("<referenceName>"))
+await foreach (var item in client.GetAllSentSharesAsync("<referenceName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -676,9 +676,9 @@ This sample shows how to call GetAllSentSharesAsync with all parameters, and how
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllSentSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -702,16 +702,16 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShares(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShares(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllSentShares with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllSentShares("<referenceName>"))
+foreach (var item in client.GetAllSentShares("<referenceName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -721,9 +721,9 @@ This sample shows how to call GetAllSentShares with all parameters, and how to p
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllSentShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAllSentShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -747,16 +747,16 @@ Schema for <c>SentShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShareInvitationsAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShareInvitationsAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllSentShareInvitationsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllSentShareInvitationsAsync("<sentShareId>"))
+await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -766,9 +766,9 @@ This sample shows how to call GetAllSentShareInvitationsAsync with all parameter
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -792,16 +792,16 @@ Schema for <c>SentShareInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAllSentShareInvitations(String,String,String,String,RequestContext)">
+    <member name="GetAllSentShareInvitations(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAllSentShareInvitations with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllSentShareInvitations("<sentShareId>"))
+foreach (var item in client.GetAllSentShareInvitations("<sentShareId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -811,9 +811,9 @@ This sample shows how to call GetAllSentShareInvitations with all parameters, an
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAllSentShareInvitations("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -837,7 +837,7 @@ Schema for <c>SentShareInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceSentShareAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShareAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceSentShareAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -864,8 +864,8 @@ var data = new {
 
 var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -898,10 +898,10 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -970,7 +970,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceSentShare(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShare(WaitUntil,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceSentShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -997,8 +997,8 @@ var data = new {
 
 var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -1031,10 +1031,10 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data), new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1103,17 +1103,17 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShareAsync(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>");
+var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
@@ -1147,17 +1147,17 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShare(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShare(WaitUntil,string,RequestContext)">
 <example>
 This sample shows how to call DeleteSentShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>");
+var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
@@ -1191,17 +1191,17 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareInvitationAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitationAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
@@ -1235,17 +1235,17 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteSentShareInvitation(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitation(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());

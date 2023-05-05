@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -18,7 +18,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {
     sensorDataModelId = "<sensorDataModelId>",
@@ -45,7 +45,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -150,12 +150,12 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="CreateOrUpdate(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -167,7 +167,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {
     sensorDataModelId = "<sensorDataModelId>",
@@ -194,7 +194,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -299,14 +299,14 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensorAsync(String,String,RequestContext)">
+    <member name="GetSensorAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSensorAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>");
+Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -374,14 +374,14 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensor(String,String,RequestContext)">
+    <member name="GetSensor(string,string,RequestContext)">
 <example>
 This sample shows how to call GetSensor with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>");
+Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -449,38 +449,38 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="DeleteAsync(String,String,RequestContext)">
+    <member name="DeleteAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>");
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,String,RequestContext)">
+    <member name="Delete(string,string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorPartnerId>", "<sensorId>");
+Response response = client.Delete("<sensorPartnerId>", "<sensorId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetConnectionStringAsync(String,String,RequestContext)">
+    <member name="GetConnectionStringAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetConnectionStringAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>");
+Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -501,14 +501,14 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 
 </remarks>
     </member>
-    <member name="GetConnectionString(String,String,RequestContext)">
+    <member name="GetConnectionString(string,string,RequestContext)">
 <example>
 This sample shows how to call GetConnectionString with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>");
+Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -529,18 +529,18 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 
 </remarks>
     </member>
-    <member name="RenewConnectionStringAsync(String,String,RequestContent,RequestContext)">
+    <member name="RenewConnectionStringAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RenewConnectionStringAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {
     connectionStringType = "Primary",
 };
 
-Response response = await client.RenewConnectionStringAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
+Response response = await client.RenewConnectionStringAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -569,18 +569,18 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 
 </remarks>
     </member>
-    <member name="RenewConnectionString(String,String,RequestContent,RequestContext)">
+    <member name="RenewConnectionString(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RenewConnectionString with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
 var data = new {
     connectionStringType = "Primary",
 };
 
-Response response = client.RenewConnectionString("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
+Response response = client.RenewConnectionString("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -609,27 +609,27 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 
 </remarks>
     </member>
-    <member name="GetSensorsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensorsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetSensorsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>"))
+await foreach (var item in client.GetSensorsAsync("<sensorPartnerId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetSensorsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetSensorsAsync("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
     Console.WriteLine(result.GetProperty("integrationId").ToString());
     Console.WriteLine(result.GetProperty("hardwareId").ToString());
@@ -696,27 +696,27 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSensors(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSensors(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetSensors with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-foreach (var data in client.GetSensors("<sensorPartnerId>"))
+foreach (var item in client.GetSensors("<sensorPartnerId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetSensors with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-foreach (var data in client.GetSensors("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetSensors("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
     Console.WriteLine(result.GetProperty("integrationId").ToString());
     Console.WriteLine(result.GetProperty("hardwareId").ToString());
