@@ -37,7 +37,7 @@
         },
         "hsmLocation": {
             "type": "string",
-            "defaultValue": "northcentralus",
+            "defaultValue": "francecentral",
             "allowedValues": [
                 "australiacentral",
                 "australiaeast",
