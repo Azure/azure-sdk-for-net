@@ -94,6 +94,7 @@ namespace Azure.Monitor.Query.Tests
             string resourceId =
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
             string[] metricNames = new[] { "Http2xx" };
+            // Use of asterisk in filter value enables splitting on Instance dimension.
             string filter = "Instance eq '*'";
 #else
             string resourceId = TestEnvironment.MetricsResource;
@@ -107,7 +108,6 @@ namespace Azure.Monitor.Query.Tests
                 {
                     MetricAggregationType.Average,
                 },
-                // Use of asterisk in filter value enables splitting on the dimension.
                 Filter = filter,
                 TimeRange = TimeSpan.FromDays(2),
             };

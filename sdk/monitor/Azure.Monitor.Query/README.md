@@ -515,6 +515,7 @@ The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.mo
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
 string[] metricNames = new[] { "Http2xx" };
+// Use of asterisk in filter value enables splitting on Instance dimension.
 string filter = "Instance eq '*'";
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 var options = new MetricsQueryOptions
@@ -523,7 +524,6 @@ var options = new MetricsQueryOptions
     {
         MetricAggregationType.Average,
     },
-    // Use of asterisk in filter value enables splitting on the dimension.
     Filter = filter,
     TimeRange = TimeSpan.FromDays(2),
 };
