@@ -9,6 +9,6 @@ namespace Azure.Communication.CallAutomation
     {
         internal string EventArgsId { get; set; }
 
-        internal CallAutomationEventData CallAutomationEvent { get; set; }
+        internal CallAutomationEventBase CallAutomationEvent { get; set; }
     }
 }

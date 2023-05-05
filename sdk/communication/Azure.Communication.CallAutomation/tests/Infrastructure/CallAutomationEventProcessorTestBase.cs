@@ -100,9 +100,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected void SendAndProcessEvent(
             CallAutomationEventProcessor eventProcessor,
-            CallAutomationEventData eventToBeSent)
+            CallAutomationEventBase eventToBeSent)
         {
-            eventProcessor.ProcessEvents(new List<CallAutomationEventData>() { eventToBeSent });
+            eventProcessor.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });
         }
     }
 }
