@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
                 SourceType = SourceControlSourceType.VsoGit,
                 SecurityToken = new SourceControlSecurityTokenProperties()
                 {
-                    AccessToken = "p26mwl3frnfa4l5i6a7zjfog7k75qeac7otyfa76q3ceajmrnjoq",
+                    AccessToken = "stringfortoken",
                     TokenType = SourceControlTokenType.PersonalAccessToken
                 },
                 Description = "test creating a Source Control",
