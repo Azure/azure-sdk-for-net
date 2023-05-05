@@ -26,7 +26,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null);
+Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -122,7 +122,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetUpdate("<provider>", "<name>", "<version>", null);
+Response response = client.GetUpdate("<provider>", "<name>", "<version>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -215,7 +215,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null);
+Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("fileId").ToString());
@@ -294,7 +294,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null);
+Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("fileId").ToString());
@@ -373,7 +373,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetOperationStatusAsync("<operationId>", null);
+Response response = await client.GetOperationStatusAsync("<operationId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -460,7 +460,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetOperationStatus("<operationId>", null);
+Response response = client.GetOperationStatus("<operationId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -533,9 +533,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetUpdatesAsync())
+await foreach (var item in client.GetUpdatesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -551,9 +551,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetUpdatesAsync("<search>", "<filter>"))
+await foreach (var item in client.GetUpdatesAsync("<search>", "<filter>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -631,9 +631,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetUpdates())
+foreach (var item in client.GetUpdates())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -649,9 +649,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetUpdates("<search>", "<filter>"))
+foreach (var item in client.GetUpdates("<search>", "<filter>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -729,9 +729,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetProvidersAsync())
+await foreach (var item in client.GetProvidersAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -745,9 +745,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetProviders())
+foreach (var item in client.GetProviders(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -761,9 +761,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetNamesAsync("<provider>"))
+await foreach (var item in client.GetNamesAsync("<provider>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -777,9 +777,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetNames("<provider>"))
+foreach (var item in client.GetNames("<provider>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -793,9 +793,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetVersionsAsync("<provider>", "<name>"))
+await foreach (var item in client.GetVersionsAsync("<provider>", "<name>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -805,9 +805,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetVersionsAsync("<provider>", "<name>", "<filter>"))
+await foreach (var item in client.GetVersionsAsync("<provider>", "<name>", "<filter>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -821,9 +821,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetVersions("<provider>", "<name>"))
+foreach (var item in client.GetVersions("<provider>", "<name>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -833,9 +833,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetVersions("<provider>", "<name>", "<filter>"))
+foreach (var item in client.GetVersions("<provider>", "<name>", "<filter>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -849,9 +849,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetFilesAsync("<provider>", "<name>", "<version>"))
+await foreach (var item in client.GetFilesAsync("<provider>", "<name>", "<version>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -865,9 +865,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetFiles("<provider>", "<name>", "<version>"))
+foreach (var item in client.GetFiles("<provider>", "<name>", "<version>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -881,9 +881,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetOperationStatusesAsync())
+await foreach (var item in client.GetOperationStatusesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -896,9 +896,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var data in client.GetOperationStatusesAsync("<filter>", 1234))
+await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
@@ -970,9 +970,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetOperationStatuses())
+foreach (var item in client.GetOperationStatuses())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -985,9 +985,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-foreach (var data in client.GetOperationStatuses("<filter>", 1234))
+foreach (var item in client.GetOperationStatuses("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
@@ -1059,9 +1059,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
+var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1073,9 +1073,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");
+var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1106,9 +1106,9 @@ var data = new[] {
     }
 };
 
-var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
+var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
@@ -1162,9 +1162,9 @@ var data = new[] {
     }
 };
 
-var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
+var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>

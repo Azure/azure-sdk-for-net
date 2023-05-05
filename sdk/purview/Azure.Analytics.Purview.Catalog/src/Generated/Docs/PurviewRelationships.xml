@@ -62,27 +62,6 @@ var data = new {
         displayText = "<displayText>",
         entityStatus = "ACTIVE",
         relationshipType = "<relationshipType>",
-        relationshipAttributes = new {
-            entityGuid = "<entityGuid>",
-            entityStatus = "ACTIVE",
-            removePropagationsOnEntityDelete = true,
-            validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-            source = "<source>",
-            sourceDetails = new {
-                key = new {},
-            },
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
         relationshipGuid = "<relationshipGuid>",
         relationshipStatus = "ACTIVE",
         guid = "<guid>",
@@ -106,7 +85,7 @@ var data = new {
     lastModifiedTS = "<lastModifiedTS>",
 };
 
-Response response = await client.CreateAsync(RequestContent.Create(data));
+Response response = await client.CreateAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -248,27 +227,6 @@ var data = new {
         displayText = "<displayText>",
         entityStatus = "ACTIVE",
         relationshipType = "<relationshipType>",
-        relationshipAttributes = new {
-            entityGuid = "<entityGuid>",
-            entityStatus = "ACTIVE",
-            removePropagationsOnEntityDelete = true,
-            validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-            source = "<source>",
-            sourceDetails = new {
-                key = new {},
-            },
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
         relationshipGuid = "<relationshipGuid>",
         relationshipStatus = "ACTIVE",
         guid = "<guid>",
@@ -292,7 +250,7 @@ var data = new {
     lastModifiedTS = "<lastModifiedTS>",
 };
 
-Response response = client.Create(RequestContent.Create(data));
+Response response = client.Create(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -434,27 +392,6 @@ var data = new {
         displayText = "<displayText>",
         entityStatus = "ACTIVE",
         relationshipType = "<relationshipType>",
-        relationshipAttributes = new {
-            entityGuid = "<entityGuid>",
-            entityStatus = "ACTIVE",
-            removePropagationsOnEntityDelete = true,
-            validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-            source = "<source>",
-            sourceDetails = new {
-                key = new {},
-            },
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
         relationshipGuid = "<relationshipGuid>",
         relationshipStatus = "ACTIVE",
         guid = "<guid>",
@@ -478,7 +415,7 @@ var data = new {
     lastModifiedTS = "<lastModifiedTS>",
 };
 
-Response response = await client.UpdateAsync(RequestContent.Create(data));
+Response response = await client.UpdateAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -620,27 +557,6 @@ var data = new {
         displayText = "<displayText>",
         entityStatus = "ACTIVE",
         relationshipType = "<relationshipType>",
-        relationshipAttributes = new {
-            entityGuid = "<entityGuid>",
-            entityStatus = "ACTIVE",
-            removePropagationsOnEntityDelete = true,
-            validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-            source = "<source>",
-            sourceDetails = new {
-                key = new {},
-            },
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
         relationshipGuid = "<relationshipGuid>",
         relationshipStatus = "ACTIVE",
         guid = "<guid>",
@@ -664,7 +580,7 @@ var data = new {
     lastModifiedTS = "<lastModifiedTS>",
 };
 
-Response response = client.Update(RequestContent.Create(data));
+Response response = client.Update(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -764,7 +680,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
+Response response = await client.GetPurviewRelationshipAsync("<guid>", true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
@@ -872,7 +788,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-Response response = client.GetPurviewRelationship("<guid>", true);
+Response response = client.GetPurviewRelationship("<guid>", true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
@@ -969,7 +885,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-Response response = await client.DeleteAsync("<guid>");
+Response response = await client.DeleteAsync("<guid>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -982,7 +898,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-Response response = client.Delete("<guid>");
+Response response = client.Delete("<guid>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
