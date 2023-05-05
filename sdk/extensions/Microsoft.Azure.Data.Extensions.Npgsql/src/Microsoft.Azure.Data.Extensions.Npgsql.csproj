@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<PackageId>Microsoft.Azure.Data.Extensions.Npgsql</PackageId>
+		<Version>1.0.0-beta.1</Version>
+		<RepositoryUrl>https://github.com/felipmiguel/AzureDb.Passwordless</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\..\Microsoft.Azure.Data.Extensions.Core\src\TokenCredentialBaseAuthenticationProvider.cs" Link="TokenCredentialBaseAuthenticationProvider.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Core" Version="1.31.0" />
+		<PackageReference Include="Npgsql" Version="7.0.4" />
+	</ItemGroup>
+
+</Project>
