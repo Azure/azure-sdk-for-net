@@ -46,6 +46,7 @@
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
