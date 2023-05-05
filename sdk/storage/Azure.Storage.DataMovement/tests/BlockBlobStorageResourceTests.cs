@@ -288,7 +288,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange

@@ -285,14 +285,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingBlobContainer test = await GetTestContainerAsync(
                 service: serviceClient,
-                publicAccessType: PublicAccessType.None);
+                publicAccessType: PublicAccessType.BlobContainer);
 
             AppendBlobClient sourceClient = test.Container.GetAppendBlobClient(GetNewBlobName());
             AppendBlobClient destinationClient = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
@@ -306,7 +305,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
-            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
+            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(
+                destinationClient,
+                new AppendBlobStorageResourceOptions() { CopyMethod = TransferCopyMethod.AsyncCopy });
             string sourceBearerToken = await GetAuthToken();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {

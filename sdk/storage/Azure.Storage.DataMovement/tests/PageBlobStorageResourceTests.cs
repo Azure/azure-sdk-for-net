@@ -26,7 +26,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         { }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public void Ctor_PublicUri()
         {
             // Arrange
@@ -306,7 +305,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange
@@ -329,7 +327,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(
+                destinationClient,
+                new PageBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy
+                });
+
             string sourceBearerToken = await GetAuthToken();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
@@ -414,7 +418,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CopyBlockFromUriAsync_OAuth()
         {
             // Arrange
@@ -432,7 +435,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     content: stream,
                     offset: 0);
             }
-            await destinationClient.CreateIfNotExistsAsync(blockLength);
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
@@ -449,11 +451,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: blockLength,
                 options: options);
+
+            // Commit the block
             await destinationResource.CompleteTransferAsync();
 
             // Assert
-            await destinationClient.ExistsAsync();
             BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
             Assert.NotNull(result);
             byte[] blockData = new byte[blockLength];
