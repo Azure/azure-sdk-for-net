@@ -729,7 +729,7 @@ array is consistent with the input series.
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResultAsync(string,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResultAsync(String,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -812,7 +812,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="GetMultivariateBatchDetectionResult(string,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResult(String,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
 <code><![CDATA[
@@ -1251,7 +1251,7 @@ information.
 
 </remarks>
     </member>
-    <member name="DeleteMultivariateModelAsync(string,RequestContext)">
+    <member name="DeleteMultivariateModelAsync(String,RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModelAsync with required parameters.
 <code><![CDATA[
@@ -1267,7 +1267,7 @@ Console.WriteLine(response.Status);
 Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="DeleteMultivariateModel(string,RequestContext)">
+    <member name="DeleteMultivariateModel(String,RequestContext)">
 <example>
 This sample shows how to call DeleteMultivariateModel with required parameters.
 <code><![CDATA[
@@ -1283,7 +1283,7 @@ Console.WriteLine(response.Status);
 Delete an existing multivariate model according to the modelId value.
 </remarks>
     </member>
-    <member name="GetMultivariateModelAsync(string,RequestContext)">
+    <member name="GetMultivariateModelAsync(String,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModelAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1379,7 +1379,7 @@ information.
 
 </remarks>
     </member>
-    <member name="GetMultivariateModel(string,RequestContext)">
+    <member name="GetMultivariateModel(String,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateModel with required parameters and parse the result.
 <code><![CDATA[
@@ -1475,7 +1475,7 @@ information.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomalyAsync(string,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomalyAsync(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1587,7 +1587,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateBatchAnomaly(string,RequestContent,RequestContext)">
+    <member name="DetectMultivariateBatchAnomaly(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -1699,7 +1699,7 @@ significant the anomaly is.
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomalyAsync(string,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomalyAsync(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateLastAnomalyAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1811,7 +1811,7 @@ Schema for <c>MultivariateLastDetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="DetectMultivariateLastAnomaly(string,RequestContent,RequestContext)">
+    <member name="DetectMultivariateLastAnomaly(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectMultivariateLastAnomaly with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1923,9 +1923,23 @@ Schema for <c>MultivariateLastDetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="GetMultivariateModelsAsync(int?,int?,RequestContext)">
+    <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModelsAsync with required parameters and parse the result.
+This sample shows how to call GetMultivariateModelsAsync and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+await foreach (var data in client.GetMultivariateModelsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+}
+]]></code>
+This sample shows how to call GetMultivariateModelsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2014,9 +2028,23 @@ information.
 
 </remarks>
     </member>
-    <member name="GetMultivariateModels(int?,int?,RequestContext)">
+    <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModels with required parameters and parse the result.
+This sample shows how to call GetMultivariateModels and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+foreach (var data in client.GetMultivariateModels())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+}
+]]></code>
+This sample shows how to call GetMultivariateModels with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");

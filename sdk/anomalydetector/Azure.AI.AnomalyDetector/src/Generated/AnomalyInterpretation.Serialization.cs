@@ -43,6 +43,7 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value);

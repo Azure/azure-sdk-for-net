@@ -30,53 +30,6 @@ namespace Azure.AI.AnomalyDetector
             Series = series.ToList();
         }
 
-        /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
-        /// <param name="series">
-        /// Time series data points. Points should be sorted by time stamp in ascending
-        /// order to match the anomaly detection result. If the data is not sorted
-        /// correctly or there's a duplicated time stamp, the API won't work. In such
-        /// a case, an error message is returned.
-        /// </param>
-        /// <param name="granularity">
-        /// Argument that indicates time granularity. If granularity is not present, the value
-        /// is none by default. If granularity is none, the time stamp property in the time
-        /// series point can be absent.
-        /// </param>
-        /// <param name="customInterval">
-        /// A custom interval is used to set a nonstandard time interval. For example, if the
-        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
-        /// "customInterval":5}.
-        /// </param>
-        /// <param name="period">
-        /// Argument that indicates the periodic value of a time series. If the value is null or
-        /// is not present, the API determines the period automatically.
-        /// </param>
-        /// <param name="maxAnomalyRatio"> Argument that indicates an advanced model parameter. It's the maximum anomaly ratio in a time series. </param>
-        /// <param name="sensitivity">
-        /// Argument that indicates an advanced model parameter between 0 and 99. The lower the value
-        /// is, the larger the margin value is, which means fewer anomalies will be
-        /// accepted.
-        /// </param>
-        /// <param name="imputeMode">
-        /// Specifies how to deal with missing values in the input series. It's used
-        /// when granularity is not "none".
-        /// </param>
-        /// <param name="imputeFixedValue">
-        /// Specifies the value to fill. It's used when granularity is not "none"
-        /// and imputeMode is "fixed".
-        /// </param>
-        internal UnivariateDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue)
-        {
-            Series = series;
-            Granularity = granularity;
-            CustomInterval = customInterval;
-            Period = period;
-            MaxAnomalyRatio = maxAnomalyRatio;
-            Sensitivity = sensitivity;
-            ImputeMode = imputeMode;
-            ImputeFixedValue = imputeFixedValue;
-        }
-
         /// <summary>
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted

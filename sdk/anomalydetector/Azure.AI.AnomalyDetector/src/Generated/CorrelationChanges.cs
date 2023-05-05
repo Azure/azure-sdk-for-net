@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +24,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
         internal CorrelationChanges(IReadOnlyList<string> changedVariables)
         {
-            ChangedVariables = changedVariables;
+            ChangedVariables = changedVariables.ToList();
         }
 
         /// <summary> Correlated variables that have correlation changes under an anomaly. </summary>

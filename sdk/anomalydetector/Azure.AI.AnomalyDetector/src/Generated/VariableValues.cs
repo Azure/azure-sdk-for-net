@@ -31,17 +31,6 @@ namespace Azure.AI.AnomalyDetector
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of VariableValues. </summary>
-        /// <param name="variable"> Variable name of the last detection request. </param>
-        /// <param name="timestamps"> Time stamps of the last detection request. </param>
-        /// <param name="values"> Values of variables. </param>
-        internal VariableValues(string variable, IList<string> timestamps, IList<float> values)
-        {
-            Variable = variable;
-            Timestamps = timestamps;
-            Values = values;
-        }
-
         /// <summary> Variable name of the last detection request. </summary>
         public string Variable { get; }
         /// <summary> Time stamps of the last detection request. </summary>

@@ -45,6 +45,7 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
