@@ -72,9 +72,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.BindToCollector<TableEntity>(CreateTableWriter);
 
+            binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
             binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
             binding.BindToInput<ParameterBindingData[]>(CreateEnumerable);
-            binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
+
             binding.BindToInput<JArray>(CreateJArray);
         }
 
