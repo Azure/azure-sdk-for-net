@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="container">The source container which will contains the source blobs</param>
@@ -439,6 +439,48 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationBlobPrefix: destinationFolder,
                 blobNames,
                 options: options).ConfigureAwait(false);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task BlockBlobDirectoryToDirectory_Root()
+        {
+            // Arrange
+            string[] files = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
+            BinaryData data = BinaryData.FromString("Hello World");
+
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            foreach (string file in files)
+            {
+                await source.Container.UploadBlobAsync(file, data);
+            }
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource =
+                new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
+                destination.Container,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                });
+
+            // Act
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            // Assert
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.IsTrue(destinationFiles.OrderBy(f => f).SequenceEqual(files.OrderBy(f => f)));
         }
 
         #region Single Concurrency
