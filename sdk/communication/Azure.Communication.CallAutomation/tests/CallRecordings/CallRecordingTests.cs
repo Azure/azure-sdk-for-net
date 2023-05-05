@@ -148,7 +148,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
-                   callRecording => callRecording.StartRecording(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri, ChannelAffinity = testChannelAffinities})
+                   callRecording => callRecording.Start(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities})
                 },
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
@@ -163,7 +163,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
                 {
-                   callRecording => callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri, ChannelAffinity = testChannelAffinities})
+                   callRecording => callRecording.StartAsync(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities})
                 },
                 new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
                 {
@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         callRecording.Start(
                             new StartRecordingOptions(_callLocator)
                             {
-                                RecordingStateCallbackEndpoint = _callBackUri,
+                                RecordingStateCallbackUri = _callBackUri,
                                 ChannelAffinity = testChannelAffinities
                             })
                 },

@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Creates a new PlayOptions object.
+        /// Creates a new PlayToAllOptions object.
         /// </summary>
         public PlayToAllOptions(PlaySource playSource)
         {
