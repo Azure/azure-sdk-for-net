@@ -59,7 +59,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (options.IgnoreAdditionalProperties)
+            if (!options.IgnoreAdditionalProperties)
             {
                 //write out the raw data
                 foreach (var property in RawData)

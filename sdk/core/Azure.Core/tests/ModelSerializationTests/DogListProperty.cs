@@ -107,7 +107,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.IgnoreAdditionalProperties)
+                if (!options.IgnoreAdditionalProperties)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

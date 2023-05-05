@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             DogListProperty model = new DogListProperty("Doggo");
 
             Stream stream = new MemoryStream();
-            model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });
+            model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { IgnoreReadOnlyProperties = true, PrettyPrint = true });
             stream.Position = 0;
             var actualJson = new StreamReader(stream).ReadToEnd();
 

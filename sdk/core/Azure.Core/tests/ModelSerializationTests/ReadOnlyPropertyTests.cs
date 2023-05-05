@@ -80,16 +80,17 @@ namespace Azure.Core.Tests.ModelSerializationTests
             CatReadOnlyProperty model = new CatReadOnlyProperty(3.2, "Felis catus", "Catto", true, false);
 
             Stream stream = new MemoryStream();
-            model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });
+            model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });;
             stream.Position = 0;
             var actualJson = new StreamReader(stream).ReadToEnd();
 
             var expectedJson = """
                 {
+                  "latinName": "Felis catus",
+                  "hasWhiskers": false,
                   "name": "Catto",
                   "isHungry": true,
-                  "weight": 3.2,
-                  "hasWhiskers": false
+                  "weight": 3.2
                 }
                 """;
 
