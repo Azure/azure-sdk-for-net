@@ -375,6 +375,7 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
