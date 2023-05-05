@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
     public class HealthBotTests : HealthBotManagementTestBase
     {
         public HealthBotTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
