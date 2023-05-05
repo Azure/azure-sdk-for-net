@@ -22,7 +22,21 @@ namespace Azure.ResourceManager.Resources
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemAssignedServiceIdentity Identity
         {
-            get => ManagedIdentity == null ? null : new SystemAssignedServiceIdentity(ManagedIdentity.PrincipalId, ManagedIdentity.TenantId, ManagedIdentity.ManagedServiceIdentityType.ToString());
+            get
+            {
+                if (ManagedIdentity != null)
+                {
+                    if (_identity == null || _identity.Identity != ManagedIdentity)
+                    {
+                        _identity = new SystemAssignedServiceIdentity(ManagedIdentity);
+                    }
+                }
+                else
+                {
+                    _identity = null;
+                }
+                return _identity;
+            }
             set
             {
                 _identity = value;
@@ -30,6 +44,5 @@ namespace Azure.ResourceManager.Resources
             }
         }
 #pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
-
     }
 }
