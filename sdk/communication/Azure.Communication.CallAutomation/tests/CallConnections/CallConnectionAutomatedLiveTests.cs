@@ -56,15 +56,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
 
                     // wait for callConnected
-                    var connectedEvent = await WaitForEvent<CallConnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnectedEventData);
-                    Assert.AreEqual(callConnectionId, ((CallConnectedEventData)connectedEvent!).CallConnectionId);
+                    Assert.IsTrue(connectedEvent is CallConnected);
+                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
                     // wait for participants updated
-                    var participantsUpdatedEvent1 = await WaitForEvent<ParticipantsUpdatedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var participantsUpdatedEvent1 = await WaitForEvent<ParticipantsUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(participantsUpdatedEvent1);
-                    Assert.AreEqual(2, ((ParticipantsUpdatedEventData)participantsUpdatedEvent1!).Participants.Count);
+                    Assert.AreEqual(2, ((ParticipantsUpdated)participantsUpdatedEvent1!).Participants.Count);
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -81,10 +81,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 
                     // call should be disconnected after removing participant
-                    var disconnectedEvent = await WaitForEvent<CallDisconnectedEventData>(callConnectionId, TimeSpan.FromSeconds(20));
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnectedEventData);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnectedEventData)disconnectedEvent!).CallConnectionId);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
                     callConnectionId = null;
                 }
                 catch (Exception)
