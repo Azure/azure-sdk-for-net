@@ -149,8 +149,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetDouble(out value);
+                        return change.AsJsonElement().TryGetDouble(out value);
                 }
             }
 
@@ -203,8 +202,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetInt32(out value);
+                        return change.AsJsonElement().TryGetInt32(out value);
                 }
             }
 
@@ -252,8 +250,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetInt64(out value);
+                        return change.AsJsonElement().TryGetInt64(out value);
                 }
             }
 
@@ -301,8 +298,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetSingle(out value);
+                        return change.AsJsonElement().TryGetSingle(out value);
                 }
             }
 
@@ -336,13 +332,22 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    string s => s,
-                    JsonElement element => element.GetString(),
-                    null => null,
-                    _ => throw new InvalidOperationException($"Element at '{_path}' is not a string."),
-                };
+                    case string s:
+                        return s;
+                    case JsonElement element:
+                        return element.GetString();
+                    case null:
+                        return null;
+                    default:
+                        JsonElement el = change.AsJsonElement();
+                        if (el.ValueKind == JsonValueKind.String)
+                        {
+                            return el.GetString();
+                        }
+                        throw new InvalidOperationException($"Element at '{_path}' is not a string.");
+                }
             }
 
             return _element.GetString();
@@ -387,8 +392,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetByte(out value);
+                        return change.AsJsonElement().TryGetByte(out value);
                 }
             }
 
@@ -422,8 +426,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetDateTime(out value);
+                        return change.AsJsonElement().TryGetDateTime(out value);
                 }
             }
 
@@ -450,15 +453,15 @@ namespace Azure.Core.Json
                 {
                     case DateTimeOffset o:
                         value = o;
-                        return true;;
+                        return true;
+                        ;
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
                     case null:
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetDateTimeOffset(out value);
+                        return change.AsJsonElement().TryGetDateTimeOffset(out value);
                 }
             }
 
@@ -492,8 +495,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetDecimal(out value);
+                        return change.AsJsonElement().TryGetDecimal(out value);
                 }
             }
 
@@ -527,8 +529,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetGuid(out value);
+                        return change.AsJsonElement().TryGetGuid(out value);
                 }
             }
 
@@ -562,8 +563,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetInt16(out value);
+                        return change.AsJsonElement().TryGetInt16(out value);
                 }
             }
 
@@ -597,8 +597,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetSByte(out value);
+                        return change.AsJsonElement().TryGetSByte(out value);
                 }
             }
 
@@ -632,8 +631,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetUInt16(out value);
+                        return change.AsJsonElement().TryGetUInt16(out value);
                 }
             }
 
@@ -667,8 +665,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetUInt32(out value);
+                        return change.AsJsonElement().TryGetUInt32(out value);
                 }
             }
 
@@ -702,8 +699,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        return el.TryGetUInt64(out value);
+                        return change.AsJsonElement().TryGetUInt64(out value);
                 }
             }
 
