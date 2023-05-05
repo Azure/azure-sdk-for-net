@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.1 (2023-05-05)
 
 ### Bugs Fixed
 
 - Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/35000) that after introduced options bag, the operation behaves differently and always put an empty array into the query parameters.
-
-### Other Changes
 
 ## 1.1.0 (2023-02-16)
 
