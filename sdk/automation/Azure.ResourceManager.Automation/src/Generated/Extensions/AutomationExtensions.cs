@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automation.Mock;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,35 +20,51 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automation. </summary>
     public static partial class AutomationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AutomationAccountResourceExtension GetAutomationAccountResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AutomationAccountResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomationAccountResourceExtension GetAutomationAccountResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AutomationAccountResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AutomationResourceGroupResourceExtension GetAutomationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AutomationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AutomationResourceGroupResourceExtension GetAutomationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AutomationResourceGroupResourceExtension(client, scope);
+            });
+        }
+
+        private static AutomationSubscriptionResourceExtension GetAutomationSubscriptionResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new AutomationSubscriptionResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static AutomationSubscriptionResourceExtension GetAutomationSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new AutomationSubscriptionResourceExtension(client, scope);
             });
         }
         #region AutomationPrivateEndpointConnectionResource
@@ -492,7 +509,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationAccountResources and their operations over a AutomationAccountResource. </returns>
         public static AutomationAccountCollection GetAutomationAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutomationAccounts();
+            return GetAutomationResourceGroupResourceExtension(resourceGroupResource).GetAutomationAccounts();
         }
 
         /// <summary>
@@ -561,7 +578,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
+            return GetAutomationAccountResourceExtension(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +599,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomationAccounts(cancellationToken);
+            return GetAutomationAccountResourceExtension(subscriptionResource).GetAutomationAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -603,7 +620,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
+            return GetAutomationSubscriptionResourceExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -624,7 +641,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
+            return GetAutomationSubscriptionResourceExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
         }
     }
 }

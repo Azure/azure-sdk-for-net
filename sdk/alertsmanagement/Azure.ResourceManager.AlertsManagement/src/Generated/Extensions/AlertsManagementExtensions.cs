@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AlertsManagement.Mock;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,67 @@ namespace Azure.ResourceManager.AlertsManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.AlertsManagement. </summary>
     public static partial class AlertsManagementExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AlertProcessingRuleResourceExtension GetAlertProcessingRuleResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AlertProcessingRuleResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AlertProcessingRuleResourceExtension GetAlertProcessingRuleResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AlertProcessingRuleResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AlertsManagementResourceGroupResourceExtension GetAlertsManagementResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AlertsManagementResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AlertsManagementResourceGroupResourceExtension GetAlertsManagementResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AlertsManagementResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AlertsManagementSubscriptionResourceExtension GetAlertsManagementSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AlertsManagementSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AlertsManagementSubscriptionResourceExtension GetAlertsManagementSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AlertsManagementSubscriptionResourceExtension(client, scope);
+            });
+        }
+
+        private static ServiceAlertResourceExtension GetServiceAlertResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ServiceAlertResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ServiceAlertResourceExtension GetServiceAlertResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ServiceAlertResourceExtension(client, scope);
             });
         }
         #region AlertProcessingRuleResource
@@ -128,7 +145,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of AlertProcessingRuleResources and their operations over a AlertProcessingRuleResource. </returns>
         public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertProcessingRules();
+            return GetAlertsManagementResourceGroupResourceExtension(resourceGroupResource).GetAlertProcessingRules();
         }
 
         /// <summary>
@@ -184,7 +201,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceAlerts();
+            return GetAlertsManagementSubscriptionResourceExtension(subscriptionResource).GetServiceAlerts();
         }
 
         /// <summary>
@@ -236,7 +253,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of SmartGroupResources and their operations over a SmartGroupResource. </returns>
         public static SmartGroupCollection GetSmartGroups(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSmartGroups();
+            return GetAlertsManagementSubscriptionResourceExtension(subscriptionResource).GetSmartGroups();
         }
 
         /// <summary>
@@ -301,7 +318,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
+            return GetAlertProcessingRuleResourceExtension(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertProcessingRules(cancellationToken);
+            return GetAlertProcessingRuleResourceExtension(subscriptionResource).GetAlertProcessingRules(cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +363,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetServiceAlertResourceExtension(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
+            return GetServiceAlertResourceExtension(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +408,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetServiceAlertResourceExtension(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -412,7 +429,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
+            return GetServiceAlertResourceExtension(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }
     }
 }

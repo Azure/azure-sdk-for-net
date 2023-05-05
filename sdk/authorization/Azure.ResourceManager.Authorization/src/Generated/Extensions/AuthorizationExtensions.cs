@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Mock;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,67 +20,67 @@ namespace Azure.ResourceManager.Authorization
     /// <summary> A class to add extension methods to Azure.ResourceManager.Authorization. </summary>
     public static partial class AuthorizationExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static AuthorizationArmResourceExtension GetAuthorizationArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new AuthorizationArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AuthorizationArmResourceExtension GetAuthorizationArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new AuthorizationArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AuthorizationResourceGroupResourceExtension GetAuthorizationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AuthorizationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AuthorizationResourceGroupResourceExtension GetAuthorizationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AuthorizationResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AuthorizationSubscriptionResourceExtension GetAuthorizationSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AuthorizationSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AuthorizationSubscriptionResourceExtension GetAuthorizationSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AuthorizationSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AuthorizationTenantResourceExtension GetAuthorizationTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AuthorizationTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AuthorizationTenantResourceExtension GetAuthorizationTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AuthorizationTenantResourceExtension(client, scope);
             });
         }
         #region DenyAssignmentResource
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
         public static DenyAssignmentCollection GetDenyAssignments(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetDenyAssignments();
+            return GetAuthorizationArmResourceExtension(armResource).GetDenyAssignments();
         }
 
         /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
         public static DenyAssignmentCollection GetDenyAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDenyAssignments();
+            return GetAuthorizationArmResourceExtension(client, scope).GetDenyAssignments();
         }
 
         /// <summary>
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
         public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignments();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleAssignments();
         }
 
         /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
@@ -439,7 +440,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
         public static RoleAssignmentCollection GetRoleAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignments();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleAssignments();
         }
 
         /// <summary>
@@ -545,7 +546,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
         public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetAuthorizationRoleDefinitions();
+            return GetAuthorizationArmResourceExtension(armResource).GetAuthorizationRoleDefinitions();
         }
 
         /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
@@ -554,7 +555,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
         public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAuthorizationRoleDefinitions();
+            return GetAuthorizationArmResourceExtension(client, scope).GetAuthorizationRoleDefinitions();
         }
 
         /// <summary>
@@ -656,7 +657,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
         public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentSchedules();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleAssignmentSchedules();
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
@@ -665,7 +666,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
         public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentSchedules();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleAssignmentSchedules();
         }
 
         /// <summary>
@@ -771,7 +772,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
         public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentScheduleInstances();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleAssignmentScheduleInstances();
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource. </summary>
@@ -780,7 +781,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
         public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentScheduleInstances();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleAssignmentScheduleInstances();
         }
 
         /// <summary>
@@ -886,7 +887,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
         public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentScheduleRequests();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleAssignmentScheduleRequests();
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource. </summary>
@@ -895,7 +896,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
         public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentScheduleRequests();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleAssignmentScheduleRequests();
         }
 
         /// <summary>
@@ -1001,7 +1002,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
         public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilitySchedules();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleEligibilitySchedules();
         }
 
         /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmResource. </summary>
@@ -1010,7 +1011,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
         public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilitySchedules();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleEligibilitySchedules();
         }
 
         /// <summary>
@@ -1116,7 +1117,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
         public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilityScheduleInstances();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleEligibilityScheduleInstances();
         }
 
         /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource. </summary>
@@ -1125,7 +1126,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
         public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilityScheduleInstances();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleEligibilityScheduleInstances();
         }
 
         /// <summary>
@@ -1231,7 +1232,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
         public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilityScheduleRequests();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleEligibilityScheduleRequests();
         }
 
         /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource. </summary>
@@ -1240,7 +1241,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
         public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilityScheduleRequests();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleEligibilityScheduleRequests();
         }
 
         /// <summary>
@@ -1346,7 +1347,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
         public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleManagementPolicies();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleManagementPolicies();
         }
 
         /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmResource. </summary>
@@ -1355,7 +1356,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
         public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleManagementPolicies();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleManagementPolicies();
         }
 
         /// <summary>
@@ -1461,7 +1462,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
         public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetRoleManagementPolicyAssignments();
+            return GetAuthorizationArmResourceExtension(armResource).GetRoleManagementPolicyAssignments();
         }
 
         /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource. </summary>
@@ -1470,7 +1471,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
         public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleManagementPolicyAssignments();
+            return GetAuthorizationArmResourceExtension(client, scope).GetRoleManagementPolicyAssignments();
         }
 
         /// <summary>
@@ -1590,7 +1591,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResourcesAsync(filter, cancellationToken);
+            return GetAuthorizationArmResourceExtension(client, scope).GetEligibleChildResourcesAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -1612,7 +1613,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<EligibleChildResource> GetEligibleChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResources(filter, cancellationToken);
+            return GetAuthorizationArmResourceExtension(client, scope).GetEligibleChildResources(filter, cancellationToken);
         }
 
         /// <summary>
@@ -1633,7 +1634,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroupsAsync(cancellationToken);
+            return GetAuthorizationResourceGroupResourceExtension(resourceGroupResource).GetAzurePermissionsForResourceGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1654,7 +1655,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroups(cancellationToken);
+            return GetAuthorizationResourceGroupResourceExtension(resourceGroupResource).GetAzurePermissionsForResourceGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1686,7 +1687,7 @@ namespace Azure.ResourceManager.Authorization
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourcesAsync(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+            return GetAuthorizationResourceGroupResourceExtension(resourceGroupResource).GetAzurePermissionsForResourcesAsync(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1718,7 +1719,7 @@ namespace Azure.ResourceManager.Authorization
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+            return GetAuthorizationResourceGroupResourceExtension(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1739,7 +1740,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
+            return GetAuthorizationSubscriptionResourceExtension(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1760,7 +1761,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClassicAdministrators(cancellationToken);
+            return GetAuthorizationSubscriptionResourceExtension(subscriptionResource).GetClassicAdministrators(cancellationToken);
         }
 
         /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
@@ -1768,7 +1769,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
         public static AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
+            return GetAuthorizationTenantResourceExtension(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -1836,7 +1837,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> ElevateAccessGlobalAdministratorAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).ElevateAccessGlobalAdministratorAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAuthorizationTenantResourceExtension(tenantResource).ElevateAccessGlobalAdministratorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1856,7 +1857,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response ElevateAccessGlobalAdministrator(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).ElevateAccessGlobalAdministrator(cancellationToken);
+            return GetAuthorizationTenantResourceExtension(tenantResource).ElevateAccessGlobalAdministrator(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn.Mock;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,51 +20,67 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Azure.ResourceManager.Cdn. </summary>
     public static partial class CdnExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CdnResourceGroupResourceExtension GetCdnResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CdnResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CdnResourceGroupResourceExtension GetCdnResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CdnResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CdnSubscriptionResourceExtension GetCdnSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CdnSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CdnSubscriptionResourceExtension GetCdnSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new CdnSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static CdnTenantResourceExtension GetCdnTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new CdnTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CdnTenantResourceExtension GetCdnTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new CdnTenantResourceExtension(client, scope);
+            });
+        }
+
+        private static ProfileResourceExtension GetProfileResourceExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ProfileResourceExtension(client, resource.Id);
+            });
+        }
+
+        private static ProfileResourceExtension GetProfileResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ProfileResourceExtension(client, scope);
             });
         }
         #region FrontDoorCustomDomainResource
@@ -356,7 +373,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProfiles();
+            return GetCdnResourceGroupResourceExtension(resourceGroupResource).GetProfiles();
         }
 
         /// <summary>
@@ -412,7 +429,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
+            return GetCdnResourceGroupResourceExtension(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -484,7 +501,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnResourceGroupResourceExtension(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -508,7 +525,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
+            return GetCdnResourceGroupResourceExtension(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -532,7 +549,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnSubscriptionResourceExtension(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -556,7 +573,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
         }
 
         /// <summary>
@@ -580,7 +597,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnSubscriptionResourceExtension(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -604,7 +621,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProbe(content, cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).ValidateProbe(content, cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +642,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProfilesAsync(cancellationToken);
+            return GetProfileResourceExtension(subscriptionResource).GetProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +663,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProfiles(cancellationToken);
+            return GetProfileResourceExtension(subscriptionResource).GetProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +684,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -688,7 +705,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceUsages(cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).GetResourceUsages(cancellationToken);
         }
 
         /// <summary>
@@ -709,7 +726,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +747,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSets(cancellationToken);
+            return GetCdnSubscriptionResourceExtension(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -754,7 +771,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnTenantResourceExtension(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -778,7 +795,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
+            return GetCdnTenantResourceExtension(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -799,7 +816,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeNode> GetEdgeNodesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEdgeNodesAsync(cancellationToken);
+            return GetCdnTenantResourceExtension(tenantResource).GetEdgeNodesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -820,7 +837,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeNode> GetEdgeNodes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEdgeNodes(cancellationToken);
+            return GetCdnTenantResourceExtension(tenantResource).GetEdgeNodes(cancellationToken);
         }
     }
 }
