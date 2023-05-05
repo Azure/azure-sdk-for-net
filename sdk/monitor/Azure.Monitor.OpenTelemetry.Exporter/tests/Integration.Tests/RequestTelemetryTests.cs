@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Assert
             Assert.True(telemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.LastOrDefault()!;
             this.telemetryOutput.Write(telemetryItem);
 
             AssertRequestTelemetry(

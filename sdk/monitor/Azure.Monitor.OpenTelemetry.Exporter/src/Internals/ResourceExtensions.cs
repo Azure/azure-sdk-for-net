@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -10,15 +12,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class ResourceExtensions
     {
         private const string s_AiSdkPrefixKey = "ai.sdk.prefix";
+        private const int Version = 2;
 
-        internal static AzureMonitorResource? UpdateRoleNameAndInstance(this Resource resource)
+        internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
         {
             if (resource == null)
             {
                 return null;
             }
 
-            AzureMonitorResource resourceParser = new AzureMonitorResource();
+            AzureMonitorResource azureMonitorResource = new AzureMonitorResource();
+            MetricsData? metricsData = null;
             string? serviceName = null;
             string? serviceNamespace = null;
 
@@ -33,29 +37,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         serviceNamespace = $"[{_serviceNamespace}]";
                         break;
                     case SemanticConventions.AttributeServiceInstance when attribute.Value is string _serviceInstance:
-                        resourceParser.RoleInstance = _serviceInstance;
+                        azureMonitorResource.RoleInstance = _serviceInstance;
                         break;
-                    case s_AiSdkPrefixKey:
-                        SdkVersionUtils.SdkVersionPrefix = attribute.Value.ToString();
-                        break;
+                    case s_AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
+                        SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
+                        continue;
+                }
+
+                if (instrumentationKey != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
+                {
+                    metricsData = metricsData ?? new MetricsData(Version);
+                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+                    metricsData.Properties.Add(new KeyValuePair<string, string>(attribute.Key, attribute.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
                 }
             }
 
             // TODO: Check if service.name as unknown_service should be sent.
             if (serviceName != null && serviceNamespace != null)
             {
-                resourceParser.RoleName = string.Concat(serviceNamespace, "/", serviceName);
+                azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);
             }
             else
             {
-                resourceParser.RoleName = serviceName;
+                azureMonitorResource.RoleName = serviceName;
             }
 
-            if (resourceParser.RoleInstance == null)
+            if (azureMonitorResource.RoleInstance == null)
             {
                 try
                 {
-                    resourceParser.RoleInstance = Dns.GetHostName();
+                    azureMonitorResource.RoleInstance = Dns.GetHostName();
                 }
                 catch (Exception ex)
                 {
@@ -63,7 +74,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            return resourceParser;
+            if (metricsData != null)
+            {
+                azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
+                {
+                    Data = new MonitorBase
+                    {
+                        BaseType = "MetricData",
+                        BaseData = metricsData
+                    }
+                };
+            }
+
+            return azureMonitorResource;
         }
     }
 }
