@@ -19,11 +19,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
         /// </summary>
-        private const string EventSuffix = "EventData";
-
-        /// <summary>
-        /// Parsing a CallAutomation event from a CloudEvent.
-        /// </summary>
         /// <param name="cloudEvent"><see cref="CloudEvent"/>.</param>
         /// <returns>A <see cref="CallAutomationEventBase"/> object.</returns>
         public static CallAutomationEventBase Parse(CloudEvent cloudEvent)
@@ -95,7 +90,6 @@ namespace Azure.Communication.CallAutomation
         private static CallAutomationEventBase Deserialize(string eventData, string type)
         {
             var eventType = type.Replace(EventPrefix, "");
-            eventType = eventType + EventSuffix;
             switch (eventType)
             {
                 case nameof(AddParticipantFailed):
