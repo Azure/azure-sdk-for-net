@@ -6,7 +6,7 @@
 
 - Added the `GetRawResponse` method to `RequestFailedException`.
 - Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
-- Added `DynamicData` type that provides a `dynamic` layer over raw JSON.  For more information, see [aka.ms/azsdk/net/dynamicdata](https://aka.ms/net/dynamicdata).
+- Added the `DynamicData` type that provides a `dynamic` layer over raw JSON.  For more information, see [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata).
 
 ## 1.31.0 (2023-04-10)
 
@@ -26,7 +26,7 @@
 
 ### Bugs Fixed
 
-- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in (https://github.com/Azure/azure-sdk-for-net/pull/34800)  `Dispose` method].
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in `Dispose` method](https://github.com/Azure/azure-sdk-for-net/pull/34800).
 
 ## 1.29.0 (2023-03-02)
 
