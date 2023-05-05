@@ -60,13 +60,22 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> [Protocol Method] Get a sent share in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a sent share in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareAsync(string sentShareName, RequestContext context = null)
         {
@@ -86,13 +95,22 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> [Protocol Method] Get a sent share in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a sent share in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShare(string,RequestContext)']/*" />
         public virtual Response GetSentShare(string sentShareName, RequestContext context = null)
         {
@@ -112,14 +130,23 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> [Protocol Method] Create a sent share in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a sent share in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sentShareName, RequestContent content, RequestContext context = null)
         {
@@ -140,14 +167,23 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> [Protocol Method] Create a sent share in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a sent share in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sentShareName, RequestContent content, RequestContext context = null)
         {
@@ -168,7 +204,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> [Protocol Method] Get list of sent shares in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Get list of sent shares in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -183,7 +228,16 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Get list of sent shares in the given Purview account. </summary>
+        /// <summary>
+        /// [Protocol Method] Get list of sent shares in the given Purview account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -198,7 +252,16 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Deletes a sent share. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a sent share
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -225,7 +288,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a sent share. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a sent share
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>

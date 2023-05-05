@@ -30,23 +30,6 @@ await foreach (var item in client.GetReceivedAssetsAsync("<receivedShareName>", 
 }
 ]]></code>
 </example>
-<remarks>
-List received assets for a received share
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ReceivedAssetListValue</c>:
-<code>{
-  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetReceivedAssets(string,string,RequestContext)">
 <example>
@@ -77,23 +60,6 @@ foreach (var item in client.GetReceivedAssets("<receivedShareName>", "<skipToken
 }
 ]]></code>
 </example>
-<remarks>
-List received assets for a received share
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ReceivedAssetListValue</c>:
-<code>{
-  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

@@ -27,34 +27,6 @@ Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Workflow</c>:
-<code>{
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflow(Guid,RequestContext)">
 <example>
@@ -82,34 +54,6 @@ Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Workflow</c>:
-<code>{
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrReplaceWorkflowAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -179,53 +123,6 @@ Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>WorkflowCreateOrUpdateCommand</c>:
-<code>{
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  name: string, # Required. The workflow name.
-  isEnabled: boolean, # Required. Whether the workflow enabled or not.
-  description: string, # Required. Description of a workflow.
-  actionDag: any, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Workflow</c>:
-<code>{
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrReplaceWorkflow(Guid,RequestContent,RequestContext)">
 <example>
@@ -295,53 +192,6 @@ Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>WorkflowCreateOrUpdateCommand</c>:
-<code>{
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  name: string, # Required. The workflow name.
-  isEnabled: boolean, # Required. Whether the workflow enabled or not.
-  description: string, # Required. Description of a workflow.
-  actionDag: any, # Optional. The action DAG(Directed Acyclic Graph), it defines actual flow.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Workflow</c>:
-<code>{
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines steps to be executed in a workflow run and their order.
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteWorkflowAsync(Guid,RequestContext)">
 <example>
@@ -423,42 +273,6 @@ Console.WriteLine(result.GetProperty("comment").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>UserRequestPayload</c>:
-<code>{
-  operations: [
-    {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: any, # Required. The payload of each operation which user want to submit.
-    }
-  ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
-  comment: string, # Optional. The comment when submit a user request.
-}
-</code>
-
-Response Body:
-
-Schema for <c>UserRequestResponse</c>:
-<code>{
-  requestId: Guid, # Required. The user request id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  operations: [
-    {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: any, # Required. The payload of each operation which user want to submit.
-      workflowRunIds: [Guid], # Optional.
-    }
-  ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
-  comment: string, # Optional. The comment when submit a user request.
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="SubmitUserRequests(RequestContent,RequestContext)">
 <example>
@@ -514,42 +328,6 @@ Console.WriteLine(result.GetProperty("comment").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>UserRequestPayload</c>:
-<code>{
-  operations: [
-    {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: any, # Required. The payload of each operation which user want to submit.
-    }
-  ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
-  comment: string, # Optional. The comment when submit a user request.
-}
-</code>
-
-Response Body:
-
-Schema for <c>UserRequestResponse</c>:
-<code>{
-  requestId: Guid, # Required. The user request id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  operations: [
-    {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
-      payload: any, # Required. The payload of each operation which user want to submit.
-      workflowRunIds: [Guid], # Optional.
-    }
-  ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
-  comment: string, # Optional. The comment when submit a user request.
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowRunAsync(Guid,RequestContext)">
 <example>
@@ -579,36 +357,6 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString(
 Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>WorkflowRun</c>:
-<code>{
-  id: Guid, # Optional. The workflow run id.
-  workflowId: Guid, # Optional. The workflow id.
-  startTime: string (ISO 8601 Format), # Optional. Workflow run start time.
-  requestor: Guid, # Optional. The person who submitted the user request.
-  userRequestId: Guid, # Optional. The user request id.
-  runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
-    targetValue: string, # Required. The target value which need involve workflow to update.
-    payload: any, # Required. The payload of each operation which user want to submit.
-  }, # Optional. The input of a workflow run. Align with operation in user request. 
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Optional. The status.
-  endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
-  cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
-  cancelComment: string, # Optional. The comment when cancel a workflow run.
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
-  detail: {
-    runInput: any, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
-    actions: any, # Required. Any object
-  }, # Required. It refers to the &quot;detail&quot; property of a workflow run object, which contains run context and runtime information of actions.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowRun(Guid,RequestContext)">
 <example>
@@ -638,36 +386,6 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString(
 Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>WorkflowRun</c>:
-<code>{
-  id: Guid, # Optional. The workflow run id.
-  workflowId: Guid, # Optional. The workflow id.
-  startTime: string (ISO 8601 Format), # Optional. Workflow run start time.
-  requestor: Guid, # Optional. The person who submitted the user request.
-  userRequestId: Guid, # Optional. The user request id.
-  runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
-    targetValue: string, # Required. The target value which need involve workflow to update.
-    payload: any, # Required. The payload of each operation which user want to submit.
-  }, # Optional. The input of a workflow run. Align with operation in user request. 
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Optional. The status.
-  endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
-  cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
-  cancelComment: string, # Optional. The comment when cancel a workflow run.
-  actionDag: any, # Required. The action DAG(Directed Acyclic Graph), it defines actual flow.
-  detail: {
-    runInput: any, # Required. Built-in variables starts with @runInput. Its properties are determined by trigger type at workflow run time. 
-    actions: any, # Required. Any object
-  }, # Required. It refers to the &quot;detail&quot; property of a workflow run object, which contains run context and runtime information of actions.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CancelWorkflowRunAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -696,18 +414,6 @@ Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestC
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>WorkflowRunCancelRequest</c>:
-<code>{
-  comment: string, # Optional. The comment of canceling a workflow run.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CancelWorkflowRun(Guid,RequestContent,RequestContext)">
 <example>
@@ -736,18 +442,6 @@ Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Crea
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>WorkflowRunCancelRequest</c>:
-<code>{
-  comment: string, # Optional. The comment of canceling a workflow run.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowTaskAsync(Guid,RequestContext)">
 <example>
@@ -781,90 +475,6 @@ Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings")
 Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>Approval</summary>Schema for <c>Approval</c>:
-<code>{
-  approvalDetail: {
-    approvalType: &quot;PendingOnAny&quot; | &quot;PendingOnAll&quot;, # Required. The approval type of an approval task.
-    status: &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Canceled&quot;, # Required. The status of an approval task.
-    approvers: Dictionary&lt;string, ApproverResponse&gt;, # Required. The list of approvers with reply.
-  }, # Optional. The approval task details
-  type: Approval, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
-<code>{
-  taskDetail: {
-    taskBody: string, # Required. The simple task body.
-    assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
-    status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [any], # Required.
-  }, # Optional. Workflow simple task details.
-  type: SimpleTask, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="GetWorkflowTask(Guid,RequestContext)">
 <example>
@@ -898,90 +508,6 @@ Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings")
 Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>Approval</summary>Schema for <c>Approval</c>:
-<code>{
-  approvalDetail: {
-    approvalType: &quot;PendingOnAny&quot; | &quot;PendingOnAll&quot;, # Required. The approval type of an approval task.
-    status: &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Canceled&quot;, # Required. The status of an approval task.
-    approvers: Dictionary&lt;string, ApproverResponse&gt;, # Required. The list of approvers with reply.
-  }, # Optional. The approval task details
-  type: Approval, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
-<code>{
-  taskDetail: {
-    taskBody: string, # Required. The simple task body.
-    assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
-    status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [any], # Required.
-  }, # Optional. Workflow simple task details.
-  type: SimpleTask, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="ApproveApprovalTaskAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -1010,18 +536,6 @@ Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), Reques
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ApprovalResponseComment</c>:
-<code>{
-  comment: string, # Optional. The comment of approving or rejecting an approval request.
-}
-</code>
-
-</remarks>
     </member>
     <member name="ApproveApprovalTask(Guid,RequestContent,RequestContext)">
 <example>
@@ -1050,18 +564,6 @@ Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Cr
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ApprovalResponseComment</c>:
-<code>{
-  comment: string, # Optional. The comment of approving or rejecting an approval request.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RejectApprovalTaskAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -1090,18 +592,6 @@ Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), Request
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ApprovalResponseComment</c>:
-<code>{
-  comment: string, # Optional. The comment of approving or rejecting an approval request.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RejectApprovalTask(Guid,RequestContent,RequestContext)">
 <example>
@@ -1130,18 +620,6 @@ Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Cre
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ApprovalResponseComment</c>:
-<code>{
-  comment: string, # Optional. The comment of approving or rejecting an approval request.
-}
-</code>
-
-</remarks>
     </member>
     <member name="ReassignWorkflowTaskAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -1175,23 +653,6 @@ Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), Reque
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ReassignCommand</c>:
-<code>{
-  reassignments: [
-    {
-      reassignFrom: Guid, # Required. Reassign a workflow task from a user or a group.
-      reassignTo: Guid, # Required. Reassign a workflow task to a user or a group.
-    }
-  ], # Optional. The request body of reassigning a workflow task.
-}
-</code>
-
-</remarks>
     </member>
     <member name="ReassignWorkflowTask(Guid,RequestContent,RequestContext)">
 <example>
@@ -1225,23 +686,6 @@ Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.C
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ReassignCommand</c>:
-<code>{
-  reassignments: [
-    {
-      reassignFrom: Guid, # Required. Reassign a workflow task from a user or a group.
-      reassignTo: Guid, # Required. Reassign a workflow task to a user or a group.
-    }
-  ], # Optional. The request body of reassigning a workflow task.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateTaskStatusAsync(Guid,RequestContent,RequestContext)">
 <example>
@@ -1273,19 +717,6 @@ Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestCo
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>TaskUpdateCommand</c>:
-<code>{
-  newStatus: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
-  comment: string, # Optional. The comment when update a task.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateTaskStatus(Guid,RequestContent,RequestContext)">
 <example>
@@ -1317,19 +748,6 @@ Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Creat
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>TaskUpdateCommand</c>:
-<code>{
-  newStatus: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
-  comment: string, # Optional. The comment when update a task.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowsAsync(RequestContext)">
 <example>
@@ -1357,33 +775,6 @@ await foreach (var item in client.GetWorkflowsAsync(new RequestContext()))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>WorkflowMetadataListValue</c>:
-<code>{
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflows(RequestContext)">
 <example>
@@ -1411,33 +802,6 @@ foreach (var item in client.GetWorkflows(new RequestContext()))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>WorkflowMetadataListValue</c>:
-<code>{
-  id: Guid, # Required. The id of workflow.
-  triggers: [
-    {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
-      underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
-      underCollection: string, # Optional. The collection name.
-      underGlossary: string, # Optional. The glossary guid.
-    }
-  ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
-  createdBy: string, # Optional. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
-  updatedBy: string, # Optional. The person who updated the workflow.
-  name: string, # Required. The name of a workflow.
-  isEnabled: boolean, # Required. Whether the workflow is enabled or not.
-  description: string, # Required. Description of a workflow.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
@@ -1482,30 +846,6 @@ await foreach (var item in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>WorkflowRunListValue</c>:
-<code>{
-  id: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  startTime: string (ISO 8601 Format), # Required. Workflow run start time.
-  requestor: Guid, # Required. The person who submitted the user request.
-  userRequestId: Guid, # Optional. The user request id.
-  runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
-    targetValue: string, # Required. The target value which need involve workflow to update.
-  }, # Required. The input of a workflow run. Align with operation in user request. 
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
-  endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
-  cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
-  cancelComment: string, # Optional. The comment when cancel a workflow run.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
 <example>
@@ -1550,30 +890,6 @@ foreach (var item in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new Str
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>WorkflowRunListValue</c>:
-<code>{
-  id: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  startTime: string (ISO 8601 Format), # Required. Workflow run start time.
-  requestor: Guid, # Required. The person who submitted the user request.
-  userRequestId: Guid, # Optional. The user request id.
-  runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
-    targetValue: string, # Required. The target value which need involve workflow to update.
-  }, # Required. The input of a workflow run. Align with operation in user request. 
-  status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
-  endTime: string (ISO 8601 Format), # Optional. The time of workflow run completed.
-  cancelTime: string (ISO 8601 Format), # Optional. The time of workflow run be canceled.
-  cancelComment: string, # Optional. The comment when cancel a workflow run.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
@@ -1628,44 +944,6 @@ await foreach (var item in client.GetWorkflowTasksAsync("<viewMode>", new String
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>TasksListValue</c>:
-<code>{
-  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot;, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
 <example>
@@ -1720,44 +998,6 @@ foreach (var item in client.GetWorkflowTasks("<viewMode>", new String[]{"<workfl
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>TasksListValue</c>:
-<code>{
-  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot;, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: any, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: any, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: any, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
