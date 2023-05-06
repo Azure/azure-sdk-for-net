@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
+            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
             Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
         }
     }
