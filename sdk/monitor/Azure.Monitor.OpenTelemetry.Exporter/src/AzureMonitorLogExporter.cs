@@ -15,11 +15,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
+        private readonly bool _includeResourceCustomAttributes;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
+            _includeResourceCustomAttributes = options.IncludeResourceCustomAttributes;
         }
 
         internal AzureMonitorLogExporter(ITransmitter transmitter)
@@ -40,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _includeResourceCustomAttributes);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();

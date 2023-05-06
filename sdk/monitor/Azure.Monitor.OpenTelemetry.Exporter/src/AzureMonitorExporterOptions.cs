@@ -36,6 +36,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public ServiceVersion Version { get; set; } = LatestVersion;
 
         /// <summary>
+        /// If set to true, then custom attributes specified on the associated Resource
+        /// will be included in the properties of telemetry items of the type processed
+        /// by this exporter (e.g., logs, traces, or metrics).
+        /// </summary>
+        public bool IncludeResourceCustomAttributes { get; set; } = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
         /// </summary>
         public AzureMonitorExporterOptions() : this(LatestVersion)

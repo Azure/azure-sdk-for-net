@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey, bool includeResourceCustomAttributes)
         {
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
@@ -33,7 +33,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             }
                         };
 
-                        telemetryItem.SetResourceCustomAttributes(resource, ((MetricsData)telemetryItem.Data.BaseData).Properties);
+                        if (includeResourceCustomAttributes)
+                        {
+                            telemetryItem.SetResourceCustomAttributes(resource, ((MetricsData)telemetryItem.Data.BaseData).Properties);
+                        }
+
                         telemetryItems.Add(telemetryItem);
                     }
                     catch (Exception ex)

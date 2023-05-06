@@ -240,7 +240,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", false);
 
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Exception", telemetryItems[0].Name);
@@ -277,7 +277,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", false);
 
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Message", telemetryItems[0].Name);
@@ -310,7 +310,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", false);
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
@@ -343,7 +343,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", false);
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", telemetryItems[0].Name);

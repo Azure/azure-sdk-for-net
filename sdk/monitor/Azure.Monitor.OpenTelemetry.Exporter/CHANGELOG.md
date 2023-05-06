@@ -5,6 +5,8 @@
 ### Features Added
 
 * Added inclusion of OpenTelemetry Resource service version and custom attributes to the published telemetry for logs, traces, and metrics.
+  Inclusion of custom attributes can be enabled or disabled by using a new AzureMonitorExporterOptions property (IncludeResourceCustomAttributes),
+  which defaults to false.
   ([#35487](https://github.com/Azure/azure-sdk-for-net/issues/35487))
 
 ### Breaking Changes

@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? resource, string instrumentationKey, bool includeResourceCustomAttributes)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -45,7 +45,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RequestData",
                                 BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
                             };
-                            telemetryItem.SetResourceCustomAttributes(resource, ((RequestData)telemetryItem.Data.BaseData).Properties);
+
+                            if (includeResourceCustomAttributes)
+                            {
+                                telemetryItem.SetResourceCustomAttributes(resource, ((RequestData)telemetryItem.Data.BaseData).Properties);
+                            }
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
@@ -53,7 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RemoteDependencyData",
                                 BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
-                            telemetryItem.SetResourceCustomAttributes(resource, ((RemoteDependencyData)telemetryItem.Data.BaseData).Properties);
+
+                            if (includeResourceCustomAttributes)
+                            {
+                                telemetryItem.SetResourceCustomAttributes(resource, ((RemoteDependencyData)telemetryItem.Data.BaseData).Properties);
+                            }
                             break;
                     }
 
