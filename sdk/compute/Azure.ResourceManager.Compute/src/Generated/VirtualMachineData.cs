@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachine data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachine data model.
+    /// Describes a Virtual Machine.
+    /// </summary>
     public partial class VirtualMachineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>

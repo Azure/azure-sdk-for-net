@@ -29,14 +29,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceContainerArmIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PauseGC))
+            if (Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
-                writer.WriteBooleanValue(PauseGC.Value);
+                writer.WriteBooleanValue(DoesPauseGC.Value);
             }
             writer.WriteEndObject();
         }

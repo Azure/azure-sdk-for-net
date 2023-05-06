@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static EnvironmentContainerResourceArmPaginatedResult DeserializeEnvironmentContainerResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<MachineLearningEnvironmentContainerData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningEnvironmentContainerData> array = new List<MachineLearningEnvironmentContainerData>();

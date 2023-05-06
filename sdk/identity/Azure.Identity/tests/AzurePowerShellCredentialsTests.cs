@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
         {
             var pwshOptions = new AzurePowerShellCredentialOptions
             {
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
@@ -190,7 +190,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Timeout = 10000 };
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(
-                    new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = TimeSpan.Zero },
+                    new AzurePowerShellCredentialOptions() { ProcessTimeout = TimeSpan.Zero },
                     CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));

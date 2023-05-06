@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dimension = default;
             Optional<DimensionScope> scope = default;
             Optional<string> providerId = default;
@@ -32,7 +36,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = new DimensionScope(property.Value.GetString());
@@ -47,7 +50,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     utilization = property.Value.GetSingle();
@@ -57,7 +59,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     holds = property.Value.GetSingle();
@@ -67,7 +68,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetSingle();
@@ -77,7 +77,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     period = new MeterPeriod(property.Value.GetString());

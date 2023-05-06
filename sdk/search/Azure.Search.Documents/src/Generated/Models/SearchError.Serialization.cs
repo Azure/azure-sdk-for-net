@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchError DeserializeSearchError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             string message = default;
             Optional<IReadOnlyList<SearchError>> details = default;
@@ -34,7 +38,6 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchError> array = new List<SearchError>();

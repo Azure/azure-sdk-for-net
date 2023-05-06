@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static AuthorizationMethod ToAuthorizationMethod(this string value)
         {
-            if (string.Equals(value, "HEAD", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Head;
-            if (string.Equals(value, "OPTIONS", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Options;
-            if (string.Equals(value, "TRACE", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Trace;
-            if (string.Equals(value, "GET", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Get;
-            if (string.Equals(value, "POST", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Post;
-            if (string.Equals(value, "PUT", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Put;
-            if (string.Equals(value, "PATCH", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Patch;
-            if (string.Equals(value, "DELETE", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD")) return AuthorizationMethod.Head;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OPTIONS")) return AuthorizationMethod.Options;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TRACE")) return AuthorizationMethod.Trace;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET")) return AuthorizationMethod.Get;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "POST")) return AuthorizationMethod.Post;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PUT")) return AuthorizationMethod.Put;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PATCH")) return AuthorizationMethod.Patch;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DELETE")) return AuthorizationMethod.Delete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationMethod value.");
         }
     }

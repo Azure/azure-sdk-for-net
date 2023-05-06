@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseBigDataPoolInfo data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseBigDataPoolInfo data model.
+    /// A Big Data pool
+    /// </summary>
     public partial class SynapseBigDataPoolInfoData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>

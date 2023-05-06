@@ -61,7 +61,7 @@
 
                     response = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
 
-                    Assert.Equal(response.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
+                    Assert.Equal(applicationId, response.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId);
                 }
                 finally
                 {

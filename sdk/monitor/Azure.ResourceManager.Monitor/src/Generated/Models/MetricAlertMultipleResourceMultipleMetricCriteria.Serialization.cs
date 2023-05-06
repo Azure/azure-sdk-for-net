@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricAlertMultipleResourceMultipleMetricCriteria DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MultiMetricCriteria>> allOf = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MultiMetricCriteria> array = new List<MultiMetricCriteria>();

@@ -46,19 +46,34 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vmHealth">The health status for the VM.</param>
         /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
         /// feature which allows you to view Console Output and Screenshot to
-        /// diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the
-        /// output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables
-        /// you to see a screenshot of the VM from the hypervisor.</param>
+        /// diagnose VM status. You can easily view the output of your console
+        /// log. Azure also enables you to see a screenshot of the VM from the
+        /// hypervisor.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="assignedHost">Resource id of the dedicated host, on
         /// which the virtual machine is allocated through automatic placement,
         /// when the virtual machine is associated with a dedicated host group
-        /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2020-06-01.</param>
+        /// that has automatic placement enabled. Minimum api-version:
+        /// 2020-06-01.</param>
         /// <param name="placementGroupId">The placement group in which the VM
         /// is running. If the VM is deallocated it will not have a
         /// placementGroupId.</param>
-        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), string assignedHost = default(string), string placementGroupId = default(string))
+        /// <param name="computerName">Specifies the host OS name of the
+        /// virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated
+        /// after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming
+        /// conventions and restrictions see [Azure infrastructure services
+        /// implementation
+        /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).</param>
+        /// <param name="osName">The Operating System running on the hybrid
+        /// machine.</param>
+        /// <param name="osVersion">The version of Operating System running on
+        /// the hybrid machine.</param>
+        /// <param name="hyperVGeneration">The hypervisor generation of the
+        /// Virtual Machine [V1, V2]. Possible values include: 'V1',
+        /// 'V2'</param>
+        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), string assignedHost = default(string), string placementGroupId = default(string), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -72,6 +87,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             Statuses = statuses;
             AssignedHost = assignedHost;
             PlacementGroupId = placementGroupId;
+            ComputerName = computerName;
+            OsName = osName;
+            OsVersion = osVersion;
+            HyperVGeneration = hyperVGeneration;
             CustomInit();
         }
 
@@ -132,9 +151,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets boot Diagnostics is a debugging feature which allows
         /// you to view Console Output and Screenshot to diagnose VM status.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; You can easily view the output
-        /// of your console log. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Azure
-        /// also enables you to see a screenshot of the VM from the hypervisor.
+        /// You can easily view the output of your console log. Azure also
+        /// enables you to see a screenshot of the VM from the hypervisor.
         /// </summary>
         [JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
@@ -149,9 +167,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets resource id of the dedicated host, on which the virtual
         /// machine is allocated through automatic placement, when the virtual
         /// machine is associated with a dedicated host group that has
-        /// automatic placement enabled.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2020-06-01.
+        /// automatic placement enabled. Minimum api-version: 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "assignedHost")]
         public string AssignedHost { get; private set; }
@@ -162,6 +178,40 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "placementGroupId")]
         public string PlacementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the host OS name of the virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This name cannot be updated
+        /// after the VM is created. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// **Max-length (Windows):** 15 characters
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length (Linux):** 64
+        /// characters. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For naming
+        /// conventions and restrictions see [Azure infrastructure services
+        /// implementation
+        /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).
+        /// </summary>
+        [JsonProperty(PropertyName = "computerName")]
+        public string ComputerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Operating System running on the hybrid machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "osName")]
+        public string OsName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of Operating System running on the hybrid
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "osVersion")]
+        public string OsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hypervisor generation of the Virtual Machine [V1,
+        /// V2]. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
 
     }
 }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static MonitorListResult DeserializeMonitorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SapMonitorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SapMonitorData> array = new List<SapMonitorData>();

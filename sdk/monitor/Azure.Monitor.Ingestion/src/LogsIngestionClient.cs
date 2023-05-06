@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -80,7 +79,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="logEntries"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, LogsUploadOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -196,7 +195,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -205,7 +204,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             Response response = null;
             List<Exception> exceptions = null;
-            options ??= new UploadLogsOptions();
+            options ??= new LogsUploadOptions();
             scope.Start();
 
             // Keep track of the number of failed logs across batches
@@ -219,6 +218,8 @@ namespace Azure.Monitor.Ingestion
                     break;
                 try
                 {
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    cancellationToken.ThrowIfCancellationRequested();
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
                     response = UploadBatchListSyncOrAsync(
                         batch,
@@ -232,18 +233,23 @@ namespace Azure.Monitor.Ingestion
                         // if there is no Handler on options, throw exception otherwise raise Handler
                         if (!options.HasHandler)
                         {
+                            // throw exception here that is caught in catch and we increment LogsFailed
                             throw new RequestFailedException(response);
                         }
                         else
                         {
-                            var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
+                            logsFailed += batch.Logs.Count;
+                            var eventArgs = new LogsUploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // sync/async parameter in eventArgs
-                            var ex = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
+                            var userThrownException = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                            shouldAbort = ex != null;
-                            if (shouldAbort)
-                                AddException(ref exceptions, ex);
+                            // if exception is thrown stop processing future batches
+                            if (userThrownException != null)
+                            {
+                                shouldAbort = true;
+                                AddException(ref exceptions, userThrownException);
+                            }
                         }
                     }
                 }
@@ -259,13 +265,24 @@ namespace Azure.Monitor.Ingestion
                     }
                     else
                     {
-                        var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
+                        logsFailed += batch.Logs.Count;
+                        var eventArgs = new LogsUploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                         var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                        shouldAbort = exceptionOnUpload != null;
-                        if (shouldAbort)
+                        // if exception is thrown stop processing future batches
+                        if (exceptionOnUpload != null)
+                        {
+                            shouldAbort = true;
                             AddException(ref exceptions, exceptionOnUpload);
+                        }
+                    }
+
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
+                    {
+                        shouldAbort = true;
+                        AddException(ref exceptions, ex);
                     }
                 }
             }
@@ -306,12 +323,12 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
-            options ??= new UploadLogsOptions();
+            options ??= new LogsUploadOptions();
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
@@ -322,16 +339,21 @@ namespace Azure.Monitor.Ingestion
             // A list of tasks that are currently executing which will
             // always be smaller than or equal to MaxWorkerCount
             var runningTasks = new List<(Task<Response> CurrentTask, List<object> Logs)>();
+
+            // Save first batch to return later
+            Task<Response> firstTask = null;
             // Keep track of the number of failed logs across batches
             int logsFailed = 0;
-
-            // Partition the stream into individual blocks
-            foreach (BatchedLogs batch in Batch(logs, options))
+            try
             {
-                if (shouldAbort)
-                    break;
-                try
+                // Partition the stream into individual blocks
+                foreach (BatchedLogs batch in Batch(logs, options))
                 {
+                    if (shouldAbort)
+                        break;
+
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    cancellationToken.ThrowIfCancellationRequested();
                     // Start staging the next batch (but don't await the Task!)
                     Task<Response> task = UploadBatchListSyncOrAsync(
                         batch,
@@ -348,6 +370,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         // Wait for at least one of them to finish
                         await Task.WhenAny(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
+                        firstTask = runningTasks.First().CurrentTask;
                         // Clear any completed blocks from the task list
                         for (int i = 0; i < runningTasks.Count; i++)
                         {
@@ -363,23 +386,46 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).ConfigureAwait(false);
-                                shouldAbort = exceptionEventHandler != null;
-                                if (shouldAbort)
-                                    AddException(ref exceptions, exceptionEventHandler);
+                                var processCompletedTask = await ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).ConfigureAwait(false);
+                                logsFailed += processCompletedTask.FailedLogsCount;
+                                // if exception is thrown stop processing future batches
+                                if (processCompletedTask.Exception != null)
+                                {
+                                    shouldAbort = true;
+                                    AddException(ref exceptions, processCompletedTask.Exception);
+                                }
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
                         }
                     }
-
-                    // Wait for all the remaining blocks to finish uploading
-                    await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
-                }
-                catch (Exception)
+                } // foreach closed
+            } // end of try block
+            catch (Exception ex)
+            {
+                // We do not want to log exceptions here as we will loop through all the tasks later
+                // Cancel all future Uploads if user triggers CancellationToken
+                if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                 {
-                    // We do not want to log exceptions here as we will loop through all the tasks later
+                    shouldAbort = true;
+                    AddException(ref exceptions, ex);
+                }
+            }
+
+            try
+            {
+                // Wait for all the remaining blocks to finish uploading
+                await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // We do not want to log exceptions here as we will loop through all the tasks later
+                // Cancel all future Uploads if user triggers CancellationToken
+                if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
+                {
+                    shouldAbort = true;
+                    AddException(ref exceptions, ex);
                 }
             }
 
@@ -387,16 +433,20 @@ namespace Azure.Monitor.Ingestion
             foreach (var task in runningTasks)
             {
                 // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                if (!options.HasHandler)
+                // if we need to abort we do not need to invoke EventHandler because we need to throw Exception
+                if (shouldAbort || !options.HasHandler)
                 {
                     ProcessCompletedTask(task, ref exceptions, ref logsFailed);
                 }
                 else
                 {
-                    Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
-                    shouldAbort = exceptionEventHandler != null;
-                    if (shouldAbort)
-                        AddException(ref exceptions, exceptionEventHandler);
+                    var processTaskResult = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
+                    logsFailed += processTaskResult.FailedLogsCount;
+                    // if exception is thrown stop processing future batches
+                    if (processTaskResult.Exception != null)
+                    {
+                        AddException(ref exceptions, processTaskResult.Exception);
+                    }
                 }
             }
             if (exceptions?.Count > 0)
@@ -407,18 +457,24 @@ namespace Azure.Monitor.Ingestion
             }
 
             // If no exceptions return response
-            return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
+            if (runningTasks.Count == 0)
+                return firstTask.Result;
+            else
+                return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
         }
 
         private static void ProcessCompletedTask((Task<Response> CurrentTask, List<object> Logs) runningTask, ref List<Exception> exceptions, ref int logsFailed)
         {
+            // If the task was canceled, the OperationCanceledException was already observed and tracked in our exception list.
+            if (runningTask.CurrentTask.IsCanceled)
+                return;
             int logsCount = runningTask.Logs.Count;
             // If current task has an exception, log the exception and add number of logs in this task to failed logs
             if (runningTask.CurrentTask.Exception != null)
             {
                 AddException(
                     ref exceptions,
-                    runningTask.CurrentTask.Exception);
+                    runningTask.CurrentTask.Exception.InnerException ?? runningTask.CurrentTask.Exception);
                 logsFailed += logsCount;
             }
             // If current task returned a response that was not a success, log the exception and add number of logs in this task to failed logs
@@ -431,22 +487,28 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<Exception> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
+        internal async Task<(Exception Exception, int FailedLogsCount)> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, LogsUploadOptions options, CancellationToken cancellationToken)
         {
-            UploadFailedEventArgs eventArgs;
+            // If the task was canceled, the OperationCanceledException was already observed and tracked in our exception list.
+            if (completedTask.IsCanceled)
+                return (default, default);
+
+            LogsUploadFailedEventArgs eventArgs;
             if (completedTask.Exception != null)
             {
-                eventArgs = new UploadFailedEventArgs(logs, completedTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                return await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                eventArgs = new LogsUploadFailedEventArgs(logs, completedTask.Exception.InnerException ?? completedTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                var exception = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                return (exception, logs.Count);
             }
             else if (completedTask.Result.Status != 204)
             {
-                eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(completedTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                return await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                eventArgs = new LogsUploadFailedEventArgs(logs, new RequestFailedException(completedTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                var exception = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                return (exception, logs.Count);
             }
             else
             {
-                return null;
+                return (null, 0);
             }
         }
 

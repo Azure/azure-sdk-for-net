@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the HostPool data model. </summary>
+    /// <summary>
+    /// A class representing the HostPool data model.
+    /// Represents a HostPool definition.
+    /// </summary>
     public partial class HostPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HostPoolData. </summary>

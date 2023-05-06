@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<MediaJobError> error = default;
             Optional<MediaTransformPreset> presetOverride = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = MediaJobError.DeserializeMediaJobError(property.Value);
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
@@ -72,7 +74,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new MediaJobState(property.Value.GetString());
@@ -82,7 +83,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = property.Value.GetInt32();

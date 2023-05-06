@@ -47,15 +47,20 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecordingStorageType))
+            if (Optional.IsCollectionDefined(ChannelAffinity))
             {
-                writer.WritePropertyName("recordingStorageType"u8);
-                writer.WriteStringValue(RecordingStorageType.Value.ToString());
+                writer.WritePropertyName("channelAffinity"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelAffinity)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExternalStorageLocation))
+            if (Optional.IsDefined(ExternalStorage))
             {
-                writer.WritePropertyName("externalStorageLocation"u8);
-                writer.WriteStringValue(ExternalStorageLocation);
+                writer.WritePropertyName("externalStorage"u8);
+                writer.WriteObjectValue(ExternalStorage);
             }
             writer.WriteEndObject();
         }

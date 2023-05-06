@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WorkspaceKeyDetails DeserializeWorkspaceKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())

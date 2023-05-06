@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseReplicationLink data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseReplicationLink data model.
+    /// Represents a Sql pool replication link.
+    /// </summary>
     public partial class SynapseReplicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseReplicationLinkData. </summary>

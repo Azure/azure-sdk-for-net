@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
@@ -31,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-12-02")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2023-01-03")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -83,7 +84,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -107,7 +108,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -152,7 +153,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -177,7 +178,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -202,7 +203,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -241,7 +242,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -270,7 +271,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -320,7 +321,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -356,7 +357,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterStorageProfile DeserializeManagedClusterStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
             Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
             Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCsiDriver = ManagedClusterStorageProfileDiskCsiDriver.DeserializeManagedClusterStorageProfileDiskCsiDriver(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileCsiDriver = ManagedClusterStorageProfileFileCsiDriver.DeserializeManagedClusterStorageProfileFileCsiDriver(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshotController = ManagedClusterStorageProfileSnapshotController.DeserializeManagedClusterStorageProfileSnapshotController(property.Value);
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blobCsiDriver = ManagedClusterStorageProfileBlobCsiDriver.DeserializeManagedClusterStorageProfileBlobCsiDriver(property.Value);

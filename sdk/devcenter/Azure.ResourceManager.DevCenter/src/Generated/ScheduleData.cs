@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Schedule data model. </summary>
+    /// <summary>
+    /// A class representing the Schedule data model.
+    /// Represents a Schedule to execute a task.
+    /// </summary>
     public partial class ScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of ScheduleData. </summary>

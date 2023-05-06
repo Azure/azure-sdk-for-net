@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static HealthCheck DeserializeHealthCheck(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthCheckStatus> status = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> startDateTime = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new HealthCheckStatus(property.Value.GetString());
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDateTime = property.Value.GetDateTimeOffset("O");
@@ -53,7 +55,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endDateTime = property.Value.GetDateTimeOffset("O");

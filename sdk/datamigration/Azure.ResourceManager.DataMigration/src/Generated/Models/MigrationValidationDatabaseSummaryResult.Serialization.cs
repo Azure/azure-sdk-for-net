@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrationValidationDatabaseSummaryResult DeserializeMigrationValidationDatabaseSummaryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> migrationId = default;
             Optional<string> sourceDatabaseName = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedOn = property.Value.GetDateTimeOffset("O");
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedOn = property.Value.GetDateTimeOffset("O");
@@ -68,7 +70,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ValidationStatus(property.Value.GetString());

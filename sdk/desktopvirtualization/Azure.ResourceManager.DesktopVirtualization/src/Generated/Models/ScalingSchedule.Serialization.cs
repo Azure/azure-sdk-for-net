@@ -117,6 +117,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<ScalingScheduleDaysOfWeekItem>> daysOfWeek = default;
             Optional<DateTimeOffset> rampUpStartTime = default;
@@ -146,7 +150,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScalingScheduleDaysOfWeekItem> array = new List<ScalingScheduleDaysOfWeekItem>();
@@ -161,7 +164,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpStartTime = property.Value.GetDateTimeOffset("O");
@@ -171,7 +173,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
@@ -181,7 +182,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpMinimumHostsPct = property.Value.GetInt32();
@@ -191,7 +191,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpCapacityThresholdPct = property.Value.GetInt32();
@@ -201,7 +200,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peakStartTime = property.Value.GetDateTimeOffset("O");
@@ -211,7 +209,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
@@ -221,7 +218,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownStartTime = property.Value.GetDateTimeOffset("O");
@@ -231,7 +227,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
@@ -241,7 +236,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownMinimumHostsPct = property.Value.GetInt32();
@@ -251,7 +245,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownCapacityThresholdPct = property.Value.GetInt32();
@@ -261,7 +254,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownForceLogoffUsers = property.Value.GetBoolean();
@@ -271,7 +263,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownStopHostsWhen = new DesktopVirtualizationStopHostsWhen(property.Value.GetString());
@@ -281,7 +272,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownWaitTimeMinutes = property.Value.GetInt32();
@@ -296,7 +286,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offPeakStartTime = property.Value.GetDateTimeOffset("O");
@@ -306,7 +295,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offPeakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static RawStreamInputDataSource DeserializeRawStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> payload = default;
             Optional<Uri> payloadUri = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             payload = BinaryData.FromString(property0.Value.GetRawText());
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                payloadUri = null;
                                 continue;
                             }
                             payloadUri = new Uri(property0.Value.GetString());

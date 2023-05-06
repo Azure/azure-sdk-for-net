@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightPrivateLinkConfiguration DeserializeHDInsightPrivateLinkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string name = default;
             Optional<ResourceType> type = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HDInsightPrivateLinkConfigurationProvisioningState(property0.Value.GetString());

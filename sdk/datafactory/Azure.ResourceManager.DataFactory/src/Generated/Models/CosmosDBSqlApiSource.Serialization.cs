@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CosmosDBSqlApiSource DeserializeCosmosDBSqlApiSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> pageSize = default;
             Optional<BinaryData> preferredRegions = default;
@@ -132,7 +136,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     query = BinaryData.FromString(property.Value.GetRawText());
@@ -142,7 +145,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pageSize = BinaryData.FromString(property.Value.GetRawText());
@@ -152,7 +154,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preferredRegions = BinaryData.FromString(property.Value.GetRawText());
@@ -162,7 +163,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detectDatetime = BinaryData.FromString(property.Value.GetRawText());
@@ -172,7 +172,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = BinaryData.FromString(property.Value.GetRawText());
@@ -187,7 +186,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
@@ -197,7 +195,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
@@ -207,7 +204,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
@@ -217,7 +213,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());

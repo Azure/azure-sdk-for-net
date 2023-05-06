@@ -56,18 +56,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static NotificationRegistrationProperties DeserializeNotificationRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationMode> notificationMode = default;
             Optional<MessageScope> messageScope = default;
             Optional<IList<string>> includedEvents = default;
             Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notificationMode = new NotificationMode(property.Value.GetString());
@@ -77,7 +80,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageScope = new MessageScope(property.Value.GetString());
@@ -87,7 +89,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -102,7 +103,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotificationEndpoint> array = new List<NotificationEndpoint>();
@@ -117,10 +117,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

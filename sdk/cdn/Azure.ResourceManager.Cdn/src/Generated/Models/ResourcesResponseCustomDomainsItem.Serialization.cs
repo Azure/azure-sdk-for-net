@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponseCustomDomainsItem DeserializeResourcesResponseCustomDomainsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> endpointId = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     history = property.Value.GetBoolean();

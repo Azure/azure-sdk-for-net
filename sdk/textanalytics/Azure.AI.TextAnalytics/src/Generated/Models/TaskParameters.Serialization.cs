@@ -25,6 +25,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static TaskParameters DeserializeTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();

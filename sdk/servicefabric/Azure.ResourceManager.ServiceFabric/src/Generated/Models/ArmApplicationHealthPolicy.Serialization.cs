@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ArmApplicationHealthPolicy DeserializeArmApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> considerWarningAsError = default;
             Optional<int> maxPercentUnhealthyDeployedApplications = default;
             Optional<ArmServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     considerWarningAsError = property.Value.GetBoolean();
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPercentUnhealthyDeployedApplications = property.Value.GetInt32();
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property.Value);
@@ -87,7 +88,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ArmServiceTypeHealthPolicy> dictionary = new Dictionary<string, ArmServiceTypeHealthPolicy>();

@@ -46,7 +46,11 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<WellKnownFhirVersion> fhirVersion = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<FhirVersion> fhirVersion = default;
             Optional<HealthcareDocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
@@ -57,17 +61,15 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
+                    fhirVersion = new FhirVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("documentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     documentType = new HealthcareDocumentType(property.Value.GetString());
@@ -77,7 +79,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stringIndexType = new StringIndexType(property.Value.GetString());
@@ -92,7 +93,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();

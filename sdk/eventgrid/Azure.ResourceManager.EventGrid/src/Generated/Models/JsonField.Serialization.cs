@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static JsonField DeserializeJsonField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceField = default;
             foreach (var property in element.EnumerateObject())
             {

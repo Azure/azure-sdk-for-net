@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static TriggeredWebJobStatus ToTriggeredWebJobStatus(this string value)
         {
-            if (string.Equals(value, "Success", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Success;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Failed;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return TriggeredWebJobStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success")) return TriggeredWebJobStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return TriggeredWebJobStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return TriggeredWebJobStatus.Error;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TriggeredWebJobStatus value.");
         }
     }

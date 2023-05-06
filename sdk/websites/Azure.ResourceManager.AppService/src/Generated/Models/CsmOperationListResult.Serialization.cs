@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CsmOperationListResult DeserializeCsmOperationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CsmOperationDescription> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

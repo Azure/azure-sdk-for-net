@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsOrganizationalInfo> organizationalData = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);

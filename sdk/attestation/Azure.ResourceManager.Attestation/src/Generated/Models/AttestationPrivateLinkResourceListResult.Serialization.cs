@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Attestation.Models
     {
         internal static AttestationPrivateLinkResourceListResult DeserializeAttestationPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AttestationPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Attestation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AttestationPrivateLinkResource> array = new List<AttestationPrivateLinkResource>();

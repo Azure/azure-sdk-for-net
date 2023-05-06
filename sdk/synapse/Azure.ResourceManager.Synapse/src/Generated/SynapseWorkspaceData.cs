@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseWorkspace data model.
+    /// A workspace
+    /// </summary>
     public partial class SynapseWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>

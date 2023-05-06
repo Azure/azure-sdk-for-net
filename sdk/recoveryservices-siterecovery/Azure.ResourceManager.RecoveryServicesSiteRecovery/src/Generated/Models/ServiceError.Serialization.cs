@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ServiceError DeserializeServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> possibleCauses = default;

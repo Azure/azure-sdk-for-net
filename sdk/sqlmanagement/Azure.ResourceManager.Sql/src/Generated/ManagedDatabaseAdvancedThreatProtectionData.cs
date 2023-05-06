@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabaseAdvancedThreatProtection data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabaseAdvancedThreatProtection data model.
+    /// A managed database Advanced Threat Protection.
+    /// </summary>
     public partial class ManagedDatabaseAdvancedThreatProtectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionData. </summary>

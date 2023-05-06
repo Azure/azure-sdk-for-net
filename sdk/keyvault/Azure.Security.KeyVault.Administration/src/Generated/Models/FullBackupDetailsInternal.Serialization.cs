@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static FullBackupDetailsInternal DeserializeFullBackupDetailsInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> statusDetails = default;
             Optional<KeyVaultServiceError> error = default;
@@ -48,7 +52,6 @@ namespace Azure.Security.KeyVault.Administration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("U");

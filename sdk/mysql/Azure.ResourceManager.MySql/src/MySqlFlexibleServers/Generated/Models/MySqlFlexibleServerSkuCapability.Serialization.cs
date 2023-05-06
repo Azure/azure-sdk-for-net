@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerSkuCapability DeserializeMySqlFlexibleServerSkuCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCores = property.Value.GetInt64();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedIops = property.Value.GetInt64();
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedMemoryPerVCoreMB = property.Value.GetInt64();

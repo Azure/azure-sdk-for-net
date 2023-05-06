@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> percentComplete = default;
             Optional<int> numberOfUpdatesToInstall = default;
             Optional<int> numberOfUpdatesInstalled = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentComplete = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfUpdatesToInstall = property.Value.GetInt32();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfUpdatesInstalled = property.Value.GetInt32();

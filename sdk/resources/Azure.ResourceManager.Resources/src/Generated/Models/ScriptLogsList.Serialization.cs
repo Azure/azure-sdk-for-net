@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ScriptLogsList DeserializeScriptLogsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScriptLogData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScriptLogData> array = new List<ScriptLogData>();

@@ -130,6 +130,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
             Optional<Uri> entitiesDefinitionUri = default;
             Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;

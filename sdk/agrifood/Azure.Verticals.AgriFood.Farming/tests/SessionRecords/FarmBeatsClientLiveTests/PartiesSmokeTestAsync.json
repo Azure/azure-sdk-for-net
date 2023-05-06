@@ -1,0 +1,111 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://bb-prod-wcus-1.farmbeats.azure.net/parties/smoke-test-parties-4754?api-version=2022-11-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "User-Agent": "azsdk-net-Verticals.AgriFood.Farming/1.0.0-alpha.20230210.1 (.NET 6.0.13; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c995a62c9a4d00209625b9ba465460bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-11-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "264",
+        "Content-Security-Policy": "self",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Feb 2023 20:09:49 GMT",
+        "ETag": "0800ae59-0000-0600-0000-63e5530d0000",
+        "Location": "http://bb-prod-wcus-1.farmbeats.azure.net/parties/smoke-test-parties-4754",
+        "mise-correlation-id": "30718605-1852-4d1d-8127-f5b925e04c92",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "5e84d4bd99a267c604d36e11225ac732",
+        "x-ms-throttle-information": "1000"
+      },
+      "ResponseBody": {
+        "id": "smoke-test-parties-4754",
+        "eTag": "0800ae59-0000-0600-0000-63e5530d0000",
+        "createdDateTime": "2023-02-09T20:09:49Z",
+        "modifiedDateTime": "2023-02-09T20:09:49Z",
+        "createdBy": "9002b50e-dc98-445e-a865-72dce38ecafd",
+        "modifiedBy": "9002b50e-dc98-445e-a865-72dce38ecafd"
+      }
+    },
+    {
+      "RequestUri": "https://bb-prod-wcus-1.farmbeats.azure.net/parties/smoke-test-parties-4754?api-version=2022-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Verticals.AgriFood.Farming/1.0.0-alpha.20230210.1 (.NET 6.0.13; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4a4eca69c124f00f82ca2576fe05723c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-11-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "264",
+        "Content-Security-Policy": "self",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Feb 2023 20:09:49 GMT",
+        "ETag": "0800ae59-0000-0600-0000-63e5530d0000",
+        "mise-correlation-id": "79910965-ab21-4e4c-83e8-7c53fa291976",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "6278f9b76a642f1ba0c07ce9d9c59b12",
+        "x-ms-throttle-information": "100"
+      },
+      "ResponseBody": {
+        "id": "smoke-test-parties-4754",
+        "eTag": "0800ae59-0000-0600-0000-63e5530d0000",
+        "createdDateTime": "2023-02-09T20:09:49Z",
+        "modifiedDateTime": "2023-02-09T20:09:49Z",
+        "createdBy": "9002b50e-dc98-445e-a865-72dce38ecafd",
+        "modifiedBy": "9002b50e-dc98-445e-a865-72dce38ecafd"
+      }
+    },
+    {
+      "RequestUri": "https://bb-prod-wcus-1.farmbeats.azure.net/parties/smoke-test-parties-4754?api-version=2022-11-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Verticals.AgriFood.Farming/1.0.0-alpha.20230210.1 (.NET 6.0.13; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d8389a90e963d0fb4f1109fb14fabcf9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-11-01-preview",
+        "Connection": "keep-alive",
+        "Content-Security-Policy": "self",
+        "Date": "Thu, 09 Feb 2023 20:09:50 GMT",
+        "mise-correlation-id": "aa1e1d56-ed75-4bde-af12-ea415ffb4790",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "0b179a11f7943e53b6b0873be3376cad",
+        "x-ms-throttle-information": "100"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "FARMBEATS_ENDPOINT": "https://bb-prod-wcus-1.farmbeats.azure.net",
+    "RandomSeed": "1561936091"
+  }
+}

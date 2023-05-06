@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterWindowsProfile DeserializeManagedClusterWindowsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUsername = default;
             Optional<string> adminPassword = default;
             Optional<WindowsVmLicenseType> licenseType = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     licenseType = new WindowsVmLicenseType(property.Value.GetString());
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCsiProxy = property.Value.GetBoolean();
@@ -83,7 +85,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value);

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> succeededCount = default;
             Optional<float> failedCount = default;
             Optional<float> expiringCount = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     succeededCount = property.Value.GetSingle();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedCount = property.Value.GetSingle();
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiringCount = property.Value.GetSingle();
@@ -59,7 +60,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiredCount = property.Value.GetSingle();
@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingCount = property.Value.GetSingle();
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancelledCount = property.Value.GetSingle();
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processingCount = property.Value.GetSingle();
@@ -99,7 +96,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     noBenefitCount = property.Value.GetSingle();
@@ -109,7 +105,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     warningCount = property.Value.GetSingle();

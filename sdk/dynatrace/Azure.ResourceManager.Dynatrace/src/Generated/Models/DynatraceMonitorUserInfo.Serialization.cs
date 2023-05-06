@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorUserInfo DeserializeDynatraceMonitorUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             Optional<string> emailAddress = default;

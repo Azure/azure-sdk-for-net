@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CapacityReservationProfile DeserializeCapacityReservationProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> capacityReservationGroup = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

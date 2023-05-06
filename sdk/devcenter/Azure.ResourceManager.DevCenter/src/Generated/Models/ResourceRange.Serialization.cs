@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static ResourceRange DeserializeResourceRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> min = default;
             Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     min = property.Value.GetInt32();
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     max = property.Value.GetInt32();

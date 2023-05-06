@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityTaskProperties DeserializeSecurityTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

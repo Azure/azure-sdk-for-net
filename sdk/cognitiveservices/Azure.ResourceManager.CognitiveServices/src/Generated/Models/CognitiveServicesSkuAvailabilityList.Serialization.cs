@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuAvailabilityList DeserializeCognitiveServicesSkuAvailabilityList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> type = default;
             Optional<string> skuName = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skuAvailable = property.Value.GetBoolean();

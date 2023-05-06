@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningServiceFunctionBinding DeserializeMachineLearningServiceFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;
@@ -115,7 +119,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MachineLearningServiceInputColumn> array = new List<MachineLearningServiceInputColumn>();
@@ -130,7 +133,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MachineLearningServiceOutputColumn> array = new List<MachineLearningServiceOutputColumn>();
@@ -145,7 +147,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             batchSize = property0.Value.GetInt32();
@@ -155,7 +156,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfParallelRequests = property0.Value.GetInt32();

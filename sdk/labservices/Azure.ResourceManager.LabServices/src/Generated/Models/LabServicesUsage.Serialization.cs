@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsage DeserializeLabServicesUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<LabServicesUsageUnit> unit = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt64();
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt64();
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new LabServicesUsageUnit(property.Value.GetString());
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());

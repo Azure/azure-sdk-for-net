@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSqlPool data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSqlPool data model.
+    /// A SQL Analytics pool
+    /// </summary>
     public partial class SynapseSqlPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolData. </summary>

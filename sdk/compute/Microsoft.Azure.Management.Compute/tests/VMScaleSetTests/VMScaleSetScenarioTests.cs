@@ -735,13 +735,12 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var vmssName = TestUtilities.GenerateName("vmss");
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachineScaleSet inputVMScaleSet;
-                var serviceArtifaceReferenceId = "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crpTestrgarco/providers/Microsoft.Compute/galleries/mygalleryForCrp97f7/serviceArtifacts/serviceArtifactWithPirImage2/vmArtifactsProfiles/myVMP";
+                var serviceArtifaceReferenceId = "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crparcobvt/providers/Microsoft.Compute/galleries/galleryForArcoBvt/serviceArtifacts/serviceArtifactWithPirImage/vmArtifactsProfiles/myVMP";
 
                 try
                 {
@@ -794,6 +793,80 @@ namespace Compute.Tests
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
+                
+            }
+        }
+
+        /// <summary>
+        /// This test creates a VMSS with PIR image and securityPostureReference defined.
+        /// Once the VMSS is created, it verifies whether the response contains securityPostureReference or not
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperation_SecurityPostureReferenceId")]
+        public void TestVMScaleSetScenarioOperation_SecurityPostureReferenceId()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+                var securityPostureId = "/CommunityGalleries/Microsoft.Compute/SecurityPostures/WindowsVMSS/versions/1.0.0";
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2022-datacenter",
+                        Version = "latest"
+                    };
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.SecurityPostureReference = new SecurityPostureReference()
+                            {
+                                Id = securityPostureId
+                            };
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Automatic;
+                            vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                            {
+                                EnableAutomaticOSUpgrade = true
+                            };
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    Assert.True(string.Equals(securityPostureId, getResponse.VirtualMachineProfile.SecurityPostureReference?.Id, StringComparison.OrdinalIgnoreCase),
+                        "SecurityPostureReference.Id are not matching");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
             }
         }
 
@@ -808,6 +881,8 @@ namespace Compute.Tests
             EnsureClientsInitialized(context);
 
             ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
+            const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = "test000000", expectedHyperVGeneration = "V1";
+
             // Create resource group
             var rgName = TestUtilities.GenerateName(TestPrefix);
             var vmssName = TestUtilities.GenerateName("vmss");
@@ -975,7 +1050,7 @@ namespace Compute.Tests
                 if (validateVmssVMInstanceView)
                 {
                     VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
-                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostReferenceId);
+                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedHyperVGeneration, dedicatedHostReferenceId);
                 }
 
                 vmScaleSetValidator?.Invoke(getResponse);

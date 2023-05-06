@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static ConnectorMappingState ToConnectorMappingState(this string value)
         {
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Creating;
-            if (string.Equals(value, "Created", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Created;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Failed;
-            if (string.Equals(value, "Ready", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Ready;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Running;
-            if (string.Equals(value, "Stopped", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Stopped;
-            if (string.Equals(value, "Expiring", StringComparison.InvariantCultureIgnoreCase)) return ConnectorMappingState.Expiring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return ConnectorMappingState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return ConnectorMappingState.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ConnectorMappingState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return ConnectorMappingState.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return ConnectorMappingState.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped")) return ConnectorMappingState.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expiring")) return ConnectorMappingState.Expiring;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectorMappingState value.");
         }
     }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsStatus DeserializeContainerAppDiagnosticsStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<int> statusId = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusId = property.Value.GetInt32();

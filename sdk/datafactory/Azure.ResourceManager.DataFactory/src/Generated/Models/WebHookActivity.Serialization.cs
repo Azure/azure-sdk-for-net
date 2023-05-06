@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebHookActivity DeserializeWebHookActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;
@@ -143,7 +147,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityDependency> array = new List<ActivityDependency>();
@@ -158,7 +161,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityUserProperty> array = new List<ActivityUserProperty>();
@@ -197,7 +199,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             headers = BinaryData.FromString(property0.Value.GetRawText());
@@ -207,7 +208,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             body = BinaryData.FromString(property0.Value.GetRawText());
@@ -217,7 +217,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
@@ -227,7 +226,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reportStatusOnCallBack = BinaryData.FromString(property0.Value.GetRawText());

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareVirtualMachineDetails DeserializeVMwareVirtualMachineDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentGeneratedId = default;
             Optional<string> agentInstalled = default;
             Optional<string> osType = default;
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageDiskDetails> array = new List<InMageDiskDetails>();
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();

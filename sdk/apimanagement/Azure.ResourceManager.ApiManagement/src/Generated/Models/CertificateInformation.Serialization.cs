@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static CertificateInformation DeserializeCertificateInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset expiry = default;
             string thumbprint = default;
             string subject = default;

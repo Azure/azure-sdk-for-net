@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "770",
+        "Content-Length": "738",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-305b7eed2ebacfdfce2d7d65f042d749-71a7016dcfb1bf8f-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6e6de3f7fa19ad69b87381d3457ea41e",
+        "traceparent": "00-7ad31581a1b7527836f2486bdafe717d-69c00da79645d23f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20230217.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "524862f8938f4abf24b7e404ee79ce67",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,12 +28,12 @@
             },
             {
               "id": "3",
-              "text": "The apartment is 840 sqft. and it has 2 bedrooms. It costs 2,000 US dollars per month and will be available on 11/01/2022.",
+              "text": "The apartment (840 sqft. with 2 bedrooms) costs 2,000 USD per month and will be available on 11/01/2022.",
               "language": "en"
             },
             {
               "id": "4",
-              "text": "Mix 1 cup of sugar. Bake for approximately 60 minutes in an oven preheated to 350 degrees F.",
+              "text": "Mix 1 cup of sugar. Bake for 60 minutes in an oven preheated to 350 degrees F.",
               "language": "en"
             },
             {
@@ -51,15 +51,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7dd40011-e066-4fbf-8599-14a8f0bb1c6a",
-        "Content-Length": "4148",
+        "apim-request-id": "056b968a-b640-491d-93d7-2a5bc39902af",
+        "Content-Length": "4668",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=5,CognitiveServices.TextAnalytics.TextRecords=5",
-        "Date": "Wed, 23 Nov 2022 19:56:07 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.Text.NER=5,CognitiveServices.TextAnalytics.TextRecords=5",
+        "Date": "Fri, 17 Feb 2023 22:56:23 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "253",
+        "x-envoy-upstream-service-time": "541",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -69,6 +69,21 @@
             {
               "id": "1",
               "entities": [
+                {
+                  "text": "14",
+                  "category": "Quantity",
+                  "subcategory": "Number",
+                  "offset": 11,
+                  "length": 2,
+                  "confidenceScore": 0.61,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "NumberResolution",
+                      "numberKind": "Integer",
+                      "value": 14.0
+                    }
+                  ]
+                },
                 {
                   "text": "14 inches",
                   "category": "Quantity",
@@ -81,6 +96,21 @@
                       "resolutionKind": "LengthResolution",
                       "unit": "Inch",
                       "value": 14.0
+                    }
+                  ]
+                },
+                {
+                  "text": "20",
+                  "category": "Quantity",
+                  "subcategory": "Number",
+                  "offset": 37,
+                  "length": 2,
+                  "confidenceScore": 0.58,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "NumberResolution",
+                      "numberKind": "Integer",
+                      "value": 20.0
                     }
                   ]
                 },
@@ -141,7 +171,7 @@
                   "category": "Product",
                   "offset": 18,
                   "length": 8,
-                  "confidenceScore": 0.8
+                  "confidenceScore": 0.87
                 },
                 {
                   "text": "1,300 mph",
@@ -164,7 +194,7 @@
                   "subcategory": "NumberRange",
                   "offset": 79,
                   "length": 5,
-                  "confidenceScore": 0.83,
+                  "confidenceScore": 0.91,
                   "resolutions": [
                     {
                       "resolutionKind": "NumericRangeResolution",
@@ -179,7 +209,7 @@
                   "category": "PersonType",
                   "offset": 85,
                   "length": 10,
-                  "confidenceScore": 0.92
+                  "confidenceScore": 0.98
                 }
               ],
               "warnings": []
@@ -192,13 +222,13 @@
                   "category": "Location",
                   "offset": 4,
                   "length": 9,
-                  "confidenceScore": 0.81
+                  "confidenceScore": 0.75
                 },
                 {
                   "text": "840 sqft",
                   "category": "Quantity",
                   "subcategory": "Dimension",
-                  "offset": 17,
+                  "offset": 15,
                   "length": 8,
                   "confidenceScore": 0.8,
                   "resolutions": [
@@ -213,9 +243,9 @@
                   "text": "2",
                   "category": "Quantity",
                   "subcategory": "Number",
-                  "offset": 38,
+                  "offset": 30,
                   "length": 1,
-                  "confidenceScore": 0.98,
+                  "confidenceScore": 0.97,
                   "resolutions": [
                     {
                       "resolutionKind": "NumberResolution",
@@ -227,16 +257,16 @@
                 {
                   "text": "bedrooms",
                   "category": "Location",
-                  "offset": 40,
+                  "offset": 32,
                   "length": 8,
-                  "confidenceScore": 0.66
+                  "confidenceScore": 0.63
                 },
                 {
-                  "text": "2,000 US dollars",
+                  "text": "2,000 USD",
                   "category": "Quantity",
                   "subcategory": "Currency",
-                  "offset": 59,
-                  "length": 16,
+                  "offset": 48,
+                  "length": 9,
                   "confidenceScore": 0.99,
                   "resolutions": [
                     {
@@ -251,9 +281,9 @@
                   "text": "11/01/2022",
                   "category": "DateTime",
                   "subcategory": "Date",
-                  "offset": 111,
+                  "offset": 93,
                   "length": 10,
-                  "confidenceScore": 0.99,
+                  "confidenceScore": 1.0,
                   "resolutions": [
                     {
                       "resolutionKind": "DateTimeResolution",
@@ -275,7 +305,7 @@
                   "subcategory": "Number",
                   "offset": 4,
                   "length": 1,
-                  "confidenceScore": 0.69,
+                  "confidenceScore": 0.77,
                   "resolutions": [
                     {
                       "resolutionKind": "NumberResolution",
@@ -304,18 +334,19 @@
                   "category": "Product",
                   "offset": 13,
                   "length": 5,
-                  "confidenceScore": 0.92
+                  "confidenceScore": 0.93
                 },
                 {
                   "text": "60 minutes",
                   "category": "DateTime",
                   "subcategory": "Duration",
-                  "offset": 43,
+                  "offset": 29,
                   "length": 10,
-                  "confidenceScore": 0.95,
+                  "confidenceScore": 0.99,
                   "resolutions": [
                     {
                       "resolutionKind": "TemporalSpanResolution",
+                      "timex": "PT60M",
                       "duration": "PT60M"
                     }
                   ]
@@ -323,7 +354,7 @@
                 {
                   "text": "oven",
                   "category": "Product",
-                  "offset": 60,
+                  "offset": 46,
                   "length": 4,
                   "confidenceScore": 0.87
                 },
@@ -331,7 +362,7 @@
                   "text": "350 degrees F",
                   "category": "Quantity",
                   "subcategory": "Temperature",
-                  "offset": 78,
+                  "offset": 64,
                   "length": 13,
                   "confidenceScore": 0.8,
                   "resolutions": [
@@ -364,15 +395,23 @@
                   ]
                 },
                 {
-                  "text": "10/24/2022 to 10/28/2022",
+                  "text": "data",
+                  "category": "Skill",
+                  "offset": 32,
+                  "length": 4,
+                  "confidenceScore": 0.74
+                },
+                {
+                  "text": "from 10/24/2022 to 10/28/2022",
                   "category": "DateTime",
                   "subcategory": "DateRange",
-                  "offset": 42,
-                  "length": 24,
-                  "confidenceScore": 0.85,
+                  "offset": 37,
+                  "length": 29,
+                  "confidenceScore": 0.8,
                   "resolutions": [
                     {
                       "resolutionKind": "TemporalSpanResolution",
+                      "timex": "(2022-10-24,2022-10-28,P4D)",
                       "duration": "P4D",
                       "begin": "2022-10-24",
                       "end": "2022-10-28"
@@ -390,7 +429,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1195462607",
+    "RandomSeed": "599466627",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

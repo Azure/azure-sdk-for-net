@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the MobileNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the MobileNetwork data model.
+    /// Mobile network resource.
+    /// </summary>
     public partial class MobileNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MobileNetworkData. </summary>

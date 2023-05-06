@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciClusterIdentityResult DeserializeHciClusterIdentityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
             Optional<Guid> aadServicePrincipalObjectId = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadClientId = property0.Value.GetGuid();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadTenantId = property0.Value.GetGuid();
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
@@ -64,7 +65,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadApplicationObjectId = property0.Value.GetGuid();

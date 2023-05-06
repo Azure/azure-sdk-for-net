@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationAnnotation DeserializeLogicApiOperationAnnotation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicApiOperationAnnotationStatus> status = default;
             Optional<string> family = default;
             Optional<int> revision = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new LogicApiOperationAnnotationStatus(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     revision = property.Value.GetInt32();

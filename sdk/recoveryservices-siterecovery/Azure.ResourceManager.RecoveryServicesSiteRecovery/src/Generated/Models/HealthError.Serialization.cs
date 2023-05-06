@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HealthError DeserializeHealthError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InnerHealthError>> innerHealthErrors = default;
             Optional<string> errorSource = default;
             Optional<string> errorType = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InnerHealthError> array = new List<InnerHealthError>();
@@ -97,7 +100,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     creationTimeUtc = property.Value.GetDateTimeOffset("O");
@@ -122,7 +124,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());

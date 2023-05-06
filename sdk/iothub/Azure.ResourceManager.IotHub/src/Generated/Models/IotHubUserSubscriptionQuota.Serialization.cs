@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubUserSubscriptionQuota DeserializeIotHubUserSubscriptionQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<string> unit = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt32();
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -61,7 +63,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = IotHubTypeName.DeserializeIotHubTypeName(property.Value);

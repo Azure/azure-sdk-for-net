@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SyncMemberData DeserializeSyncMemberData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -113,7 +117,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -132,7 +135,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             databaseType = new SyncMemberDbType(property0.Value.GetString());
@@ -142,7 +144,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncAgentId = new ResourceIdentifier(property0.Value.GetString());
@@ -152,7 +153,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sqlServerDatabaseId = property0.Value.GetGuid();
@@ -162,7 +162,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncMemberAzureDatabaseResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -172,7 +171,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usePrivateLinkConnection = property0.Value.GetBoolean();
@@ -207,7 +205,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncDirection = new SyncDirection(property0.Value.GetString());
@@ -217,7 +214,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncState = new SyncMemberState(property0.Value.GetString());

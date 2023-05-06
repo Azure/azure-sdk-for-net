@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static EnvironmentSkuProperties DeserializeEnvironmentSkuProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AppContainersSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {

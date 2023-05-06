@@ -52,6 +52,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentResponseDocumentsItem DeserializeSentimentResponseDocumentsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             TextSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
@@ -65,7 +69,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
@@ -110,7 +113,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

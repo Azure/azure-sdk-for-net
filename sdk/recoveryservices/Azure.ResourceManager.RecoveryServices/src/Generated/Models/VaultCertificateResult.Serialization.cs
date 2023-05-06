@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static VaultCertificateResult DeserializeVaultCertificateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceCertificateDetails> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value);
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

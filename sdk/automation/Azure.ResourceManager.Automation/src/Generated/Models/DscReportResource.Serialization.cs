@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscReportResource DeserializeDscReportResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             Optional<string> sourceInfo = default;
             Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationInSeconds = property.Value.GetDouble();
@@ -92,7 +94,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDate = property.Value.GetDateTimeOffset("O");

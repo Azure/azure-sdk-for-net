@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsNetworkRuleSet data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsNetworkRuleSet data model.
+    /// Description of topic resource.
+    /// </summary>
     public partial class EventHubsNetworkRuleSetData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>

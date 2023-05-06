@@ -19,8 +19,16 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary>
         /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSiteIdentifiersAssignedToHostName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
@@ -31,13 +39,21 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
-            return GetExtensionClient(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
         /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSiteIdentifiersAssignedToHostName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
@@ -48,33 +64,49 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
-            return GetExtensionClient(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataDataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
         }
 
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataData(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
         }
     }
 }

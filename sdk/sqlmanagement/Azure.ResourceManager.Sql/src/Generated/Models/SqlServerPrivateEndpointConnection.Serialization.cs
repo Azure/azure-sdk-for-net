@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlServerPrivateEndpointConnection DeserializeSqlServerPrivateEndpointConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<ServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ServerPrivateEndpointConnectionProperties.DeserializeServerPrivateEndpointConnectionProperties(property.Value);

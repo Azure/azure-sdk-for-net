@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static DistributionPolicyCollection DeserializeDistributionPolicyCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DistributionPolicyItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

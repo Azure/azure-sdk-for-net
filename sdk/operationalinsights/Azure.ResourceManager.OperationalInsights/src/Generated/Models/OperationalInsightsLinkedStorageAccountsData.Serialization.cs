@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -36,6 +41,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsLinkedStorageAccountsData DeserializeOperationalInsightsLinkedStorageAccountsData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +72,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -82,7 +90,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSourceType = property0.Value.GetString().ToOperationalInsightsDataSourceType();
@@ -92,13 +99,19 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             storageAccountIds = array;
                             continue;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static TokenGenerationUsedKeyType ToTokenGenerationUsedKeyType(this string value)
         {
-            if (string.Equals(value, "primary", StringComparison.InvariantCultureIgnoreCase)) return TokenGenerationUsedKeyType.Primary;
-            if (string.Equals(value, "secondary", StringComparison.InvariantCultureIgnoreCase)) return TokenGenerationUsedKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return TokenGenerationUsedKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return TokenGenerationUsedKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenGenerationUsedKeyType value.");
         }
     }

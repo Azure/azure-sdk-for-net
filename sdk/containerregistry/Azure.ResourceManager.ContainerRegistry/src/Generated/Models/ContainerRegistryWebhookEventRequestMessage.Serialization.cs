@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventRequestMessage DeserializeContainerRegistryWebhookEventRequestMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryWebhookEventContent> content = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             Optional<string> method = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = ContainerRegistryWebhookEventContent.DeserializeContainerRegistryWebhookEventContent(property.Value);
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestUri = null;
                         continue;
                     }
                     requestUri = new Uri(property.Value.GetString());

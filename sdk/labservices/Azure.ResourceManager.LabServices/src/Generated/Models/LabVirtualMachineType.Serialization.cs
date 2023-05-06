@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineType ToLabVirtualMachineType(this string value)
         {
-            if (string.Equals(value, "User", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineType.User;
-            if (string.Equals(value, "Template", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineType.Template;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return LabVirtualMachineType.User;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Template")) return LabVirtualMachineType.Template;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineType value.");
         }
     }

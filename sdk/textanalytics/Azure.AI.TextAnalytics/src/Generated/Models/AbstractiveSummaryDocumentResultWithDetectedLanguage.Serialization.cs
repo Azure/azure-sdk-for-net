@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryDocumentResultWithDetectedLanguage DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;
@@ -59,7 +63,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
@@ -94,7 +97,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

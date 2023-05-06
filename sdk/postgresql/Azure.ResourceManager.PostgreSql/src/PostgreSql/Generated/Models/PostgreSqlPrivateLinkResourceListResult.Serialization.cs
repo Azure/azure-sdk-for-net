@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlPrivateLinkResourceListResult DeserializePostgreSqlPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlPrivateLinkResourceData> array = new List<PostgreSqlPrivateLinkResourceData>();

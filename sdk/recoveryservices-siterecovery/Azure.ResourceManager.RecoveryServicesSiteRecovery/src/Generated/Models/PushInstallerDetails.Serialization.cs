@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static PushInstallerDetails DeserializePushInstallerDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> biosId = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ProtectionHealth(property.Value.GetString());
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();

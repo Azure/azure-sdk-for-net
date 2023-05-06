@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the SoftwareUpdateConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the SoftwareUpdateConfiguration data model.
+    /// Software update configuration properties.
+    /// </summary>
     public partial class SoftwareUpdateConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static AddonList DeserializeAddonList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeRoleAddonData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeRoleAddonData> array = new List<DataBoxEdgeRoleAddonData>();

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protectedItemName = default;
             Optional<string> fabricObjectId = default;
             Optional<string> fabricName = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
             Optional<OpenIdAuthenticationSettingsContract> openid = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value);

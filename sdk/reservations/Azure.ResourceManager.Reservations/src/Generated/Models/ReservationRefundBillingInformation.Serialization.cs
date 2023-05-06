@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<int> completedTransactions = default;
             Optional<int> totalTransactions = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingPlan = new ReservationBillingPlan(property.Value.GetString());
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     completedTransactions = property.Value.GetInt32();
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalTransactions = property.Value.GetInt32();
@@ -56,7 +57,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);

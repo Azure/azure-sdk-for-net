@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static JobOffer DeserializeJobOffer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string jobId = default;
             int capacityCost = default;
@@ -41,7 +45,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerTimeUtc = property.Value.GetDateTimeOffset("O");
@@ -51,7 +54,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTimeUtc = property.Value.GetDateTimeOffset("O");

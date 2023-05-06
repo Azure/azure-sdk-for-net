@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -115,6 +120,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in FilePaths)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -142,6 +152,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CommandEnvironment)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -157,6 +172,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Defines)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -180,6 +200,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightStreamingActivity DeserializeHDInsightStreamingActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -207,7 +231,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -217,7 +240,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
@@ -242,7 +264,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityDependency> array = new List<ActivityDependency>();
@@ -257,7 +278,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityUserProperty> array = new List<ActivityUserProperty>();
@@ -281,7 +301,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
@@ -296,13 +315,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             arguments = array;
                             continue;
@@ -311,7 +336,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
@@ -342,7 +366,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             filePaths = array;
                             continue;
@@ -351,7 +382,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fileLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
@@ -361,7 +391,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             combiner = BinaryData.FromString(property0.Value.GetRawText());
@@ -371,13 +400,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             commandEnvironment = array;
                             continue;
@@ -386,13 +421,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             defines = dictionary;
                             continue;

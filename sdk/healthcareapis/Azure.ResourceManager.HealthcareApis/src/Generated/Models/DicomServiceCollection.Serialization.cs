@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static DicomServiceCollection DeserializeDicomServiceCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DicomServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DicomServiceData> array = new List<DicomServiceData>();

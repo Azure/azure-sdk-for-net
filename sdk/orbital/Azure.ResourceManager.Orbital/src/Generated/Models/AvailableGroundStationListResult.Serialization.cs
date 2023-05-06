@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static AvailableGroundStationListResult DeserializeAvailableGroundStationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableGroundStationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableGroundStationData> array = new List<AvailableGroundStationData>();

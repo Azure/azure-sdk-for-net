@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyAuthenticationContextRule DeserializeRoleManagementPolicyAuthenticationContextRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEnabled = default;
             Optional<string> claimValue = default;
             Optional<string> id = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEnabled = property.Value.GetBoolean();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);

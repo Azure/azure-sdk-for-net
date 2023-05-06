@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryPlanA2ADetails DeserializeRecoveryPlanA2ADetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryZone = default;
             Optional<string> recoveryZone = default;
             Optional<ExtendedLocation> primaryExtendedLocation = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);

@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static StorageBundle DeserializeStorageBundle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> resourceId = default;
             Optional<string> activeKeyName = default;
@@ -43,7 +47,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoRegenerateKey = property.Value.GetBoolean();
@@ -58,7 +61,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
@@ -68,7 +70,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

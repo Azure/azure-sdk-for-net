@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayHybridConnection data model. </summary>
+    /// <summary>
+    /// A class representing the RelayHybridConnection data model.
+    /// Description of hybrid connection resource.
+    /// </summary>
     public partial class RelayHybridConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayHybridConnectionData. </summary>

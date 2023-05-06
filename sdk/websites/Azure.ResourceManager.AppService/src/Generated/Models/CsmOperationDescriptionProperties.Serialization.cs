@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CsmOperationDescriptionProperties DeserializeCsmOperationDescriptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value);

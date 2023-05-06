@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTree DeserializeSwaggerCustomDynamicTree(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SwaggerCustomDynamicTreeSettings> settings = default;
             Optional<SwaggerCustomDynamicTreeCommand> open = default;
             Optional<SwaggerCustomDynamicTreeCommand> browse = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     settings = SwaggerCustomDynamicTreeSettings.DeserializeSwaggerCustomDynamicTreeSettings(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     open = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     browse = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value);

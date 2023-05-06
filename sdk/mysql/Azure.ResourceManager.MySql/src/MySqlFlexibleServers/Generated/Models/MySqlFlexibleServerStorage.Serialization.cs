@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> storageSizeGB = default;
             Optional<int> iops = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> autoGrow = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageSizeGB = property.Value.GetInt32();
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iops = property.Value.GetInt32();
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoGrow = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());

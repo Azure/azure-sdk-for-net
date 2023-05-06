@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppSourceControl data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppSourceControl data model.
+    /// Container App SourceControl.
+    /// </summary>
     public partial class ContainerAppSourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppSourceControlData. </summary>

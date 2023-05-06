@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
@@ -85,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logRefreshInterval = BinaryData.FromString(property0.Value.GetRawText());

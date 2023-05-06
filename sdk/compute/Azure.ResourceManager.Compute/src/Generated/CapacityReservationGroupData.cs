@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CapacityReservationGroup data model. </summary>
+    /// <summary>
+    /// A class representing the CapacityReservationGroup data model.
+    /// Specifies information about the capacity reservation group that the capacity reservations should be assigned to. &lt;br&gt;&lt;br&gt; Currently, a capacity reservation can only be added to a capacity reservation group at creation time. An existing capacity reservation cannot be added or moved to another capacity reservation group.
+    /// </summary>
     public partial class CapacityReservationGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>

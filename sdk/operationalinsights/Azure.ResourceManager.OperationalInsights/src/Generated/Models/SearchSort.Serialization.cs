@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchSort DeserializeSearchSort(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SearchSortEnum> order = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = new SearchSortEnum(property.Value.GetString());

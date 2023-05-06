@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BinarySource DeserializeBinarySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<BinaryReadSettings> formatSettings = default;
             string type = default;
@@ -70,7 +74,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
@@ -80,7 +83,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     formatSettings = BinaryReadSettings.DeserializeBinaryReadSettings(property.Value);
@@ -95,7 +97,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = property.Value.GetObject();
@@ -105,7 +106,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = property.Value.GetObject();
@@ -115,7 +115,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();

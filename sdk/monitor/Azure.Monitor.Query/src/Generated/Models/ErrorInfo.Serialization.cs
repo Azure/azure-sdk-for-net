@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static ErrorInfo DeserializeErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<IReadOnlyList<ErrorDetail>> details = default;
@@ -36,7 +40,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorDetail> array = new List<ErrorDetail>();
@@ -51,7 +54,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeErrorInfo(property.Value);
@@ -61,7 +63,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalProperties = property.Value.GetObject();

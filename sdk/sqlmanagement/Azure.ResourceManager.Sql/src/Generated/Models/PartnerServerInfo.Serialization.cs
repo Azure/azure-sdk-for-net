@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static PartnerServerInfo DeserializePartnerServerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<AzureLocation> location = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -46,7 +49,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationRole = new FailoverGroupReplicationRole(property.Value.GetString());

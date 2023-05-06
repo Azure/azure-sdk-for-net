@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultAccessPolicyProperties DeserializeKeyVaultAccessPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<KeyVaultAccessPolicy> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {

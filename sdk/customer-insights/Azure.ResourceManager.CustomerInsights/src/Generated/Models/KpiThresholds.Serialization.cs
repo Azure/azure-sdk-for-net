@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiThresholds DeserializeKpiThresholds(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             decimal lowerLimit = default;
             decimal upperLimit = default;
             bool increasingKpi = default;

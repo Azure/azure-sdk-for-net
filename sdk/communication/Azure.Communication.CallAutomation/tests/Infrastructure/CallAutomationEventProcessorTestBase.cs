@@ -29,24 +29,20 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
 
-        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\": {{\"identifier\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
+        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"sourceIdentity\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
-        protected const string AddParticipantsPayload = "{\"participants\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}],\"operationContext\":\"someOperationContext\"}";
+        protected const string AddParticipantsPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
 
         protected const string GetParticipantPayload = "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}";
 
         protected const string GetParticipantsPayload = "{\"values\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}]}";
 
+        protected const string RemoveParticipantPayload = AddParticipantsPayload;
+
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
-            if (options == default)
-            {
-                options = new CallAutomationClientOptions();
-                options.EventProcessorOptions.EventTimeout = TimeSpan.FromSeconds(defaultTestTimeout);
-            }
-
             var mockResponse = new MockResponse(responseCode);
 
             if (responseContent != null)
@@ -85,36 +81,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return callconn;
         }
 
-        protected CallConnectionProperties CreateMoakCallConnectionProperties(
-            string? callConnectionId = default,
-            string? servercallId = default,
-            CallSource? source = default,
-            IEnumerable<CommunicationIdentifier>? targets = default,
-            CallConnectionState connectionState = default)
-        {
-            CallConnectionProperties callconnprops = new CallConnectionProperties(
-                callConnectionId == default ? CallConnectionId : callConnectionId,
-                servercallId == default ? ServerCallId : servercallId,
-                source == default ? CreateMoakCallSource() : source,
-                targets == default ? CreateMoakTargets() : targets,
-                connectionState == default ? CallConnectionState.Unknown : connectionState,
-                null, null);
-
-            return callconnprops;
-        }
-
-        protected CallSource CreateMoakCallSource(CommunicationIdentifier? identifier = default)
-        {
-            var callsource = new CallSource(identifier == default ? new CommunicationUserIdentifier(SourceUser) : identifier);
-
-            return callsource;
-        }
-
         protected IEnumerable<CommunicationIdentifier> CreateMoakTargets(IEnumerable<CommunicationIdentifier>? targets = default)
         {
             var targetsOutput = targets == default ? new List<CommunicationIdentifier> { new CommunicationUserIdentifier(TargetUser) } : targets;
 
             return targetsOutput;
+        }
+
+        protected CallInvite CreateMockInvite(CallInvite? target = default)
+        {
+            return target == default? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
         }
 
         protected CallConnection CreateMockCallConnection(int responseCode, string? responseContent = default, string? callConnectionId = default)
@@ -123,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         protected void SendAndProcessEvent(
-            EventProcessor eventProcessor,
+            CallAutomationEventProcessor eventProcessor,
             CallAutomationEventBase eventToBeSent)
         {
             eventProcessor.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });

@@ -38,8 +38,7 @@ namespace Azure.Identity
 
         protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
         {
-            var authorityHost = Pipeline.AuthorityHost;
-            var authorityUri = new UriBuilder(authorityHost.Scheme, authorityHost.Host, authorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
+            var authorityUri = new UriBuilder(AuthorityHost.Scheme, AuthorityHost.Host, AuthorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
 
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
@@ -96,7 +95,7 @@ namespace Azure.Identity
 
             if (tenantId != null)
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
 
             return await builder
@@ -119,7 +118,7 @@ namespace Azure.Identity
             // otherwise we should authenticate with the tenant specified by the authentication record since that's the tenant the
             // user authenticated to originally.
             return await client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
-                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
+                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
                 .WithClaims(claims)
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -170,7 +169,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -192,7 +191,7 @@ namespace Azure.Identity
                 .WithClaims(claims);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);

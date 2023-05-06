@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static DataShareEmailRegistration DeserializeDataShareEmailRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activationCode = default;
             Optional<DateTimeOffset> activationExpirationDate = default;
             Optional<string> email = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activationExpirationDate = property.Value.GetDateTimeOffset("O");
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registrationStatus = new DataShareEmailRegistrationStatus(property.Value.GetString());
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

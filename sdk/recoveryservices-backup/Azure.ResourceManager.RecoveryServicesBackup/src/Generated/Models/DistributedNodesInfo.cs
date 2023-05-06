@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Failed | Succeeded
         /// </param>
         /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
-        internal DistributedNodesInfo(string nodeName, string status, ErrorDetail errorDetail)
+        internal DistributedNodesInfo(string nodeName, string status, BackupErrorDetail errorDetail)
         {
             NodeName = nodeName;
             Status = status;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </summary>
         public string Status { get; set; }
         /// <summary> Error Details if the Status is non-success. </summary>
-        public ErrorDetail ErrorDetail { get; set; }
+        public BackupErrorDetail ErrorDetail { get; set; }
     }
 }

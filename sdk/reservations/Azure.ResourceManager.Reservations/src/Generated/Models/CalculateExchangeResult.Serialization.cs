@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CalculateExchangeResult DeserializeCalculateExchangeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<CalculateExchangeOperationResultStatus> status = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new CalculateExchangeOperationResultStatus(property.Value.GetString());
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = CalculateExchangeResultProperties.DeserializeCalculateExchangeResultProperties(property.Value);
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = OperationResultError.DeserializeOperationResultError(property.Value);

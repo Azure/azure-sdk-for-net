@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ResourceCertificateDetails DeserializeResourceCertificateDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

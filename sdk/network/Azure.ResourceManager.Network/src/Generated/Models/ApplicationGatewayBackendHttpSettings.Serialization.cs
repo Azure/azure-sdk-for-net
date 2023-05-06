@@ -111,6 +111,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -135,7 +139,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -145,7 +148,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -160,7 +162,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -179,7 +180,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -189,7 +189,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new ApplicationGatewayProtocol(property0.Value.GetString());
@@ -199,7 +198,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cookieBasedAffinity = new ApplicationGatewayCookieBasedAffinity(property0.Value.GetString());
@@ -209,7 +207,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestTimeout = property0.Value.GetInt32();
@@ -219,7 +216,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             probe = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -229,7 +225,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -244,7 +239,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -259,7 +253,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
@@ -274,7 +267,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pickHostNameFromBackendAddress = property0.Value.GetBoolean();
@@ -289,7 +281,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             probeEnabled = property0.Value.GetBoolean();
@@ -304,7 +295,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");

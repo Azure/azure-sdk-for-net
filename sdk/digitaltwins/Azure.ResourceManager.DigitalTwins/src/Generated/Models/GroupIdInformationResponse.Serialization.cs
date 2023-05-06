@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static GroupIdInformationResponse DeserializeGroupIdInformationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DigitalTwinsPrivateLinkResourceData> array = new List<DigitalTwinsPrivateLinkResourceData>();

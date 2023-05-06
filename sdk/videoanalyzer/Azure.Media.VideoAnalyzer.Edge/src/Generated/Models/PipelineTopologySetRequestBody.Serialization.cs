@@ -37,6 +37,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologySetRequestBody DeserializePipelineTopologySetRequestBody(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<SystemData> systemData = default;
             Optional<PipelineTopologyProperties> properties = default;
@@ -53,7 +57,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = PipelineTopologyProperties.DeserializePipelineTopologyProperties(property.Value);

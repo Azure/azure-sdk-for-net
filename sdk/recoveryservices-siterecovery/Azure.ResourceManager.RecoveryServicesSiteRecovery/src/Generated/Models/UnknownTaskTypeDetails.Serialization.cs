@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownTaskTypeDetails DeserializeUnknownTaskTypeDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

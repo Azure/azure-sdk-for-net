@@ -41,6 +41,10 @@ namespace Azure.Communication.JobRouter
 
         internal static BestWorkerMode DeserializeBestWorkerMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouterRule> scoringRule = default;
             Optional<ScoringRuleOptions> scoringRuleOptions = default;
             string kind = default;
@@ -53,7 +57,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringRule = RouterRule.DeserializeRouterRule(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringRuleOptions = ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
@@ -88,7 +90,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bypassSelectors = property.Value.GetBoolean();

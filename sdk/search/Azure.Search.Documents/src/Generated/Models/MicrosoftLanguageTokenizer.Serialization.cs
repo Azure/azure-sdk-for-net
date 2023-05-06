@@ -39,6 +39,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxTokenLength = default;
             Optional<bool> isSearchTokenizer = default;
             Optional<MicrosoftTokenizerLanguage> language = default;
@@ -50,7 +54,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenLength = property.Value.GetInt32();
@@ -60,7 +63,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSearchTokenizer = property.Value.GetBoolean();
@@ -70,7 +72,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     language = property.Value.GetString().ToMicrosoftTokenizerLanguage();

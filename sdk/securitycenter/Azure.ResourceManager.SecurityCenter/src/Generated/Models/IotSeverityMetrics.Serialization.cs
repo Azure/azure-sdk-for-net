@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSeverityMetrics DeserializeIotSeverityMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> high = default;
             Optional<long> medium = default;
             Optional<long> low = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     high = property.Value.GetInt64();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     medium = property.Value.GetInt64();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     low = property.Value.GetInt64();

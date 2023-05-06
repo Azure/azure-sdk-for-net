@@ -10,7 +10,7 @@ using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
-    internal sealed class SharedBlobQueueListener : ISharedListener, IScaleMonitorProvider
+    internal sealed class SharedBlobQueueListener : ISharedListener, IScaleMonitorProvider, ITargetScalerProvider
     {
         private readonly IListener _listener;
         private readonly BlobQueueTriggerExecutor _executor;
@@ -73,7 +73,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public IScaleMonitor GetMonitor()
         {
-            return (IScaleMonitor)_listener;
+            return ((IScaleMonitorProvider)_listener).GetMonitor();
+        }
+
+        public ITargetScaler GetTargetScaler()
+        {
+            return ((ITargetScalerProvider)_listener).GetTargetScaler();
         }
     }
 }

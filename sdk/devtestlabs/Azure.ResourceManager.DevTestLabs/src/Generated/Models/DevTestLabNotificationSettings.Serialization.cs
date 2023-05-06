@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNotificationSettings DeserializeDevTestLabNotificationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabEnableStatus> status = default;
             Optional<int> timeInMinutes = default;
             Optional<Uri> webhookUrl = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DevTestLabEnableStatus(property.Value.GetString());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeInMinutes = property.Value.GetInt32();
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        webhookUrl = null;
                         continue;
                     }
                     webhookUrl = new Uri(property.Value.GetString());

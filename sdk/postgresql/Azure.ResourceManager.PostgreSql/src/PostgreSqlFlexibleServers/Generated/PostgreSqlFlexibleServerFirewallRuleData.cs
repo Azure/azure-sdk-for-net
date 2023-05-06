@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerFirewallRule data model.
+    /// Represents a server firewall rule.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFirewallRuleData. </summary>

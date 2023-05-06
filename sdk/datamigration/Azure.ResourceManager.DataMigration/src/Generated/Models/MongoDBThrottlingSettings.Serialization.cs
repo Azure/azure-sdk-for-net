@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBThrottlingSettings DeserializeMongoDBThrottlingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minFreeCpu = default;
             Optional<int> minFreeMemoryMb = default;
             Optional<int> maxParallelism = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minFreeCpu = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minFreeMemoryMb = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxParallelism = property.Value.GetInt32();

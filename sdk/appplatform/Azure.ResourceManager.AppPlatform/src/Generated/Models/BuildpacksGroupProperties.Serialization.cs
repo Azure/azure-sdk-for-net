@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static BuildpacksGroupProperties DeserializeBuildpacksGroupProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<WritableSubResource>> buildpacks = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();

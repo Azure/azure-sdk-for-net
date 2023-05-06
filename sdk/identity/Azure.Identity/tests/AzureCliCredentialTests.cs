@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
         {
             var azCliOptions = new AzureCliCredentialOptions
             {
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
@@ -134,7 +134,7 @@ namespace Azure.Identity.Tests
             AzureCliCredential credential = InstrumentClient(
                 new AzureCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),
-                    new AzureCliCredentialOptions() { CliProcessTimeout = TimeSpan.Zero }));
+                    new AzureCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzureCliCredential.AzureCliTimeoutError, ex.Message);
         }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationVersionSafetyProfile DeserializeGalleryApplicationVersionSafetyProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowDeletionOfReplicatedLocations = property.Value.GetBoolean();

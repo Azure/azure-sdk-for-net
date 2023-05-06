@@ -116,6 +116,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Workspace DeserializeWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
@@ -144,7 +148,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
@@ -154,7 +157,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -198,7 +200,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultDataLakeStorage = DataLakeStorageAccountDetails.DeserializeDataLakeStorageAccountDetails(property0.Value);
@@ -228,7 +229,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
@@ -238,7 +238,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -258,7 +257,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
@@ -273,7 +271,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
@@ -283,7 +280,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceUID = property0.Value.GetGuid();
@@ -293,13 +289,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, property1.Value.GetObject());
+                                }
                             }
                             extraProperties = dictionary;
                             continue;
@@ -308,7 +310,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
@@ -318,7 +319,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
@@ -328,7 +328,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);

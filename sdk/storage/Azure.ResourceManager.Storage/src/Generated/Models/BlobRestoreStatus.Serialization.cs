@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobRestoreProgressStatus> status = default;
             Optional<string> failureReason = default;
             Optional<string> restoreId = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new BlobRestoreProgressStatus(property.Value.GetString());
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = BlobRestoreContent.DeserializeBlobRestoreContent(property.Value);

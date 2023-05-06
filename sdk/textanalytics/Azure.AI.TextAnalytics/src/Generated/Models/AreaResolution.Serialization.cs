@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static AreaResolution DeserializeAreaResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AreaUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

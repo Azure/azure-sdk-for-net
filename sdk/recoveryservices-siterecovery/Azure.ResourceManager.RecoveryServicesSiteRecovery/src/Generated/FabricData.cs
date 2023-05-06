@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the Fabric data model. </summary>
+    /// <summary>
+    /// A class representing the Fabric data model.
+    /// Fabric definition.
+    /// </summary>
     public partial class FabricData : ResourceData
     {
         /// <summary> Initializes a new instance of FabricData. </summary>

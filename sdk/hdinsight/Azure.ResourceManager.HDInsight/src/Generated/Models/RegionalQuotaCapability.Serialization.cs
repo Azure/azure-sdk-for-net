@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> regionName = default;
             Optional<long> coresUsed = default;
             Optional<long> coresAvailable = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionName = new AzureLocation(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coresUsed = property.Value.GetInt64();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coresAvailable = property.Value.GetInt64();

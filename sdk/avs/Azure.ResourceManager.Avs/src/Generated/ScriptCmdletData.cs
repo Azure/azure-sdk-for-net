@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the ScriptCmdlet data model. </summary>
+    /// <summary>
+    /// A class representing the ScriptCmdlet data model.
+    /// A cmdlet available for script execution
+    /// </summary>
     public partial class ScriptCmdletData : ResourceData
     {
         /// <summary> Initializes a new instance of ScriptCmdletData. </summary>

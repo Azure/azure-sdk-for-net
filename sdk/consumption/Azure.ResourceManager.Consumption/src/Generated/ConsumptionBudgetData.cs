@@ -13,7 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    /// <summary> A class representing the ConsumptionBudget data model. </summary>
+    /// <summary>
+    /// A class representing the ConsumptionBudget data model.
+    /// A budget resource.
+    /// Serialized Name: Budget
+    /// </summary>
     public partial class ConsumptionBudgetData : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
@@ -27,15 +31,42 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
-        /// <param name="amount"> The total amount of cost to track with the budget. </param>
-        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
-        /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
-        /// <param name="filter"> May be used to filter budgets by user-specified dimensions and/or tags. </param>
-        /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
-        /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
-        /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="category">
+        /// The category of the budget, whether the budget tracks cost or usage.
+        /// Serialized Name: Budget.properties.category
+        /// </param>
+        /// <param name="amount">
+        /// The total amount of cost to track with the budget
+        /// Serialized Name: Budget.properties.amount
+        /// </param>
+        /// <param name="timeGrain">
+        /// The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers
+        /// Serialized Name: Budget.properties.timeGrain
+        /// </param>
+        /// <param name="timePeriod">
+        /// Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date.
+        /// Serialized Name: Budget.properties.timePeriod
+        /// </param>
+        /// <param name="filter">
+        /// May be used to filter budgets by user-specified dimensions and/or tags.
+        /// Serialized Name: Budget.properties.filter
+        /// </param>
+        /// <param name="currentSpend">
+        /// The current amount of cost which is being tracked for a budget.
+        /// Serialized Name: Budget.properties.currentSpend
+        /// </param>
+        /// <param name="notifications">
+        /// Dictionary of notifications associated with the budget. Budget can have up to five notifications.
+        /// Serialized Name: Budget.properties.notifications
+        /// </param>
+        /// <param name="forecastSpend">
+        /// The forecasted cost which is being tracked for a budget.
+        /// Serialized Name: Budget.properties.forecastSpend
+        /// </param>
+        /// <param name="etag">
+        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
+        /// Serialized Name: ProxyResource.eTag
+        /// </param>
         internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Category = category;
@@ -49,23 +80,50 @@ namespace Azure.ResourceManager.Consumption
             ETag = etag;
         }
 
-        /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
+        /// <summary>
+        /// The category of the budget, whether the budget tracks cost or usage.
+        /// Serialized Name: Budget.properties.category
+        /// </summary>
         public BudgetCategory? Category { get; set; }
-        /// <summary> The total amount of cost to track with the budget. </summary>
+        /// <summary>
+        /// The total amount of cost to track with the budget
+        /// Serialized Name: Budget.properties.amount
+        /// </summary>
         public decimal? Amount { get; set; }
-        /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
+        /// <summary>
+        /// The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers
+        /// Serialized Name: Budget.properties.timeGrain
+        /// </summary>
         public BudgetTimeGrainType? TimeGrain { get; set; }
-        /// <summary> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </summary>
+        /// <summary>
+        /// Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date.
+        /// Serialized Name: Budget.properties.timePeriod
+        /// </summary>
         public BudgetTimePeriod TimePeriod { get; set; }
-        /// <summary> May be used to filter budgets by user-specified dimensions and/or tags. </summary>
+        /// <summary>
+        /// May be used to filter budgets by user-specified dimensions and/or tags.
+        /// Serialized Name: Budget.properties.filter
+        /// </summary>
         public ConsumptionBudgetFilter Filter { get; set; }
-        /// <summary> The current amount of cost which is being tracked for a budget. </summary>
+        /// <summary>
+        /// The current amount of cost which is being tracked for a budget.
+        /// Serialized Name: Budget.properties.currentSpend
+        /// </summary>
         public BudgetCurrentSpend CurrentSpend { get; }
-        /// <summary> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </summary>
+        /// <summary>
+        /// Dictionary of notifications associated with the budget. Budget can have up to five notifications.
+        /// Serialized Name: Budget.properties.notifications
+        /// </summary>
         public IDictionary<string, BudgetAssociatedNotification> Notifications { get; }
-        /// <summary> The forecasted cost which is being tracked for a budget. </summary>
+        /// <summary>
+        /// The forecasted cost which is being tracked for a budget.
+        /// Serialized Name: Budget.properties.forecastSpend
+        /// </summary>
         public BudgetForecastSpend ForecastSpend { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        /// <summary>
+        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
+        /// Serialized Name: ProxyResource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

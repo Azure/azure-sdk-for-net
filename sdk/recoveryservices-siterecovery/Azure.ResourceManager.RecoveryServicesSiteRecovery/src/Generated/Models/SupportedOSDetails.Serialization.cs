@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SupportedOSDetails DeserializeSupportedOSDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> osName = default;
             Optional<string> osType = default;
             Optional<IReadOnlyList<OSVersionWrapper>> osVersions = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OSVersionWrapper> array = new List<OSVersionWrapper>();

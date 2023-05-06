@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         public static FactoryDayOfWeek ToFactoryDayOfWeek(this string value)
         {
-            if (string.Equals(value, "Sunday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Sunday;
-            if (string.Equals(value, "Monday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Monday;
-            if (string.Equals(value, "Tuesday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Tuesday;
-            if (string.Equals(value, "Wednesday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Wednesday;
-            if (string.Equals(value, "Thursday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Thursday;
-            if (string.Equals(value, "Friday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Friday;
-            if (string.Equals(value, "Saturday", StringComparison.InvariantCultureIgnoreCase)) return FactoryDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return FactoryDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return FactoryDayOfWeek.Monday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return FactoryDayOfWeek.Tuesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return FactoryDayOfWeek.Wednesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return FactoryDayOfWeek.Thursday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return FactoryDayOfWeek.Friday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return FactoryDayOfWeek.Saturday;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FactoryDayOfWeek value.");
         }
     }

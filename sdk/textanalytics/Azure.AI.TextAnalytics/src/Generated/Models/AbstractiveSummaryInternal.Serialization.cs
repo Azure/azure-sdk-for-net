@@ -33,6 +33,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryInternal DeserializeAbstractiveSummaryInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             Optional<IList<SummaryContextInternal>> contexts = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +50,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SummaryContextInternal> array = new List<SummaryContextInternal>();

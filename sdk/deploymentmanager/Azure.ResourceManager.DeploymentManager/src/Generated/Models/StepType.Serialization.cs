@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         public static StepType ToStepType(this string value)
         {
-            if (string.Equals(value, "Wait", StringComparison.InvariantCultureIgnoreCase)) return StepType.Wait;
-            if (string.Equals(value, "HealthCheck", StringComparison.InvariantCultureIgnoreCase)) return StepType.HealthCheck;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wait")) return StepType.Wait;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HealthCheck")) return StepType.HealthCheck;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StepType value.");
         }
     }

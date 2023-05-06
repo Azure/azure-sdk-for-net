@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceShareSynchronizationSettingKind kind = default;
             Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
             Optional<DateTimeOffset> synchronizationTime = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recurrenceInterval = new DataShareSynchronizationRecurrenceInterval(property0.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             synchronizationTime = property0.Value.GetDateTimeOffset("O");

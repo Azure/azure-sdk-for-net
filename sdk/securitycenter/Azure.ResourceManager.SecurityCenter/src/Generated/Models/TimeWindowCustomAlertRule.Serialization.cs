@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static TimeWindowCustomAlertRule DeserializeTimeWindowCustomAlertRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("ruleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

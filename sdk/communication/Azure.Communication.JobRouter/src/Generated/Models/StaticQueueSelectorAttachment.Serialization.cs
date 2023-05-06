@@ -24,6 +24,10 @@ namespace Azure.Communication.JobRouter
 
         internal static StaticQueueSelectorAttachment DeserializeStaticQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             QueueSelector labelSelector = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

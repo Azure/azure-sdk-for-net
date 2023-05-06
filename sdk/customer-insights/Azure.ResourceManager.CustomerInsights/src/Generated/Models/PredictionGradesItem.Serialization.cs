@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionGradesItem DeserializePredictionGradesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gradeName = default;
             Optional<int> minScoreThreshold = default;
             Optional<int> maxScoreThreshold = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minScoreThreshold = property.Value.GetInt32();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxScoreThreshold = property.Value.GetInt32();

@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("activeActive"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
+            if (Optional.IsDefined(DisableIPSecReplayProtection))
+            {
+                writer.WritePropertyName("disableIPSecReplayProtection"u8);
+                writer.WriteBooleanValue(DisableIPSecReplayProtection.Value);
+            }
             if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite"u8);
@@ -102,6 +107,16 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("vpnClientConfiguration"u8);
                 writer.WriteObjectValue(VpnClientConfiguration);
+            }
+            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
+            {
+                writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualNetworkGatewayPolicyGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
@@ -138,12 +153,26 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
                 writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
             }
+            if (Optional.IsDefined(AllowVirtualWanTraffic))
+            {
+                writer.WritePropertyName("allowVirtualWanTraffic"u8);
+                writer.WriteBooleanValue(AllowVirtualWanTraffic.Value);
+            }
+            if (Optional.IsDefined(AllowRemoteVnetTraffic))
+            {
+                writer.WritePropertyName("allowRemoteVnetTraffic"u8);
+                writer.WriteBooleanValue(AllowRemoteVnetTraffic.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -158,9 +187,11 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableBgp = default;
             Optional<bool> enablePrivateIPAddress = default;
             Optional<bool> activeActive = default;
+            Optional<bool> disableIPSecReplayProtection = default;
             Optional<WritableSubResource> gatewayDefaultSite = default;
             Optional<VirtualNetworkGatewaySku> sku = default;
             Optional<VpnClientConfiguration> vpnClientConfiguration = default;
+            Optional<IList<VirtualNetworkGatewayPolicyGroup>> virtualNetworkGatewayPolicyGroups = default;
             Optional<BgpSettings> bgpSettings = default;
             Optional<AddressSpace> customRoutes = default;
             Optional<Guid> resourceGuid = default;
@@ -170,13 +201,14 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> vNetExtendedLocationResourceId = default;
             Optional<IList<VirtualNetworkGatewayNatRuleData>> natRules = default;
             Optional<bool> enableBgpRouteTranslationForNat = default;
+            Optional<bool> allowVirtualWanTraffic = default;
+            Optional<bool> allowRemoteVnetTraffic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
@@ -186,7 +218,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -196,7 +227,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -211,7 +241,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -221,7 +250,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -231,7 +259,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -255,7 +282,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
@@ -270,7 +296,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gatewayType = new VirtualNetworkGatewayType(property0.Value.GetString());
@@ -280,7 +305,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnType = new VpnType(property0.Value.GetString());
@@ -290,7 +314,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnGatewayGeneration = new VpnGatewayGeneration(property0.Value.GetString());
@@ -300,7 +323,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBgp = property0.Value.GetBoolean();
@@ -310,7 +332,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePrivateIPAddress = property0.Value.GetBoolean();
@@ -320,17 +341,24 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             activeActive = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("disableIPSecReplayProtection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableIPSecReplayProtection = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("gatewayDefaultSite"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -340,7 +368,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value);
@@ -350,17 +377,29 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VirtualNetworkGatewayPolicyGroup> array = new List<VirtualNetworkGatewayPolicyGroup>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item));
+                            }
+                            virtualNetworkGatewayPolicyGroups = array;
                             continue;
                         }
                         if (property0.NameEquals("bgpSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
@@ -370,7 +409,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -380,7 +418,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceGuid = property0.Value.GetGuid();
@@ -390,7 +427,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -400,7 +436,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableDnsForwarding = property0.Value.GetBoolean();
@@ -415,7 +450,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vNetExtendedLocationResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -425,7 +459,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualNetworkGatewayNatRuleData> array = new List<VirtualNetworkGatewayNatRuleData>();
@@ -440,17 +473,34 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBgpRouteTranslationForNat = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowVirtualWanTraffic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowVirtualWanTraffic = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowRemoteVnetTraffic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowRemoteVnetTraffic = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat));
+            return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), Optional.ToNullable(disableIPSecReplayProtection), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(allowVirtualWanTraffic), Optional.ToNullable(allowRemoteVnetTraffic));
         }
     }
 }

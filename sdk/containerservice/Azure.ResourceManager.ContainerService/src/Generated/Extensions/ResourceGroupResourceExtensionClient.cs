@@ -44,5 +44,19 @@ namespace Azure.ResourceManager.ContainerService
         {
             return GetCachedClient(Client => new AgentPoolSnapshotCollection(Client, Id));
         }
+
+        /// <summary> Gets a collection of ManagedClusterSnapshotResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedClusterSnapshotResources and their operations over a ManagedClusterSnapshotResource. </returns>
+        public virtual ManagedClusterSnapshotCollection GetManagedClusterSnapshots()
+        {
+            return GetCachedClient(Client => new ManagedClusterSnapshotCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
+        public virtual ContainerServiceFleetCollection GetContainerServiceFleets()
+        {
+            return GetCachedClient(Client => new ContainerServiceFleetCollection(Client, Id));
+        }
     }
 }

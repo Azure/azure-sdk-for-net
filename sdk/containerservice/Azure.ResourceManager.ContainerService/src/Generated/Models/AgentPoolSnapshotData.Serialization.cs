@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static AgentPoolSnapshotData DeserializeAgentPoolSnapshotData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -104,7 +107,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -123,7 +125,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
@@ -133,7 +134,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             snapshotType = new SnapshotType(property0.Value.GetString());
@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = new ContainerServiceOSType(property0.Value.GetString());
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osSku = new ContainerServiceOSSku(property0.Value.GetString());
@@ -178,7 +176,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableFIPS = property0.Value.GetBoolean();

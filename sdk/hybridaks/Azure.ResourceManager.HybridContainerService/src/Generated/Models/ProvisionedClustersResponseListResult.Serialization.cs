@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ProvisionedClustersResponseListResult DeserializeProvisionedClustersResponseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProvisionedClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProvisionedClusterData> array = new List<ProvisionedClusterData>();

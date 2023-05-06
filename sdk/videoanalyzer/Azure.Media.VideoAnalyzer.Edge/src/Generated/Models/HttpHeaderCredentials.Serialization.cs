@@ -26,6 +26,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static HttpHeaderCredentials DeserializeHttpHeaderCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string headerName = default;
             string headerValue = default;
             string type = default;

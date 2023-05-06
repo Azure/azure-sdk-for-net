@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing the SecurityInsightsThreatIntelligenceIndicatorBase data model.
+    /// Threat intelligence information object.
     /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
     /// </summary>

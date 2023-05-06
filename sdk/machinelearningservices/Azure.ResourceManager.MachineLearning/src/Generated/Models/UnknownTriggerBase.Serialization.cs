@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endTime = default;
             Optional<string> startTime = default;
             Optional<string> timeZone = default;

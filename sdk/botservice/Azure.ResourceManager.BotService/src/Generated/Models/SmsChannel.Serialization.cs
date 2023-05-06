@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SmsChannel DeserializeSmsChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmsChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SmsChannelProperties.DeserializeSmsChannelProperties(property.Value);
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
             Optional<Uri> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = new ApplicationGatewayCustomErrorStatusCode(property.Value.GetString());
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        customErrorPageUrl = null;
                         continue;
                     }
                     customErrorPageUrl = new Uri(property.Value.GetString());

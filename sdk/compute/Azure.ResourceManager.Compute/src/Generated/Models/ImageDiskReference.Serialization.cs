@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> sharedGalleryImageId = default;
             Optional<string> communityGalleryImageId = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lun = property.Value.GetInt32();

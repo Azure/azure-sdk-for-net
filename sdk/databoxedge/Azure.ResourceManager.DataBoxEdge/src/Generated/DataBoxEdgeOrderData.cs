@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeOrder data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeOrder data model.
+    /// The order details.
+    /// </summary>
     public partial class DataBoxEdgeOrderData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>

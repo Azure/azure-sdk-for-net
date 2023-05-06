@@ -45,11 +45,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// policy. This name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public WebApplicationFirewallCustomRule(int priority, string ruleType, IList<MatchCondition> matchConditions, string action, string name = default(string), string etag = default(string))
+        /// <param name="state">Describes if the custom rule is in enabled or
+        /// disabled state. Defaults to Enabled if not specified. Possible
+        /// values include: 'Disabled', 'Enabled'</param>
+        public WebApplicationFirewallCustomRule(int priority, string ruleType, IList<MatchCondition> matchConditions, string action, string name = default(string), string etag = default(string), string state = default(string))
         {
             Name = name;
             Etag = etag;
             Priority = priority;
+            State = state;
             RuleType = ruleType;
             MatchConditions = matchConditions;
             Action = action;
@@ -81,6 +85,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes if the custom rule is in enabled or disabled
+        /// state. Defaults to Enabled if not specified. Possible values
+        /// include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the rule type. Possible values include: 'MatchRule',

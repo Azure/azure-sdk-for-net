@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             Optional<DateTimeOffset> expiryTimeUtc = default;
             Optional<DateTimeOffset> refreshAfterTimeUtc = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTimeUtc = property.Value.GetDateTimeOffset("U");
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshAfterTimeUtc = property.Value.GetDateTimeOffset("U");

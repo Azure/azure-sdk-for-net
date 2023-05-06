@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountDeploymentModel DeserializeCognitiveServicesAccountDeploymentModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> format = default;
             Optional<string> name = default;
             Optional<string> version = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);

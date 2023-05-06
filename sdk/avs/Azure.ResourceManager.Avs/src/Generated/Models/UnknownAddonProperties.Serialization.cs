@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AddonType addonType = "Unknown";
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AddonProvisioningState(property.Value.GetString());

@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Orbital
 
         internal static OrbitalSpacecraftData DeserializeOrbitalSpacecraftData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -94,7 +98,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -104,7 +107,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -158,7 +159,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
@@ -188,7 +188,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<OrbitalSpacecraftLink> array = new List<OrbitalSpacecraftLink>();

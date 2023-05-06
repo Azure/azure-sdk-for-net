@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlServerSecurityAlertPolicyData DeserializePostgreSqlServerSecurityAlertPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -103,7 +107,6 @@ namespace Azure.ResourceManager.PostgreSql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -122,7 +125,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToPostgreSqlServerSecurityAlertPolicyState();
@@ -132,7 +134,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -147,7 +148,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -162,7 +162,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             emailAccountAdmins = property0.Value.GetBoolean();
@@ -182,7 +181,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retentionDays = property0.Value.GetInt32();

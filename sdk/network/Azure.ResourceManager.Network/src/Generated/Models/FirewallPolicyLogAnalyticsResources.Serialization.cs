@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
             Optional<WritableSubResource> defaultWorkspaceId = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FirewallPolicyLogAnalyticsWorkspace> array = new List<FirewallPolicyLogAnalyticsWorkspace>();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultWorkspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

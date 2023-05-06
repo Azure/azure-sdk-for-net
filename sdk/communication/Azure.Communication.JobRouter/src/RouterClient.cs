@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
@@ -620,7 +618,7 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -646,7 +644,7 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -680,7 +678,7 @@ using Azure.Core.Pipeline;
                         status: options?.Status,
                         queueId: options?.QueueId,
                         channelId: options?.ChannelId,
-                        maxpagesize: maxPageSize,
+                        maxPageSize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -705,7 +703,7 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1128,6 +1126,55 @@ using Azure.Core.Pipeline;
             }
         }
 
+        /// <summary> Unassign a job from a worker. </summary>
+        /// <param name="options"> Options for unassigning a job from a worker. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UnassignJobAsync)}");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.UnassignJobActionAsync(
+                        id: options.JobId,
+                        assignmentId: options.AssignmentId,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Unassign a job from a worker. </summary>
+        /// <param name="options"> Options for unassigning a job from a worker. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<UnassignJobResult> UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UnassignJob)}");
+            scope.Start();
+            try
+            {
+                var response = RestClient.UnassignJobAction(
+                    id: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves existing workers. Pass status and Channel Id to filter workers further. </summary>
         /// <param name="options"> Options for filtering while retrieving router workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1148,7 +1195,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
+                        maxPageSize: maxPageSize,
                         cancellationToken:  cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1175,7 +1222,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1210,7 +1257,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
+                        maxPageSize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1236,7 +1283,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

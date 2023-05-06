@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterestCategory DeserializePointOfInterestCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<int>> childCategoryIds = default;
@@ -25,7 +29,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt32();
@@ -40,7 +43,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -55,7 +57,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

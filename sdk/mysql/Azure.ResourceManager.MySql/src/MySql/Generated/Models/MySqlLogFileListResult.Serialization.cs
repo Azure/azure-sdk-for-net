@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlLogFileListResult DeserializeMySqlLogFileListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlLogFile>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlLogFile> array = new List<MySqlLogFile>();

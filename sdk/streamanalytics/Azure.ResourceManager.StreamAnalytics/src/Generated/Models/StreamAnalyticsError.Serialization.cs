@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsError DeserializeStreamAnalyticsError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();

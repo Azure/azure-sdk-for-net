@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageSku DeserializeStorageSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StorageSkuName name = default;
             Optional<StorageSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToStorageSkuTier();

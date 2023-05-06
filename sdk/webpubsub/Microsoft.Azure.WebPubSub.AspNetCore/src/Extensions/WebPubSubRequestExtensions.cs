@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates);
+                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates, eventRequest.Headers);
                     }
                 case RequestType.User:
                     {

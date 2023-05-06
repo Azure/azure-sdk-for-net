@@ -14,6 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static JobPositionDetails DeserializeJobPositionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string jobId = default;
             int position = default;
             string queueId = default;

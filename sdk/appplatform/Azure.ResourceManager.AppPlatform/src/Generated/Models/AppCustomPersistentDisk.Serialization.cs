@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppCustomPersistentDisk DeserializeAppCustomPersistentDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
             string storageId = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value);

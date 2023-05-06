@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     {
         internal static ConnectivityCollection DeserializeConnectivityCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
             Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedNetworkPeeringPolicyData> array = new List<ManagedNetworkPeeringPolicyData>();

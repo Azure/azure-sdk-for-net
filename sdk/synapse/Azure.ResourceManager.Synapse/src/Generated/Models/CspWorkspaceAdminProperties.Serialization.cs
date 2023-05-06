@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static CspWorkspaceAdminProperties DeserializeCspWorkspaceAdminProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> initialWorkspaceAdminObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialWorkspaceAdminObjectId = property.Value.GetGuid();

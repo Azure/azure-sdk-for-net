@@ -236,7 +236,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -339,7 +339,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
 
         internal TableClient(
@@ -366,7 +366,7 @@ namespace Azure.Data.Tables
             _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
-            Uri = new Uri(_endpoint, Name);
+            Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
@@ -1355,7 +1355,7 @@ namespace Azure.Data.Tables
                 return message.Response.Status switch
                 {
                     404 or 204 => message.Response,
-                    _ => throw _diagnostics.CreateRequestFailedException(message.Response),
+                    _ => throw new RequestFailedException(message.Response),
                 };
             }
             catch (Exception ex)

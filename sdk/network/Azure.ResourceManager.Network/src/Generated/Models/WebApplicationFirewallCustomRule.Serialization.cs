@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("matchConditions"u8);
@@ -40,9 +45,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static WebApplicationFirewallCustomRule DeserializeWebApplicationFirewallCustomRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ETag> etag = default;
             int priority = default;
+            Optional<WebApplicationFirewallState> state = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
             WebApplicationFirewallAction action = default;
@@ -57,7 +67,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -66,6 +75,15 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("priority"u8))
                 {
                     priority = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new WebApplicationFirewallState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ruleType"u8))
@@ -89,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, ruleType, matchConditions, action);
+            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), ruleType, matchConditions, action);
         }
     }
 }

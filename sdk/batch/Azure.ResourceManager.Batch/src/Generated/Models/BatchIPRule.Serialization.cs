@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchIPRule DeserializeBatchIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchIPRuleAction action = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

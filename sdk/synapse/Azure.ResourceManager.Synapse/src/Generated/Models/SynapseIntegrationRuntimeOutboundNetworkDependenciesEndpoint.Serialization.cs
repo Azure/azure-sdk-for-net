@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> array = new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();

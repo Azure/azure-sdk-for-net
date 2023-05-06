@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static JwtClaimChecks DeserializeJwtClaimChecks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedGroups = default;
             Optional<IList<string>> allowedClientApplications = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

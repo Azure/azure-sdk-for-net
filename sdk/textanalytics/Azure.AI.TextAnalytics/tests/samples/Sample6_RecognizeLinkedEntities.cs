@@ -9,19 +9,18 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractEntityLinking()
+        public void RecognizeLinkedEntities()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-
-            #region Snippet:RecognizeLinkedEntities
-            string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                                Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped
-                                down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                                Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                                headquartered in Redmond";
+            #region Snippet:Sample6_RecognizeLinkedEntities
+            string document =
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond.";
 
             try
             {
@@ -43,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"    Length: {match.Length}");
                         Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
                     }
-                    Console.WriteLine("");
+                    Console.WriteLine();
                 }
             }
             catch (RequestFailedException exception)

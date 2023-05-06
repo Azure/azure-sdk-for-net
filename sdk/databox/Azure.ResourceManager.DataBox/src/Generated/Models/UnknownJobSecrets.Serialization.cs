@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());

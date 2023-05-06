@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppAccountList DeserializeNetAppAccountList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetAppAccountData> array = new List<NetAppAccountData>();

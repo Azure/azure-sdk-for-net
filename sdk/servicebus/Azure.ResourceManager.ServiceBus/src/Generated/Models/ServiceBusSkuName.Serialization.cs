@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusSkuName ToServiceBusSkuName(this string value)
         {
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusSkuName.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusSkuName.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusSkuName.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return ServiceBusSkuName.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ServiceBusSkuName.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return ServiceBusSkuName.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusSkuName value.");
         }
     }

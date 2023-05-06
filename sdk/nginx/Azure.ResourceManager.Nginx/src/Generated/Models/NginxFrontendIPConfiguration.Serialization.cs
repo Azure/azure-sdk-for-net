@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxFrontendIPConfiguration DeserializeNginxFrontendIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> publicIPAddresses = default;
             Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NginxPrivateIPAddress> array = new List<NginxPrivateIPAddress>();

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToTargetAzureDBForMySqlTaskOutput DeserializeConnectToTargetAzureDBForMySqlTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> serverVersion = default;
             Optional<IReadOnlyList<string>> databases = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReportableException> array = new List<ReportableException>();

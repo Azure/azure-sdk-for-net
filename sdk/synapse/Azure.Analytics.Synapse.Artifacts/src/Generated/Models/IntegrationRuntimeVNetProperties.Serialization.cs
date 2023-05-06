@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeVNetProperties DeserializeIntegrationRuntimeVNetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vNetId = default;
             Optional<string> subnet = default;
             Optional<IList<string>> publicIPs = default;
@@ -70,7 +74,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

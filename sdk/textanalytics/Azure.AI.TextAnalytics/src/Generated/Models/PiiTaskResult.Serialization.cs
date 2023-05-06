@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PiiEntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())

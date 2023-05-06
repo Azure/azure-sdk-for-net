@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the StreamingPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingPolicy data model.
+    /// A Streaming Policy resource
+    /// </summary>
     public partial class StreamingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of StreamingPolicyData. </summary>

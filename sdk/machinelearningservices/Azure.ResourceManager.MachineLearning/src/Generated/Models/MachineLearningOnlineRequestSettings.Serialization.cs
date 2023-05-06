@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineRequestSettings DeserializeMachineLearningOnlineRequestSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentRequestsPerInstance = default;
             Optional<TimeSpan> maxQueueWait = default;
             Optional<TimeSpan> requestTimeout = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentRequestsPerInstance = property.Value.GetInt32();
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxQueueWait = property.Value.GetTimeSpan("P");
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestTimeout = property.Value.GetTimeSpan("P");

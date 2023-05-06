@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxUpdateClassification> includedPackageClassifications = default;
             Optional<IList<string>> excludedPackageNameMasks = default;
             Optional<IList<string>> includedPackageNameMasks = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includedPackageClassifications = new LinuxUpdateClassification(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

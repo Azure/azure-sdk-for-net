@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     {
         internal static CustomLocationEnabledResourceTypesResult DeserializeCustomLocationEnabledResourceTypesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<CustomLocationEnabledResourceType>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CustomLocationEnabledResourceType> array = new List<CustomLocationEnabledResourceType>();

@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static TextAnswer DeserializeTextAnswer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> answer = default;
             Optional<double> confidenceScore = default;
             Optional<string> id = default;
@@ -31,7 +35,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidenceScore = property.Value.GetDouble();
@@ -46,7 +49,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
@@ -56,7 +58,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offset = property.Value.GetInt32();
@@ -66,7 +67,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     length = property.Value.GetInt32();

@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> relativeUrl = default;
             string type = default;
             Optional<object> folderPath = default;
@@ -58,7 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     relativeUrl = property.Value.GetObject();
@@ -73,7 +76,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folderPath = property.Value.GetObject();
@@ -83,7 +85,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileName = property.Value.GetObject();

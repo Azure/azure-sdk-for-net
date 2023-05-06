@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             string emailAddress = default;

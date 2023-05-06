@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static InfrastructureConfiguration DeserializeInfrastructureConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("deploymentType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

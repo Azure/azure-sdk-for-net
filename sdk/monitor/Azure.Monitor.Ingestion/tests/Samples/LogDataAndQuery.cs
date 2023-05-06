@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
@@ -10,7 +12,7 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
 {
-    public partial class IngestionSamples: SamplesBase<MonitorIngestionTestEnvironment>
+    public partial class IngestionSamples : SamplesBase<MonitorIngestionTestEnvironment>
     {
         public void SetUpClient()
         {

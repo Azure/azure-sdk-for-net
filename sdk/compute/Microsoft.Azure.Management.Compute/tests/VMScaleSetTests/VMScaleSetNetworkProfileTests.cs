@@ -594,6 +594,17 @@ namespace Compute.Tests
                     foreach (VirtualMachine vm in listResponse)
                     {
                         Assert.True(string.Equals(vm.VirtualMachineScaleSet.Id, vmss.Id, StringComparison.OrdinalIgnoreCase));
+                        // Instance View should not be populated when $expand filter is not applied
+                        Assert.Null(vm.InstanceView);
+                    }
+
+                    listResponse = m_CrpClient.VirtualMachines.ListAll(null, vmssFilterMatch, ExpandTypesForListVMs.InstanceView);
+
+                    foreach (VirtualMachine vm in listResponse)
+                    {
+                        Assert.True(string.Equals(vm.VirtualMachineScaleSet.Id, vmss.Id, StringComparison.OrdinalIgnoreCase));
+                        // Instance View should be populated when $expand is specified as part of request
+                        Assert.NotNull(vm.InstanceView);
                     }
 
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);

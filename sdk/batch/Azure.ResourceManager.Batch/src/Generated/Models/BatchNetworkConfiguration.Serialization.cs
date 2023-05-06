@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetId = new ResourceIdentifier(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicVnetAssignmentScope = property.Value.GetString().ToDynamicVNetAssignmentScope();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value);
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value);

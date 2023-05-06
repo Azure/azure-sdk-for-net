@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2023-05-05)
+
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/35000) that after introduced options bag, the operation behaves differently and always put an empty array into the query parameters.
+
+## 1.1.0 (2023-02-16)
+
+### Features Added
+
+- Introduced property bag for the methods with more than 5 parameters.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2023-01-16)
 

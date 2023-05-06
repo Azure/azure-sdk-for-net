@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceSqlServerTaskProperties DeserializeConnectToSourceSqlServerTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectToSourceSqlServerTaskInput> input = default;
             Optional<IReadOnlyList<ConnectToSourceSqlServerTaskOutput>> output = default;
             Optional<string> taskId = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     input = ConnectToSourceSqlServerTaskInput.DeserializeConnectToSourceSqlServerTaskInput(property.Value);
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectToSourceSqlServerTaskOutput> array = new List<ConnectToSourceSqlServerTaskOutput>();
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new TaskState(property.Value.GetString());
@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommandProperties> array = new List<CommandProperties>();
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

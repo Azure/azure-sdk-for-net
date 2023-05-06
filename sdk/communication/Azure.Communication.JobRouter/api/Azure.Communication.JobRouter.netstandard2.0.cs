@@ -25,6 +25,7 @@ namespace Azure.Communication.JobRouter
     {
         public ChannelConfiguration(int capacityCostPerJob) { }
         public int CapacityCostPerJob { get { throw null; } set { } }
+        public int? MaxNumberOfJobs { get { throw null; } set { } }
     }
     public partial class CloseJobOptions
     {
@@ -247,6 +248,12 @@ namespace Azure.Communication.JobRouter
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> WorkerSelectors { get { throw null; } }
     }
+    public partial class Oauth2ClientCredential
+    {
+        public Oauth2ClientCredential() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
+    }
     public partial class PassThroughQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
         public PassThroughQueueSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
@@ -387,6 +394,8 @@ namespace Azure.Communication.JobRouter
         public virtual Azure.AsyncPageable<Azure.Communication.JobRouter.Models.RouterWorkerItem> GetWorkersAsync(Azure.Communication.JobRouter.GetWorkersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.ReclassifyJobResult> ReclassifyJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.ReclassifyJobResult>> ReclassifyJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.JobRouter.Models.UnassignJobResult> UnassignJob(Azure.Communication.JobRouter.UnassignJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.UnassignJobResult>> UnassignJobAsync(Azure.Communication.JobRouter.UnassignJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> UpdateJob(Azure.Communication.JobRouter.UpdateJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> UpdateJobAsync(Azure.Communication.JobRouter.UpdateJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterWorker> UpdateWorker(Azure.Communication.JobRouter.UpdateWorkerOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -443,6 +452,12 @@ namespace Azure.Communication.JobRouter
     {
         public StaticWorkerSelectorAttachment(Azure.Communication.JobRouter.WorkerSelector labelSelector) { }
         public Azure.Communication.JobRouter.WorkerSelector LabelSelector { get { throw null; } set { } }
+    }
+    public partial class UnassignJobOptions
+    {
+        public UnassignJobOptions(string jobId, string assignmentId) { }
+        public string AssignmentId { get { throw null; } }
+        public string JobId { get { throw null; } }
     }
     public partial class UpdateClassificationPolicyOptions
     {
@@ -509,6 +524,13 @@ namespace Azure.Communication.JobRouter
         public WaitTimeExceptionTrigger(System.TimeSpan threshold) { }
         public System.TimeSpan Threshold { get { throw null; } set { } }
     }
+    public partial class WebhookRule : Azure.Communication.JobRouter.RouterRule
+    {
+        public WebhookRule() { }
+        public System.Uri AuthorizationServerUri { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.Oauth2ClientCredential ClientCredential { get { throw null; } set { } }
+        public System.Uri WebhookUri { get { throw null; } set { } }
+    }
     public partial class WeightedAllocationQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
         public WeightedAllocationQueueSelectorAttachment(System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.QueueWeightedAllocation> allocations) { }
@@ -521,7 +543,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class WorkerSelector
     {
-        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value, System.TimeSpan? ttl = default(System.TimeSpan?), bool? expedite = default(bool?)) { }
+        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireTime { get { throw null; } }
         public string Key { get { throw null; } set { } }

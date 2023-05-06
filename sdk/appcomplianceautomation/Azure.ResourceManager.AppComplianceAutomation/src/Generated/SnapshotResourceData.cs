@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    /// <summary> A class representing the SnapshotResource data model. </summary>
+    /// <summary>
+    /// A class representing the SnapshotResource data model.
+    /// A class represent a AppComplianceAutomation snapshot resource.
+    /// </summary>
     public partial class SnapshotResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SnapshotResourceData. </summary>

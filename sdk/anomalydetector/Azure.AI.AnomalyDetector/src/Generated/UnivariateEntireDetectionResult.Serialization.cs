@@ -16,6 +16,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static UnivariateEntireDetectionResult DeserializeUnivariateEntireDetectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int period = default;
             IReadOnlyList<float> expectedValues = default;
             IReadOnlyList<float> upperMargins = default;
@@ -95,7 +99,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();

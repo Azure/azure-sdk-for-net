@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static EnqueueReplicationServerProperties DeserializeEnqueueReplicationServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EnqueueReplicationServerType> ersVersion = default;
             Optional<string> instanceNo = default;
             Optional<string> hostname = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ersVersion = new EnqueueReplicationServerType(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new SapHealthState(property.Value.GetString());

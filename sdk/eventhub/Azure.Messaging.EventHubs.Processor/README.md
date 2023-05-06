@@ -30,7 +30,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
   You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
   
-  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 11.0 is necessary.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed resources in Azure and to receive connection strings for them, you can deploy our sample template by clicking:  
 
@@ -53,6 +53,8 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 #### Obtain an Azure Storage connection string
 
 For the event processor client to make use of Azure Storage blobs for checkpointing, it will need to understand how to connect to a storage account and authorize with it.  The most straightforward method of doing so is to use a connection string, which is generated at the time that the storage account is created.  If you aren't familiar with storage account connection string authorization in Azure, you may wish to follow the step-by-step guide to [configure Azure Storage connection strings](https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string).
+
+Once you have the connection strings, see [Creating an Event Processor Client](#creating-an-event-processor-client) for an example of how to use them to create the processor.
 
 ## Key concepts
 

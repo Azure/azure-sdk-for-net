@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoleAssignmentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.4-preview.1")
+        public RoleAssignmentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.4")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 404:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 404:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -364,7 +364,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -397,7 +397,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -448,7 +448,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -486,7 +486,7 @@ namespace Azure.Security.KeyVault.Administration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

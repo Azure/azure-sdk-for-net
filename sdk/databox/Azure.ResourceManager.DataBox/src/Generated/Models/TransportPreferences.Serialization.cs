@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransportPreferences DeserializeTransportPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TransportShipmentType preferredShipmentType = default;
             foreach (var property in element.EnumerateObject())
             {

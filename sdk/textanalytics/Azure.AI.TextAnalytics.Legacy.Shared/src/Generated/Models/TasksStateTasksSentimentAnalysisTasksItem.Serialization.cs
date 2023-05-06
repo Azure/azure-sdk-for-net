@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     {
         internal static TasksStateTasksSentimentAnalysisTasksItem DeserializeTasksStateTasksSentimentAnalysisTasksItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SentimentResponse> results = default;
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
@@ -26,7 +30,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = SentimentResponse.DeserializeSentimentResponse(property.Value);

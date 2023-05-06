@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary>
         /// The FHIR bundle that was produced for this document according to the specified
-        /// <see cref="WellKnownFhirVersion"/>. For additional information, see
+        /// <see cref="FhirVersion"/>. For additional information, see
         /// <see href="https://www.hl7.org/fhir/overview.html"/>.
         /// </summary>
         [CodeGenMember("FhirBundle")]

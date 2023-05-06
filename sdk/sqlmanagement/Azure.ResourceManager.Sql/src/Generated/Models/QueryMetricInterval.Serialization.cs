@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryMetricInterval DeserializeQueryMetricInterval(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> intervalStartTime = default;
             Optional<QueryTimeGrainType> intervalType = default;
             Optional<long> executionCount = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalType = new QueryTimeGrainType(property.Value.GetString());
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     executionCount = property.Value.GetInt64();
@@ -66,7 +68,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();

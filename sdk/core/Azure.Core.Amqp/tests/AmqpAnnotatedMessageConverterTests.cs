@@ -133,11 +133,12 @@ namespace Azure.Core.Amqp.Tests
             Assert.IsTrue(message.Header.FirstAcquirer);
             Assert.AreEqual(1, message.Header.Priority);
             Assert.AreEqual(TimeSpan.FromSeconds(60), message.Header.TimeToLive);
-            Assert.AreEqual(time.ToUnixTimeMilliseconds(), message.Properties.AbsoluteExpiryTime.Value.ToUnixTimeMilliseconds());
+            // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
+            Assert.That(time, Is.EqualTo(message.Properties.AbsoluteExpiryTime.Value).Within(1).Milliseconds);
             Assert.AreEqual("compress", message.Properties.ContentEncoding);
             Assert.AreEqual("application/json", message.Properties.ContentType);
             Assert.AreEqual("correlationId", message.Properties.CorrelationId.ToString());
-            Assert.AreEqual(time.ToUnixTimeMilliseconds(), message.Properties.CreationTime.Value.ToUnixTimeMilliseconds());
+            Assert.That(time, Is.EqualTo(message.Properties.CreationTime.Value).Within(1).Milliseconds);
             Assert.AreEqual("groupId", message.Properties.GroupId);
             Assert.AreEqual(5, message.Properties.GroupSequence);
             Assert.AreEqual("messageId", message.Properties.MessageId.ToString());

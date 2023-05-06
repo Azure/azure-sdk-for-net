@@ -45,6 +45,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static NGramTokenizer DeserializeNGramTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minGram = default;
             Optional<int> maxGram = default;
             Optional<IList<TokenCharacterKind>> tokenChars = default;
@@ -56,7 +60,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minGram = property.Value.GetInt32();
@@ -66,7 +69,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxGram = property.Value.GetInt32();
@@ -76,7 +78,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TokenCharacterKind> array = new List<TokenCharacterKind>();

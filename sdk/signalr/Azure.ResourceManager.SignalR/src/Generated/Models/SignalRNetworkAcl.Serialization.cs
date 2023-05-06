@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcl DeserializeSignalRNetworkAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRRequestType>> allow = default;
             Optional<IList<SignalRRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRRequestType> array = new List<SignalRRequestType>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRRequestType> array = new List<SignalRRequestType>();

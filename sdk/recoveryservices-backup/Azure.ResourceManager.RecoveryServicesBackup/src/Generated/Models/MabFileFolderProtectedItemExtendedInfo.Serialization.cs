@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabFileFolderProtectedItemExtendedInfo DeserializeMabFileFolderProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastRefreshedAt = default;
             Optional<DateTimeOffset> oldestRecoveryPoint = default;
             Optional<int> recoveryPointCount = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRefreshedAt = property.Value.GetDateTimeOffset("O");
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oldestRecoveryPoint = property.Value.GetDateTimeOffset("O");
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointCount = property.Value.GetInt32();

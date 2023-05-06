@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// </param>
         /// <param name="softwareConfiguration">
         /// The software configuration.
-        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
         /// </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Workloads.Models
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }
         /// <summary>
         /// The software configuration.
-        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
         /// </summary>
-        public SoftwareConfiguration SoftwareConfiguration { get; set; }
+        public SapSoftwareConfiguration SoftwareConfiguration { get; set; }
         /// <summary> The OS and SAP configuration. </summary>
         public OSSapConfiguration OSSapConfiguration { get; set; }
     }

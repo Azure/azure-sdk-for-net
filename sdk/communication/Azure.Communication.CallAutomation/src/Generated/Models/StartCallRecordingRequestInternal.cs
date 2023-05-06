@@ -24,6 +24,7 @@ namespace Azure.Communication.CallAutomation
 
             CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
+            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> The call locator. </summary>
@@ -43,9 +44,14 @@ namespace Azure.Communication.CallAutomation
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
-        /// <summary> Recording storage mode. When set to &apos;BlobStorage&apos;, specify required parameter &apos;ExternalStorageLocation&apos;, to export recording to your own blob container. </summary>
-        public RecordingStorageType? RecordingStorageType { get; set; }
-        /// <summary> The location where recording is stored, when RecordingStorageType is set to &apos;BlobStorage&apos;. </summary>
-        public string ExternalStorageLocation { get; set; }
+        /// <summary>
+        /// The channel affinity of call recording
+        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </summary>
+        public IList<ChannelAffinityInternal> ChannelAffinity { get; }
+        /// <summary> Optional property to specify location where recording will be stored. </summary>
+        public ExternalStorageInternal ExternalStorage { get; set; }
     }
 }

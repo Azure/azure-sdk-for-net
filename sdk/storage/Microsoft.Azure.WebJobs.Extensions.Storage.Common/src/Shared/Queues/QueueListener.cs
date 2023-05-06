@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -25,10 +24,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
-    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>
+    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, ITargetScalerProvider, IScaleMonitorProvider
     {
-        private const int NumberOfSamplesToConsider = 5;
-
         private readonly ITaskSeriesTimer _timer;
         private readonly IDelayStrategy _delayStrategy;
         private readonly QueueClient _queue;
@@ -44,8 +41,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly ILogger<QueueListener> _logger;
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly string _functionId;
-        private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly CancellationTokenSource _shutdownCancellationTokenSource;
+        private readonly Lazy<QueueTargetScaler> _targetScaler;
+        private readonly Lazy<QueueScaleMonitor> _scaleMonitor;
 
         private bool? _queueExists;
         private bool _foundMessageSinceLastDelay;
@@ -57,6 +55,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         // for mock testing only
         internal QueueListener()
         {
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor());
+            _targetScaler = new Lazy<QueueTargetScaler>(() => new QueueTargetScaler());
         }
 
         public QueueListener(QueueClient queue,
@@ -130,10 +130,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture), _functionId);
             _shutdownCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
+
+            _targetScaler = new Lazy<QueueTargetScaler>(
+                    () => new QueueTargetScaler(
+                        _functionId,
+                        queue,
+                        queueOptions,
+                        loggerFactory
+                        ));
+
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor(_functionId, _queue, loggerFactory));
         }
 
         // for testing
@@ -444,185 +453,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
         }
 
-        public ScaleMonitorDescriptor Descriptor
+        public ITargetScaler GetTargetScaler()
         {
-            get
-            {
-                return _scaleMonitorDescriptor;
-            }
+            return _targetScaler.Value;
         }
 
-        async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
+        public IScaleMonitor GetMonitor()
         {
-            return await GetMetricsAsync().ConfigureAwait(false);
-        }
-
-        public async Task<QueueTriggerMetrics> GetMetricsAsync()
-        {
-            int queueLength = 0;
-            TimeSpan queueTime = TimeSpan.Zero;
-
-            try
-            {
-                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-                queueLength = queueProperties.ApproximateMessagesCount;
-
-                if (queueLength > 0)
-                {
-                    PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
-                    {
-                        if (message.InsertedOn.HasValue)
-                        {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
-                        }
-                    }
-                    else
-                    {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
-                        queueLength = 0;
-                    }
-                }
-            }
-            catch (RequestFailedException ex)
-            {
-                if (ex.IsNotFoundQueueNotFound() ||
-                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
-                    ex.IsServerSideError())
-                {
-                    // ignore transient errors, and return default metrics
-                    // E.g. if the queue doesn't exist, we'll return a zero queue length
-                    // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
-                }
-            }
-
-            return new QueueTriggerMetrics
-            {
-                QueueLength = queueLength,
-                QueueTime = queueTime,
-                Timestamp = DateTime.UtcNow
-            };
-        }
-
-        ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
-        {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<QueueTriggerMetrics>().ToArray());
-        }
-
-        public ScaleStatus GetScaleStatus(ScaleStatusContext<QueueTriggerMetrics> context)
-        {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.ToArray());
-        }
-
-        private ScaleStatus GetScaleStatusCore(int workerCount, QueueTriggerMetrics[] metrics)
-        {
-            ScaleStatus status = new ScaleStatus
-            {
-                Vote = ScaleVote.None
-            };
-
-            // verify we have enough samples to make a scale decision.
-            if (metrics == null || (metrics.Length < NumberOfSamplesToConsider))
-            {
-                return status;
-            }
-
-            // Maintain a minimum ratio of 1 worker per 1,000 queue messages.
-            long latestQueueLength = metrics.Last().QueueLength;
-            if (latestQueueLength > workerCount * 1000)
-            {
-                status.Vote = ScaleVote.ScaleOut;
-                _logger.LogInformation($"QueueLength ({latestQueueLength}) > workerCount ({workerCount}) * 1,000");
-                _logger.LogInformation($"Length of queue ({_queue.Name}, {latestQueueLength}) is too high relative to the number of instances ({workerCount}).");
-                return status;
-            }
-
-            // Check to see if the queue has been empty for a while.
-            bool queueIsIdle = metrics.All(p => p.QueueLength == 0);
-            if (queueIsIdle)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue '{_queue.Name}' is idle");
-                return status;
-            }
-
-            // Samples are in chronological order. Check for a continuous increase in time or length.
-            // If detected, this results in an automatic scale out.
-            if (metrics[0].QueueLength > 0)
-            {
-                bool queueLengthIncreasing =
-                IsTrueForLastN(
-                    metrics,
-                    NumberOfSamplesToConsider,
-                    (prev, next) => prev.QueueLength < next.QueueLength);
-                if (queueLengthIncreasing)
-                {
-                    status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Queue length is increasing for '{_queue.Name}'");
-                    return status;
-                }
-            }
-
-            if (metrics[0].QueueTime > TimeSpan.Zero && metrics[0].QueueTime < metrics[NumberOfSamplesToConsider - 1].QueueTime)
-            {
-                bool queueTimeIncreasing =
-                    IsTrueForLastN(
-                        metrics,
-                        NumberOfSamplesToConsider,
-                        (prev, next) => prev.QueueTime <= next.QueueTime);
-                if (queueTimeIncreasing)
-                {
-                    status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Queue time is increasing for '{_queue.Name}'");
-                    return status;
-                }
-            }
-
-            bool queueLengthDecreasing =
-                IsTrueForLastN(
-                    metrics,
-                    NumberOfSamplesToConsider,
-                    (prev, next) => prev.QueueLength > next.QueueLength);
-            if (queueLengthDecreasing)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue length is decreasing for '{_queue.Name}'");
-                return status;
-            }
-
-            bool queueTimeDecreasing = IsTrueForLastN(
-                metrics,
-                NumberOfSamplesToConsider,
-                (prev, next) => prev.QueueTime > next.QueueTime);
-            if (queueTimeDecreasing)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue time is decreasing for '{_queue.Name}'");
-                return status;
-            }
-
-            _logger.LogInformation($"Queue '{_queue.Name}' is steady");
-
-            return status;
-        }
-
-        private static bool IsTrueForLastN(IList<QueueTriggerMetrics> samples, int count, Func<QueueTriggerMetrics, QueueTriggerMetrics, bool> predicate)
-        {
-            Debug.Assert(count > 1, "count must be greater than 1.");
-            Debug.Assert(count <= samples.Count, "count must be less than or equal to the list size.");
-
-            // Walks through the list from left to right starting at len(samples) - count.
-            for (int i = samples.Count - count; i < samples.Count - 1; i++)
-            {
-                if (!predicate(samples[i], samples[i + 1]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return _scaleMonitor.Value;
         }
     }
 }

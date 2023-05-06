@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBPercentileMetric DeserializeCosmosDBPercentileMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeGrain = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -53,7 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new CosmosDBMetricUnitType(property.Value.GetString());
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PercentileMetricValue> array = new List<PercentileMetricValue>();

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static PerformanceLevelCapability DeserializePerformanceLevelCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> value = default;
             Optional<PerformanceLevelUnit> unit = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetDouble();
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new PerformanceLevelUnit(property.Value.GetString());

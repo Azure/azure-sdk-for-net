@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             MonitorScaleCapacity capacity = default;
             IList<AutoscaleRule> rules = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value);

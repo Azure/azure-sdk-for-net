@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SlackChannelProperties DeserializeSlackChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<string> verificationToken = default;
@@ -95,7 +99,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        landingPageUrl = null;
                         continue;
                     }
                     landingPageUrl = new Uri(property.Value.GetString());
@@ -115,7 +118,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registerBeforeOAuthFlow = property.Value.GetBoolean();
@@ -125,7 +127,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

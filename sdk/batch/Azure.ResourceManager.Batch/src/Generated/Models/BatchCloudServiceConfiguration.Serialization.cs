@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchCloudServiceConfiguration DeserializeBatchCloudServiceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string osFamily = default;
             Optional<string> osVersion = default;
             foreach (var property in element.EnumerateObject())

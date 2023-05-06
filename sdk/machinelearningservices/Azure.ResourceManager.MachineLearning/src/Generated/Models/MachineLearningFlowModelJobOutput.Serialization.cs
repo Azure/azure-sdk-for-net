@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningFlowModelJobOutput DeserializeMachineLearningFlowModelJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningOutputDeliveryMode> mode = default;
             Optional<Uri> uri = default;
             Optional<string> description = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new MachineLearningOutputDeliveryMode(property.Value.GetString());

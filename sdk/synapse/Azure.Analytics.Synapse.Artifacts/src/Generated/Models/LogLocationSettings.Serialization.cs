@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedServiceReference linkedServiceName = default;
             Optional<object> path = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = property.Value.GetObject();

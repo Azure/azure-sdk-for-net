@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<SynapseSecureString> catalogAdminPassword = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        catalogServerEndpoint = null;
                         continue;
                     }
                     catalogServerEndpoint = new Uri(property.Value.GetString());
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
@@ -88,7 +90,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogPricingTier = new SynapseIntegrationRuntimeSsisCatalogPricingTier(property.Value.GetString());

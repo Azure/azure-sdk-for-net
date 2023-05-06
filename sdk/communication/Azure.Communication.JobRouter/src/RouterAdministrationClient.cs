@@ -186,8 +186,8 @@ namespace Azure.Communication.JobRouter
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors,
-                    WorkerSelectors = options.WorkerSelectors,
+                    QueueSelectors = options.QueueSelectors ?? new List<QueueSelectorAttachment>(),
+                    WorkerSelectors = options.WorkerSelectors ?? new List<WorkerSelectorAttachment>(),
                     PrioritizationRule = options.PrioritizationRule
                 };
 
@@ -220,8 +220,9 @@ namespace Azure.Communication.JobRouter
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors,
-                    WorkerSelectors = options.WorkerSelectors,
+                    QueueSelectors = options.QueueSelectors ?? new List<QueueSelectorAttachment>(),
+                    WorkerSelectors = options.WorkerSelectors ?? new List<WorkerSelectorAttachment>(),
+                    PrioritizationRule = options.PrioritizationRule
                 };
 
                 return RestClient.UpsertClassificationPolicy(

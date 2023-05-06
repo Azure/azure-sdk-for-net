@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<double> ttlSeconds = default;
@@ -51,7 +55,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttlSeconds = property.Value.GetDouble();

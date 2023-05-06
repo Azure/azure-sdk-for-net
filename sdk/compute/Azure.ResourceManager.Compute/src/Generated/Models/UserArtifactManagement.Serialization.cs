@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactManagement DeserializeUserArtifactManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string install = default;
             string @remove = default;
             Optional<string> update = default;

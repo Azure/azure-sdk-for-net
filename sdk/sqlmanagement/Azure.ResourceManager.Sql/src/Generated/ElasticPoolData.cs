@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ElasticPool data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticPool data model.
+    /// An elastic pool.
+    /// </summary>
     public partial class ElasticPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ElasticPoolData. </summary>

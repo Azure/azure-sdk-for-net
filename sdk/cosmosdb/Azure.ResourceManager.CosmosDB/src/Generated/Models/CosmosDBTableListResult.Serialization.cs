@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBTableListResult DeserializeCosmosDBTableListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBTableData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CosmosDBTableData> array = new List<CosmosDBTableData>();

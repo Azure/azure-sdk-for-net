@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildServiceProperties DeserializeAppPlatformBuildServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kPackVersion = default;
             Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformBuildServiceProvisioningState(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceRequests = AppPlatformBuildServiceResourceRequirements.DeserializeAppPlatformBuildServiceResourceRequirements(property.Value);

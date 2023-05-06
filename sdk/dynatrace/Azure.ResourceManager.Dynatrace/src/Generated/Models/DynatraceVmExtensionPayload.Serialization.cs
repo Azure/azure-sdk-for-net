@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceVmExtensionPayload DeserializeDynatraceVmExtensionPayload(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ingestionKey = default;
             Optional<string> environmentId = default;
             foreach (var property in element.EnumerateObject())

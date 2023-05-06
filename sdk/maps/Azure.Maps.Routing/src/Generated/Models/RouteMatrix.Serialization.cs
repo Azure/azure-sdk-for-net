@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrix DeserializeRouteMatrix(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> statusCode = default;
             Optional<RouteMatrixResultResponse> response = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
@@ -32,7 +35,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     response = RouteMatrixResultResponse.DeserializeRouteMatrixResultResponse(property.Value);

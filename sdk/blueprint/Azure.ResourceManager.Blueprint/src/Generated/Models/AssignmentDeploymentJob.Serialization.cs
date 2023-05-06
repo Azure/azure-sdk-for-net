@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJob DeserializeAssignmentDeploymentJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> action = default;
             Optional<string> jobId = default;
@@ -95,7 +99,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value);
@@ -105,7 +108,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AssignmentDeploymentJobResult> array = new List<AssignmentDeploymentJobResult>();
@@ -120,7 +122,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestUri = null;
                         continue;
                     }
                     requestUri = new Uri(property.Value.GetString());

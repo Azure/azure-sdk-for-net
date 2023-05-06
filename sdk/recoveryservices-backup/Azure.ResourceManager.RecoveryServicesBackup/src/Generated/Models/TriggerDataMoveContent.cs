@@ -19,31 +19,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceRegion"> Source Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>
         /// <param name="correlationId"> Correlation Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="sourceRegion"/> or <paramref name="correlationId"/> is null. </exception>
-        public TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="correlationId"/> is null. </exception>
+        public TriggerDataMoveContent(ResourceIdentifier sourceResourceId, AzureLocation sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             SourceResourceId = sourceResourceId;
             SourceRegion = sourceRegion;
             DataMoveLevel = dataMoveLevel;
             CorrelationId = correlationId;
-            SourceContainerArmIds = new ChangeTrackingList<string>();
+            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> ARM Id of source vault. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
         /// <summary> Source Region. </summary>
-        public string SourceRegion { get; }
+        public AzureLocation SourceRegion { get; }
         /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }
         /// <summary> Correlation Id. </summary>
         public string CorrelationId { get; }
         /// <summary> Source Container ArmIds. </summary>
-        public IList<string> SourceContainerArmIds { get; }
+        public IList<ResourceIdentifier> SourceContainerArmIds { get; }
         /// <summary> Pause GC. </summary>
-        public bool? PauseGC { get; set; }
+        public bool? DoesPauseGC { get; set; }
     }
 }

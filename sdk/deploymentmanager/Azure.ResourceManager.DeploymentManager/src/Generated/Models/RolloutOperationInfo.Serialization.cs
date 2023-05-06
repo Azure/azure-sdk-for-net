@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static RolloutOperationInfo DeserializeRolloutOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retryAttempt = default;
             Optional<bool> skipSucceededOnRetry = default;
             Optional<DateTimeOffset> startTime = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryAttempt = property.Value.GetInt32();
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipSucceededOnRetry = property.Value.GetBoolean();
@@ -47,7 +49,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());

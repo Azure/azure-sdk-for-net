@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -96,7 +100,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -106,7 +109,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -116,7 +118,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -146,7 +147,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -175,7 +175,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BatchProvisioningState(property0.Value.GetString());
@@ -185,7 +184,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             poolAllocationMode = property0.Value.GetString().ToBatchAccountPoolAllocationMode();
@@ -195,7 +193,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value);
@@ -240,7 +237,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoStorage = BatchAccountAutoStorageConfiguration.DeserializeBatchAccountAutoStorageConfiguration(property0.Value);
@@ -250,7 +246,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
@@ -295,7 +290,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dedicatedCoreQuotaPerVmFamilyEnforced = property0.Value.GetBoolean();
@@ -305,7 +299,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             poolQuota = property0.Value.GetInt32();
@@ -315,7 +308,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             activeJobAndJobScheduleQuota = property0.Value.GetInt32();

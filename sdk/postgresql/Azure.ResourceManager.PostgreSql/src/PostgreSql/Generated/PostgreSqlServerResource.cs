@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
         public virtual PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministrator()
         {
-            return new PostgreSqlServerAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/administrators/activeDirectory"));
+            return new PostgreSqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets a collection of PostgreSqlServerSecurityAlertPolicyResources in the PostgreSqlServer. </summary>

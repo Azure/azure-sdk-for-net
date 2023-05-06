@@ -48,11 +48,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="certificateStore">For Windows VMs, specifies the
         /// certificate store on the Virtual Machine to which the certificate
         /// should be added. The specified certificate store is implicitly in
-        /// the LocalMachine account. &lt;br&gt;&lt;br&gt;For Linux VMs, the
-        /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &amp;lt;UppercaseThumbprint&amp;gt;.crt for the
-        /// X509 certificate file and &amp;lt;UppercaseThumbprint&amp;gt;.prv
-        /// for private key. Both of these files are .pem formatted.</param>
+        /// the LocalMachine account. For Linux VMs, the certificate file is
+        /// placed under the /var/lib/waagent directory, with the file name
+        /// &amp;lt;UppercaseThumbprint&amp;gt;.crt for the X509 certificate
+        /// file and &amp;lt;UppercaseThumbprint&amp;gt;.prv for private key.
+        /// Both of these files are .pem formatted.</param>
         public VaultCertificate(string certificateUrl = default(string), string certificateStore = default(string))
         {
             CertificateUrl = certificateUrl;
@@ -90,10 +90,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets for Windows VMs, specifies the certificate store on
         /// the Virtual Machine to which the certificate should be added. The
         /// specified certificate store is implicitly in the LocalMachine
-        /// account. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Linux VMs, the
-        /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.crt
-        /// for the X509 certificate file and
+        /// account. For Linux VMs, the certificate file is placed under the
+        /// /var/lib/waagent directory, with the file name
+        /// &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.crt for the X509
+        /// certificate file and
         /// &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.prv for private key.
         /// Both of these files are .pem formatted.
         /// </summary>

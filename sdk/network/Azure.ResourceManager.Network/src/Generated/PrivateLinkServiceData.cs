@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PrivateLinkService data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateLinkService data model.
+    /// Private link service resource.
+    /// </summary>
     public partial class PrivateLinkServiceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>

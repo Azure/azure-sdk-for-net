@@ -58,6 +58,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static CustomLayout DeserializeCustomLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, LayoutLayer>> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
@@ -70,7 +74,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, LayoutLayer> dictionary = new Dictionary<string, LayoutLayer>();
@@ -100,7 +103,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
@@ -115,7 +117,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

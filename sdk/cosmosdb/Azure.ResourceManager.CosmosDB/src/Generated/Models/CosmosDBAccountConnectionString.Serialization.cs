@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBAccountConnectionString DeserializeCosmosDBAccountConnectionString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

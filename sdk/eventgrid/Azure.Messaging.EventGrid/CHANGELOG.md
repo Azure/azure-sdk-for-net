@@ -1,14 +1,31 @@
 # Release History
 
-## 4.14.0-beta.1 (Unreleased)
+## 4.16.0 (2023-05-09)
 
 ### Features Added
 
-### Breaking Changes
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
 
-### Bugs Fixed
+## 4.15.0 (2023-04-13)
+
+### Features Added
+
+- Added new Storage events, `StorageTaskCompletedEventData` and `StorageTaskQueuedEventData`.
+
+## 4.14.1 (2023-03-13)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 4.14.0 (2023-03-06)
+
+### Features Added
+
+- Added new Communication events, `AcsEmailDeliveryReportReceivedEventData` and `AcsEmailEngagementTrackingReportReceivedEventData`.
 
 ## 4.13.0 (2023-01-19)
 

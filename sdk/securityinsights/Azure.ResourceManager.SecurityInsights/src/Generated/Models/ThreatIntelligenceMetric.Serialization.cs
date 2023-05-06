@@ -15,22 +15,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastUpdatedTimeUtc = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> sourceMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimeUtc"))
+                if (property.NameEquals("lastUpdatedTimeUtc"u8))
                 {
                     lastUpdatedTimeUtc = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatTypeMetrics"))
+                if (property.NameEquals("threatTypeMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
@@ -41,11 +44,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     threatTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("patternTypeMetrics"))
+                if (property.NameEquals("patternTypeMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
@@ -56,11 +58,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     patternTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("sourceMetrics"))
+                if (property.NameEquals("sourceMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
