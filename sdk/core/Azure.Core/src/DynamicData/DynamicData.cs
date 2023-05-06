@@ -9,10 +9,9 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -30,12 +29,12 @@ namespace Azure
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
-        private DynamicDataOptions _options;
+        private JsonSerializerOptions _serializerOptions;
 
-        internal DynamicData(MutableJsonElement element, DynamicDataOptions options = default)
+        internal DynamicData(MutableJsonElement element)
         {
             _element = element;
-            _options = options;
+            _serializerOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         }
 
         internal void WriteTo(Stream stream)
@@ -48,32 +47,25 @@ namespace Azure
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            if (_element.ValueKind == JsonValueKind.Array && name == "Length")
             {
-                return new DynamicData(element, _options);
+                return _element.GetArrayLength();
             }
 
-            if (PascalCaseGetters() && char.IsUpper(name[0]))
+            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            {
+                return new DynamicData(element);
+            }
+
+            if (char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
-                    return new DynamicData(element, _options);
+                    return new DynamicData(element);
                 }
             }
 
             return null;
-        }
-
-        private bool PascalCaseGetters()
-        {
-            return
-                _options.NameMapping == DynamicDataNameMapping.PascalCaseGetters ||
-                _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
-        }
-
-        private bool CamelCaseSetters()
-        {
-            return _options.NameMapping == DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private static string GetAsCamelCase(string value)
@@ -91,9 +83,13 @@ namespace Azure
             switch (index)
             {
                 case string propertyName:
-                    return GetProperty(propertyName);
+                    if (_element.TryGetProperty(propertyName, out MutableJsonElement element))
+                    {
+                        return new DynamicData(element);
+                    }
+                    return null;
                 case int arrayIndex:
-                    return new DynamicData(_element.GetIndexElement(arrayIndex), _options);
+                    return new DynamicData(_element.GetIndexElement(arrayIndex));
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
@@ -103,8 +99,8 @@ namespace Azure
         {
             return _element.ValueKind switch
             {
-                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
-                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject(), _options),
+                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray()),
+                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject()),
                 _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind '{_element.ValueKind}'.  Cannot cast value to IEnumerable."),
             };
         }
@@ -113,12 +109,6 @@ namespace Azure
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (_options.NameMapping == DynamicDataNameMapping.None)
-            {
-                _element = _element.SetProperty(name, value);
-                return null;
-            }
-
             if (!char.IsUpper(name[0]))
             {
                 // Lookup name is camelCase, so set unchanged.
@@ -126,8 +116,7 @@ namespace Azure
                 return null;
             }
 
-            // Other mappings have PascalCase getters, and lookup name is PascalCase.
-            // So, if it exists in either form, we'll set it in that form.
+            // Lookup name is PascalCase, so check for the property as PascalCase then camelCase.
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
                 element.Set(value);
@@ -140,9 +129,8 @@ namespace Azure
                 return null;
             }
 
-            // It's a new property, so set according to the mapping.
-            name = CamelCaseSetters() ? GetAsCamelCase(name) : name;
-            _element = _element.SetProperty(name, value);
+            // It's a new property, so set with a camelCase member name.
+            _element = _element.SetProperty(GetAsCamelCase(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
@@ -153,11 +141,12 @@ namespace Azure
             switch (index)
             {
                 case string propertyName:
-                    return SetProperty(propertyName, value);
+                    _element = _element.SetProperty(propertyName, value);
+                    return null;
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
                     element.Set(value);
-                    return new DynamicData(element, _options);
+                    return new DynamicData(element);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
@@ -170,10 +159,10 @@ namespace Azure
             try
             {
 #if NET6_0_OR_GREATER
-                return JsonSerializer.Deserialize<T>(element, MutableJsonDocument.DefaultJsonSerializerOptions);
+                return JsonSerializer.Deserialize<T>(element, _serializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
-                return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
+                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions);
 #endif
             }
             catch (JsonException e)
@@ -293,7 +282,7 @@ namespace Azure
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
                 return new DynamicData(new MutableJsonDocument(document).RootElement);
             }
 

@@ -311,6 +311,13 @@
       ]
     },
     {
+      "filename": "**/sdk/newrelic/**/*.cs",
+      "words": [
+        "liftr",
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/datalake-analytics/**/*.cs",
       "words": [
         "undeleting"

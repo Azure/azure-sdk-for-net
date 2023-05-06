@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> The status of the email. </summary>
+    /// <summary> The status of the email. Any value other than Delivered is considered failed. </summary>
     public readonly partial struct AcsEmailDeliveryReportStatus : IEquatable<AcsEmailDeliveryReportStatus>
     {
         private readonly string _value;
@@ -22,19 +22,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string FailedValue = "Failed";
+        private const string BouncedValue = "Bounced";
         private const string DeliveredValue = "Delivered";
+        private const string FailedValue = "Failed";
         private const string FilteredSpamValue = "FilteredSpam";
         private const string QuarantinedValue = "Quarantined";
+        private const string SuppressedValue = "Suppressed";
 
-        /// <summary> Failed. </summary>
-        public static AcsEmailDeliveryReportStatus Failed { get; } = new AcsEmailDeliveryReportStatus(FailedValue);
-        /// <summary> Delivered. </summary>
+        /// <summary> Hard bounce detected while sending the email. </summary>
+        public static AcsEmailDeliveryReportStatus Bounced { get; } = new AcsEmailDeliveryReportStatus(BouncedValue);
+        /// <summary> The email was delivered. </summary>
         public static AcsEmailDeliveryReportStatus Delivered { get; } = new AcsEmailDeliveryReportStatus(DeliveredValue);
-        /// <summary> FilteredSpam. </summary>
+        /// <summary> The email failed to be delivered. </summary>
+        public static AcsEmailDeliveryReportStatus Failed { get; } = new AcsEmailDeliveryReportStatus(FailedValue);
+        /// <summary> The message was identified spam and was rejected or blocked (not quarantined). </summary>
         public static AcsEmailDeliveryReportStatus FilteredSpam { get; } = new AcsEmailDeliveryReportStatus(FilteredSpamValue);
-        /// <summary> Quarantined. </summary>
+        /// <summary> The message was quarantined (as spam, bulk mail, or phishing). For more information, see Quarantined email messages in EOP (EXCHANGE ONLINE PROTECTION). </summary>
         public static AcsEmailDeliveryReportStatus Quarantined { get; } = new AcsEmailDeliveryReportStatus(QuarantinedValue);
+        /// <summary> The email was suppressed. </summary>
+        public static AcsEmailDeliveryReportStatus Suppressed { get; } = new AcsEmailDeliveryReportStatus(SuppressedValue);
         /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are the same. </summary>
         public static bool operator ==(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are not the same. </summary>

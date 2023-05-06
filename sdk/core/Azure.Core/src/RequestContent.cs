@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -97,6 +98,12 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         public static implicit operator RequestContent(BinaryData content) => Create(content);
+
+        /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        public static implicit operator RequestContent(DynamicData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.

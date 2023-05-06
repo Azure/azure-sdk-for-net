@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
             string serverCallId,
             IEnumerable<CommunicationIdentifier> targets,
             CallConnectionState callConnectionState,
-            Uri callbackEndpoint,
+            Uri callbackUri,
             CommunicationIdentifier sourceIdentity,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState == default ? CallConnectionState.Unknown : callConnectionState;
-            CallbackEndpoint = callbackEndpoint;
+            CallbackUri = callbackUri;
             SourceIdentity = sourceIdentity;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState.Value;
             }
 
-            CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
+            CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
             SourceIdentity = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The state of the call connection. </summary>
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
-        public Uri CallbackEndpoint { get; }
+        public Uri CallbackUri { get; }
         /// <summary> SubscriptionId for media streaming. </summary>
         public string MediaSubscriptionId { get; }
         /// <summary>

@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
         }
 
-#if !NET461
+#if !NET462
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.

@@ -12,21 +12,21 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="AddParticipantSucceededEventData"/> event will be returned when the participant joined the call successfully.
+        /// <see cref="AddParticipantSucceeded"/> event will be returned when the participant joined the call successfully.
         /// </summary>
-        public AddParticipantSucceededEventData SuccessResult { get; }
+        public AddParticipantSucceeded SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="AddParticipantFailedEventData"/> event will be returned when the participant did not join the call.
+        /// <see cref="AddParticipantFailed"/> event will be returned when the participant did not join the call.
         /// </summary>
-        public AddParticipantFailedEventData FailureResult { get; }
+        public AddParticipantFailed FailureResult { get; }
 
         /// <summary>
         /// <see cref="CommunicationIdentifier"/> Participant that was added or removed from the call.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
-        internal AddParticipantEventResult(bool isSuccess, AddParticipantSucceededEventData successResult, AddParticipantFailedEventData failureResult, CommunicationIdentifier participant)
+        internal AddParticipantEventResult(bool isSuccess, AddParticipantSucceeded successResult, AddParticipantFailed failureResult, CommunicationIdentifier participant)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;

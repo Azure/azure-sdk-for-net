@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     public partial class DynamicData
     {
@@ -17,20 +17,18 @@ namespace Azure
         internal struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
         {
             private MutableJsonElement.ArrayEnumerator _enumerator;
-            private readonly DynamicDataOptions _options;
 
-            internal ArrayEnumerator(MutableJsonElement.ArrayEnumerator enumerator, DynamicDataOptions options)
+            internal ArrayEnumerator(MutableJsonElement.ArrayEnumerator enumerator)
             {
                 _enumerator = enumerator;
-                _options = options;
             }
 
             /// <summary> Returns an enumerator that iterates through a collection.</summary>
             /// <returns> An <see cref="ArrayEnumerator"/> value that can be used to iterate through the array.</returns>
-            public ArrayEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _options);
+            public ArrayEnumerator GetEnumerator() => new(_enumerator.GetEnumerator());
 
             /// <inheritdoc />
-            public DynamicData Current => new(_enumerator.Current, _options);
+            public DynamicData Current => new(_enumerator.Current);
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
