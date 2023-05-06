@@ -367,6 +367,47 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => get(mdoc.RootElement.GetProperty("foo")));
         }
 
+        [Test]
+        public void CanGetGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            string json = $"{{\"foo\" : \"{guid}\"}}";
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetGuid(out Guid g));
+            Assert.AreEqual(guid, g);
+            Assert.AreEqual(guid, mdoc.RootElement.GetProperty("foo").GetGuid());
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetGuid(out g));
+            Assert.AreEqual(fooValue, g);
+            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetGuid());
+
+            // Get from newly added value
+            Guid barValue = Guid.NewGuid();
+            mdoc.RootElement.SetProperty("bar", barValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetGuid(out g));
+            Assert.AreEqual(barValue, g);
+            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetGuid());
+
+            // Can get them as a strings, too
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
+            Assert.AreEqual(fooValue.ToString(), mdoc.RootElement.GetProperty("foo").GetString());
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
+            Assert.AreEqual(barValue.ToString(), mdoc.RootElement.GetProperty("bar").GetString());
+
+            // Doesn't work for non-string change
+            mdoc.RootElement.GetProperty("foo").Set(true);
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").TryGetGuid(out g));
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetGuid());
+        }
+
         #region Helpers
 
         internal static void ValidateToString(string json, MutableJsonElement element)

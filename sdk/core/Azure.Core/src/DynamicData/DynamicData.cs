@@ -208,21 +208,49 @@ namespace Azure.Core.Dynamic
                      _element.ValueKind == JsonValueKind.False) &&
                     _element.GetBoolean() == b,
 
-                double d =>
+                byte b =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.TryGetDouble(out double od) && d == od,
+                    _element.TryGetByte(out byte ob) && b == ob,
 
-                float f =>
+                sbyte s =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.TryGetSingle(out float of) && f == of,
+                    _element.TryGetSByte(out sbyte os) && s == os,
+
+                short s =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetInt16(out short os) && s == os,
+
+                ushort us =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetUInt16(out ushort ous) && us == ous,
+
+                int i =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetInt32(out int oi) && i == oi,
+
+                uint ui =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetUInt32(out uint oui) && ui == oui,
 
                 long l =>
                     _element.ValueKind == JsonValueKind.Number &&
                     _element.TryGetInt64(out long ol) && l == ol,
 
-                int i =>
+                ulong ul =>
                     _element.ValueKind == JsonValueKind.Number &&
-                    _element.TryGetInt32(out int oi) && i == oi,
+                    _element.TryGetUInt64(out ulong oul) && ul == oul,
+
+                float f =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetSingle(out float of) && f == of,
+
+                double d =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetDouble(out double od) && d == od,
+
+                decimal d =>
+                    _element.ValueKind == JsonValueKind.Number &&
+                    _element.TryGetDecimal(out decimal od) && d == od,
 
                 DynamicData data => Equals(data),
 

@@ -953,6 +953,17 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value"></param>
+        public void Set(Guid value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
         public void Set(object value)
         {
             EnsureValid();
@@ -997,6 +1008,9 @@ namespace Azure.Core.Json
                     break;
                 case decimal d:
                     Set(d);
+                    break;
+                case Guid g:
+                    Set(g);
                     break;
                 case MutableJsonElement e:
                     Set(e);

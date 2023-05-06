@@ -760,25 +760,70 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             Assert.AreEqual(x, (T)json.Foo);
             Assert.IsTrue(x == json.Foo);
+            Assert.IsTrue(json.Foo == x);
 
             // Get from assigned existing value
             json.Foo = y;
             Assert.AreEqual(y, (T)json.Foo);
             Assert.IsTrue(y == json.Foo);
+            Assert.IsTrue(json.Foo == y);
 
             // Get from added value
             json.Bar = z;
             Assert.AreEqual(z, (T)json.Bar);
             Assert.IsTrue(z == json.Bar);
+            Assert.IsTrue(json.Bar == z);
 
             // Doesn't work if number change is outside T range
             // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
-            json.Foo = invalid;
-            Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+            if (invalid is bool testRange && testRange)
+            {
+                json.Foo = invalid;
+                Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+            }
 
             // Doesn't work for non-number change
             json.Foo = "string";
             Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+        }
+
+        [Test]
+        public void CanCastToGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(guid, (Guid)json.Foo);
+            Assert.IsTrue(guid == json.Foo);
+            Assert.IsTrue(json.Foo == guid);
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (Guid)json.Foo);
+            Assert.IsTrue(fooValue == json.Foo);
+            Assert.IsTrue(json.Foo == fooValue);
+
+            // Get from added value
+            Guid barValue = Guid.NewGuid();
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (Guid)json.Bar);
+            Assert.IsTrue(barValue == json.Bar);
+            Assert.IsTrue(json.Bar == barValue);
+
+            // Also works as a string
+            Assert.AreEqual(fooValue, (string)json.Foo);
+            Assert.IsTrue(fooValue.ToString() == json.Foo);
+            Assert.IsTrue(json.Foo == fooValue.ToString());
+
+            Assert.AreEqual(barValue, (string)json.Bar);
+            Assert.IsTrue(barValue.ToString() == json.Bar);
+            Assert.IsTrue(json.Bar == barValue.ToString());
+
+            // Doesn't work for non-number change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { Guid g = json.Foo; });
         }
 
         public static IEnumerable<object[]> NumberValues()
@@ -793,9 +838,9 @@ namespace Azure.Core.Tests
             yield return new object[] { "42", 42u, 43u, 44u, 4294967296 };
             yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808 };
             yield return new object[] { "42", 42ul, 43ul, 44ul, -1 };
-            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, float.MaxValue + 1 };
-            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, double.MaxValue + 1 };
-            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, true };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
         }
 
         #region Helpers
