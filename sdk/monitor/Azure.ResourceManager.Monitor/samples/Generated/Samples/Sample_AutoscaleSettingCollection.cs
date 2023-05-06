@@ -138,7 +138,6 @@ new MonitorDayOfWeek("1")
 {
 new AutoscaleNotification()
 {
-Operation = MonitorOperationType.Scale,
 Email = new EmailNotification()
 {
 SendToSubscriptionAdministrator = true,
