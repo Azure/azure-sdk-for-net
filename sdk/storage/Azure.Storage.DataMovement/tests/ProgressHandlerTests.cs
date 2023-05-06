@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
@@ -13,77 +14,156 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class ProgressHandlerTests : DataMovementBlobTestBase
     {
+        private BinaryData _data = BinaryData.FromString("Hello World!");
+        private string[] _testFiles = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
+
         public ProgressHandlerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, default)
         {
         }
 
-        [Test]
-        public async Task ProgressHandler_DownloadDirectory()
+        private async Task PopulateTestContainer(BlobContainerClient container)
         {
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-
-            BinaryData data = BinaryData.FromString("Hello World!");
-
-            await testContainer.Container.UploadBlobAsync("file1", data);
-            await testContainer.Container.UploadBlobAsync("dir1/file2", data);
-            await testContainer.Container.UploadBlobAsync("dir1/file3", data);
-            await testContainer.Container.UploadBlobAsync("dir1/file4", data);
-            await testContainer.Container.UploadBlobAsync("dir2/file5", data);
-
-            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
-            Console.WriteLine(destinationFolder);
-
-            StorageResourceContainer sourceResource =
-                new BlobStorageResourceContainer(testContainer.Container);
-            StorageResourceContainer destinationResource =
-                new LocalDirectoryStorageResourceContainer(destinationFolder);
-
-            TransferManager transferManager = new TransferManager();
-
-            TestProgressHandler progressHandler = new TestProgressHandler();
-            TransferOptions options = new TransferOptions()
+            foreach (string file in _testFiles)
             {
-                ProgressHandler = progressHandler,
+                await container.UploadBlobAsync(file, _data);
+            }
+        }
+
+        private async Task PopulateTestLocalDirectory(string directoryPath)
+        {
+            // Manually follows _testFiles pattern
+            await CreateRandomFileAsync(directoryPath, "file1", size: Constants.KB);
+
+            string subFolder = CreateRandomDirectory(directoryPath, "dir1");
+            await CreateRandomFileAsync(subFolder, "file1", size: Constants.KB);
+            await CreateRandomFileAsync(subFolder, "file2", size: Constants.KB);
+            await CreateRandomFileAsync(subFolder, "file3", size: Constants.KB);
+
+            string subFolder2 = CreateRandomDirectory(directoryPath, "dir2");
+            await CreateRandomFileAsync(subFolder2, "file1", size: Constants.KB);
+        }
+
+        private async Task TransferAndAssertProgress(
+            StorageResourceContainer source,
+            StorageResourceContainer destination,
+            int fileCount,
+            int skippedCount = 0,
+            int failedCount = 0,
+            TransferManagerOptions transferManagerOptions = default,
+            StorageResourceCreateMode createMode = StorageResourceCreateMode.Overwrite)
+        {
+            transferManagerOptions ??= new TransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
-            await transfer.AwaitCompletion();
-            progressHandler.AssertProgress(5);
+            TransferManager transferManager = new TransferManager(transferManagerOptions);
+
+            TestProgressHandler progressHandler = new TestProgressHandler();
+            TransferOptions transferOptions = new TransferOptions()
+            {
+                ProgressHandler = progressHandler,
+                CreateMode = createMode,
+            };
+
+            DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            progressHandler.AssertProgress(fileCount, skippedCount, failedCount);
         }
 
         [Test]
-        public async Task ProgressHandler_DirectoryUpload()
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task ProgressHandler_DownloadDirectory()
         {
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            // Arrange
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
 
-            await CreateRandomFileAsync(testDirectory.DirectoryPath, size: Constants.KB);
-            await CreateRandomFileAsync(testDirectory.DirectoryPath, size: Constants.KB);
-
-            string subFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            await CreateRandomFileAsync(subFolder, size: Constants.KB);
-            await CreateRandomFileAsync(subFolder, size: Constants.KB);
-
-            string subFolder2 = CreateRandomDirectory(testDirectory.DirectoryPath);
-            await CreateRandomFileAsync(subFolder2, size: Constants.KB);
-
-            TransferManager transferManager = new TransferManager();
+            await PopulateTestContainer(source.Container);
 
             StorageResourceContainer sourceResource =
-                new LocalDirectoryStorageResourceContainer(testDirectory.DirectoryPath);
+                new BlobStorageResourceContainer(source.Container);
             StorageResourceContainer destinationResource =
-                new BlobStorageResourceContainer(testContainer.Container);
+                new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
 
-            TestProgressHandler progressHandler = new TestProgressHandler();
-            TransferOptions options = new TransferOptions()
-            {
-                ProgressHandler = progressHandler,
-            };
+            // Act / Assert
+            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+        }
 
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
-            await transfer.AwaitCompletion();
-            progressHandler.AssertProgress(5);
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task ProgressHandler_DirectoryUpload()
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            await PopulateTestLocalDirectory(source.DirectoryPath);
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            // Act / Assert
+            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task ProgressHandler_AsyncCopy()
+        {
+            // Arrange
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            await PopulateTestContainer(source.Container);
+
+            StorageResourceContainer sourceResource =
+                new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
+                destination.Container,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy
+                });
+
+            // Act / Assert
+            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [TestCase(StorageResourceCreateMode.Skip)]
+        [TestCase(StorageResourceCreateMode.Fail)]
+        public async Task ProgressHandler_Conflict(StorageResourceCreateMode createMode)
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            await PopulateTestLocalDirectory(source.DirectoryPath);
+
+            // Create conflicts
+            await destination.Container.UploadBlobAsync(_testFiles[0], _data);
+            await destination.Container.UploadBlobAsync(_testFiles[2], _data);
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            // Act / Assert
+            await TransferAndAssertProgress(
+                sourceResource,
+                destinationResource,
+                fileCount: 5,
+                skippedCount: createMode == StorageResourceCreateMode.Skip ? 2 : 0,
+                failedCount: createMode == StorageResourceCreateMode.Fail ? 2 : 0,
+                createMode: createMode);
         }
     }
 }

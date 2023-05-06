@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Report(StorageTransferProgress progress)
         {
             _updates.Add(progress);
-            string message = $"Event - Queued: {progress.QueuedCount}, InProgress: {progress.InProgressCount}, Completed: {progress.CompletedCount}";
+            string message = $"Event - Queued: {progress.QueuedCount}, InProgress: {progress.InProgressCount}, Completed: {progress.CompletedCount}, Skipped: {progress.SkippedCount}, Failed: {progress.FailedCount}";
             Console.WriteLine(message);
         }
 
@@ -26,6 +26,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(0, last.QueuedCount);
             Assert.AreEqual(0, last.InProgressCount);
             Assert.AreEqual(total - skipped - failed, last.CompletedCount);
+            Assert.AreEqual(skipped, last.SkippedCount);
+            Assert.AreEqual(failed, last.FailedCount);
 
             long completedCount = 0;
             long skippedCount = 0;
