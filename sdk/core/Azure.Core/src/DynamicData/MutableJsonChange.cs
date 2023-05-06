@@ -23,17 +23,6 @@ namespace Azure.Core.Json
 
         private JsonElement? _serializedValue;
 
-        internal Utf8JsonReader GetReader()
-        {
-            if (!ReplacesJsonElement)
-            {
-                // This change doesn't represent a new node, so we shouldn't need a new reader.
-                throw new InvalidOperationException("Unable to get Utf8JsonReader for this change.");
-            }
-
-            return MutableJsonElement.GetReaderForElement(AsJsonElement());
-        }
-
         internal JsonElement AsJsonElement()
         {
             if (Value is JsonElement)

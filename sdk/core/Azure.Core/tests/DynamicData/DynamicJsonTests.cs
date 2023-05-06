@@ -826,6 +826,90 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidCastException>(() => { Guid g = (Guid)json.Foo; });
         }
 
+        [Test]
+        public void CanExplicitCastToDateTime()
+        {
+            DateTime dateTime = DateTime.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTime)json.Foo);
+            Assert.IsTrue(dateTime == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTime fooValue = DateTime.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTime)json.Foo);
+            Assert.IsTrue(fooValue == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == fooValue);
+
+            // Get from added value
+            DateTime barValue = DateTime.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTime)json.Bar);
+            Assert.IsTrue(barValue == (DateTime)json.Bar);
+            Assert.IsTrue((DateTime)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTime g = (DateTime)json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToDateTimeOffset()
+        {
+            DateTimeOffset dateTime = DateTimeOffset.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(dateTime == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(fooValue == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == fooValue);
+
+            // Get from added value
+            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTimeOffset)json.Bar);
+            Assert.IsTrue(barValue == (DateTimeOffset)json.Bar);
+            Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
         public static IEnumerable<object[]> NumberValues()
         {
             // Valid ranges:

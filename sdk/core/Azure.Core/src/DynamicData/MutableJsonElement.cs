@@ -957,7 +957,29 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(DateTime value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(DateTimeOffset value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
         }
 
         /// <summary>
@@ -1007,6 +1029,12 @@ namespace Azure.Core.Json
                     Set(d);
                     break;
                 case decimal d:
+                    Set(d);
+                    break;
+                case DateTime d:
+                    Set(d);
+                    break;
+                case DateTimeOffset d:
                     Set(d);
                     break;
                 case Guid g:

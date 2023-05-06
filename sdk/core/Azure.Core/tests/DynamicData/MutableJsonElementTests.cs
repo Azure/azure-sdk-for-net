@@ -408,6 +408,90 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetGuid());
         }
 
+        [Test]
+        public void CanGetDateTime()
+        {
+            DateTime dateTime = DateTime.Parse("2023-05-07T21:04:45.1657010-07:00");
+            string dateTimeString = FormatDateTime(dateTime);
+            string json = $"{{\"foo\" : \"{dateTimeString}\"}}";
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out DateTime d));
+            Assert.AreEqual(dateTime, d);
+            Assert.AreEqual(dateTime, mdoc.RootElement.GetProperty("foo").GetDateTime());
+
+            // Get from assigned existing value
+            DateTime fooValue = dateTime.AddDays(1);
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out d));
+            Assert.AreEqual(fooValue, d);
+            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetDateTime());
+
+            // Get from newly added value
+            DateTime barValue = dateTime.AddDays(2);
+            mdoc.RootElement.SetProperty("bar", barValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetDateTime(out d));
+            Assert.AreEqual(barValue, d);
+            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetDateTime());
+
+            // Can get them as a strings, too
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
+            Assert.AreEqual(FormatDateTime(fooValue), mdoc.RootElement.GetProperty("foo").GetString());
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
+            Assert.AreEqual(FormatDateTime(barValue), mdoc.RootElement.GetProperty("bar").GetString());
+
+            // Doesn't work for non-string change
+            mdoc.RootElement.GetProperty("foo").Set(true);
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").TryGetDateTime(out d));
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetDateTime());
+        }
+
+        [Test]
+        public void CanGetDateTimeOffset()
+        {
+            DateTimeOffset dateTime = DateTimeOffset.Now;
+            string dateTimeString = FormatDateTimeOffset(dateTime);
+            string json = $"{{\"foo\" : \"{dateTimeString}\"}}";
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out DateTimeOffset d));
+            Assert.AreEqual(dateTime, d);
+            Assert.AreEqual(dateTime, mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+
+            // Get from assigned existing value
+            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out d));
+            Assert.AreEqual(fooValue, d);
+            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+
+            // Get from newly added value
+            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            mdoc.RootElement.SetProperty("bar", barValue);
+
+            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetDateTimeOffset(out d));
+            Assert.AreEqual(barValue, d);
+            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetDateTimeOffset());
+
+            // Can get them as a strings, too
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
+            Assert.AreEqual(FormatDateTimeOffset(fooValue), mdoc.RootElement.GetProperty("foo").GetString());
+            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
+            Assert.AreEqual(FormatDateTimeOffset(barValue), mdoc.RootElement.GetProperty("bar").GetString());
+
+            // Doesn't work for non-string change
+            mdoc.RootElement.GetProperty("foo").Set(true);
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out d));
+            Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+        }
+
         #region Helpers
 
         internal static void ValidateToString(string json, MutableJsonElement element)
@@ -415,6 +499,18 @@ namespace Azure.Core.Tests
             Assert.AreEqual(
                 MutableJsonDocumentTests.RemoveWhiteSpace(json),
                 MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()));
+        }
+
+        internal static string FormatDateTime(DateTime d)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
+            return JsonDocument.Parse(bytes).RootElement.GetString();
+        }
+
+        internal static string FormatDateTimeOffset(DateTimeOffset d)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
+            return JsonDocument.Parse(bytes).RootElement.GetString();
         }
 
         public static IEnumerable<object[]> NumberValues()
