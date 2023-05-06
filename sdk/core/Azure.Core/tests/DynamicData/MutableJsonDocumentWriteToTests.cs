@@ -571,6 +571,31 @@ namespace Azure.Core.Tests
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":{y},\"bar\":{z}}}", mdoc);
         }
 
+        [Test]
+        public void CanWriteGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            string json = $"{{\"foo\" : \"{guid}\"}}";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual($"{guid}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+            Assert.AreEqual($"{fooValue}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooValue}\"}}", mdoc);
+
+            // Get from added value
+            Guid barValue = Guid.NewGuid();
+            mdoc.RootElement.SetProperty("bar", barValue);
+            Assert.AreEqual($"{barValue}", mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooValue}\",\"bar\":\"{barValue}\"}}", mdoc);
+        }
+
         public static IEnumerable<dynamic> TestCases()
         {
             yield return """

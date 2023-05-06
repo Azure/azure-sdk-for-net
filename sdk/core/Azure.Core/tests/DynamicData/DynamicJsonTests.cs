@@ -788,42 +788,42 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanCastToGuid()
+        public void CanExplicitCastToGuid()
         {
             Guid guid = Guid.NewGuid();
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson();
 
             // Get from parsed JSON
             Assert.AreEqual(guid, (Guid)json.Foo);
-            Assert.IsTrue(guid == json.Foo);
-            Assert.IsTrue(json.Foo == guid);
+            Assert.IsTrue(guid == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == guid);
 
             // Get from assigned existing value
             Guid fooValue = Guid.NewGuid();
             json.Foo = fooValue;
             Assert.AreEqual(fooValue, (Guid)json.Foo);
-            Assert.IsTrue(fooValue == json.Foo);
-            Assert.IsTrue(json.Foo == fooValue);
+            Assert.IsTrue(fooValue == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == fooValue);
 
             // Get from added value
             Guid barValue = Guid.NewGuid();
             json.Bar = barValue;
             Assert.AreEqual(barValue, (Guid)json.Bar);
-            Assert.IsTrue(barValue == json.Bar);
-            Assert.IsTrue(json.Bar == barValue);
+            Assert.IsTrue(barValue == (Guid)json.Bar);
+            Assert.IsTrue((Guid)json.Bar == barValue);
 
             // Also works as a string
-            Assert.AreEqual(fooValue, (string)json.Foo);
+            Assert.AreEqual(fooValue.ToString(), (string)json.Foo);
             Assert.IsTrue(fooValue.ToString() == json.Foo);
             Assert.IsTrue(json.Foo == fooValue.ToString());
 
-            Assert.AreEqual(barValue, (string)json.Bar);
+            Assert.AreEqual(barValue.ToString(), (string)json.Bar);
             Assert.IsTrue(barValue.ToString() == json.Bar);
             Assert.IsTrue(json.Bar == barValue.ToString());
 
-            // Doesn't work for non-number change
+            // Doesn't work for non-string change
             json.Foo = "false";
-            Assert.Throws<InvalidCastException>(() => { Guid g = json.Foo; });
+            Assert.Throws<InvalidCastException>(() => { Guid g = (Guid)json.Foo; });
         }
 
         public static IEnumerable<object[]> NumberValues()

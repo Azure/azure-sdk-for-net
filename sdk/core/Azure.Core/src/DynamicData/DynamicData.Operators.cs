@@ -273,7 +273,7 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="DateTime"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator DateTime(DynamicData value)
+        public static explicit operator DateTime(DynamicData value)
         {
             try
             {
@@ -283,13 +283,17 @@ namespace Azure.Core.Dynamic
             {
                 throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value._element), e);
             }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTime), value._element), formatException);
+            }
         }
 
         /// <summary>
         /// Converts the value to a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator DateTimeOffset(DynamicData value)
+        public static explicit operator DateTimeOffset(DynamicData value)
         {
             try
             {
@@ -299,13 +303,17 @@ namespace Azure.Core.Dynamic
             {
                 throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value._element), e);
             }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTimeOffset), value._element), formatException);
+            }
         }
 
         /// <summary>
         /// Converts the value to a <see cref="Guid"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator Guid(DynamicData value)
+        public static explicit operator Guid(DynamicData value)
         {
             try
             {
@@ -314,6 +322,10 @@ namespace Azure.Core.Dynamic
             catch (InvalidOperationException e)
             {
                 throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(Guid), value._element), formatException);
             }
         }
 
