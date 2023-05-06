@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Identity of the Extension resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity of the Extension resource. </param>
         /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             IsSystemExtension = isSystemExtension;
         }
 
-        /// <summary> Identity of the Extension resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity of the Extension resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The plan information. </summary>
         public ArmPlan Plan { get; set; }

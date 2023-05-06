@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.LabServices.Models
             AllowedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Managed Identity Information. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Managed Identity Information. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default lab connection profile. This can be changed on a lab resource and only provides a default profile. </summary>
         public LabConnectionProfile DefaultConnectionProfile { get; set; }
