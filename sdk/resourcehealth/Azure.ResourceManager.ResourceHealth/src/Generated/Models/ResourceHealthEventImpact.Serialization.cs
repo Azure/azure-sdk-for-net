@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             Optional<string> impactedService = default;
-            Optional<IReadOnlyList<ImpactedServiceRegion>> impactedRegions = default;
+            Optional<IReadOnlyList<ResourceHealthEventImpactedServiceRegion>> impactedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedService"u8))
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    List<ImpactedServiceRegion> array = new List<ImpactedServiceRegion>();
+                    List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImpactedServiceRegion.DeserializeImpactedServiceRegion(item));
+                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
                     }
                     impactedRegions = array;
                     continue;

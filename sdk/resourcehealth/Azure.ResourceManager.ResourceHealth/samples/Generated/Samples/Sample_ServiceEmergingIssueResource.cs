@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
 
             // this example assumes you already have this ServiceEmergingIssueResource created on azure
             // for more information of creating ServiceEmergingIssueResource, please refer to the document of ServiceEmergingIssueResource
-            IssueNameContent issueName = IssueNameContent.Default;
+            EmergingIssueNameContent issueName = EmergingIssueNameContent.Default;
             ResourceIdentifier serviceEmergingIssueResourceId = ServiceEmergingIssueResource.CreateResourceIdentifier(issueName);
             ServiceEmergingIssueResource serviceEmergingIssue = client.GetServiceEmergingIssueResource(serviceEmergingIssueResourceId);
 

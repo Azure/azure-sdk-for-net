@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
         internal ResourceHealthAvailabilityStatusProperties()
         {
-            RecommendedActions = new ChangeTrackingList<RecommendedAction>();
+            RecommendedActions = new ChangeTrackingList<ResourceHealthRecommendedAction>();
             ServiceImpactingEvents = new ChangeTrackingList<ServiceImpactingEvent>();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<RecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
+        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
         public ResourceHealthAvailabilityStateRecentlyResolved RecentlyResolved { get; }
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
-        public IReadOnlyList<RecommendedAction> RecommendedActions { get; }
+        public IReadOnlyList<ResourceHealthRecommendedAction> RecommendedActions { get; }
         /// <summary> Lists the service impacting events that may be affecting the health of the resource. </summary>
         public IReadOnlyList<ServiceImpactingEvent> ServiceImpactingEvents { get; }
     }

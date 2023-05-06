@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Object of impacted region. </summary>
-    public partial class ImpactedRegion
+    public partial class EmergingIssueImpactedRegion
     {
-        /// <summary> Initializes a new instance of ImpactedRegion. </summary>
-        internal ImpactedRegion()
+        /// <summary> Initializes a new instance of EmergingIssueImpactedRegion. </summary>
+        internal EmergingIssueImpactedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of ImpactedRegion. </summary>
+        /// <summary> Initializes a new instance of EmergingIssueImpactedRegion. </summary>
         /// <param name="id"> The impacted region id. </param>
         /// <param name="name"> The impacted region name. </param>
-        internal ImpactedRegion(string id, string name)
+        internal EmergingIssueImpactedRegion(string id, string name)
         {
             Id = id;
             Name = name;

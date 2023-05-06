@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ImpactedRegion
+    public partial class EmergingIssueImpactedRegion
     {
-        internal static ImpactedRegion DeserializeImpactedRegion(JsonElement element)
+        internal static EmergingIssueImpactedRegion DeserializeEmergingIssueImpactedRegion(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ImpactedRegion(id.Value, name.Value);
+            return new EmergingIssueImpactedRegion(id.Value, name.Value);
         }
     }
 }

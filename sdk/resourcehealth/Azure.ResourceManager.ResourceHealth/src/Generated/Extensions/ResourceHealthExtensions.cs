@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(this TenantResource tenantResource, IssueNameContent issueName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetServiceEmergingIssues().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
         }
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(this TenantResource tenantResource, IssueNameContent issueName, CancellationToken cancellationToken = default)
+        public static Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetServiceEmergingIssues().Get(issueName, cancellationToken);
         }

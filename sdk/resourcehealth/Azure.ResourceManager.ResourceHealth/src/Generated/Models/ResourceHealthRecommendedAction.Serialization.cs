@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class RecommendedAction
+    public partial class ResourceHealthRecommendedAction
     {
-        internal static RecommendedAction DeserializeRecommendedAction(JsonElement element)
+        internal static ResourceHealthRecommendedAction DeserializeResourceHealthRecommendedAction(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new RecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value);
+            return new ResourceHealthRecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value);
         }
     }
 }

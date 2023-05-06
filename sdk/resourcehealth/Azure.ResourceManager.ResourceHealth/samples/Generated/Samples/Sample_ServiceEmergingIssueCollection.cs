@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             ServiceEmergingIssueCollection collection = tenantResource.GetServiceEmergingIssues();
 
             // invoke the operation
-            IssueNameContent issueName = IssueNameContent.Default;
+            EmergingIssueNameContent issueName = EmergingIssueNameContent.Default;
             ServiceEmergingIssueResource result = await collection.GetAsync(issueName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             ServiceEmergingIssueCollection collection = tenantResource.GetServiceEmergingIssues();
 
             // invoke the operation
-            IssueNameContent issueName = IssueNameContent.Default;
+            EmergingIssueNameContent issueName = EmergingIssueNameContent.Default;
             bool result = await collection.ExistsAsync(issueName);
 
             Console.WriteLine($"Succeeded: {result}");

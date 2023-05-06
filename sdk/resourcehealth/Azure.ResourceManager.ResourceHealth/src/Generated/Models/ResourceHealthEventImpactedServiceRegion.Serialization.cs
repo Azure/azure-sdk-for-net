@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ImpactedServiceRegion
+    public partial class ResourceHealthEventImpactedServiceRegion
     {
-        internal static ImpactedServiceRegion DeserializeImpactedServiceRegion(JsonElement element)
+        internal static ResourceHealthEventImpactedServiceRegion DeserializeResourceHealthEventImpactedServiceRegion(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates));
+            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates));
         }
     }
 }

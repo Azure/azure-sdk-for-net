@@ -31,7 +31,7 @@ rename-mapping:
   LevelValues: ResourceHealthEventInsightLevelValues
   Faq: ResourceHealthEventFaq
   Impact: ResourceHealthEventImpact
-  IssueNameParameter: IssueNameContent
+  IssueNameParameter: EmergingIssueNameContent
   Link: ResourceHealthEventLink
   LinkDisplayText: ResourceHealthEventLinkDisplayText
   LinkTypeValues: ResourceHealthEventLinkTypeValues
@@ -54,6 +54,8 @@ rename-mapping:
   Event.properties.enableMicrosoftSupport: IsMicrosoftSupportEnabled
   Event.properties.enableChatWithUs: IsChatWithUsEnabled
   EventLevelValues: ResourceHealthEventLevelValue
+  ImpactedRegion: EmergingIssueImpactedRegion
+  ImpactedServiceRegion: ResourceHealthEventImpactedServiceRegion
 
 prepend-rp-prefix:
   - AvailabilityStatus
@@ -67,6 +69,7 @@ prepend-rp-prefix:
   - EventSourceValues
   - EventStatusValues
   - EventTypeValues
+  - RecommendedAction
 
 format-by-name-rules:
   'tenantId': 'uuid'

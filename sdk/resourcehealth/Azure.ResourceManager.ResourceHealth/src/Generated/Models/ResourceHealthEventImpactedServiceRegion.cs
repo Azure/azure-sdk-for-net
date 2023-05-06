@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Azure region impacted by the service health event. </summary>
-    public partial class ImpactedServiceRegion
+    public partial class ResourceHealthEventImpactedServiceRegion
     {
-        /// <summary> Initializes a new instance of ImpactedServiceRegion. </summary>
-        internal ImpactedServiceRegion()
+        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
+        internal ResourceHealthEventImpactedServiceRegion()
         {
             ImpactedSubscriptions = new ChangeTrackingList<string>();
             ImpactedTenants = new ChangeTrackingList<string>();
             Updates = new ChangeTrackingList<ResourceHealthEventUpdate>();
         }
 
-        /// <summary> Initializes a new instance of ImpactedServiceRegion. </summary>
+        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
         /// <param name="impactedRegion"> Impacted region name. </param>
         /// <param name="status"> Current status of event in the region. </param>
         /// <param name="impactedSubscriptions"> List subscription impacted by the service health event. </param>
         /// <param name="impactedTenants"> List tenant impacted by the service health event. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the last update for the service health event. </param>
         /// <param name="updates"> List of updates for given service health event. </param>
-        internal ImpactedServiceRegion(string impactedRegion, ResourceHealthEventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<ResourceHealthEventUpdate> updates)
+        internal ResourceHealthEventImpactedServiceRegion(string impactedRegion, ResourceHealthEventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<ResourceHealthEventUpdate> updates)
         {
             ImpactedRegion = impactedRegion;
             Status = status;

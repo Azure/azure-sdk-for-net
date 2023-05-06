@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<ReasonChronicityType> reasonChronicity = default;
             Optional<DateTimeOffset> reportedTime = default;
             Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
-            Optional<IReadOnlyList<RecommendedAction>> recommendedActions = default;
+            Optional<IReadOnlyList<ResourceHealthRecommendedAction>> recommendedActions = default;
             Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    List<RecommendedAction> array = new List<RecommendedAction>();
+                    List<ResourceHealthRecommendedAction> array = new List<ResourceHealthRecommendedAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedAction.DeserializeRecommendedAction(item));
+                        array.Add(ResourceHealthRecommendedAction.DeserializeResourceHealthRecommendedAction(item));
                     }
                     recommendedActions = array;
                     continue;

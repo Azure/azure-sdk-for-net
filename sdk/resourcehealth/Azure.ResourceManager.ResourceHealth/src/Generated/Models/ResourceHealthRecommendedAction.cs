@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
-    public partial class RecommendedAction
+    public partial class ResourceHealthRecommendedAction
     {
-        /// <summary> Initializes a new instance of RecommendedAction. </summary>
-        internal RecommendedAction()
+        /// <summary> Initializes a new instance of ResourceHealthRecommendedAction. </summary>
+        internal ResourceHealthRecommendedAction()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedAction. </summary>
+        /// <summary> Initializes a new instance of ResourceHealthRecommendedAction. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
         /// <param name="actionUriComment"> the comment for the Action. </param>
         /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
-        internal RecommendedAction(string action, Uri actionUri, string actionUriComment, string actionUriText)
+        internal ResourceHealthRecommendedAction(string action, Uri actionUri, string actionUriComment, string actionUriText)
         {
             Action = action;
             ActionUri = actionUri;
