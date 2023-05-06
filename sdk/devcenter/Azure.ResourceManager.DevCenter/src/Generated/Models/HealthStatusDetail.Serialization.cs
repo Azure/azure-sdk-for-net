@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class OperationStatusError
+    public partial class HealthStatusDetail
     {
-        internal static OperationStatusError DeserializeOperationStatusError(JsonElement element)
+        internal static HealthStatusDetail DeserializeHealthStatusDetail(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new OperationStatusError(code.Value, message.Value);
+            return new HealthStatusDetail(code.Value, message.Value);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<string> networkConnectionId = default;
             Optional<string> networkConnectionLocation = default;
             Optional<HealthCheckStatus> healthCheckStatus = default;
@@ -80,7 +80,11 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkConnectionId"u8))
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, provisioningState.Value, networkConnectionId.Value, networkConnectionLocation.Value, Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
+            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, networkConnectionLocation.Value, Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
         }
     }
 }

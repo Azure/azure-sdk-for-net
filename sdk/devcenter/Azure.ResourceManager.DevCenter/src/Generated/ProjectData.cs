@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -32,19 +34,27 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         /// <param name="devCenterId"> Resource Id of an associated DevCenter. </param>
         /// <param name="description"> Description of the project. </param>
+        /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devCenterId, string description, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="devCenterUri"> The URI of the Dev Center resource this project is associated with. </param>
+        internal ProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devCenterId, string description, int? maxDevBoxesPerUser, ProvisioningState? provisioningState, Uri devCenterUri) : base(id, name, resourceType, systemData, tags, location)
         {
             DevCenterId = devCenterId;
             Description = description;
+            MaxDevBoxesPerUser = maxDevBoxesPerUser;
             ProvisioningState = provisioningState;
+            DevCenterUri = devCenterUri;
         }
 
         /// <summary> Resource Id of an associated DevCenter. </summary>
         public string DevCenterId { get; set; }
         /// <summary> Description of the project. </summary>
         public string Description { get; set; }
+        /// <summary> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </summary>
+        public int? MaxDevBoxesPerUser { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The URI of the Dev Center resource this project is associated with. </summary>
+        public Uri DevCenterUri { get; }
     }
 }

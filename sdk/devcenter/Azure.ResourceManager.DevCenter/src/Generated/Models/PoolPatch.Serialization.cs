@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
+            if (Optional.IsDefined(StopOnDisconnect))
+            {
+                writer.WritePropertyName("stopOnDisconnect"u8);
+                writer.WriteObjectValue(StopOnDisconnect);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

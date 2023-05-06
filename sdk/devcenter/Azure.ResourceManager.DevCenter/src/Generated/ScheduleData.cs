@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledType? typePropertiesType, ScheduledFrequency? frequency, string time, string timeZone, EnableStatus? state, string provisioningState) : base(id, name, resourceType, systemData)
+        internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledType? typePropertiesType, ScheduledFrequency? frequency, string time, string timeZone, ScheduleEnableStatus? state, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             TypePropertiesType = typePropertiesType;
             Frequency = frequency;
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public EnableStatus? State { get; set; }
+        public ScheduleEnableStatus? State { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

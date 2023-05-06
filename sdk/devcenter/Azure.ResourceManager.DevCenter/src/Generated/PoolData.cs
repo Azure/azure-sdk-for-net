@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         public PoolData(AzureLocation location) : base(location)
         {
+            HealthStatusDetails = new ChangeTrackingList<HealthStatusDetail>();
         }
 
         /// <summary> Initializes a new instance of PoolData. </summary>
@@ -35,13 +36,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
         /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
         /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
+        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="healthStatus"> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </param>
+        /// <param name="healthStatusDetails"> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, LicenseType? licenseType, LocalAdminStatus? localAdministrator, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal PoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, LicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, HealthStatus? healthStatus, IReadOnlyList<HealthStatusDetail> healthStatusDetails, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             DevBoxDefinitionName = devBoxDefinitionName;
             NetworkConnectionName = networkConnectionName;
             LicenseType = licenseType;
             LocalAdministrator = localAdministrator;
+            StopOnDisconnect = stopOnDisconnect;
+            HealthStatus = healthStatus;
+            HealthStatusDetails = healthStatusDetails;
             ProvisioningState = provisioningState;
         }
 
@@ -53,7 +60,13 @@ namespace Azure.ResourceManager.DevCenter
         public LicenseType? LicenseType { get; set; }
         /// <summary> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </summary>
         public LocalAdminStatus? LocalAdministrator { get; set; }
+        /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
+        public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
+        /// <summary> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </summary>
+        public HealthStatus? HealthStatus { get; }
+        /// <summary> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </summary>
+        public IReadOnlyList<HealthStatusDetail> HealthStatusDetails { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -20,21 +20,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Publisher))
-            {
-                writer.WritePropertyName("publisher"u8);
-                writer.WriteStringValue(Publisher);
-            }
-            if (Optional.IsDefined(Offer))
-            {
-                writer.WritePropertyName("offer"u8);
-                writer.WriteStringValue(Offer);
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteStringValue(Sku);
-            }
             writer.WriteEndObject();
         }
 
@@ -46,9 +31,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             Optional<string> id = default;
             Optional<string> exactVersion = default;
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -61,23 +43,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                     exactVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
-                {
-                    publisher = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("offer"u8))
-                {
-                    offer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    sku = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ImageReference(id.Value, exactVersion.Value, publisher.Value, offer.Value, sku.Value);
+            return new ImageReference(id.Value, exactVersion.Value);
         }
     }
 }

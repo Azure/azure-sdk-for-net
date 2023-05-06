@@ -142,6 +142,59 @@ namespace Azure.ResourceManager.DevCenter
             return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of AllowedEnvironmentTypeResources in the Project. </summary>
+        /// <returns> An object representing collection of AllowedEnvironmentTypeResources and their operations over a AllowedEnvironmentTypeResource. </returns>
+        public virtual AllowedEnvironmentTypeCollection GetAllowedEnvironmentTypes()
+        {
+            return GetCachedClient(Client => new AllowedEnvironmentTypeCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an allowed environment type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAllowedEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            return await GetAllowedEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an allowed environment type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AllowedEnvironmentTypeResource> GetAllowedEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            return GetAllowedEnvironmentTypes().Get(environmentTypeName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ProjectEnvironmentTypeResources in the Project. </summary>
         /// <returns> An object representing collection of ProjectEnvironmentTypeResources and their operations over a ProjectEnvironmentTypeResource. </returns>
         public virtual ProjectEnvironmentTypeCollection GetProjectEnvironmentTypes()

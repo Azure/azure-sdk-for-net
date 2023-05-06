@@ -6,50 +6,43 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class OperationStatus
+    public partial class OperationStatus : OperationStatusResult
     {
         /// <summary> Initializes a new instance of OperationStatus. </summary>
-        internal OperationStatus()
+        /// <param name="status"> Operation status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
+        internal OperationStatus(string status) : base(status)
         {
+            Argument.AssertNotNull(status, nameof(status));
         }
 
         /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> Fully qualified ID for the operation status. </param>
-        /// <param name="name"> The operation id name. </param>
-        /// <param name="status"> Provisioning state of the resource. </param>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
-        /// <param name="error"> Operation Error message. </param>
-        internal OperationStatus(string id, string name, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, float? percentComplete, BinaryData properties, OperationStatusError error)
+        internal OperationStatus(string id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, string resourceId, BinaryData properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
-            Id = id;
-            Name = name;
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            PercentComplete = percentComplete;
+            ResourceId = resourceId;
             Properties = properties;
-            Error = error;
         }
 
-        /// <summary> Fully qualified ID for the operation status. </summary>
-        public string Id { get; }
-        /// <summary> The operation id name. </summary>
-        public string Name { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public string Status { get; }
-        /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> The end time of the operation. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> Percent of the operation that is complete. </summary>
-        public float? PercentComplete { get; }
+        /// <summary> The id of the resource. </summary>
+        public string ResourceId { get; }
         /// <summary>
         /// Custom operation properties, populated only for a successful operation.
         /// <para>
@@ -81,7 +74,5 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </para>
         /// </summary>
         public BinaryData Properties { get; }
-        /// <summary> Operation Error message. </summary>
-        public OperationStatusError Error { get; }
     }
 }

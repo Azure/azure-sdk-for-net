@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
         public string DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
-        public EnableStatus? Status { get; set; }
+        public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
         internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment CreatorRoleAssignment { get; set; }
         /// <summary> A map of roles to assign to the environment creator. </summary>
