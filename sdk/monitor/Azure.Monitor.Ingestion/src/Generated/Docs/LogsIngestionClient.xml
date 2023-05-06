@@ -26,13 +26,10 @@ var data = new[] {
     new {}
 };
 
-Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
     <member name="Upload(string,string,RequestContent,string,RequestContext)">
 <example>
@@ -59,13 +56,10 @@ var data = new[] {
     new {}
 };
 
-Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
   </members>
 </doc>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Dynamic;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -31,7 +32,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(DynamicDataOptions.Default);
+                """).ToDynamicFromJson();
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
