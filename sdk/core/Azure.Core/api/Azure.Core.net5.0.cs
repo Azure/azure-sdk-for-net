@@ -788,13 +788,13 @@ namespace Azure.Core.Dynamic
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
+        public static explicit operator System.DateTime (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static explicit operator System.DateTimeOffset (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static explicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator byte (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator System.DateTime (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator System.DateTimeOffset (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator decimal (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator short (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator int (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator long (Azure.Core.Dynamic.DynamicData value) { throw null; }
