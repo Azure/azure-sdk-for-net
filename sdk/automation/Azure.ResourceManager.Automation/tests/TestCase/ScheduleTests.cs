@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         }
 
         [TestCase]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36058")]
         public async Task ScheduleApiTests()
         {
             //1.CreateOrUpdate
