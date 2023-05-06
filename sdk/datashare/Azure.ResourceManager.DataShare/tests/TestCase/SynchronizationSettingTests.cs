@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
     public class SynchronizationSettingTests : DataShareManagementTestBase
     {
         public SynchronizationSettingTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
