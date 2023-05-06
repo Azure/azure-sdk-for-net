@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         /// <summary> Geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> FarmBeats ARM Resource properties. </summary>
         public FarmBeatsUpdateProperties Properties { get; set; }

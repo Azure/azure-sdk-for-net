@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Action when client IP address is matched. </summary>
-        public BatchIPRuleAction Action { get; set; }
+        public BatchIPRuleAction Action { get; }
         /// <summary> IPv4 address, or IPv4 address range in CIDR format. </summary>
         public string Value { get; set; }
     }

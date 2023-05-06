@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = "Microsoft.Batch/batchAccounts";
+            ResourceType = ResourceType.MicrosoftBatchBatchAccounts;
         }
 
         /// <summary> The name to check for availability. </summary>
