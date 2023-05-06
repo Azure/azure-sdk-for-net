@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchIPRule
     {
         public BatchIPRule(string value) { }
-        public Azure.ResourceManager.Batch.Models.BatchIPRuleAction Action { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchIPRuleAction Action { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmContainerConfiguration() { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } }
     }
     public partial class BatchVmContainerRegistry
     {

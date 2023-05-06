@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;

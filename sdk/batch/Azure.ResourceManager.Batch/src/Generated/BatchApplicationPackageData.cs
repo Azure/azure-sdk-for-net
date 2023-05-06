@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchApplicationPackageData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag) : base(id, name, resourceType, systemData)
         {
             State = state;
             Format = format;
