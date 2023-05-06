@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Batch/batchAccounts";
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

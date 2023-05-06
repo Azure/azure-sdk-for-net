@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = Type.MicrosoftStorageStorageAccounts;
+            ResourceType = "Microsoft.Storage/storageAccounts";
         }
 
         /// <summary> The storage account name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
-        public Type ResourceType { get; }
+        public ResourceType ResourceType { get; }
     }
 }

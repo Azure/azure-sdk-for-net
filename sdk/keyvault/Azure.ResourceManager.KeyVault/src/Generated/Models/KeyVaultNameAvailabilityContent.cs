@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = Type.MicrosoftKeyVaultVaults;
+            ResourceType = "Microsoft.KeyVault/vaults";
         }
 
         /// <summary> The vault name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
-        public Type ResourceType { get; }
+        public ResourceType ResourceType { get; }
     }
 }

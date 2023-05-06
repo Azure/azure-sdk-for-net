@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<BatchPrivateEndpointConnectionProvisioningState> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))

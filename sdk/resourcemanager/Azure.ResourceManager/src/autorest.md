@@ -823,6 +823,6 @@ directive:
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
       $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
       $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
-      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-constant'] = true;
       $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```
