@@ -27,13 +27,15 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="id"> Id for completion response. </param>
+        /// <param name="object"> Object for completion response. </param>
         /// <param name="created"> Created time for completion response. </param>
         /// <param name="model"> Model used for completion response. </param>
         /// <param name="choices"> Array of choices returned containing text completions to prompts sent. </param>
         /// <param name="usage"> Usage counts for tokens input using the completions API. </param>
-        internal Completions(string id, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
+        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
         {
             Id = id;
+            Object = @object;
             Created = created;
             Model = model;
             Choices = choices;
