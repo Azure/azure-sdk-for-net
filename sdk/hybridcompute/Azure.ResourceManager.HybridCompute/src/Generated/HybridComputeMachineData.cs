@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Hybrid Compute Machine properties. </param>
         /// <param name="resources"> The list of extensions affiliated to the machine. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
         public MachineProperties Properties { get; set; }
         /// <summary> The list of extensions affiliated to the machine. </summary>
         public IReadOnlyList<HybridComputeMachineExtensionData> Resources { get; }
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

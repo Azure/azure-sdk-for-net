@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Hybrid Compute Machine properties. </summary>
         public MachineUpdateProperties Properties { get; set; }
