@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Standard Metrics + Resource Metrics.
             Assert.Equal(2, metricTelemetryItems.Count);
 
-            var metricTelemetry = metricTelemetryItems.LastOrDefault()!;
+            var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
             var metricData = (MetricsData)metricTelemetry.Data.BaseData;
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.RequestSuccessKey, out var isSuccess));
@@ -107,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Standard Metrics + Resource Metrics.
             Assert.Equal(2, metricTelemetryItems.Count);
 
-            var metricTelemetry = metricTelemetryItems.LastOrDefault()!;
+            var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
             var metricData = (MetricsData)metricTelemetry.Data.BaseData;
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencySuccessKey, out var isSuccess));

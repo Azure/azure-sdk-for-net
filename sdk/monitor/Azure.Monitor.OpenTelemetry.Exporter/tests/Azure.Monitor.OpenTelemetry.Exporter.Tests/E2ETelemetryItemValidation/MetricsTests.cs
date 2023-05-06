@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.LastOrDefault()!;
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.LastOrDefault()!;
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
@@ -169,7 +169,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.LastOrDefault()!;
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
@@ -216,7 +216,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.LastOrDefault()!;
+            var telemetryItem = telemetryItems.Last()!;
 
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
@@ -260,7 +260,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             metricReader.Collect();
             Assert.True(telemetryItems.Count == 2);
-            var telemetryItem = telemetryItems.LastOrDefault()!;
+            var telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem!,
@@ -275,7 +275,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             metricReader.Collect();
             Assert.True(telemetryItems.Count == 2);
-            telemetryItem = telemetryItems.LastOrDefault()!;
+            telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem!);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem!,

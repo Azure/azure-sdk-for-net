@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
@@ -26,6 +27,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? serviceName = null;
             string? serviceNamespace = null;
 
+            if (instrumentationKey != null && resource.Attributes.Count() > 0)
+            {
+                metricsData = new MetricsData(Version);
+            }
+
             foreach (var attribute in resource.Attributes)
             {
                 switch (attribute.Key)
@@ -44,9 +50,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         continue;
                 }
 
-                if (instrumentationKey != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
+                if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
                 {
-                    metricsData = metricsData ?? new MetricsData(Version);
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                     metricsData.Properties.Add(new KeyValuePair<string, string>(attribute.Key, attribute.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
                 }

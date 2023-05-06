@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.LastOrDefault()!.SampleRate);
+            Assert.Equal(100F, telemetryItems.Last()!.SampleRate);
         }
 
         [Fact]

@@ -36,6 +36,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
+        /// <summary>
+        /// This constructor is used only for creating resource metrics with the name "_OTELRESOURCE_".
+        /// </summary>
+        /// <param name="version">Schema version.</param>
         public MetricsData(int version) : base(version)
         {
             IList<MetricDataPoint> metricDataPoints = new List<MetricDataPoint>();
