@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="identity"> The cmk identity for the server. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             MaintenanceWindow = maintenanceWindow;
         }
 
-        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
+        /// <summary> The cmk identity for the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }

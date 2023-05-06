@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
+        /// <summary> The cmk identity for the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }
