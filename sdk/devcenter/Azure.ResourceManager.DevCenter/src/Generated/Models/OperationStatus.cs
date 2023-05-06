@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
-        internal OperationStatus(string id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, string resourceId, BinaryData properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
+        internal OperationStatus(string id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, string resourceId, BinaryData properties) : base(new ResourceIdentifier(id), name, status, percentComplete, startOn, endOn, operations, error)
         {
             ResourceId = resourceId;
             Properties = properties;
