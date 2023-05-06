@@ -31,33 +31,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>InsightAttachment</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)">
 <example>
@@ -89,33 +62,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>InsightAttachment</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetInsightAttachmentAsync(string,string,string,string,string,RequestContext)">
 <example>
@@ -145,33 +91,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>InsightAttachment</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetInsightAttachment(string,string,string,string,string,RequestContext)">
 <example>
@@ -201,33 +120,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>InsightAttachment</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteAsync(string,string,string,string,string,RequestContext)">
 <example>
@@ -329,33 +221,6 @@ await foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResour
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>InsightAttachmentListResponseValue</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetInsightAttachmentsByPartyIdModelIdAndResource(string,string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -397,33 +262,6 @@ foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<p
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>InsightAttachmentListResponseValue</c>:
-<code>{
-  insightId: string, # Required. InsightID for this InsightAttachment.
-  modelId: string, # Optional. ModelID for this InsightAttachment.
-  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot;, # Optional. Associated Resource type for this attachment.
-  resourceId: string, # Optional. Associated Resource id for this attachment.
-  originalFileName: string, # Optional. Original File Name for this attachment.
-  partyId: string, # Optional. PartyId id for this attachment.
-  id: string, # Optional. Unique id.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

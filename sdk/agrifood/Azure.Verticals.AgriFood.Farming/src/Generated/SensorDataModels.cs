@@ -50,15 +50,24 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> [Protocol Method] Create a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorDataModelId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string sensorDataModelId, RequestContent content, RequestContext context = null)
         {
@@ -80,15 +89,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Create a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/>, <paramref name="sensorDataModelId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string sensorDataModelId, RequestContent content, RequestContext context = null)
         {
@@ -110,14 +128,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Gets a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorDataModelAsync(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
@@ -138,14 +165,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Gets a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sensorPartnerId"/> or <paramref name="sensorDataModelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModel(string,string,RequestContext)']/*" />
         public virtual Response GetSensorDataModel(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
         {
@@ -166,7 +202,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -194,7 +239,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a sensor data model entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a sensor data model entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the sensor partner. </param>
         /// <param name="sensorDataModelId"> Id of the sensor data model resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -222,7 +276,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of sensor data model resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of sensor data model resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
@@ -255,7 +318,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorDataModels.GetSensorDataModels", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of sensor data model resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of sensor data model resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>

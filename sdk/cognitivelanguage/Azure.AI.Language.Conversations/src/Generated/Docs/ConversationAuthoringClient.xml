@@ -59,45 +59,9 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
-
-Request Body:
-
-Schema for <c>CreateProjectOptions</c>:
-<code>{
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -159,45 +123,9 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
-
-Request Body:
-
-Schema for <c>CreateProjectOptions</c>:
-<code>{
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -226,29 +154,9 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -277,29 +185,9 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
-
-Response Body:
-
-Schema for <c>ProjectMetadata</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -325,28 +213,9 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -372,28 +241,9 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -432,42 +282,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -506,42 +323,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -580,42 +364,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -654,42 +405,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -728,42 +446,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -802,42 +487,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -877,43 +529,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
-
-Response Body:
-
-Schema for <c>ExportProjectJobState</c>:
-<code>{
-  resultUrl: string, # Optional. The URL to use in order to download the exported project.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -953,43 +571,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
-
-Response Body:
-
-Schema for <c>ExportProjectJobState</c>:
-<code>{
-  resultUrl: string, # Optional. The URL to use in order to download the exported project.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1028,42 +612,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
-
-Response Body:
-
-Schema for <c>ImportProjectJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1102,42 +653,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
-
-Response Body:
-
-Schema for <c>ImportProjectJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1162,23 +680,9 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
-
-Response Body:
-
-Schema for <c>ProjectTrainedModel</c>:
-<code>{
-  label: string, # Required. The trained model label.
-  modelId: string, # Required. The model ID.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
-  lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-  modelExpirationDate: string (date), # Required. The model expiration date.
-  modelTrainingConfigVersion: string, # Required. The model training config version.
-  hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
-}
-</code>
 
 </remarks>
     </member>
@@ -1203,23 +707,9 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
-
-Response Body:
-
-Schema for <c>ProjectTrainedModel</c>:
-<code>{
-  label: string, # Required. The trained model label.
-  modelId: string, # Required. The model ID.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
-  lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-  modelExpirationDate: string (date), # Required. The model expiration date.
-  modelTrainingConfigVersion: string, # Required. The model training config version.
-  hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
-}
-</code>
 
 </remarks>
     </member>
@@ -1235,6 +725,12 @@ Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trai
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
+<remarks>
+
+Additional information can be found in the service REST API documentation:
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-trained-model
+
+</remarks>
     </member>
     <member name="DeleteTrainedModel(string,string,RequestContext)">
 <example>
@@ -1248,6 +744,12 @@ Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLab
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
+<remarks>
+
+Additional information can be found in the service REST API documentation:
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-trained-model
+
+</remarks>
     </member>
     <member name="GetModelEvaluationSummaryAsync(string,string,RequestContext)">
 <example>
@@ -1296,41 +798,9 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
-
-Response Body:
-
-Schema for <c>EvaluationSummary</c>:
-<code>{
-  entitiesEvaluation: {
-    confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted.
-    entities: Dictionary&lt;string, EntityEvaluationSummary&gt;, # Required. Represents the entities evaluation summary.
-    microF1: number, # Required. Represents the micro F1
-    microPrecision: number, # Required. Represents the micro precision
-    microRecall: number, # Required. Represents the micro recall
-    macroF1: number, # Required. Represents the macro F1
-    macroPrecision: number, # Required. Represents the macro precision
-    macroRecall: number, # Required. Represents the macro recall
-  }, # Required. Contains the data related to entities evaluation.
-  intentsEvaluation: {
-    confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted.
-    intents: Dictionary&lt;string, IntentEvaluationSummary&gt;, # Required. Represents the intents evaluation summary.
-    microF1: number, # Required. Represents the micro F1
-    microPrecision: number, # Required. Represents the micro precision
-    microRecall: number, # Required. Represents the micro recall
-    macroF1: number, # Required. Represents the macro F1
-    macroPrecision: number, # Required. Represents the macro precision
-    macroRecall: number, # Required. Represents the macro recall
-  }, # Required. Contains the data related to intents evaluation.
-  evaluationOptions: {
-    kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
-    trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
-    testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
-  }, # Optional. The options that were used while running the evaluation.
-}
-</code>
 
 </remarks>
     </member>
@@ -1381,41 +851,9 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
-
-Response Body:
-
-Schema for <c>EvaluationSummary</c>:
-<code>{
-  entitiesEvaluation: {
-    confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted.
-    entities: Dictionary&lt;string, EntityEvaluationSummary&gt;, # Required. Represents the entities evaluation summary.
-    microF1: number, # Required. Represents the micro F1
-    microPrecision: number, # Required. Represents the micro precision
-    microRecall: number, # Required. Represents the micro recall
-    macroF1: number, # Required. Represents the macro F1
-    macroPrecision: number, # Required. Represents the macro precision
-    macroRecall: number, # Required. Represents the macro recall
-  }, # Required. Contains the data related to entities evaluation.
-  intentsEvaluation: {
-    confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted.
-    intents: Dictionary&lt;string, IntentEvaluationSummary&gt;, # Required. Represents the intents evaluation summary.
-    microF1: number, # Required. Represents the micro F1
-    microPrecision: number, # Required. Represents the micro precision
-    microRecall: number, # Required. Represents the micro recall
-    macroF1: number, # Required. Represents the macro F1
-    macroPrecision: number, # Required. Represents the macro precision
-    macroRecall: number, # Required. Represents the macro recall
-  }, # Required. Contains the data related to intents evaluation.
-  evaluationOptions: {
-    kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
-    trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
-    testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
-  }, # Optional. The options that were used while running the evaluation.
-}
-</code>
 
 </remarks>
     </member>
@@ -1454,42 +892,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
-
-Response Body:
-
-Schema for <c>LoadSnapshotJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1528,42 +933,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
-
-Response Body:
-
-Schema for <c>LoadSnapshotJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1602,42 +974,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentResourcesJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1676,42 +1015,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentResourcesJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1750,42 +1056,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentResourcesJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1824,42 +1097,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
-
-Response Body:
-
-Schema for <c>DeploymentResourcesJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -1910,55 +1150,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2009,55 +1203,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2096,42 +1244,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
-
-Response Body:
-
-Schema for <c>ProjectDeletionJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2170,42 +1285,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
-
-Response Body:
-
-Schema for <c>ProjectDeletionJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2235,29 +1317,9 @@ await foreach (var item in client.GetProjectsAsync(new RequestContext()))
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectsMetadataValue</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -2287,29 +1349,9 @@ foreach (var item in client.GetProjects(new RequestContext()))
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectsMetadataValue</c>:
-<code>{
-  createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
-  lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
-  lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
-  projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-  settings: {
-    confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-  }, # Optional. The project settings.
-  storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-  projectName: string, # Required. The new project name.
-  multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-  description: string, # Optional. The project description.
-  language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -2336,28 +1378,9 @@ await foreach (var item in client.GetDeploymentsAsync("<projectName>", new Reque
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -2384,28 +1407,9 @@ foreach (var item in client.GetDeployments("<projectName>", new RequestContext()
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -2431,23 +1435,9 @@ await foreach (var item in client.GetTrainedModelsAsync("<projectName>", new Req
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
-<code>{
-  label: string, # Required. The trained model label.
-  modelId: string, # Required. The model ID.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
-  lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-  modelExpirationDate: string (date), # Required. The model expiration date.
-  modelTrainingConfigVersion: string, # Required. The model training config version.
-  hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
-}
-</code>
 
 </remarks>
     </member>
@@ -2473,23 +1463,9 @@ foreach (var item in client.GetTrainedModels("<projectName>", new RequestContext
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
-<code>{
-  label: string, # Required. The trained model label.
-  modelId: string, # Required. The model ID.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
-  lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-  modelExpirationDate: string (date), # Required. The model expiration date.
-  modelTrainingConfigVersion: string, # Required. The model training config version.
-  hasSnapshot: boolean, # Optional. The flag to indicate if the trained model has a snapshot ready.
-}
-</code>
 
 </remarks>
     </member>
@@ -2539,32 +1515,9 @@ await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>"
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
-<code>{
-  text: string, # Required. Represents the utterance text.
-  language: string, # Required. Represents the utterance language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-  entitiesResult: {
-    expectedEntities: [
-      {
-        category: string, # Required. Represents the entity category.
-        offset: number, # Required. Represents the entity offset index relative to the original text.
-        length: number, # Required. Represents the entity length.
-      }
-    ], # Required. Represents the expected entity labels.
-    predictedEntities: [UtteranceEntityEvaluationResult], # Required. Represents the predicted entity labels.
-  }, # Required. Represents the entities results for the utterance.
-  intentsResult: {
-    expectedIntent: string, # Required. Represents the utterance&apos;s expected intent.
-    predictedIntent: string, # Required. Represents the utterance&apos;s predicted intent.
-  }, # Required. Represents the intents results for the utterance.
-}
-</code>
 
 </remarks>
     </member>
@@ -2614,32 +1567,9 @@ foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trained
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
-<code>{
-  text: string, # Required. Represents the utterance text.
-  language: string, # Required. Represents the utterance language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-  entitiesResult: {
-    expectedEntities: [
-      {
-        category: string, # Required. Represents the entity category.
-        offset: number, # Required. Represents the entity offset index relative to the original text.
-        length: number, # Required. Represents the entity length.
-      }
-    ], # Required. Represents the expected entity labels.
-    predictedEntities: [UtteranceEntityEvaluationResult], # Required. Represents the predicted entity labels.
-  }, # Required. Represents the entities results for the utterance.
-  intentsResult: {
-    expectedIntent: string, # Required. Represents the utterance&apos;s expected intent.
-    predictedIntent: string, # Required. Represents the utterance&apos;s predicted intent.
-  }, # Required. Represents the intents results for the utterance.
-}
-</code>
 
 </remarks>
     </member>
@@ -2673,18 +1603,9 @@ await foreach (var item in client.GetDeploymentResourcesAsync("<projectName>", 1
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c>:
-<code>{
-  azureResourceId: string, # Required. The resource ID.
-  region: string, # Required. The resource region.
-}
-</code>
 
 </remarks>
     </member>
@@ -2718,18 +1639,9 @@ foreach (var item in client.GetDeploymentResources("<projectName>", 1234, 1234, 
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringAssignedDeploymentResourcesValue</c>:
-<code>{
-  azureResourceId: string, # Required. The resource ID.
-  region: string, # Required. The resource region.
-}
-</code>
 
 </remarks>
     </member>
@@ -2781,55 +1693,9 @@ await foreach (var item in client.GetTrainingJobsAsync("<projectName>", new Requ
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2881,55 +1747,9 @@ foreach (var item in client.GetTrainingJobs("<projectName>", new RequestContext(
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -2967,24 +1787,9 @@ await foreach (var item in client.GetAssignedResourceDeploymentsAsync(1234, 1234
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadataValue</c>:
-<code>{
-  projectName: string, # Required. Represents the project name.
-  deploymentsMetadata: [
-    {
-      deploymentName: string, # Required. Represents the deployment name.
-      lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-      deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-    }
-  ], # Required. Represents the resource region.
-}
-</code>
 
 </remarks>
     </member>
@@ -3022,24 +1827,9 @@ foreach (var item in client.GetAssignedResourceDeployments(1234, 1234, 1234, new
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringAssignedResourceDeploymentsMetadataValue</c>:
-<code>{
-  projectName: string, # Required. Represents the project name.
-  deploymentsMetadata: [
-    {
-      deploymentName: string, # Required. Represents the deployment name.
-      lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-      deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-    }
-  ], # Required. Represents the resource region.
-}
-</code>
 
 </remarks>
     </member>
@@ -3060,18 +1850,9 @@ await foreach (var item in client.GetSupportedLanguagesAsync("<projectKind>", ne
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
-<code>{
-  languageName: string, # Required. The language name.
-  languageCode: string, # Required. The language code. This is BCP-47 representation of a language. For example, &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -3092,18 +1873,9 @@ foreach (var item in client.GetSupportedLanguages("<projectKind>", new RequestCo
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
-<code>{
-  languageName: string, # Required. The language name.
-  languageCode: string, # Required. The language code. This is BCP-47 representation of a language. For example, &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-}
-</code>
 
 </remarks>
     </member>
@@ -3139,19 +1911,9 @@ await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync("<language>"
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
-<code>{
-  category: string, # Required. The prebuilt entity category.
-  description: string, # Required. The description.
-  examples: string, # Required. English examples for the entity.
-}
-</code>
 
 </remarks>
     </member>
@@ -3187,19 +1949,9 @@ foreach (var item in client.GetSupportedPrebuiltEntities("<language>", true, new
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
-<code>{
-  category: string, # Required. The prebuilt entity category.
-  description: string, # Required. The description.
-  examples: string, # Required. English examples for the entity.
-}
-</code>
 
 </remarks>
     </member>
@@ -3220,18 +1972,9 @@ await foreach (var item in client.GetTrainingConfigVersionsAsync("<projectKind>"
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
-<code>{
-  trainingConfigVersion: string, # Required. Represents the version of the config.
-  modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
-}
-</code>
 
 </remarks>
     </member>
@@ -3252,18 +1995,9 @@ foreach (var item in client.GetTrainingConfigVersions("<projectKind>", new Reque
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for one item in the pageable response.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
-
-Response Body:
-
-Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
-<code>{
-  trainingConfigVersion: string, # Required. Represents the version of the config.
-  modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
-}
-</code>
 
 </remarks>
     </member>
@@ -3303,42 +2037,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
-
-Response Body:
-
-Schema for <c>ProjectDeletionJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -3378,42 +2079,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
-
-Response Body:
-
-Schema for <c>ProjectDeletionJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -3466,43 +2134,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
-
-Response Body:
-
-Schema for <c>ExportProjectJobState</c>:
-<code>{
-  resultUrl: string, # Optional. The URL to use in order to download the exported project.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -3555,43 +2189,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
-
-Response Body:
-
-Schema for <c>ExportProjectJobState</c>:
-<code>{
-  resultUrl: string, # Optional. The URL to use in order to download the exported project.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -3733,65 +2333,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
-
-Request Body:
-
-Schema for <c>ExportedProject</c>:
-<code>{
-  projectFileVersion: string, # Required. The version of the exported file.
-  stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
-  metadata: {
-    projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-    settings: {
-      confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-    }, # Optional. The project settings.
-    storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-    projectName: string, # Required. The new project name.
-    multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-    description: string, # Optional. The project description.
-    language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-  }, # Required. Represents the project metadata.
-  assets: {
-    projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of project containing the assets.
-  }, # Optional. Represents the project assets.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ImportProjectJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -3933,65 +2477,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
-
-Request Body:
-
-Schema for <c>ExportedProject</c>:
-<code>{
-  projectFileVersion: string, # Required. The version of the exported file.
-  stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
-  metadata: {
-    projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. Represents the project kind.
-    settings: {
-      confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;. The value of the threshold should be between 0 and 1 inclusive.
-    }, # Optional. The project settings.
-    storageInputContainerName: string, # Optional. The storage container name in case of conversation summarization.
-    projectName: string, # Required. The new project name.
-    multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
-    description: string, # Optional. The project description.
-    language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
-  }, # Required. Represents the project metadata.
-  assets: {
-    projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;, # Required. The type of project containing the assets.
-  }, # Optional. Represents the project assets.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ImportProjectJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4078,70 +2566,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
-
-Request Body:
-
-Schema for <c>TrainingJobOptions</c>:
-<code>{
-  modelLabel: string, # Required. Represents the output model label.
-  trainingConfigVersion: string, # Optional. Represents training config version. By default, &quot;latest&quot; value is used which uses the latest released training config version.
-  trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Required. Represents the mode of the training operation.
-  evaluationOptions: {
-    kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
-    trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
-    testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
-  }, # Optional. Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4228,70 +2655,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
-
-Request Body:
-
-Schema for <c>TrainingJobOptions</c>:
-<code>{
-  modelLabel: string, # Required. Represents the output model label.
-  trainingConfigVersion: string, # Optional. Represents training config version. By default, &quot;latest&quot; value is used which uses the latest released training config version.
-  trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Required. Represents the mode of the training operation.
-  evaluationOptions: {
-    kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
-    trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
-    testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
-  }, # Optional. Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4336,51 +2702,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
-
-Request Body:
-
-Schema for <c>SwapDeploymentsOptions</c>:
-<code>{
-  firstDeploymentName: string, # Required. Represents the first deployment name.
-  secondDeploymentName: string, # Required. Represents the second deployment name.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4425,51 +2749,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
-
-Request Body:
-
-Schema for <c>SwapDeploymentsOptions</c>:
-<code>{
-  firstDeploymentName: string, # Required. Represents the first deployment name.
-  secondDeploymentName: string, # Required. Represents the second deployment name.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4524,38 +2806,9 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
-
-Request Body:
-
-Schema for <c>CreateDeploymentOptions</c>:
-<code>{
-  trainedModelLabel: string, # Required. Represents the trained model label.
-  assignedResourceIds: [string], # Optional. Represents the resource IDs to be assigned to the deployment.
-            If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -4610,38 +2863,9 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request and response payloads.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
-
-Request Body:
-
-Schema for <c>CreateDeploymentOptions</c>:
-<code>{
-  trainedModelLabel: string, # Required. Represents the trained model label.
-  assignedResourceIds: [string], # Optional. Represents the resource IDs to be assigned to the deployment.
-            If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ProjectDeployment</c>:
-<code>{
-  deploymentName: string, # Required. Represents deployment name.
-  modelId: string, # Required. Represents deployment modelId.
-  lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
-  lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-  deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
-  modelTrainingConfigVersion: string, # Required. Represents model training config version.
-  assignedResources: [
-    {
-      resourceId: string, # Required. Represents the Azure resource Id.
-      region: string, # Required. Represents the resource region.
-    }
-  ], # Optional. Represents the metadata of the assigned Azure resources.
-}
-</code>
 
 </remarks>
     </member>
@@ -4681,42 +2905,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4756,42 +2947,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
-
-Response Body:
-
-Schema for <c>DeploymentJobState</c>:
-<code>{
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -4827,19 +2985,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
-
-Request Body:
-
-Schema for <c>DeleteDeploymentOptions</c>:
-<code>{
-  assignedResourceIds: [string], # Optional. Represents the resource IDs to delete the deployment from.
-            If not provided, the deployment will be rolled out from all the resources it is deployed to.
-            If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest.
-}
-</code>
 
 </remarks>
     </member>
@@ -4875,19 +3023,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
-
-Request Body:
-
-Schema for <c>DeleteDeploymentOptions</c>:
-<code>{
-  assignedResourceIds: [string], # Optional. Represents the resource IDs to delete the deployment from.
-            If not provided, the deployment will be rolled out from all the resources it is deployed to.
-            If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest.
-}
-</code>
 
 </remarks>
     </member>
@@ -4904,6 +3042,12 @@ var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectNam
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
+<remarks>
+
+Additional information can be found in the service REST API documentation:
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/load-snapshot
+
+</remarks>
     </member>
     <member name="LoadSnapshot(WaitUntil,string,string,RequestContext)">
 <example>
@@ -4918,6 +3062,12 @@ var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trai
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
+<remarks>
+
+Additional information can be found in the service REST API documentation:
+https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/load-snapshot
+
+</remarks>
     </member>
     <member name="AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -4943,23 +3093,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
-
-Request Body:
-
-Schema for <c>AssignDeploymentResourcesOptions</c>:
-<code>{
-  resourcesMetadata: [
-    {
-      azureResourceId: string, # Required. Represents the Azure resource ID.
-      customDomain: string, # Required. Represents the Azure resource custom domain.
-      region: string, # Required. Represents the Azure resource region.
-    }
-  ], # Required. Represents the metadata for the resources to be assigned.
-}
-</code>
 
 </remarks>
     </member>
@@ -4987,23 +3123,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
-
-Request Body:
-
-Schema for <c>AssignDeploymentResourcesOptions</c>:
-<code>{
-  resourcesMetadata: [
-    {
-      azureResourceId: string, # Required. Represents the Azure resource ID.
-      customDomain: string, # Required. Represents the Azure resource custom domain.
-      region: string, # Required. Represents the Azure resource region.
-    }
-  ], # Required. Represents the metadata for the resources to be assigned.
-}
-</code>
 
 </remarks>
     </member>
@@ -5027,17 +3149,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
-
-Request Body:
-
-Schema for <c>UnassignDeploymentResourcesOptions</c>:
-<code>{
-  assignedResourceIds: [string], # Required. Represents the assigned resource IDs to be unassigned.
-}
-</code>
 
 </remarks>
     </member>
@@ -5061,17 +3175,9 @@ Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the request payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
-
-Request Body:
-
-Schema for <c>UnassignDeploymentResourcesOptions</c>:
-<code>{
-  assignedResourceIds: [string], # Required. Represents the assigned resource IDs to be unassigned.
-}
-</code>
 
 </remarks>
     </member>
@@ -5123,55 +3229,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>
@@ -5223,55 +3283,9 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 ]]></code>
 </example>
 <remarks>
-Below is the JSON schema for the response payload.
+
 Additional information can be found in the service REST API documentation:
 https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
-
-Response Body:
-
-Schema for <c>TrainingJobState</c>:
-<code>{
-  result: {
-    modelLabel: string, # Required. Represents trained model label.
-    trainingConfigVersion: string, # Required. Represents training config version.
-    trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-    trainingStatus: {
-      percentComplete: number, # Required. Represents progress percentage.
-      startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-      endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-      status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-    }, # Required. Represents the model training status.
-    evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-    estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-  }, # Required. Represents training tasks detailed result.
-  jobId: string, # Required. The job ID.
-  createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
-  lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
-  expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
-  warnings: [
-    {
-      code: string, # Required. The warning code.
-      message: string, # Required. The warning message.
-    }
-  ], # Optional. The warnings that were encountered while executing the job.
-  errors: [
-    {
-      code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        message: string, # Required. Error message.
-        details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        target: string, # Optional. Error target.
-        innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. The errors encountered while executing the job.
-}
-</code>
 
 </remarks>
     </member>

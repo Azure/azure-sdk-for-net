@@ -28,36 +28,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSeason(string,RequestContext)">
 <example>
@@ -86,36 +56,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
 <example>
@@ -170,62 +110,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
 <example>
@@ -280,62 +164,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Season</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteAsync(string,RequestContext)">
 <example>
@@ -400,36 +228,6 @@ await foreach (var item in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTim
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SeasonListResponseValue</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSeasons(DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{int},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -470,36 +268,6 @@ foreach (var item in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.Utc
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SeasonListResponseValue</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  year: number, # Optional. Season year.
-  geographicIdentifier: string, # Optional. Geographic Identifier.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

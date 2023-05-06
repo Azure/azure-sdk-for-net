@@ -59,72 +59,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(string,string,RequestContent,RequestContext)">
 <example>
@@ -184,72 +118,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceDataModelAsync(string,string,RequestContext)">
 <example>
@@ -279,41 +147,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceDataModel(string,string,RequestContext)">
 <example>
@@ -343,41 +176,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DeviceDataModel</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteAsync(string,string,RequestContext)">
 <example>
@@ -443,41 +241,6 @@ await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", 
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceDataModelListResponseValue</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetDeviceDataModels(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
@@ -519,41 +282,6 @@ foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>", new String[
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DeviceDataModelListResponseValue</c>:
-<code>{
-  type: string, # Optional. Type of device.
-  manufacturer: string, # Optional. Device manufacturer.
-  productCode: string, # Optional. Device productCode.
-  ports: [
-    {
-      name: string, # Optional. Name of the port.
-      type: string, # Optional. Type of port digital/analog.
-    }
-  ], # Optional. List of device ports supported.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
