@@ -12,18 +12,18 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> List of vaults. </summary>
-    internal partial class KeyVaultListResult
+    internal partial class VaultListResult
     {
-        /// <summary> Initializes a new instance of KeyVaultListResult. </summary>
-        internal KeyVaultListResult()
+        /// <summary> Initializes a new instance of VaultListResult. </summary>
+        internal VaultListResult()
         {
             Value = new ChangeTrackingList<KeyVaultData>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultListResult. </summary>
+        /// <summary> Initializes a new instance of VaultListResult. </summary>
         /// <param name="value"> The list of vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of vaults. </param>
-        internal KeyVaultListResult(IReadOnlyList<KeyVaultData> value, string nextLink)
+        internal VaultListResult(IReadOnlyList<KeyVaultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationRestOperations LocationRestClient => _locationRestClient ??= new LocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
