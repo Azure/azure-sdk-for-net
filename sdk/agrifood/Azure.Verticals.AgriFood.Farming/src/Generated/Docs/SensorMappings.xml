@@ -6,7 +6,7 @@
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -18,7 +18,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
 var data = new {
     sensorId = "<sensorId>",
@@ -33,7 +33,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -52,67 +52,13 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -124,7 +70,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
 var data = new {
     sensorId = "<sensorId>",
@@ -139,7 +85,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -158,69 +104,15 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorMappingAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSensorMappingAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
+Response response = await client.GetSensorMappingAsync("<sensorMappingId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -239,44 +131,15 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorMapping(string,RequestContext)">
 <example>
 This sample shows how to call GetSensorMapping with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = client.GetSensorMapping("<sensorMappingId>");
+Response response = client.GetSensorMapping("<sensorMappingId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -295,44 +158,15 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SensorMapping</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorMappingId>");
+Response response = await client.DeleteAsync("<sensorMappingId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -342,9 +176,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorMappingId>");
+Response response = client.Delete("<sensorMappingId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -354,22 +188,22 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetSensorMappingsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetSensorMappingsAsync())
+await foreach (var item in client.GetSensorMappingsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetSensorMappingsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -387,57 +221,28 @@ await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorId
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SensorMappingListResponseValue</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSensorMappings(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetSensorMappings and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-foreach (var data in client.GetSensorMappings())
+foreach (var item in client.GetSensorMappings())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetSensorMappings with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -455,35 +260,6 @@ foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new S
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SensorMappingListResponseValue</c>:
-<code>{
-  sensorId: string, # Optional. Id of the associated sensor.
-  sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  partyId: string, # Optional. Id of the associated party.
-  boundaryId: string, # Optional. Id of the associated boundary.
-  id: string, # Optional. Id of the resource.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and
-only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

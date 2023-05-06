@@ -125,9 +125,10 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public async Task<Response> DownloadToAsync(
+        public async Task<Response> DownloadToInternal(
             Stream destination,
             BlobRequestConditions conditions,
+            bool async,
             CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
@@ -142,20 +143,18 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
-                    _client.DownloadStreamingInternal(
+                Response<BlobDownloadStreamingResult> initialResponse;
+
+                try
+                {
+                    initialResponse = await _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
-                        async: true,
-                        cancellationToken).AsTask();
-
-                Response<BlobDownloadStreamingResult> initialResponse = null;
-                try
-                {
-                    initialResponse = await initialResponseTask.ConfigureAwait(false);
+                        async,
+                        cancellationToken).ConfigureAwait(false);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
@@ -165,9 +164,8 @@ namespace Azure.Storage.Blobs
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
-                        async: true,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                        async,
+                        cancellationToken).ConfigureAwait(false);
                 }
 
                 // If the initial request returned no content (i.e., a 304),
@@ -187,7 +185,7 @@ namespace Azure.Storage.Blobs
                             new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
                                 destination,
                                 initialResponse.Value.Details.Metadata,
-                                async: true,
+                                async,
                                 cancellationToken).ConfigureAwait(false);
                     }
                 }
@@ -201,11 +199,11 @@ namespace Azure.Storage.Blobs
                     await CopyToInternal(
                         initialResponse,
                         destination,
-                        async: true,
+                        async,
                         cancellationToken)
                         .ConfigureAwait(false);
 
-                    await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
+                    await FlushFinalIfNecessaryInternal(destination, async, cancellationToken).ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
                 }
 
@@ -215,53 +213,70 @@ namespace Azure.Storage.Blobs
                 ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
-                // Create a queue of tasks that will each download one segment
-                // of the blob.  The queue maintains the order of the segments
-                // so we can keep appending to the end of the destination
-                // stream when each segment finishes.
-                var runningTasks = new Queue<Task<Response<BlobDownloadStreamingResult>>>();
-                runningTasks.Enqueue(initialResponseTask);
-                if (_maxWorkerCount <= 1)
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                                // Rule checker cannot understand this section, but this
+                                // massively reduces code duplication.
+                Queue<Task<Response<BlobDownloadStreamingResult>>> runningTasks = null;
+                int effectiveWorkerCount = async ? _maxWorkerCount : 1;
+                if (effectiveWorkerCount > 1)
                 {
-                    // consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
-                    await ConsumeQueuedTask().ConfigureAwait(false);
+                    runningTasks = new();
+                    runningTasks.Enqueue(Task.FromResult(initialResponse));
+                }
+                else
+                {
+                    await CopyToInternal(initialResponse, destination, async, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Fill the queue with tasks to download each of the remaining
                 // ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
                 {
-                    // Add the next Task (which will start the download but
-                    // return before it's completed downloading)
-                    runningTasks.Enqueue(_client.DownloadStreamingInternal(
-                        httpRange,
-                        conditionsWithEtag,
-                        ValidationOptions,
-                        _progress,
-                        _innerOperationName,
-                        async: true,
-                        cancellationToken).AsTask());
-
-                    // If we have fewer tasks than alotted workers, then just
-                    // continue adding tasks until we have _maxWorkerCount
-                    // running in parallel
-                    if (runningTasks.Count < _maxWorkerCount)
+                    ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
+                        .DownloadStreamingInternal(
+                            httpRange,
+                            conditionsWithEtag,
+                            ValidationOptions,
+                            _progress,
+                            _innerOperationName,
+                            async,
+                            cancellationToken);
+                    if (runningTasks != null)
                     {
-                        continue;
-                    }
+                        // Add the next Task (which will start the download but
+                        // return before it's completed downloading)
+                        runningTasks.Enqueue(responseValueTask.AsTask());
 
-                    // Once all the workers are busy, wait for the first
-                    // segment to finish downloading before we create more work
-                    await ConsumeQueuedTask().ConfigureAwait(false);
+                        // If we have fewer tasks than alotted workers, then just
+                        // continue adding tasks until we have effectiveWorkerCount
+                        // running in parallel
+                        if (runningTasks.Count < effectiveWorkerCount)
+                        {
+                            continue;
+                        }
+
+                        // Once all the workers are busy, wait for the first
+                        // segment to finish downloading before we create more work
+                        await ConsumeQueuedTask().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Response<BlobDownloadStreamingResult> result = await responseValueTask.ConfigureAwait(false);
+                        await CopyToInternal(result, destination, async, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 // Wait for all of the remaining segments to download
-                while (runningTasks.Count > 0)
+                if (runningTasks != null)
                 {
-                    await ConsumeQueuedTask().ConfigureAwait(false);
+                    while (runningTasks.Count > 0)
+                    {
+                        await ConsumeQueuedTask().ConfigureAwait(false);
+                    }
                 }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
-                await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
+                await FlushFinalIfNecessaryInternal(destination, async, cancellationToken).ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
                 // Wait for the first segment in the queue of tasks to complete
@@ -280,124 +295,10 @@ namespace Azure.Storage.Blobs
                     await CopyToInternal(
                         response,
                         destination,
-                        async: true,
+                        async,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-
-        public Response DownloadTo(
-            Stream destination,
-            BlobRequestConditions conditions,
-            CancellationToken cancellationToken)
-        {
-            // Wrap the download range calls in a Download span for distributed
-            // tracing
-            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
-            try
-            {
-                scope.Start();
-
-                // Just start downloading using an initial range.  If it's a
-                // small blob, we'll get the whole thing in one shot.  If it's
-                // a large blob, we'll get its full size in Content-Range and
-                // can keep downloading it in segments.
-                var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<BlobDownloadStreamingResult> initialResponse;
-
-                try
-                {
-                    initialResponse = _client.DownloadStreamingInternal(
-                        initialRange,
-                        conditions,
-                        ValidationOptions,
-                        _progress,
-                        _innerOperationName,
-                        async: false,
-                        cancellationToken).EnsureCompleted();
-                }
-                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
-                {
-                    initialResponse = _client.DownloadStreamingInternal(
-                        range: default,
-                        conditions,
-                        ValidationOptions,
-                        _progress,
-                        _innerOperationName,
-                        async: false,
-                        cancellationToken).EnsureCompleted();
-                }
-
-                // If the initial request returned no content (i.e., a 304),
-                // we'll pass that back to the user immediately
-                if (initialResponse.IsUnavailable())
-                {
-                    return initialResponse.GetRawResponse();
-                }
-
-                // We deferred client-side encryption, so now we must handle it before anything
-                // is written to destination
-                if (_client.UsingClientSideEncryption)
-                {
-                    if (initialResponse.Value.Details.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
-                    {
-                        destination = new BlobClientSideDecryptor(
-                            new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
-                                destination,
-                                initialResponse.Value.Details.Metadata,
-                                async: false,
-                                cancellationToken).EnsureCompleted();
-                    }
-                }
-
-                // Copy the first segment to the destination stream
-                CopyToInternal(initialResponse, destination, async: false, cancellationToken).EnsureCompleted();
-
-                // If the first segment was the entire blob, we're finished now
-                long initialLength = initialResponse.Value.Details.ContentLength;
-                long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
-                if (initialLength == totalLength)
-                {
-                    FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
-                    return initialResponse.GetRawResponse();
-                }
-
-                // Capture the etag from the first segment and construct
-                // conditions to ensure the blob doesn't change while we're
-                // downloading the remaining segments
-                ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
-
-                // Download each of the remaining ranges in the blob
-                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
-                {
-                    // Don't need to worry about 304s here because the ETag
-                    // condition will turn into a 412 and throw a proper
-                    // RequestFailedException
-                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
-                        httpRange,
-                        conditionsWithEtag,
-                        ValidationOptions,
-                        _progress,
-                        _innerOperationName,
-                        async: false,
-                        cancellationToken).EnsureCompleted();
-                    CopyToInternal(result, destination, async: false, cancellationToken).EnsureCompleted();
-                }
-
-                FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
-
-                return initialResponse.GetRawResponse();
             }
             catch (Exception ex)
             {

@@ -16,13 +16,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
         /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
         /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
-        internal HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber)
+        internal HealthcareDicomImageDeletedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber)
         {
+            PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;
             ImageSeriesInstanceUid = imageSeriesInstanceUid;
             ImageSopInstanceUid = imageSopInstanceUid;
@@ -30,6 +32,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SequenceNumber = sequenceNumber;
         }
 
+        /// <summary> Data partition name. </summary>
+        public string PartitionName { get; }
         /// <summary> Unique identifier for the Study. </summary>
         public string ImageStudyInstanceUid { get; }
         /// <summary> Unique identifier for the Series. </summary>
