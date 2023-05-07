@@ -1118,27 +1118,6 @@ namespace Azure.Core.Tests
                 return Message == obj.Message && Number == obj.Number;
             }
         }
-
-        internal class camelCaseModel : IEquatable<camelCaseModel>
-        {
-            public string message { get; set; }
-            public int number { get; set; }
-            public override bool Equals(object obj)
-            {
-                camelCaseModel other = obj as camelCaseModel;
-                if (other == null)
-                {
-                    return false;
-                }
-
-                return Equals(other);
-            }
-
-            public bool Equals(camelCaseModel obj)
-            {
-                return message == obj.message && number == obj.number;
-            }
-        }
         #endregion
     }
 }
